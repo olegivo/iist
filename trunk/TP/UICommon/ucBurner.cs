@@ -17,6 +17,10 @@ namespace UICommon
             InitializeComponent();
         }
 
+        // Включеное состояние
+        [Category("Layout"), Description("Огонь")]
+        public bool BurnerStatus { get; set; }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);//вызов базового метода ucCaptioned.OnPaint

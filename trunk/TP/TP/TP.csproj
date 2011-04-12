@@ -98,6 +98,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ReheatChamber\ucReheatChamber.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ReheatChamber\ucReheatChamber.Designer.cs">
+      <DependentUpon>ucReheatChamber.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -148,6 +154,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReheatChamber\ucReheatChamber.resx">
+      <DependentUpon>ucReheatChamber.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -207,7 +216,6 @@
     <Folder Include="DrumTypeFurnace\" />
     <Folder Include="FinishCleaning\" />
     <Folder Include="HeatExchanger\" />
-    <Folder Include="ReheatChamber\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
