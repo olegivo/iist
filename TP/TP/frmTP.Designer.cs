@@ -55,6 +55,8 @@ namespace TP
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.miLookAndFeel = new DevExpress.XtraBars.BarSubItem();
+            this.ucReheatChamber1 = new TP.ReheatChamber.ucReheatChamber();
+            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
@@ -68,10 +70,12 @@ namespace TP
             ((System.ComponentModel.ISupportInitialize)(this.lcgFinishCleaning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.styleController1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             this.SuspendLayout();
             // 
             // layoutControl1
             // 
+            this.layoutControl1.Controls.Add(this.ucReheatChamber1);
             this.layoutControl1.Controls.Add(this.ucCyclonAndScrubber1);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutControl1.Location = new System.Drawing.Point(0, 51);
@@ -142,6 +146,8 @@ namespace TP
             // lcgReheatChamber
             // 
             this.lcgReheatChamber.CustomizationFormText = "Камера дожигания ";
+            this.lcgReheatChamber.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem2});
             this.lcgReheatChamber.Location = new System.Drawing.Point(0, 0);
             this.lcgReheatChamber.Name = "lcgReheatChamber";
             this.lcgReheatChamber.Size = new System.Drawing.Size(1055, 510);
@@ -292,6 +298,25 @@ namespace TP
             this.miLookAndFeel.Id = 1;
             this.miLookAndFeel.Name = "miLookAndFeel";
             // 
+            // ucReheatChamber1
+            // 
+            this.ucReheatChamber1.Location = new System.Drawing.Point(24, 44);
+            this.ucReheatChamber1.Name = "ucReheatChamber1";
+            this.ucReheatChamber1.Size = new System.Drawing.Size(1051, 506);
+            this.ucReheatChamber1.TabIndex = 4;
+            // 
+            // layoutControlItem2
+            // 
+            this.layoutControlItem2.Control = this.ucReheatChamber1;
+            this.layoutControlItem2.CustomizationFormText = "layoutControlItem2";
+            this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItem2.Name = "layoutControlItem2";
+            this.layoutControlItem2.Size = new System.Drawing.Size(1055, 510);
+            this.layoutControlItem2.Text = "layoutControlItem2";
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem2.TextToControlDistance = 0;
+            this.layoutControlItem2.TextVisible = false;
+            // 
             // frmTP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -321,6 +346,7 @@ namespace TP
             ((System.ComponentModel.ISupportInitialize)(this.lcgFinishCleaning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.styleController1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -350,5 +376,7 @@ namespace TP
         private DevExpress.XtraBars.BarSubItem barSubItem1;
         private BarSubItem miLookAndFeel;
         private BarButtonItem miSkin;
+        private TP.ReheatChamber.ucReheatChamber ucReheatChamber1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
     }
 }

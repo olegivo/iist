@@ -32,10 +32,48 @@ namespace UICommon
         [Category("Layout"), DefaultValue(ArrowEx.None), Description("Стрелка")]
         public ArrowEx Arrow { get; set; }
 
+        private LineCap _StartCap = LineCap.NoAnchor;
+        private LineCap _EndCap;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DefaultValue(LineCap.NoAnchor)]
+        public LineCap StartCap
+        {
+            get { return _StartCap; }
+            set
+            {
+                if (_StartCap != value)
+                {
+                    _StartCap = value; 
+                    Refresh();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DefaultValue(LineCap.NoAnchor)]
+        public LineCap EndCap
+        {
+            get { return _EndCap; }
+            set
+            {
+                if (_EndCap != value)
+                {
+                    _EndCap = value; 
+                    Refresh();
+                }
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="e"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -45,7 +83,8 @@ namespace UICommon
             int n;
 
             Pen pen = new Pen(GetColor(), Math.Min(XMax/2, YMax/2));
-            pen.EndCap = LineCap.ArrowAnchor;
+            pen.StartCap = StartCap;
+            pen.EndCap = EndCap;
 
             Point[] points = null;
 
@@ -61,117 +100,34 @@ namespace UICommon
 
             Point p1 = new Point();
             Point p2 = new Point();
-            g.DrawLine(pen, 0, YCenter, XMax, YCenter);
-
-            throw new NotImplementedException("доделать по направлениям");
             switch (Direction)
             {
+                case AnchorStyles.Top:
+                    p1 = new Point(XCenter, YMax);
+                    p2 = new Point(XCenter, 0);
+                    break;
                 case AnchorStyles.Bottom:
                     p1 = new Point(XCenter, 0);
                     p2 = new Point(XCenter, YMax);
                     break;
+                case AnchorStyles.Left:
+                    p1 = new Point(XMax, YCenter);
+                    p2 = new Point(0, YCenter);
+                    break;
+                case AnchorStyles.Right:
+                    p1 = new Point(0, YCenter);
+                    p2 = new Point(XMax, YCenter);
+                    break;
+                case AnchorStyles.Right | AnchorStyles.Bottom:
+                    p1 = new Point(0, 0);
+                    p2 = new Point(XMax, YMax);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("Direction", Direction, "Неожиданное значение Direction");
             }
 
-            //if (Orientation == Orientation.Horizontal)
-            //{
-            //    Height = n;
-            //    switch (Arrow)
-            //    {
-            //        case ArrowEx.None:
-            //            points = new[]
-            //                         {
-            //                             new Point(0, y),
-            //                             new Point(0, YMax - y),
-            //                             new Point(XMax, YMax - y),
-            //                             new Point(XMax, y),
-            //                         };
-            //            break;
+            g.DrawLine(pen, p1, p2);
 
-            //        case ArrowEx.Right:
-            //            points = new[]
-            //                         {
-            //                             new Point(XMax, YCenter),
-            //                             new Point(XMax - 15, 0),
-            //                             new Point(XMax - 15, y),
-            //                             new Point(0, y),
-            //                             new Point(0, YMax - y),
-            //                             new Point(XMax - 15, YMax - y),
-            //                             new Point(XMax - 15, YMax),
-            //                         };
-            //            break;
-
-            //        case ArrowEx.Left:
-            //            points = new[]
-            //                         {
-            //                             new Point(0, YCenter),
-            //                             new Point(15, 0),
-            //                             new Point(15, y),
-            //                             new Point(XMax, y),
-            //                             new Point(XMax, YMax - y),
-            //                             new Point(15, YMax - y),
-            //                             new Point(15, YMax),
-            //                         };
-            //            break;
-
-            //        case ArrowEx.Up:
-            //            break;
-
-            //        case ArrowEx.Down:
-            //            break;
-            //    }
-            //}
-            //else if (Orientation == Orientation.Vertical)
-            //{
-            //    Width = n;
-            //    switch (Arrow)
-            //    {
-            //        case ArrowEx.None:
-            //            points = new[]
-            //                         {
-            //                             new Point(x, 0),
-            //                             new Point(x, YMax),
-            //                             new Point(XMax - x, YMax),
-            //                             new Point(XMax - x, 0),
-            //                         };
-            //            break;
-
-            //        case ArrowEx.Down:
-            //            points = new[]
-            //                         {
-            //                             new Point(XCenter, YMax),
-            //                             new Point(0, YMax - 15),
-            //                             new Point(x, YMax - 15),
-            //                             new Point(x, 0),
-            //                             new Point(XMax - x, 0),
-            //                             new Point(XMax - x, YMax - 15),
-            //                             new Point(XMax, YMax - 15),
-            //                         };
-            //            break;
-
-            //        case ArrowEx.Up:
-            //            points = new[]
-            //                         {
-            //                             new Point(XCenter, 0),
-            //                             new Point(0, 15),
-            //                             new Point(x, 15),
-            //                             new Point(x, YMax),
-            //                             new Point(XMax - x, YMax),
-            //                             new Point(XMax - x, 15),
-            //                             new Point(XMax, 15),
-            //                         };
-            //            break;
-
-            //        case ArrowEx.Right:
-            //            break;
-
-            //        case ArrowEx.Left:
-            //            break;
-            //    }
-
-            //}
-
-            //if (points != null) 
-            //    g.FillPolygon(pen.Brush, points);
         }
 
         private Color GetColor()
@@ -197,10 +153,32 @@ namespace UICommon
         [Category("Layout"), DefaultValue(LineColor.Blue), Description("Цвет")]
         public LineColor Color { get; set; }
 
+        private AnchorStyles _Direction = AnchorStyles.Right;
+
         /// <summary>
         /// 
         /// </summary>
-        public AnchorStyles Direction { get; set; }
+        [DefaultValue(AnchorStyles.Right)]
+        public AnchorStyles Direction
+        {
+            get { return _Direction; }
+            set
+            {
+                if (_Direction != value)
+                {
+                    switch (value)
+                    {
+                        case AnchorStyles.Bottom | AnchorStyles.Top:
+                        case AnchorStyles.Left | AnchorStyles.Right:
+                            break;
+                            
+                        default:
+                            _Direction = value;
+                            break;
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>

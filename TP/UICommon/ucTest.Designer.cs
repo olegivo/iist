@@ -70,10 +70,10 @@
             this.ucFlowRelay1 = new UICommon.ucFlowRelay();
             this.ucTransporter1 = new UICommon.ucTransporter();
             this.ucBurner1 = new UICommon.ucBurner();
+            this.ucLine1 = new UICommon.ucLine();
             this.ucPump1 = new UICommon.ucPump();
             this.ucValve1 = new UICommon.ucValve();
             this.ucCaptioned1 = new UICommon.ucCaptioned();
-            this.ucLine1 = new UICommon.ucLine();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEditBindingSource)).BeginInit();
@@ -163,6 +163,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.ucLine1);
             this.groupBox3.Controls.Add(this.ucPump1);
             this.groupBox3.Location = new System.Drawing.Point(3, 230);
             this.groupBox3.Name = "groupBox3";
@@ -173,7 +174,6 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.ucLine1);
             this.groupBox4.Controls.Add(this.ucFlowRelay1);
             this.groupBox4.Controls.Add(this.ucTransporter1);
             this.groupBox4.Controls.Add(this.ucBurner1);
@@ -598,6 +598,16 @@
             this.ucBurner1.Size = new System.Drawing.Size(60, 40);
             this.ucBurner1.TabIndex = 10;
             // 
+            // ucLine1
+            // 
+            this.ucLine1.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine1.Appearance.Options.UseBackColor = true;
+            this.ucLine1.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            this.ucLine1.Location = new System.Drawing.Point(6, 77);
+            this.ucLine1.Name = "ucLine1";
+            this.ucLine1.Size = new System.Drawing.Size(268, 17);
+            this.ucLine1.TabIndex = 2;
+            // 
             // ucPump1
             // 
             this.ucPump1.Appearance.BackColor = System.Drawing.Color.Transparent;
@@ -628,15 +638,6 @@
             this.ucCaptioned1.Name = "ucCaptioned1";
             this.ucCaptioned1.Size = new System.Drawing.Size(139, 74);
             this.ucCaptioned1.TabIndex = 0;
-            // 
-            // ucLine1
-            // 
-            this.ucLine1.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucLine1.Appearance.Options.UseBackColor = true;
-            this.ucLine1.Location = new System.Drawing.Point(91, 62);
-            this.ucLine1.Name = "ucLine1";
-            this.ucLine1.Size = new System.Drawing.Size(94, 22);
-            this.ucLine1.TabIndex = 12;
             // 
             // ucTest
             // 
