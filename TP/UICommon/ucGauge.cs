@@ -186,9 +186,11 @@ namespace UICommon
             }
         }
 
+        private bool enlarged = false;
+
         private void gaugeControl1_MouseClick(object sender, MouseEventArgs e)
         {
-            if(e.Button==MouseButtons.Left)
+            if(e.Button==MouseButtons.Left && !enlarged)
             {
                 DockStyle dock = Dock;
                 Control parent = Parent;
@@ -207,8 +209,9 @@ namespace UICommon
                 form.Size = new Size(160, 300);
                 form.ResumeLayout(false);
 
-
+                enlarged = true;
                 form.ShowDialog();
+                enlarged = false;
 
                 parent.Controls.Add(this);
                 Dock = dock;
