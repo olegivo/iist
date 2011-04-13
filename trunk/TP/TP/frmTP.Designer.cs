@@ -33,12 +33,14 @@ namespace TP
         {
             this.components = new System.ComponentModel.Container();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+            this.ucReheatChamber1 = new TP.ReheatChamber.ucReheatChamber();
             this.ucCyclonAndScrubber1 = new TP.CyclonAndScrubber.ucCyclonAndScrubber();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.tabbedControlGroup1 = new DevExpress.XtraLayout.TabbedControlGroup();
             this.lcgCommonView = new DevExpress.XtraLayout.LayoutControlGroup();
             this.lcgDrumTypeFurnace = new DevExpress.XtraLayout.LayoutControlGroup();
             this.lcgReheatChamber = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.lcgHeatExchanger = new DevExpress.XtraLayout.LayoutControlGroup();
             this.lcgCyclonAndScrubber = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -55,8 +57,8 @@ namespace TP
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.miLookAndFeel = new DevExpress.XtraBars.BarSubItem();
-            this.ucReheatChamber1 = new TP.ReheatChamber.ucReheatChamber();
-            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ucAllHeatExchanger1 = new HeatExchanger.ucAllHeatExchanger();
+            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
@@ -64,17 +66,19 @@ namespace TP
             ((System.ComponentModel.ISupportInitialize)(this.lcgCommonView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgDrumTypeFurnace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgReheatChamber)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgHeatExchanger)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgCyclonAndScrubber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgFinishCleaning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.styleController1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             this.SuspendLayout();
             // 
             // layoutControl1
             // 
+            this.layoutControl1.Controls.Add(this.ucAllHeatExchanger1);
             this.layoutControl1.Controls.Add(this.ucReheatChamber1);
             this.layoutControl1.Controls.Add(this.ucCyclonAndScrubber1);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -85,6 +89,13 @@ namespace TP
             this.layoutControl1.Size = new System.Drawing.Size(1099, 574);
             this.layoutControl1.TabIndex = 1;
             this.layoutControl1.Text = "layoutControl1";
+            // 
+            // ucReheatChamber1
+            // 
+            this.ucReheatChamber1.Location = new System.Drawing.Point(24, 44);
+            this.ucReheatChamber1.Name = "ucReheatChamber1";
+            this.ucReheatChamber1.Size = new System.Drawing.Size(1051, 506);
+            this.ucReheatChamber1.TabIndex = 4;
             // 
             // ucCyclonAndScrubber1
             // 
@@ -153,9 +164,23 @@ namespace TP
             this.lcgReheatChamber.Size = new System.Drawing.Size(1055, 510);
             this.lcgReheatChamber.Text = "Камера дожигания ";
             // 
+            // layoutControlItem2
+            // 
+            this.layoutControlItem2.Control = this.ucReheatChamber1;
+            this.layoutControlItem2.CustomizationFormText = "layoutControlItem2";
+            this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItem2.Name = "layoutControlItem2";
+            this.layoutControlItem2.Size = new System.Drawing.Size(1055, 510);
+            this.layoutControlItem2.Text = "layoutControlItem2";
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem2.TextToControlDistance = 0;
+            this.layoutControlItem2.TextVisible = false;
+            // 
             // lcgHeatExchanger
             // 
             this.lcgHeatExchanger.CustomizationFormText = "Теплообменник ";
+            this.lcgHeatExchanger.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem3});
             this.lcgHeatExchanger.Location = new System.Drawing.Point(0, 0);
             this.lcgHeatExchanger.Name = "lcgHeatExchanger";
             this.lcgHeatExchanger.Size = new System.Drawing.Size(1055, 510);
@@ -298,24 +323,26 @@ namespace TP
             this.miLookAndFeel.Id = 1;
             this.miLookAndFeel.Name = "miLookAndFeel";
             // 
-            // ucReheatChamber1
+            // ucAllHeatExchanger1
             // 
-            this.ucReheatChamber1.Location = new System.Drawing.Point(24, 44);
-            this.ucReheatChamber1.Name = "ucReheatChamber1";
-            this.ucReheatChamber1.Size = new System.Drawing.Size(1051, 506);
-            this.ucReheatChamber1.TabIndex = 4;
+            this.ucAllHeatExchanger1.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucAllHeatExchanger1.Appearance.Options.UseBackColor = true;
+            this.ucAllHeatExchanger1.Location = new System.Drawing.Point(24, 44);
+            this.ucAllHeatExchanger1.Name = "ucAllHeatExchanger1";
+            this.ucAllHeatExchanger1.Size = new System.Drawing.Size(1051, 506);
+            this.ucAllHeatExchanger1.TabIndex = 5;
             // 
-            // layoutControlItem2
+            // layoutControlItem3
             // 
-            this.layoutControlItem2.Control = this.ucReheatChamber1;
-            this.layoutControlItem2.CustomizationFormText = "layoutControlItem2";
-            this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(1055, 510);
-            this.layoutControlItem2.Text = "layoutControlItem2";
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem2.TextToControlDistance = 0;
-            this.layoutControlItem2.TextVisible = false;
+            this.layoutControlItem3.Control = this.ucAllHeatExchanger1;
+            this.layoutControlItem3.CustomizationFormText = "layoutControlItem3";
+            this.layoutControlItem3.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItem3.Name = "layoutControlItem3";
+            this.layoutControlItem3.Size = new System.Drawing.Size(1055, 510);
+            this.layoutControlItem3.Text = "layoutControlItem3";
+            this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem3.TextToControlDistance = 0;
+            this.layoutControlItem3.TextVisible = false;
             // 
             // frmTP
             // 
@@ -340,13 +367,14 @@ namespace TP
             ((System.ComponentModel.ISupportInitialize)(this.lcgCommonView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgDrumTypeFurnace)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgReheatChamber)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgHeatExchanger)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgCyclonAndScrubber)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgFinishCleaning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.styleController1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -378,5 +406,7 @@ namespace TP
         private BarButtonItem miSkin;
         private TP.ReheatChamber.ucReheatChamber ucReheatChamber1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private HeatExchanger.ucAllHeatExchanger ucAllHeatExchanger1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
     }
 }
