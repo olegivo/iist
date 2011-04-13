@@ -142,6 +142,8 @@ namespace UICommon
                     return System.Drawing.Color.Red;
                 case LineColor.LightBlue:
                     return System.Drawing.Color.LightBlue;
+                case LineColor.Green:
+                    return System.Drawing.Color.Green;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
