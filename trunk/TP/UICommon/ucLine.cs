@@ -144,6 +144,8 @@ namespace UICommon
                     return System.Drawing.Color.LightBlue;
                 case LineColor.Green:
                     return System.Drawing.Color.Green;
+                case LineColor.Black:
+                    return System.Drawing.Color.Black;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -180,6 +182,11 @@ namespace UICommon
                     }
                 }
             }
+        }
+
+        private void ucLine_Load(object sender, EventArgs e)
+        {
+
         }
     }
 
