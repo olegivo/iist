@@ -9,7 +9,7 @@ namespace UICommon
     /// <summary>
     /// 
     /// </summary>
-    public partial class ucGauge : XtraUserControl
+    public partial class ucIndicator : XtraUserControl
     {
         private float _allowedMinValue;
         private float _allowedMaxValue;
@@ -17,7 +17,7 @@ namespace UICommon
         /// <summary>
         /// 
         /// </summary>
-        public ucGauge()
+        public ucIndicator()
         {
             InitializeComponent();
         }
@@ -71,6 +71,22 @@ namespace UICommon
                 }
                 //if (AllowedMinValue > MaxValue) AllowedMinValue = MaxValue;
                 //if (AllowedMaxValue > MaxValue) AllowedMaxValue = MaxValue;
+            }
+        }
+
+        /// <summary>
+        /// Количество делений шкалы
+        /// </summary>
+        public int TickCount
+        {
+            get { return _tickCount; }
+            set
+            {
+                if(_tickCount!=value)
+                {
+                    _tickCount = value;
+                    Refresh();
+                }
             }
         }
 
@@ -180,13 +196,18 @@ namespace UICommon
         private void linearScaleComponent1_MinMaxValueChanged(object sender, EventArgs e)
         {
             float range = MaxValue - MinValue;
+
             if (range > 0)
             {
-                linearScaleComponent1.MajorTickCount = Convert.ToInt32(range);
+				//todo: tick count?!
+                int i = Convert.ToInt32(range);
+                //if (i > 10) i = 10;
+                linearScaleComponent1.MajorTickCount = i;                
             }
         }
 
         private bool enlarged = false;
+        private int _tickCount;
 
         private void gaugeControl1_MouseClick(object sender, MouseEventArgs e)
         {

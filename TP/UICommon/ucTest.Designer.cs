@@ -59,7 +59,7 @@
             this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.ucGauge1 = new UICommon.ucGauge();
+            this.ucGauge1 = new UICommon.ucIndicator();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -711,7 +711,7 @@
         private System.Windows.Forms.BindingSource spinEditBindingSource;
         private System.Windows.Forms.BindingSource radioGroupBindingSource;
         private System.Windows.Forms.BindingSource textEditBindingSource;
-        private ucGauge ucGauge1;
+        private ucIndicator ucGauge1;
         private System.Windows.Forms.GroupBox groupBox5;
         private DevExpress.XtraEditors.SpinEdit seMax;
         private DevExpress.XtraEditors.SpinEdit seMin;

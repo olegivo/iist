@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace UICommon
@@ -37,8 +38,27 @@ namespace UICommon
             g.DrawString(Caption, new Font("Arial", 12,FontStyle.Bold), Brushes.Black,
                          new RectangleF(25, yMax/2, xMax, yMax));
 
+            float f = YMax - YMax * Level / 10;
+            g.DrawLine(Pens.Black, 0, f, XMax,  f);
+        }
 
+        private float _level;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public float Level
+        {
+            get { return _level; }
+            set
+            {
+                if (_level != value)
+                {
+                    _level = value; 
+                    Refresh();
+                }
+            }
         }
     }
 }

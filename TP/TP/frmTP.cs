@@ -51,6 +51,11 @@ namespace TP
             }
         }
 
+        private void frmTP_Load(object sender, EventArgs e)
+        {
+            channelController1.Form = this;
+        }
+
         //private void OnPopupLookAndFeel(object sender, EventArgs e)
         //{
         //    BarSubItem item = sender as BarSubItem;

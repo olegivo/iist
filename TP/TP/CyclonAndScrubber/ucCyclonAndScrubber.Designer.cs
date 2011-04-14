@@ -127,9 +127,9 @@ namespace TP.CyclonAndScrubber
             this.ucLine1 = new UICommon.ucLine();
             this.ucTransporter2 = new UICommon.ucTransporter();
             this.ucTransporter1 = new UICommon.ucTransporter();
-            this.ucGauge3 = new UICommon.ucGauge();
-            this.ucGauge2 = new UICommon.ucGauge();
-            this.ucGauge1 = new UICommon.ucGauge();
+            this.ucGauge3 = new UICommon.ucIndicator();
+            this.ucGauge2 = new UICommon.ucIndicator();
+            this.ucGauge1 = new UICommon.ucIndicator();
             this.ucValve28 = new UICommon.ucValve();
             this.ucPump4 = new UICommon.ucPump();
             this.ucValve27 = new UICommon.ucValve();
@@ -1833,10 +1833,10 @@ namespace TP.CyclonAndScrubber
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape81;
-        private ucGauge ucGauge1;
-        private ucGauge ucGauge2;
+        private ucIndicator ucGauge1;
+        private ucIndicator ucGauge2;
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape82;
-        private ucGauge ucGauge3;
+        private ucIndicator ucGauge3;
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape83;
         private ucTransporter ucTransporter1;
         private ucTransporter ucTransporter2;

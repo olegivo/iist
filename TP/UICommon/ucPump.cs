@@ -18,20 +18,6 @@ namespace UICommon
             InitializeComponent();
         }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //protected override CreateParams CreateParams
-        //{
-        //    get
-        //    {
-        //        // делаем стиль прозрачным:
-        //        CreateParams cp = base.CreateParams;
-        //        cp.ExStyle |= 0x00000020;
-        //        return cp;
-        //    }
-        //}
-
         /// <summary>
         /// 
         /// </summary>
@@ -41,13 +27,29 @@ namespace UICommon
             Graphics g = e.Graphics;
             Height = Width;//TODO: это лучше делать при изменении размеров, а не при каждой отрисовке
             int rem;
-            int delta = Math.DivRem(XMax, 4, out rem);
+            //int delta = Math.DivRem(XMax, 4, out rem);
 
             Pen pen = new Pen(MyColor);
 
             Pen penl = Pens.Black;
+
+            Rectangle rectangle = new Rectangle(0, 0, XMax, YMax);
+            g.FillPie(pen.Brush, rectangle, 0, 360);
+            g.DrawArc(penl, rectangle, 0, 360);
+
+            rectangle = new Rectangle(XMax / 4, YMax / 4, XMax / 2, YMax / 2);
+            g.FillPie(Brushes.LightGray, rectangle, 0, 360);
+            g.DrawArc(penl, rectangle, 0, 360);
+
+            g.FillRectangle(pen.Brush, 0, 0, XCenter, YMax / 8);
+            g.DrawLine(penl, 0, 0, XCenter, 0);
+            g.DrawLine(penl, 0, 0, 0, YMax / 8);
+            g.DrawLine(penl, 0, YMax / 8, XMax / 6, YMax / 8);
+
+/*
             g.FillEllipse(pen.Brush, 0, 0, XMax, YMax);
             g.FillEllipse(Brushes.White, delta, delta, XMax - 2 * delta, YMax - 2 * delta);
+            g.DrawArc(penl, new Rectangle(0, 0, XMax, YMax), 0, 360);
             g.FillPolygon(pen.Brush, new[]
                 {
                     new Point(0,0),
@@ -55,11 +57,11 @@ namespace UICommon
                     new Point(XMax/6, YMax/8),
                     new Point(0,YMax/10),
                 });
-            g.DrawArc(penl, new Rectangle(0, 0, XMax, YMax), 0, 360);
             g.DrawArc(penl, new Rectangle(0 + delta, 0 + delta, XMax - 2 * delta, YMax - 2 * delta), 0, 360);
             g.DrawLine(penl, 0, 0, XCenter, 0);
             g.DrawLine(penl, 0, 0, 0, YMax / 10);
             g.DrawLine(penl, 0, YMax / 10, XMax / 6, YMax / 8);
+*/
         }
 
         /// <summary>

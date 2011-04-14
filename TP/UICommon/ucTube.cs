@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace UICommon
@@ -11,6 +12,26 @@ namespace UICommon
         public ucTube()
         {
             InitializeComponent();
+        }
+
+        private bool _isSmokes;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsSmokes
+        {
+            get { return _isSmokes; }
+            set
+            {
+                if (_isSmokes != value)
+                {
+                    _isSmokes = value;
+                    if (IsSmokesChanged != null) 
+                        IsSmokesChanged(this, EventArgs.Empty);
+                    Refresh();
+                }
+            }
         }
 
         /// <summary>
@@ -58,5 +79,7 @@ namespace UICommon
 
 
         }
+
+        public event EventHandler IsSmokesChanged;
     }
 }
