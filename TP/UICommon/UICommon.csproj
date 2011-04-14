@@ -114,6 +114,12 @@
     <Compile Include="ucTransporter.Designer.cs">
       <DependentUpon>ucTransporter.cs</DependentUpon>
     </Compile>
+    <Compile Include="ucTube.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucTube.Designer.cs">
+      <DependentUpon>ucTube.cs</DependentUpon>
+    </Compile>
     <Compile Include="ucValve.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -147,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ucTransporter.resx">
       <DependentUpon>ucTransporter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucTube.resx">
+      <DependentUpon>ucTube.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ucValve.resx">
       <DependentUpon>ucValve.cs</DependentUpon>

@@ -1,4 +1,6 @@
-﻿using UICommon;
+﻿using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+using UICommon;
 
 namespace TP.ReheatChamber
 {
@@ -12,7 +14,7 @@ namespace TP.ReheatChamber
         /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param name="disposing"><see langword="true"/> if managed resources should be dis<see langword="false"/>langword="<see langword="false"<see langword="false"/>; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -112,21 +114,21 @@ namespace TP.ReheatChamber
             // 
             // ucLine33
             // 
-            this.ucLine33.Arrow = UICommon.ArrowEx.Down;
+            this.ucLine33.EndCap = LineCap.ArrowAnchor;
             this.ucLine33.Color = LineColor.Blue;
             this.ucLine33.Location = new System.Drawing.Point(453, 448);
             this.ucLine33.Name = "ucLine33";
-            this.ucLine33.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine33.Direction = AnchorStyles.Bottom;
             this.ucLine33.Size = new System.Drawing.Size(13, 49);
             this.ucLine33.TabIndex = 10;
             // 
             // ucLine28
             // 
-            this.ucLine28.Arrow = UICommon.ArrowEx.Down;
+            this.ucLine28.EndCap = LineCap.ArrowAnchor;
             this.ucLine28.Color = LineColor.Blue;
             this.ucLine28.Location = new System.Drawing.Point(286, 448);
             this.ucLine28.Name = "ucLine28";
-            this.ucLine28.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine28.Direction = AnchorStyles.Bottom;
             this.ucLine28.Size = new System.Drawing.Size(13, 49);
             this.ucLine28.TabIndex = 10;
             // 
@@ -174,7 +176,7 @@ namespace TP.ReheatChamber
             this.ucLine16.Color = LineColor.Blue;
             this.ucLine16.Location = new System.Drawing.Point(677, 130);
             this.ucLine16.Name = "ucLine16";
-            this.ucLine16.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine16.Direction = AnchorStyles.Bottom;
             this.ucLine16.Size = new System.Drawing.Size(13, 108);
             this.ucLine16.TabIndex = 11;
             // 
@@ -257,7 +259,7 @@ namespace TP.ReheatChamber
             this.ucValve9.Color = ValveColor.Green;
             this.ucValve9.Location = new System.Drawing.Point(592, 378);
             this.ucValve9.Name = "ucValve9";
-            this.ucValve9.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucValve9.Orientation = Orientation.Vertical;
             this.ucValve9.Size = new System.Drawing.Size(20, 40);
             this.ucValve9.TabIndex = 8;
             // 
@@ -356,7 +358,7 @@ namespace TP.ReheatChamber
             // 
             // ucLine8
             // 
-            this.ucLine8.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine8.EndCap = LineCap.ArrowAnchor;
             this.ucLine8.Color = LineColor.Blue;
             this.ucLine8.Location = new System.Drawing.Point(668, 520);
             this.ucLine8.Name = "ucLine8";
@@ -365,7 +367,7 @@ namespace TP.ReheatChamber
             // 
             // ucLine7
             // 
-            this.ucLine7.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine7.EndCap = LineCap.ArrowAnchor;
             this.ucLine7.Color = LineColor.Blue;
             this.ucLine7.Location = new System.Drawing.Point(668, 480);
             this.ucLine7.Name = "ucLine7";
@@ -374,7 +376,7 @@ namespace TP.ReheatChamber
             // 
             // ucLine3
             // 
-            this.ucLine3.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine3.EndCap = LineCap.ArrowAnchor;
             this.ucLine3.Color = LineColor.Blue;
             this.ucLine3.Location = new System.Drawing.Point(52, 424);
             this.ucLine3.Name = "ucLine3";
@@ -402,7 +404,7 @@ namespace TP.ReheatChamber
             this.ucLine9.Color = LineColor.Blue;
             this.ucLine9.Location = new System.Drawing.Point(818, 192);
             this.ucLine9.Name = "ucLine9";
-            this.ucLine9.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine9.Direction = AnchorStyles.Bottom;
             this.ucLine9.Size = new System.Drawing.Size(13, 335);
             this.ucLine9.TabIndex = 10;
             // 
@@ -411,7 +413,7 @@ namespace TP.ReheatChamber
             this.ucLine23.Color = LineColor.Blue;
             this.ucLine23.Location = new System.Drawing.Point(48, 429);
             this.ucLine23.Name = "ucLine23";
-            this.ucLine23.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine23.Direction = AnchorStyles.Bottom;
             this.ucLine23.Size = new System.Drawing.Size(13, 45);
             this.ucLine23.TabIndex = 10;
             // 
@@ -452,7 +454,7 @@ namespace TP.ReheatChamber
             this.ucLine30.Color = LineColor.Blue;
             this.ucLine30.Location = new System.Drawing.Point(558, 551);
             this.ucLine30.Name = "ucLine30";
-            this.ucLine30.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine30.Direction = AnchorStyles.Bottom;
             this.ucLine30.Size = new System.Drawing.Size(13, 40);
             this.ucLine30.TabIndex = 10;
             // 
@@ -461,7 +463,7 @@ namespace TP.ReheatChamber
             this.ucLine27.Color = LineColor.Blue;
             this.ucLine27.Location = new System.Drawing.Point(391, 551);
             this.ucLine27.Name = "ucLine27";
-            this.ucLine27.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine27.Direction = AnchorStyles.Bottom;
             this.ucLine27.Size = new System.Drawing.Size(13, 40);
             this.ucLine27.TabIndex = 10;
             // 
@@ -470,7 +472,7 @@ namespace TP.ReheatChamber
             this.ucLine29.Color = LineColor.Blue;
             this.ucLine29.Location = new System.Drawing.Point(513, 450);
             this.ucLine29.Name = "ucLine29";
-            this.ucLine29.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine29.Direction = AnchorStyles.Bottom;
             this.ucLine29.Size = new System.Drawing.Size(13, 141);
             this.ucLine29.TabIndex = 10;
             // 
@@ -479,7 +481,7 @@ namespace TP.ReheatChamber
             this.ucLine24.Color = LineColor.Blue;
             this.ucLine24.Location = new System.Drawing.Point(346, 450);
             this.ucLine24.Name = "ucLine24";
-            this.ucLine24.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine24.Direction = AnchorStyles.Bottom;
             this.ucLine24.Size = new System.Drawing.Size(13, 141);
             this.ucLine24.TabIndex = 10;
             // 
@@ -488,7 +490,7 @@ namespace TP.ReheatChamber
             this.ucLine22.Color = LineColor.Blue;
             this.ucLine22.Location = new System.Drawing.Point(137, 382);
             this.ucLine22.Name = "ucLine22";
-            this.ucLine22.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine22.Direction = AnchorStyles.Bottom;
             this.ucLine22.Size = new System.Drawing.Size(13, 50);
             this.ucLine22.TabIndex = 10;
             // 
@@ -497,7 +499,7 @@ namespace TP.ReheatChamber
             this.ucLine20.Color = LineColor.Blue;
             this.ucLine20.Location = new System.Drawing.Point(31, 383);
             this.ucLine20.Name = "ucLine20";
-            this.ucLine20.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine20.Direction = AnchorStyles.Bottom;
             this.ucLine20.Size = new System.Drawing.Size(13, 148);
             this.ucLine20.TabIndex = 10;
             // 
@@ -506,7 +508,7 @@ namespace TP.ReheatChamber
             this.ucLine17.Color = LineColor.Blue;
             this.ucLine17.Location = new System.Drawing.Point(596, 110);
             this.ucLine17.Name = "ucLine17";
-            this.ucLine17.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine17.Direction = AnchorStyles.Bottom;
             this.ucLine17.Size = new System.Drawing.Size(13, 320);
             this.ucLine17.TabIndex = 10;
             // 
@@ -515,14 +517,15 @@ namespace TP.ReheatChamber
             this.ucLine6.Color = LineColor.Blue;
             this.ucLine6.Location = new System.Drawing.Point(774, 169);
             this.ucLine6.Name = "ucLine6";
-            this.ucLine6.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine6.Direction = AnchorStyles.Bottom;
             this.ucLine6.Size = new System.Drawing.Size(13, 320);
             this.ucLine6.TabIndex = 10;
             // 
             // ucLine11
             // 
-            this.ucLine11.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine11.EndCap = LineCap.ArrowAnchor;
             this.ucLine11.Color = LineColor.Blue;
+            this.ucLine11.Direction = AnchorStyles.Right;
             this.ucLine11.Location = new System.Drawing.Point(513, 190);
             this.ucLine11.Name = "ucLine11";
             this.ucLine11.Size = new System.Drawing.Size(314, 13);
@@ -530,8 +533,9 @@ namespace TP.ReheatChamber
             // 
             // ucLine43
             // 
-            this.ucLine43.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine43.EndCap = LineCap.ArrowAnchor;
             this.ucLine43.Color = LineColor.Blue;
+            this.ucLine43.Direction=AnchorStyles.Right;
             this.ucLine43.Location = new System.Drawing.Point(436, 298);
             this.ucLine43.Name = "ucLine43";
             this.ucLine43.Size = new System.Drawing.Size(38, 13);
@@ -539,8 +543,9 @@ namespace TP.ReheatChamber
             // 
             // ucLine42
             // 
-            this.ucLine42.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine42.EndCap = LineCap.ArrowAnchor;
             this.ucLine42.Color = LineColor.Blue;
+            this.ucLine42.Direction=AnchorStyles.Left;
             this.ucLine42.Location = new System.Drawing.Point(435, 272);
             this.ucLine42.Name = "ucLine42";
             this.ucLine42.Size = new System.Drawing.Size(39, 13);
@@ -548,8 +553,9 @@ namespace TP.ReheatChamber
             // 
             // ucLine40
             // 
-            this.ucLine40.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine40.EndCap = LineCap.ArrowAnchor;
             this.ucLine40.Color = LineColor.Blue;
+            this.ucLine40.Direction=AnchorStyles.Right;
             this.ucLine40.Location = new System.Drawing.Point(437, 192);
             this.ucLine40.Name = "ucLine40";
             this.ucLine40.Size = new System.Drawing.Size(38, 13);
@@ -557,8 +563,9 @@ namespace TP.ReheatChamber
             // 
             // ucLine41
             // 
-            this.ucLine41.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine41.EndCap = LineCap.ArrowAnchor;
             this.ucLine41.Color = LineColor.Blue;
+            this.ucLine41.Direction = AnchorStyles.Left;
             this.ucLine41.Location = new System.Drawing.Point(436, 166);
             this.ucLine41.Name = "ucLine41";
             this.ucLine41.Size = new System.Drawing.Size(39, 13);
@@ -566,8 +573,9 @@ namespace TP.ReheatChamber
             // 
             // ucLine13
             // 
-            this.ucLine13.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine13.EndCap = LineCap.ArrowAnchor;
             this.ucLine13.Color = LineColor.Blue;
+            this.ucLine13.Direction = AnchorStyles.Right;
             this.ucLine13.Location = new System.Drawing.Point(513, 297);
             this.ucLine13.Name = "ucLine13";
             this.ucLine13.Size = new System.Drawing.Size(314, 13);
@@ -575,8 +583,9 @@ namespace TP.ReheatChamber
             // 
             // ucLine12
             // 
-            this.ucLine12.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine12.EndCap = LineCap.ArrowAnchor;
             this.ucLine12.Color = LineColor.Blue;
+            this.ucLine12.Direction = AnchorStyles.Left;
             this.ucLine12.Location = new System.Drawing.Point(513, 272);
             this.ucLine12.Name = "ucLine12";
             this.ucLine12.Size = new System.Drawing.Size(270, 13);
@@ -584,8 +593,8 @@ namespace TP.ReheatChamber
             // 
             // ucLine15
             // 
-            this.ucLine15.Arrow = UICommon.ArrowEx.Left;
-            this.ucLine15.Color = LineColor.Blue;
+            this.ucLine15.EndCap = LineCap.ArrowAnchor;
+            this.ucLine15.Direction = AnchorStyles.Left;
             this.ucLine15.Location = new System.Drawing.Point(513, 231);
             this.ucLine15.Name = "ucLine15";
             this.ucLine15.Size = new System.Drawing.Size(173, 13);
@@ -593,8 +602,9 @@ namespace TP.ReheatChamber
             // 
             // ucLine14
             // 
-            this.ucLine14.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine14.EndCap = LineCap.ArrowAnchor;
             this.ucLine14.Color = LineColor.Blue;
+            this.ucLine14.Direction = AnchorStyles.Left;
             this.ucLine14.Location = new System.Drawing.Point(513, 125);
             this.ucLine14.Name = "ucLine14";
             this.ucLine14.Size = new System.Drawing.Size(342, 13);
@@ -602,18 +612,19 @@ namespace TP.ReheatChamber
             // 
             // ucLine38
             // 
-            this.ucLine38.Arrow = UICommon.ArrowEx.Down;
+            this.ucLine38.EndCap = LineCap.ArrowAnchor;
             this.ucLine38.Color = LineColor.Blue;
             this.ucLine38.Location = new System.Drawing.Point(420, 235);
             this.ucLine38.Name = "ucLine38";
-            this.ucLine38.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine38.Direction = AnchorStyles.Bottom;
             this.ucLine38.Size = new System.Drawing.Size(13, 38);
             this.ucLine38.TabIndex = 10;
             // 
             // ucLine34
             // 
-            this.ucLine34.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine34.EndCap = LineCap.ArrowAnchor;
             this.ucLine34.Color = LineColor.Orange;
+            this.ucLine34.Direction = AnchorStyles.Left;
             this.ucLine34.Location = new System.Drawing.Point(112, 121);
             this.ucLine34.Name = "ucLine34";
             this.ucLine34.Size = new System.Drawing.Size(97, 21);
@@ -621,18 +632,19 @@ namespace TP.ReheatChamber
             // 
             // ucLine36
             // 
-            this.ucLine36.Arrow = UICommon.ArrowEx.Down;
+            this.ucLine36.EndCap = LineCap.ArrowAnchor;
             this.ucLine36.Color = LineColor.Blue;
             this.ucLine36.Location = new System.Drawing.Point(420, 129);
             this.ucLine36.Name = "ucLine36";
-            this.ucLine36.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine36.Direction = AnchorStyles.Bottom;
             this.ucLine36.Size = new System.Drawing.Size(13, 38);
             this.ucLine36.TabIndex = 10;
             // 
             // ucLine10
             // 
-            this.ucLine10.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine10.EndCap = LineCap.ArrowAnchor;
             this.ucLine10.Color = LineColor.Blue;
+            this.ucLine10.Direction = AnchorStyles.Left;
             this.ucLine10.Location = new System.Drawing.Point(513, 165);
             this.ucLine10.Name = "ucLine10";
             this.ucLine10.Size = new System.Drawing.Size(270, 13);
@@ -696,8 +708,9 @@ namespace TP.ReheatChamber
             // 
             // ucLine35
             // 
-            this.ucLine35.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine35.EndCap = LineCap.ArrowAnchor;
             this.ucLine35.Color = LineColor.Orange;
+            this.ucLine35.Direction = AnchorStyles.Left;
             this.ucLine35.Location = new System.Drawing.Point(418, 336);
             this.ucLine35.Name = "ucLine35";
             this.ucLine35.Size = new System.Drawing.Size(437, 21);

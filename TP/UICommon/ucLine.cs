@@ -19,19 +19,6 @@ namespace UICommon
             InitializeComponent();
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Category("Layout"), DefaultValue(Orientation.Horizontal), Description("Направление")]
-        public Orientation Orientation { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Category("Layout"), DefaultValue(ArrowEx.None), Description("Стрелка")]
-        public ArrowEx Arrow { get; set; }
-
         private LineCap _StartCap = LineCap.NoAnchor;
         private LineCap _EndCap;
 
@@ -77,29 +64,14 @@ namespace UICommon
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            int rem;
-            int x = Math.DivRem(XMax, 3, out rem);
-            int y = Math.DivRem(YMax, 3, out rem);
-            int n;
 
             Pen pen = new Pen(GetColor(), Math.Min(XMax/2, YMax/2));
             pen.StartCap = StartCap;
             pen.EndCap = EndCap;
 
-            Point[] points = null;
-
-            switch (Color)
-            {
-                case LineColor.Orange:
-                    n = 21;
-                    break;
-                default:
-                    n = 13;
-                    break;
-            }
-
-            Point p1 = new Point();
-            Point p2 = new Point();
+            Point p1;
+            Point p2;
+            
             switch (Direction)
             {
                 case AnchorStyles.Top:
@@ -117,6 +89,10 @@ namespace UICommon
                 case AnchorStyles.Right:
                     p1 = new Point(0, YCenter);
                     p2 = new Point(XMax, YCenter);
+                    break;
+                case AnchorStyles.Left | AnchorStyles.Bottom:
+                    p1 = new Point(XMax, 0);
+                    p2 = new Point(0, YMax);
                     break;
                 case AnchorStyles.Right | AnchorStyles.Bottom:
                     p1 = new Point(0, 0);
@@ -189,18 +165,5 @@ namespace UICommon
 
         }
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public enum ArrowEx
-    {
-        None = 0,
-        Right = 1,
-        Left = 2,
-        Up = 3,
-        Down = 4,
-    }
-
 
 }

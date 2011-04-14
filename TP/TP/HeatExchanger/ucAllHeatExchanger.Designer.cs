@@ -1,6 +1,9 @@
-﻿using UICommon;
+﻿using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+using HeatExchanger;
+using UICommon;
 
-namespace HeatExchanger
+namespace TP.HeatExchanger
 {
     partial class ucAllHeatExchanger
     {
@@ -151,9 +154,9 @@ namespace HeatExchanger
             this.ucLine62 = new UICommon.ucLine();
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
-            this.ucHeatExchander2 = new HeatExchanger.ucHeatExchanger();
-            this.ucHeatExchander1 = new HeatExchanger.ucHeatExchanger();
-            this.ucFan1 = new HeatExchanger.ucFan();
+            this.ucHeatExchander2 = new ucHeatExchanger();
+            this.ucHeatExchander1 = new ucHeatExchanger();
+            this.ucFan1 = new ucFan();
             this.SuspendLayout();
             // 
             // ucCaptioned17
@@ -252,7 +255,7 @@ namespace HeatExchanger
             this.ucLine61.Appearance.Options.UseBackColor = true;
             this.ucLine61.Location = new System.Drawing.Point(534, 171);
             this.ucLine61.Name = "ucLine61";
-            this.ucLine61.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine61.Direction = AnchorStyles.Bottom;
             this.ucLine61.Size = new System.Drawing.Size(13, 10);
             this.ucLine61.TabIndex = 244;
             // 
@@ -281,7 +284,8 @@ namespace HeatExchanger
             // 
             this.ucLine60.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine60.Appearance.Options.UseBackColor = true;
-            this.ucLine60.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine60.EndCap = LineCap.ArrowAnchor;
+            this.ucLine60.Direction = AnchorStyles.Right;
             this.ucLine60.Location = new System.Drawing.Point(1076, 177);
             this.ucLine60.Name = "ucLine60";
             this.ucLine60.Size = new System.Drawing.Size(141, 13);
@@ -301,7 +305,8 @@ namespace HeatExchanger
             // 
             this.ucLine56.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine56.Appearance.Options.UseBackColor = true;
-            this.ucLine56.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine56.EndCap = LineCap.ArrowAnchor;
+            this.ucLine56.Direction = AnchorStyles.Right;
             this.ucLine56.Location = new System.Drawing.Point(989, 248);
             this.ucLine56.Name = "ucLine56";
             this.ucLine56.Size = new System.Drawing.Size(228, 13);
@@ -321,7 +326,8 @@ namespace HeatExchanger
             // 
             this.ucLine55.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine55.Appearance.Options.UseBackColor = true;
-            this.ucLine55.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine55.EndCap = LineCap.ArrowAnchor;
+            this.ucLine55.Direction = AnchorStyles.Right;
             this.ucLine55.Location = new System.Drawing.Point(909, 316);
             this.ucLine55.Name = "ucLine55";
             this.ucLine55.Size = new System.Drawing.Size(308, 13);
@@ -331,7 +337,8 @@ namespace HeatExchanger
             // 
             this.ucLine57.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine57.Appearance.Options.UseBackColor = true;
-            this.ucLine57.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine57.EndCap = LineCap.ArrowAnchor;
+            this.ucLine57.Direction = AnchorStyles.Right;
             this.ucLine57.Color = UICommon.LineColor.Red;
             this.ucLine57.Location = new System.Drawing.Point(319, 234);
             this.ucLine57.Name = "ucLine57";
@@ -342,7 +349,8 @@ namespace HeatExchanger
             // 
             this.ucLine58.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine58.Appearance.Options.UseBackColor = true;
-            this.ucLine58.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine58.EndCap = LineCap.ArrowAnchor;
+            this.ucLine58.Direction = AnchorStyles.Left;
             this.ucLine58.Color = UICommon.LineColor.Red;
             this.ucLine58.Location = new System.Drawing.Point(319, 218);
             this.ucLine58.Name = "ucLine58";
@@ -353,7 +361,8 @@ namespace HeatExchanger
             // 
             this.ucLine59.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine59.Appearance.Options.UseBackColor = true;
-            this.ucLine59.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine59.EndCap = LineCap.ArrowAnchor;
+            this.ucLine59.Direction = AnchorStyles.Left;
             this.ucLine59.Color = UICommon.LineColor.LightBlue;
             this.ucLine59.Location = new System.Drawing.Point(319, 204);
             this.ucLine59.Name = "ucLine59";
@@ -364,7 +373,8 @@ namespace HeatExchanger
             // 
             this.ucLine54.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine54.Appearance.Options.UseBackColor = true;
-            this.ucLine54.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine54.EndCap = LineCap.ArrowAnchor;
+            this.ucLine54.Direction = AnchorStyles.Right;
             this.ucLine54.Color = UICommon.LineColor.Red;
             this.ucLine54.Location = new System.Drawing.Point(599, 299);
             this.ucLine54.Name = "ucLine54";
@@ -375,7 +385,8 @@ namespace HeatExchanger
             // 
             this.ucLine53.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine53.Appearance.Options.UseBackColor = true;
-            this.ucLine53.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine53.EndCap = LineCap.ArrowAnchor;
+            this.ucLine53.Direction = AnchorStyles.Left;
             this.ucLine53.Color = UICommon.LineColor.Red;
             this.ucLine53.Location = new System.Drawing.Point(599, 270);
             this.ucLine53.Name = "ucLine53";
@@ -386,7 +397,8 @@ namespace HeatExchanger
             // 
             this.ucLine52.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine52.Appearance.Options.UseBackColor = true;
-            this.ucLine52.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine52.EndCap = LineCap.ArrowAnchor;
+            this.ucLine52.Direction = AnchorStyles.Left;
             this.ucLine52.Color = UICommon.LineColor.LightBlue;
             this.ucLine52.Location = new System.Drawing.Point(599, 242);
             this.ucLine52.Name = "ucLine52";
@@ -410,7 +422,7 @@ namespace HeatExchanger
             this.ucLine50.Color = UICommon.LineColor.Red;
             this.ucLine50.Location = new System.Drawing.Point(537, 291);
             this.ucLine50.Name = "ucLine50";
-            this.ucLine50.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine50.Direction = AnchorStyles.Bottom;
             this.ucLine50.Size = new System.Drawing.Size(13, 17);
             this.ucLine50.TabIndex = 226;
             // 
@@ -418,7 +430,8 @@ namespace HeatExchanger
             // 
             this.ucLine49.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine49.Appearance.Options.UseBackColor = true;
-            this.ucLine49.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine49.EndCap = LineCap.ArrowAnchor;
+            this.ucLine49.Direction = AnchorStyles.Left;
             this.ucLine49.Color = UICommon.LineColor.Red;
             this.ucLine49.Location = new System.Drawing.Point(505, 286);
             this.ucLine49.Name = "ucLine49";
@@ -429,7 +442,8 @@ namespace HeatExchanger
             // 
             this.ucLine48.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine48.Appearance.Options.UseBackColor = true;
-            this.ucLine48.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine48.EndCap = LineCap.ArrowAnchor;
+            this.ucLine48.Direction = AnchorStyles.Left;
             this.ucLine48.Color = UICommon.LineColor.Red;
             this.ucLine48.Location = new System.Drawing.Point(505, 270);
             this.ucLine48.Name = "ucLine48";
@@ -440,7 +454,8 @@ namespace HeatExchanger
             // 
             this.ucLine47.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine47.Appearance.Options.UseBackColor = true;
-            this.ucLine47.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine47.EndCap = LineCap.ArrowAnchor;
+            this.ucLine47.Direction = AnchorStyles.Left;
             this.ucLine47.Color = UICommon.LineColor.LightBlue;
             this.ucLine47.Location = new System.Drawing.Point(505, 256);
             this.ucLine47.Name = "ucLine47";
@@ -464,7 +479,7 @@ namespace HeatExchanger
             this.ucLine45.Color = UICommon.LineColor.LightBlue;
             this.ucLine45.Location = new System.Drawing.Point(537, 246);
             this.ucLine45.Name = "ucLine45";
-            this.ucLine45.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine45.Direction = AnchorStyles.Bottom;
             this.ucLine45.Size = new System.Drawing.Size(13, 15);
             this.ucLine45.TabIndex = 221;
             // 
@@ -475,7 +490,7 @@ namespace HeatExchanger
             this.ucLine43.Color = UICommon.LineColor.Orange;
             this.ucLine43.Location = new System.Drawing.Point(133, 34);
             this.ucLine43.Name = "ucLine43";
-            this.ucLine43.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine43.Direction = AnchorStyles.Bottom;
             this.ucLine43.Size = new System.Drawing.Size(21, 86);
             this.ucLine43.TabIndex = 220;
             // 
@@ -496,7 +511,7 @@ namespace HeatExchanger
             this.ucLine41.Color = UICommon.LineColor.Orange;
             this.ucLine41.Location = new System.Drawing.Point(319, 34);
             this.ucLine41.Name = "ucLine41";
-            this.ucLine41.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine41.Direction = AnchorStyles.Bottom;
             this.ucLine41.Size = new System.Drawing.Size(21, 128);
             this.ucLine41.TabIndex = 218;
             // 
@@ -504,7 +519,8 @@ namespace HeatExchanger
             // 
             this.ucLine42.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine42.Appearance.Options.UseBackColor = true;
-            this.ucLine42.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine42.EndCap = LineCap.ArrowAnchor;
+            this.ucLine42.Direction = AnchorStyles.Left;
             this.ucLine42.Color = UICommon.LineColor.Orange;
             this.ucLine42.Location = new System.Drawing.Point(61, 28);
             this.ucLine42.Name = "ucLine42";
@@ -528,7 +544,7 @@ namespace HeatExchanger
             this.ucLine39.Color = UICommon.LineColor.Orange;
             this.ucLine39.Location = new System.Drawing.Point(484, 308);
             this.ucLine39.Name = "ucLine39";
-            this.ucLine39.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine39.Direction = AnchorStyles.Bottom;
             this.ucLine39.Size = new System.Drawing.Size(21, 62);
             this.ucLine39.TabIndex = 215;
             // 
@@ -536,7 +552,8 @@ namespace HeatExchanger
             // 
             this.ucLine38.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine38.Appearance.Options.UseBackColor = true;
-            this.ucLine38.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine38.EndCap = LineCap.ArrowAnchor;
+            this.ucLine38.Direction = AnchorStyles.Left;
             this.ucLine38.Color = UICommon.LineColor.Orange;
             this.ucLine38.Location = new System.Drawing.Point(463, 357);
             this.ucLine38.Name = "ucLine38";
@@ -547,7 +564,8 @@ namespace HeatExchanger
             // 
             this.ucLine37.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine37.Appearance.Options.UseBackColor = true;
-            this.ucLine37.Arrow = UICommon.ArrowEx.Left;
+            this.ucLine37.EndCap = LineCap.ArrowAnchor;
+            this.ucLine37.Direction = AnchorStyles.Left;
             this.ucLine37.Color = UICommon.LineColor.Orange;
             this.ucLine37.Location = new System.Drawing.Point(278, 302);
             this.ucLine37.Name = "ucLine37";
@@ -560,7 +578,7 @@ namespace HeatExchanger
             this.ucLine36.Appearance.Options.UseBackColor = true;
             this.ucLine36.Location = new System.Drawing.Point(478, 124);
             this.ucLine36.Name = "ucLine36";
-            this.ucLine36.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine36.Direction = AnchorStyles.Bottom;
             this.ucLine36.Size = new System.Drawing.Size(13, 54);
             this.ucLine36.TabIndex = 212;
             // 
@@ -570,7 +588,7 @@ namespace HeatExchanger
             this.ucLine34.Appearance.Options.UseBackColor = true;
             this.ucLine34.Location = new System.Drawing.Point(712, 114);
             this.ucLine34.Name = "ucLine34";
-            this.ucLine34.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine34.Direction = AnchorStyles.Bottom;
             this.ucLine34.Size = new System.Drawing.Size(13, 45);
             this.ucLine34.TabIndex = 210;
             // 
@@ -580,7 +598,7 @@ namespace HeatExchanger
             this.ucLine33.Appearance.Options.UseBackColor = true;
             this.ucLine33.Location = new System.Drawing.Point(580, 71);
             this.ucLine33.Name = "ucLine33";
-            this.ucLine33.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine33.Direction = AnchorStyles.Bottom;
             this.ucLine33.Size = new System.Drawing.Size(13, 110);
             this.ucLine33.TabIndex = 209;
             // 
@@ -588,7 +606,8 @@ namespace HeatExchanger
             // 
             this.ucLine32.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine32.Appearance.Options.UseBackColor = true;
-            this.ucLine32.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine32.EndCap = LineCap.ArrowAnchor;
+            this.ucLine32.Direction = AnchorStyles.Right;
             this.ucLine32.Location = new System.Drawing.Point(463, 173);
             this.ucLine32.Name = "ucLine32";
             this.ucLine32.Size = new System.Drawing.Size(121, 13);
@@ -607,7 +626,8 @@ namespace HeatExchanger
             // 
             this.ucLine31.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine31.Appearance.Options.UseBackColor = true;
-            this.ucLine31.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine31.EndCap = LineCap.ArrowAnchor;
+            this.ucLine31.Direction = AnchorStyles.Right;
             this.ucLine31.Location = new System.Drawing.Point(589, 67);
             this.ucLine31.Name = "ucLine31";
             this.ucLine31.Size = new System.Drawing.Size(417, 13);
@@ -626,7 +646,8 @@ namespace HeatExchanger
             // 
             this.ucLine30.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine30.Appearance.Options.UseBackColor = true;
-            this.ucLine30.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine30.EndCap = LineCap.ArrowAnchor;
+            this.ucLine30.Direction = AnchorStyles.Right;
             this.ucLine30.Location = new System.Drawing.Point(716, 109);
             this.ucLine30.Name = "ucLine30";
             this.ucLine30.Size = new System.Drawing.Size(205, 13);
@@ -654,7 +675,8 @@ namespace HeatExchanger
             // 
             this.ucLine29.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine29.Appearance.Options.UseBackColor = true;
-            this.ucLine29.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine29.EndCap = LineCap.ArrowAnchor;
+            this.ucLine29.Direction = AnchorStyles.Right;
             this.ucLine29.Location = new System.Drawing.Point(589, 152);
             this.ucLine29.Name = "ucLine29";
             this.ucLine29.Size = new System.Drawing.Size(249, 13);
@@ -664,7 +686,8 @@ namespace HeatExchanger
             // 
             this.ucLine28.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine28.Appearance.Options.UseBackColor = true;
-            this.ucLine28.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine28.EndCap = LineCap.ArrowAnchor;
+            this.ucLine28.Direction = AnchorStyles.Right;
             this.ucLine28.Location = new System.Drawing.Point(1099, 400);
             this.ucLine28.Name = "ucLine28";
             this.ucLine28.Size = new System.Drawing.Size(45, 13);
@@ -674,7 +697,8 @@ namespace HeatExchanger
             // 
             this.ucLine27.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine27.Appearance.Options.UseBackColor = true;
-            this.ucLine27.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine27.EndCap = LineCap.ArrowAnchor;
+            this.ucLine27.Direction = AnchorStyles.Right;
             this.ucLine27.Location = new System.Drawing.Point(930, 435);
             this.ucLine27.Name = "ucLine27";
             this.ucLine27.Size = new System.Drawing.Size(214, 13);
@@ -684,7 +708,8 @@ namespace HeatExchanger
             // 
             this.ucLine26.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine26.Appearance.Options.UseBackColor = true;
-            this.ucLine26.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine26.EndCap = LineCap.ArrowAnchor;
+            this.ucLine26.Direction = AnchorStyles.Right;
             this.ucLine26.Location = new System.Drawing.Point(1017, 418);
             this.ucLine26.Name = "ucLine26";
             this.ucLine26.Size = new System.Drawing.Size(127, 13);
@@ -697,7 +722,7 @@ namespace HeatExchanger
             this.ucValve28.Color = UICommon.ValveColor.Orange;
             this.ucValve28.Location = new System.Drawing.Point(1091, 197);
             this.ucValve28.Name = "ucValve28";
-            this.ucValve28.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucValve28.Orientation = Orientation.Vertical;
             this.ucValve28.Size = new System.Drawing.Size(20, 40);
             this.ucValve28.TabIndex = 198;
             // 
@@ -707,7 +732,7 @@ namespace HeatExchanger
             this.ucLine25.Appearance.Options.UseBackColor = true;
             this.ucLine25.Location = new System.Drawing.Point(1095, 186);
             this.ucLine25.Name = "ucLine25";
-            this.ucLine25.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine25.Direction = AnchorStyles.Bottom;
             this.ucLine25.Size = new System.Drawing.Size(13, 220);
             this.ucLine25.TabIndex = 201;
             // 
@@ -728,7 +753,7 @@ namespace HeatExchanger
             this.ucLine24.Appearance.Options.UseBackColor = true;
             this.ucLine24.Location = new System.Drawing.Point(1011, 253);
             this.ucLine24.Name = "ucLine24";
-            this.ucLine24.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine24.Direction = AnchorStyles.Bottom;
             this.ucLine24.Size = new System.Drawing.Size(13, 173);
             this.ucLine24.TabIndex = 200;
             // 
@@ -749,7 +774,7 @@ namespace HeatExchanger
             this.ucLine22.Appearance.Options.UseBackColor = true;
             this.ucLine22.Location = new System.Drawing.Point(925, 322);
             this.ucLine22.Name = "ucLine22";
-            this.ucLine22.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine22.Direction = AnchorStyles.Bottom;
             this.ucLine22.Size = new System.Drawing.Size(13, 122);
             this.ucLine22.TabIndex = 199;
             // 
@@ -769,7 +794,7 @@ namespace HeatExchanger
             this.ucLine21.Appearance.Options.UseBackColor = true;
             this.ucLine21.Location = new System.Drawing.Point(984, 213);
             this.ucLine21.Name = "ucLine21";
-            this.ucLine21.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine21.Direction = AnchorStyles.Bottom;
             this.ucLine21.Size = new System.Drawing.Size(13, 310);
             this.ucLine21.TabIndex = 193;
             // 
@@ -789,7 +814,7 @@ namespace HeatExchanger
             this.ucLine23.Appearance.Options.UseBackColor = true;
             this.ucLine23.Location = new System.Drawing.Point(1068, 172);
             this.ucLine23.Name = "ucLine23";
-            this.ucLine23.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine23.Direction = AnchorStyles.Bottom;
             this.ucLine23.Size = new System.Drawing.Size(13, 351);
             this.ucLine23.TabIndex = 195;
             // 
@@ -799,7 +824,7 @@ namespace HeatExchanger
             this.ucLine18.Appearance.Options.UseBackColor = true;
             this.ucLine18.Location = new System.Drawing.Point(743, 521);
             this.ucLine18.Name = "ucLine18";
-            this.ucLine18.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine18.Direction = AnchorStyles.Bottom;
             this.ucLine18.Size = new System.Drawing.Size(13, 50);
             this.ucLine18.TabIndex = 190;
             // 
@@ -809,7 +834,7 @@ namespace HeatExchanger
             this.ucLine17.Appearance.Options.UseBackColor = true;
             this.ucLine17.Location = new System.Drawing.Point(728, 520);
             this.ucLine17.Name = "ucLine17";
-            this.ucLine17.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine17.Direction = AnchorStyles.Bottom;
             this.ucLine17.Size = new System.Drawing.Size(13, 50);
             this.ucLine17.TabIndex = 189;
             // 
@@ -819,7 +844,7 @@ namespace HeatExchanger
             this.ucLine12.Appearance.Options.UseBackColor = true;
             this.ucLine12.Location = new System.Drawing.Point(313, 640);
             this.ucLine12.Name = "ucLine12";
-            this.ucLine12.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine12.Direction = AnchorStyles.Bottom;
             this.ucLine12.Size = new System.Drawing.Size(13, 41);
             this.ucLine12.TabIndex = 184;
             // 
@@ -829,7 +854,7 @@ namespace HeatExchanger
             this.ucLine11.Appearance.Options.UseBackColor = true;
             this.ucLine11.Location = new System.Drawing.Point(313, 559);
             this.ucLine11.Name = "ucLine11";
-            this.ucLine11.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine11.Direction = AnchorStyles.Bottom;
             this.ucLine11.Size = new System.Drawing.Size(13, 41);
             this.ucLine11.TabIndex = 183;
             // 
@@ -839,7 +864,7 @@ namespace HeatExchanger
             this.ucLine3.Appearance.Options.UseBackColor = true;
             this.ucLine3.Location = new System.Drawing.Point(99, 312);
             this.ucLine3.Name = "ucLine3";
-            this.ucLine3.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine3.Direction = AnchorStyles.Bottom;
             this.ucLine3.Size = new System.Drawing.Size(13, 330);
             this.ucLine3.TabIndex = 174;
             // 
@@ -1154,7 +1179,8 @@ namespace HeatExchanger
             // 
             this.ucLine1.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine1.Appearance.Options.UseBackColor = true;
-            this.ucLine1.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine1.EndCap = LineCap.ArrowAnchor;
+            this.ucLine1.Direction = AnchorStyles.Right;
             this.ucLine1.Location = new System.Drawing.Point(104, 306);
             this.ucLine1.Name = "ucLine1";
             this.ucLine1.Size = new System.Drawing.Size(94, 13);
@@ -1164,7 +1190,8 @@ namespace HeatExchanger
             // 
             this.ucLine2.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine2.Appearance.Options.UseBackColor = true;
-            this.ucLine2.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine2.EndCap = LineCap.ArrowAnchor;
+            this.ucLine2.Direction = AnchorStyles.Right;
             this.ucLine2.Location = new System.Drawing.Point(4, 352);
             this.ucLine2.Name = "ucLine2";
             this.ucLine2.Size = new System.Drawing.Size(94, 13);
@@ -1176,7 +1203,7 @@ namespace HeatExchanger
             this.ucLine4.Appearance.Options.UseBackColor = true;
             this.ucLine4.Location = new System.Drawing.Point(283, 367);
             this.ucLine4.Name = "ucLine4";
-            this.ucLine4.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine4.Direction = AnchorStyles.Bottom;
             this.ucLine4.Size = new System.Drawing.Size(13, 197);
             this.ucLine4.TabIndex = 177;
             // 
@@ -1184,7 +1211,8 @@ namespace HeatExchanger
             // 
             this.ucLine5.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine5.Appearance.Options.UseBackColor = true;
-            this.ucLine5.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine5.EndCap = LineCap.ArrowAnchor;
+            this.ucLine5.Direction = AnchorStyles.Right;
             this.ucLine5.Location = new System.Drawing.Point(287, 361);
             this.ucLine5.Name = "ucLine5";
             this.ucLine5.Size = new System.Drawing.Size(94, 13);
@@ -1232,7 +1260,7 @@ namespace HeatExchanger
             this.ucLine10.Appearance.Options.UseBackColor = true;
             this.ucLine10.Location = new System.Drawing.Point(517, 501);
             this.ucLine10.Name = "ucLine10";
-            this.ucLine10.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine10.Direction = AnchorStyles.Bottom;
             this.ucLine10.Size = new System.Drawing.Size(13, 181);
             this.ucLine10.TabIndex = 182;
             // 
@@ -1276,7 +1304,8 @@ namespace HeatExchanger
             // 
             this.ucLine19.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine19.Appearance.Options.UseBackColor = true;
-            this.ucLine19.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine19.EndCap = LineCap.ArrowAnchor;
+            this.ucLine19.Direction = AnchorStyles.Right;
             this.ucLine19.Location = new System.Drawing.Point(747, 564);
             this.ucLine19.Name = "ucLine19";
             this.ucLine19.Size = new System.Drawing.Size(88, 13);
@@ -1288,7 +1317,7 @@ namespace HeatExchanger
             this.ucLine20.Appearance.Options.UseBackColor = true;
             this.ucLine20.Location = new System.Drawing.Point(900, 263);
             this.ucLine20.Name = "ucLine20";
-            this.ucLine20.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine20.Direction = AnchorStyles.Bottom;
             this.ucLine20.Size = new System.Drawing.Size(13, 260);
             this.ucLine20.TabIndex = 192;
             // 
@@ -1296,7 +1325,8 @@ namespace HeatExchanger
             // 
             this.ucLine35.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine35.Appearance.Options.UseBackColor = true;
-            this.ucLine35.Arrow = UICommon.ArrowEx.Right;
+            this.ucLine35.EndCap = LineCap.ArrowAnchor;
+            this.ucLine35.Direction = AnchorStyles.Right;
             this.ucLine35.Location = new System.Drawing.Point(278, 117);
             this.ucLine35.Name = "ucLine35";
             this.ucLine35.Size = new System.Drawing.Size(203, 13);
@@ -1306,10 +1336,11 @@ namespace HeatExchanger
             // 
             this.ucLine62.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine62.Appearance.Options.UseBackColor = true;
-            this.ucLine62.Arrow = UICommon.ArrowEx.Up;
+            this.ucLine62.EndCap = LineCap.ArrowAnchor;
+            this.ucLine62.Direction = AnchorStyles.Top;
             this.ucLine62.Location = new System.Drawing.Point(509, 108);
             this.ucLine62.Name = "ucLine62";
-            this.ucLine62.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucLine62.Direction = AnchorStyles.Bottom;
             this.ucLine62.Size = new System.Drawing.Size(13, 73);
             this.ucLine62.TabIndex = 245;
             // 
