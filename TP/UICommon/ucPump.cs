@@ -62,6 +62,7 @@ namespace UICommon
             g.DrawLine(penl, 0, 0, 0, YMax / 10);
             g.DrawLine(penl, 0, YMax / 10, XMax / 6, YMax / 8);
 */
+            base.OnPaint(e);
         }
 
         /// <summary>
