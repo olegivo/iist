@@ -1,19 +1,16 @@
-﻿using System;
-
-namespace TP.CyclonAndScrubber
+﻿namespace TP.CyclonAndScrubber
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class ucCyclonAndScrubber : DevExpress.XtraEditors.XtraUserControl
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public ucCyclonAndScrubber()
         {
             InitializeComponent();
         }
-
-        protected override void OnStyleChanged(EventArgs e)
-        {
-            base.OnStyleChanged(e);
-            
-        }
-
     }
 }
