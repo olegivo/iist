@@ -19,42 +19,6 @@ namespace UICommon
             InitializeComponent();
         }
 
-        private LineCap _StartCap = LineCap.NoAnchor;
-        private LineCap _EndCap;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [DefaultValue(LineCap.NoAnchor)]
-        public LineCap StartCap
-        {
-            get { return _StartCap; }
-            set
-            {
-                if (_StartCap != value)
-                {
-                    _StartCap = value; 
-                    Refresh();
-                }
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [DefaultValue(LineCap.NoAnchor)]
-        public LineCap EndCap
-        {
-            get { return _EndCap; }
-            set
-            {
-                if (_EndCap != value)
-                {
-                    _EndCap = value; 
-                    Refresh();
-                }
-            }
-        }
 
         /// <summary>
         /// 
@@ -65,9 +29,8 @@ namespace UICommon
         {
             Graphics g = e.Graphics;
 
-            Pen pen = new Pen(GetColor(), Math.Min(XMax/2, YMax/2));
-            pen.StartCap = StartCap;
-            pen.EndCap = EndCap;
+            int width = LineWidth > 0 ? LineWidth : Math.Min(XMax/2, YMax/2);
+            Pen pen = new Pen(GetColor(), width) {StartCap = StartCap, EndCap = EndCap};
 
             Point p1;
             Point p2;
@@ -98,6 +61,14 @@ namespace UICommon
                     p1 = new Point(0, 0);
                     p2 = new Point(XMax, YMax);
                     break;
+                case AnchorStyles.Left | AnchorStyles.Top:
+                    p1 = new Point(XMax, YMax);
+                    p2 = new Point(0, 0);
+                    break;
+                case AnchorStyles.Right | AnchorStyles.Top:
+                    p1 = new Point(0, YMax);
+                    p2 = new Point(XMax, 0);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("Direction", Direction, "Неожиданное значение Direction");
             }
@@ -127,13 +98,80 @@ namespace UICommon
             }
         }
 
+        private AnchorStyles _direction = AnchorStyles.Right;
+        private int _lineWidth;
+        private LineCap _startCap = LineCap.NoAnchor;
+        private LineCap _endCap = LineCap.NoAnchor;
+        private LineColor _color;
+
+
         /// <summary>
         /// 
         /// </summary>
         [Category("Layout"), DefaultValue(LineColor.Blue), Description("Цвет")]
-        public LineColor Color { get; set; }
+        public LineColor Color
+        {
+            get { return _color; }
+            set
+            {
+                if (_color != value)
+                {
+                    _color = value; 
+                    Refresh();
+                }
+            }
+        }
 
-        private AnchorStyles _Direction = AnchorStyles.Right;
+        /// <summary>
+        /// 
+        /// </summary>
+        [DefaultValue(LineCap.NoAnchor)]
+        public LineCap StartCap
+        {
+            get { return _startCap; }
+            set
+            {
+                if (_startCap != value)
+                {
+                    _startCap = value; 
+                    Refresh();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DefaultValue(LineCap.NoAnchor)]
+        public LineCap EndCap
+        {
+            get { return _endCap; }
+            set
+            {
+                if (_endCap != value)
+                {
+                    _endCap = value; 
+                    Refresh();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DefaultValue(0)]
+        public int LineWidth
+        {
+            get { return _lineWidth; }
+            set
+            {
+                if (_lineWidth != value)
+                {
+                    _lineWidth = value; 
+                    Refresh();
+                }
+            }
+        }
 
         /// <summary>
         /// 
@@ -141,10 +179,10 @@ namespace UICommon
         [DefaultValue(AnchorStyles.Right)]
         public AnchorStyles Direction
         {
-            get { return _Direction; }
+            get { return _direction; }
             set
             {
-                if (_Direction != value)
+                if (_direction != value)
                 {
                     switch (value)
                     {
@@ -153,16 +191,11 @@ namespace UICommon
                             break;
                             
                         default:
-                            _Direction = value;
+                            _direction = value;
                             break;
                     }
                 }
             }
-        }
-
-        private void ucLine_Load(object sender, EventArgs e)
-        {
-
         }
     }
 
