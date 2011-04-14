@@ -1,4 +1,6 @@
-﻿namespace TP
+﻿using UICommon;
+
+namespace TP
 {
     partial class XtraForm1
     {
@@ -31,7 +33,7 @@
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.ovalShape1 = new Microsoft.VisualBasic.PowerPacks.OvalShape();
             this.checkButton1 = new DevExpress.XtraEditors.CheckButton();
-            this.ucTube1 = new TP.ucTube();
+            this.ucTube1 = new ucTube();
             this.ovalShape2 = new Microsoft.VisualBasic.PowerPacks.OvalShape();
             this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.lineShape2 = new Microsoft.VisualBasic.PowerPacks.LineShape();

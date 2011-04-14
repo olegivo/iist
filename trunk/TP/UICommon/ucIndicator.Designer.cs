@@ -1,6 +1,6 @@
 ﻿namespace UICommon
 {
-    partial class ucGauge
+    partial class ucIndicator
     {
         /// <summary> 
         /// Required designer variable.
@@ -163,12 +163,12 @@
             this.linearScaleLevelComponent1.ShapeType = DevExpress.XtraGauges.Core.Model.LevelShapeSetType.Style9;
             this.linearScaleLevelComponent1.ZOrder = -50;
             // 
-            // ucGauge
+            // ucIndicator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gaugeControl1);
-            this.Name = "ucGauge";
+            this.Name = "ucIndicator";
             this.Size = new System.Drawing.Size(204, 366);
             ((System.ComponentModel.ISupportInitialize)(this.linearGauge1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.linearScaleBackgroundLayerComponent1)).EndInit();

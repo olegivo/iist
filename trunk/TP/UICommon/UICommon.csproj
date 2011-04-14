@@ -84,11 +84,11 @@
     <Compile Include="ucFlowRelay.designer.cs">
       <DependentUpon>ucFlowRelay.cs</DependentUpon>
     </Compile>
-    <Compile Include="ucGauge.cs">
+    <Compile Include="ucIndicator.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucGauge.Designer.cs">
-      <DependentUpon>ucGauge.cs</DependentUpon>
+    <Compile Include="ucIndicator.Designer.cs">
+      <DependentUpon>ucIndicator.cs</DependentUpon>
     </Compile>
     <Compile Include="ucLine.cs">
       <SubType>UserControl</SubType>
@@ -139,8 +139,8 @@
     <EmbeddedResource Include="ucFlowRelay.resx">
       <DependentUpon>ucFlowRelay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ucGauge.resx">
-      <DependentUpon>ucGauge.cs</DependentUpon>
+    <EmbeddedResource Include="ucIndicator.resx">
+      <DependentUpon>ucIndicator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ucLine.resx">
       <DependentUpon>ucLine.cs</DependentUpon>
