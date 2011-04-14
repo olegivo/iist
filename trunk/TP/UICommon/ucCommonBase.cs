@@ -56,20 +56,29 @@ namespace UICommon
             get { return Height - 1; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnPaintBackground(PaintEventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
-            g.FillRectangle(new SolidBrush(Color.FromArgb(0, Color.Black)), 0, 0, Width, Height);
+            //Graphics g = e.Graphics;
+            //g.FillRectangle(new SolidBrush(Color.FromArgb(0, Color.Black)), 0, 0, Width, Height);
             //GroupBoxRenderer.DrawParentBackground(e.Graphics, new Rectangle(0, 0, Width, Height), this);
             //InvalidateEx();
             //base.OnPaint(e);
         }
 
+/*
         protected void InvalidateEx()
         {
             if (Parent == null)
@@ -77,6 +86,7 @@ namespace UICommon
             Rectangle rc = new Rectangle(Location, Size);
             Parent.Invalidate(rc, true);
         }
+*/
 
         /// <summary>
         /// 
@@ -96,9 +106,11 @@ namespace UICommon
             }
         }
 
+/*
         protected override void OnMove(EventArgs e)
         {
             if (Parent != null) Parent.Invalidate(Bounds, true);
         }
+*/
     }
 }

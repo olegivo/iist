@@ -79,6 +79,24 @@
     <Compile Include="ChannelController.Designer.cs">
       <DependentUpon>ChannelController.cs</DependentUpon>
     </Compile>
+    <Compile Include="FinishCleaning\ucCrater.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FinishCleaning\ucCrater.Designer.cs">
+      <DependentUpon>ucCrater.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FinishCleaning\ucFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FinishCleaning\ucFilter.Designer.cs">
+      <DependentUpon>ucFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FinishCleaning\ucFinishCleaning.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FinishCleaning\ucFinishCleaning.Designer.cs">
+      <DependentUpon>ucFinishCleaning.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,6 +177,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FinishCleaning\ucCrater.resx">
+      <DependentUpon>ucCrater.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FinishCleaning\ucFilter.resx">
+      <DependentUpon>ucFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FinishCleaning\ucFinishCleaning.resx">
+      <DependentUpon>ucFinishCleaning.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -238,7 +265,6 @@
   <ItemGroup>
     <Folder Include="CommonView\" />
     <Folder Include="DrumTypeFurnace\" />
-    <Folder Include="FinishCleaning\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
