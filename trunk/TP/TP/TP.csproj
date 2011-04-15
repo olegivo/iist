@@ -79,6 +79,12 @@
     <Compile Include="ChannelController.Designer.cs">
       <DependentUpon>ChannelController.cs</DependentUpon>
     </Compile>
+    <Compile Include="CyclonAndScrubber\ucSB.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CyclonAndScrubber\ucSB.Designer.cs">
+      <DependentUpon>ucSB.cs</DependentUpon>
+    </Compile>
     <Compile Include="FinishCleaning\ucCrater.cs">
       <SubType>UserControl</SubType>
     </Compile>
