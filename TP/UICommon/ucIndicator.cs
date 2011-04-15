@@ -85,7 +85,7 @@ namespace UICommon
                 if(_tickCount!=value)
                 {
                     _tickCount = value;
-                    Refresh();
+                    RefreshTickCount();
                 }
             }
         }
@@ -195,15 +195,17 @@ namespace UICommon
 
         private void linearScaleComponent1_MinMaxValueChanged(object sender, EventArgs e)
         {
-            float range = MaxValue - MinValue;
+            RefreshTickCount();
+        }
 
-            if (range > 0)
-            {
-				//todo: tick count?!
-                int i = Convert.ToInt32(range);
-                //if (i > 10) i = 10;
-                linearScaleComponent1.MajorTickCount = i;                
-            }
+        private void RefreshTickCount()
+        {
+            //float range = MaxValue - MinValue;
+
+            //if (range > 0)
+            //{
+            //    linearScaleComponent1.MajorTickCount = TickCount > 0 ? TickCount : Convert.ToInt32(range);
+            //}
         }
 
         private bool enlarged = false;

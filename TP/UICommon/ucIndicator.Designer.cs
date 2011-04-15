@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraGauges.Core.Model.ScaleLabel scaleLabel2 = new DevExpress.XtraGauges.Core.Model.ScaleLabel();
-            DevExpress.XtraGauges.Core.Model.LinearScaleRange linearScaleRange4 = new DevExpress.XtraGauges.Core.Model.LinearScaleRange();
-            DevExpress.XtraGauges.Core.Model.LinearScaleRange linearScaleRange5 = new DevExpress.XtraGauges.Core.Model.LinearScaleRange();
-            DevExpress.XtraGauges.Core.Model.LinearScaleRange linearScaleRange6 = new DevExpress.XtraGauges.Core.Model.LinearScaleRange();
-            DevExpress.XtraGauges.Core.Model.ScaleIndicatorState scaleIndicatorState4 = new DevExpress.XtraGauges.Core.Model.ScaleIndicatorState();
-            DevExpress.XtraGauges.Core.Model.ScaleIndicatorState scaleIndicatorState5 = new DevExpress.XtraGauges.Core.Model.ScaleIndicatorState();
-            DevExpress.XtraGauges.Core.Model.ScaleIndicatorState scaleIndicatorState6 = new DevExpress.XtraGauges.Core.Model.ScaleIndicatorState();
+            DevExpress.XtraGauges.Core.Model.ScaleLabel scaleLabel1 = new DevExpress.XtraGauges.Core.Model.ScaleLabel();
+            DevExpress.XtraGauges.Core.Model.LinearScaleRange linearScaleRange1 = new DevExpress.XtraGauges.Core.Model.LinearScaleRange();
+            DevExpress.XtraGauges.Core.Model.LinearScaleRange linearScaleRange2 = new DevExpress.XtraGauges.Core.Model.LinearScaleRange();
+            DevExpress.XtraGauges.Core.Model.LinearScaleRange linearScaleRange3 = new DevExpress.XtraGauges.Core.Model.LinearScaleRange();
+            DevExpress.XtraGauges.Core.Model.ScaleIndicatorState scaleIndicatorState1 = new DevExpress.XtraGauges.Core.Model.ScaleIndicatorState();
+            DevExpress.XtraGauges.Core.Model.ScaleIndicatorState scaleIndicatorState2 = new DevExpress.XtraGauges.Core.Model.ScaleIndicatorState();
+            DevExpress.XtraGauges.Core.Model.ScaleIndicatorState scaleIndicatorState3 = new DevExpress.XtraGauges.Core.Model.ScaleIndicatorState();
             this.gaugeControl1 = new DevExpress.XtraGauges.Win.GaugeControl();
             this.linearGauge1 = new DevExpress.XtraGauges.Win.Gauges.Linear.LinearGauge();
             this.linearScaleBackgroundLayerComponent1 = new DevExpress.XtraGauges.Win.Gauges.Linear.LinearScaleBackgroundLayerComponent();
@@ -87,12 +87,12 @@
             this.linearScaleComponent1.AppearanceTickmarkText.TextBrush = new DevExpress.XtraGauges.Core.Drawing.SolidBrushObject("Color:Black");
             this.linearScaleComponent1.AutoRescaling = true;
             this.linearScaleComponent1.EndPoint = new DevExpress.XtraGauges.Core.Base.PointF2D(62.5F, 33F);
-            scaleLabel2.AppearanceText.TextBrush = new DevExpress.XtraGauges.Core.Drawing.SolidBrushObject("Color:Black");
-            scaleLabel2.Name = "Label0";
-            scaleLabel2.Position = new DevExpress.XtraGauges.Core.Base.PointF2D(25F, 30F);
-            scaleLabel2.Text = "Ph1:";
+            scaleLabel1.AppearanceText.TextBrush = new DevExpress.XtraGauges.Core.Drawing.SolidBrushObject("Color:Black");
+            scaleLabel1.Name = "Label0";
+            scaleLabel1.Position = new DevExpress.XtraGauges.Core.Base.PointF2D(25F, 30F);
+            scaleLabel1.Text = "Ph1:";
             this.linearScaleComponent1.Labels.AddRange(new DevExpress.XtraGauges.Core.Model.ILabel[] {
-            scaleLabel2});
+            scaleLabel1});
             this.linearScaleComponent1.MajorTickmark.FormatString = "{0:F0}";
             this.linearScaleComponent1.MajorTickmark.ShapeOffset = 6F;
             this.linearScaleComponent1.MajorTickmark.ShapeScale = new DevExpress.XtraGauges.Core.Base.FactorF2D(1.5F, 1F);
@@ -104,31 +104,32 @@
             this.linearScaleComponent1.MinorTickmark.ShapeType = DevExpress.XtraGauges.Core.Model.TickmarkShapeType.Linear_Style9_1;
             this.linearScaleComponent1.MinValue = 3F;
             this.linearScaleComponent1.Name = "scale1";
-            linearScaleRange4.AppearanceRange.ContentBrush = new DevExpress.XtraGauges.Core.Drawing.SolidBrushObject("Color:LightCoral");
-            linearScaleRange4.EndValue = 14F;
-            linearScaleRange4.Name = "RangeHigh";
-            linearScaleRange4.ShapeOffset = -20F;
-            linearScaleRange4.StartThickness = 1F;
-            linearScaleRange4.StartValue = 9F;
-            linearScaleRange5.AppearanceRange.BorderWidth = 5F;
-            linearScaleRange5.AppearanceRange.ContentBrush = new DevExpress.XtraGauges.Core.Drawing.SolidBrushObject("Color:YellowGreen");
-            linearScaleRange5.EndThickness = 1F;
-            linearScaleRange5.EndValue = 9F;
-            linearScaleRange5.Name = "RangeNormal";
-            linearScaleRange5.ShapeOffset = -20F;
-            linearScaleRange5.StartThickness = 1F;
-            linearScaleRange5.StartValue = 7F;
-            linearScaleRange6.AppearanceRange.BorderWidth = 1F;
-            linearScaleRange6.AppearanceRange.ContentBrush = new DevExpress.XtraGauges.Core.Drawing.SolidBrushObject("Color:Coral");
-            linearScaleRange6.EndThickness = 1F;
-            linearScaleRange6.EndValue = 7F;
-            linearScaleRange6.Name = "RangeLow";
-            linearScaleRange6.ShapeOffset = -20F;
-            linearScaleRange6.StartValue = 3F;
+            linearScaleRange1.AppearanceRange.ContentBrush = new DevExpress.XtraGauges.Core.Drawing.SolidBrushObject("Color:LightCoral");
+            linearScaleRange1.EndValue = 14F;
+            linearScaleRange1.Name = "RangeHigh";
+            linearScaleRange1.ShapeOffset = -20F;
+            linearScaleRange1.StartThickness = 1F;
+            linearScaleRange1.StartValue = 9F;
+            linearScaleRange2.AppearanceRange.BorderWidth = 5F;
+            linearScaleRange2.AppearanceRange.ContentBrush = new DevExpress.XtraGauges.Core.Drawing.SolidBrushObject("Color:YellowGreen");
+            linearScaleRange2.EndThickness = 1F;
+            linearScaleRange2.EndValue = 9F;
+            linearScaleRange2.Name = "RangeNormal";
+            linearScaleRange2.ShapeOffset = -20F;
+            linearScaleRange2.StartThickness = 1F;
+            linearScaleRange2.StartValue = 7F;
+            linearScaleRange3.AppearanceRange.BorderWidth = 1F;
+            linearScaleRange3.AppearanceRange.ContentBrush = new DevExpress.XtraGauges.Core.Drawing.SolidBrushObject("Color:Coral");
+            linearScaleRange3.EndThickness = 1F;
+            linearScaleRange3.EndValue = 7F;
+            linearScaleRange3.Name = "RangeLow";
+            linearScaleRange3.ShapeOffset = -20F;
+            linearScaleRange3.StartValue = 3F;
             this.linearScaleComponent1.Ranges.AddRange(new DevExpress.XtraGauges.Core.Model.IRange[] {
-            linearScaleRange4,
-            linearScaleRange5,
-            linearScaleRange6});
+            linearScaleRange1,
+            linearScaleRange2,
+            linearScaleRange3});
+            this.linearScaleComponent1.RescalingBestValues = true;
             this.linearScaleComponent1.StartPoint = new DevExpress.XtraGauges.Core.Base.PointF2D(62.5F, 217F);
             this.linearScaleComponent1.Value = 13F;
             this.linearScaleComponent1.MinMaxValueChanged += new System.EventHandler(this.linearScaleComponent1_MinMaxValueChanged);
@@ -138,22 +139,22 @@
             this.linearScaleStateIndicatorComponent1.Center = new DevExpress.XtraGauges.Core.Base.PointF2D(62.5F, 232F);
             this.linearScaleStateIndicatorComponent1.IndicatorScale = this.linearScaleComponent1;
             this.linearScaleStateIndicatorComponent1.Name = "lgPh1_Indicator1";
-            scaleIndicatorState4.IntervalLength = 5F;
-            scaleIndicatorState4.Name = "EmergencyHigh";
-            scaleIndicatorState4.ShapeType = DevExpress.XtraGauges.Core.Model.StateIndicatorShapeType.ElectricLight2;
-            scaleIndicatorState4.StartValue = 9F;
-            scaleIndicatorState5.IntervalLength = 2F;
-            scaleIndicatorState5.Name = "Normal";
-            scaleIndicatorState5.ShapeType = DevExpress.XtraGauges.Core.Model.StateIndicatorShapeType.ElectricLight4;
-            scaleIndicatorState5.StartValue = 7F;
-            scaleIndicatorState6.IntervalLength = 4F;
-            scaleIndicatorState6.Name = "EmergencyLow";
-            scaleIndicatorState6.ShapeType = DevExpress.XtraGauges.Core.Model.StateIndicatorShapeType.ElectricLight3;
-            scaleIndicatorState6.StartValue = 3F;
+            scaleIndicatorState1.IntervalLength = 5F;
+            scaleIndicatorState1.Name = "EmergencyHigh";
+            scaleIndicatorState1.ShapeType = DevExpress.XtraGauges.Core.Model.StateIndicatorShapeType.ElectricLight2;
+            scaleIndicatorState1.StartValue = 9F;
+            scaleIndicatorState2.IntervalLength = 2F;
+            scaleIndicatorState2.Name = "Normal";
+            scaleIndicatorState2.ShapeType = DevExpress.XtraGauges.Core.Model.StateIndicatorShapeType.ElectricLight4;
+            scaleIndicatorState2.StartValue = 7F;
+            scaleIndicatorState3.IntervalLength = 4F;
+            scaleIndicatorState3.Name = "EmergencyLow";
+            scaleIndicatorState3.ShapeType = DevExpress.XtraGauges.Core.Model.StateIndicatorShapeType.ElectricLight3;
+            scaleIndicatorState3.StartValue = 3F;
             this.linearScaleStateIndicatorComponent1.States.AddRange(new DevExpress.XtraGauges.Core.Model.IIndicatorState[] {
-            scaleIndicatorState4,
-            scaleIndicatorState5,
-            scaleIndicatorState6});
+            scaleIndicatorState1,
+            scaleIndicatorState2,
+            scaleIndicatorState3});
             this.linearScaleStateIndicatorComponent1.ZOrder = -100;
             // 
             // linearScaleLevelComponent1

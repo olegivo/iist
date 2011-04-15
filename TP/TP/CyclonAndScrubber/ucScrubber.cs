@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using UICommon;
 
@@ -18,6 +20,25 @@ namespace TP.CyclonAndScrubber
             InitializeComponent();
         }
 
+        private bool _mirrored;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DefaultValue(false)]
+        public bool Mirrored
+        {
+            get { return _mirrored; }
+            set
+            {
+                if (_mirrored != value)
+                {
+                    _mirrored = value; 
+                    Refresh();
+                }
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -26,32 +47,36 @@ namespace TP.CyclonAndScrubber
         {
             // Create a local version of the graphics object for the PictureBox.
             Graphics g = e.Graphics;
-            int xMax = Width - 1;
-            int yMax = Height - 1;
-            int rem;
-            //int xCenter = Math.DivRem(xMax, 2, out rem);
-            int yCenter = Math.DivRem(yMax, 2, out rem);
-            int yShift = Math.DivRem(xMax, 4, out rem);
+            int yShift = Convert.ToInt32(XMax/4);
+            //int xMirror = Mirrored ? 
 
-            // Draw a line in the PictureBox.
-            Pen pen = Pens.Black;
+            Pen pen = Pens.Blue;
             int x = 10;
             int y = 10;
-            g.DrawRectangle(pen, 2 * x, 0, xMax - 3 * x, yMax - yShift);//большой
 
-            g.DrawLine(pen, 2 * x, yMax - yShift, 3 * x, yMax);//линия слева
-            g.DrawLine(pen, xMax - x, yMax - yShift, xMax - 2 * x, yMax);//линия справа
-            g.DrawLine(pen, 3 * x, yMax, xMax - 2 * x, yMax);//линия снизу
+            Matrix prevTransform = g.Transform;
+            if (Mirrored)
+            {
+                Matrix matrix = new Matrix(-1, 0, 0, 1, XMax, 0);
+                g.Transform = matrix;
+            }
 
-            g.DrawRectangle(pen, x, yCenter, x, 2 * y);//маленький слева
-            g.DrawRectangle(pen, x / 2, yCenter - 3 * y, x * 3 / 2, 3 * y);//побольше слева
-            g.DrawRectangle(pen, xMax - x, y, x, 3 * y);//справа
+            g.DrawRectangle(pen, 2 * x, 0, XMax - 3 * x, YMax - yShift);//большой
 
-            //g.FillPolygon();
+            g.DrawLines(pen, new[]
+                                 {
+                                     new Point(2*x, YMax - yShift),
+                                     new Point(3 * x, YMax),
+                                     new Point(XMax - 2*x, YMax),
+                                     new Point(XMax - x, YMax - yShift),
+                                 });
 
-            //g.DrawLine(pen, 0, 0, xMax, 0);
-            //g.DrawLine(pen, 0, 0, 0, yMax - yShift);
-            //g.DrawLine(pen, xMax, 0, xMax, yMax - yShift);
+            g.DrawRectangle(pen, x, YCenter, x, 2 * y);//маленький слева
+            g.DrawRectangle(pen, x / 2, YCenter - 3 * y, x * 3 / 2, 3 * y);//побольше слева
+            g.DrawRectangle(pen, XMax - x, y, x, 3 * y);//справа
+
+            if(Mirrored)
+                g.Transform = prevTransform;
 
             base.OnPaint(e);
         }
