@@ -32,10 +32,13 @@
             // 
             // ucBox
             // 
+            this.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.Appearance.Options.UseBackColor = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "ucBox";
             this.Size = new System.Drawing.Size(100, 40);
+            this.SizeChanged += new System.EventHandler(this.ucBox_SizeChanged);
             this.ResumeLayout(false);
 
         }
