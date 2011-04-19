@@ -67,8 +67,11 @@ namespace UICommon
             base.OnPaint(e);
         }
 
-        //сам уровень наполнения box'a
         private float _level;
+
+        /// <summary>
+        /// сам уровень наполнения box'a
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public float Level
         {
