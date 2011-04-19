@@ -33,6 +33,7 @@ namespace TP
         {
             this.components = new System.ComponentModel.Container();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+            this.ucFinishCleaning1 = new TP.FinishCleaning.ucFinishCleaning();
             this.spinEdit2 = new DevExpress.XtraEditors.SpinEdit();
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar1 = new DevExpress.XtraBars.Bar();
@@ -49,6 +50,7 @@ namespace TP
             this.ucAllHeatExchanger1 = new TP.HeatExchanger.ucAllHeatExchanger();
             this.ucReheatChamber1 = new TP.ReheatChamber.ucReheatChamber();
             this.ucCyclonAndScrubber1 = new TP.CyclonAndScrubber.ucCyclonAndScrubber();
+            this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.tabbedControlGroup1 = new DevExpress.XtraLayout.TabbedControlGroup();
             this.lcgCommonView = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -62,16 +64,17 @@ namespace TP
             this.lcgCyclonAndScrubber = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.lcgFinishCleaning = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
             this.styleController1 = new DevExpress.XtraEditors.StyleController(this.components);
             this.channelController1 = new TP.ChannelController(this.components);
-            this.ucFinishCleaning1 = new TP.FinishCleaning.ucFinishCleaning();
-            this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.drumTypeFurnace1 = new TP.DrumTypeFurnace.DrumTypeFurnace();
+            this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgCommonView)).BeginInit();
@@ -85,13 +88,14 @@ namespace TP
             ((System.ComponentModel.ISupportInitialize)(this.lcgCyclonAndScrubber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgFinishCleaning)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.styleController1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.styleController1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
             this.SuspendLayout();
             // 
             // layoutControl1
             // 
+            this.layoutControl1.Controls.Add(this.drumTypeFurnace1);
             this.layoutControl1.Controls.Add(this.ucFinishCleaning1);
             this.layoutControl1.Controls.Add(this.spinEdit2);
             this.layoutControl1.Controls.Add(this.spinEdit1);
@@ -108,6 +112,14 @@ namespace TP
             this.layoutControl1.Size = new System.Drawing.Size(1099, 574);
             this.layoutControl1.TabIndex = 1;
             this.layoutControl1.Text = "layoutControl1";
+            // 
+            // ucFinishCleaning1
+            // 
+            this.ucFinishCleaning1.AutoScroll = true;
+            this.ucFinishCleaning1.Location = new System.Drawing.Point(24, 44);
+            this.ucFinishCleaning1.Name = "ucFinishCleaning1";
+            this.ucFinishCleaning1.Size = new System.Drawing.Size(1051, 506);
+            this.ucFinishCleaning1.TabIndex = 8;
             // 
             // spinEdit2
             // 
@@ -269,6 +281,17 @@ namespace TP
             this.ucCyclonAndScrubber1.Size = new System.Drawing.Size(1051, 506);
             this.ucCyclonAndScrubber1.TabIndex = 0;
             // 
+            // layoutControlItem4
+            // 
+            this.layoutControlItem4.CustomizationFormText = "layoutControlItem4";
+            this.layoutControlItem4.Location = new System.Drawing.Point(527, 0);
+            this.layoutControlItem4.Name = "layoutControlItem4";
+            this.layoutControlItem4.Size = new System.Drawing.Size(528, 510);
+            this.layoutControlItem4.Text = "layoutControlItem4";
+            this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem4.TextToControlDistance = 0;
+            this.layoutControlItem4.TextVisible = false;
+            // 
             // layoutControlGroup1
             // 
             this.layoutControlGroup1.CustomizationFormText = "layoutControlGroup1";
@@ -311,6 +334,8 @@ namespace TP
             // lcgDrumTypeFurnace
             // 
             this.lcgDrumTypeFurnace.CustomizationFormText = "Барабанная вращающаяся печь ";
+            this.lcgDrumTypeFurnace.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem8});
             this.lcgDrumTypeFurnace.Location = new System.Drawing.Point(0, 0);
             this.lcgDrumTypeFurnace.Name = "lcgDrumTypeFurnace";
             this.lcgDrumTypeFurnace.Size = new System.Drawing.Size(1055, 510);
@@ -414,30 +439,6 @@ namespace TP
             this.lcgFinishCleaning.Size = new System.Drawing.Size(1055, 510);
             this.lcgFinishCleaning.Text = "Финишная очистка ";
             // 
-            // layoutControlItem4
-            // 
-            this.layoutControlItem4.CustomizationFormText = "layoutControlItem4";
-            this.layoutControlItem4.Location = new System.Drawing.Point(527, 0);
-            this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(528, 510);
-            this.layoutControlItem4.Text = "layoutControlItem4";
-            this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem4.TextToControlDistance = 0;
-            this.layoutControlItem4.TextVisible = false;
-            // 
-            // styleController1
-            // 
-            this.styleController1.LookAndFeel.SkinName = "iMaginary";
-            this.styleController1.LookAndFeel.UseDefaultLookAndFeel = false;
-            // 
-            // ucFinishCleaning1
-            // 
-            this.ucFinishCleaning1.AutoScroll = true;
-            this.ucFinishCleaning1.Location = new System.Drawing.Point(24, 44);
-            this.ucFinishCleaning1.Name = "ucFinishCleaning1";
-            this.ucFinishCleaning1.Size = new System.Drawing.Size(1051, 506);
-            this.ucFinishCleaning1.TabIndex = 8;
-            // 
             // layoutControlItem7
             // 
             this.layoutControlItem7.Control = this.ucFinishCleaning1;
@@ -449,6 +450,36 @@ namespace TP
             this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem7.TextToControlDistance = 0;
             this.layoutControlItem7.TextVisible = false;
+            // 
+            // styleController1
+            // 
+            this.styleController1.LookAndFeel.SkinName = "iMaginary";
+            this.styleController1.LookAndFeel.UseDefaultLookAndFeel = false;
+            // 
+            // drumTypeFurnace1
+            // 
+            this.drumTypeFurnace1.Appearance.BackColor = System.Drawing.Color.Gainsboro;
+            this.drumTypeFurnace1.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.drumTypeFurnace1.Appearance.Options.UseBackColor = true;
+            this.drumTypeFurnace1.Appearance.Options.UseBorderColor = true;
+            this.drumTypeFurnace1.Appearance.Options.UseFont = true;
+            this.drumTypeFurnace1.Appearance.Options.UseForeColor = true;
+            this.drumTypeFurnace1.Location = new System.Drawing.Point(24, 44);
+            this.drumTypeFurnace1.Name = "drumTypeFurnace1";
+            this.drumTypeFurnace1.Size = new System.Drawing.Size(1051, 506);
+            this.drumTypeFurnace1.TabIndex = 9;
+            // 
+            // layoutControlItem8
+            // 
+            this.layoutControlItem8.Control = this.drumTypeFurnace1;
+            this.layoutControlItem8.CustomizationFormText = "layoutControlItem8";
+            this.layoutControlItem8.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItem8.Name = "layoutControlItem8";
+            this.layoutControlItem8.Size = new System.Drawing.Size(1055, 510);
+            this.layoutControlItem8.Text = "layoutControlItem8";
+            this.layoutControlItem8.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem8.TextToControlDistance = 0;
+            this.layoutControlItem8.TextVisible = false;
             // 
             // frmTP
             // 
@@ -472,6 +503,7 @@ namespace TP
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgCommonView)).EndInit();
@@ -485,9 +517,9 @@ namespace TP
             ((System.ComponentModel.ISupportInitialize)(this.lcgCyclonAndScrubber)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgFinishCleaning)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.styleController1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.styleController1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -530,5 +562,7 @@ namespace TP
         private ChannelController channelController1;
         private TP.FinishCleaning.ucFinishCleaning ucFinishCleaning1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
+        private TP.DrumTypeFurnace.DrumTypeFurnace drumTypeFurnace1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
     }
 }
