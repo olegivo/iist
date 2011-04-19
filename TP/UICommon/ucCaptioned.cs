@@ -29,6 +29,7 @@ namespace UICommon
         }
 
         private Point _captionLocation = new Point(0, 0);
+        private Font _captionFont;
 
         /// <summary>
         /// 
@@ -50,6 +51,23 @@ namespace UICommon
         /// <summary>
         /// 
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content), DefaultValue(null)]
+        public Font CaptionFont
+        {
+            get { return _captionFont; }
+            set
+            {
+                if (_captionFont != value)
+                {
+                    _captionFont = value; 
+                    Refresh();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -58,7 +76,8 @@ namespace UICommon
             Graphics g = e.Graphics;
 
             // Draw a string on the PictureBox.
-            g.DrawString(Caption, new Font("Arial", 10), Brushes.Black,
+            Font f = CaptionFont ?? new Font("Arial", 10);
+            g.DrawString(Caption, f, Brushes.Black,
                          new RectangleF(CaptionLocation, new SizeF(XMax, YMax)));
 
         }
