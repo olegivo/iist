@@ -17,6 +17,8 @@ namespace UICommon
         {
             InitializeComponent();
         }
+        
+        const int GradWidth = 10;
 
         /// <summary>
         /// 
@@ -27,7 +29,6 @@ namespace UICommon
             Graphics g = e.Graphics;
             int xMax = Width - 1;
             int yMax = Height - 1;
-            int GradWidth = 10;         //ширина градиента
             if (xMax < GradWidth) { throw new Exception("Box size is too small."); }
 
             //градиент
@@ -63,9 +64,7 @@ namespace UICommon
             e.Graphics.FillRectangle(myBrush3, GradWidth, f, xMax - 2 * GradWidth, yMax - f);
             g.DrawLine(Pens.Black, 0, f, XMax,  f);
 
-            //надпись
-            g.DrawString(Caption, new Font("Arial", 12, FontStyle.Bold), Brushes.Black,
-                         new RectangleF(25, yMax / 2, xMax, yMax));
+            base.OnPaint(e);
         }
 
         //сам уровень наполнения box'a
@@ -82,6 +81,14 @@ namespace UICommon
                     Refresh();
                 }
             }
+        }
+
+        private void ucBox_SizeChanged(object sender, EventArgs e)
+        {
+            CaptionLocation = new Point(25, YMax / 2);
+
+            if (Size.Width < GradWidth * 2)
+                Size = new Size(GradWidth*2, Size.Height);
         }
     }
 }
