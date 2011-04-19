@@ -85,6 +85,24 @@
     <Compile Include="CyclonAndScrubber\ucSB.Designer.cs">
       <DependentUpon>ucSB.cs</DependentUpon>
     </Compile>
+    <Compile Include="DrumTypeFurnace\DrumTypeFurnace.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrumTypeFurnace\DrumTypeFurnace.Designer.cs">
+      <DependentUpon>DrumTypeFurnace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DrumTypeFurnace\ucKrutilka.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrumTypeFurnace\ucKrutilka.Designer.cs">
+      <DependentUpon>ucKrutilka.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DrumTypeFurnace\ucTransporter3d.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrumTypeFurnace\ucTransporter3d.Designer.cs">
+      <DependentUpon>ucTransporter3d.cs</DependentUpon>
+    </Compile>
     <Compile Include="FinishCleaning\ucCrater.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -183,6 +201,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DrumTypeFurnace\DrumTypeFurnace.resx">
+      <DependentUpon>DrumTypeFurnace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DrumTypeFurnace\ucKrutilka.resx">
+      <DependentUpon>ucKrutilka.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DrumTypeFurnace\ucTransporter3d.resx">
+      <DependentUpon>ucTransporter3d.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FinishCleaning\ucCrater.resx">
       <DependentUpon>ucCrater.cs</DependentUpon>
     </EmbeddedResource>
@@ -270,7 +297,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CommonView\" />
-    <Folder Include="DrumTypeFurnace\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
