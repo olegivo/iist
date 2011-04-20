@@ -95,6 +95,7 @@ namespace TP.FinishCleaning
             this.ucPump1 = new UICommon.ucPump();
             this.ucCrater1 = new TP.FinishCleaning.ucCrater();
             this.ucFilter1 = new TP.FinishCleaning.ucFilter();
+            this.ucCaptioned17 = new UICommon.ucCaptioned();
             this.SuspendLayout();
             // 
             // shapeContainer1
@@ -361,7 +362,7 @@ namespace TP.FinishCleaning
             this.ucCaptioned14.Caption = "ЧР 2";
             this.ucCaptioned14.Location = new System.Drawing.Point(398, 548);
             this.ucCaptioned14.Name = "ucCaptioned14";
-            this.ucCaptioned14.Size = new System.Drawing.Size(50, 48);
+            this.ucCaptioned14.Size = new System.Drawing.Size(38, 22);
             this.ucCaptioned14.TabIndex = 54;
             // 
             // ucCaptioned12
@@ -813,11 +814,24 @@ namespace TP.FinishCleaning
             this.ucFilter1.Size = new System.Drawing.Size(146, 196);
             this.ucFilter1.TabIndex = 1;
             // 
+            // ucCaptioned17
+            // 
+            this.ucCaptioned17.Appearance.BackColor = System.Drawing.Color.Gray;
+            this.ucCaptioned17.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned17.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned17.Appearance.Options.UseFont = true;
+            this.ucCaptioned17.Caption = "ДН";
+            this.ucCaptioned17.Location = new System.Drawing.Point(466, 406);
+            this.ucCaptioned17.Name = "ucCaptioned17";
+            this.ucCaptioned17.Size = new System.Drawing.Size(33, 24);
+            this.ucCaptioned17.TabIndex = 71;
+            // 
             // ucFinishCleaning
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.Controls.Add(this.ucCaptioned17);
             this.Controls.Add(this.ucCaptioned4);
             this.Controls.Add(this.ucLine18);
             this.Controls.Add(this.ucLine12);
@@ -878,7 +892,7 @@ namespace TP.FinishCleaning
             this.Controls.Add(this.shapeContainer1);
             this.Controls.Add(this.ucPump1);
             this.Name = "ucFinishCleaning";
-            this.Size = new System.Drawing.Size(1192, 645);
+            this.Size = new System.Drawing.Size(1175, 628);
             this.Load += new System.EventHandler(this.ucFinishCleaning_Load);
             this.ResumeLayout(false);
 
@@ -949,5 +963,6 @@ namespace TP.FinishCleaning
         private ucLine ucLine12;
         private ucLine ucLine18;
         private ucCaptioned ucCaptioned4;
+        private ucCaptioned ucCaptioned17;
     }
 }
