@@ -56,6 +56,11 @@ namespace TP
             channelController1.Form = this;
         }
 
+        private void spinEdit3_EditValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
         //private void OnPopupLookAndFeel(object sender, EventArgs e)
         //{
         //    BarSubItem item = sender as BarSubItem;

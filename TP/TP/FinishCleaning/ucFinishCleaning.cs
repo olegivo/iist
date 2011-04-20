@@ -15,8 +15,8 @@ namespace TP.FinishCleaning
         //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         //public float Level3
         //{
-        //    get { return ucTube.Leve3; }
-        //    set { ucGauge1.EditValue = ucTube.Leve3 = value; }
+        //    get { }
+        //    set { ucIndicator2.EditValue = value; }
         //}
 
       
