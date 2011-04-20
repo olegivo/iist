@@ -23,17 +23,35 @@ namespace TP.ReheatChamber
         public float Level1
         {
             get { return ucBox1.Level; }
-            set { ucGauge1.EditValue = ucBox1.Level = value; }
+            set { ucIndicator1.EditValue = ucBox1.Level = value; }
         }
 
         /// <summary>
-        /// 
+        /// ДУ4 (РЕ)
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public float Level2
         {
             get { return ucBox2.Level; }
-            set { ucGauge2.EditValue = ucBox2.Level = value; }
+            set { ucIndicator2.EditValue = ucBox2.Level = value; }
+        }
+        /// <summary>
+        /// ДУ1 (НЕ)
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public float Level3
+        {
+            get { return ucBox3.Level; }
+            set { ucIndicator3.EditValue = ucBox3.Level = value; }
+        }
+        /// <summary>
+        /// ДУ11 (ПТ)
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public float Level4
+        {
+            get { return ucBox4.Level; }
+            set { ucIndicator4.EditValue = ucBox4.Level = value; }
         }
 
     }

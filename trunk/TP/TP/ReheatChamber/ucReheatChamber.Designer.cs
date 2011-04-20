@@ -35,8 +35,6 @@ namespace TP.ReheatChamber
             this.ucPump1 = new UICommon.ucPump();
             this.ucValve10 = new UICommon.ucValve();
             this.ucValve11 = new UICommon.ucValve();
-            this.ucGauge2 = new UICommon.ucIndicator();
-            this.ucGauge1 = new UICommon.ucIndicator();
             this.ucTube1 = new UICommon.ucTube();
             this.ucLine33 = new UICommon.ucLine();
             this.ucLine28 = new UICommon.ucLine();
@@ -46,8 +44,6 @@ namespace TP.ReheatChamber
             this.ucLine16 = new UICommon.ucLine();
             this.ucBurner3 = new UICommon.ucBurner();
             this.ucBurner2 = new UICommon.ucBurner();
-            this.ucBox4 = new UICommon.ucBox();
-            this.ucBox3 = new UICommon.ucBox();
             this.ucBox2 = new UICommon.ucBox();
             this.ucValve13 = new UICommon.ucValve();
             this.ucValve12 = new UICommon.ucValve();
@@ -105,6 +101,13 @@ namespace TP.ReheatChamber
             this.ucLine2 = new UICommon.ucLine();
             this.ucLine1 = new UICommon.ucLine();
             this.ucLine38 = new UICommon.ucLine();
+            this.ucBox3 = new UICommon.ucBox();
+            this.ucBox4 = new UICommon.ucBox();
+            this.ucIndicator1 = new UICommon.ucIndicator();
+            this.ucIndicator2 = new UICommon.ucIndicator();
+            this.ucIndicator3 = new UICommon.ucIndicator();
+            this.ucIndicator4 = new UICommon.ucIndicator();
+            this.ucIndicator5 = new UICommon.ucIndicator();
             this.SuspendLayout();
             // 
             // ucPump1
@@ -133,34 +136,6 @@ namespace TP.ReheatChamber
             this.ucValve11.Name = "ucValve11";
             this.ucValve11.Size = new System.Drawing.Size(40, 20);
             this.ucValve11.TabIndex = 8;
-            // 
-            // ucGauge2
-            // 
-            this.ucGauge2.AllowedMaxValue = 6F;
-            this.ucGauge2.AllowedMinValue = 4F;
-            this.ucGauge2.Caption = "ДУ5:";
-            this.ucGauge2.EditValue = 0.7F;
-            this.ucGauge2.Location = new System.Drawing.Point(426, 611);
-            this.ucGauge2.MaxValue = 0.7F;
-            this.ucGauge2.MinValue = 0.5F;
-            this.ucGauge2.Name = "ucGauge2";
-            this.ucGauge2.Size = new System.Drawing.Size(72, 131);
-            this.ucGauge2.TabIndex = 19;
-            this.ucGauge2.TickCount = 10;
-            // 
-            // ucGauge1
-            // 
-            this.ucGauge1.AllowedMaxValue = 6F;
-            this.ucGauge1.AllowedMinValue = 4F;
-            this.ucGauge1.Caption = "Ph1:";
-            this.ucGauge1.EditValue = 3F;
-            this.ucGauge1.Location = new System.Drawing.Point(48, 192);
-            this.ucGauge1.MaxValue = 14F;
-            this.ucGauge1.MinValue = 3F;
-            this.ucGauge1.Name = "ucGauge1";
-            this.ucGauge1.Size = new System.Drawing.Size(75, 138);
-            this.ucGauge1.TabIndex = 18;
-            this.ucGauge1.TickCount = 10;
             // 
             // ucTube1
             // 
@@ -191,9 +166,9 @@ namespace TP.ReheatChamber
             this.ucLine28.Color = UICommon.LineColor.Green;
             this.ucLine28.Direction = System.Windows.Forms.AnchorStyles.Bottom;
             this.ucLine28.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
-            this.ucLine28.Location = new System.Drawing.Point(286, 448);
+            this.ucLine28.Location = new System.Drawing.Point(290, 440);
             this.ucLine28.Name = "ucLine28";
-            this.ucLine28.Size = new System.Drawing.Size(13, 26);
+            this.ucLine28.Size = new System.Drawing.Size(10, 26);
             this.ucLine28.TabIndex = 10;
             // 
             // ucLine18
@@ -259,34 +234,14 @@ namespace TP.ReheatChamber
             this.ucBurner2.Size = new System.Drawing.Size(60, 40);
             this.ucBurner2.TabIndex = 1;
             // 
-            // ucBox4
-            // 
-            this.ucBox4.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucBox4.Appearance.Options.UseBackColor = true;
-            this.ucBox4.Caption = "ПТ";
-            this.ucBox4.Location = new System.Drawing.Point(558, 470);
-            this.ucBox4.Name = "ucBox4";
-            this.ucBox4.Size = new System.Drawing.Size(117, 96);
-            this.ucBox4.TabIndex = 9;
-            // 
-            // ucBox3
-            // 
-            this.ucBox3.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucBox3.Appearance.Options.UseBackColor = true;
-            this.ucBox3.Caption = "НЕ";
-            this.ucBox3.Location = new System.Drawing.Point(379, 470);
-            this.ucBox3.Name = "ucBox3";
-            this.ucBox3.Size = new System.Drawing.Size(117, 96);
-            this.ucBox3.TabIndex = 9;
-            // 
             // ucBox2
             // 
             this.ucBox2.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucBox2.Appearance.Options.UseBackColor = true;
             this.ucBox2.Caption = "РЕ";
-            this.ucBox2.Location = new System.Drawing.Point(200, 470);
+            this.ucBox2.Location = new System.Drawing.Point(210, 470);
             this.ucBox2.Name = "ucBox2";
-            this.ucBox2.Size = new System.Drawing.Size(117, 96);
+            this.ucBox2.Size = new System.Drawing.Size(110, 100);
             this.ucBox2.TabIndex = 9;
             // 
             // ucValve13
@@ -466,7 +421,7 @@ namespace TP.ReheatChamber
             this.ucLine26.Color = UICommon.LineColor.Green;
             this.ucLine26.Location = new System.Drawing.Point(351, 582);
             this.ucLine26.Name = "ucLine26";
-            this.ucLine26.Size = new System.Drawing.Size(49, 13);
+            this.ucLine26.Size = new System.Drawing.Size(49, 10);
             this.ucLine26.TabIndex = 10;
             // 
             // ucLine31
@@ -484,9 +439,9 @@ namespace TP.ReheatChamber
             this.ucLine25.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucLine25.Appearance.Options.UseBackColor = true;
             this.ucLine25.Color = UICommon.LineColor.Green;
-            this.ucLine25.Location = new System.Drawing.Point(290, 443);
+            this.ucLine25.Location = new System.Drawing.Point(290, 440);
             this.ucLine25.Name = "ucLine25";
-            this.ucLine25.Size = new System.Drawing.Size(65, 13);
+            this.ucLine25.Size = new System.Drawing.Size(65, 10);
             this.ucLine25.TabIndex = 10;
             // 
             // ucLine30
@@ -528,9 +483,9 @@ namespace TP.ReheatChamber
             this.ucLine24.Appearance.Options.UseBackColor = true;
             this.ucLine24.Color = UICommon.LineColor.Green;
             this.ucLine24.Direction = System.Windows.Forms.AnchorStyles.Bottom;
-            this.ucLine24.Location = new System.Drawing.Point(346, 450);
+            this.ucLine24.Location = new System.Drawing.Point(346, 440);
             this.ucLine24.Name = "ucLine24";
-            this.ucLine24.Size = new System.Drawing.Size(13, 141);
+            this.ucLine24.Size = new System.Drawing.Size(10, 141);
             this.ucLine24.TabIndex = 10;
             // 
             // ucLine22
@@ -805,9 +760,9 @@ namespace TP.ReheatChamber
             this.ucBox1.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucBox1.Appearance.Options.UseBackColor = true;
             this.ucBox1.Caption = "Камера дожигания";
-            this.ucBox1.Location = new System.Drawing.Point(192, 106);
+            this.ucBox1.Location = new System.Drawing.Point(190, 110);
             this.ucBox1.Name = "ucBox1";
-            this.ucBox1.Size = new System.Drawing.Size(208, 251);
+            this.ucBox1.Size = new System.Drawing.Size(200, 240);
             this.ucBox1.TabIndex = 9;
             // 
             // ucLine5
@@ -873,15 +828,108 @@ namespace TP.ReheatChamber
             this.ucLine38.Size = new System.Drawing.Size(13, 38);
             this.ucLine38.TabIndex = 10;
             // 
+            // ucBox3
+            // 
+            this.ucBox3.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucBox3.Appearance.Options.UseBackColor = true;
+            this.ucBox3.Caption = "НЕ";
+            this.ucBox3.Location = new System.Drawing.Point(370, 470);
+            this.ucBox3.Name = "ucBox3";
+            this.ucBox3.Size = new System.Drawing.Size(110, 100);
+            this.ucBox3.TabIndex = 9;
+            // 
+            // ucBox4
+            // 
+            this.ucBox4.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucBox4.Appearance.Options.UseBackColor = true;
+            this.ucBox4.Caption = "ПТ";
+            this.ucBox4.Location = new System.Drawing.Point(530, 470);
+            this.ucBox4.Name = "ucBox4";
+            this.ucBox4.Size = new System.Drawing.Size(110, 100);
+            this.ucBox4.TabIndex = 9;
+            // 
+            // ucIndicator1
+            // 
+            this.ucIndicator1.AllowedMaxValue = 0F;
+            this.ucIndicator1.AllowedMinValue = 0F;
+            this.ucIndicator1.Caption = "???:";
+            this.ucIndicator1.EditValue = 13F;
+            this.ucIndicator1.Location = new System.Drawing.Point(10, 170);
+            this.ucIndicator1.MaxValue = 14F;
+            this.ucIndicator1.MinValue = 3F;
+            this.ucIndicator1.Name = "ucIndicator1";
+            this.ucIndicator1.Size = new System.Drawing.Size(70, 120);
+            this.ucIndicator1.TabIndex = 20;
+            this.ucIndicator1.TickCount = 0;
+            // 
+            // ucIndicator2
+            // 
+            this.ucIndicator2.AllowedMaxValue = 900F;
+            this.ucIndicator2.AllowedMinValue = 300F;
+            this.ucIndicator2.Caption = "ДУ4:";
+            this.ucIndicator2.EditValue = 13F;
+            this.ucIndicator2.Location = new System.Drawing.Point(210, 590);
+            this.ucIndicator2.MaxValue = 1500F;
+            this.ucIndicator2.MinValue = 0F;
+            this.ucIndicator2.Name = "ucIndicator2";
+            this.ucIndicator2.Size = new System.Drawing.Size(70, 120);
+            this.ucIndicator2.TabIndex = 21;
+            this.ucIndicator2.TickCount = 0;
+            // 
+            // ucIndicator3
+            // 
+            this.ucIndicator3.AllowedMaxValue = 1300F;
+            this.ucIndicator3.AllowedMinValue = 300F;
+            this.ucIndicator3.Caption = "ДУ1:";
+            this.ucIndicator3.EditValue = 13F;
+            this.ucIndicator3.Location = new System.Drawing.Point(370, 590);
+            this.ucIndicator3.MaxValue = 1500F;
+            this.ucIndicator3.MinValue = 0F;
+            this.ucIndicator3.Name = "ucIndicator3";
+            this.ucIndicator3.Size = new System.Drawing.Size(70, 120);
+            this.ucIndicator3.TabIndex = 22;
+            this.ucIndicator3.TickCount = 0;
+            // 
+            // ucIndicator4
+            // 
+            this.ucIndicator4.AllowedMaxValue = 900F;
+            this.ucIndicator4.AllowedMinValue = 300F;
+            this.ucIndicator4.Caption = "ДУ11:";
+            this.ucIndicator4.EditValue = 13F;
+            this.ucIndicator4.Location = new System.Drawing.Point(520, 590);
+            this.ucIndicator4.MaxValue = 1000F;
+            this.ucIndicator4.MinValue = 0F;
+            this.ucIndicator4.Name = "ucIndicator4";
+            this.ucIndicator4.Size = new System.Drawing.Size(70, 120);
+            this.ucIndicator4.TabIndex = 23;
+            this.ucIndicator4.TickCount = 0;
+            // 
+            // ucIndicator5
+            // 
+            this.ucIndicator5.AllowedMaxValue = 1200F;
+            this.ucIndicator5.AllowedMinValue = 1050F;
+            this.ucIndicator5.Caption = "TP3:";
+            this.ucIndicator5.EditValue = 13F;
+            this.ucIndicator5.Location = new System.Drawing.Point(100, 170);
+            this.ucIndicator5.MaxValue = 1500F;
+            this.ucIndicator5.MinValue = 0F;
+            this.ucIndicator5.Name = "ucIndicator5";
+            this.ucIndicator5.Size = new System.Drawing.Size(70, 120);
+            this.ucIndicator5.TabIndex = 24;
+            this.ucIndicator5.TickCount = 0;
+            // 
             // ucReheatChamber
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ucIndicator5);
+            this.Controls.Add(this.ucIndicator4);
+            this.Controls.Add(this.ucIndicator3);
+            this.Controls.Add(this.ucIndicator2);
+            this.Controls.Add(this.ucIndicator1);
             this.Controls.Add(this.ucPump1);
             this.Controls.Add(this.ucValve10);
             this.Controls.Add(this.ucValve11);
-            this.Controls.Add(this.ucGauge2);
-            this.Controls.Add(this.ucGauge1);
             this.Controls.Add(this.ucTube1);
             this.Controls.Add(this.ucLine33);
             this.Controls.Add(this.ucLine28);
@@ -970,8 +1018,6 @@ namespace TP.ReheatChamber
         private UICommon.ucBurner ucBurner2;
         private UICommon.ucBurner ucBurner3;
         private UICommon.ucBox ucBox2;
-        private UICommon.ucBox ucBox3;
-        private UICommon.ucBox ucBox4;
         private UICommon.ucPump ucPump3;
         private UICommon.ucValve ucValve7;
         private UICommon.ucPump ucPump4;
@@ -1028,9 +1074,14 @@ namespace TP.ReheatChamber
         private UICommon.ucLine ucLine42;
         private UICommon.ucLine ucLine43;
         private ucTube ucTube1;
-        private ucIndicator ucGauge1;
-        private ucIndicator ucGauge2;
         private ucLine ucLine38;
+        private ucBox ucBox3;
+        private ucBox ucBox4;
+        private ucIndicator ucIndicator1;
+        private ucIndicator ucIndicator2;
+        private ucIndicator ucIndicator3;
+        private ucIndicator ucIndicator4;
+        private ucIndicator ucIndicator5;
 
     }
 }
