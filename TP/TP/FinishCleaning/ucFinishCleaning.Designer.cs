@@ -89,12 +89,12 @@ namespace TP.FinishCleaning
             this.ucValve3 = new UICommon.ucValve();
             this.ucValve2 = new UICommon.ucValve();
             this.ucValve1 = new UICommon.ucValve();
-            this.ucCrater1 = new TP.FinishCleaning.ucCrater();
             this.ucCaptioned1 = new UICommon.ucCaptioned();
             this.ucLine1 = new UICommon.ucLine();
             this.ucIndicator3 = new UICommon.ucIndicator();
-            this.ucFilter1 = new TP.FinishCleaning.ucFilter();
             this.ucPump1 = new UICommon.ucPump();
+            this.ucCrater1 = new TP.FinishCleaning.ucCrater();
+            this.ucFilter1 = new TP.FinishCleaning.ucFilter();
             this.SuspendLayout();
             // 
             // shapeContainer1
@@ -107,7 +107,7 @@ namespace TP.FinishCleaning
             this.lineShape3,
             this.lineShape2,
             this.lineShape1});
-            this.shapeContainer1.Size = new System.Drawing.Size(1232, 811);
+            this.shapeContainer1.Size = new System.Drawing.Size(1208, 811);
             this.shapeContainer1.TabIndex = 48;
             this.shapeContainer1.TabStop = false;
             // 
@@ -235,13 +235,13 @@ namespace TP.FinishCleaning
             // 
             // ucIndicator7
             // 
-            this.ucIndicator7.AllowedMaxValue = 0F;
+            this.ucIndicator7.AllowedMaxValue = 120F;
             this.ucIndicator7.AllowedMinValue = 0F;
-            this.ucIndicator7.Caption = "Ph1:";
-            this.ucIndicator7.EditValue = 13F;
+            this.ucIndicator7.Caption = "TC6:";
+            this.ucIndicator7.EditValue = 90F;
             this.ucIndicator7.Location = new System.Drawing.Point(887, 287);
-            this.ucIndicator7.MaxValue = 14F;
-            this.ucIndicator7.MinValue = 3F;
+            this.ucIndicator7.MaxValue = 180F;
+            this.ucIndicator7.MinValue = 0F;
             this.ucIndicator7.Name = "ucIndicator7";
             this.ucIndicator7.Size = new System.Drawing.Size(87, 148);
             this.ucIndicator7.TabIndex = 64;
@@ -249,13 +249,13 @@ namespace TP.FinishCleaning
             // 
             // ucIndicator6
             // 
-            this.ucIndicator6.AllowedMaxValue = 0F;
-            this.ucIndicator6.AllowedMinValue = 0F;
-            this.ucIndicator6.Caption = "Ph1:";
-            this.ucIndicator6.EditValue = 13F;
+            this.ucIndicator6.AllowedMaxValue = 2000F;
+            this.ucIndicator6.AllowedMinValue = 600F;
+            this.ucIndicator6.Caption = "SO2:";
+            this.ucIndicator6.EditValue = 1300F;
             this.ucIndicator6.Location = new System.Drawing.Point(158, 340);
-            this.ucIndicator6.MaxValue = 14F;
-            this.ucIndicator6.MinValue = 3F;
+            this.ucIndicator6.MaxValue = 2000F;
+            this.ucIndicator6.MinValue = 0F;
             this.ucIndicator6.Name = "ucIndicator6";
             this.ucIndicator6.Size = new System.Drawing.Size(87, 148);
             this.ucIndicator6.TabIndex = 63;
@@ -263,13 +263,13 @@ namespace TP.FinishCleaning
             // 
             // ucIndicator5
             // 
-            this.ucIndicator5.AllowedMaxValue = 0F;
-            this.ucIndicator5.AllowedMinValue = 0F;
-            this.ucIndicator5.Caption = "Ph1:";
-            this.ucIndicator5.EditValue = 13F;
+            this.ucIndicator5.AllowedMaxValue = 21F;
+            this.ucIndicator5.AllowedMinValue = 5F;
+            this.ucIndicator5.Caption = "O2:";
+            this.ucIndicator5.EditValue = 15F;
             this.ucIndicator5.Location = new System.Drawing.Point(65, 340);
-            this.ucIndicator5.MaxValue = 14F;
-            this.ucIndicator5.MinValue = 3F;
+            this.ucIndicator5.MaxValue = 25F;
+            this.ucIndicator5.MinValue = 0F;
             this.ucIndicator5.Name = "ucIndicator5";
             this.ucIndicator5.Size = new System.Drawing.Size(87, 148);
             this.ucIndicator5.TabIndex = 62;
@@ -277,13 +277,13 @@ namespace TP.FinishCleaning
             // 
             // ucIndicator4
             // 
-            this.ucIndicator4.AllowedMaxValue = 0F;
+            this.ucIndicator4.AllowedMaxValue = 160F;
             this.ucIndicator4.AllowedMinValue = 0F;
-            this.ucIndicator4.Caption = "Ph1:";
-            this.ucIndicator4.EditValue = 13F;
+            this.ucIndicator4.Caption = "TC7:";
+            this.ucIndicator4.EditValue = 100F;
             this.ucIndicator4.Location = new System.Drawing.Point(412, 143);
-            this.ucIndicator4.MaxValue = 14F;
-            this.ucIndicator4.MinValue = 3F;
+            this.ucIndicator4.MaxValue = 200F;
+            this.ucIndicator4.MinValue = 0F;
             this.ucIndicator4.Name = "ucIndicator4";
             this.ucIndicator4.Size = new System.Drawing.Size(87, 148);
             this.ucIndicator4.TabIndex = 61;
@@ -291,13 +291,13 @@ namespace TP.FinishCleaning
             // 
             // ucIndicator2
             // 
-            this.ucIndicator2.AllowedMaxValue = 0F;
-            this.ucIndicator2.AllowedMinValue = 0F;
-            this.ucIndicator2.Caption = "Ph1:";
-            this.ucIndicator2.EditValue = 13F;
+            this.ucIndicator2.AllowedMaxValue = 5000F;
+            this.ucIndicator2.AllowedMinValue = 3500F;
+            this.ucIndicator2.Caption = "CO:";
+            this.ucIndicator2.EditValue = 1000F;
             this.ucIndicator2.Location = new System.Drawing.Point(12, 143);
-            this.ucIndicator2.MaxValue = 14F;
-            this.ucIndicator2.MinValue = 3F;
+            this.ucIndicator2.MaxValue = 5000F;
+            this.ucIndicator2.MinValue = 0F;
             this.ucIndicator2.Name = "ucIndicator2";
             this.ucIndicator2.Size = new System.Drawing.Size(87, 148);
             this.ucIndicator2.TabIndex = 60;
@@ -305,13 +305,13 @@ namespace TP.FinishCleaning
             // 
             // ucIndicator1
             // 
-            this.ucIndicator1.AllowedMaxValue = 0F;
-            this.ucIndicator1.AllowedMinValue = 0F;
-            this.ucIndicator1.Caption = "Ph1:";
-            this.ucIndicator1.EditValue = 13F;
+            this.ucIndicator1.AllowedMaxValue = 1000F;
+            this.ucIndicator1.AllowedMinValue = 700F;
+            this.ucIndicator1.Caption = "NO:";
+            this.ucIndicator1.EditValue = 500F;
             this.ucIndicator1.Location = new System.Drawing.Point(105, 143);
-            this.ucIndicator1.MaxValue = 14F;
-            this.ucIndicator1.MinValue = 3F;
+            this.ucIndicator1.MaxValue = 1000F;
+            this.ucIndicator1.MinValue = 0F;
             this.ucIndicator1.Name = "ucIndicator1";
             this.ucIndicator1.Size = new System.Drawing.Size(87, 148);
             this.ucIndicator1.TabIndex = 59;
@@ -752,13 +752,6 @@ namespace TP.FinishCleaning
             this.ucValve1.Size = new System.Drawing.Size(40, 20);
             this.ucValve1.TabIndex = 12;
             // 
-            // ucCrater1
-            // 
-            this.ucCrater1.Location = new System.Drawing.Point(632, 397);
-            this.ucCrater1.Name = "ucCrater1";
-            this.ucCrater1.Size = new System.Drawing.Size(93, 93);
-            this.ucCrater1.TabIndex = 11;
-            // 
             // ucCaptioned1
             // 
             this.ucCaptioned1.Appearance.BackColor = System.Drawing.Color.Red;
@@ -785,24 +778,17 @@ namespace TP.FinishCleaning
             // 
             // ucIndicator3
             // 
-            this.ucIndicator3.AllowedMaxValue = 0F;
-            this.ucIndicator3.AllowedMinValue = 0F;
-            this.ucIndicator3.Caption = "Ph1:";
-            this.ucIndicator3.EditValue = 13F;
+            this.ucIndicator3.AllowedMaxValue = 1000F;
+            this.ucIndicator3.AllowedMinValue = 750F;
+            this.ucIndicator3.Caption = "NO2:";
+            this.ucIndicator3.EditValue = 800F;
             this.ucIndicator3.Location = new System.Drawing.Point(188, 143);
-            this.ucIndicator3.MaxValue = 14F;
-            this.ucIndicator3.MinValue = 3F;
+            this.ucIndicator3.MaxValue = 1000F;
+            this.ucIndicator3.MinValue = 0F;
             this.ucIndicator3.Name = "ucIndicator3";
             this.ucIndicator3.Size = new System.Drawing.Size(87, 148);
             this.ucIndicator3.TabIndex = 4;
             this.ucIndicator3.TickCount = 0;
-            // 
-            // ucFilter1
-            // 
-            this.ucFilter1.Location = new System.Drawing.Point(631, 124);
-            this.ucFilter1.Name = "ucFilter1";
-            this.ucFilter1.Size = new System.Drawing.Size(146, 196);
-            this.ucFilter1.TabIndex = 1;
             // 
             // ucPump1
             // 
@@ -812,6 +798,20 @@ namespace TP.FinishCleaning
             this.ucPump1.Name = "ucPump1";
             this.ucPump1.Size = new System.Drawing.Size(53, 53);
             this.ucPump1.TabIndex = 17;
+            // 
+            // ucCrater1
+            // 
+            this.ucCrater1.Location = new System.Drawing.Point(632, 397);
+            this.ucCrater1.Name = "ucCrater1";
+            this.ucCrater1.Size = new System.Drawing.Size(93, 93);
+            this.ucCrater1.TabIndex = 11;
+            // 
+            // ucFilter1
+            // 
+            this.ucFilter1.Location = new System.Drawing.Point(631, 124);
+            this.ucFilter1.Name = "ucFilter1";
+            this.ucFilter1.Size = new System.Drawing.Size(146, 196);
+            this.ucFilter1.TabIndex = 1;
             // 
             // ucFinishCleaning
             // 
@@ -878,7 +878,7 @@ namespace TP.FinishCleaning
             this.Controls.Add(this.shapeContainer1);
             this.Controls.Add(this.ucPump1);
             this.Name = "ucFinishCleaning";
-            this.Size = new System.Drawing.Size(1232, 811);
+            this.Size = new System.Drawing.Size(1192, 645);
             this.Load += new System.EventHandler(this.ucFinishCleaning_Load);
             this.ResumeLayout(false);
 
