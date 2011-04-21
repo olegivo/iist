@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace TP.FinishCleaning
 {
@@ -9,21 +10,19 @@ namespace TP.FinishCleaning
             InitializeComponent();
         }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        //public float Level3
-        //{
-        //    get { }
-        //    set { ucIndicator2.EditValue = value; }
-        //}
-
-      
-
-        private void ucFinishCleaning_Load(object sender, EventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        public float Level3
         {
+            get { return ucIndicator2.EditValue; }
+            set { ucIndicator2.EditValue = value; }
+        }
 
+        private void spinEdit1_EditValueChanged(object sender, EventArgs e)
+        {
+            Level3 = (float) Convert.ToDecimal(spinEdit1.EditValue);
         }
     }
 }

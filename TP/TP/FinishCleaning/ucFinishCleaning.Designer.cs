@@ -96,6 +96,8 @@ namespace TP.FinishCleaning
             this.ucCrater1 = new TP.FinishCleaning.ucCrater();
             this.ucFilter1 = new TP.FinishCleaning.ucFilter();
             this.ucCaptioned17 = new UICommon.ucCaptioned();
+            this.spinEdit1 = new DevExpress.XtraEditors.SpinEdit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinEdit1.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // shapeContainer1
@@ -826,11 +828,27 @@ namespace TP.FinishCleaning
             this.ucCaptioned17.Size = new System.Drawing.Size(33, 24);
             this.ucCaptioned17.TabIndex = 71;
             // 
+            // spinEdit1
+            // 
+            this.spinEdit1.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.spinEdit1.Location = new System.Drawing.Point(220, 24);
+            this.spinEdit1.Name = "spinEdit1";
+            this.spinEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.spinEdit1.Size = new System.Drawing.Size(100, 20);
+            this.spinEdit1.TabIndex = 72;
+            this.spinEdit1.EditValueChanged += new System.EventHandler(this.spinEdit1_EditValueChanged);
+            // 
             // ucFinishCleaning
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.Controls.Add(this.spinEdit1);
             this.Controls.Add(this.ucCaptioned17);
             this.Controls.Add(this.ucCaptioned4);
             this.Controls.Add(this.ucLine18);
@@ -892,8 +910,8 @@ namespace TP.FinishCleaning
             this.Controls.Add(this.shapeContainer1);
             this.Controls.Add(this.ucPump1);
             this.Name = "ucFinishCleaning";
-            this.Size = new System.Drawing.Size(1175, 628);
-            this.Load += new System.EventHandler(this.ucFinishCleaning_Load);
+            this.Size = new System.Drawing.Size(1158, 611);
+            ((System.ComponentModel.ISupportInitialize)(this.spinEdit1.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -964,5 +982,6 @@ namespace TP.FinishCleaning
         private ucLine ucLine18;
         private ucCaptioned ucCaptioned4;
         private ucCaptioned ucCaptioned17;
+        private DevExpress.XtraEditors.SpinEdit spinEdit1;
     }
 }
