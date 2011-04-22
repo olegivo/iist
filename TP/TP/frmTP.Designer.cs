@@ -33,7 +33,9 @@ namespace TP
         {
             this.components = new System.ComponentModel.Container();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-            this.spinEdit9 = new DevExpress.XtraEditors.SpinEdit();
+            this.drumTypeFurnace1 = new TP.DrumTypeFurnace.DrumTypeFurnace();
+            this.ucFinishCleaning1 = new TP.FinishCleaning.ucFinishCleaning();
+            this.spinEdit2 = new DevExpress.XtraEditors.SpinEdit();
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.bar2 = new DevExpress.XtraBars.Bar();
@@ -45,15 +47,6 @@ namespace TP
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.miLookAndFeel = new DevExpress.XtraBars.BarSubItem();
-            this.spinEdit8 = new DevExpress.XtraEditors.SpinEdit();
-            this.spinEdit7 = new DevExpress.XtraEditors.SpinEdit();
-            this.spinEdit6 = new DevExpress.XtraEditors.SpinEdit();
-            this.spinEdit5 = new DevExpress.XtraEditors.SpinEdit();
-            this.spinEdit4 = new DevExpress.XtraEditors.SpinEdit();
-            this.spinEdit3 = new DevExpress.XtraEditors.SpinEdit();
-            this.drumTypeFurnace1 = new TP.DrumTypeFurnace.DrumTypeFurnace();
-            this.ucFinishCleaning1 = new TP.FinishCleaning.ucFinishCleaning();
-            this.spinEdit2 = new DevExpress.XtraEditors.SpinEdit();
             this.spinEdit1 = new DevExpress.XtraEditors.SpinEdit();
             this.ucAllHeatExchanger1 = new TP.HeatExchanger.ucAllHeatExchanger();
             this.ucReheatChamber1 = new TP.ReheatChamber.ucReheatChamber();
@@ -63,13 +56,6 @@ namespace TP
             this.tabbedControlGroup1 = new DevExpress.XtraLayout.TabbedControlGroup();
             this.lcgFinishCleaning = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem14 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem15 = new DevExpress.XtraLayout.LayoutControlItem();
             this.lcgCommonView = new DevExpress.XtraLayout.LayoutControlGroup();
             this.lcgDrumTypeFurnace = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -85,28 +71,14 @@ namespace TP
             this.channelController1 = new TP.ChannelController(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit9.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit8.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit7.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit6.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit5.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit4.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit3.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit2.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgFinishCleaning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgCommonView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgDrumTypeFurnace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
@@ -123,13 +95,6 @@ namespace TP
             // 
             // layoutControl1
             // 
-            this.layoutControl1.Controls.Add(this.spinEdit9);
-            this.layoutControl1.Controls.Add(this.spinEdit8);
-            this.layoutControl1.Controls.Add(this.spinEdit7);
-            this.layoutControl1.Controls.Add(this.spinEdit6);
-            this.layoutControl1.Controls.Add(this.spinEdit5);
-            this.layoutControl1.Controls.Add(this.spinEdit4);
-            this.layoutControl1.Controls.Add(this.spinEdit3);
             this.layoutControl1.Controls.Add(this.drumTypeFurnace1);
             this.layoutControl1.Controls.Add(this.ucFinishCleaning1);
             this.layoutControl1.Controls.Add(this.spinEdit2);
@@ -148,21 +113,48 @@ namespace TP
             this.layoutControl1.TabIndex = 1;
             this.layoutControl1.Text = "layoutControl1";
             // 
-            // spinEdit9
+            // drumTypeFurnace1
             // 
-            this.spinEdit9.EditValue = new decimal(new int[] {
+            this.drumTypeFurnace1.Appearance.BackColor = System.Drawing.Color.Gainsboro;
+            this.drumTypeFurnace1.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.drumTypeFurnace1.Appearance.Options.UseBackColor = true;
+            this.drumTypeFurnace1.Appearance.Options.UseBorderColor = true;
+            this.drumTypeFurnace1.Appearance.Options.UseFont = true;
+            this.drumTypeFurnace1.Appearance.Options.UseForeColor = true;
+            this.drumTypeFurnace1.Location = new System.Drawing.Point(24, 44);
+            this.drumTypeFurnace1.Name = "drumTypeFurnace1";
+            this.drumTypeFurnace1.Size = new System.Drawing.Size(1216, 620);
+            this.drumTypeFurnace1.TabIndex = 9;
+            // 
+            // ucFinishCleaning1
+            // 
+            this.ucFinishCleaning1.AutoScroll = true;
+            this.ucFinishCleaning1.Level_NO = 0F;
+            this.ucFinishCleaning1.Level_NO2 = 0F;
+            this.ucFinishCleaning1.Level_O2 = 0F;
+            this.ucFinishCleaning1.Level_SO2 = 0F;
+            this.ucFinishCleaning1.Level_TC6 = 0F;
+            this.ucFinishCleaning1.Level_TC7 = 0F;
+            this.ucFinishCleaning1.Location = new System.Drawing.Point(24, 44);
+            this.ucFinishCleaning1.Name = "ucFinishCleaning1";
+            this.ucFinishCleaning1.Size = new System.Drawing.Size(1216, 620);
+            this.ucFinishCleaning1.TabIndex = 8;
+            // 
+            // spinEdit2
+            // 
+            this.spinEdit2.EditValue = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            this.spinEdit9.Location = new System.Drawing.Point(1104, 44);
-            this.spinEdit9.MenuManager = this.barManager1;
-            this.spinEdit9.Name = "spinEdit9";
-            this.spinEdit9.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.spinEdit2.Location = new System.Drawing.Point(681, 44);
+            this.spinEdit2.MenuManager = this.barManager1;
+            this.spinEdit2.Name = "spinEdit2";
+            this.spinEdit2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.spinEdit9.Size = new System.Drawing.Size(136, 20);
-            this.spinEdit9.StyleController = this.layoutControl1;
-            this.spinEdit9.TabIndex = 16;
+            this.spinEdit2.Size = new System.Drawing.Size(559, 20);
+            this.spinEdit2.StyleController = this.layoutControl1;
+            this.spinEdit2.TabIndex = 7;
             // 
             // barManager1
             // 
@@ -266,140 +258,6 @@ namespace TP
             this.miLookAndFeel.Id = 1;
             this.miLookAndFeel.Name = "miLookAndFeel";
             // 
-            // spinEdit8
-            // 
-            this.spinEdit8.EditValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.spinEdit8.Location = new System.Drawing.Point(1104, 68);
-            this.spinEdit8.MenuManager = this.barManager1;
-            this.spinEdit8.Name = "spinEdit8";
-            this.spinEdit8.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.spinEdit8.Size = new System.Drawing.Size(136, 20);
-            this.spinEdit8.StyleController = this.layoutControl1;
-            this.spinEdit8.TabIndex = 15;
-            // 
-            // spinEdit7
-            // 
-            this.spinEdit7.EditValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.spinEdit7.Location = new System.Drawing.Point(195, 68);
-            this.spinEdit7.MenuManager = this.barManager1;
-            this.spinEdit7.Name = "spinEdit7";
-            this.spinEdit7.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.spinEdit7.Size = new System.Drawing.Size(129, 20);
-            this.spinEdit7.StyleController = this.layoutControl1;
-            this.spinEdit7.TabIndex = 14;
-            // 
-            // spinEdit6
-            // 
-            this.spinEdit6.EditValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.spinEdit6.Location = new System.Drawing.Point(499, 44);
-            this.spinEdit6.MenuManager = this.barManager1;
-            this.spinEdit6.Name = "spinEdit6";
-            this.spinEdit6.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.spinEdit6.Size = new System.Drawing.Size(120, 20);
-            this.spinEdit6.StyleController = this.layoutControl1;
-            this.spinEdit6.TabIndex = 13;
-            // 
-            // spinEdit5
-            // 
-            this.spinEdit5.EditValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.spinEdit5.Location = new System.Drawing.Point(499, 68);
-            this.spinEdit5.MenuManager = this.barManager1;
-            this.spinEdit5.Name = "spinEdit5";
-            this.spinEdit5.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.spinEdit5.Size = new System.Drawing.Size(430, 20);
-            this.spinEdit5.StyleController = this.layoutControl1;
-            this.spinEdit5.TabIndex = 12;
-            // 
-            // spinEdit4
-            // 
-            this.spinEdit4.EditValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.spinEdit4.Location = new System.Drawing.Point(794, 44);
-            this.spinEdit4.MenuManager = this.barManager1;
-            this.spinEdit4.Name = "spinEdit4";
-            this.spinEdit4.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.spinEdit4.Size = new System.Drawing.Size(135, 20);
-            this.spinEdit4.StyleController = this.layoutControl1;
-            this.spinEdit4.TabIndex = 11;
-            // 
-            // spinEdit3
-            // 
-            this.spinEdit3.EditValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.spinEdit3.Location = new System.Drawing.Point(195, 44);
-            this.spinEdit3.MenuManager = this.barManager1;
-            this.spinEdit3.Name = "spinEdit3";
-            this.spinEdit3.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.spinEdit3.Size = new System.Drawing.Size(129, 20);
-            this.spinEdit3.StyleController = this.layoutControl1;
-            this.spinEdit3.TabIndex = 10;
-            this.spinEdit3.EditValueChanged += new System.EventHandler(this.spinEdit3_EditValueChanged);
-            // 
-            // drumTypeFurnace1
-            // 
-            this.drumTypeFurnace1.Appearance.BackColor = System.Drawing.Color.Gainsboro;
-            this.drumTypeFurnace1.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.drumTypeFurnace1.Appearance.Options.UseBackColor = true;
-            this.drumTypeFurnace1.Appearance.Options.UseBorderColor = true;
-            this.drumTypeFurnace1.Appearance.Options.UseFont = true;
-            this.drumTypeFurnace1.Appearance.Options.UseForeColor = true;
-            this.drumTypeFurnace1.Location = new System.Drawing.Point(24, 44);
-            this.drumTypeFurnace1.Name = "drumTypeFurnace1";
-            this.drumTypeFurnace1.Size = new System.Drawing.Size(1216, 620);
-            this.drumTypeFurnace1.TabIndex = 9;
-            // 
-            // ucFinishCleaning1
-            // 
-            this.ucFinishCleaning1.AutoScroll = true;
-            this.ucFinishCleaning1.Location = new System.Drawing.Point(24, 92);
-            this.ucFinishCleaning1.Name = "ucFinishCleaning1";
-            this.ucFinishCleaning1.Size = new System.Drawing.Size(1216, 572);
-            this.ucFinishCleaning1.TabIndex = 8;
-            // 
-            // spinEdit2
-            // 
-            this.spinEdit2.EditValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.spinEdit2.Location = new System.Drawing.Point(755, 44);
-            this.spinEdit2.MenuManager = this.barManager1;
-            this.spinEdit2.Name = "spinEdit2";
-            this.spinEdit2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.spinEdit2.Size = new System.Drawing.Size(485, 20);
-            this.spinEdit2.StyleController = this.layoutControl1;
-            this.spinEdit2.TabIndex = 7;
-            // 
             // spinEdit1
             // 
             this.spinEdit1.EditValue = new decimal(new int[] {
@@ -407,12 +265,12 @@ namespace TP
             0,
             0,
             0});
-            this.spinEdit1.Location = new System.Drawing.Point(195, 44);
+            this.spinEdit1.Location = new System.Drawing.Point(121, 44);
             this.spinEdit1.MenuManager = this.barManager1;
             this.spinEdit1.Name = "spinEdit1";
             this.spinEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.spinEdit1.Size = new System.Drawing.Size(385, 20);
+            this.spinEdit1.Size = new System.Drawing.Size(459, 20);
             this.spinEdit1.StyleController = this.layoutControl1;
             this.spinEdit1.TabIndex = 6;
             // 
@@ -472,8 +330,8 @@ namespace TP
             this.tabbedControlGroup1.CustomizationFormText = "tabbedControlGroup1";
             this.tabbedControlGroup1.Location = new System.Drawing.Point(0, 0);
             this.tabbedControlGroup1.Name = "tabbedControlGroup1";
-            this.tabbedControlGroup1.SelectedTabPage = this.lcgFinishCleaning;
-            this.tabbedControlGroup1.SelectedTabPageIndex = 5;
+            this.tabbedControlGroup1.SelectedTabPage = this.lcgCommonView;
+            this.tabbedControlGroup1.SelectedTabPageIndex = 0;
             this.tabbedControlGroup1.Size = new System.Drawing.Size(1244, 668);
             this.tabbedControlGroup1.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcgCommonView,
@@ -488,14 +346,7 @@ namespace TP
             // 
             this.lcgFinishCleaning.CustomizationFormText = "Финишная очистка ";
             this.lcgFinishCleaning.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem7,
-            this.layoutControlItem9,
-            this.layoutControlItem10,
-            this.layoutControlItem12,
-            this.layoutControlItem14,
-            this.layoutControlItem13,
-            this.layoutControlItem11,
-            this.layoutControlItem15});
+            this.layoutControlItem7});
             this.lcgFinishCleaning.Location = new System.Drawing.Point(0, 0);
             this.lcgFinishCleaning.Name = "lcgFinishCleaning";
             this.lcgFinishCleaning.Size = new System.Drawing.Size(1220, 624);
@@ -505,83 +356,13 @@ namespace TP
             // 
             this.layoutControlItem7.Control = this.ucFinishCleaning1;
             this.layoutControlItem7.CustomizationFormText = "layoutControlItem7";
-            this.layoutControlItem7.Location = new System.Drawing.Point(0, 48);
+            this.layoutControlItem7.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem7.Name = "layoutControlItem7";
-            this.layoutControlItem7.Size = new System.Drawing.Size(1220, 576);
+            this.layoutControlItem7.Size = new System.Drawing.Size(1220, 624);
             this.layoutControlItem7.Text = "layoutControlItem7";
             this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem7.TextToControlDistance = 0;
             this.layoutControlItem7.TextVisible = false;
-            // 
-            // layoutControlItem9
-            // 
-            this.layoutControlItem9.Control = this.spinEdit3;
-            this.layoutControlItem9.CustomizationFormText = "концентрация газа СО";
-            this.layoutControlItem9.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem9.Name = "layoutControlItem9";
-            this.layoutControlItem9.Size = new System.Drawing.Size(304, 24);
-            this.layoutControlItem9.Text = "концентрация газа СО";
-            this.layoutControlItem9.TextSize = new System.Drawing.Size(167, 13);
-            // 
-            // layoutControlItem10
-            // 
-            this.layoutControlItem10.Control = this.spinEdit4;
-            this.layoutControlItem10.CustomizationFormText = "концентрация газа NО2";
-            this.layoutControlItem10.Location = new System.Drawing.Point(599, 0);
-            this.layoutControlItem10.Name = "layoutControlItem10";
-            this.layoutControlItem10.Size = new System.Drawing.Size(310, 24);
-            this.layoutControlItem10.Text = "концентрация газа NО2";
-            this.layoutControlItem10.TextSize = new System.Drawing.Size(167, 13);
-            // 
-            // layoutControlItem12
-            // 
-            this.layoutControlItem12.Control = this.spinEdit6;
-            this.layoutControlItem12.CustomizationFormText = "концентрация газа NО";
-            this.layoutControlItem12.Location = new System.Drawing.Point(304, 0);
-            this.layoutControlItem12.Name = "layoutControlItem12";
-            this.layoutControlItem12.Size = new System.Drawing.Size(295, 24);
-            this.layoutControlItem12.Text = "концентрация газа NО";
-            this.layoutControlItem12.TextSize = new System.Drawing.Size(167, 13);
-            // 
-            // layoutControlItem14
-            // 
-            this.layoutControlItem14.Control = this.spinEdit8;
-            this.layoutControlItem14.CustomizationFormText = "TC6";
-            this.layoutControlItem14.Location = new System.Drawing.Point(909, 24);
-            this.layoutControlItem14.Name = "layoutControlItem14";
-            this.layoutControlItem14.Size = new System.Drawing.Size(311, 24);
-            this.layoutControlItem14.Text = "TC6 (перед рукавным фильтром)";
-            this.layoutControlItem14.TextSize = new System.Drawing.Size(167, 13);
-            // 
-            // layoutControlItem13
-            // 
-            this.layoutControlItem13.Control = this.spinEdit7;
-            this.layoutControlItem13.CustomizationFormText = "концентрация газа О2";
-            this.layoutControlItem13.Location = new System.Drawing.Point(0, 24);
-            this.layoutControlItem13.Name = "layoutControlItem13";
-            this.layoutControlItem13.Size = new System.Drawing.Size(304, 24);
-            this.layoutControlItem13.Text = "концентрация газа О2";
-            this.layoutControlItem13.TextSize = new System.Drawing.Size(167, 13);
-            // 
-            // layoutControlItem11
-            // 
-            this.layoutControlItem11.Control = this.spinEdit5;
-            this.layoutControlItem11.CustomizationFormText = "концентрация газа SО2";
-            this.layoutControlItem11.Location = new System.Drawing.Point(304, 24);
-            this.layoutControlItem11.Name = "layoutControlItem11";
-            this.layoutControlItem11.Size = new System.Drawing.Size(605, 24);
-            this.layoutControlItem11.Text = "концентрация газа SО2";
-            this.layoutControlItem11.TextSize = new System.Drawing.Size(167, 13);
-            // 
-            // layoutControlItem15
-            // 
-            this.layoutControlItem15.Control = this.spinEdit9;
-            this.layoutControlItem15.CustomizationFormText = "TC7";
-            this.layoutControlItem15.Location = new System.Drawing.Point(909, 0);
-            this.layoutControlItem15.Name = "layoutControlItem15";
-            this.layoutControlItem15.Size = new System.Drawing.Size(311, 24);
-            this.layoutControlItem15.Text = "TC7 (перед дымонасосом)";
-            this.layoutControlItem15.TextSize = new System.Drawing.Size(167, 13);
             // 
             // lcgCommonView
             // 
@@ -645,7 +426,7 @@ namespace TP
             this.layoutControlItem5.Name = "layoutControlItem5";
             this.layoutControlItem5.Size = new System.Drawing.Size(560, 24);
             this.layoutControlItem5.Text = "layoutControlItem5";
-            this.layoutControlItem5.TextSize = new System.Drawing.Size(167, 13);
+            this.layoutControlItem5.TextSize = new System.Drawing.Size(93, 13);
             // 
             // layoutControlItem6
             // 
@@ -655,7 +436,7 @@ namespace TP
             this.layoutControlItem6.Name = "layoutControlItem6";
             this.layoutControlItem6.Size = new System.Drawing.Size(660, 24);
             this.layoutControlItem6.Text = "layoutControlItem6";
-            this.layoutControlItem6.TextSize = new System.Drawing.Size(167, 13);
+            this.layoutControlItem6.TextSize = new System.Drawing.Size(93, 13);
             // 
             // lcgHeatExchanger
             // 
@@ -725,28 +506,14 @@ namespace TP
             this.Load += new System.EventHandler(this.frmTP_Load);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit9.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit8.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit7.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit6.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit5.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit4.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spinEdit3.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit2.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgFinishCleaning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgCommonView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lcgDrumTypeFurnace)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
@@ -803,19 +570,5 @@ namespace TP
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
         private TP.DrumTypeFurnace.DrumTypeFurnace drumTypeFurnace1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
-        private DevExpress.XtraEditors.SpinEdit spinEdit9;
-        private DevExpress.XtraEditors.SpinEdit spinEdit8;
-        private DevExpress.XtraEditors.SpinEdit spinEdit7;
-        private DevExpress.XtraEditors.SpinEdit spinEdit6;
-        private DevExpress.XtraEditors.SpinEdit spinEdit5;
-        private DevExpress.XtraEditors.SpinEdit spinEdit4;
-        private DevExpress.XtraEditors.SpinEdit spinEdit3;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem12;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem13;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem14;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem15;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
     }
 }
