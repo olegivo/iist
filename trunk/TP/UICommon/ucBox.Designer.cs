@@ -38,6 +38,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "ucBox";
             this.Size = new System.Drawing.Size(100, 40);
+            //this.Load += new System.EventHandler(this.ucBox_Load);
             this.SizeChanged += new System.EventHandler(this.ucBox_SizeChanged);
             this.ResumeLayout(false);
 

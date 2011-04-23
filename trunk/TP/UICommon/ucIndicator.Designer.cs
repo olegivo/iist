@@ -85,7 +85,6 @@
             // 
             this.linearScaleComponent1.AppearanceTickmarkText.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Bold);
             this.linearScaleComponent1.AppearanceTickmarkText.TextBrush = new DevExpress.XtraGauges.Core.Drawing.SolidBrushObject("Color:Black");
-            this.linearScaleComponent1.AutoRescaling = true;
             this.linearScaleComponent1.EndPoint = new DevExpress.XtraGauges.Core.Base.PointF2D(62.5F, 33F);
             scaleLabel1.AppearanceText.TextBrush = new DevExpress.XtraGauges.Core.Drawing.SolidBrushObject("Color:Black");
             scaleLabel1.Name = "Label0";
@@ -98,40 +97,38 @@
             this.linearScaleComponent1.MajorTickmark.ShapeScale = new DevExpress.XtraGauges.Core.Base.FactorF2D(1.5F, 1F);
             this.linearScaleComponent1.MajorTickmark.ShapeType = DevExpress.XtraGauges.Core.Model.TickmarkShapeType.Linear_Style9_3;
             this.linearScaleComponent1.MajorTickmark.TextOffset = 35F;
-            this.linearScaleComponent1.MaxValue = 14F;
+            this.linearScaleComponent1.MaxValue = 10F;
             this.linearScaleComponent1.MinorTickCount = 5;
             this.linearScaleComponent1.MinorTickmark.ShapeOffset = 6F;
             this.linearScaleComponent1.MinorTickmark.ShapeType = DevExpress.XtraGauges.Core.Model.TickmarkShapeType.Linear_Style9_1;
-            this.linearScaleComponent1.MinValue = 3F;
             this.linearScaleComponent1.Name = "scale1";
             linearScaleRange1.AppearanceRange.ContentBrush = new DevExpress.XtraGauges.Core.Drawing.SolidBrushObject("Color:LightCoral");
-            linearScaleRange1.EndValue = 14F;
+            linearScaleRange1.EndValue = 10F;
             linearScaleRange1.Name = "RangeHigh";
             linearScaleRange1.ShapeOffset = -20F;
             linearScaleRange1.StartThickness = 1F;
-            linearScaleRange1.StartValue = 9F;
+            linearScaleRange1.StartValue = 8F;
             linearScaleRange2.AppearanceRange.BorderWidth = 5F;
             linearScaleRange2.AppearanceRange.ContentBrush = new DevExpress.XtraGauges.Core.Drawing.SolidBrushObject("Color:YellowGreen");
             linearScaleRange2.EndThickness = 1F;
-            linearScaleRange2.EndValue = 9F;
+            linearScaleRange2.EndValue = 8F;
             linearScaleRange2.Name = "RangeNormal";
             linearScaleRange2.ShapeOffset = -20F;
             linearScaleRange2.StartThickness = 1F;
-            linearScaleRange2.StartValue = 7F;
+            linearScaleRange2.StartValue = 4F;
             linearScaleRange3.AppearanceRange.BorderWidth = 1F;
             linearScaleRange3.AppearanceRange.ContentBrush = new DevExpress.XtraGauges.Core.Drawing.SolidBrushObject("Color:Coral");
             linearScaleRange3.EndThickness = 1F;
-            linearScaleRange3.EndValue = 7F;
+            linearScaleRange3.EndValue = 4F;
             linearScaleRange3.Name = "RangeLow";
             linearScaleRange3.ShapeOffset = -20F;
-            linearScaleRange3.StartValue = 3F;
             this.linearScaleComponent1.Ranges.AddRange(new DevExpress.XtraGauges.Core.Model.IRange[] {
             linearScaleRange1,
             linearScaleRange2,
             linearScaleRange3});
             this.linearScaleComponent1.RescalingBestValues = true;
             this.linearScaleComponent1.StartPoint = new DevExpress.XtraGauges.Core.Base.PointF2D(62.5F, 217F);
-            this.linearScaleComponent1.Value = 13F;
+            this.linearScaleComponent1.Value = 10F;
             this.linearScaleComponent1.MinMaxValueChanged += new System.EventHandler(this.linearScaleComponent1_MinMaxValueChanged);
             // 
             // linearScaleStateIndicatorComponent1
