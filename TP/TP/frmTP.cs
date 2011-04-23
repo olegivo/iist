@@ -53,7 +53,7 @@ namespace TP
 
         private void frmTP_Load(object sender, EventArgs e)
         {
-            channelController1.Form = this;
+            //channelController1.Form = this;
         }
 
         private void spinEdit3_EditValueChanged(object sender, EventArgs e)

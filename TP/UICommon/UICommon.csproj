@@ -162,6 +162,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\DataSources\DevExpress.XtraEditors.BaseEdit.datasource" />
     <None Include="Properties\DataSources\DevExpress.XtraEditors.RadioGroup.datasource" />
     <None Include="Properties\DataSources\DevExpress.XtraEditors.SpinEdit.datasource" />
