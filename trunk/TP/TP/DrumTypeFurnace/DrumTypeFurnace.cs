@@ -14,6 +14,6 @@ namespace TP.DrumTypeFurnace
         {
             InitializeComponent();
         }
-
+    
     }
 }

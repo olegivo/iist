@@ -139,6 +139,31 @@
             this.ucLine69 = new UICommon.ucLine();
             this.ucLine70 = new UICommon.ucLine();
             this.ucLine71 = new UICommon.ucLine();
+            this.ucLine72 = new UICommon.ucLine();
+            this.ucLine73 = new UICommon.ucLine();
+            this.ucLine75 = new UICommon.ucLine();
+            this.ucCaptioned5 = new UICommon.ucCaptioned();
+            this.ucLine74 = new UICommon.ucLine();
+            this.ucValve23 = new UICommon.ucValve();
+            this.ucLine76 = new UICommon.ucLine();
+            this.ucLine77 = new UICommon.ucLine();
+            this.ucCaptioned6 = new UICommon.ucCaptioned();
+            this.ucCaptioned7 = new UICommon.ucCaptioned();
+            this.ucCaptioned8 = new UICommon.ucCaptioned();
+            this.ucCaptioned9 = new UICommon.ucCaptioned();
+            this.ucCaptioned10 = new UICommon.ucCaptioned();
+            this.ucCaptioned11 = new UICommon.ucCaptioned();
+            this.ucCaptioned12 = new UICommon.ucCaptioned();
+            this.ucCaptioned13 = new UICommon.ucCaptioned();
+            this.ucCaptioned14 = new UICommon.ucCaptioned();
+            this.ucCaptioned15 = new UICommon.ucCaptioned();
+            this.ucCaptioned16 = new UICommon.ucCaptioned();
+            this.ucCaptioned17 = new UICommon.ucCaptioned();
+            this.ucLine78 = new UICommon.ucLine();
+            this.ucLine79 = new UICommon.ucLine();
+            this.ucLine80 = new UICommon.ucLine();
+            this.ucCaptioned18 = new UICommon.ucCaptioned();
+            this.ucCaptioned19 = new UICommon.ucCaptioned();
             this.SuspendLayout();
             // 
             // ucLine6
@@ -1202,10 +1227,10 @@
             this.ucCaptioned1.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ucCaptioned1.Appearance.Options.UseBackColor = true;
             this.ucCaptioned1.Appearance.Options.UseFont = true;
-            this.ucCaptioned1.Caption = "Нефтешламы";
-            this.ucCaptioned1.Location = new System.Drawing.Point(0, 360);
+            this.ucCaptioned1.Caption = "Нефте-шламы";
+            this.ucCaptioned1.Location = new System.Drawing.Point(24, 346);
             this.ucCaptioned1.Name = "ucCaptioned1";
-            this.ucCaptioned1.Size = new System.Drawing.Size(98, 16);
+            this.ucCaptioned1.Size = new System.Drawing.Size(54, 42);
             this.ucCaptioned1.TabIndex = 67;
             // 
             // ucCaptioned3
@@ -1328,6 +1353,293 @@
             this.ucLine71.Size = new System.Drawing.Size(10, 20);
             this.ucLine71.TabIndex = 60;
             // 
+            // ucLine72
+            // 
+            this.ucLine72.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine72.Appearance.Options.UseBackColor = true;
+            this.ucLine72.Color = UICommon.LineColor.LightBlue;
+            this.ucLine72.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine72.LineWidth = 3;
+            this.ucLine72.Location = new System.Drawing.Point(128, 204);
+            this.ucLine72.Name = "ucLine72";
+            this.ucLine72.Size = new System.Drawing.Size(10, 344);
+            this.ucLine72.TabIndex = 60;
+            // 
+            // ucLine73
+            // 
+            this.ucLine73.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine73.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine73.Appearance.Options.UseBackColor = true;
+            this.ucLine73.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine73.LineWidth = 10;
+            this.ucLine73.Location = new System.Drawing.Point(863, 237);
+            this.ucLine73.Name = "ucLine73";
+            this.ucLine73.Size = new System.Drawing.Size(25, 39);
+            this.ucLine73.StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            this.ucLine73.TabIndex = 44;
+            // 
+            // ucLine75
+            // 
+            this.ucLine75.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine75.Appearance.Options.UseBackColor = true;
+            this.ucLine75.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            this.ucLine75.LineWidth = 10;
+            this.ucLine75.Location = new System.Drawing.Point(876, 201);
+            this.ucLine75.Name = "ucLine75";
+            this.ucLine75.Size = new System.Drawing.Size(72, 66);
+            this.ucLine75.TabIndex = 44;
+            // 
+            // ucCaptioned5
+            // 
+            this.ucCaptioned5.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned5.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned5.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned5.Appearance.Options.UseFont = true;
+            this.ucCaptioned5.Caption = "от водопровода";
+            this.ucCaptioned5.Location = new System.Drawing.Point(626, 480);
+            this.ucCaptioned5.Name = "ucCaptioned5";
+            this.ucCaptioned5.Size = new System.Drawing.Size(130, 30);
+            this.ucCaptioned5.TabIndex = 69;
+            // 
+            // ucLine74
+            // 
+            this.ucLine74.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine74.Appearance.Options.UseBackColor = true;
+            this.ucLine74.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine74.LineWidth = 3;
+            this.ucLine74.Location = new System.Drawing.Point(670, 460);
+            this.ucLine74.Name = "ucLine74";
+            this.ucLine74.Size = new System.Drawing.Size(23, 20);
+            this.ucLine74.StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            this.ucLine74.TabIndex = 60;
+            // 
+            // ucValve23
+            // 
+            this.ucValve23.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucValve23.Appearance.Options.UseBackColor = true;
+            this.ucValve23.Location = new System.Drawing.Point(440, 683);
+            this.ucValve23.Name = "ucValve23";
+            this.ucValve23.Size = new System.Drawing.Size(40, 20);
+            this.ucValve23.TabIndex = 22;
+            // 
+            // ucLine76
+            // 
+            this.ucLine76.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine76.Appearance.Options.UseBackColor = true;
+            this.ucLine76.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            this.ucLine76.Location = new System.Drawing.Point(479, 689);
+            this.ucLine76.Name = "ucLine76";
+            this.ucLine76.Size = new System.Drawing.Size(35, 10);
+            this.ucLine76.TabIndex = 60;
+            // 
+            // ucLine77
+            // 
+            this.ucLine77.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine77.Appearance.Options.UseBackColor = true;
+            this.ucLine77.Location = new System.Drawing.Point(420, 689);
+            this.ucLine77.Name = "ucLine77";
+            this.ucLine77.Size = new System.Drawing.Size(21, 10);
+            this.ucLine77.TabIndex = 60;
+            // 
+            // ucCaptioned6
+            // 
+            this.ucCaptioned6.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned6.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned6.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned6.Appearance.Options.UseFont = true;
+            this.ucCaptioned6.Caption = "от водопровода";
+            this.ucCaptioned6.Location = new System.Drawing.Point(408, 702);
+            this.ucCaptioned6.Name = "ucCaptioned6";
+            this.ucCaptioned6.Size = new System.Drawing.Size(130, 30);
+            this.ucCaptioned6.TabIndex = 69;
+            // 
+            // ucCaptioned7
+            // 
+            this.ucCaptioned7.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned7.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned7.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned7.Appearance.Options.UseFont = true;
+            this.ucCaptioned7.Caption = "ВН 1";
+            this.ucCaptioned7.Location = new System.Drawing.Point(355, 679);
+            this.ucCaptioned7.Name = "ucCaptioned7";
+            this.ucCaptioned7.Size = new System.Drawing.Size(46, 30);
+            this.ucCaptioned7.TabIndex = 69;
+            // 
+            // ucCaptioned8
+            // 
+            this.ucCaptioned8.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned8.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned8.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned8.Appearance.Options.UseFont = true;
+            this.ucCaptioned8.Caption = "КМ 2";
+            this.ucCaptioned8.Location = new System.Drawing.Point(227, 679);
+            this.ucCaptioned8.Name = "ucCaptioned8";
+            this.ucCaptioned8.Size = new System.Drawing.Size(46, 14);
+            this.ucCaptioned8.TabIndex = 69;
+            // 
+            // ucCaptioned9
+            // 
+            this.ucCaptioned9.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned9.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned9.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned9.Appearance.Options.UseFont = true;
+            this.ucCaptioned9.Caption = "КМ 1";
+            this.ucCaptioned9.Location = new System.Drawing.Point(227, 716);
+            this.ucCaptioned9.Name = "ucCaptioned9";
+            this.ucCaptioned9.Size = new System.Drawing.Size(46, 14);
+            this.ucCaptioned9.TabIndex = 69;
+            // 
+            // ucCaptioned10
+            // 
+            this.ucCaptioned10.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned10.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned10.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned10.Appearance.Options.UseFont = true;
+            this.ucCaptioned10.Caption = "Подача воздуха для сжигания";
+            this.ucCaptioned10.Location = new System.Drawing.Point(18, 686);
+            this.ucCaptioned10.Name = "ucCaptioned10";
+            this.ucCaptioned10.Size = new System.Drawing.Size(68, 68);
+            this.ucCaptioned10.TabIndex = 67;
+            // 
+            // ucCaptioned11
+            // 
+            this.ucCaptioned11.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned11.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned11.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned11.Appearance.Options.UseFont = true;
+            this.ucCaptioned11.Caption = "ЦВТ";
+            this.ucCaptioned11.Location = new System.Drawing.Point(454, 399);
+            this.ucCaptioned11.Name = "ucCaptioned11";
+            this.ucCaptioned11.Size = new System.Drawing.Size(46, 23);
+            this.ucCaptioned11.TabIndex = 69;
+            // 
+            // ucCaptioned12
+            // 
+            this.ucCaptioned12.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned12.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned12.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned12.Appearance.Options.UseFont = true;
+            this.ucCaptioned12.Caption = "ВК";
+            this.ucCaptioned12.Location = new System.Drawing.Point(543, 421);
+            this.ucCaptioned12.Name = "ucCaptioned12";
+            this.ucCaptioned12.Size = new System.Drawing.Size(46, 23);
+            this.ucCaptioned12.TabIndex = 69;
+            // 
+            // ucCaptioned13
+            // 
+            this.ucCaptioned13.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned13.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned13.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned13.Appearance.Options.UseFont = true;
+            this.ucCaptioned13.Caption = "ПВ";
+            this.ucCaptioned13.Location = new System.Drawing.Point(699, 335);
+            this.ucCaptioned13.Name = "ucCaptioned13";
+            this.ucCaptioned13.Size = new System.Drawing.Size(46, 23);
+            this.ucCaptioned13.TabIndex = 69;
+            // 
+            // ucCaptioned14
+            // 
+            this.ucCaptioned14.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned14.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned14.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned14.Appearance.Options.UseFont = true;
+            this.ucCaptioned14.Caption = "ЗУ";
+            this.ucCaptioned14.Location = new System.Drawing.Point(1072, 318);
+            this.ucCaptioned14.Name = "ucCaptioned14";
+            this.ucCaptioned14.Size = new System.Drawing.Size(46, 23);
+            this.ucCaptioned14.TabIndex = 69;
+            // 
+            // ucCaptioned15
+            // 
+            this.ucCaptioned15.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned15.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned15.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned15.Appearance.Options.UseFont = true;
+            this.ucCaptioned15.Caption = "к ТА";
+            this.ucCaptioned15.Location = new System.Drawing.Point(954, 226);
+            this.ucCaptioned15.Name = "ucCaptioned15";
+            this.ucCaptioned15.Size = new System.Drawing.Size(46, 23);
+            this.ucCaptioned15.TabIndex = 69;
+            // 
+            // ucCaptioned16
+            // 
+            this.ucCaptioned16.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned16.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned16.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned16.Appearance.Options.UseFont = true;
+            this.ucCaptioned16.Caption = "ЗС";
+            this.ucCaptioned16.Location = new System.Drawing.Point(820, 726);
+            this.ucCaptioned16.Name = "ucCaptioned16";
+            this.ucCaptioned16.Size = new System.Drawing.Size(46, 23);
+            this.ucCaptioned16.TabIndex = 69;
+            // 
+            // ucCaptioned17
+            // 
+            this.ucCaptioned17.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned17.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned17.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned17.Appearance.Options.UseFont = true;
+            this.ucCaptioned17.Caption = "Выгрузка золы в контейнер";
+            this.ucCaptioned17.Location = new System.Drawing.Point(924, 653);
+            this.ucCaptioned17.Name = "ucCaptioned17";
+            this.ucCaptioned17.Size = new System.Drawing.Size(76, 62);
+            this.ucCaptioned17.TabIndex = 69;
+            // 
+            // ucLine78
+            // 
+            this.ucLine78.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine78.Appearance.Options.UseBackColor = true;
+            this.ucLine78.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine78.LineWidth = 3;
+            this.ucLine78.Location = new System.Drawing.Point(826, 329);
+            this.ucLine78.Name = "ucLine78";
+            this.ucLine78.Size = new System.Drawing.Size(10, 114);
+            this.ucLine78.TabIndex = 60;
+            // 
+            // ucLine79
+            // 
+            this.ucLine79.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine79.Appearance.Options.UseBackColor = true;
+            this.ucLine79.Location = new System.Drawing.Point(813, 327);
+            this.ucLine79.Name = "ucLine79";
+            this.ucLine79.Size = new System.Drawing.Size(18, 10);
+            this.ucLine79.StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            this.ucLine79.TabIndex = 60;
+            // 
+            // ucLine80
+            // 
+            this.ucLine80.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine80.Appearance.Options.UseBackColor = true;
+            this.ucLine80.Location = new System.Drawing.Point(813, 352);
+            this.ucLine80.Name = "ucLine80";
+            this.ucLine80.Size = new System.Drawing.Size(18, 10);
+            this.ucLine80.StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            this.ucLine80.TabIndex = 60;
+            // 
+            // ucCaptioned18
+            // 
+            this.ucCaptioned18.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned18.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned18.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned18.Appearance.Options.UseFont = true;
+            this.ucCaptioned18.Caption = " подача воздуха для  охлаждения";
+            this.ucCaptioned18.Location = new System.Drawing.Point(782, 444);
+            this.ucCaptioned18.Name = "ucCaptioned18";
+            this.ucCaptioned18.Size = new System.Drawing.Size(130, 30);
+            this.ucCaptioned18.TabIndex = 69;
+            // 
+            // ucCaptioned19
+            // 
+            this.ucCaptioned19.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned19.Appearance.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ucCaptioned19.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned19.Appearance.Options.UseFont = true;
+            this.ucCaptioned19.Caption = "слив воды в канализацию";
+            this.ucCaptioned19.Location = new System.Drawing.Point(627, 209);
+            this.ucCaptioned19.Name = "ucCaptioned19";
+            this.ucCaptioned19.Size = new System.Drawing.Size(185, 24);
+            this.ucCaptioned19.TabIndex = 69;
+            // 
             // DrumTypeFurnace
             // 
             this.Appearance.BackColor = System.Drawing.Color.Gainsboro;
@@ -1338,7 +1650,24 @@
             this.Appearance.Options.UseForeColor = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ucLine80);
+            this.Controls.Add(this.ucLine79);
+            this.Controls.Add(this.ucCaptioned15);
+            this.Controls.Add(this.ucCaptioned17);
+            this.Controls.Add(this.ucCaptioned16);
+            this.Controls.Add(this.ucCaptioned14);
+            this.Controls.Add(this.ucCaptioned13);
+            this.Controls.Add(this.ucCaptioned12);
+            this.Controls.Add(this.ucCaptioned11);
+            this.Controls.Add(this.ucCaptioned9);
+            this.Controls.Add(this.ucCaptioned8);
+            this.Controls.Add(this.ucCaptioned7);
+            this.Controls.Add(this.ucCaptioned18);
+            this.Controls.Add(this.ucCaptioned6);
+            this.Controls.Add(this.ucCaptioned19);
+            this.Controls.Add(this.ucCaptioned5);
             this.Controls.Add(this.ucCaptioned4);
+            this.Controls.Add(this.ucCaptioned10);
             this.Controls.Add(this.ucCaptioned3);
             this.Controls.Add(this.ucCaptioned1);
             this.Controls.Add(this.ucCaptioned2);
@@ -1365,6 +1694,8 @@
             this.Controls.Add(this.ucLine71);
             this.Controls.Add(this.ucLine68);
             this.Controls.Add(this.ucLine70);
+            this.Controls.Add(this.ucLine74);
+            this.Controls.Add(this.ucLine78);
             this.Controls.Add(this.ucLine67);
             this.Controls.Add(this.ucLine65);
             this.Controls.Add(this.ucLine64);
@@ -1375,6 +1706,7 @@
             this.Controls.Add(this.ucLine46);
             this.Controls.Add(this.ucLine55);
             this.Controls.Add(this.ucLine44);
+            this.Controls.Add(this.ucLine72);
             this.Controls.Add(this.ucLine36);
             this.Controls.Add(this.ucLine31);
             this.Controls.Add(this.ucLine30);
@@ -1399,8 +1731,10 @@
             this.Controls.Add(this.ucLine57);
             this.Controls.Add(this.ucLine69);
             this.Controls.Add(this.ucLine66);
+            this.Controls.Add(this.ucLine77);
             this.Controls.Add(this.ucLine48);
             this.Controls.Add(this.ucLine63);
+            this.Controls.Add(this.ucLine76);
             this.Controls.Add(this.ucLine49);
             this.Controls.Add(this.ucLine45);
             this.Controls.Add(this.ucLine8);
@@ -1410,14 +1744,12 @@
             this.Controls.Add(this.ucStakan1);
             this.Controls.Add(this.ucBurner6);
             this.Controls.Add(this.ucBurner5);
-            this.Controls.Add(this.ucBurner4);
             this.Controls.Add(this.ucBurner3);
-            this.Controls.Add(this.ucBurner2);
             this.Controls.Add(this.ucBurner1);
-            this.Controls.Add(this.ucPump2);
-            this.Controls.Add(this.ucPump1);
             this.Controls.Add(this.ucValve22);
             this.Controls.Add(this.ucValve21);
+            this.Controls.Add(this.ucLine73);
+            this.Controls.Add(this.ucLine75);
             this.Controls.Add(this.ucLine5);
             this.Controls.Add(this.ucLine2);
             this.Controls.Add(this.ucLine1);
@@ -1430,6 +1762,7 @@
             this.Controls.Add(this.ucLine4);
             this.Controls.Add(this.ucLine3);
             this.Controls.Add(this.ucValve17);
+            this.Controls.Add(this.ucValve23);
             this.Controls.Add(this.ucValve18);
             this.Controls.Add(this.ucPump4);
             this.Controls.Add(this.ucPump6);
@@ -1448,6 +1781,10 @@
             this.Controls.Add(this.ucValve5);
             this.Controls.Add(this.ucLine61);
             this.Controls.Add(this.ucLine53);
+            this.Controls.Add(this.ucBurner2);
+            this.Controls.Add(this.ucBurner4);
+            this.Controls.Add(this.ucPump1);
+            this.Controls.Add(this.ucPump2);
             this.Controls.Add(this.ucPe4b1);
             this.Name = "DrumTypeFurnace";
             this.Size = new System.Drawing.Size(1200, 800);
@@ -1568,5 +1905,30 @@
         private UICommon.ucLine ucLine69;
         private UICommon.ucLine ucLine70;
         private UICommon.ucLine ucLine71;
+        private UICommon.ucLine ucLine72;
+        private UICommon.ucLine ucLine73;
+        private UICommon.ucLine ucLine75;
+        private UICommon.ucCaptioned ucCaptioned5;
+        private UICommon.ucLine ucLine74;
+        private UICommon.ucValve ucValve23;
+        private UICommon.ucLine ucLine76;
+        private UICommon.ucLine ucLine77;
+        private UICommon.ucCaptioned ucCaptioned6;
+        private UICommon.ucCaptioned ucCaptioned7;
+        private UICommon.ucCaptioned ucCaptioned8;
+        private UICommon.ucCaptioned ucCaptioned9;
+        private UICommon.ucCaptioned ucCaptioned10;
+        private UICommon.ucCaptioned ucCaptioned11;
+        private UICommon.ucCaptioned ucCaptioned12;
+        private UICommon.ucCaptioned ucCaptioned13;
+        private UICommon.ucCaptioned ucCaptioned14;
+        private UICommon.ucCaptioned ucCaptioned15;
+        private UICommon.ucCaptioned ucCaptioned16;
+        private UICommon.ucCaptioned ucCaptioned17;
+        private UICommon.ucLine ucLine78;
+        private UICommon.ucLine ucLine79;
+        private UICommon.ucLine ucLine80;
+        private UICommon.ucCaptioned ucCaptioned18;
+        private UICommon.ucCaptioned ucCaptioned19;
     }
 }
