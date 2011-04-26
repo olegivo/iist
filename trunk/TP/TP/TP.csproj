@@ -97,6 +97,18 @@
     <Compile Include="DrumTypeFurnace\ucKrutilka.Designer.cs">
       <DependentUpon>ucKrutilka.cs</DependentUpon>
     </Compile>
+    <Compile Include="DrumTypeFurnace\ucPe4b.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrumTypeFurnace\ucPe4b.Designer.cs">
+      <DependentUpon>ucPe4b.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DrumTypeFurnace\ucStakan.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrumTypeFurnace\ucStakan.Designer.cs">
+      <DependentUpon>ucStakan.cs</DependentUpon>
+    </Compile>
     <Compile Include="DrumTypeFurnace\ucTransporter3d.cs">
       <SubType>UserControl</SubType>
     </Compile>
