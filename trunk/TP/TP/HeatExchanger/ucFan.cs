@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using UICommon;
 
-namespace HeatExchanger
+namespace TP.HeatExchanger
 {
     public partial class ucFan : ucCaptioned
     {
