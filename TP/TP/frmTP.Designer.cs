@@ -54,17 +54,21 @@ namespace TP
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
+            this.sbUnregister = new DevExpress.XtraEditors.SimpleButton();
+            this.sbRegister = new DevExpress.XtraEditors.SimpleButton();
             this.xtraTabPage2 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage3 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage4 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage5 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage6 = new DevExpress.XtraTab.XtraTabPage();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.styleController1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
+            this.xtraTabPage1.SuspendLayout();
             this.xtraTabPage2.SuspendLayout();
             this.xtraTabPage3.SuspendLayout();
             this.xtraTabPage4.SuspendLayout();
@@ -203,7 +207,7 @@ namespace TP
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlTop.Size = new System.Drawing.Size(1264, 48);
+            this.barDockControlTop.Size = new System.Drawing.Size(1264, 51);
             // 
             // barDockControlBottom
             // 
@@ -216,15 +220,15 @@ namespace TP
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 48);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 691);
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 51);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 688);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(1264, 48);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 691);
+            this.barDockControlRight.Location = new System.Drawing.Point(1264, 51);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 688);
             // 
             // miLookAndFeel
             // 
@@ -237,15 +241,19 @@ namespace TP
             this.styleController1.LookAndFeel.SkinName = "iMaginary";
             this.styleController1.LookAndFeel.UseDefaultLookAndFeel = false;
             // 
+            // channelController1
+            // 
+            this.channelController1.AutoSubscribeChannels = true;
+            // 
             // groupControl1
             // 
             this.groupControl1.CaptionLocation = DevExpress.Utils.Locations.Top;
             this.groupControl1.Controls.Add(this.xtraTabControl1);
             this.groupControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupControl1.Location = new System.Drawing.Point(0, 48);
+            this.groupControl1.Location = new System.Drawing.Point(0, 51);
             this.groupControl1.Name = "groupControl1";
             this.groupControl1.ShowCaption = false;
-            this.groupControl1.Size = new System.Drawing.Size(1264, 691);
+            this.groupControl1.Size = new System.Drawing.Size(1264, 688);
             this.groupControl1.TabIndex = 6;
             this.groupControl1.Text = "layoutControlGroup1";
             // 
@@ -255,7 +263,7 @@ namespace TP
             this.xtraTabControl1.Location = new System.Drawing.Point(2, 2);
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
-            this.xtraTabControl1.Size = new System.Drawing.Size(1260, 687);
+            this.xtraTabControl1.Size = new System.Drawing.Size(1260, 684);
             this.xtraTabControl1.TabIndex = 0;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
@@ -267,9 +275,30 @@ namespace TP
             // 
             // xtraTabPage1
             // 
+            this.xtraTabPage1.Controls.Add(this.textBox1);
+            this.xtraTabPage1.Controls.Add(this.sbUnregister);
+            this.xtraTabPage1.Controls.Add(this.sbRegister);
             this.xtraTabPage1.Name = "xtraTabPage1";
-            this.xtraTabPage1.Size = new System.Drawing.Size(1252, 659);
+            this.xtraTabPage1.Size = new System.Drawing.Size(1252, 656);
             this.xtraTabPage1.Text = "Общий вид";
+            // 
+            // sbUnregister
+            // 
+            this.sbUnregister.Location = new System.Drawing.Point(89, 5);
+            this.sbUnregister.Name = "sbUnregister";
+            this.sbUnregister.Size = new System.Drawing.Size(75, 23);
+            this.sbUnregister.TabIndex = 0;
+            this.sbUnregister.Text = "Unregister";
+            this.sbUnregister.Click += new System.EventHandler(this.sbUnregister_Click);
+            // 
+            // sbRegister
+            // 
+            this.sbRegister.Location = new System.Drawing.Point(8, 5);
+            this.sbRegister.Name = "sbRegister";
+            this.sbRegister.Size = new System.Drawing.Size(75, 23);
+            this.sbRegister.TabIndex = 0;
+            this.sbRegister.Text = "Register";
+            this.sbRegister.Click += new System.EventHandler(this.sbRegister_Click);
             // 
             // xtraTabPage2
             // 
@@ -306,6 +335,18 @@ namespace TP
             this.xtraTabPage6.Size = new System.Drawing.Size(1252, 656);
             this.xtraTabPage6.Text = "Финишная очистка ";
             // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Location = new System.Drawing.Point(170, 5);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBox1.Size = new System.Drawing.Size(1078, 648);
+            this.textBox1.TabIndex = 2;
+            // 
             // frmTP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -329,6 +370,8 @@ namespace TP
             this.groupControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
             this.xtraTabControl1.ResumeLayout(false);
+            this.xtraTabPage1.ResumeLayout(false);
+            this.xtraTabPage1.PerformLayout();
             this.xtraTabPage2.ResumeLayout(false);
             this.xtraTabPage3.ResumeLayout(false);
             this.xtraTabPage4.ResumeLayout(false);
@@ -368,5 +411,8 @@ namespace TP
         private DevExpress.XtraTab.XtraTabPage xtraTabPage4;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage5;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage6;
+        private DevExpress.XtraEditors.SimpleButton sbUnregister;
+        private DevExpress.XtraEditors.SimpleButton sbRegister;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

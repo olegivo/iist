@@ -1,6 +1,6 @@
 ﻿using System;
-using DevExpress.LookAndFeel;
-using DevExpress.Skins;
+using System.Linq;
+using System.Windows.Forms;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Helpers;
 using DevExpress.XtraBars.Ribbon;
@@ -53,12 +53,48 @@ namespace TP
 
         private void frmTP_Load(object sender, EventArgs e)
         {
+            channelController1.InitProvider("HighLevelClient");
+            channelController1.NeedProtocol += channelController1_NeedProtocol;
             //channelController1.Form = this;
         }
 
-        private void spinEdit3_EditValueChanged(object sender, EventArgs e)
+        void channelController1_NeedProtocol(object sender, EventArgs e)
         {
+            Protocol(sender);
+        }
 
+        private void sbRegister_Click(object sender, EventArgs e)
+        {
+            channelController1.Register();
+        }
+
+        private void sbUnregister_Click(object sender, EventArgs e)
+        {
+            channelController1.Unregister();
+        }
+
+        private void Protocol(object sender)
+        {
+            if (sender is double || sender is string)
+            {
+                string s = string.Format("{0}\t{1}{2}", DateTime.Now, sender, Environment.NewLine);
+
+                SetText(textBox1, s);
+            }
+        }
+
+        private delegate void StDelegate(TextBox info, string s);
+        private void SetText(TextBox info, string s)
+        {
+            if (info.InvokeRequired)
+            {
+                StDelegate ddd = SetText;
+                info.Invoke(ddd, new object[] { info, s });
+            }
+            else
+            {
+                info.AppendText(s);
+            }
         }
 
         //private void OnPopupLookAndFeel(object sender, EventArgs e)
