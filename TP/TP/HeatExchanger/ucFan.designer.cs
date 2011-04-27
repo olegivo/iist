@@ -1,4 +1,4 @@
-﻿namespace HeatExchanger
+﻿namespace TP.HeatExchanger
 {
     partial class ucFan
     {
