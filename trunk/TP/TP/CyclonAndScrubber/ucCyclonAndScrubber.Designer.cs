@@ -138,9 +138,9 @@ namespace TP.CyclonAndScrubber
             this.ucLine1 = new UICommon.ucLine();
             this.ucTransporter2 = new UICommon.ucTransporter();
             this.ucTransporter1 = new UICommon.ucTransporter();
-            this.ucGauge3 = new UICommon.ucIndicator();
-            this.ucGauge2 = new UICommon.ucIndicator();
-            this.ucGauge1 = new UICommon.ucIndicator();
+            this.ucIndicatorLevel10 = new UICommon.ucIndicator();
+            this.ucIndicatorPh2 = new UICommon.ucIndicator();
+            this.ucIndicatorPh1 = new UICommon.ucIndicator();
             this.ucValve24 = new UICommon.ucValve();
             this.ucValve23 = new UICommon.ucValve();
             this.ucValve22 = new UICommon.ucValve();
@@ -1301,47 +1301,47 @@ namespace TP.CyclonAndScrubber
             this.ucTransporter1.Size = new System.Drawing.Size(74, 8);
             this.ucTransporter1.TabIndex = 8;
             // 
-            // ucGauge3
+            // ucIndicatorLevel10
             // 
-            this.ucGauge3.AllowedMaxValue = 800F;
-            this.ucGauge3.AllowedMinValue = 300F;
-            this.ucGauge3.Caption = "ДУ10:";
-            this.ucGauge3.EditValue = 10F;
-            this.ucGauge3.Location = new System.Drawing.Point(497, 3);
-            this.ucGauge3.MaxValue = 1000F;
-            this.ucGauge3.MinValue = 0F;
-            this.ucGauge3.Name = "ucGauge3";
-            this.ucGauge3.Size = new System.Drawing.Size(47, 77);
-            this.ucGauge3.TabIndex = 7;
-            this.ucGauge3.TickCount = 10;
+            this.ucIndicatorLevel10.AllowedMaxValue = 800F;
+            this.ucIndicatorLevel10.AllowedMinValue = 300F;
+            this.ucIndicatorLevel10.Caption = "ДУ10:";
+            this.ucIndicatorLevel10.EditValue = 10F;
+            this.ucIndicatorLevel10.Location = new System.Drawing.Point(497, 3);
+            this.ucIndicatorLevel10.MaxValue = 1000F;
+            this.ucIndicatorLevel10.MinValue = 0F;
+            this.ucIndicatorLevel10.Name = "ucIndicatorLevel10";
+            this.ucIndicatorLevel10.Size = new System.Drawing.Size(47, 77);
+            this.ucIndicatorLevel10.TabIndex = 7;
+            this.ucIndicatorLevel10.TickCount = 10;
             // 
-            // ucGauge2
+            // ucIndicatorPh2
             // 
-            this.ucGauge2.AllowedMaxValue = 0F;
-            this.ucGauge2.AllowedMinValue = 0F;
-            this.ucGauge2.Caption = "Ph2:";
-            this.ucGauge2.EditValue = 13F;
-            this.ucGauge2.Location = new System.Drawing.Point(1047, 355);
-            this.ucGauge2.MaxValue = 14F;
-            this.ucGauge2.MinValue = 3F;
-            this.ucGauge2.Name = "ucGauge2";
-            this.ucGauge2.Size = new System.Drawing.Size(54, 95);
-            this.ucGauge2.TabIndex = 7;
-            this.ucGauge2.TickCount = 0;
+            this.ucIndicatorPh2.AllowedMaxValue = 0F;
+            this.ucIndicatorPh2.AllowedMinValue = 0F;
+            this.ucIndicatorPh2.Caption = "Ph2:";
+            this.ucIndicatorPh2.EditValue = 13F;
+            this.ucIndicatorPh2.Location = new System.Drawing.Point(1047, 355);
+            this.ucIndicatorPh2.MaxValue = 14F;
+            this.ucIndicatorPh2.MinValue = 3F;
+            this.ucIndicatorPh2.Name = "ucIndicatorPh2";
+            this.ucIndicatorPh2.Size = new System.Drawing.Size(54, 95);
+            this.ucIndicatorPh2.TabIndex = 7;
+            this.ucIndicatorPh2.TickCount = 0;
             // 
-            // ucGauge1
+            // ucIndicatorPh1
             // 
-            this.ucGauge1.AllowedMaxValue = 0F;
-            this.ucGauge1.AllowedMinValue = 0F;
-            this.ucGauge1.Caption = "Ph1:";
-            this.ucGauge1.EditValue = 13F;
-            this.ucGauge1.Location = new System.Drawing.Point(67, 299);
-            this.ucGauge1.MaxValue = 14F;
-            this.ucGauge1.MinValue = 3F;
-            this.ucGauge1.Name = "ucGauge1";
-            this.ucGauge1.Size = new System.Drawing.Size(54, 92);
-            this.ucGauge1.TabIndex = 7;
-            this.ucGauge1.TickCount = 0;
+            this.ucIndicatorPh1.AllowedMaxValue = 0F;
+            this.ucIndicatorPh1.AllowedMinValue = 0F;
+            this.ucIndicatorPh1.Caption = "Ph1:";
+            this.ucIndicatorPh1.EditValue = 13F;
+            this.ucIndicatorPh1.Location = new System.Drawing.Point(67, 299);
+            this.ucIndicatorPh1.MaxValue = 14F;
+            this.ucIndicatorPh1.MinValue = 3F;
+            this.ucIndicatorPh1.Name = "ucIndicatorPh1";
+            this.ucIndicatorPh1.Size = new System.Drawing.Size(54, 92);
+            this.ucIndicatorPh1.TabIndex = 7;
+            this.ucIndicatorPh1.TickCount = 0;
             // 
             // ucValve24
             // 
@@ -1758,9 +1758,9 @@ namespace TP.CyclonAndScrubber
             this.Controls.Add(this.ucLine1);
             this.Controls.Add(this.ucTransporter2);
             this.Controls.Add(this.ucTransporter1);
-            this.Controls.Add(this.ucGauge3);
-            this.Controls.Add(this.ucGauge2);
-            this.Controls.Add(this.ucGauge1);
+            this.Controls.Add(this.ucIndicatorLevel10);
+            this.Controls.Add(this.ucIndicatorPh2);
+            this.Controls.Add(this.ucIndicatorPh1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label9);
@@ -1849,10 +1849,10 @@ namespace TP.CyclonAndScrubber
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape81;
-        private ucIndicator ucGauge1;
-        private ucIndicator ucGauge2;
+        private ucIndicator ucIndicatorPh1;
+        private ucIndicator ucIndicatorPh2;
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape82;
-        private ucIndicator ucGauge3;
+        private ucIndicator ucIndicatorLevel10;
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape83;
         private ucTransporter ucTransporter1;
         private ucTransporter ucTransporter2;
