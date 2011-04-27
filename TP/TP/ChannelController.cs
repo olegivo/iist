@@ -203,15 +203,18 @@ namespace TP
                 Provider.ChannelRegistered += Provider_ChannelRegistered;
                 Provider.ChannelSubscribeCompleted += Provider_ChannelSubscribeCompleted;
                 Provider.ChannelUnSubscribeCompleted += Provider_ChannelUnSubscribeCompleted;
-                Provider.HasReadChannel += Provider_HasReadChannel;
                 
                 isitialized = true;
             }
         }
 
-        void Provider_HasReadChannel(object sender, CallbackHandler.DataEventArgs e)
+        /// <summary>
+        /// Прочитан канал
+        /// </summary>
+        public event EventHandler<CallbackHandler.DataEventArgs> HasReadChannel
         {
-            //TODO: пришли новые данные, отсюда нужно передать пришедшее значение в контролы
+            add { Provider.HasReadChannel += value; }
+            remove { Provider.HasReadChannel -= value; }
         }
 
         private void Provider_NeedProtocol(object sender, EventArgs e)
