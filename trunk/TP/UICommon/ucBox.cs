@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System;
-
-using DevExpress.XtraEditors;
-using DevExpress.XtraGauges.Core.Model;
 
 namespace UICommon
 {
@@ -19,9 +17,13 @@ namespace UICommon
         public ucBox()
         {
             InitializeComponent();
+            CreateBrashes();
         }
         
-        const int GradWidth = 10;   //ширина градиента
+        /// <summary>
+        /// ширина градиента
+        /// </summary>
+        const int GradWidth = 10;
 
         /// <summary>
         /// 
@@ -29,18 +31,11 @@ namespace UICommon
         /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
-            //Graphics g = e.Graphics;
-            //if (XMax < GradWidth) { throw new Exception("Box size is too small."); }
-
             //градиент
-            var myBrush1 = new System.Drawing.Drawing2D.LinearGradientBrush(new Point(0, YMax), new Point(GradWidth, YMax), Color.DarkGray, Color.Gray);
-            var myBrush2 = new System.Drawing.Drawing2D.LinearGradientBrush(new Point(XMax-GradWidth-1, YMax), new Point(XMax, YMax), Color.Gray,Color.DimGray);
-            var myBrush3 = new System.Drawing.Drawing2D.LinearGradientBrush(new Point(0, 0), new Point(GradWidth, GradWidth), Color.LightBlue, Color.Transparent);
             e.Graphics.FillRectangle(Brushes.Gray, 0, 0, XMax, YMax);
             e.Graphics.FillRectangle(myBrush1, 0, 0, GradWidth, YMax);
             e.Graphics.FillRectangle(myBrush2, XMax-GradWidth, 0, GradWidth, YMax);
             
-            //Dispose(myBrush1);
             //уголки
             e.Graphics.FillPolygon(Brushes.Black, new[]{
                 new Point(0,GradWidth),
@@ -61,7 +56,7 @@ namespace UICommon
 
             
             //линия и градиент уровня
-            float f = YMax - YMax * Level / 1500;//ucIndicator.MaxValue;
+            float f = YMax - YMax * Level / 100;
             e.Graphics.FillRectangle(myBrush3, GradWidth, f, XMax - 2 * GradWidth, YMax - f);
             e.Graphics.DrawLine(Pens.Black, 0, f, XMax-1,  f);
 
@@ -69,9 +64,13 @@ namespace UICommon
         }
 
         private float _level;
+        private LinearGradientBrush myBrush1;
+        private LinearGradientBrush myBrush2;
+        private LinearGradientBrush myBrush3;
 
         /// <summary>
-        /// уровень наполнения (заливки) box'a
+        /// Уровень наполнения (в процентах)
+        /// Влияет на процент заливки снизу вверх
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public float Level
@@ -86,20 +85,28 @@ namespace UICommon
                 }
             }
         }
-        /// <summary>
-        /// Задать минимальную ширину box'а
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void ucBox_SizeChanged(object sender, EventArgs e)
         {
             CaptionLocation = new Point(25, YMax / 2);
+            SetMinWidth();
+            CreateBrashes();
+        }
 
+        private void CreateBrashes()
+        {
+            myBrush1 = new LinearGradientBrush(new Point(0, YMax), new Point(GradWidth, YMax), Color.DarkGray, Color.Gray);
+            myBrush2 = new LinearGradientBrush(new Point(XMax - GradWidth - 1, YMax), new Point(XMax, YMax), Color.Gray, Color.DimGray);
+            myBrush3 = new LinearGradientBrush(new Point(0, 0), new Point(GradWidth, GradWidth), Color.LightBlue, Color.Transparent);
+        }
+
+        /// <summary>
+        /// задать минимальную ширину
+        /// </summary>
+        private void SetMinWidth()
+        {
             if (Size.Width < GradWidth * 2)
                 Size = new Size(GradWidth*2, Size.Height);
         }
-
-
-
-     }
+    }
 }
