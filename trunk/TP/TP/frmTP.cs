@@ -66,8 +66,10 @@ namespace TP
                 case 5:
                     break; //TР5	температура в теплообменнике ТО2
                 case 6:
+                    ucFinishCleaning1.Temperature_TC6 = value;
                     break; //TС6	температура перед рукавным фильтром
                 case 7:
+                    ucFinishCleaning1.Temperature_TC7 = value;
                     break; //TС7	температура перед дымососом
                 case 8:
                     break; //TС8	температура воды в системе охлаждения
@@ -97,14 +99,19 @@ namespace TP
                 case 19:
                     break; //Г-СО	концентрация газа СО
                 case 20:
+                    ucFinishCleaning1.GasConcentration_O2 = value;
                     break; //Г-О2	концентрация газа О2
                 case 21:
+                    ucFinishCleaning1.GasConcentration_CO = value;
                     break; //Г-СО	концентрация газа СО
                 case 22:
+                    ucFinishCleaning1.GasConcentration_SO2 = value;
                     break; //Г-SО2	концентрация газа SО2
                 case 23:
+                    ucFinishCleaning1.GasConcentration_NO = value;
                     break; //Г-NО	концентрация газа NО
                 case 24:
+                    ucFinishCleaning1.GasConcentration_NO2 = value;
                     break; //Г-NО2	концентрация газа NО2
             }
         }
