@@ -94,12 +94,12 @@ namespace TP
             // 
             this.ucFinishCleaning1.AutoScroll = true;
             this.ucFinishCleaning1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucFinishCleaning1.Level_NO = 0F;
-            this.ucFinishCleaning1.Level_NO2 = 0F;
-            this.ucFinishCleaning1.Level_O2 = 0F;
-            this.ucFinishCleaning1.Level_SO2 = 0F;
-            this.ucFinishCleaning1.Level_TC6 = 0F;
-            this.ucFinishCleaning1.Level_TC7 = 0F;
+            this.ucFinishCleaning1.GasConcentration_NO = 0F;
+            this.ucFinishCleaning1.GasConcentration_NO2 = 0F;
+            this.ucFinishCleaning1.GasConcentration_O2 = 0F;
+            this.ucFinishCleaning1.GasConcentration_SO2 = 0F;
+            this.ucFinishCleaning1.Temperature_TC6 = 0F;
+            this.ucFinishCleaning1.Temperature_TC7 = 0F;
             this.ucFinishCleaning1.Location = new System.Drawing.Point(0, 0);
             this.ucFinishCleaning1.Name = "ucFinishCleaning1";
             this.ucFinishCleaning1.Size = new System.Drawing.Size(1252, 656);
