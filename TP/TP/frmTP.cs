@@ -62,8 +62,10 @@ namespace TP
                 case 3:
                     break; //TП3	температура в камере дожигания
                 case 4:
+                    ucAllHeatExchanger1.Temperature_TP4 = value;
                     break; //TР4	температура в теплообменнике ТО1
                 case 5:
+                    ucAllHeatExchanger1.Temperature_TP5 = value;
                     break; //TР5	температура в теплообменнике ТО2
                 case 6:
                     ucFinishCleaning1.Temperature_TC6 = value;
@@ -95,8 +97,10 @@ namespace TP
                     ucCyclonAndScrubber1.Level10 = value;
                     break; //ДУ-10	уровень в СБ
                 case 18:
+                    ucAllHeatExchanger1.Concentration_O2 = value;
                     break; //Г-О2	концентрация газа О2
                 case 19:
+                    ucAllHeatExchanger1.Concentration_CO = value;
                     break; //Г-СО	концентрация газа СО
                 case 20:
                     ucFinishCleaning1.GasConcentration_O2 = value;
