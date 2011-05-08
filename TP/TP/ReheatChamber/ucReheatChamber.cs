@@ -21,7 +21,7 @@ namespace TP.ReheatChamber
         /// ДУ4 (РЕ)
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        public float Level2
+        public float Level4
         {
             get { return ucBox2.Level; }
             set { ucIndicator2.EditValue = ucBox2.Level = value; }
@@ -30,7 +30,7 @@ namespace TP.ReheatChamber
         /// ДУ1 (НЕ)
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        public float Level3
+        public float Level1
         {
             get { return ucBox3.Level; }
             set { ucIndicator3.EditValue = ucBox3.Level = value; }
@@ -39,7 +39,7 @@ namespace TP.ReheatChamber
         /// ДУ11 (ПТ)
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        public float Level4
+        public float Level11
         {
             get { return ucBox4.Level; }
             set { ucIndicator4.EditValue = ucBox4.Level = value; }
@@ -48,7 +48,7 @@ namespace TP.ReheatChamber
         /// ТР3 (камера дожигания)
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        public float Level1
+        public float Temperature_TP3
         {
             //get { return ucBox4.Level; }  /*у камеры нет уровня*/
             set { ucIndicator1.EditValue = value; }
@@ -57,39 +57,39 @@ namespace TP.ReheatChamber
         /// P (камера дожигания)
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        public float Level5
+        public float Pressure
         {
             //get { return ucBox4.Level; }  /*у камеры нет уровня*/
             set { ucIndicator5.EditValue = value; }
         }
-       
-        
-        
+
+
+
         /*********************СИМУЛЯТОРЫ_ДАТЧИКОВ************************************/
         private void numericUpDown2_ValueChanged(object sender, System.EventArgs e)
         {
-            Level2 = (float)Convert.ToDecimal(numericUpDown2.Value);
+            Level4 = (float)Convert.ToDecimal(numericUpDown2.Value);
         }
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
-            Level3 = (float)Convert.ToDecimal(numericUpDown3.Value);
+            Level1 = (float)Convert.ToDecimal(numericUpDown3.Value);
 
         }
         private void numericUpDown4_ValueChanged(object sender, EventArgs e)
         {
-            Level4 = (float)Convert.ToDecimal(numericUpDown4.Value);
+            Level11 = (float)Convert.ToDecimal(numericUpDown4.Value);
 
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            Level1 = (float)Convert.ToDecimal(numericUpDown1.Value);
+            Temperature_TP3 = (float)Convert.ToDecimal(numericUpDown1.Value);
         }
 
         private void numericUpDown5_ValueChanged(object sender, EventArgs e)
         {
-            Level5 = (float)Convert.ToDecimal(numericUpDown5.Value);
+            Pressure = (float)Convert.ToDecimal(numericUpDown5.Value);
         }
 
 

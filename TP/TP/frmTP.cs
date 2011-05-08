@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using DevExpress.XtraBars.Helpers;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
+using DevExpress.XtraCharts;
 
 namespace TP
 {
@@ -49,6 +50,24 @@ namespace TP
             channelController1.HasReadChannel += channelController1_HasReadChannel;
         }
 
+        /*отображение графика 14 канала*/
+        Series series1 = new Series("ДУ-11", ViewType.Area);
+        public void CreateChart(int NewValue)
+        {
+
+            if (chartControl1.Series.Count == 0)
+            {
+                chartControl1.Series.Add(series1);
+            }
+
+            series1.Points.Add(new SeriesPoint(Convert.ToString(DateTime.Now), NewValue));
+            series1.ArgumentDataMember = "Argument";
+            series1.ValueScaleType = ScaleType.Numerical;
+            series1.ValueDataMembers.AddRange(new string[] { "Value" });
+          }
+        /*конец отображение графика*/
+
+
         void channelController1_HasReadChannel(object sender, Oleg_ivo.Client.CallbackHandler.DataEventArgs e)
         {
             float value = Convert.ToSingle(e.Message.Value);
@@ -88,10 +107,14 @@ namespace TP
                 case 13:
                     break; //ДУ-9	уровень отходов в бункере
                 case 14:
+                    ucReheatChamber1.Level11 = value;
+                    CreateChart(Convert.ToInt32(value * 1000));
                     break; //ДУ-11	уровень в РТ
                 case 15:
+                    ucReheatChamber1.Level1 = value;
                     break; //ДУ-1	уровень в НЕ
                 case 16:
+                    ucReheatChamber1.Level4 = value;
                     break; //ДУ-4	уровень в РЕ
                 case 17:
                     ucCyclonAndScrubber1.Level10 = value;

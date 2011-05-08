@@ -32,6 +32,8 @@ namespace TP
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            DevExpress.XtraCharts.PointSeriesLabel pointSeriesLabel1 = new DevExpress.XtraCharts.PointSeriesLabel();
+            DevExpress.XtraCharts.AreaSeriesView areaSeriesView1 = new DevExpress.XtraCharts.AreaSeriesView();
             this.drumTypeFurnace1 = new TP.DrumTypeFurnace.DrumTypeFurnace();
             this.ucFinishCleaning1 = new TP.FinishCleaning.ucFinishCleaning();
             this.ucAllHeatExchanger1 = new TP.HeatExchanger.ucAllHeatExchanger();
@@ -54,6 +56,7 @@ namespace TP
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.sbUnregister = new DevExpress.XtraEditors.SimpleButton();
             this.sbRegister = new DevExpress.XtraEditors.SimpleButton();
             this.xtraTabPage2 = new DevExpress.XtraTab.XtraTabPage();
@@ -61,7 +64,8 @@ namespace TP
             this.xtraTabPage4 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage5 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage6 = new DevExpress.XtraTab.XtraTabPage();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.xtraTabPage7 = new DevExpress.XtraTab.XtraTabPage();
+            this.chartControl1 = new DevExpress.XtraCharts.ChartControl();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.styleController1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
@@ -74,6 +78,10 @@ namespace TP
             this.xtraTabPage4.SuspendLayout();
             this.xtraTabPage5.SuspendLayout();
             this.xtraTabPage6.SuspendLayout();
+            this.xtraTabPage7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(pointSeriesLabel1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(areaSeriesView1)).BeginInit();
             this.SuspendLayout();
             // 
             // drumTypeFurnace1
@@ -98,22 +106,25 @@ namespace TP
             this.ucFinishCleaning1.GasConcentration_NO2 = 0F;
             this.ucFinishCleaning1.GasConcentration_O2 = 0F;
             this.ucFinishCleaning1.GasConcentration_SO2 = 0F;
-            this.ucFinishCleaning1.Temperature_TC6 = 0F;
-            this.ucFinishCleaning1.Temperature_TC7 = 0F;
             this.ucFinishCleaning1.Location = new System.Drawing.Point(0, 0);
             this.ucFinishCleaning1.Name = "ucFinishCleaning1";
             this.ucFinishCleaning1.Size = new System.Drawing.Size(1252, 656);
             this.ucFinishCleaning1.TabIndex = 8;
+            this.ucFinishCleaning1.Temperature_TC6 = 0F;
+            this.ucFinishCleaning1.Temperature_TC7 = 0F;
             // 
             // ucAllHeatExchanger1
             // 
             this.ucAllHeatExchanger1.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucAllHeatExchanger1.Appearance.Options.UseBackColor = true;
+            this.ucAllHeatExchanger1.Concentration_CO = 10F;
             this.ucAllHeatExchanger1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucAllHeatExchanger1.Location = new System.Drawing.Point(0, 0);
             this.ucAllHeatExchanger1.Name = "ucAllHeatExchanger1";
             this.ucAllHeatExchanger1.Size = new System.Drawing.Size(1252, 656);
             this.ucAllHeatExchanger1.TabIndex = 5;
+            this.ucAllHeatExchanger1.Temperature_TP4 = 10F;
+            this.ucAllHeatExchanger1.Temperature_TP5 = 10F;
             // 
             // ucReheatChamber1
             // 
@@ -271,7 +282,8 @@ namespace TP
             this.xtraTabPage3,
             this.xtraTabPage4,
             this.xtraTabPage5,
-            this.xtraTabPage6});
+            this.xtraTabPage6,
+            this.xtraTabPage7});
             // 
             // xtraTabPage1
             // 
@@ -281,6 +293,18 @@ namespace TP
             this.xtraTabPage1.Name = "xtraTabPage1";
             this.xtraTabPage1.Size = new System.Drawing.Size(1252, 656);
             this.xtraTabPage1.Text = "Общий вид";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Location = new System.Drawing.Point(170, 5);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBox1.Size = new System.Drawing.Size(1078, 648);
+            this.textBox1.TabIndex = 2;
             // 
             // sbUnregister
             // 
@@ -335,17 +359,26 @@ namespace TP
             this.xtraTabPage6.Size = new System.Drawing.Size(1252, 656);
             this.xtraTabPage6.Text = "Финишная очистка ";
             // 
-            // textBox1
+            // xtraTabPage7
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(170, 5);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(1078, 648);
-            this.textBox1.TabIndex = 2;
+            this.xtraTabPage7.Controls.Add(this.chartControl1);
+            this.xtraTabPage7.Name = "xtraTabPage7";
+            this.xtraTabPage7.Size = new System.Drawing.Size(1252, 656);
+            this.xtraTabPage7.Text = "Графики";
+            // 
+            // chartControl1
+            // 
+            this.chartControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartControl1.Legend.AlignmentHorizontal = DevExpress.XtraCharts.LegendAlignmentHorizontal.Right;
+            this.chartControl1.Location = new System.Drawing.Point(0, 0);
+            this.chartControl1.Name = "chartControl1";
+            this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[0];
+            pointSeriesLabel1.LineVisible = true;
+            this.chartControl1.SeriesTemplate.Label = pointSeriesLabel1;
+            areaSeriesView1.Transparency = ((byte)(0));
+            this.chartControl1.SeriesTemplate.View = areaSeriesView1;
+            this.chartControl1.Size = new System.Drawing.Size(1252, 656);
+            this.chartControl1.TabIndex = 0;
             // 
             // frmTP
             // 
@@ -377,6 +410,10 @@ namespace TP
             this.xtraTabPage4.ResumeLayout(false);
             this.xtraTabPage5.ResumeLayout(false);
             this.xtraTabPage6.ResumeLayout(false);
+            this.xtraTabPage7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(pointSeriesLabel1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(areaSeriesView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -414,5 +451,7 @@ namespace TP
         private DevExpress.XtraEditors.SimpleButton sbUnregister;
         private DevExpress.XtraEditors.SimpleButton sbRegister;
         private System.Windows.Forms.TextBox textBox1;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage7;
+        private DevExpress.XtraCharts.ChartControl chartControl1;
     }
 }
