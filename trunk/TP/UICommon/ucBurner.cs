@@ -63,8 +63,6 @@ namespace UICommon
                     break;
             }
 
-            g.DrawString(Caption, new Font("Arial", 10), Brushes.Black,
-                         new RectangleF(XCenter +3, YCenter-7 , 30, 20));
         }
 
         /// <summary>
