@@ -75,7 +75,7 @@ namespace TP
             switch (channelId)
             {
                 case 1:
-                    ucDrumTypeFurnace.T1 = value;
+                    //ucDrumTypeFurnace.T1 = value;
                     break; //TП1	температура в циклонной вихревой топке
                 case 2:
                     break; //TП2	температура в загрузочной системе
