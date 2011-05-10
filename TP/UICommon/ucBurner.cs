@@ -23,8 +23,6 @@ namespace UICommon
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);//вызов базового метода ucCaptioned.OnPaint
-
             Graphics g = e.Graphics;
             Pen pen = Pens.Black;
             
@@ -62,6 +60,8 @@ namespace UICommon
                     g.FillRectangle(Brushes.LightSlateGray, 15, 30, 10, 30);
                     break;
             }
+
+            base.OnPaint(e);//вызов базового метода ucCaptioned.OnPaint
 
         }
 
