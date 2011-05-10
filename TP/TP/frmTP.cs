@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using DevExpress.XtraBars.Helpers;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
+using TP.DrumTypeFurnace;
 using DevExpress.XtraCharts;
 
 namespace TP
@@ -74,6 +75,7 @@ namespace TP
             switch (channelId)
             {
                 case 1:
+                    ucDrumTypeFurnace.T1 = value;
                     break; //TП1	температура в циклонной вихревой топке
                 case 2:
                     break; //TП2	температура в загрузочной системе
