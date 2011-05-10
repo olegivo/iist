@@ -50,7 +50,7 @@ namespace TP
             channelController1.HasReadChannel += channelController1_HasReadChannel;
         }
 
-        /*отображение графика 14 канала*/
+        #region отображение графика 14 канала
         Series series1 = new Series("ДУ-11", ViewType.Area);
         public void CreateChart(int NewValue)
         {
@@ -64,9 +64,8 @@ namespace TP
             series1.ArgumentDataMember = "Argument";
             series1.ValueScaleType = ScaleType.Numerical;
             series1.ValueDataMembers.AddRange(new string[] { "Value" });
-          }
-        /*конец отображение графика*/
-
+        }
+        #endregion
 
         void channelController1_HasReadChannel(object sender, Oleg_ivo.Client.CallbackHandler.DataEventArgs e)
         {
