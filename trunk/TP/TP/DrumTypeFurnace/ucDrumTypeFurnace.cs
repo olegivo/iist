@@ -5,12 +5,12 @@ namespace TP.DrumTypeFurnace
     /// <summary>
     /// 
     /// </summary>
-    public partial class DrumTypeFurnace : XtraUserControl
+    public partial class ucDrumTypeFurnace : XtraUserControl
     {
         /// <summary>
         /// 
         /// </summary>
-        public DrumTypeFurnace()
+        public ucDrumTypeFurnace()
         {
             InitializeComponent();
         }

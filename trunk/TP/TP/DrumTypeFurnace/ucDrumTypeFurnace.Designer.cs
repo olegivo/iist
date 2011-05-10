@@ -1,6 +1,6 @@
 ﻿namespace TP.DrumTypeFurnace
 {
-    partial class DrumTypeFurnace
+    partial class ucDrumTypeFurnace
     {
         /// <summary> 
         /// Required designer variable.
