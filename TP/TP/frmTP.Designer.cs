@@ -34,7 +34,7 @@ namespace TP
             this.components = new System.ComponentModel.Container();
             DevExpress.XtraCharts.PointSeriesLabel pointSeriesLabel1 = new DevExpress.XtraCharts.PointSeriesLabel();
             DevExpress.XtraCharts.AreaSeriesView areaSeriesView1 = new DevExpress.XtraCharts.AreaSeriesView();
-            this.drumTypeFurnace1 = new TP.DrumTypeFurnace.DrumTypeFurnace();
+            this.drumTypeFurnace1 = new TP.DrumTypeFurnace.ucDrumTypeFurnace();
             this.ucFinishCleaning1 = new TP.FinishCleaning.ucFinishCleaning();
             this.ucAllHeatExchanger1 = new TP.HeatExchanger.ucAllHeatExchanger();
             this.ucReheatChamber1 = new TP.ReheatChamber.ucReheatChamber();
@@ -438,7 +438,7 @@ namespace TP
         internal TP.ReheatChamber.ucReheatChamber ucReheatChamber1;
         private ChannelController channelController1;
         private TP.FinishCleaning.ucFinishCleaning ucFinishCleaning1;
-        private TP.DrumTypeFurnace.DrumTypeFurnace drumTypeFurnace1;
+        private TP.DrumTypeFurnace.ucDrumTypeFurnace drumTypeFurnace1;
         private DevExpress.XtraLayout.Converter.LayoutConverter layoutConverter1;
         private DevExpress.XtraEditors.GroupControl groupControl1;
         private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
