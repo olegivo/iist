@@ -55,10 +55,11 @@ namespace TP
             this.layoutConverter1 = new DevExpress.XtraLayout.Converter.LayoutConverter(this.components);
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
-            this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
+            this.xtraTabPage8 = new DevExpress.XtraTab.XtraTabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.sbUnregister = new DevExpress.XtraEditors.SimpleButton();
             this.sbRegister = new DevExpress.XtraEditors.SimpleButton();
+            this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage2 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage3 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage4 = new DevExpress.XtraTab.XtraTabPage();
@@ -66,12 +67,14 @@ namespace TP
             this.xtraTabPage6 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage7 = new DevExpress.XtraTab.XtraTabPage();
             this.chartControl1 = new DevExpress.XtraCharts.ChartControl();
+            this.ucCommonView1 = new TP.CommonView.ucCommonView();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.styleController1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
+            this.xtraTabPage8.SuspendLayout();
             this.xtraTabPage1.SuspendLayout();
             this.xtraTabPage2.SuspendLayout();
             this.xtraTabPage3.SuspendLayout();
@@ -93,9 +96,12 @@ namespace TP
             this.drumTypeFurnace1.Appearance.Options.UseFont = true;
             this.drumTypeFurnace1.Appearance.Options.UseForeColor = true;
             this.drumTypeFurnace1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.drumTypeFurnace1.DU9 = 10F;
             this.drumTypeFurnace1.Location = new System.Drawing.Point(0, 0);
             this.drumTypeFurnace1.Name = "drumTypeFurnace1";
+            this.drumTypeFurnace1.S = 10F;
             this.drumTypeFurnace1.Size = new System.Drawing.Size(1252, 656);
+            this.drumTypeFurnace1.T8 = 10F;
             this.drumTypeFurnace1.TabIndex = 9;
             // 
             // ucFinishCleaning1
@@ -283,16 +289,17 @@ namespace TP
             this.xtraTabPage4,
             this.xtraTabPage5,
             this.xtraTabPage6,
-            this.xtraTabPage7});
+            this.xtraTabPage7,
+            this.xtraTabPage8});
             // 
-            // xtraTabPage1
+            // xtraTabPage8
             // 
-            this.xtraTabPage1.Controls.Add(this.textBox1);
-            this.xtraTabPage1.Controls.Add(this.sbUnregister);
-            this.xtraTabPage1.Controls.Add(this.sbRegister);
-            this.xtraTabPage1.Name = "xtraTabPage1";
-            this.xtraTabPage1.Size = new System.Drawing.Size(1252, 656);
-            this.xtraTabPage1.Text = "Общий вид";
+            this.xtraTabPage8.Controls.Add(this.textBox1);
+            this.xtraTabPage8.Controls.Add(this.sbUnregister);
+            this.xtraTabPage8.Controls.Add(this.sbRegister);
+            this.xtraTabPage8.Name = "xtraTabPage8";
+            this.xtraTabPage8.Size = new System.Drawing.Size(1252, 656);
+            this.xtraTabPage8.Text = "Отладочная информация";
             // 
             // textBox1
             // 
@@ -323,6 +330,13 @@ namespace TP
             this.sbRegister.TabIndex = 0;
             this.sbRegister.Text = "Register";
             this.sbRegister.Click += new System.EventHandler(this.sbRegister_Click);
+            // 
+            // xtraTabPage1
+            // 
+            this.xtraTabPage1.Controls.Add(this.ucCommonView1);
+            this.xtraTabPage1.Name = "xtraTabPage1";
+            this.xtraTabPage1.Size = new System.Drawing.Size(1252, 656);
+            this.xtraTabPage1.Text = "Общий вид";
             // 
             // xtraTabPage2
             // 
@@ -380,6 +394,16 @@ namespace TP
             this.chartControl1.Size = new System.Drawing.Size(1252, 656);
             this.chartControl1.TabIndex = 0;
             // 
+            // ucCommonView1
+            // 
+            this.ucCommonView1.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCommonView1.Appearance.Options.UseBackColor = true;
+            this.ucCommonView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucCommonView1.Location = new System.Drawing.Point(0, 0);
+            this.ucCommonView1.Name = "ucCommonView1";
+            this.ucCommonView1.Size = new System.Drawing.Size(1252, 656);
+            this.ucCommonView1.TabIndex = 0;
+            // 
             // frmTP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -403,8 +427,9 @@ namespace TP
             this.groupControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
             this.xtraTabControl1.ResumeLayout(false);
+            this.xtraTabPage8.ResumeLayout(false);
+            this.xtraTabPage8.PerformLayout();
             this.xtraTabPage1.ResumeLayout(false);
-            this.xtraTabPage1.PerformLayout();
             this.xtraTabPage2.ResumeLayout(false);
             this.xtraTabPage3.ResumeLayout(false);
             this.xtraTabPage4.ResumeLayout(false);
@@ -442,7 +467,7 @@ namespace TP
         private DevExpress.XtraLayout.Converter.LayoutConverter layoutConverter1;
         private DevExpress.XtraEditors.GroupControl groupControl1;
         private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
-        private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage8;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage2;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage3;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage4;
@@ -453,5 +478,7 @@ namespace TP
         private System.Windows.Forms.TextBox textBox1;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage7;
         private DevExpress.XtraCharts.ChartControl chartControl1;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
+        private TP.CommonView.ucCommonView ucCommonView1;
     }
 }

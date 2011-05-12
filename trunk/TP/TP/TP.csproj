@@ -94,6 +94,12 @@
     <Compile Include="ChannelController.Designer.cs">
       <DependentUpon>ChannelController.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommonView\ucCommonView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonView\ucCommonView.Designer.cs">
+      <DependentUpon>ucCommonView.cs</DependentUpon>
+    </Compile>
     <Compile Include="CyclonAndScrubber\ucSB.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -228,6 +234,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CommonView\ucCommonView.resx">
+      <DependentUpon>ucCommonView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DrumTypeFurnace\ucDrumTypeFurnace.resx">
       <DependentUpon>ucDrumTypeFurnace.cs</DependentUpon>
     </EmbeddedResource>
@@ -326,7 +335,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CommonView\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
