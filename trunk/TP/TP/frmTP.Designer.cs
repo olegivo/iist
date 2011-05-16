@@ -33,7 +33,7 @@ namespace TP
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTP));
-            this.drumTypeFurnace1 = new TP.DrumTypeFurnace.ucDrumTypeFurnace();
+            this.ucDrumTypeFurnace1 = new TP.DrumTypeFurnace.ucDrumTypeFurnace();
             this.ucFinishCleaning1 = new TP.FinishCleaning.ucFinishCleaning();
             this.ucAllHeatExchanger1 = new TP.HeatExchanger.ucAllHeatExchanger();
             this.ucReheatChamber1 = new TP.ReheatChamber.ucReheatChamber();
@@ -83,23 +83,24 @@ namespace TP
             this.xtraTabPage8.SuspendLayout();
             this.SuspendLayout();
             // 
-            // drumTypeFurnace1
+            // ucDrumTypeFurnace1
             // 
-            this.drumTypeFurnace1.Appearance.BackColor = System.Drawing.Color.Gainsboro;
-            this.drumTypeFurnace1.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.drumTypeFurnace1.Appearance.Options.UseBackColor = true;
-            this.drumTypeFurnace1.Appearance.Options.UseBorderColor = true;
-            this.drumTypeFurnace1.Appearance.Options.UseFont = true;
-            this.drumTypeFurnace1.Appearance.Options.UseForeColor = true;
-            this.drumTypeFurnace1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.drumTypeFurnace1.DU9 = 10F;
-            this.drumTypeFurnace1.Location = new System.Drawing.Point(0, 0);
-            this.drumTypeFurnace1.Name = "drumTypeFurnace1";
-            this.drumTypeFurnace1.S = 10F;
-            this.drumTypeFurnace1.Size = new System.Drawing.Size(1252, 656);
-            this.drumTypeFurnace1.T2 = 10F;
-            this.drumTypeFurnace1.T8 = 10F;
-            this.drumTypeFurnace1.TabIndex = 9;
+            this.ucDrumTypeFurnace1.Appearance.BackColor = System.Drawing.Color.Gainsboro;
+            this.ucDrumTypeFurnace1.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.ucDrumTypeFurnace1.Appearance.Options.UseBackColor = true;
+            this.ucDrumTypeFurnace1.Appearance.Options.UseBorderColor = true;
+            this.ucDrumTypeFurnace1.Appearance.Options.UseFont = true;
+            this.ucDrumTypeFurnace1.Appearance.Options.UseForeColor = true;
+            this.ucDrumTypeFurnace1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucDrumTypeFurnace1.DU9 = 10F;
+            this.ucDrumTypeFurnace1.Location = new System.Drawing.Point(0, 0);
+            this.ucDrumTypeFurnace1.Name = "ucDrumTypeFurnace1";
+            this.ucDrumTypeFurnace1.S = 5F;
+            this.ucDrumTypeFurnace1.Size = new System.Drawing.Size(1252, 656);
+            this.ucDrumTypeFurnace1.T2 = 10F;
+            this.ucDrumTypeFurnace1.T8 = 10F;
+            this.ucDrumTypeFurnace1.TabIndex = 9;
+            this.ucDrumTypeFurnace1.Load += new System.EventHandler(this.ucDrumTypeFurnace_Load);
             // 
             // ucFinishCleaning1
             // 
@@ -310,7 +311,7 @@ namespace TP
             // 
             // xtraTabPage2
             // 
-            this.xtraTabPage2.Controls.Add(this.drumTypeFurnace1);
+            this.xtraTabPage2.Controls.Add(this.ucDrumTypeFurnace1);
             this.xtraTabPage2.Name = "xtraTabPage2";
             this.xtraTabPage2.Size = new System.Drawing.Size(1252, 656);
             this.xtraTabPage2.Text = "Барабанная вращающаяся печь ";
@@ -455,7 +456,7 @@ namespace TP
         internal TP.ReheatChamber.ucReheatChamber ucReheatChamber1;
         private ChannelController channelController1;
         private TP.FinishCleaning.ucFinishCleaning ucFinishCleaning1;
-        private TP.DrumTypeFurnace.ucDrumTypeFurnace drumTypeFurnace1;
+        private TP.DrumTypeFurnace.ucDrumTypeFurnace ucDrumTypeFurnace1;
         private DevExpress.XtraLayout.Converter.LayoutConverter layoutConverter1;
         private DevExpress.XtraEditors.GroupControl groupControl1;
         private DevExpress.XtraTab.XtraTabControl xtraTabControl1;

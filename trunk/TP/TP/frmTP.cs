@@ -62,9 +62,10 @@ namespace TP
             switch (channelId)
             {
                 case 1:
-                    //ucDrumTypeFurnace.T1 = value;
+                    ucDrumTypeFurnace1.T1=value;
                     break; //TП1	температура в циклонной вихревой топке
                 case 2:
+                    ucDrumTypeFurnace1.T2 = value;
                     break; //TП2	температура в загрузочной системе
                 case 3:
                     break; //TП3	температура в камере дожигания
@@ -81,6 +82,7 @@ namespace TP
                     ucFinishCleaning1.Temperature_TC7 = value;
                     break; //TС7	температура перед дымососом
                 case 8:
+                    ucDrumTypeFurnace1.T8 = value;
                     break; //TС8	температура воды в системе охлаждения
                 case 9:
                     break; //Р	разрежение в камере дожигания
@@ -91,8 +93,11 @@ namespace TP
                     ucCyclonAndScrubber1.Ph2 = value;
                     break; //рН2	уровень рН в СФ2
                 case 12:
+                    ucDrumTypeFurnace1.S = value;
                     break; //S	скорость вращения печи
                 case 13:
+                    ucDrumTypeFurnace1.DU9 = value;
+                    ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //ДУ-9	уровень отходов в бункере
                 case 14:
                     ucReheatChamber1.Level11 = value;
@@ -176,6 +181,11 @@ namespace TP
         private void channelController1_CanRegisterChanged(object sender, EventArgs e)
         {
             sbUnregister.Enabled = !(sbRegister.Enabled = channelController1.CanRegister);
+        }
+
+        private void ucDrumTypeFurnace_Load(object sender, EventArgs e)
+        {
+
         }
 
     }
