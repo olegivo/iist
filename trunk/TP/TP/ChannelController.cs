@@ -53,48 +53,6 @@ namespace TP
             }
         }
 
-        //private frmTP _form;
-        ///// <summary>
-        ///// временно не работает
-        ///// </summary>
-        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        //public frmTP Form
-        //{
-        //    get
-        //    {
-        //        //return _form;
-        //    }
-        //    set
-        //    {
-        //        if (_form != value)
-        //        {
-        //            if (_form != null)
-        //            {
-        //                _form.spinEdit1.EditValueChanged -= spinEdit1_EditValueChanged;
-        //                _form.spinEdit2.EditValueChanged -= spinEdit2_EditValueChanged;
-        //            }
-
-        //            _form = value;
-
-        //            if (_form != null)
-        //            {
-        //                _form.spinEdit1.EditValueChanged += spinEdit1_EditValueChanged;
-        //                _form.spinEdit2.EditValueChanged += spinEdit2_EditValueChanged;
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private void spinEdit2_EditValueChanged(object sender, EventArgs e)
-        //{
-        //    _form.ucReheatChamber1.Level2 = (float)Convert.ToDecimal(_form.spinEdit2.EditValue);
-        //}
-
-        //private void spinEdit1_EditValueChanged(object sender, EventArgs e)
-        //{
-        //    _form.ucReheatChamber1.Level1 = (float)Convert.ToDecimal(_form.spinEdit1.EditValue);
-        //}
-
         /// <summary>
         /// регистрация
         /// </summary>
@@ -112,10 +70,30 @@ namespace TP
             }
         }
 
+        private bool _canRegister;
+
         /// <summary>
         /// 
         /// </summary>
-        protected bool CanRegister { get; set; }
+        public bool CanRegister
+        {
+            get { return _canRegister; }
+            set
+            {
+                if (_canRegister != value)
+                {
+                    _canRegister = value;
+
+                    EventHandler handler = CanRegisterChanged;
+                    if (handler != null) handler(this, EventArgs.Empty);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Событие изменения возможности регистрирации на сервере
+        /// </summary>
+        public event EventHandler CanRegisterChanged;
 
         void RegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
@@ -137,14 +115,14 @@ namespace TP
                 }
         }
 
-        readonly IList sourceLeft = new List<int>();
-        readonly IList sourceRight = new List<int>();
+        readonly IList registeredChannelsList = new List<int>();
+        readonly IList subscribedChannelsList = new List<int>();
 
         private void AddRegisteredChannel(ChannelSubscribeMessage message)
         {
-            if (!sourceLeft.Contains(message.LogicalChannelId) && !sourceRight.Contains(message.LogicalChannelId))
+            if (!registeredChannelsList.Contains(message.LogicalChannelId) && !subscribedChannelsList.Contains(message.LogicalChannelId))
             {
-                sourceLeft.Add(message.LogicalChannelId);
+                registeredChannelsList.Add(message.LogicalChannelId);
                 Protocol(string.Format("Канал [{0}] теперь доступен для подписки", message.LogicalChannelId));
                 if(AutoSubscribeChannels)
                 {
@@ -170,8 +148,8 @@ namespace TP
                 Provider.Unregister();
 
                 //убираем все зарегистрированные и подписанные каналы:
-                sourceLeft.Clear();
-                sourceRight.Clear();
+                registeredChannelsList.Clear();
+                subscribedChannelsList.Clear();
 
                 CanRegister = true;
                 Protocol("Отмена регистрации на сервере завершилась успешно");
@@ -240,11 +218,11 @@ namespace TP
 
         private void RemoveRegisteredChannel(ChannelSubscribeMessage message)
         {
-            if (sourceLeft.Contains(message.LogicalChannelId))
+            if (registeredChannelsList.Contains(message.LogicalChannelId))
             {
-                sourceLeft.Remove(message.LogicalChannelId);
+                registeredChannelsList.Remove(message.LogicalChannelId);
             }
-            else if (sourceRight.Contains(message.LogicalChannelId))
+            else if (subscribedChannelsList.Contains(message.LogicalChannelId))
             {
                 ChannelSubscribeMessage unSubscribeMessage = new ChannelSubscribeMessage
                 {
@@ -253,7 +231,7 @@ namespace TP
                     LogicalChannelId = message.LogicalChannelId
                 };
 
-                sourceRight.Remove(message.LogicalChannelId);
+                subscribedChannelsList.Remove(message.LogicalChannelId);
 
                 ParameterizedThreadStart thread = UnSubscribeUnregisteredChannelAsync;
                 thread.Invoke(unSubscribeMessage);

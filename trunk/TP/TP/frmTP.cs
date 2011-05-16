@@ -49,6 +49,8 @@ namespace TP
             channelController1.InitProvider("HighLevelClient");
             channelController1.NeedProtocol += channelController1_NeedProtocol;
             channelController1.HasReadChannel += channelController1_HasReadChannel;
+            channelController1.CanRegister = true;
+            
             ucChart1.InitializeChart();
         }
 
@@ -169,6 +171,11 @@ namespace TP
             {
                 info.AppendText(s);
             }
+        }
+
+        private void channelController1_CanRegisterChanged(object sender, EventArgs e)
+        {
+            sbUnregister.Enabled = !(sbRegister.Enabled = channelController1.CanRegister);
         }
 
     }

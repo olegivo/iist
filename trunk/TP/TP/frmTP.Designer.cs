@@ -258,6 +258,8 @@ namespace TP
             // channelController1
             // 
             this.channelController1.AutoSubscribeChannels = true;
+            this.channelController1.CanRegister = false;
+            this.channelController1.CanRegisterChanged += new System.EventHandler(this.channelController1_CanRegisterChanged);
             // 
             // groupControl1
             // 
@@ -380,6 +382,7 @@ namespace TP
             // 
             // sbUnregister
             // 
+            this.sbUnregister.Enabled = false;
             this.sbUnregister.Location = new System.Drawing.Point(89, 5);
             this.sbUnregister.Name = "sbUnregister";
             this.sbUnregister.Size = new System.Drawing.Size(75, 23);
