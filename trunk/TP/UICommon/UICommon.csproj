@@ -32,9 +32,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.BonusSkins.v10.2, Version=10.2.6.0, Culture=neutral, PublicKeyToken=95fc6c5621878f0a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Charts.v10.2.Core, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Data.v10.2, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.OfficeSkins.v10.2, Version=10.2.6.0, Culture=neutral, PublicKeyToken=95fc6c5621878f0a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v10.2, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v10.2, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v10.2.UI, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v10.2, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraGauges.v10.2.Core, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraGauges.v10.2.Win, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -74,6 +77,12 @@
     </Compile>
     <Compile Include="ucCaptioned.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucChart.Designer.cs">
+      <DependentUpon>ucChart.cs</DependentUpon>
     </Compile>
     <Compile Include="ucCommonBase.cs">
       <SubType>UserControl</SubType>
@@ -135,6 +144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ucBurner.resx">
       <DependentUpon>ucBurner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucChart.resx">
+      <DependentUpon>ucChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ucFlowRelay.resx">
       <DependentUpon>ucFlowRelay.cs</DependentUpon>

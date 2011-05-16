@@ -32,8 +32,7 @@ namespace TP
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraCharts.PointSeriesLabel pointSeriesLabel1 = new DevExpress.XtraCharts.PointSeriesLabel();
-            DevExpress.XtraCharts.AreaSeriesView areaSeriesView1 = new DevExpress.XtraCharts.AreaSeriesView();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTP));
             this.drumTypeFurnace1 = new TP.DrumTypeFurnace.ucDrumTypeFurnace();
             this.ucFinishCleaning1 = new TP.FinishCleaning.ucFinishCleaning();
             this.ucAllHeatExchanger1 = new TP.HeatExchanger.ucAllHeatExchanger();
@@ -55,26 +54,25 @@ namespace TP
             this.layoutConverter1 = new DevExpress.XtraLayout.Converter.LayoutConverter(this.components);
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
-            this.xtraTabPage8 = new DevExpress.XtraTab.XtraTabPage();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.sbUnregister = new DevExpress.XtraEditors.SimpleButton();
-            this.sbRegister = new DevExpress.XtraEditors.SimpleButton();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
+            this.ucCommonView1 = new TP.CommonView.ucCommonView();
             this.xtraTabPage2 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage3 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage4 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage5 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage6 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage7 = new DevExpress.XtraTab.XtraTabPage();
-            this.chartControl1 = new DevExpress.XtraCharts.ChartControl();
-            this.ucCommonView1 = new TP.CommonView.ucCommonView();
+            this.ucChart1 = new UICommon.ucChart();
+            this.xtraTabPage8 = new DevExpress.XtraTab.XtraTabPage();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.sbUnregister = new DevExpress.XtraEditors.SimpleButton();
+            this.sbRegister = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.styleController1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
-            this.xtraTabPage8.SuspendLayout();
             this.xtraTabPage1.SuspendLayout();
             this.xtraTabPage2.SuspendLayout();
             this.xtraTabPage3.SuspendLayout();
@@ -82,9 +80,7 @@ namespace TP
             this.xtraTabPage5.SuspendLayout();
             this.xtraTabPage6.SuspendLayout();
             this.xtraTabPage7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(pointSeriesLabel1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(areaSeriesView1)).BeginInit();
+            this.xtraTabPage8.SuspendLayout();
             this.SuspendLayout();
             // 
             // drumTypeFurnace1
@@ -101,6 +97,7 @@ namespace TP
             this.drumTypeFurnace1.Name = "drumTypeFurnace1";
             this.drumTypeFurnace1.S = 10F;
             this.drumTypeFurnace1.Size = new System.Drawing.Size(1252, 656);
+            this.drumTypeFurnace1.T2 = 10F;
             this.drumTypeFurnace1.T8 = 10F;
             this.drumTypeFurnace1.TabIndex = 9;
             // 
@@ -292,6 +289,74 @@ namespace TP
             this.xtraTabPage7,
             this.xtraTabPage8});
             // 
+            // xtraTabPage1
+            // 
+            this.xtraTabPage1.Controls.Add(this.ucCommonView1);
+            this.xtraTabPage1.Name = "xtraTabPage1";
+            this.xtraTabPage1.Size = new System.Drawing.Size(1252, 656);
+            this.xtraTabPage1.Text = "Общий вид";
+            // 
+            // ucCommonView1
+            // 
+            this.ucCommonView1.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCommonView1.Appearance.Options.UseBackColor = true;
+            this.ucCommonView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucCommonView1.Location = new System.Drawing.Point(0, 0);
+            this.ucCommonView1.Name = "ucCommonView1";
+            this.ucCommonView1.Size = new System.Drawing.Size(1252, 656);
+            this.ucCommonView1.TabIndex = 0;
+            // 
+            // xtraTabPage2
+            // 
+            this.xtraTabPage2.Controls.Add(this.drumTypeFurnace1);
+            this.xtraTabPage2.Name = "xtraTabPage2";
+            this.xtraTabPage2.Size = new System.Drawing.Size(1252, 656);
+            this.xtraTabPage2.Text = "Барабанная вращающаяся печь ";
+            // 
+            // xtraTabPage3
+            // 
+            this.xtraTabPage3.Controls.Add(this.ucReheatChamber1);
+            this.xtraTabPage3.Name = "xtraTabPage3";
+            this.xtraTabPage3.Size = new System.Drawing.Size(1252, 656);
+            this.xtraTabPage3.Text = "Камера дожигания ";
+            // 
+            // xtraTabPage4
+            // 
+            this.xtraTabPage4.Controls.Add(this.ucAllHeatExchanger1);
+            this.xtraTabPage4.Name = "xtraTabPage4";
+            this.xtraTabPage4.Size = new System.Drawing.Size(1252, 656);
+            this.xtraTabPage4.Text = "Теплообменник ";
+            // 
+            // xtraTabPage5
+            // 
+            this.xtraTabPage5.Controls.Add(this.ucCyclonAndScrubber1);
+            this.xtraTabPage5.Name = "xtraTabPage5";
+            this.xtraTabPage5.Size = new System.Drawing.Size(1252, 656);
+            this.xtraTabPage5.Text = "Циклон и скруббер";
+            // 
+            // xtraTabPage6
+            // 
+            this.xtraTabPage6.Controls.Add(this.ucFinishCleaning1);
+            this.xtraTabPage6.Name = "xtraTabPage6";
+            this.xtraTabPage6.Size = new System.Drawing.Size(1252, 656);
+            this.xtraTabPage6.Text = "Финишная очистка ";
+            // 
+            // xtraTabPage7
+            // 
+            this.xtraTabPage7.Controls.Add(this.ucChart1);
+            this.xtraTabPage7.Name = "xtraTabPage7";
+            this.xtraTabPage7.Size = new System.Drawing.Size(1252, 656);
+            this.xtraTabPage7.Text = "Графики";
+            // 
+            // ucChart1
+            // 
+            this.ucChart1.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart1.ChannelsToDisplay")));
+            this.ucChart1.ChartTitle = "Уровни";
+            this.ucChart1.Location = new System.Drawing.Point(192, 40);
+            this.ucChart1.Name = "ucChart1";
+            this.ucChart1.Size = new System.Drawing.Size(640, 480);
+            this.ucChart1.TabIndex = 0;
+            // 
             // xtraTabPage8
             // 
             this.xtraTabPage8.Controls.Add(this.textBox1);
@@ -331,79 +396,6 @@ namespace TP
             this.sbRegister.Text = "Register";
             this.sbRegister.Click += new System.EventHandler(this.sbRegister_Click);
             // 
-            // xtraTabPage1
-            // 
-            this.xtraTabPage1.Controls.Add(this.ucCommonView1);
-            this.xtraTabPage1.Name = "xtraTabPage1";
-            this.xtraTabPage1.Size = new System.Drawing.Size(1252, 656);
-            this.xtraTabPage1.Text = "Общий вид";
-            // 
-            // xtraTabPage2
-            // 
-            this.xtraTabPage2.Controls.Add(this.drumTypeFurnace1);
-            this.xtraTabPage2.Name = "xtraTabPage2";
-            this.xtraTabPage2.Size = new System.Drawing.Size(1252, 656);
-            this.xtraTabPage2.Text = "Барабанная вращающаяся печь ";
-            // 
-            // xtraTabPage3
-            // 
-            this.xtraTabPage3.Controls.Add(this.ucReheatChamber1);
-            this.xtraTabPage3.Name = "xtraTabPage3";
-            this.xtraTabPage3.Size = new System.Drawing.Size(1252, 656);
-            this.xtraTabPage3.Text = "Камера дожигания ";
-            // 
-            // xtraTabPage4
-            // 
-            this.xtraTabPage4.Controls.Add(this.ucAllHeatExchanger1);
-            this.xtraTabPage4.Name = "xtraTabPage4";
-            this.xtraTabPage4.Size = new System.Drawing.Size(1252, 656);
-            this.xtraTabPage4.Text = "Теплообменник ";
-            // 
-            // xtraTabPage5
-            // 
-            this.xtraTabPage5.Controls.Add(this.ucCyclonAndScrubber1);
-            this.xtraTabPage5.Name = "xtraTabPage5";
-            this.xtraTabPage5.Size = new System.Drawing.Size(1252, 656);
-            this.xtraTabPage5.Text = "Циклон и скруббер";
-            // 
-            // xtraTabPage6
-            // 
-            this.xtraTabPage6.Controls.Add(this.ucFinishCleaning1);
-            this.xtraTabPage6.Name = "xtraTabPage6";
-            this.xtraTabPage6.Size = new System.Drawing.Size(1252, 656);
-            this.xtraTabPage6.Text = "Финишная очистка ";
-            // 
-            // xtraTabPage7
-            // 
-            this.xtraTabPage7.Controls.Add(this.chartControl1);
-            this.xtraTabPage7.Name = "xtraTabPage7";
-            this.xtraTabPage7.Size = new System.Drawing.Size(1252, 656);
-            this.xtraTabPage7.Text = "Графики";
-            // 
-            // chartControl1
-            // 
-            this.chartControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartControl1.Legend.AlignmentHorizontal = DevExpress.XtraCharts.LegendAlignmentHorizontal.Right;
-            this.chartControl1.Location = new System.Drawing.Point(0, 0);
-            this.chartControl1.Name = "chartControl1";
-            this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[0];
-            pointSeriesLabel1.LineVisible = true;
-            this.chartControl1.SeriesTemplate.Label = pointSeriesLabel1;
-            areaSeriesView1.Transparency = ((byte)(0));
-            this.chartControl1.SeriesTemplate.View = areaSeriesView1;
-            this.chartControl1.Size = new System.Drawing.Size(1252, 656);
-            this.chartControl1.TabIndex = 0;
-            // 
-            // ucCommonView1
-            // 
-            this.ucCommonView1.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucCommonView1.Appearance.Options.UseBackColor = true;
-            this.ucCommonView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucCommonView1.Location = new System.Drawing.Point(0, 0);
-            this.ucCommonView1.Name = "ucCommonView1";
-            this.ucCommonView1.Size = new System.Drawing.Size(1252, 656);
-            this.ucCommonView1.TabIndex = 0;
-            // 
             // frmTP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -427,8 +419,6 @@ namespace TP
             this.groupControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
             this.xtraTabControl1.ResumeLayout(false);
-            this.xtraTabPage8.ResumeLayout(false);
-            this.xtraTabPage8.PerformLayout();
             this.xtraTabPage1.ResumeLayout(false);
             this.xtraTabPage2.ResumeLayout(false);
             this.xtraTabPage3.ResumeLayout(false);
@@ -436,9 +426,8 @@ namespace TP
             this.xtraTabPage5.ResumeLayout(false);
             this.xtraTabPage6.ResumeLayout(false);
             this.xtraTabPage7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(pointSeriesLabel1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(areaSeriesView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).EndInit();
+            this.xtraTabPage8.ResumeLayout(false);
+            this.xtraTabPage8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -477,8 +466,8 @@ namespace TP
         private DevExpress.XtraEditors.SimpleButton sbRegister;
         private System.Windows.Forms.TextBox textBox1;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage7;
-        private DevExpress.XtraCharts.ChartControl chartControl1;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
         private TP.CommonView.ucCommonView ucCommonView1;
+        private UICommon.ucChart ucChart1;
     }
 }
