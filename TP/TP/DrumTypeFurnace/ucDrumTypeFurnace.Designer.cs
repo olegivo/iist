@@ -199,12 +199,12 @@
             // 
             // ucIndicator1
             // 
-            this.ucIndicator1.AllowedMaxValue = 0F;
-            this.ucIndicator1.AllowedMinValue = 0F;
-            this.ucIndicator1.Caption = "ТП1";
-            this.ucIndicator1.EditValue = 10F;
+            this.ucIndicator1.AllowedMaxValue = 1300F;
+            this.ucIndicator1.AllowedMinValue = 900F;
+            this.ucIndicator1.Caption = "ТП1:";
+            this.ucIndicator1.EditValue = 0F;
             this.ucIndicator1.Location = new System.Drawing.Point(626, 50);
-            this.ucIndicator1.MaxValue = 10F;
+            this.ucIndicator1.MaxValue = 1400F;
             this.ucIndicator1.MinValue = 0F;
             this.ucIndicator1.Name = "ucIndicator1";
             this.ucIndicator1.Size = new System.Drawing.Size(73, 124);
@@ -1661,12 +1661,12 @@
             // 
             // ucIndicator2
             // 
-            this.ucIndicator2.AllowedMaxValue = 0F;
-            this.ucIndicator2.AllowedMinValue = 0F;
-            this.ucIndicator2.Caption = "ТП2";
-            this.ucIndicator2.EditValue = 10F;
+            this.ucIndicator2.AllowedMaxValue = 800F;
+            this.ucIndicator2.AllowedMinValue = 600F;
+            this.ucIndicator2.Caption = "ТП2:";
+            this.ucIndicator2.EditValue = 0F;
             this.ucIndicator2.Location = new System.Drawing.Point(782, 50);
-            this.ucIndicator2.MaxValue = 10F;
+            this.ucIndicator2.MaxValue = 1400F;
             this.ucIndicator2.MinValue = 0F;
             this.ucIndicator2.Name = "ucIndicator2";
             this.ucIndicator2.Size = new System.Drawing.Size(73, 124);
@@ -1726,12 +1726,12 @@
             // 
             // ucIndicator3
             // 
-            this.ucIndicator3.AllowedMaxValue = 0F;
+            this.ucIndicator3.AllowedMaxValue = 95F;
             this.ucIndicator3.AllowedMinValue = 0F;
-            this.ucIndicator3.Caption = "ТП8";
-            this.ucIndicator3.EditValue = 10F;
+            this.ucIndicator3.Caption = "ТП8:";
+            this.ucIndicator3.EditValue = 0F;
             this.ucIndicator3.Location = new System.Drawing.Point(476, 50);
-            this.ucIndicator3.MaxValue = 10F;
+            this.ucIndicator3.MaxValue = 200F;
             this.ucIndicator3.MinValue = 0F;
             this.ucIndicator3.Name = "ucIndicator3";
             this.ucIndicator3.Size = new System.Drawing.Size(73, 124);
@@ -1755,12 +1755,12 @@
             // 
             // ucIndicator4
             // 
-            this.ucIndicator4.AllowedMaxValue = 0F;
-            this.ucIndicator4.AllowedMinValue = 0F;
-            this.ucIndicator4.Caption = "ДУ-9";
-            this.ucIndicator4.EditValue = 10F;
+            this.ucIndicator4.AllowedMaxValue = 700F;
+            this.ucIndicator4.AllowedMinValue = 300F;
+            this.ucIndicator4.Caption = "ДУ-9:";
+            this.ucIndicator4.EditValue = 0F;
             this.ucIndicator4.Location = new System.Drawing.Point(1072, 121);
-            this.ucIndicator4.MaxValue = 10F;
+            this.ucIndicator4.MaxValue = 1000F;
             this.ucIndicator4.MinValue = 0F;
             this.ucIndicator4.Name = "ucIndicator4";
             this.ucIndicator4.Size = new System.Drawing.Size(73, 124);
@@ -1784,12 +1784,12 @@
             // 
             // ucIndicator5
             // 
-            this.ucIndicator5.AllowedMaxValue = 0F;
-            this.ucIndicator5.AllowedMinValue = 0F;
+            this.ucIndicator5.AllowedMaxValue = 3F;
+            this.ucIndicator5.AllowedMinValue = 0.5F;
             this.ucIndicator5.Caption = "S    ";
-            this.ucIndicator5.EditValue = 10F;
+            this.ucIndicator5.EditValue = 0F;
             this.ucIndicator5.Location = new System.Drawing.Point(907, 456);
-            this.ucIndicator5.MaxValue = 10F;
+            this.ucIndicator5.MaxValue = 5F;
             this.ucIndicator5.MinValue = 0F;
             this.ucIndicator5.Name = "ucIndicator5";
             this.ucIndicator5.Size = new System.Drawing.Size(73, 124);
