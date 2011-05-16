@@ -49,24 +49,9 @@ namespace TP
             channelController1.InitProvider("HighLevelClient");
             channelController1.NeedProtocol += channelController1_NeedProtocol;
             channelController1.HasReadChannel += channelController1_HasReadChannel;
+            ucChart1.InitializeChart();
         }
 
-        #region отображение графика 14 канала
-        Series series1 = new Series("ДУ-11", ViewType.Area);
-        public void CreateChart(int NewValue)
-        {
-
-            if (chartControl1.Series.Count == 0)
-            {
-                chartControl1.Series.Add(series1);
-            }
-
-            series1.Points.Add(new SeriesPoint(Convert.ToString(DateTime.Now), NewValue));
-            series1.ArgumentDataMember = "Argument";
-            series1.ValueScaleType = ScaleType.Numerical;
-            series1.ValueDataMembers.AddRange(new string[] { "Value" });
-        }
-        #endregion
 
         void channelController1_HasReadChannel(object sender, Oleg_ivo.Client.CallbackHandler.DataEventArgs e)
         {
@@ -109,16 +94,19 @@ namespace TP
                     break; //ДУ-9	уровень отходов в бункере
                 case 14:
                     ucReheatChamber1.Level11 = value;
-                    CreateChart(Convert.ToInt32(value * 1000));
+                    ucChart1.AddDataChart(channelId,Convert.ToInt32(value));
                     break; //ДУ-11	уровень в РТ
                 case 15:
                     ucReheatChamber1.Level1 = value;
+                    ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //ДУ-1	уровень в НЕ
                 case 16:
                     ucReheatChamber1.Level4 = value;
+                    ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //ДУ-4	уровень в РЕ
                 case 17:
                     ucCyclonAndScrubber1.Level10 = value;
+                    ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //ДУ-10	уровень в СБ
                 case 18:
                     ucAllHeatExchanger1.Concentration_O2 = value;
