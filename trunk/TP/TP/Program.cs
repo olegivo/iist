@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using DevExpress.LookAndFeel;
+using Oleg_ivo.Tools.ExceptionCatcher;
 using TP;
 
 namespace WindowsApplication1
@@ -13,6 +14,10 @@ namespace WindowsApplication1
         [STAThread]
         static void Main()
         {
+#pragma warning disable 168
+            ExceptionHandler exceptionHandler = new ExceptionHandler();
+#pragma warning restore 168
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
