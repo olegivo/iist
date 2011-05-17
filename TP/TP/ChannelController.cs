@@ -63,7 +63,7 @@ namespace TP
                 Provider.Register(RegisterCompleted);
                 CanRegister = false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 CanRegister = true;
                 throw;
