@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{25D0E44E-94EB-40AD-8425-A637E5524338}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UICommon</RootNamespace>
+    <AssemblyName>UICommon</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.BonusSkins.v10.2, Version=10.2.6.0, Culture=neutral, PublicKeyToken=95fc6c5621878f0a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Charts.v10.2.Core, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Data.v10.2, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.OfficeSkins.v10.2, Version=10.2.6.0, Culture=neutral, PublicKeyToken=95fc6c5621878f0a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v10.2, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v10.2, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v10.2.UI, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v10.2, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGauges.v10.2.Core, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGauges.v10.2.Win, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v10.2, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraNavBar.v10.2, Version=10.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ArrowLineShape.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LineColor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PumpColor.cs" />
+    <Compile Include="ucBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucBox.Designer.cs">
+      <DependentUpon>ucBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucBurner.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucBurner.designer.cs">
+      <DependentUpon>ucBurner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucCaptioned.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucChart.Designer.cs">
+      <DependentUpon>ucChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucCommonBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucFlowRelay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucFlowRelay.designer.cs">
+      <DependentUpon>ucFlowRelay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucIndicator.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucIndicator.Designer.cs">
+      <DependentUpon>ucIndicator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucLine.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucLine.designer.cs">
+      <DependentUpon>ucLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucPump.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucPump.Designer.cs">
+      <DependentUpon>ucPump.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucTest.Designer.cs">
+      <DependentUpon>ucTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucTransporter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucTransporter.Designer.cs">
+      <DependentUpon>ucTransporter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucTube.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucTube.Designer.cs">
+      <DependentUpon>ucTube.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucValve.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucValve.Designer.cs">
+      <DependentUpon>ucValve.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ValveColor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="ucBox.resx">
+      <DependentUpon>ucBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucBurner.resx">
+      <DependentUpon>ucBurner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucChart.resx">
+      <DependentUpon>ucChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucFlowRelay.resx">
+      <DependentUpon>ucFlowRelay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucIndicator.resx">
+      <DependentUpon>ucIndicator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucLine.resx">
+      <DependentUpon>ucLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucPump.resx">
+      <DependentUpon>ucPump.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucTest.resx">
+      <DependentUpon>ucTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucTransporter.resx">
+      <DependentUpon>ucTransporter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucTube.resx">
+      <DependentUpon>ucTube.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucValve.resx">
+      <DependentUpon>ucValve.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="Properties\DataSources\DevExpress.XtraEditors.BaseEdit.datasource" />
+    <None Include="Properties\DataSources\DevExpress.XtraEditors.RadioGroup.datasource" />
+    <None Include="Properties\DataSources\DevExpress.XtraEditors.SpinEdit.datasource" />
+    <None Include="Properties\DataSources\DevExpress.XtraEditors.TextEdit.datasource" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
