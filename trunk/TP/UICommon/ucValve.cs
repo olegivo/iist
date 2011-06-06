@@ -38,8 +38,8 @@ namespace UICommon
             Pen pen = new Pen(GetColor());
             if (Orientation == Orientation.Horizontal)
             {
-                Height = 20;
-                Width = 40;
+                //Height = 20;
+                //Width = 40;
                 g.FillPolygon(pen.Brush, new[]
                                              {
                                                  new Point(0, 0),
@@ -53,8 +53,8 @@ namespace UICommon
             }
             else
             {
-                Height = 40;
-                Width = 20;
+                //Height = 40;
+                //Width = 20;
                 g.FillPolygon(pen.Brush, new[]
                                              {
                                                  new Point(0, 0),
