@@ -19,37 +19,37 @@ namespace TP.FinishCleaning
             get { return ucIndicator2.EditValue; }
             set { ucIndicator2.EditValue = value; }
         }
-
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public float GasConcentration_NO
         {
             get { return ucIndicator1.EditValue; }
             set { ucIndicator1.EditValue = value; }
         }
-
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public float GasConcentration_NO2
         {
             get { return ucIndicator3.EditValue; }
             set { ucIndicator3.EditValue = value; }
         }
-
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public float GasConcentration_O2
         {
             get { return ucIndicator5.EditValue; }
             set { ucIndicator5.EditValue = value; }
         }
-
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public float GasConcentration_SO2
         {
             get { return ucIndicator6.EditValue; }
             set { ucIndicator6.EditValue = value; }
         }
-
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public float Temperature_TC7
         {
             get { return ucIndicator4.EditValue; }
             set { ucIndicator4.EditValue = value; }
         }
-
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public float Temperature_TC6
         {
             get { return ucIndicator7.EditValue; }
