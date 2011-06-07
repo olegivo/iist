@@ -20,7 +20,7 @@ namespace UICommon
         {
             Graphics g = e.Graphics;
             Height = Width / 2;
-            Width = 44;
+            //Width = 44;
             int x = XCenter / 3;
 
             Pen pen = Pens.Black;
