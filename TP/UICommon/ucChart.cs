@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Linq;
 using System.Drawing;
-using System.Data;
-using System.Text;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
 using DevExpress.XtraCharts;
 
 namespace UICommon
@@ -60,8 +56,17 @@ namespace UICommon
 
             for (int i = 0; i < ChannelsToDisplay.Count; i++)
             {
-                ChannelChartNumbers[i] = ChannelsToDisplay[i];
-                series[i] = new Series("Channel #" + Convert.ToString(ChannelsToDisplay[i]), ViewType.Area);
+                int channelNumber = ChannelsToDisplay[i];
+                ChannelChartNumbers[i] = channelNumber;
+                Series series1 = new Series("Channel #" + Convert.ToString(channelNumber), ViewType.Area);
+
+                string tableName = GetTableName(channelNumber);
+                dtsChart1.Tables.Add(new dtsChart.ChartDataDataTable {TableName = tableName});
+                series1.DataSource = dtsChart1.Tables[tableName];
+                series[i] = series1;
+                series1.ArgumentDataMember = "TimeStamp";
+                series1.ValueDataMembers.AddRange("Value");
+
                 chartControl1.Series.Add(series[i]);
 
                 series[i].Label.Visible = false;
@@ -91,25 +96,26 @@ namespace UICommon
 
         }
 
-
-        public void AddDataChart(int ChannelNumber, int NewValue)
+        private string GetTableName(int i)
         {
-
-            for (int i = 0; i < ChannelsToDisplay.Count; i++)
-            {
-                if (ChannelsToDisplay[i] == ChannelNumber)
-                {
-                    series[i].Points.Add(new SeriesPoint((DateTime.Now.ToString("hh:mm:ss")), NewValue));
-                    break;
-                }
-            }
-
+            return string.Format("ChartData{0}", i);
         }
 
 
+        public void AddDataChart(int ChannelNumber, double NewValue)
+        {
+            dtsChart.ChartDataDataTable dataTable = dtsChart1.Tables[GetTableName(ChannelNumber)] as dtsChart.ChartDataDataTable;
+            if (dataTable != null)
+            {
+                DateTime now = DateTime.Now.AddSeconds(-3);//todo: настраиваемый временной буфер
+                foreach (var dr in dataTable.Rows.Cast<dtsChart.ChartDataRow>().Where(dr => dr.TimeStamp < now).ToList())
+                {
+                    dataTable.RemoveChartDataRow(dr);
+                }
 
-
-
+                dataTable.AddChartDataRow(DateTime.Now, NewValue);
+            }
+        }
     }
 
 }
