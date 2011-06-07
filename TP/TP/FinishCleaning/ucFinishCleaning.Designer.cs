@@ -32,11 +32,6 @@ namespace TP.FinishCleaning
         /// </summary>
         private void InitializeComponent()
         {
-            this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
-            this.lineShape4 = new Microsoft.VisualBasic.PowerPacks.LineShape();
-            this.lineShape3 = new Microsoft.VisualBasic.PowerPacks.LineShape();
-            this.lineShape2 = new Microsoft.VisualBasic.PowerPacks.LineShape();
-            this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.spinEdit1 = new DevExpress.XtraEditors.SpinEdit();
             this.spinEdit2 = new DevExpress.XtraEditors.SpinEdit();
             this.spinEdit3 = new DevExpress.XtraEditors.SpinEdit();
@@ -111,52 +106,6 @@ namespace TP.FinishCleaning
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit6.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit7.Properties)).BeginInit();
             this.SuspendLayout();
-            // 
-            // shapeContainer1
-            // 
-            this.shapeContainer1.Location = new System.Drawing.Point(0, 0);
-            this.shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
-            this.shapeContainer1.Name = "shapeContainer1";
-            this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
-            this.lineShape4,
-            this.lineShape3,
-            this.lineShape2,
-            this.lineShape1});
-            this.shapeContainer1.Size = new System.Drawing.Size(1208, 811);
-            this.shapeContainer1.TabIndex = 48;
-            this.shapeContainer1.TabStop = false;
-            // 
-            // lineShape4
-            // 
-            this.lineShape4.Name = "lineShape4";
-            this.lineShape4.X1 = 497;
-            this.lineShape4.X2 = 552;
-            this.lineShape4.Y1 = 216;
-            this.lineShape4.Y2 = 259;
-            // 
-            // lineShape3
-            // 
-            this.lineShape3.Name = "lineShape3";
-            this.lineShape3.X1 = 838;
-            this.lineShape3.X2 = 887;
-            this.lineShape3.Y1 = 234;
-            this.lineShape3.Y2 = 286;
-            // 
-            // lineShape2
-            // 
-            this.lineShape2.Name = "lineShape2";
-            this.lineShape2.X1 = 243;
-            this.lineShape2.X2 = 305;
-            this.lineShape2.Y1 = 484;
-            this.lineShape2.Y2 = 455;
-            // 
-            // lineShape1
-            // 
-            this.lineShape1.Name = "lineShape1";
-            this.lineShape1.X1 = 264;
-            this.lineShape1.X2 = 326;
-            this.lineShape1.Y1 = 286;
-            this.lineShape1.Y2 = 341;
             // 
             // spinEdit1
             // 
@@ -1015,7 +964,6 @@ namespace TP.FinishCleaning
             this.Controls.Add(this.ucLine1);
             this.Controls.Add(this.ucIndicator3);
             this.Controls.Add(this.ucFilter1);
-            this.Controls.Add(this.shapeContainer1);
             this.Controls.Add(this.ucPump1);
             this.Name = "ucFinishCleaning";
             this.Size = new System.Drawing.Size(1124, 577);
@@ -1068,11 +1016,6 @@ namespace TP.FinishCleaning
         private UICommon.ucLine ucLine21;
         private UICommon.ucLine ucLine23;
         private UICommon.ucCaptioned ucCaptioned8;
-        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
-        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
-        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape4;
-        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape3;
-        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape2;
         private UICommon.ucCaptioned ucCaptioned9;
         private UICommon.ucCaptioned ucCaptioned10;
         private UICommon.ucCaptioned ucCaptioned11;
