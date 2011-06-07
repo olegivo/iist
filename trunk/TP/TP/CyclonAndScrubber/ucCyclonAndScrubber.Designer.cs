@@ -30,10 +30,6 @@ namespace TP.CyclonAndScrubber
         /// </summary>
         private void InitializeComponent()
         {
-            this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
-            this.lineShape83 = new Microsoft.VisualBasic.PowerPacks.LineShape();
-            this.lineShape82 = new Microsoft.VisualBasic.PowerPacks.LineShape();
-            this.lineShape81 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -174,46 +170,6 @@ namespace TP.CyclonAndScrubber
             this.ucScrubber1 = new TP.CyclonAndScrubber.ucScrubber();
             this.ucLine80 = new UICommon.ucLine();
             this.SuspendLayout();
-            // 
-            // shapeContainer1
-            // 
-            this.shapeContainer1.Location = new System.Drawing.Point(0, 0);
-            this.shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
-            this.shapeContainer1.Name = "shapeContainer1";
-            this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
-            this.lineShape83,
-            this.lineShape82,
-            this.lineShape81});
-            this.shapeContainer1.Size = new System.Drawing.Size(1171, 742);
-            this.shapeContainer1.TabIndex = 4;
-            this.shapeContainer1.TabStop = false;
-            // 
-            // lineShape83
-            // 
-            this.lineShape83.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lineShape83.Name = "lineShape1";
-            this.lineShape83.X1 = 445;
-            this.lineShape83.X2 = 500;
-            this.lineShape83.Y1 = 329;
-            this.lineShape83.Y2 = 77;
-            // 
-            // lineShape82
-            // 
-            this.lineShape82.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lineShape82.Name = "lineShape1";
-            this.lineShape82.X1 = 1045;
-            this.lineShape82.X2 = 823;
-            this.lineShape82.Y1 = 418;
-            this.lineShape82.Y2 = 572;
-            // 
-            // lineShape81
-            // 
-            this.lineShape81.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lineShape81.Name = "lineShape1";
-            this.lineShape81.X1 = 252;
-            this.lineShape81.X2 = 115;
-            this.lineShape81.Y1 = 574;
-            this.lineShape81.Y2 = 385;
             // 
             // label2
             // 
@@ -1797,7 +1753,6 @@ namespace TP.CyclonAndScrubber
             this.Controls.Add(this.ucCyclon2);
             this.Controls.Add(this.ucCyclon1);
             this.Controls.Add(this.ucScrubber1);
-            this.Controls.Add(this.shapeContainer1);
             this.Controls.Add(this.ucLine62);
             this.Controls.Add(this.ucLine59);
             this.LookAndFeel.SkinName = "Caramel";
@@ -1815,7 +1770,6 @@ namespace TP.CyclonAndScrubber
         private ucCyclon ucCyclon1;
         private ucCyclon ucCyclon2;
         private ucValve ucValve1;
-        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
         private ucScrubber ucScrubber2;
         private ucCaptioned ucCaptioned3;
         private ucValve ucValve3;
@@ -1848,12 +1802,9 @@ namespace TP.CyclonAndScrubber
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
-        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape81;
         private ucIndicator ucIndicatorPh1;
         private ucIndicator ucIndicatorPh2;
-        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape82;
         private ucIndicator ucIndicatorLevel10;
-        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape83;
         private ucTransporter ucTransporter1;
         private ucTransporter ucTransporter2;
         private ucLine ucLine1;

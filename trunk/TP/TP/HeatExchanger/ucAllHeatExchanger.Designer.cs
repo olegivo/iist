@@ -37,8 +37,6 @@ namespace TP.HeatExchanger
             this.spinEdit2 = new DevExpress.XtraEditors.SpinEdit();
             this.spinEdit3 = new DevExpress.XtraEditors.SpinEdit();
             this.spinEdit4 = new DevExpress.XtraEditors.SpinEdit();
-            this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
-            this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.ucLine47 = new UICommon.ucLine();
             this.ucCaptioned17 = new UICommon.ucCaptioned();
             this.ucCaptioned16 = new UICommon.ucCaptioned();
@@ -225,25 +223,6 @@ namespace TP.HeatExchanger
             this.spinEdit4.Size = new System.Drawing.Size(87, 20);
             this.spinEdit4.TabIndex = 271;
             this.spinEdit4.EditValueChanged += new System.EventHandler(this.spinEdit4_EditValueChanged);
-            // 
-            // shapeContainer1
-            // 
-            this.shapeContainer1.Location = new System.Drawing.Point(0, 0);
-            this.shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
-            this.shapeContainer1.Name = "shapeContainer1";
-            this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
-            this.rectangleShape1});
-            this.shapeContainer1.Size = new System.Drawing.Size(1230, 768);
-            this.shapeContainer1.TabIndex = 277;
-            this.shapeContainer1.TabStop = false;
-            // 
-            // rectangleShape1
-            // 
-            this.rectangleShape1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.rectangleShape1.BorderWidth = 3;
-            this.rectangleShape1.Location = new System.Drawing.Point(517, 260);
-            this.rectangleShape1.Name = "rectangleShape1";
-            this.rectangleShape1.Size = new System.Drawing.Size(16, 44);
             // 
             // ucLine47
             // 
@@ -1646,7 +1625,6 @@ namespace TP.HeatExchanger
             this.Controls.Add(this.ucFan1);
             this.Controls.Add(this.ucLine6);
             this.Controls.Add(this.ucLine15);
-            this.Controls.Add(this.shapeContainer1);
             this.Name = "ucAllHeatExchanger";
             this.Size = new System.Drawing.Size(1230, 768);
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit1.Properties)).EndInit();
@@ -1784,7 +1762,5 @@ namespace TP.HeatExchanger
         private ucCaptioned ucCaptioned16;
         private ucCaptioned ucCaptioned17;
         private ucLine ucLine47;
-        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
-        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape1;
     }
 }
