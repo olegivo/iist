@@ -1970,7 +1970,7 @@
             this.ucBurner4.Jet = UICommon.ucBurner.JetEx.Down;
             this.ucBurner4.Location = new System.Drawing.Point(184, 329);
             this.ucBurner4.Name = "ucBurner4";
-            this.ucBurner4.Size = new System.Drawing.Size(40, 60);
+            this.ucBurner4.Size = new System.Drawing.Size(20, 30);
             this.ucBurner4.TabIndex = 336;
             // 
             // ucPe4b1
@@ -2013,7 +2013,7 @@
             this.ucBurner5.Jet = UICommon.ucBurner.JetEx.Up;
             this.ucBurner5.Location = new System.Drawing.Point(184, 425);
             this.ucBurner5.Name = "ucBurner5";
-            this.ucBurner5.Size = new System.Drawing.Size(40, 60);
+            this.ucBurner5.Size = new System.Drawing.Size(20, 30);
             this.ucBurner5.TabIndex = 336;
             // 
             // ucBurner6
@@ -2024,7 +2024,7 @@
             this.ucBurner6.Jet = UICommon.ucBurner.JetEx.Right;
             this.ucBurner6.Location = new System.Drawing.Point(139, 406);
             this.ucBurner6.Name = "ucBurner6";
-            this.ucBurner6.Size = new System.Drawing.Size(60, 40);
+            this.ucBurner6.Size = new System.Drawing.Size(30, 20);
             this.ucBurner6.TabIndex = 336;
             // 
             // ucBurner7
@@ -2035,7 +2035,7 @@
             this.ucBurner7.Jet = UICommon.ucBurner.JetEx.Right;
             this.ucBurner7.Location = new System.Drawing.Point(139, 357);
             this.ucBurner7.Name = "ucBurner7";
-            this.ucBurner7.Size = new System.Drawing.Size(60, 40);
+            this.ucBurner7.Size = new System.Drawing.Size(30, 20);
             this.ucBurner7.TabIndex = 336;
             // 
             // ucBurner8
@@ -2046,7 +2046,7 @@
             this.ucBurner8.Jet = UICommon.ucBurner.JetEx.Right;
             this.ucBurner8.Location = new System.Drawing.Point(262, 442);
             this.ucBurner8.Name = "ucBurner8";
-            this.ucBurner8.Size = new System.Drawing.Size(60, 40);
+            this.ucBurner8.Size = new System.Drawing.Size(30, 20);
             this.ucBurner8.TabIndex = 336;
             // 
             // ucBurner9
@@ -2057,7 +2057,7 @@
             this.ucBurner9.Jet = UICommon.ucBurner.JetEx.Right;
             this.ucBurner9.Location = new System.Drawing.Point(262, 321);
             this.ucBurner9.Name = "ucBurner9";
-            this.ucBurner9.Size = new System.Drawing.Size(60, 40);
+            this.ucBurner9.Size = new System.Drawing.Size(30, 20);
             this.ucBurner9.TabIndex = 336;
             // 
             // ucLine119
@@ -2551,7 +2551,7 @@
             this.ucBurner10.BurnerStatus = false;
             this.ucBurner10.Location = new System.Drawing.Point(275, 49);
             this.ucBurner10.Name = "ucBurner10";
-            this.ucBurner10.Size = new System.Drawing.Size(60, 40);
+            this.ucBurner10.Size = new System.Drawing.Size(30, 20);
             this.ucBurner10.TabIndex = 339;
             // 
             // ucBurner1
@@ -2559,9 +2559,9 @@
             this.ucBurner1.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucBurner1.Appearance.Options.UseBackColor = true;
             this.ucBurner1.BurnerStatus = false;
-            this.ucBurner1.Location = new System.Drawing.Point(812, 126);
+            this.ucBurner1.Location = new System.Drawing.Point(811, 126);
             this.ucBurner1.Name = "ucBurner1";
-            this.ucBurner1.Size = new System.Drawing.Size(60, 40);
+            this.ucBurner1.Size = new System.Drawing.Size(30, 20);
             this.ucBurner1.TabIndex = 340;
             // 
             // ucBurner2
@@ -2571,7 +2571,7 @@
             this.ucBurner2.BurnerStatus = false;
             this.ucBurner2.Location = new System.Drawing.Point(894, 153);
             this.ucBurner2.Name = "ucBurner2";
-            this.ucBurner2.Size = new System.Drawing.Size(60, 40);
+            this.ucBurner2.Size = new System.Drawing.Size(30, 20);
             this.ucBurner2.TabIndex = 341;
             // 
             // ucLine143
@@ -2659,14 +2659,17 @@
             // 
             this.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.Appearance.Options.UseBackColor = true;
+            this.Controls.Add(this.ucBurner9);
+            this.Controls.Add(this.ucBurner2);
+            this.Controls.Add(this.ucBurner1);
+            this.Controls.Add(this.ucBurner6);
+            this.Controls.Add(this.ucBurner7);
             this.Controls.Add(this.ucScrubberTap2);
             this.Controls.Add(this.ucScrubberTap1);
             this.Controls.Add(this.ucScrubber2);
             this.Controls.Add(this.ucScrubber1);
             this.Controls.Add(this.ucCyclon2);
             this.Controls.Add(this.ucCyclon1);
-            this.Controls.Add(this.ucBurner2);
-            this.Controls.Add(this.ucBurner1);
             this.Controls.Add(this.ucBurner10);
             this.Controls.Add(this.ucCaptioned13);
             this.Controls.Add(this.ucCaptioned16);
@@ -2679,10 +2682,7 @@
             this.Controls.Add(this.ucCaptioned15);
             this.Controls.Add(this.ucCaptioned8);
             this.Controls.Add(this.ucCaptioned7);
-            this.Controls.Add(this.ucBurner7);
-            this.Controls.Add(this.ucBurner9);
             this.Controls.Add(this.ucBurner8);
-            this.Controls.Add(this.ucBurner6);
             this.Controls.Add(this.ucBurner5);
             this.Controls.Add(this.ucBurner4);
             this.Controls.Add(this.ucLine139);
@@ -2867,13 +2867,13 @@
             this.Controls.Add(this.ucCaptioned2);
             this.Controls.Add(this.ucCaptioned1);
             this.Controls.Add(this.ucLine94);
-            this.Controls.Add(this.ucCaptioned4);
             this.Controls.Add(this.ucPe4b1);
             this.Controls.Add(this.ucLine140);
             this.Controls.Add(this.ucBox5);
             this.Controls.Add(this.ucBox7);
             this.Controls.Add(this.ucLine60);
             this.Controls.Add(this.ucBox6);
+            this.Controls.Add(this.ucCaptioned4);
             this.Name = "ucCommonView";
             this.Size = new System.Drawing.Size(1252, 656);
             this.ResumeLayout(false);
