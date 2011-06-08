@@ -19,16 +19,20 @@ namespace TP.CyclonAndScrubber
             InitializeComponent();
 
             myBrush1 = Brushes.Gray;
+            pen = new Pen(LookAndFeel.Painter.Border.DefaultAppearance.ForeColor);
+            CreateGraphicsParams();
+        }
+
+        private void CreateGraphicsParams()
+        {
             myBrush2 = new LinearGradientBrush(new Point(0, YMax), new Point(GradWidth, YMax), Color.DarkGray, Color.Gray);
             myBrush3 = new LinearGradientBrush(new Point(XMax - GradWidth - 1, YMax), new Point(XMax, YMax), Color.Gray, Color.DimGray);
-            pen = new Pen(LookAndFeel.Painter.Border.DefaultAppearance.ForeColor);
-
         }
 
         private readonly Brush myBrush1;
-        private readonly LinearGradientBrush myBrush2;
-        private readonly LinearGradientBrush myBrush3;
-        private readonly Pen pen;
+        private LinearGradientBrush myBrush2;
+        private LinearGradientBrush myBrush3;
+        private Pen pen;
         private const int GradWidth = 10;
 
         /// <summary>
@@ -41,10 +45,10 @@ namespace TP.CyclonAndScrubber
             int rem;
             int yShift = Math.DivRem(YMax, 2, out rem);
 
-            g.FillRectangle(myBrush1, 0, 0, YMax, YMax - yShift);
-            g.FillRectangle(myBrush2, 0, 0, GradWidth, YMax - yShift);
-            g.FillRectangle(myBrush3, YMax - GradWidth, YMax - yShift, YMax, YMax - yShift);
-            g.DrawRectangle(pen, 0, 0, YMax, YMax - yShift);
+            g.FillRectangle(myBrush1, 0, 0, XMax, YMax - yShift);
+            g.FillRectangle(myBrush2, 0, 0, GradWidth, YMax - yShift);//левый градиент
+            g.FillRectangle(myBrush3, XMax - GradWidth, 0, XMax, YMax - yShift);//правый градиент
+            g.DrawRectangle(pen, 0, 0, XMax, YMax - yShift);
 
             Point[] points = new[]
                                  {
@@ -56,6 +60,11 @@ namespace TP.CyclonAndScrubber
             g.DrawPolygon(pen, points);
 
             base.OnPaint(e);
+        }
+
+        private void ucCyclon_SizeChanged(object sender, EventArgs e)
+        {
+            CreateGraphicsParams();
         }
     }
 }
