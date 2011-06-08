@@ -105,6 +105,12 @@
     <Compile Include="CyclonAndScrubber\ucSB.Designer.cs">
       <DependentUpon>ucSB.cs</DependentUpon>
     </Compile>
+    <Compile Include="CyclonAndScrubber\ucScrubberTap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CyclonAndScrubber\ucScrubberTap.Designer.cs">
+      <DependentUpon>ucScrubberTap.cs</DependentUpon>
+    </Compile>
     <Compile Include="DrumTypeFurnace\ucDrumTypeFurnace.cs">
       <SubType>UserControl</SubType>
     </Compile>
