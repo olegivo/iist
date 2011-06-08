@@ -11,5 +11,6 @@
         LightBlue=3,
         Green=4,
         Black=5,
+        LightOrange=6,
     }
 }

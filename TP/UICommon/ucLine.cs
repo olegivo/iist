@@ -93,6 +93,8 @@ namespace UICommon
                     return System.Drawing.Color.Green;
                 case LineColor.Black:
                     return System.Drawing.Color.Black;
+                case LineColor.LightOrange:
+                    return System.Drawing.Color.Wheat;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
