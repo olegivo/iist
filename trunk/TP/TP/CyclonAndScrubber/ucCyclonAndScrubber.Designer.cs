@@ -41,6 +41,13 @@ namespace TP.CyclonAndScrubber
             this.label11 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.ucScrubberTap2 = new TP.CyclonAndScrubber.ucScrubberTap();
+            this.ucScrubberTap1 = new TP.CyclonAndScrubber.ucScrubberTap();
+            this.ucLine80 = new UICommon.ucLine();
+            this.ucSB1 = new TP.CyclonAndScrubber.ucSB();
+            this.ucValve15 = new UICommon.ucValve();
+            this.ucValve2 = new UICommon.ucValve();
+            this.ucValve14 = new UICommon.ucValve();
             this.ucLine79 = new UICommon.ucLine();
             this.ucLine78 = new UICommon.ucLine();
             this.ucLine77 = new UICommon.ucLine();
@@ -53,15 +60,12 @@ namespace TP.CyclonAndScrubber
             this.ucLine70 = new UICommon.ucLine();
             this.ucLine69 = new UICommon.ucLine();
             this.ucValve13 = new UICommon.ucValve();
-            this.ucValve15 = new UICommon.ucValve();
             this.ucLine63 = new UICommon.ucLine();
             this.ucCaptioned2 = new UICommon.ucCaptioned();
-            this.ucValve2 = new UICommon.ucValve();
             this.ucLine68 = new UICommon.ucLine();
             this.ucLine67 = new UICommon.ucLine();
             this.ucCaptioned4 = new UICommon.ucCaptioned();
             this.ucLine66 = new UICommon.ucLine();
-            this.ucValve14 = new UICommon.ucValve();
             this.ucLine65 = new UICommon.ucLine();
             this.ucPump1 = new UICommon.ucPump();
             this.ucLine64 = new UICommon.ucLine();
@@ -160,15 +164,13 @@ namespace TP.CyclonAndScrubber
             this.ucValve4 = new UICommon.ucValve();
             this.ucValve3 = new UICommon.ucValve();
             this.ucCaptioned3 = new UICommon.ucCaptioned();
-            this.ucValve1 = new UICommon.ucValve();
-            this.ucLine62 = new UICommon.ucLine();
-            this.ucLine59 = new UICommon.ucLine();
-            this.ucSB1 = new TP.CyclonAndScrubber.ucSB();
             this.ucScrubber2 = new TP.CyclonAndScrubber.ucScrubber();
+            this.ucValve1 = new UICommon.ucValve();
             this.ucCyclon2 = new TP.CyclonAndScrubber.ucCyclon();
             this.ucCyclon1 = new TP.CyclonAndScrubber.ucCyclon();
             this.ucScrubber1 = new TP.CyclonAndScrubber.ucScrubber();
-            this.ucLine80 = new UICommon.ucLine();
+            this.ucLine62 = new UICommon.ucLine();
+            this.ucLine59 = new UICommon.ucLine();
             this.SuspendLayout();
             // 
             // label2
@@ -241,7 +243,7 @@ namespace TP.CyclonAndScrubber
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(455, 450);
+            this.label11.Location = new System.Drawing.Point(451, 450);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(40, 13);
             this.label11.TabIndex = 6;
@@ -263,6 +265,76 @@ namespace TP.CyclonAndScrubber
             this.label7.TabIndex = 6;
             this.label7.Text = "От водо- провода";
             // 
+            // ucScrubberTap2
+            // 
+            this.ucScrubberTap2.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucScrubberTap2.Appearance.Options.UseBackColor = true;
+            this.ucScrubberTap2.Location = new System.Drawing.Point(442, 240);
+            this.ucScrubberTap2.Mirrored = true;
+            this.ucScrubberTap2.Name = "ucScrubberTap2";
+            this.ucScrubberTap2.Size = new System.Drawing.Size(100, 85);
+            this.ucScrubberTap2.TabIndex = 12;
+            // 
+            // ucScrubberTap1
+            // 
+            this.ucScrubberTap1.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucScrubberTap1.Appearance.Options.UseBackColor = true;
+            this.ucScrubberTap1.Location = new System.Drawing.Point(255, 240);
+            this.ucScrubberTap1.Name = "ucScrubberTap1";
+            this.ucScrubberTap1.Size = new System.Drawing.Size(100, 85);
+            this.ucScrubberTap1.TabIndex = 12;
+            // 
+            // ucLine80
+            // 
+            this.ucLine80.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine80.Appearance.Options.UseBackColor = true;
+            this.ucLine80.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine80.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            this.ucLine80.LineWidth = 5;
+            this.ucLine80.Location = new System.Drawing.Point(395, 134);
+            this.ucLine80.Name = "ucLine80";
+            this.ucLine80.Size = new System.Drawing.Size(10, 49);
+            this.ucLine80.TabIndex = 10;
+            // 
+            // ucSB1
+            // 
+            this.ucSB1.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucSB1.Appearance.Options.UseBackColor = true;
+            this.ucSB1.Caption = "СБ";
+            this.ucSB1.Location = new System.Drawing.Point(335, 325);
+            this.ucSB1.Name = "ucSB1";
+            this.ucSB1.Size = new System.Drawing.Size(127, 53);
+            this.ucSB1.TabIndex = 11;
+            // 
+            // ucValve15
+            // 
+            this.ucValve15.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucValve15.Appearance.Options.UseBackColor = true;
+            this.ucValve15.Location = new System.Drawing.Point(405, 588);
+            this.ucValve15.Name = "ucValve15";
+            this.ucValve15.Size = new System.Drawing.Size(40, 20);
+            this.ucValve15.TabIndex = 3;
+            // 
+            // ucValve2
+            // 
+            this.ucValve2.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucValve2.Appearance.Options.UseBackColor = true;
+            this.ucValve2.Location = new System.Drawing.Point(468, 632);
+            this.ucValve2.Name = "ucValve2";
+            this.ucValve2.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucValve2.Size = new System.Drawing.Size(20, 40);
+            this.ucValve2.TabIndex = 3;
+            // 
+            // ucValve14
+            // 
+            this.ucValve14.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucValve14.Appearance.Options.UseBackColor = true;
+            this.ucValve14.Location = new System.Drawing.Point(556, 632);
+            this.ucValve14.Name = "ucValve14";
+            this.ucValve14.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.ucValve14.Size = new System.Drawing.Size(20, 40);
+            this.ucValve14.TabIndex = 3;
+            // 
             // ucLine79
             // 
             this.ucLine79.Appearance.BackColor = System.Drawing.Color.Transparent;
@@ -271,7 +343,7 @@ namespace TP.CyclonAndScrubber
             this.ucLine79.LineWidth = 5;
             this.ucLine79.Location = new System.Drawing.Point(292, 178);
             this.ucLine79.Name = "ucLine79";
-            this.ucLine79.Size = new System.Drawing.Size(216, 14);
+            this.ucLine79.Size = new System.Drawing.Size(214, 14);
             this.ucLine79.StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
             this.ucLine79.TabIndex = 10;
             // 
@@ -392,15 +464,6 @@ namespace TP.CyclonAndScrubber
             this.ucValve13.Size = new System.Drawing.Size(40, 20);
             this.ucValve13.TabIndex = 3;
             // 
-            // ucValve15
-            // 
-            this.ucValve15.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucValve15.Appearance.Options.UseBackColor = true;
-            this.ucValve15.Location = new System.Drawing.Point(405, 588);
-            this.ucValve15.Name = "ucValve15";
-            this.ucValve15.Size = new System.Drawing.Size(40, 20);
-            this.ucValve15.TabIndex = 3;
-            // 
             // ucLine63
             // 
             this.ucLine63.Appearance.BackColor = System.Drawing.Color.Transparent;
@@ -422,16 +485,6 @@ namespace TP.CyclonAndScrubber
             this.ucCaptioned2.Name = "ucCaptioned2";
             this.ucCaptioned2.Size = new System.Drawing.Size(54, 114);
             this.ucCaptioned2.TabIndex = 5;
-            // 
-            // ucValve2
-            // 
-            this.ucValve2.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucValve2.Appearance.Options.UseBackColor = true;
-            this.ucValve2.Location = new System.Drawing.Point(468, 632);
-            this.ucValve2.Name = "ucValve2";
-            this.ucValve2.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.ucValve2.Size = new System.Drawing.Size(20, 40);
-            this.ucValve2.TabIndex = 3;
             // 
             // ucLine68
             // 
@@ -474,16 +527,6 @@ namespace TP.CyclonAndScrubber
             this.ucLine66.Name = "ucLine66";
             this.ucLine66.Size = new System.Drawing.Size(10, 69);
             this.ucLine66.TabIndex = 10;
-            // 
-            // ucValve14
-            // 
-            this.ucValve14.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucValve14.Appearance.Options.UseBackColor = true;
-            this.ucValve14.Location = new System.Drawing.Point(556, 632);
-            this.ucValve14.Name = "ucValve14";
-            this.ucValve14.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.ucValve14.Size = new System.Drawing.Size(20, 40);
-            this.ucValve14.TabIndex = 3;
             // 
             // ucLine65
             // 
@@ -918,7 +961,7 @@ namespace TP.CyclonAndScrubber
             this.ucLine28.Color = UICommon.LineColor.Black;
             this.ucLine28.Direction = System.Windows.Forms.AnchorStyles.Bottom;
             this.ucLine28.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
-            this.ucLine28.Location = new System.Drawing.Point(398, 379);
+            this.ucLine28.Location = new System.Drawing.Point(394, 379);
             this.ucLine28.Name = "ucLine28";
             this.ucLine28.Size = new System.Drawing.Size(10, 63);
             this.ucLine28.TabIndex = 10;
@@ -996,9 +1039,9 @@ namespace TP.CyclonAndScrubber
             this.ucLine9.Color = UICommon.LineColor.Black;
             this.ucLine9.Direction = System.Windows.Forms.AnchorStyles.Bottom;
             this.ucLine9.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
-            this.ucLine9.Location = new System.Drawing.Point(347, 294);
+            this.ucLine9.Location = new System.Drawing.Point(346, 270);
             this.ucLine9.Name = "ucLine9";
-            this.ucLine9.Size = new System.Drawing.Size(10, 31);
+            this.ucLine9.Size = new System.Drawing.Size(10, 55);
             this.ucLine9.TabIndex = 10;
             // 
             // ucLine8
@@ -1008,9 +1051,9 @@ namespace TP.CyclonAndScrubber
             this.ucLine8.Color = UICommon.LineColor.Black;
             this.ucLine8.Direction = System.Windows.Forms.AnchorStyles.Bottom;
             this.ucLine8.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
-            this.ucLine8.Location = new System.Drawing.Point(449, 294);
+            this.ucLine8.Location = new System.Drawing.Point(444, 270);
             this.ucLine8.Name = "ucLine8";
-            this.ucLine8.Size = new System.Drawing.Size(10, 31);
+            this.ucLine8.Size = new System.Drawing.Size(10, 55);
             this.ucLine8.TabIndex = 10;
             // 
             // ucLine4
@@ -1019,7 +1062,7 @@ namespace TP.CyclonAndScrubber
             this.ucLine4.Appearance.Options.UseBackColor = true;
             this.ucLine4.Color = UICommon.LineColor.Black;
             this.ucLine4.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
-            this.ucLine4.Location = new System.Drawing.Point(446, 440);
+            this.ucLine4.Location = new System.Drawing.Point(442, 440);
             this.ucLine4.Name = "ucLine4";
             this.ucLine4.Size = new System.Drawing.Size(54, 11);
             this.ucLine4.TabIndex = 10;
@@ -1028,7 +1071,7 @@ namespace TP.CyclonAndScrubber
             // 
             this.ucTransporter3.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucTransporter3.Appearance.Options.UseBackColor = true;
-            this.ucTransporter3.Location = new System.Drawing.Point(372, 442);
+            this.ucTransporter3.Location = new System.Drawing.Point(368, 442);
             this.ucTransporter3.Name = "ucTransporter3";
             this.ucTransporter3.Size = new System.Drawing.Size(74, 8);
             this.ucTransporter3.TabIndex = 8;
@@ -1273,8 +1316,8 @@ namespace TP.CyclonAndScrubber
             // 
             // ucIndicatorPh2
             // 
-            this.ucIndicatorPh2.AllowedMaxValue = 0F;
-            this.ucIndicatorPh2.AllowedMinValue = 0F;
+            this.ucIndicatorPh2.AllowedMaxValue = 9F;
+            this.ucIndicatorPh2.AllowedMinValue = 7F;
             this.ucIndicatorPh2.Caption = "Ph2:";
             this.ucIndicatorPh2.EditValue = 13F;
             this.ucIndicatorPh2.Location = new System.Drawing.Point(1047, 355);
@@ -1287,8 +1330,8 @@ namespace TP.CyclonAndScrubber
             // 
             // ucIndicatorPh1
             // 
-            this.ucIndicatorPh1.AllowedMaxValue = 0F;
-            this.ucIndicatorPh1.AllowedMinValue = 0F;
+            this.ucIndicatorPh1.AllowedMaxValue = 9F;
+            this.ucIndicatorPh1.AllowedMinValue = 7F;
             this.ucIndicatorPh1.Caption = "Ph1:";
             this.ucIndicatorPh1.EditValue = 13F;
             this.ucIndicatorPh1.Location = new System.Drawing.Point(67, 299);
@@ -1456,7 +1499,7 @@ namespace TP.CyclonAndScrubber
             // 
             this.ucValve8.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucValve8.Appearance.Options.UseBackColor = true;
-            this.ucValve8.Location = new System.Drawing.Point(392, 386);
+            this.ucValve8.Location = new System.Drawing.Point(388, 386);
             this.ucValve8.Name = "ucValve8";
             this.ucValve8.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.ucValve8.Size = new System.Drawing.Size(20, 40);
@@ -1495,7 +1538,7 @@ namespace TP.CyclonAndScrubber
             // 
             this.ucValve4.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucValve4.Appearance.Options.UseBackColor = true;
-            this.ucValve4.Location = new System.Drawing.Point(410, 174);
+            this.ucValve4.Location = new System.Drawing.Point(406, 174);
             this.ucValve4.Name = "ucValve4";
             this.ucValve4.Size = new System.Drawing.Size(40, 20);
             this.ucValve4.TabIndex = 3;
@@ -1504,7 +1547,7 @@ namespace TP.CyclonAndScrubber
             // 
             this.ucValve3.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucValve3.Appearance.Options.UseBackColor = true;
-            this.ucValve3.Location = new System.Drawing.Point(457, 174);
+            this.ucValve3.Location = new System.Drawing.Point(453, 174);
             this.ucValve3.Name = "ucValve3";
             this.ucValve3.Size = new System.Drawing.Size(40, 20);
             this.ucValve3.TabIndex = 3;
@@ -1520,45 +1563,6 @@ namespace TP.CyclonAndScrubber
             this.ucCaptioned3.Size = new System.Drawing.Size(54, 114);
             this.ucCaptioned3.TabIndex = 5;
             // 
-            // ucValve1
-            // 
-            this.ucValve1.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucValve1.Appearance.Options.UseBackColor = true;
-            this.ucValve1.Location = new System.Drawing.Point(306, 174);
-            this.ucValve1.Name = "ucValve1";
-            this.ucValve1.Size = new System.Drawing.Size(40, 20);
-            this.ucValve1.TabIndex = 3;
-            // 
-            // ucLine62
-            // 
-            this.ucLine62.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucLine62.Appearance.Options.UseBackColor = true;
-            this.ucLine62.LineWidth = 5;
-            this.ucLine62.Location = new System.Drawing.Point(391, 592);
-            this.ucLine62.Name = "ucLine62";
-            this.ucLine62.Size = new System.Drawing.Size(61, 14);
-            this.ucLine62.TabIndex = 10;
-            // 
-            // ucLine59
-            // 
-            this.ucLine59.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucLine59.Appearance.Options.UseBackColor = true;
-            this.ucLine59.LineWidth = 5;
-            this.ucLine59.Location = new System.Drawing.Point(505, 592);
-            this.ucLine59.Name = "ucLine59";
-            this.ucLine59.Size = new System.Drawing.Size(61, 14);
-            this.ucLine59.TabIndex = 10;
-            // 
-            // ucSB1
-            // 
-            this.ucSB1.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucSB1.Appearance.Options.UseBackColor = true;
-            this.ucSB1.Caption = "СБ";
-            this.ucSB1.Location = new System.Drawing.Point(337, 325);
-            this.ucSB1.Name = "ucSB1";
-            this.ucSB1.Size = new System.Drawing.Size(127, 53);
-            this.ucSB1.TabIndex = 11;
-            // 
             // ucScrubber2
             // 
             this.ucScrubber2.Appearance.BackColor = System.Drawing.Color.Transparent;
@@ -1569,6 +1573,15 @@ namespace TP.CyclonAndScrubber
             this.ucScrubber2.Name = "ucScrubber2";
             this.ucScrubber2.Size = new System.Drawing.Size(108, 205);
             this.ucScrubber2.TabIndex = 1;
+            // 
+            // ucValve1
+            // 
+            this.ucValve1.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucValve1.Appearance.Options.UseBackColor = true;
+            this.ucValve1.Location = new System.Drawing.Point(306, 174);
+            this.ucValve1.Name = "ucValve1";
+            this.ucValve1.Size = new System.Drawing.Size(40, 20);
+            this.ucValve1.TabIndex = 3;
             // 
             // ucCyclon2
             // 
@@ -1600,17 +1613,25 @@ namespace TP.CyclonAndScrubber
             this.ucScrubber1.Size = new System.Drawing.Size(108, 205);
             this.ucScrubber1.TabIndex = 1;
             // 
-            // ucLine80
+            // ucLine62
             // 
-            this.ucLine80.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucLine80.Appearance.Options.UseBackColor = true;
-            this.ucLine80.Direction = System.Windows.Forms.AnchorStyles.Bottom;
-            this.ucLine80.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
-            this.ucLine80.LineWidth = 5;
-            this.ucLine80.Location = new System.Drawing.Point(396, 134);
-            this.ucLine80.Name = "ucLine80";
-            this.ucLine80.Size = new System.Drawing.Size(10, 49);
-            this.ucLine80.TabIndex = 10;
+            this.ucLine62.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine62.Appearance.Options.UseBackColor = true;
+            this.ucLine62.LineWidth = 5;
+            this.ucLine62.Location = new System.Drawing.Point(391, 592);
+            this.ucLine62.Name = "ucLine62";
+            this.ucLine62.Size = new System.Drawing.Size(61, 14);
+            this.ucLine62.TabIndex = 10;
+            // 
+            // ucLine59
+            // 
+            this.ucLine59.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine59.Appearance.Options.UseBackColor = true;
+            this.ucLine59.LineWidth = 5;
+            this.ucLine59.Location = new System.Drawing.Point(505, 592);
+            this.ucLine59.Name = "ucLine59";
+            this.ucLine59.Size = new System.Drawing.Size(61, 14);
+            this.ucLine59.TabIndex = 10;
             // 
             // ucCyclonAndScrubber
             // 
@@ -1755,6 +1776,8 @@ namespace TP.CyclonAndScrubber
             this.Controls.Add(this.ucScrubber1);
             this.Controls.Add(this.ucLine62);
             this.Controls.Add(this.ucLine59);
+            this.Controls.Add(this.ucScrubberTap1);
+            this.Controls.Add(this.ucScrubberTap2);
             this.LookAndFeel.SkinName = "Caramel";
             this.LookAndFeel.UseDefaultLookAndFeel = false;
             this.Name = "ucCyclonAndScrubber";
@@ -1905,5 +1928,7 @@ namespace TP.CyclonAndScrubber
         private ucLine ucLine79;
         private ucSB ucSB1;
         private ucLine ucLine80;
+        private ucScrubberTap ucScrubberTap1;
+        private ucScrubberTap ucScrubberTap2;
     }
 }

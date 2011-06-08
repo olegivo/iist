@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -10,12 +10,12 @@ namespace TP.CyclonAndScrubber
     /// <summary>
     /// 
     /// </summary>
-    public partial class ucScrubber : ucCaptioned
+    public partial class ucScrubberTap : ucCommonBase
     {
         /// <summary>
         /// 
         /// </summary>
-        public ucScrubber()
+        public ucScrubberTap()
         {
             InitializeComponent();
         }
@@ -65,32 +65,20 @@ namespace TP.CyclonAndScrubber
             }
 
 
-            Rectangle rectangle = new Rectangle(2 * x, 0, XMax - 3 * x, YMax - xShift);
-            g.FillRectangle(brush, rectangle);//большой
-            g.DrawRectangle(pen, rectangle);//большой
-
-            //дно
+            //����
             Point[] points = new[]
                                  {
-                                     new Point(2*x, YMax - xShift),
-                                     new Point(3 * x, YMax),
-                                     new Point(XMax - 2*x, YMax),
-                                     new Point(XMax - x, YMax - xShift),
+                                     new Point(2*x, YMax-xShift), 
+                                     new Point(XCenter, 0), 
+                                     new Point(XMax, 0), 
+                                     new Point(XMax, 3*y), 
+                                     new Point(XMax-x, 3*y), 
+                                     new Point(XMax-x, y), 
+                                     new Point(XCenter+x, y), 
+                                     new Point(3*x, YMax-xShift+y), 
                                  };
             g.FillPolygon(brush, points);
             g.DrawPolygon(pen, points);
-
-            //маленький слева
-            rectangle = new Rectangle(x, YCenter, x, 2 * y);
-            g.FillRectangle(brush, rectangle);
-            g.DrawRectangle(pen, rectangle);
-            //побольше слева
-            rectangle = new Rectangle(x / 2, YCenter - 3 * y, x * 3 / 2, 3 * y);
-            g.FillRectangle(brush, rectangle);
-            g.DrawRectangle(pen, rectangle);
-            //справаrectangle = new Rectangle(XMax - x, y, x, 3*y);
-            g.FillRectangle(brush, rectangle);
-            g.DrawRectangle(pen, rectangle);
 
             if(Mirrored)
                 g.Transform = prevTransform;
