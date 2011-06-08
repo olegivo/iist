@@ -29,35 +29,59 @@ namespace UICommon
             switch (Jet)
             {
                 case JetEx.Left:
-                    Width = 60;
-                    Height = 40;
-                    g.FillRectangle(Brushes.LightGray, 20, 0, 40, 40);
-                    g.DrawRectangle(pen, 20,0,XMax-20,YMax);
-                    g.FillRectangle(Brushes.LightSlateGray, 0, 15, 30, 10);
+                    //Width = 60;
+                    //Height = 40;
+                    g.FillRectangle(Brushes.LightGray, XMax/3, 0, XMax, YMax);
+                    g.DrawRectangle(pen, XMax/3,0,XMax,YMax);
+                    g.FillPolygon(Brushes.LightSlateGray, new[]
+                                                 {
+                                                     new Point(0, 2*YMax/6),
+                                                     new Point(XMax/2, 2*YMax/6),
+                                                     new Point(XMax/2, 4*YMax/6),
+                                                     new Point(0, 4*YMax/6),
+                                                 });
                     break;
 
                 case JetEx.Right:
-                    Width = 60;
-                    Height = 40;
-                    g.FillRectangle(Brushes.LightGray, 0, 0, 40, 40);
-                    g.DrawRectangle(pen, 0, 0, 39, 39);
-                    g.FillRectangle(Brushes.LightSlateGray, 30, 15, 30, 10);
+                    //Width = 60;
+                    //Height = 40;
+                    g.FillRectangle(Brushes.LightGray, 0, 0, 2*XMax/3, YMax);
+                    g.DrawRectangle(pen, 0, 0, 2 * XMax / 3, YMax);
+                    g.FillPolygon(Brushes.LightSlateGray, new[]
+                                                 {
+                                                     new Point(XMax/2, 2*YMax/6),
+                                                     new Point(XMax, 2*YMax/6),
+                                                     new Point(XMax, 4*YMax/6),
+                                                     new Point(XMax/2, 4*YMax/6),
+                                                 });
                     break;
 
                 case JetEx.Up:
-                    Width = 40;
-                    Height = 60;
-                    g.FillRectangle(Brushes.LightGray, 0, 20, 40, 40);
-                    g.DrawRectangle(pen, 0, 20, 39, 39);
-                    g.FillRectangle(Brushes.LightSlateGray, 15, 0, 10, 30);
+                    //Width = 40;
+                    //Height = 60;
+                    g.FillRectangle(Brushes.LightGray, 0, YMax/3, XMax, YMax);
+                    g.DrawRectangle(pen, 0, YMax / 3, XMax, YMax);
+                    g.FillPolygon(Brushes.LightSlateGray, new[]
+                                                 {
+                                                     new Point(2*XMax/6, 0),
+                                                     new Point(4*XMax/6, 0),
+                                                     new Point(4*XMax/6, YMax/2),
+                                                     new Point(2*XMax/6, YMax/2),
+                                                 });
                     break;
 
                 case JetEx.Down:
-                    Width = 40;
-                    Height = 60;
-                    g.FillRectangle(Brushes.LightGray, 0, 0, 40, 40);
-                    g.DrawRectangle(pen, 0, 0, 39, 39);
-                    g.FillRectangle(Brushes.LightSlateGray, 15, 30, 10, 30);
+                    //Width = 40;
+                    //Height = 60;
+                    g.FillRectangle(Brushes.LightGray, 0, 0, XMax, 2*YMax/3);
+                    g.DrawRectangle(pen, 0, 0, XMax, 2 * YMax / 3);
+                    g.FillPolygon(Brushes.LightSlateGray, new[]
+                                                 {
+                                                     new Point(2*XMax/6, YMax/2),
+                                                     new Point(4*XMax/6, YMax/2),
+                                                     new Point(4*XMax/6, YMax),
+                                                     new Point(2*XMax/6, YMax),
+                                                 });
                     break;
             }
 
