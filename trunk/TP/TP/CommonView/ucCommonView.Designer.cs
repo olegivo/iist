@@ -274,6 +274,32 @@
             this.ucLine166 = new UICommon.ucLine();
             this.ucLine167 = new UICommon.ucLine();
             this.ucLine168 = new UICommon.ucLine();
+            this.ucCaptioned17 = new UICommon.ucCaptioned();
+            this.ucCaptioned18 = new UICommon.ucCaptioned();
+            this.ucCaptioned19 = new UICommon.ucCaptioned();
+            this.ucCaptioned20 = new UICommon.ucCaptioned();
+            this.ucLine169 = new UICommon.ucLine();
+            this.ucLine170 = new UICommon.ucLine();
+            this.ucLine171 = new UICommon.ucLine();
+            this.ucLine174 = new UICommon.ucLine();
+            this.ucLine175 = new UICommon.ucLine();
+            this.ucLine176 = new UICommon.ucLine();
+            this.ucLine177 = new UICommon.ucLine();
+            this.ucLine178 = new UICommon.ucLine();
+            this.ucLine179 = new UICommon.ucLine();
+            this.ucLine180 = new UICommon.ucLine();
+            this.ucLine181 = new UICommon.ucLine();
+            this.ucLine182 = new UICommon.ucLine();
+            this.ucLine183 = new UICommon.ucLine();
+            this.ucLine184 = new UICommon.ucLine();
+            this.ucLine185 = new UICommon.ucLine();
+            this.ucLine186 = new UICommon.ucLine();
+            this.ucLine187 = new UICommon.ucLine();
+            this.ucLine188 = new UICommon.ucLine();
+            this.ucLine172 = new UICommon.ucLine();
+            this.ucLine173 = new UICommon.ucLine();
+            this.ucLine189 = new UICommon.ucLine();
+            this.ucLine190 = new UICommon.ucLine();
             this.SuspendLayout();
             // 
             // ucCaptioned1
@@ -1649,9 +1675,9 @@
             this.ucLine90.Direction = System.Windows.Forms.AnchorStyles.Left;
             this.ucLine90.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
             this.ucLine90.LineWidth = 3;
-            this.ucLine90.Location = new System.Drawing.Point(707, 219);
+            this.ucLine90.Location = new System.Drawing.Point(753, 219);
             this.ucLine90.Name = "ucLine90";
-            this.ucLine90.Size = new System.Drawing.Size(94, 13);
+            this.ucLine90.Size = new System.Drawing.Size(48, 13);
             this.ucLine90.TabIndex = 304;
             // 
             // ucLine91
@@ -2700,7 +2726,7 @@
             // 
             this.ucPump8.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucPump8.Appearance.Options.UseBackColor = true;
-            this.ucPump8.Location = new System.Drawing.Point(365, 198);
+            this.ucPump8.Location = new System.Drawing.Point(584, 214);
             this.ucPump8.Name = "ucPump8";
             this.ucPump8.Size = new System.Drawing.Size(25, 25);
             this.ucPump8.TabIndex = 350;
@@ -2709,7 +2735,7 @@
             // 
             this.ucPump7.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucPump7.Appearance.Options.UseBackColor = true;
-            this.ucPump7.Location = new System.Drawing.Point(365, 233);
+            this.ucPump7.Location = new System.Drawing.Point(584, 240);
             this.ucPump7.Name = "ucPump7";
             this.ucPump7.Size = new System.Drawing.Size(25, 25);
             this.ucPump7.TabIndex = 350;
@@ -2718,7 +2744,7 @@
             // 
             this.ucPump9.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.ucPump9.Appearance.Options.UseBackColor = true;
-            this.ucPump9.Location = new System.Drawing.Point(437, 198);
+            this.ucPump9.Location = new System.Drawing.Point(686, 190);
             this.ucPump9.Name = "ucPump9";
             this.ucPump9.Size = new System.Drawing.Size(25, 25);
             this.ucPump9.TabIndex = 350;
@@ -3052,10 +3078,302 @@
             this.ucLine168.Size = new System.Drawing.Size(18, 15);
             this.ucLine168.TabIndex = 68;
             // 
+            // ucCaptioned17
+            // 
+            this.ucCaptioned17.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned17.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucCaptioned17.Caption = "ФС1";
+            this.ucCaptioned17.Location = new System.Drawing.Point(395, 201);
+            this.ucCaptioned17.Name = "ucCaptioned17";
+            this.ucCaptioned17.Size = new System.Drawing.Size(36, 54);
+            this.ucCaptioned17.TabIndex = 353;
+            // 
+            // ucCaptioned18
+            // 
+            this.ucCaptioned18.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned18.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucCaptioned18.Caption = "Б1";
+            this.ucCaptioned18.Location = new System.Drawing.Point(470, 214);
+            this.ucCaptioned18.Name = "ucCaptioned18";
+            this.ucCaptioned18.Size = new System.Drawing.Size(27, 28);
+            this.ucCaptioned18.TabIndex = 354;
+            // 
+            // ucCaptioned19
+            // 
+            this.ucCaptioned19.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned19.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucCaptioned19.Caption = "Б2";
+            this.ucCaptioned19.Location = new System.Drawing.Point(726, 214);
+            this.ucCaptioned19.Name = "ucCaptioned19";
+            this.ucCaptioned19.Size = new System.Drawing.Size(27, 29);
+            this.ucCaptioned19.TabIndex = 351;
+            // 
+            // ucCaptioned20
+            // 
+            this.ucCaptioned20.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned20.Appearance.Options.UseBackColor = true;
+            this.ucCaptioned20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucCaptioned20.Caption = "ФС2";
+            this.ucCaptioned20.Location = new System.Drawing.Point(631, 214);
+            this.ucCaptioned20.Name = "ucCaptioned20";
+            this.ucCaptioned20.Size = new System.Drawing.Size(36, 51);
+            this.ucCaptioned20.TabIndex = 352;
+            // 
+            // ucLine169
+            // 
+            this.ucLine169.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine169.Appearance.Options.UseBackColor = true;
+            this.ucLine169.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine169.LineWidth = 3;
+            this.ucLine169.Location = new System.Drawing.Point(670, 201);
+            this.ucLine169.Name = "ucLine169";
+            this.ucLine169.Size = new System.Drawing.Size(10, 33);
+            this.ucLine169.TabIndex = 334;
+            // 
+            // ucLine170
+            // 
+            this.ucLine170.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine170.Appearance.Options.UseBackColor = true;
+            this.ucLine170.Direction = System.Windows.Forms.AnchorStyles.Left;
+            this.ucLine170.LineWidth = 3;
+            this.ucLine170.Location = new System.Drawing.Point(667, 226);
+            this.ucLine170.Name = "ucLine170";
+            this.ucLine170.Size = new System.Drawing.Size(10, 13);
+            this.ucLine170.TabIndex = 304;
+            // 
+            // ucLine171
+            // 
+            this.ucLine171.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine171.Appearance.Options.UseBackColor = true;
+            this.ucLine171.Direction = System.Windows.Forms.AnchorStyles.Left;
+            this.ucLine171.LineWidth = 3;
+            this.ucLine171.Location = new System.Drawing.Point(584, 185);
+            this.ucLine171.Name = "ucLine171";
+            this.ucLine171.Size = new System.Drawing.Size(103, 13);
+            this.ucLine171.TabIndex = 304;
+            // 
+            // ucLine174
+            // 
+            this.ucLine174.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine174.Appearance.Options.UseBackColor = true;
+            this.ucLine174.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine174.LineWidth = 3;
+            this.ucLine174.Location = new System.Drawing.Point(581, 39);
+            this.ucLine174.Name = "ucLine174";
+            this.ucLine174.Size = new System.Drawing.Size(10, 155);
+            this.ucLine174.TabIndex = 334;
+            // 
+            // ucLine175
+            // 
+            this.ucLine175.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine175.Appearance.Options.UseBackColor = true;
+            this.ucLine175.Direction = System.Windows.Forms.AnchorStyles.Left;
+            this.ucLine175.LineWidth = 3;
+            this.ucLine175.Location = new System.Drawing.Point(606, 245);
+            this.ucLine175.Name = "ucLine175";
+            this.ucLine175.Size = new System.Drawing.Size(26, 13);
+            this.ucLine175.TabIndex = 304;
+            // 
+            // ucLine176
+            // 
+            this.ucLine176.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine176.Appearance.Options.UseBackColor = true;
+            this.ucLine176.Direction = System.Windows.Forms.AnchorStyles.Left;
+            this.ucLine176.LineWidth = 3;
+            this.ucLine176.Location = new System.Drawing.Point(606, 221);
+            this.ucLine176.Name = "ucLine176";
+            this.ucLine176.Size = new System.Drawing.Size(19, 13);
+            this.ucLine176.TabIndex = 304;
+            // 
+            // ucLine177
+            // 
+            this.ucLine177.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine177.Appearance.Options.UseBackColor = true;
+            this.ucLine177.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine177.LineWidth = 3;
+            this.ucLine177.Location = new System.Drawing.Point(618, 226);
+            this.ucLine177.Name = "ucLine177";
+            this.ucLine177.Size = new System.Drawing.Size(10, 26);
+            this.ucLine177.TabIndex = 334;
+            // 
+            // ucLine178
+            // 
+            this.ucLine178.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine178.Appearance.Options.UseBackColor = true;
+            this.ucLine178.Direction = System.Windows.Forms.AnchorStyles.Left;
+            this.ucLine178.LineWidth = 3;
+            this.ucLine178.Location = new System.Drawing.Point(544, 97);
+            this.ucLine178.Name = "ucLine178";
+            this.ucLine178.Size = new System.Drawing.Size(21, 13);
+            this.ucLine178.TabIndex = 304;
+            // 
+            // ucLine179
+            // 
+            this.ucLine179.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine179.Appearance.Options.UseBackColor = true;
+            this.ucLine179.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine179.LineWidth = 3;
+            this.ucLine179.Location = new System.Drawing.Point(558, 104);
+            this.ucLine179.Name = "ucLine179";
+            this.ucLine179.Size = new System.Drawing.Size(10, 98);
+            this.ucLine179.TabIndex = 334;
+            // 
+            // ucLine180
+            // 
+            this.ucLine180.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine180.Appearance.Options.UseBackColor = true;
+            this.ucLine180.Direction = System.Windows.Forms.AnchorStyles.Left;
+            this.ucLine180.LineWidth = 3;
+            this.ucLine180.Location = new System.Drawing.Point(564, 193);
+            this.ucLine180.Name = "ucLine180";
+            this.ucLine180.Size = new System.Drawing.Size(113, 13);
+            this.ucLine180.TabIndex = 304;
+            // 
+            // ucLine181
+            // 
+            this.ucLine181.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine181.Appearance.Options.UseBackColor = true;
+            this.ucLine181.Direction = System.Windows.Forms.AnchorStyles.Left;
+            this.ucLine181.LineWidth = 3;
+            this.ucLine181.Location = new System.Drawing.Point(544, 41);
+            this.ucLine181.Name = "ucLine181";
+            this.ucLine181.Size = new System.Drawing.Size(44, 10);
+            this.ucLine181.TabIndex = 304;
+            // 
+            // ucLine182
+            // 
+            this.ucLine182.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine182.Appearance.Options.UseBackColor = true;
+            this.ucLine182.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine182.LineWidth = 3;
+            this.ucLine182.Location = new System.Drawing.Point(568, 46);
+            this.ucLine182.Name = "ucLine182";
+            this.ucLine182.Size = new System.Drawing.Size(10, 196);
+            this.ucLine182.TabIndex = 334;
+            // 
+            // ucLine183
+            // 
+            this.ucLine183.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine183.Appearance.Options.UseBackColor = true;
+            this.ucLine183.Direction = System.Windows.Forms.AnchorStyles.Left;
+            this.ucLine183.LineWidth = 3;
+            this.ucLine183.Location = new System.Drawing.Point(572, 210);
+            this.ucLine183.Name = "ucLine183";
+            this.ucLine183.Size = new System.Drawing.Size(13, 13);
+            this.ucLine183.TabIndex = 304;
+            // 
+            // ucLine184
+            // 
+            this.ucLine184.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine184.Appearance.Options.UseBackColor = true;
+            this.ucLine184.Direction = System.Windows.Forms.AnchorStyles.Left;
+            this.ucLine184.LineWidth = 3;
+            this.ucLine184.Location = new System.Drawing.Point(572, 236);
+            this.ucLine184.Name = "ucLine184";
+            this.ucLine184.Size = new System.Drawing.Size(13, 13);
+            this.ucLine184.TabIndex = 304;
+            // 
+            // ucLine185
+            // 
+            this.ucLine185.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine185.Appearance.Options.UseBackColor = true;
+            this.ucLine185.Direction = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+            this.ucLine185.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            this.ucLine185.LineWidth = 3;
+            this.ucLine185.Location = new System.Drawing.Point(707, 209);
+            this.ucLine185.Name = "ucLine185";
+            this.ucLine185.Size = new System.Drawing.Size(19, 19);
+            this.ucLine185.TabIndex = 334;
+            // 
+            // ucLine186
+            // 
+            this.ucLine186.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine186.Appearance.Options.UseBackColor = true;
+            this.ucLine186.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine186.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            this.ucLine186.LineWidth = 3;
+            this.ucLine186.Location = new System.Drawing.Point(735, 242);
+            this.ucLine186.Name = "ucLine186";
+            this.ucLine186.Size = new System.Drawing.Size(10, 18);
+            this.ucLine186.TabIndex = 334;
+            // 
+            // ucLine187
+            // 
+            this.ucLine187.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine187.Appearance.Options.UseBackColor = true;
+            this.ucLine187.Direction = System.Windows.Forms.AnchorStyles.Left;
+            this.ucLine187.LineWidth = 3;
+            this.ucLine187.Location = new System.Drawing.Point(558, 32);
+            this.ucLine187.Name = "ucLine187";
+            this.ucLine187.Size = new System.Drawing.Size(30, 13);
+            this.ucLine187.TabIndex = 304;
+            // 
+            // ucLine188
+            // 
+            this.ucLine188.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine188.Appearance.Options.UseBackColor = true;
+            this.ucLine188.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine188.LineWidth = 3;
+            this.ucLine188.Location = new System.Drawing.Point(555, 37);
+            this.ucLine188.Name = "ucLine188";
+            this.ucLine188.Size = new System.Drawing.Size(10, 10);
+            this.ucLine188.TabIndex = 334;
+            // 
+            // ucLine172
+            // 
+            this.ucLine172.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine172.Appearance.Options.UseBackColor = true;
+            this.ucLine172.Direction = System.Windows.Forms.AnchorStyles.Left;
+            this.ucLine172.LineWidth = 3;
+            this.ucLine172.Location = new System.Drawing.Point(365, 32);
+            this.ucLine172.Name = "ucLine172";
+            this.ucLine172.Size = new System.Drawing.Size(30, 13);
+            this.ucLine172.TabIndex = 304;
+            // 
+            // ucLine173
+            // 
+            this.ucLine173.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine173.Appearance.Options.UseBackColor = true;
+            this.ucLine173.Direction = System.Windows.Forms.AnchorStyles.Left;
+            this.ucLine173.LineWidth = 3;
+            this.ucLine173.Location = new System.Drawing.Point(365, 41);
+            this.ucLine173.Name = "ucLine173";
+            this.ucLine173.Size = new System.Drawing.Size(44, 10);
+            this.ucLine173.TabIndex = 304;
+            // 
+            // ucLine189
+            // 
+            this.ucLine189.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine189.Appearance.Options.UseBackColor = true;
+            this.ucLine189.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine189.LineWidth = 3;
+            this.ucLine189.Location = new System.Drawing.Point(361, 37);
+            this.ucLine189.Name = "ucLine189";
+            this.ucLine189.Size = new System.Drawing.Size(10, 155);
+            this.ucLine189.TabIndex = 334;
+            // 
+            // ucLine190
+            // 
+            this.ucLine190.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine190.Appearance.Options.UseBackColor = true;
+            this.ucLine190.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine190.LineWidth = 3;
+            this.ucLine190.Location = new System.Drawing.Point(388, 39);
+            this.ucLine190.Name = "ucLine190";
+            this.ucLine190.Size = new System.Drawing.Size(10, 8);
+            this.ucLine190.TabIndex = 334;
+            // 
             // ucCommonView
             // 
             this.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.Appearance.Options.UseBackColor = true;
+            this.Controls.Add(this.ucCaptioned17);
+            this.Controls.Add(this.ucCaptioned18);
+            this.Controls.Add(this.ucCaptioned19);
+            this.Controls.Add(this.ucCaptioned20);
             this.Controls.Add(this.ucCyclon1);
             this.Controls.Add(this.ucPump9);
             this.Controls.Add(this.ucPump7);
@@ -3108,6 +3426,16 @@
             this.Controls.Add(this.ucLine129);
             this.Controls.Add(this.ucLine138);
             this.Controls.Add(this.ucLine156);
+            this.Controls.Add(this.ucLine182);
+            this.Controls.Add(this.ucLine190);
+            this.Controls.Add(this.ucLine189);
+            this.Controls.Add(this.ucLine174);
+            this.Controls.Add(this.ucLine177);
+            this.Controls.Add(this.ucLine179);
+            this.Controls.Add(this.ucLine188);
+            this.Controls.Add(this.ucLine169);
+            this.Controls.Add(this.ucLine185);
+            this.Controls.Add(this.ucLine186);
             this.Controls.Add(this.ucLine155);
             this.Controls.Add(this.ucLine136);
             this.Controls.Add(this.ucLine133);
@@ -3139,6 +3467,18 @@
             this.Controls.Add(this.ucLine77);
             this.Controls.Add(this.ucLine80);
             this.Controls.Add(this.ucLine89);
+            this.Controls.Add(this.ucLine171);
+            this.Controls.Add(this.ucLine175);
+            this.Controls.Add(this.ucLine184);
+            this.Controls.Add(this.ucLine183);
+            this.Controls.Add(this.ucLine176);
+            this.Controls.Add(this.ucLine178);
+            this.Controls.Add(this.ucLine180);
+            this.Controls.Add(this.ucLine173);
+            this.Controls.Add(this.ucLine181);
+            this.Controls.Add(this.ucLine172);
+            this.Controls.Add(this.ucLine187);
+            this.Controls.Add(this.ucLine170);
             this.Controls.Add(this.ucLine90);
             this.Controls.Add(this.ucLine91);
             this.Controls.Add(this.ucLine92);
@@ -3556,5 +3896,31 @@
         private UICommon.ucLine ucLine166;
         private UICommon.ucLine ucLine167;
         private UICommon.ucLine ucLine168;
+        private UICommon.ucCaptioned ucCaptioned17;
+        private UICommon.ucCaptioned ucCaptioned18;
+        private UICommon.ucCaptioned ucCaptioned19;
+        private UICommon.ucCaptioned ucCaptioned20;
+        private UICommon.ucLine ucLine169;
+        private UICommon.ucLine ucLine170;
+        private UICommon.ucLine ucLine171;
+        private UICommon.ucLine ucLine174;
+        private UICommon.ucLine ucLine175;
+        private UICommon.ucLine ucLine176;
+        private UICommon.ucLine ucLine177;
+        private UICommon.ucLine ucLine178;
+        private UICommon.ucLine ucLine179;
+        private UICommon.ucLine ucLine180;
+        private UICommon.ucLine ucLine181;
+        private UICommon.ucLine ucLine182;
+        private UICommon.ucLine ucLine183;
+        private UICommon.ucLine ucLine184;
+        private UICommon.ucLine ucLine185;
+        private UICommon.ucLine ucLine186;
+        private UICommon.ucLine ucLine187;
+        private UICommon.ucLine ucLine188;
+        private UICommon.ucLine ucLine172;
+        private UICommon.ucLine ucLine173;
+        private UICommon.ucLine ucLine189;
+        private UICommon.ucLine ucLine190;
     }
 }
