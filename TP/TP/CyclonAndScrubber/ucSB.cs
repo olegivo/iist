@@ -31,14 +31,17 @@ namespace TP.CyclonAndScrubber
 
             Pen pen = Pens.Black;
 
-            g.DrawLines(pen, new[]
+            Point[] points = new[]
                                  {
                                      new Point(0, 0),
                                      new Point(XMax, 0),
                                      new Point(XMax - xShift, YMax),
                                      new Point(xShift, YMax),
                                      new Point(0, 0),
-                                 });
+                                 };
+
+            g.FillPolygon(Brushes.DarkGray, points);
+            g.DrawLines(pen, points);
 
             base.OnPaint(e);
         }

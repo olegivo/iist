@@ -75,7 +75,7 @@ namespace UICommon
             //g.FillRectangle(new SolidBrush(Color.FromArgb(0, Color.Black)), 0, 0, Width, Height);
             //GroupBoxRenderer.DrawParentBackground(e.Graphics, new Rectangle(0, 0, Width, Height), this);
             //InvalidateEx();
-            //base.OnPaint(e);
+            base.OnPaint(e);
         }
 
 /*

@@ -320,6 +320,8 @@
             this.ucLine205 = new UICommon.ucLine();
             this.ucLine206 = new UICommon.ucLine();
             this.ucLine207 = new UICommon.ucLine();
+            this.ucLine208 = new UICommon.ucLine();
+            this.ucLine209 = new UICommon.ucLine();
             this.SuspendLayout();
             // 
             // ucCaptioned1
@@ -3100,7 +3102,8 @@
             // 
             // ucCaptioned17
             // 
-            this.ucCaptioned17.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned17.Appearance.BackColor = System.Drawing.Color.DarkGray;
+            this.ucCaptioned17.Appearance.BackColor2 = System.Drawing.Color.Silver;
             this.ucCaptioned17.Appearance.Options.UseBackColor = true;
             this.ucCaptioned17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ucCaptioned17.Caption = "ФС1";
@@ -3111,7 +3114,8 @@
             // 
             // ucCaptioned18
             // 
-            this.ucCaptioned18.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned18.Appearance.BackColor = System.Drawing.Color.DarkGray;
+            this.ucCaptioned18.Appearance.BackColor2 = System.Drawing.Color.Silver;
             this.ucCaptioned18.Appearance.Options.UseBackColor = true;
             this.ucCaptioned18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ucCaptioned18.Caption = "Б1";
@@ -3122,7 +3126,8 @@
             // 
             // ucCaptioned19
             // 
-            this.ucCaptioned19.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned19.Appearance.BackColor = System.Drawing.Color.DarkGray;
+            this.ucCaptioned19.Appearance.BackColor2 = System.Drawing.Color.Silver;
             this.ucCaptioned19.Appearance.Options.UseBackColor = true;
             this.ucCaptioned19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ucCaptioned19.Caption = "Б2";
@@ -3133,7 +3138,8 @@
             // 
             // ucCaptioned20
             // 
-            this.ucCaptioned20.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned20.Appearance.BackColor = System.Drawing.Color.DarkGray;
+            this.ucCaptioned20.Appearance.BackColor2 = System.Drawing.Color.Silver;
             this.ucCaptioned20.Appearance.Options.UseBackColor = true;
             this.ucCaptioned20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ucCaptioned20.Caption = "ФС2";
@@ -3603,10 +3609,36 @@
             this.ucLine207.Size = new System.Drawing.Size(33, 13);
             this.ucLine207.TabIndex = 304;
             // 
+            // ucLine208
+            // 
+            this.ucLine208.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine208.Appearance.Options.UseBackColor = true;
+            this.ucLine208.Direction = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ucLine208.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            this.ucLine208.LineWidth = 3;
+            this.ucLine208.Location = new System.Drawing.Point(470, 46);
+            this.ucLine208.Name = "ucLine208";
+            this.ucLine208.Size = new System.Drawing.Size(10, 19);
+            this.ucLine208.TabIndex = 356;
+            // 
+            // ucLine209
+            // 
+            this.ucLine209.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucLine209.Appearance.Options.UseBackColor = true;
+            this.ucLine209.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            this.ucLine209.LineWidth = 3;
+            this.ucLine209.Location = new System.Drawing.Point(440, 59);
+            this.ucLine209.Name = "ucLine209";
+            this.ucLine209.Size = new System.Drawing.Size(72, 14);
+            this.ucLine209.StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            this.ucLine209.TabIndex = 355;
+            // 
             // ucCommonView
             // 
             this.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.Appearance.Options.UseBackColor = true;
+            this.Controls.Add(this.ucLine208);
+            this.Controls.Add(this.ucLine209);
             this.Controls.Add(this.ucCaptioned17);
             this.Controls.Add(this.ucCaptioned18);
             this.Controls.Add(this.ucCaptioned19);
@@ -4199,5 +4231,7 @@
         private UICommon.ucLine ucLine205;
         private UICommon.ucLine ucLine206;
         private UICommon.ucLine ucLine207;
+        private UICommon.ucLine ucLine208;
+        private UICommon.ucLine ucLine209;
     }
 }
