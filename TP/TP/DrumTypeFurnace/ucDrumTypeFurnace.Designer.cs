@@ -165,16 +165,16 @@
             this.ucPump2 = new UICommon.ucPump();
             this.ucIndicator2 = new UICommon.ucIndicator();
             this.spinEdit2 = new DevExpress.XtraEditors.SpinEdit();
-            this.ucTransporter3d1 = new TP.DrumTypeFurnace.ucTransporter3d();
-            this.ucStakan1 = new TP.DrumTypeFurnace.ucStakan();
-            this.ucSB1 = new TP.CyclonAndScrubber.ucSB();
-            this.ucPe4b1 = new TP.DrumTypeFurnace.ucPe4b();
             this.ucIndicator3 = new UICommon.ucIndicator();
             this.spinEdit3 = new DevExpress.XtraEditors.SpinEdit();
             this.ucIndicator4 = new UICommon.ucIndicator();
             this.spinEdit4 = new DevExpress.XtraEditors.SpinEdit();
             this.ucIndicator5 = new UICommon.ucIndicator();
             this.spinEdit5 = new DevExpress.XtraEditors.SpinEdit();
+            this.ucTransporter3d1 = new TP.DrumTypeFurnace.ucTransporter3d();
+            this.ucStakan1 = new TP.DrumTypeFurnace.ucStakan();
+            this.ucSB1 = new TP.CyclonAndScrubber.ucSB();
+            this.ucPe4b1 = new TP.DrumTypeFurnace.ucPe4b();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit3.Properties)).BeginInit();
@@ -1688,42 +1688,6 @@
             this.spinEdit2.TabIndex = 75;
             this.spinEdit2.EditValueChanged += new System.EventHandler(this.SpinEdit2_EditValueChanged);
             // 
-            // ucTransporter3d1
-            // 
-            this.ucTransporter3d1.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucTransporter3d1.Appearance.Options.UseBackColor = true;
-            this.ucTransporter3d1.Location = new System.Drawing.Point(954, 335);
-            this.ucTransporter3d1.Name = "ucTransporter3d1";
-            this.ucTransporter3d1.Size = new System.Drawing.Size(134, 176);
-            this.ucTransporter3d1.TabIndex = 70;
-            // 
-            // ucStakan1
-            // 
-            this.ucStakan1.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucStakan1.Appearance.Options.UseBackColor = true;
-            this.ucStakan1.Location = new System.Drawing.Point(513, 580);
-            this.ucStakan1.Name = "ucStakan1";
-            this.ucStakan1.Size = new System.Drawing.Size(170, 140);
-            this.ucStakan1.TabIndex = 56;
-            // 
-            // ucSB1
-            // 
-            this.ucSB1.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucSB1.Appearance.Options.UseBackColor = true;
-            this.ucSB1.Location = new System.Drawing.Point(741, 650);
-            this.ucSB1.Name = "ucSB1";
-            this.ucSB1.Size = new System.Drawing.Size(180, 70);
-            this.ucSB1.TabIndex = 33;
-            // 
-            // ucPe4b1
-            // 
-            this.ucPe4b1.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucPe4b1.Appearance.Options.UseBackColor = true;
-            this.ucPe4b1.Location = new System.Drawing.Point(361, 207);
-            this.ucPe4b1.Name = "ucPe4b1";
-            this.ucPe4b1.Size = new System.Drawing.Size(740, 370);
-            this.ucPe4b1.TabIndex = 35;
-            // 
             // ucIndicator3
             // 
             this.ucIndicator3.AllowedMaxValue = 95F;
@@ -1811,9 +1775,45 @@
             this.spinEdit5.TabIndex = 81;
             this.spinEdit5.EditValueChanged += new System.EventHandler(this.SpinEdit5_EditValueChanged);
             // 
+            // ucTransporter3d1
+            // 
+            this.ucTransporter3d1.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucTransporter3d1.Appearance.Options.UseBackColor = true;
+            this.ucTransporter3d1.Location = new System.Drawing.Point(975, 370);
+            this.ucTransporter3d1.Name = "ucTransporter3d1";
+            this.ucTransporter3d1.Size = new System.Drawing.Size(80, 80);
+            this.ucTransporter3d1.TabIndex = 70;
+            // 
+            // ucStakan1
+            // 
+            this.ucStakan1.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucStakan1.Appearance.Options.UseBackColor = true;
+            this.ucStakan1.Location = new System.Drawing.Point(513, 580);
+            this.ucStakan1.Name = "ucStakan1";
+            this.ucStakan1.Size = new System.Drawing.Size(170, 140);
+            this.ucStakan1.TabIndex = 56;
+            // 
+            // ucSB1
+            // 
+            this.ucSB1.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucSB1.Appearance.Options.UseBackColor = true;
+            this.ucSB1.Location = new System.Drawing.Point(741, 650);
+            this.ucSB1.Name = "ucSB1";
+            this.ucSB1.Size = new System.Drawing.Size(180, 70);
+            this.ucSB1.TabIndex = 33;
+            // 
+            // ucPe4b1
+            // 
+            this.ucPe4b1.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucPe4b1.Appearance.Options.UseBackColor = true;
+            this.ucPe4b1.Location = new System.Drawing.Point(361, 207);
+            this.ucPe4b1.Name = "ucPe4b1";
+            this.ucPe4b1.Size = new System.Drawing.Size(740, 370);
+            this.ucPe4b1.TabIndex = 35;
+            // 
             // ucDrumTypeFurnace
             // 
-            this.Appearance.BackColor = System.Drawing.Color.Gainsboro;
+            this.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Appearance.Options.UseBackColor = true;
             this.Appearance.Options.UseBorderColor = true;
