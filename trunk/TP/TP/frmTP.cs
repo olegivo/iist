@@ -3,8 +3,6 @@ using System.Windows.Forms;
 using DevExpress.XtraBars.Helpers;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
-using TP.DrumTypeFurnace;
-using DevExpress.XtraCharts;
 
 namespace TP
 {
@@ -50,8 +48,14 @@ namespace TP
             channelController1.NeedProtocol += channelController1_NeedProtocol;
             channelController1.HasReadChannel += channelController1_HasReadChannel;
             channelController1.CanRegister = true;
-            
+
             ucChart1.InitializeChart();
+            ucChart2.InitializeChart();
+            ucChart3.InitializeChart();
+            ucChart4.InitializeChart();
+            ucChart5.InitializeChart();
+            ucChart6.InitializeChart();
+            ucChart7.InitializeChart();
         }
 
 
@@ -63,78 +67,95 @@ namespace TP
             {
                 case 1:
                     ucDrumTypeFurnace1.T1=value;
+                    ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //TП1	температура в циклонной вихревой топке
                 case 2:
                     ucDrumTypeFurnace1.T2 = value;
+                    ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //TП2	температура в загрузочной системе
                 case 3:
+                    ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //TП3	температура в камере дожигания
                 case 4:
                     ucAllHeatExchanger1.Temperature_TP4 = value;
+                    ucChart2.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //TР4	температура в теплообменнике ТО1
                 case 5:
                     ucAllHeatExchanger1.Temperature_TP5 = value;
+                    ucChart2.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //TР5	температура в теплообменнике ТО2
                 case 6:
                     ucFinishCleaning1.Temperature_TC6 = value;
+                    ucChart2.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //TС6	температура перед рукавным фильтром
                 case 7:
                     ucFinishCleaning1.Temperature_TC7 = value;
+                    ucChart2.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //TС7	температура перед дымососом
                 case 8:
                     ucDrumTypeFurnace1.T8 = value;
+                    ucChart2.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //TС8	температура воды в системе охлаждения
                 case 9:
                     break; //Р	разрежение в камере дожигания
                 case 10:
                     ucCyclonAndScrubber1.Ph1 = value;
+                    ucChart4.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //рН1	уровень рН в СФ1
                 case 11:
                     ucCyclonAndScrubber1.Ph2 = value;
+                    ucChart4.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //рН2	уровень рН в СФ2
                 case 12:
                     ucDrumTypeFurnace1.S = value;
                     break; //S	скорость вращения печи
                 case 13:
                     ucDrumTypeFurnace1.DU9 = value;
-                    ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
+                    ucChart3.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //ДУ-9	уровень отходов в бункере
                 case 14:
                     ucReheatChamber1.Level11 = value;
-                    ucChart1.AddDataChart(channelId,Convert.ToInt32(value));
+                    ucChart3.AddDataChart(channelId,Convert.ToInt32(value));
                     break; //ДУ-11	уровень в РТ
                 case 15:
                     ucReheatChamber1.Level1 = value;
-                    ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
+                    ucChart3.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //ДУ-1	уровень в НЕ
                 case 16:
                     ucReheatChamber1.Level4 = value;
-                    ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
+                    ucChart3.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //ДУ-4	уровень в РЕ
                 case 17:
                     ucCyclonAndScrubber1.Level10 = value;
-                    ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
+                    ucChart3.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //ДУ-10	уровень в СБ
                 case 18:
                     ucAllHeatExchanger1.Concentration_O2 = value;
+                    ucChart5.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //Г-О2	концентрация газа О2
                 case 19:
                     ucAllHeatExchanger1.Concentration_CO = value;
+                    ucChart6.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //Г-СО	концентрация газа СО
                 case 20:
                     ucFinishCleaning1.GasConcentration_O2 = value;
+                    ucChart5.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //Г-О2	концентрация газа О2
                 case 21:
                     ucFinishCleaning1.GasConcentration_CO = value;
+                    ucChart6.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //Г-СО	концентрация газа СО
                 case 22:
                     ucFinishCleaning1.GasConcentration_SO2 = value;
+                    ucChart7.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //Г-SО2	концентрация газа SО2
                 case 23:
                     ucFinishCleaning1.GasConcentration_NO = value;
+                    ucChart7.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //Г-NО	концентрация газа NО
                 case 24:
                     ucFinishCleaning1.GasConcentration_NO2 = value;
+                    ucChart7.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //Г-NО2	концентрация газа NО2
             }
         }
@@ -183,7 +204,7 @@ namespace TP
             sbUnregister.Enabled = !(sbRegister.Enabled = channelController1.CanRegister);
         }
 
-        private void ucDrumTypeFurnace_Load(object sender, EventArgs e)
+        private void xtraTabPage7_Paint(object sender, PaintEventArgs e)
         {
 
         }

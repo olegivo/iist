@@ -58,14 +58,14 @@ namespace UICommon
             {
                 int channelNumber = ChannelsToDisplay[i];
                 ChannelChartNumbers[i] = channelNumber;
-                Series series1 = new Series("Channel #" + Convert.ToString(channelNumber), ViewType.Area);
-
+                Series series1 = new Series("Channel #" + Convert.ToString(channelNumber), ViewType.Line);
                 string tableName = GetTableName(channelNumber);
-                dtsChart1.Tables.Add(new dtsChart.ChartDataDataTable {TableName = tableName});
+                dtsChart1.Tables.Add(new dtsChart.ChartDataDataTable { TableName = tableName });
                 series1.DataSource = dtsChart1.Tables[tableName];
                 series[i] = series1;
                 series1.ArgumentDataMember = "TimeStamp";
                 series1.ValueDataMembers.AddRange("Value");
+            
 
                 chartControl1.Series.Add(series[i]);
 
@@ -74,10 +74,10 @@ namespace UICommon
             }
             if (ChartTitle != "")
             {
-                ChartTitle chartTitle1 = new ChartTitle();
-                chartTitle1.Antialiasing = true;
-                chartTitle1.Font = new Font("Tahoma", 12, FontStyle.Bold);
-                chartTitle1.Text = ChartTitle;
+                ChartTitle chartTitle1 = new ChartTitle { 
+                    Antialiasing = true, 
+                    Font = new Font("Tahoma", 12, FontStyle.Bold), 
+                    Text = ChartTitle };
                 chartControl1.Titles.Add(chartTitle1);
 
             }
@@ -96,7 +96,7 @@ namespace UICommon
 
         }
 
-        private string GetTableName(int i)
+        private static string GetTableName(int i)
         {
             return string.Format("ChartData{0}", i);
         }

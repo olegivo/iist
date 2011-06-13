@@ -28,7 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            
+            this.SuspendLayout();
+            // 
+            // ucTransporter3d
+            // 
+            this.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.Appearance.Options.UseBackColor = true;
+            this.Name = "ucTransporter3d";
+            this.ResumeLayout(false);
 
         }
 
