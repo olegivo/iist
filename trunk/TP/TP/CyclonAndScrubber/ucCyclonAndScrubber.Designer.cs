@@ -41,8 +41,6 @@ namespace TP.CyclonAndScrubber
             this.label11 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.ucScrubberTap2 = new TP.CyclonAndScrubber.ucScrubberTap();
-            this.ucScrubberTap1 = new TP.CyclonAndScrubber.ucScrubberTap();
             this.ucLine80 = new UICommon.ucLine();
             this.ucSB1 = new TP.CyclonAndScrubber.ucSB();
             this.ucValve15 = new UICommon.ucValve();
@@ -171,6 +169,8 @@ namespace TP.CyclonAndScrubber
             this.ucScrubber1 = new TP.CyclonAndScrubber.ucScrubber();
             this.ucLine62 = new UICommon.ucLine();
             this.ucLine59 = new UICommon.ucLine();
+            this.ucScrubberTap1 = new TP.CyclonAndScrubber.ucScrubberTap();
+            this.ucScrubberTap2 = new TP.CyclonAndScrubber.ucScrubberTap();
             this.SuspendLayout();
             // 
             // label2
@@ -264,25 +264,6 @@ namespace TP.CyclonAndScrubber
             this.label7.Size = new System.Drawing.Size(62, 34);
             this.label7.TabIndex = 6;
             this.label7.Text = "От водо- провода";
-            // 
-            // ucScrubberTap2
-            // 
-            this.ucScrubberTap2.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucScrubberTap2.Appearance.Options.UseBackColor = true;
-            this.ucScrubberTap2.Location = new System.Drawing.Point(442, 240);
-            this.ucScrubberTap2.Mirrored = true;
-            this.ucScrubberTap2.Name = "ucScrubberTap2";
-            this.ucScrubberTap2.Size = new System.Drawing.Size(100, 85);
-            this.ucScrubberTap2.TabIndex = 12;
-            // 
-            // ucScrubberTap1
-            // 
-            this.ucScrubberTap1.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.ucScrubberTap1.Appearance.Options.UseBackColor = true;
-            this.ucScrubberTap1.Location = new System.Drawing.Point(255, 240);
-            this.ucScrubberTap1.Name = "ucScrubberTap1";
-            this.ucScrubberTap1.Size = new System.Drawing.Size(100, 85);
-            this.ucScrubberTap1.TabIndex = 12;
             // 
             // ucLine80
             // 
@@ -477,7 +458,8 @@ namespace TP.CyclonAndScrubber
             // 
             // ucCaptioned2
             // 
-            this.ucCaptioned2.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned2.Appearance.BackColor = System.Drawing.Color.DarkGray;
+            this.ucCaptioned2.Appearance.BackColor2 = System.Drawing.Color.Silver;
             this.ucCaptioned2.Appearance.Options.UseBackColor = true;
             this.ucCaptioned2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ucCaptioned2.Caption = "ФС1";
@@ -508,7 +490,8 @@ namespace TP.CyclonAndScrubber
             // 
             // ucCaptioned4
             // 
-            this.ucCaptioned4.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned4.Appearance.BackColor = System.Drawing.Color.DarkGray;
+            this.ucCaptioned4.Appearance.BackColor2 = System.Drawing.Color.Silver;
             this.ucCaptioned4.Appearance.Options.UseBackColor = true;
             this.ucCaptioned4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ucCaptioned4.Caption = "Б1";
@@ -1429,7 +1412,8 @@ namespace TP.CyclonAndScrubber
             // 
             // ucCaptioned5
             // 
-            this.ucCaptioned5.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned5.Appearance.BackColor = System.Drawing.Color.DarkGray;
+            this.ucCaptioned5.Appearance.BackColor2 = System.Drawing.Color.Silver;
             this.ucCaptioned5.Appearance.Options.UseBackColor = true;
             this.ucCaptioned5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ucCaptioned5.Caption = "Б2";
@@ -1554,7 +1538,8 @@ namespace TP.CyclonAndScrubber
             // 
             // ucCaptioned3
             // 
-            this.ucCaptioned3.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucCaptioned3.Appearance.BackColor = System.Drawing.Color.DarkGray;
+            this.ucCaptioned3.Appearance.BackColor2 = System.Drawing.Color.Silver;
             this.ucCaptioned3.Appearance.Options.UseBackColor = true;
             this.ucCaptioned3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ucCaptioned3.Caption = "ФС2";
@@ -1633,8 +1618,29 @@ namespace TP.CyclonAndScrubber
             this.ucLine59.Size = new System.Drawing.Size(61, 14);
             this.ucLine59.TabIndex = 10;
             // 
+            // ucScrubberTap1
+            // 
+            this.ucScrubberTap1.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucScrubberTap1.Appearance.Options.UseBackColor = true;
+            this.ucScrubberTap1.Location = new System.Drawing.Point(255, 240);
+            this.ucScrubberTap1.Name = "ucScrubberTap1";
+            this.ucScrubberTap1.Size = new System.Drawing.Size(100, 85);
+            this.ucScrubberTap1.TabIndex = 12;
+            // 
+            // ucScrubberTap2
+            // 
+            this.ucScrubberTap2.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.ucScrubberTap2.Appearance.Options.UseBackColor = true;
+            this.ucScrubberTap2.Location = new System.Drawing.Point(442, 240);
+            this.ucScrubberTap2.Mirrored = true;
+            this.ucScrubberTap2.Name = "ucScrubberTap2";
+            this.ucScrubberTap2.Size = new System.Drawing.Size(100, 85);
+            this.ucScrubberTap2.TabIndex = 12;
+            // 
             // ucCyclonAndScrubber
             // 
+            this.Appearance.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            this.Appearance.Options.UseBackColor = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.ucLine80);
