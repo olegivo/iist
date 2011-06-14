@@ -114,6 +114,7 @@ namespace UICommon
                 }
 
                 dataTable.AddChartDataRow(DateTime.Now, NewValue);
+                chartControl1.Refresh();
             }
         }
     }
