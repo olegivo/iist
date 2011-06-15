@@ -15,23 +15,23 @@ namespace EmulationClient.Emulation
         /// <summary>
         /// Входной параметр: Температура перед рукавным фильтром 
         /// </summary>
-        double Temperature();
+        public double Temperature;
 
         /// <summary>
         /// Входной параметр: Количеством оборотов дымососа  
         /// </summary>
-        double Speed();
+        public double Speed;
 
         /// <summary>
         /// Входной параметр: Горелка Вкл.\Выкл.
         /// </summary>
-        bool Burner();
+        public bool Burner;
 
 
         /// <summary>
         /// Концентрация выбрасываемого газа СО 
         /// </summary>
-        double CCO();
+        public double CCO;
 
         /// <summary>
         /// Обновить значение (используется функция пересчёта входных параметров в выходной)
