@@ -1,0 +1,24 @@
+C:\Users\Artemjke\Documents\Visual Studio 2008\Projects\Emulation\EmulationClient\bin\Debug\EmulationClient.exe
+C:\Users\Artemjke\Documents\Visual Studio 2008\Projects\Emulation\EmulationClient\bin\Debug\EmulationClient.pdb
+C:\Users\Artemjke\Documents\Visual Studio 2008\Projects\Emulation\EmulationClient\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Artemjke\Documents\Visual Studio 2008\Projects\Emulation\EmulationClient\obj\Debug\Window1.baml
+C:\Users\Artemjke\Documents\Visual Studio 2008\Projects\Emulation\EmulationClient\obj\Debug\Window1.g.cs
+C:\Users\Artemjke\Documents\Visual Studio 2008\Projects\Emulation\EmulationClient\obj\Debug\App.g.cs
+C:\Users\Artemjke\Documents\Visual Studio 2008\Projects\Emulation\EmulationClient\obj\Debug\EmulationClient_MarkupCompile.cache
+C:\Users\Artemjke\Documents\Visual Studio 2008\Projects\Emulation\EmulationClient\obj\Debug\EmulationClient.g.resources
+C:\Users\Artemjke\Documents\Visual Studio 2008\Projects\Emulation\EmulationClient\obj\Debug\EmulationClient.Properties.Resources.resources
+C:\Users\Artemjke\Documents\Visual Studio 2008\Projects\Emulation\EmulationClient\obj\Debug\EmulationClient.csproj.GenerateResource.Cache
+C:\Users\Artemjke\Documents\Visual Studio 2008\Projects\Emulation\EmulationClient\obj\Debug\EmulationClient.exe
+C:\Users\Artemjke\Documents\Visual Studio 2008\Projects\Emulation\EmulationClient\obj\Debug\EmulationClient.pdb
+C:\Users\Artemjke\Desktop\LowLevelEmulation\EmulationClient\obj\Debug\EmulationClient.exe
+C:\Users\Artemjke\Desktop\LowLevelEmulation\EmulationClient\obj\Debug\EmulationClient.pdb
+C:\Users\Artemjke\Desktop\LowLevelEmulation\EmulationClient\bin\Debug\EmulationClient.exe
+C:\Users\Artemjke\Desktop\LowLevelEmulation\EmulationClient\bin\Debug\EmulationClient.pdb
+C:\Users\Artemjke\Desktop\LowLevelEmulation\EmulationClient\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Artemjke\Desktop\LowLevelEmulation\EmulationClient\obj\Debug\Window1.baml
+C:\Users\Artemjke\Desktop\LowLevelEmulation\EmulationClient\obj\Debug\Window1.g.cs
+C:\Users\Artemjke\Desktop\LowLevelEmulation\EmulationClient\obj\Debug\App.g.cs
+C:\Users\Artemjke\Desktop\LowLevelEmulation\EmulationClient\obj\Debug\EmulationClient_MarkupCompile.cache
+C:\Users\Artemjke\Desktop\LowLevelEmulation\EmulationClient\obj\Debug\EmulationClient.g.resources
+C:\Users\Artemjke\Desktop\LowLevelEmulation\EmulationClient\obj\Debug\EmulationClient.Properties.Resources.resources
+C:\Users\Artemjke\Desktop\LowLevelEmulation\EmulationClient\obj\Debug\EmulationClient.csproj.GenerateResource.Cache
