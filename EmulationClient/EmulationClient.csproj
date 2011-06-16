@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{81A80C97-115F-43E0-B181-F4263746900A}</ProjectGuid>
+    <ProjectGuid>{6F65DF76-B2BE-4D5E-BF23-BA955F228326}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EmulationClient</RootNamespace>
@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Emulation\GasConcentration.cs" />
     <Compile Include="Emulation\IControlledParameter.cs" />
+    <Compile Include="Emulation\Temperature.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
