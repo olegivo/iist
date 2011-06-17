@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using DMS.Common.Messages;
-using Oleg_ivo.Client;
+using Oleg_ivo.HighLevelClient;
 
 namespace TP
 {
