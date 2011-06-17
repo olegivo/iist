@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using DevExpress.XtraBars.Helpers;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
+using Oleg_ivo.HighLevelClient;
 
 namespace TP
 {
@@ -59,7 +60,7 @@ namespace TP
         }
 
 
-        void channelController1_HasReadChannel(object sender, Oleg_ivo.Client.CallbackHandler.DataEventArgs e)
+        void channelController1_HasReadChannel(object sender, CallbackHandler.DataEventArgs e)
         {
             float value = Convert.ToSingle(e.Message.Value);
             int channelId = e.Message.LogicalChannelId;
