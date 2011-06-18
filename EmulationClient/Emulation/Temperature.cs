@@ -5,7 +5,7 @@ namespace EmulationClient.Emulation
     /// <summary>
     /// Температура
     /// </summary>
-    public class Temperature : IControlledParameter
+    public class Temperature : CPBase
     {
         /// <summary>
         /// 
@@ -26,28 +26,19 @@ namespace EmulationClient.Emulation
         /// <summary>
         /// Значение контролируемого параметра
         /// </summary>
-        public double OutputValue { get; set; }
+        public override double OutputValue { get; set; }
 
         /// <summary>
         /// Входной параметр: Горелка Вкл.\Выкл.
         /// </summary>
-        public bool IsBurnerOn { get; set; }
+        public  bool IsBurnerOn { get; set; }
 
-        //if (IsBurnerOn = true);
-        //{
-        //Temperature = Math.Exp(1/2*DateTime.Now.Second);
-        //}
-        //else          
-        //{
-        //Temperature = Math.Exp(-1/2*DateTime.Now.Second);
-        //}
-
-        /// <summary>
+       /// <summary>
         /// Обновить значение (используется функция пересчёта входных параметров в выходной)
         /// </summary>
-        public void Refresh()
+        public override void Refresh()
         {
-            double delta = (IsBurnerOn ? 1 : -1)
+            double delta = (IsBurnerOn ? 1/2 : -1/2)
                             * Math.Exp(GetPassedSeconds());
             OutputValue += delta;
             startTime = DateTime.Now;

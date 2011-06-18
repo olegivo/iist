@@ -5,7 +5,7 @@ namespace EmulationClient.Emulation
     /// <summary>
     /// 
     /// </summary>
-    public class GasConcentration : IControlledParameter
+    public class GasConcentration : CPBase
     {
         /// <summary>
         /// 
@@ -26,23 +26,23 @@ namespace EmulationClient.Emulation
         /// <summary>
         /// Значение контролируемого параметра
         /// </summary>
-        public double OutputValue { get; set; }
+        public override double OutputValue { get; set; }
 
         /// <summary>
         /// Входной параметр: Температура перед рукавным фильтром 
         /// </summary>
-        public double Temperature { get; set; }
+        public  double Temperature { get; set; }
 
 
         /// <summary>
         /// Входной параметр: Количеством оборотов дымососа  
         /// </summary>
-        public double Speed { get; set; }
+        public  double Speed { get; set; }
 
         /// <summary>
         /// Обновить значение (используется функция пересчёта входных параметров в выходной)
         /// </summary>
-        public void Refresh()
+        public override void Refresh()
         {
             RefreshTemperature();
             int passedSeconds = GetPassedSeconds();
