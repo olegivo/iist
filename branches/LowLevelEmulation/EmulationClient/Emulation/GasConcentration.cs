@@ -3,7 +3,7 @@ using System;
 namespace EmulationClient.Emulation
 {
     /// <summary>
-    /// 
+    /// Концентрация газа
     /// </summary>
     public class GasConcentration : CPBase
     {
@@ -25,13 +25,13 @@ namespace EmulationClient.Emulation
 
        
         /// <summary>
-        /// Входной параметр: Температура перед рукавным фильтром 
+        /// Входной параметр: Температура перед рукавным фильтром
         /// </summary>
         public  double Temperature { get; set; }
 
 
         /// <summary>
-        /// Входной параметр: Количеством оборотов дымососа  
+        /// Входной параметр: Количество оборотов дымососа  
         /// </summary>
         public  double Speed { get; set; }
 

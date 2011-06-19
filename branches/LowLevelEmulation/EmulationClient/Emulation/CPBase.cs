@@ -1,5 +1,3 @@
-using System;
-
 namespace EmulationClient.Emulation
 {
     public abstract class CPBase

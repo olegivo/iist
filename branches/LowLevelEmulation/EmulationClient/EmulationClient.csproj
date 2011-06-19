@@ -33,9 +33,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DMS.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Referenced\DMS.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Oleg_ivo.Plc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Referenced\Oleg_ivo.Plc.dll</HintPath>
+    </Reference>
+    <Reference Include="Oleg_ivo.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e9643967fa5cdff5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Referenced\Oleg_ivo.Tools.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -69,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Emulation\CPBase.cs" />
+    <Compile Include="ControlManagementUnitEmulation.cs" />
     <Compile Include="Emulation\GasConcentration.cs" />
     <Compile Include="Emulation\IControlledParameter.cs" />
     <Compile Include="Emulation\Speed.cs" />
@@ -90,6 +106,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
