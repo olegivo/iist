@@ -5,7 +5,7 @@ namespace EmulationClient.Emulation
         /// <summary>
         /// Значение контролируемого параметра
         /// </summary>
-        public abstract double OutputValue { get; set; }
+        public double OutputValue { get; set; }
 
        /// <summary>
         /// Обновить значение (используется функция пересчёта входных параметров в выходной)
