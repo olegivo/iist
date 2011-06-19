@@ -1,19 +1,22 @@
 namespace EmulationClient.Emulation
 {
-    public abstract class CPBase
+    /// <summary>
+    /// Базовая реализация контролируемого параметра
+    /// </summary>
+    public abstract class CPBase : IControlledParameter
     {
-        public double outputvalue;
         /// <summary>
-        /// Значение контролируемого параметра
+        /// Выходное значение контролируемого параметра. Используется для установки и чтения
         /// </summary>
-        public double OutputValue
+        protected double _outputValue;
+
+        /// <summary>
+        /// Получить актуальное значение контролируемого параметра
+        /// </summary>
+        public double GetOutputValue()
         {
-            get
-            {
-                Refresh();
-                return  outputvalue;
-            }
-            set { outputvalue = value; }
+            Refresh();
+            return _outputValue;
         }
 
         /// <summary>

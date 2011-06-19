@@ -36,7 +36,7 @@ namespace EmulationClient.Emulation
         {
             double delta = (IsBurnerOn ? 1/2 : -1/2)
                             * Math.Exp(GetPassedSeconds());
-            OutputValue += delta;
+            _outputValue += delta;
             startTime = DateTime.Now;
         }
     }
