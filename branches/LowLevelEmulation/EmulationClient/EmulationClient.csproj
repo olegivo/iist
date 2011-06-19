@@ -37,6 +37,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Referenced\DMS.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Oleg_ivo.LowLevelClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Referenced\Oleg_ivo.LowLevelClient.dll</HintPath>
+    </Reference>
     <Reference Include="Oleg_ivo.Plc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Referenced\Oleg_ivo.Plc.dll</HintPath>
