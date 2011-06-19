@@ -10,17 +10,7 @@ namespace EmulationClient.Emulation
     /// </summary>
     public class Speed: CPBase
     {
-        public override double OutputValue
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        
 
         public override void Refresh()
         {

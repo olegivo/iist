@@ -23,11 +23,7 @@ namespace EmulationClient.Emulation
             return now.Subtract(startTime).Seconds;
         }
 
-        /// <summary>
-        /// Значение контролируемого параметра
-        /// </summary>
-        public override double OutputValue { get; set; }
-
+      
         /// <summary>
         /// Входной параметр: Горелка Вкл.\Выкл.
         /// </summary>
