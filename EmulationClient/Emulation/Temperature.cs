@@ -25,7 +25,7 @@ namespace EmulationClient.Emulation
 
       
         /// <summary>
-        /// Входной параметр: Горелка Вкл.\Выкл.
+        /// Входной параметр: Горелка (включено / выключено)
         /// </summary>
         public  bool IsBurnerOn { get; set; }
 
