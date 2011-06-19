@@ -8,7 +8,7 @@ namespace EmulationClient.Emulation
         /// <summary>
         /// Значение контролируемого параметра
         /// </summary>
-        double OutputValue { get; }
+        double GetOutputValue();
 
         /// <summary>
         /// Обновить значение (используется функция пересчёта входных параметров в выходной)

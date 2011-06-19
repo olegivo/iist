@@ -26,21 +26,21 @@ namespace EmulationClient
             double temperatureValue;
 
             temperature.Refresh();
-            temperatureValue = temperature.OutputValue;
+            temperatureValue = temperature.GetOutputValue();
 
             gasConcentration.Temperature = temperatureValue;
             gasConcentration.Refresh();
-            concentrationValue = gasConcentration.OutputValue;
+            concentrationValue = gasConcentration.GetOutputValue();
             Console.WriteLine("outputValue = {0}", concentrationValue);
 
             Thread.Sleep(2000);
             gasConcentration.Refresh();
-            concentrationValue = gasConcentration.OutputValue;
+            concentrationValue = gasConcentration.GetOutputValue();
             Console.WriteLine("outputValue = {0}", concentrationValue);
 
             Thread.Sleep(2000);
             gasConcentration.Refresh();
-            concentrationValue = gasConcentration.OutputValue;
+            concentrationValue = gasConcentration.GetOutputValue();
             Console.WriteLine("outputValue = {0}", concentrationValue);
         }
 

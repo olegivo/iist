@@ -42,7 +42,7 @@ namespace EmulationClient.Emulation
         {
             RefreshTemperature();
             int passedSeconds = GetPassedSeconds();
-            OutputValue = Math.Abs(Math.Sin(0.005 * passedSeconds)) * 500 + 3500 + Temperature + Speed;
+            _outputValue = Math.Abs(Math.Sin(0.005 * passedSeconds)) * 500 + 3500 + Temperature + Speed;
         }
 
         private void RefreshTemperature()
