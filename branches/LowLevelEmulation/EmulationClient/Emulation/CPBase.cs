@@ -2,17 +2,18 @@ namespace EmulationClient.Emulation
 {
     public abstract class CPBase
     {
+        public double outputvalue;
         /// <summary>
         /// Значение контролируемого параметра
         /// </summary>
         public double OutputValue
         {
             get
-        {
-            Refresh();
-            return 0d;
-        }
-            set {  }
+            {
+                Refresh();
+                return  outputvalue;
+            }
+            set { outputvalue = value; }
         }
 
         /// <summary>
