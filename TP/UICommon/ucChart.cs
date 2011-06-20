@@ -20,7 +20,6 @@ namespace UICommon
         /// </summary>
 
         List<int> _ChannelList = new List<int>();
-
         public List<int> ChannelsToDisplay
         {
             get { return _ChannelList; }
@@ -41,6 +40,16 @@ namespace UICommon
         {
             get { return _ChartTitle; }
             set { if (_ChartTitle != value) { _ChartTitle = value; } }
+        }
+
+        /// <summary>
+        /// Настреваемый временной буфер [сек.]
+        /// </summary>
+        private int _ChartDataStorageTime=30;
+        public int ChartDataStorageTime
+        {
+            get { return _ChartDataStorageTime; }
+            set { if (_ChartDataStorageTime != value) { _ChartDataStorageTime = value; } }
         }
 
 
@@ -107,7 +116,7 @@ namespace UICommon
             dtsChart.ChartDataDataTable dataTable = dtsChart1.Tables[GetTableName(ChannelNumber)] as dtsChart.ChartDataDataTable;
             if (dataTable != null)
             {
-                DateTime now = DateTime.Now.AddSeconds(-3);//todo: настраиваемый временной буфер
+                DateTime now = DateTime.Now.AddSeconds(-ChartDataStorageTime);//настраиваемый временной буфер
                 foreach (var dr in dataTable.Rows.Cast<dtsChart.ChartDataRow>().Where(dr => dr.TimeStamp < now).ToList())
                 {
                     dataTable.RemoveChartDataRow(dr);
@@ -117,6 +126,12 @@ namespace UICommon
                 chartControl1.Refresh();
             }
         }
+
+        private void ucChart_Load(object sender, EventArgs e)
+        {
+            InitializeChart();
+        }
+
     }
 
 }

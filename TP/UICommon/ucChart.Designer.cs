@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucChart));
             DevExpress.XtraCharts.PointSeriesLabel pointSeriesLabel1 = new DevExpress.XtraCharts.PointSeriesLabel();
             DevExpress.XtraCharts.AreaSeriesView areaSeriesView1 = new DevExpress.XtraCharts.AreaSeriesView();
             this.chartControl1 = new DevExpress.XtraCharts.ChartControl();
@@ -65,6 +66,7 @@
             this.Controls.Add(this.chartControl1);
             this.Name = "ucChart";
             this.Size = new System.Drawing.Size(640, 480);
+            this.Load += new System.EventHandler(this.ucChart_Load);
             ((System.ComponentModel.ISupportInitialize)(pointSeriesLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(areaSeriesView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).EndInit();

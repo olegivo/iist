@@ -32,7 +32,6 @@ namespace TP
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTP));
             this.ucDrumTypeFurnace1 = new TP.DrumTypeFurnace.ucDrumTypeFurnace();
             this.ucFinishCleaning1 = new TP.FinishCleaning.ucFinishCleaning();
             this.ucAllHeatExchanger1 = new TP.HeatExchanger.ucAllHeatExchanger();
@@ -62,26 +61,12 @@ namespace TP
             this.xtraTabPage5 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage6 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage7 = new DevExpress.XtraTab.XtraTabPage();
-            this.xtraTabControl2 = new DevExpress.XtraTab.XtraTabControl();
-            this.xtraTabPage9 = new DevExpress.XtraTab.XtraTabPage();
-            this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
-            this.ucChart1 = new UICommon.ucChart();
-            this.ucChart2 = new UICommon.ucChart();
-            this.xtraTabPage10 = new DevExpress.XtraTab.XtraTabPage();
-            this.ucChart3 = new UICommon.ucChart();
-            this.xtraTabPage11 = new DevExpress.XtraTab.XtraTabPage();
-            this.splitContainerControl2 = new DevExpress.XtraEditors.SplitContainerControl();
-            this.splitContainerControl3 = new DevExpress.XtraEditors.SplitContainerControl();
-            this.ucChart4 = new UICommon.ucChart();
-            this.ucChart5 = new UICommon.ucChart();
-            this.splitContainerControl4 = new DevExpress.XtraEditors.SplitContainerControl();
-            this.ucChart6 = new UICommon.ucChart();
-            this.ucChart7 = new UICommon.ucChart();
             this.xtraTabPage8 = new DevExpress.XtraTab.XtraTabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.sbUnregister = new DevExpress.XtraEditors.SimpleButton();
             this.sbRegister = new DevExpress.XtraEditors.SimpleButton();
             this.dtsChart1 = new UICommon.dtsChart();
+            this.ucCommonCharts1 = new TP.CommonView.ucCommonCharts();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.styleController1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
@@ -95,19 +80,6 @@ namespace TP
             this.xtraTabPage5.SuspendLayout();
             this.xtraTabPage6.SuspendLayout();
             this.xtraTabPage7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl2)).BeginInit();
-            this.xtraTabControl2.SuspendLayout();
-            this.xtraTabPage9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
-            this.splitContainerControl1.SuspendLayout();
-            this.xtraTabPage10.SuspendLayout();
-            this.xtraTabPage11.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl2)).BeginInit();
-            this.splitContainerControl2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl3)).BeginInit();
-            this.splitContainerControl3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl4)).BeginInit();
-            this.splitContainerControl4.SuspendLayout();
             this.xtraTabPage8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtsChart1)).BeginInit();
             this.SuspendLayout();
@@ -162,6 +134,8 @@ namespace TP
             // 
             // ucCyclonAndScrubber1
             // 
+            this.ucCyclonAndScrubber1.Appearance.GradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            this.ucCyclonAndScrubber1.Appearance.Options.UseBackColor = true;
             this.ucCyclonAndScrubber1.AutoScroll = true;
             this.ucCyclonAndScrubber1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucCyclonAndScrubber1.Location = new System.Drawing.Point(0, 0);
@@ -367,182 +341,11 @@ namespace TP
             // 
             // xtraTabPage7
             // 
-            this.xtraTabPage7.Controls.Add(this.xtraTabControl2);
+            this.xtraTabPage7.Controls.Add(this.ucCommonCharts1);
             this.xtraTabPage7.Name = "xtraTabPage7";
             this.xtraTabPage7.Size = new System.Drawing.Size(1016, 479);
             this.xtraTabPage7.Text = "Графики";
             this.xtraTabPage7.Paint += new System.Windows.Forms.PaintEventHandler(this.xtraTabPage7_Paint);
-            // 
-            // xtraTabControl2
-            // 
-            this.xtraTabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.xtraTabControl2.HeaderLocation = DevExpress.XtraTab.TabHeaderLocation.Left;
-            this.xtraTabControl2.HeaderOrientation = DevExpress.XtraTab.TabOrientation.Horizontal;
-            this.xtraTabControl2.Location = new System.Drawing.Point(0, 0);
-            this.xtraTabControl2.Name = "xtraTabControl2";
-            this.xtraTabControl2.SelectedTabPage = this.xtraTabPage9;
-            this.xtraTabControl2.Size = new System.Drawing.Size(1016, 479);
-            this.xtraTabControl2.TabIndex = 0;
-            this.xtraTabControl2.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
-            this.xtraTabPage9,
-            this.xtraTabPage10,
-            this.xtraTabPage11});
-            // 
-            // xtraTabPage9
-            // 
-            this.xtraTabPage9.Controls.Add(this.splitContainerControl1);
-            this.xtraTabPage9.Name = "xtraTabPage9";
-            this.xtraTabPage9.Size = new System.Drawing.Size(930, 471);
-            this.xtraTabPage9.Text = "Температура";
-            // 
-            // splitContainerControl1
-            // 
-            this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerControl1.FixedPanel = DevExpress.XtraEditors.SplitFixedPanel.None;
-            this.splitContainerControl1.Horizontal = false;
-            this.splitContainerControl1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerControl1.Name = "splitContainerControl1";
-            this.splitContainerControl1.Panel1.Controls.Add(this.ucChart1);
-            this.splitContainerControl1.Panel1.Text = "Panel1";
-            this.splitContainerControl1.Panel2.Controls.Add(this.ucChart2);
-            this.splitContainerControl1.Panel2.Text = "Panel2";
-            this.splitContainerControl1.Size = new System.Drawing.Size(930, 471);
-            this.splitContainerControl1.SplitterPosition = 189;
-            this.splitContainerControl1.TabIndex = 0;
-            this.splitContainerControl1.Text = "splitContainerControl1";
-            // 
-            // ucChart1
-            // 
-            this.ucChart1.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart1.ChannelsToDisplay")));
-            this.ucChart1.ChartTitle = "";
-            this.ucChart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucChart1.Location = new System.Drawing.Point(0, 0);
-            this.ucChart1.Name = "ucChart1";
-            this.ucChart1.Size = new System.Drawing.Size(930, 189);
-            this.ucChart1.TabIndex = 0;
-            // 
-            // ucChart2
-            // 
-            this.ucChart2.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart2.ChannelsToDisplay")));
-            this.ucChart2.ChartTitle = "";
-            this.ucChart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucChart2.Location = new System.Drawing.Point(0, 0);
-            this.ucChart2.Name = "ucChart2";
-            this.ucChart2.Size = new System.Drawing.Size(930, 276);
-            this.ucChart2.TabIndex = 0;
-            // 
-            // xtraTabPage10
-            // 
-            this.xtraTabPage10.Controls.Add(this.ucChart3);
-            this.xtraTabPage10.Name = "xtraTabPage10";
-            this.xtraTabPage10.Size = new System.Drawing.Size(930, 471);
-            this.xtraTabPage10.Text = "Уровень";
-            // 
-            // ucChart3
-            // 
-            this.ucChart3.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart3.ChannelsToDisplay")));
-            this.ucChart3.ChartTitle = "";
-            this.ucChart3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucChart3.Location = new System.Drawing.Point(0, 0);
-            this.ucChart3.Name = "ucChart3";
-            this.ucChart3.Size = new System.Drawing.Size(930, 471);
-            this.ucChart3.TabIndex = 0;
-            // 
-            // xtraTabPage11
-            // 
-            this.xtraTabPage11.Controls.Add(this.splitContainerControl2);
-            this.xtraTabPage11.Name = "xtraTabPage11";
-            this.xtraTabPage11.Size = new System.Drawing.Size(930, 471);
-            this.xtraTabPage11.Text = "Газ";
-            // 
-            // splitContainerControl2
-            // 
-            this.splitContainerControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerControl2.FixedPanel = DevExpress.XtraEditors.SplitFixedPanel.None;
-            this.splitContainerControl2.Horizontal = false;
-            this.splitContainerControl2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerControl2.Name = "splitContainerControl2";
-            this.splitContainerControl2.Panel1.Controls.Add(this.splitContainerControl3);
-            this.splitContainerControl2.Panel1.Text = "Panel1";
-            this.splitContainerControl2.Panel2.Controls.Add(this.splitContainerControl4);
-            this.splitContainerControl2.Panel2.Text = "Panel2";
-            this.splitContainerControl2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.splitContainerControl2.Size = new System.Drawing.Size(930, 471);
-            this.splitContainerControl2.SplitterPosition = 237;
-            this.splitContainerControl2.TabIndex = 0;
-            this.splitContainerControl2.Text = "splitContainerControl2";
-            // 
-            // splitContainerControl3
-            // 
-            this.splitContainerControl3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerControl3.FixedPanel = DevExpress.XtraEditors.SplitFixedPanel.None;
-            this.splitContainerControl3.Horizontal = false;
-            this.splitContainerControl3.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerControl3.Name = "splitContainerControl3";
-            this.splitContainerControl3.Panel1.Controls.Add(this.ucChart4);
-            this.splitContainerControl3.Panel1.Text = "Panel1";
-            this.splitContainerControl3.Panel2.Controls.Add(this.ucChart5);
-            this.splitContainerControl3.Panel2.Text = "Panel2";
-            this.splitContainerControl3.Size = new System.Drawing.Size(930, 237);
-            this.splitContainerControl3.SplitterPosition = 119;
-            this.splitContainerControl3.TabIndex = 0;
-            this.splitContainerControl3.Text = "splitContainerControl3";
-            // 
-            // ucChart4
-            // 
-            this.ucChart4.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart4.ChannelsToDisplay")));
-            this.ucChart4.ChartTitle = "";
-            this.ucChart4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucChart4.Location = new System.Drawing.Point(0, 0);
-            this.ucChart4.Name = "ucChart4";
-            this.ucChart4.Size = new System.Drawing.Size(930, 119);
-            this.ucChart4.TabIndex = 0;
-            // 
-            // ucChart5
-            // 
-            this.ucChart5.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart5.ChannelsToDisplay")));
-            this.ucChart5.ChartTitle = "";
-            this.ucChart5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucChart5.Location = new System.Drawing.Point(0, 0);
-            this.ucChart5.Name = "ucChart5";
-            this.ucChart5.Size = new System.Drawing.Size(930, 112);
-            this.ucChart5.TabIndex = 0;
-            // 
-            // splitContainerControl4
-            // 
-            this.splitContainerControl4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerControl4.FixedPanel = DevExpress.XtraEditors.SplitFixedPanel.None;
-            this.splitContainerControl4.Horizontal = false;
-            this.splitContainerControl4.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerControl4.Name = "splitContainerControl4";
-            this.splitContainerControl4.Panel1.Controls.Add(this.ucChart6);
-            this.splitContainerControl4.Panel1.Text = "Panel1";
-            this.splitContainerControl4.Panel2.Controls.Add(this.ucChart7);
-            this.splitContainerControl4.Panel2.Text = "Panel2";
-            this.splitContainerControl4.Size = new System.Drawing.Size(930, 228);
-            this.splitContainerControl4.SplitterPosition = 115;
-            this.splitContainerControl4.TabIndex = 0;
-            this.splitContainerControl4.Text = "splitContainerControl4";
-            // 
-            // ucChart6
-            // 
-            this.ucChart6.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart6.ChannelsToDisplay")));
-            this.ucChart6.ChartTitle = "";
-            this.ucChart6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucChart6.Location = new System.Drawing.Point(0, 0);
-            this.ucChart6.Name = "ucChart6";
-            this.ucChart6.Size = new System.Drawing.Size(930, 115);
-            this.ucChart6.TabIndex = 0;
-            // 
-            // ucChart7
-            // 
-            this.ucChart7.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart7.ChannelsToDisplay")));
-            this.ucChart7.ChartTitle = "";
-            this.ucChart7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucChart7.Location = new System.Drawing.Point(0, 0);
-            this.ucChart7.Name = "ucChart7";
-            this.ucChart7.Size = new System.Drawing.Size(930, 107);
-            this.ucChart7.TabIndex = 0;
             // 
             // xtraTabPage8
             // 
@@ -562,7 +365,7 @@ namespace TP
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(1078, 648);
+            this.textBox1.Size = new System.Drawing.Size(1078, 650);
             this.textBox1.TabIndex = 2;
             // 
             // sbUnregister
@@ -588,6 +391,14 @@ namespace TP
             // 
             this.dtsChart1.DataSetName = "dtsChart";
             this.dtsChart1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // ucCommonCharts1
+            // 
+            this.ucCommonCharts1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucCommonCharts1.Location = new System.Drawing.Point(0, 0);
+            this.ucCommonCharts1.Name = "ucCommonCharts1";
+            this.ucCommonCharts1.Size = new System.Drawing.Size(1016, 479);
+            this.ucCommonCharts1.TabIndex = 0;
             // 
             // frmTP
             // 
@@ -619,19 +430,6 @@ namespace TP
             this.xtraTabPage5.ResumeLayout(false);
             this.xtraTabPage6.ResumeLayout(false);
             this.xtraTabPage7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl2)).EndInit();
-            this.xtraTabControl2.ResumeLayout(false);
-            this.xtraTabPage9.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
-            this.splitContainerControl1.ResumeLayout(false);
-            this.xtraTabPage10.ResumeLayout(false);
-            this.xtraTabPage11.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl2)).EndInit();
-            this.splitContainerControl2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl3)).EndInit();
-            this.splitContainerControl3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl4)).EndInit();
-            this.splitContainerControl4.ResumeLayout(false);
             this.xtraTabPage8.ResumeLayout(false);
             this.xtraTabPage8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtsChart1)).EndInit();
@@ -675,21 +473,7 @@ namespace TP
         private DevExpress.XtraTab.XtraTabPage xtraTabPage7;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
         private TP.CommonView.ucCommonView ucCommonView1;
-        private DevExpress.XtraTab.XtraTabControl xtraTabControl2;
-        private DevExpress.XtraTab.XtraTabPage xtraTabPage9;
-        private DevExpress.XtraTab.XtraTabPage xtraTabPage10;
-        private DevExpress.XtraTab.XtraTabPage xtraTabPage11;
         private UICommon.dtsChart dtsChart1;
-        private DevExpress.XtraEditors.SplitContainerControl splitContainerControl1;
-        private UICommon.ucChart ucChart1;
-        private UICommon.ucChart ucChart2;
-        private DevExpress.XtraEditors.SplitContainerControl splitContainerControl2;
-        private UICommon.ucChart ucChart3;
-        private DevExpress.XtraEditors.SplitContainerControl splitContainerControl3;
-        private DevExpress.XtraEditors.SplitContainerControl splitContainerControl4;
-        private UICommon.ucChart ucChart4;
-        private UICommon.ucChart ucChart5;
-        private UICommon.ucChart ucChart6;
-        private UICommon.ucChart ucChart7;
+        private TP.CommonView.ucCommonCharts ucCommonCharts1;
     }
 }

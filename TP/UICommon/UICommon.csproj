@@ -189,10 +189,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="dtsChart.xsc">
+      <DependentUpon>dtsChart.xsd</DependentUpon>
+    </None>
     <None Include="dtsChart.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>dtsChart.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dtsChart.xss">
+      <DependentUpon>dtsChart.xsd</DependentUpon>
     </None>
     <None Include="Properties\DataSources\DevExpress.XtraEditors.BaseEdit.datasource" />
     <None Include="Properties\DataSources\DevExpress.XtraEditors.RadioGroup.datasource" />

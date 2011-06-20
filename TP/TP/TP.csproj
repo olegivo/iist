@@ -103,6 +103,12 @@
     <Compile Include="ChannelController.Designer.cs">
       <DependentUpon>ChannelController.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommonView\ucCommonCharts.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommonView\ucCommonCharts.Designer.cs">
+      <DependentUpon>ucCommonCharts.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommonView\ucCommonView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -237,6 +243,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CommonView\ucCommonCharts.resx">
+      <DependentUpon>ucCommonCharts.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CommonView\ucCommonView.resx">
       <DependentUpon>ucCommonView.cs</DependentUpon>
       <SubType>Designer</SubType>
