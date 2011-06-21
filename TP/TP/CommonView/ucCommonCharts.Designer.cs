@@ -39,13 +39,13 @@
             this.xtraTabPage11 = new DevExpress.XtraTab.XtraTabPage();
             this.splitContainerControl2 = new DevExpress.XtraEditors.SplitContainerControl();
             this.splitContainerControl3 = new DevExpress.XtraEditors.SplitContainerControl();
+            this.ucChart6 = new UICommon.ucChart();
             this.ucChart5 = new UICommon.ucChart();
+            this.ucChart4 = new UICommon.ucChart();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
             this.splitContainerControl5 = new DevExpress.XtraEditors.SplitContainerControl();
             this.ucChart7 = new UICommon.ucChart();
             this.ucChart8 = new UICommon.ucChart();
-            this.ucChart4 = new UICommon.ucChart();
-            this.ucChart6 = new UICommon.ucChart();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl2)).BeginInit();
             this.xtraTabControl2.SuspendLayout();
             this.xtraTabPage9.SuspendLayout();
@@ -104,8 +104,6 @@
             // ucChart1
             // 
             this.ucChart1.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart1.ChannelsToDisplay")));
-            this.ucChart1.ChartDataStorageTime = 30;
-            this.ucChart1.ChartTitle = "";
             this.ucChart1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucChart1.Location = new System.Drawing.Point(0, 0);
             this.ucChart1.Name = "ucChart1";
@@ -116,7 +114,6 @@
             // 
             this.ucChart2.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart2.ChannelsToDisplay")));
             this.ucChart2.ChartDataStorageTime = 40;
-            this.ucChart2.ChartTitle = "";
             this.ucChart2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucChart2.Location = new System.Drawing.Point(0, 0);
             this.ucChart2.Name = "ucChart2";
@@ -133,8 +130,6 @@
             // ucChart3
             // 
             this.ucChart3.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart3.ChannelsToDisplay")));
-            this.ucChart3.ChartDataStorageTime = 30;
-            this.ucChart3.ChartTitle = "";
             this.ucChart3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucChart3.Location = new System.Drawing.Point(0, 0);
             this.ucChart3.Name = "ucChart3";
@@ -181,16 +176,32 @@
             this.splitContainerControl3.TabIndex = 0;
             this.splitContainerControl3.Text = "splitContainerControl3";
             // 
+            // ucChart6
+            // 
+            this.ucChart6.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart6.ChannelsToDisplay")));
+            this.ucChart6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucChart6.Location = new System.Drawing.Point(0, 0);
+            this.ucChart6.Name = "ucChart6";
+            this.ucChart6.Size = new System.Drawing.Size(556, 123);
+            this.ucChart6.TabIndex = 1;
+            // 
             // ucChart5
             // 
             this.ucChart5.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart5.ChannelsToDisplay")));
-            this.ucChart5.ChartDataStorageTime = 30;
-            this.ucChart5.ChartTitle = "";
             this.ucChart5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucChart5.Location = new System.Drawing.Point(0, 0);
             this.ucChart5.Name = "ucChart5";
             this.ucChart5.Size = new System.Drawing.Size(556, 113);
             this.ucChart5.TabIndex = 0;
+            // 
+            // ucChart4
+            // 
+            this.ucChart4.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart4.ChannelsToDisplay")));
+            this.ucChart4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucChart4.Location = new System.Drawing.Point(0, 0);
+            this.ucChart4.Name = "ucChart4";
+            this.ucChart4.Size = new System.Drawing.Size(556, 228);
+            this.ucChart4.TabIndex = 1;
             // 
             // xtraTabPage1
             // 
@@ -218,8 +229,6 @@
             // ucChart7
             // 
             this.ucChart7.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart7.ChannelsToDisplay")));
-            this.ucChart7.ChartDataStorageTime = 30;
-            this.ucChart7.ChartTitle = "";
             this.ucChart7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucChart7.Location = new System.Drawing.Point(0, 0);
             this.ucChart7.Name = "ucChart7";
@@ -229,43 +238,22 @@
             // ucChart8
             // 
             this.ucChart8.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart8.ChannelsToDisplay")));
-            this.ucChart8.ChartDataStorageTime = 30;
-            this.ucChart8.ChartTitle = "";
             this.ucChart8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucChart8.Location = new System.Drawing.Point(0, 0);
             this.ucChart8.Name = "ucChart8";
             this.ucChart8.Size = new System.Drawing.Size(556, 232);
             this.ucChart8.TabIndex = 2;
             // 
-            // ucChart4
-            // 
-            this.ucChart4.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart4.ChannelsToDisplay")));
-            this.ucChart4.ChartDataStorageTime = 30;
-            this.ucChart4.ChartTitle = "";
-            this.ucChart4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucChart4.Location = new System.Drawing.Point(0, 0);
-            this.ucChart4.Name = "ucChart4";
-            this.ucChart4.Size = new System.Drawing.Size(556, 228);
-            this.ucChart4.TabIndex = 1;
-            // 
-            // ucChart6
-            // 
-            this.ucChart6.ChannelsToDisplay = ((System.Collections.Generic.List<int>)(resources.GetObject("ucChart6.ChannelsToDisplay")));
-            this.ucChart6.ChartDataStorageTime = 30;
-            this.ucChart6.ChartTitle = "";
-            this.ucChart6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucChart6.Location = new System.Drawing.Point(0, 0);
-            this.ucChart6.Name = "ucChart6";
-            this.ucChart6.Size = new System.Drawing.Size(556, 123);
-            this.ucChart6.TabIndex = 1;
-            // 
             // ucCommonCharts
             // 
+            this.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.Appearance.Options.UseBackColor = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.xtraTabControl2);
             this.Name = "ucCommonCharts";
             this.Size = new System.Drawing.Size(640, 480);
+            this.ParentChanged += new System.EventHandler(this.ucCommonParentChanged);
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl2)).EndInit();
             this.xtraTabControl2.ResumeLayout(false);
             this.xtraTabPage9.ResumeLayout(false);

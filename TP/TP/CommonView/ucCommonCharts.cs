@@ -1,51 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
+using System.Linq;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using UICommon;
 
 namespace TP.CommonView
 {
-    public partial class ucCommonCharts : DevExpress.XtraEditors.XtraUserControl
+    /// <summary>
+    /// 
+    /// </summary>
+    public partial class ucCommonCharts : XtraUserControl
     {
+        private Dictionary<int, ucChart> _chartsMapping;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public ucCommonCharts()
         {
             InitializeComponent();
         }
-        public UICommon.ucChart Chart1
+
+        private IEnumerable<ucChart> GetCharts(Control сontrol)
         {
-            get { return this.ucChart1; }
+            List<ucChart> charts = new List<ucChart>();
+            if (сontrol != null)
+                foreach (Control childControl in сontrol.Controls)
+                {
+                    if (childControl.GetType() == typeof(ucChart))
+                        charts.Add((ucChart)childControl);
+                    else
+                        charts.AddRange(GetCharts(childControl));
+                }
+
+            return charts;
         }
-        public UICommon.ucChart Chart2
+
+        private void MapCharts()
         {
-            get { return this.ucChart2; }
+            _chartsMapping = new Dictionary<int, ucChart>();
+
+            try
+            {
+                foreach (var keyValuePair in
+                    GetCharts(this).SelectMany(chart => chart.ChannelsToDisplay.ToDictionary(item => item, item => chart)))
+                {
+                    _chartsMapping.Add(keyValuePair.Key, keyValuePair.Value);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Неправильно настроены каналы для графиков", ex);
+            }
         }
-        public UICommon.ucChart Chart3
+
+        /// <summary>
+        /// Добавить данные на график
+        /// </summary>
+        /// <param name="channelNumber"></param>
+        /// <param name="newValue"></param>
+        public void AddChartData(int channelNumber, double newValue)
         {
-            get { return this.ucChart3; }
+            if (_chartsMapping.ContainsKey(channelNumber))
+                _chartsMapping[channelNumber].AddChartData(channelNumber, newValue);
         }
-        public UICommon.ucChart Chart4
+
+        private void ucCommonParentChanged(object sender, EventArgs e)
         {
-            get { return this.ucChart4; }
-        }
-        public UICommon.ucChart Chart5
-        {
-            get { return this.ucChart5; }
-        }
-        public UICommon.ucChart Chart6
-        {
-            get { return this.ucChart6; }
-        }
-        public UICommon.ucChart Chart7
-        {
-            get { return this.ucChart7; }
-        }
-        public UICommon.ucChart Chart8
-        {
-            get { return this.ucChart8; }
+            MapCharts();
         }
     }
 }

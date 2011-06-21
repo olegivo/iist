@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Drawing;
 using DevExpress.XtraCharts;
@@ -15,48 +16,57 @@ namespace UICommon
 
         }
 
-        /// <summary>
-        /// Список каналов, Отображаемых на графике
-        /// </summary>
+        private List<int> _channelList = new List<int>();
+        private String _chartTitle = "";
+        private int _chartDataStorageTime = 30;
+        Series[] series = new Series[10]; //TODO: непонятно сколько памяти выделять под массив (ChannelsToDisplay.Count)
 
-        List<int> _ChannelList = new List<int>();
+        /// <summary>
+        /// Список каналов, отображаемых на графике
+        /// </summary>
         public List<int> ChannelsToDisplay
         {
-            get { return _ChannelList; }
-            set
-            {
-                if (_ChannelList != value)
-                {
-                    _ChannelList = value;
-                }
-
-            }
+            get { return _channelList; }
+            set { _channelList = value; }
         }
+        
+
         /// <summary>
         /// Заголовок графика
         /// </summary>
-        private String _ChartTitle = "";
+        [DefaultValue("")]
         public string ChartTitle
         {
-            get { return _ChartTitle; }
-            set { if (_ChartTitle != value) { _ChartTitle = value; } }
+            get { return _chartTitle; }
+            set
+            {
+                if (_chartTitle != value)
+                {
+                    _chartTitle = value;
+                }
+            }
         }
 
         /// <summary>
-        /// Настреваемый временной буфер [сек.]
+        /// Настраиваемый временной буфер [сек.]
         /// </summary>
-        private int _ChartDataStorageTime=30;
+        [DefaultValue(30)]
         public int ChartDataStorageTime
         {
-            get { return _ChartDataStorageTime; }
-            set { if (_ChartDataStorageTime != value) { _ChartDataStorageTime = value; } }
+            get { return _chartDataStorageTime; }
+            set
+            {
+                if (_chartDataStorageTime != value)
+                {
+                    _chartDataStorageTime = value;
+                }
+            }
         }
 
 
 
 
-        Series[] series = new Series[10]; //TODO: непонятно сколько памяти выделять под массив (ChannelsToDisplay.Count)
-        int[] ChannelChartNumbers = new int[10];
+
         /// <summary>
         /// инициализация графика и его серий, параметров, итп.
         /// </summary>
@@ -66,7 +76,6 @@ namespace UICommon
             for (int i = 0; i < ChannelsToDisplay.Count; i++)
             {
                 int channelNumber = ChannelsToDisplay[i];
-                ChannelChartNumbers[i] = channelNumber;
                 Series series1 = new Series("Channel #" + Convert.ToString(channelNumber), ViewType.Line);
                 string tableName = GetTableName(channelNumber);
                 dtsChart1.Tables.Add(new dtsChart.ChartDataDataTable { TableName = tableName });
@@ -111,9 +120,14 @@ namespace UICommon
         }
 
 
-        public void AddDataChart(int ChannelNumber, double NewValue)
+        /// <summary>
+        /// Добавить данные на график
+        /// </summary>
+        /// <param name="channelNumber"></param>
+        /// <param name="newValue"></param>
+        public void AddChartData(int channelNumber, double newValue)
         {
-            dtsChart.ChartDataDataTable dataTable = dtsChart1.Tables[GetTableName(ChannelNumber)] as dtsChart.ChartDataDataTable;
+            dtsChart.ChartDataDataTable dataTable = dtsChart1.Tables[GetTableName(channelNumber)] as dtsChart.ChartDataDataTable;
             if (dataTable != null)
             {
                 DateTime now = DateTime.Now.AddSeconds(-ChartDataStorageTime);//настраиваемый временной буфер
@@ -122,7 +136,7 @@ namespace UICommon
                     dataTable.RemoveChartDataRow(dr);
                 }
 
-                dataTable.AddChartDataRow(DateTime.Now, NewValue);
+                dataTable.AddChartDataRow(DateTime.Now, newValue);//добавление ряда в таблицу датасета
                 chartControl1.Refresh();
             }
         }
