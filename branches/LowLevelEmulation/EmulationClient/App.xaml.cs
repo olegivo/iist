@@ -14,34 +14,57 @@ namespace EmulationClient
     /// </summary>
     public partial class App : Application
     {
-        private ControlManagementUnitEmulation _controlManagementUnit;
-
         public App()
         {
+            ControlManagementUnit = new ControlManagementUnitEmulation();
+            ControlManagementUnit.GetRegName = new GetRegNameDelegate(() => "EmulationClient");
+            Emulator = new Emulator();
+            Emulator.ControlManagementUnit = ControlManagementUnit;
+
+            //GasConcentration gasConcentration = new GasConcentration();
+            //Temperature temperature = new Temperature();
+            //double concentrationValue;
+            //double temperatureValue;
+
+            //temperature.Refresh();
+            //temperatureValue = temperature.GetOutputValue();
+
+            //gasConcentration.Temperature = temperatureValue;
+            //gasConcentration.Refresh();
+            //concentrationValue = gasConcentration.GetOutputValue();
+            //Console.WriteLine("outputValue = {0}", concentrationValue);
+
+            //Thread.Sleep(2000);
+            //gasConcentration.Refresh();
+            //concentrationValue = gasConcentration.GetOutputValue();
+            //Console.WriteLine("outputValue = {0}", concentrationValue);
+
+            //Thread.Sleep(2000);
+            //gasConcentration.Refresh();
+            //concentrationValue = gasConcentration.GetOutputValue();
+            //Console.WriteLine("outputValue = {0}", concentrationValue);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
             Init();
+            ControlManagementUnit.Register();
+        }
 
-            GasConcentration gasConcentration = new GasConcentration();
-            Temperature temperature = new Temperature();
-            double concentrationValue;
-            double temperatureValue;
-
-            temperature.Refresh();
-            temperatureValue = temperature.GetOutputValue();
-
-            gasConcentration.Temperature = temperatureValue;
-            gasConcentration.Refresh();
-            concentrationValue = gasConcentration.GetOutputValue();
-            Console.WriteLine("outputValue = {0}", concentrationValue);
-
-            Thread.Sleep(2000);
-            gasConcentration.Refresh();
-            concentrationValue = gasConcentration.GetOutputValue();
-            Console.WriteLine("outputValue = {0}", concentrationValue);
-
-            Thread.Sleep(2000);
-            gasConcentration.Refresh();
-            concentrationValue = gasConcentration.GetOutputValue();
-            Console.WriteLine("outputValue = {0}", concentrationValue);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnExit(ExitEventArgs e)
+        {
+            ControlManagementUnit.Unregister();
+            base.OnExit(e);
         }
 
         private void Init()
@@ -51,7 +74,6 @@ namespace EmulationClient
 #pragma warning restore 168
 
             DbConnectionProvider.Instance.SetupConnectionStringFromConfigurationFile();
-            ControlManagementUnit.Register();
             
         }
 
@@ -82,22 +104,8 @@ namespace EmulationClient
             */
         }
 
-        private ControlManagementUnitEmulation ControlManagementUnit
-        {
-            get
-            {
-                if (_controlManagementUnit == null)
-                {
-                    _controlManagementUnit = new ControlManagementUnitEmulation();
-                    _controlManagementUnit.GetRegName = new GetRegNameDelegate(() => "EmulationClient");
-                    _controlManagementUnit.InitChannels();
-                    //_ControlManagementUnit.GetDistributedMeasurementInformationSystem =
-                    //    GetDistributedMeasurementInformationSystem;
-                    //_ControlManagementUnit.BuildSystemConfiguration();
-                }
-                return _controlManagementUnit;
-            }
-        }
+        internal ControlManagementUnitEmulation ControlManagementUnit { get; private set; }
 
+        internal Emulator Emulator { get; private set; }
     }
 }

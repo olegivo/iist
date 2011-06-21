@@ -14,5 +14,14 @@ namespace EmulationClient.Emulation
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetSpeedValue(double value)
+        {
+            _outputValue = value;
+        }
     }
 }

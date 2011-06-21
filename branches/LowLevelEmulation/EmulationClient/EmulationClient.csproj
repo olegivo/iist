@@ -89,7 +89,9 @@
   <ItemGroup>
     <Compile Include="Emulation\CPBase.cs" />
     <Compile Include="ControlManagementUnitEmulation.cs" />
+    <Compile Include="Emulation\Emulator.cs" />
     <Compile Include="Emulation\GasConcentration.cs" />
+    <Compile Include="Emulation\GetDoubleValueDelegate.cs" />
     <Compile Include="Emulation\IControlledParameter.cs" />
     <Compile Include="Emulation\Speed.cs" />
     <Compile Include="Emulation\Temperature.cs" />

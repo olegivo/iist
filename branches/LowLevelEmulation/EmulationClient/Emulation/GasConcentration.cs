@@ -23,31 +23,44 @@ namespace EmulationClient.Emulation
             return now.Subtract(startTime).Seconds;
         }
 
-       
+        private double _temperature;
+        private double _speed;
+
         /// <summary>
         /// Входной параметр: Температура перед рукавным фильтром
         /// </summary>
-        public  double Temperature { get; set; }
-
+        public double Temperature
+        {
+            get { return GetTemperature != null ? GetTemperature() : _temperature; }
+            set { _temperature = value; }
+        }
 
         /// <summary>
         /// Входной параметр: Количество оборотов дымососа  
         /// </summary>
-        public  double Speed { get; set; }
+        public double Speed
+        {
+            get { return GetSpeed != null ? GetSpeed() : _speed; }
+            set { _speed = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public GetDoubleValueDelegate GetTemperature { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public GetDoubleValueDelegate GetSpeed { get; set; }
 
         /// <summary>
         /// Обновить значение (используется функция пересчёта входных параметров в выходной)
         /// </summary>
         public override void Refresh()
         {
-            RefreshTemperature();
             int passedSeconds = GetPassedSeconds();
             _outputValue = Math.Abs(Math.Sin(0.005 * passedSeconds)) * 500 + 3500 + Temperature + Speed;
-        }
-
-        private void RefreshTemperature()
-        {
-            ;
         }
 
     }
