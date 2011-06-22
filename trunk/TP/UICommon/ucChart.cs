@@ -12,11 +12,13 @@ namespace UICommon
         public ucChart()
         {
             InitializeComponent();
+            SetChannelsNames();
 
 
         }
 
-        private List<int> _channelList = new List<int>();
+        private List<int> _ChannelsToDisplay = new List<int>();
+        private List<string> _ChannelsNameList = new List<string>();
         private String _chartTitle = "";
         private int _chartDataStorageTime = 30;
         Series[] series = new Series[10]; //TODO: непонятно сколько памяти выделять под массив (ChannelsToDisplay.Count)
@@ -26,10 +28,38 @@ namespace UICommon
         /// </summary>
         public List<int> ChannelsToDisplay
         {
-            get { return _channelList; }
-            set { _channelList = value; }
+            get { return _ChannelsToDisplay; }
+            set { _ChannelsToDisplay = value; }
         }
-        
+        /// <summary>
+        /// Названия каналов (верней, за какой параметр они отвечают)
+        /// </summary>
+        private void SetChannelsNames() {
+            _ChannelsNameList.Add("ТП1");
+            _ChannelsNameList.Add("ТП2");
+            _ChannelsNameList.Add("ТП3");
+            _ChannelsNameList.Add("ТР4");
+            _ChannelsNameList.Add("ТР5");
+            _ChannelsNameList.Add("ТС6");
+            _ChannelsNameList.Add("ТС7");
+            _ChannelsNameList.Add("ТС8");
+            _ChannelsNameList.Add("P");
+            _ChannelsNameList.Add("PH1");
+            _ChannelsNameList.Add("PH2");
+            _ChannelsNameList.Add("S");
+            _ChannelsNameList.Add("ДУ-9");
+            _ChannelsNameList.Add("ДУ-11");
+            _ChannelsNameList.Add("ДУ-1");
+            _ChannelsNameList.Add("ДУ-4");
+            _ChannelsNameList.Add("ДУ-10");
+            _ChannelsNameList.Add("Г-O2");
+            _ChannelsNameList.Add("Г-СО");
+            _ChannelsNameList.Add("Г-O2");
+            _ChannelsNameList.Add("Г-СО");
+            _ChannelsNameList.Add("Г-SO2");
+            _ChannelsNameList.Add("Г-NO");
+            _ChannelsNameList.Add("Г-NO2");
+        }
 
         /// <summary>
         /// Заголовок графика
@@ -76,13 +106,17 @@ namespace UICommon
             for (int i = 0; i < ChannelsToDisplay.Count; i++)
             {
                 int channelNumber = ChannelsToDisplay[i];
-                Series series1 = new Series("Channel #" + Convert.ToString(channelNumber), ViewType.Line);
+                Series series1 = new Series(_ChannelsNameList[ChannelsToDisplay[i]-1]+" #" + Convert.ToString(channelNumber), ViewType.Line);
                 string tableName = GetTableName(channelNumber);
                 dtsChart1.Tables.Add(new dtsChart.ChartDataDataTable { TableName = tableName });
                 series1.DataSource = dtsChart1.Tables[tableName];
                 series[i] = series1;
                 series1.ArgumentDataMember = "TimeStamp";
                 series1.ValueDataMembers.AddRange("Value");
+
+                
+                series1.ValueScaleType = ScaleType.Numerical;
+                series1.ArgumentScaleType = ScaleType.DateTime;         //BUG:  ошибка при отображении
             
 
                 chartControl1.Series.Add(series[i]);
@@ -101,10 +135,12 @@ namespace UICommon
             }
 
             XYDiagram diagram = (XYDiagram)chartControl1.Diagram;
-            diagram.AxisX.Label.Angle = -45;
-            diagram.AxisX.DateTimeOptions.Format = DateTimeFormat.ShortTime; //DateTimeFormat.MonthAndDay;
+            //diagram.AxisX.Label.Angle = -45;
+            //diagram.AxisX.DateTimeMeasureUnit = DateTimeMeasurementUnit.Second;
+            diagram.AxisX.DateTimeOptions.Format = DateTimeFormat.ShortTime;
             //diagram.AxisX.DateTimeOptions.FormatString = "hh:mm:ss"; //DateTimeFormat.Custom;
-
+            
+            //настройка полосы прокрутки
             diagram.EnableAxisXScrolling = true;
             diagram.AxisX.Range.Auto = false;
             diagram.AxisX.Range.SetInternalMinMaxValues(0, 30);
@@ -119,7 +155,7 @@ namespace UICommon
             return string.Format("ChartData{0}", i);
         }
 
-
+        DateTime now = DateTime.Today;
         /// <summary>
         /// Добавить данные на график
         /// </summary>
@@ -135,8 +171,10 @@ namespace UICommon
                 {
                     dataTable.RemoveChartDataRow(dr);
                 }
-
-                dataTable.AddChartDataRow(DateTime.Now, newValue);//добавление ряда в таблицу датасета
+                
+                now = now.AddSeconds(1);
+                now = now.AddMinutes(1);
+                dataTable.AddChartDataRow(now, newValue);  //добавление ряда в таблицу датасета
                 chartControl1.Refresh();
             }
         }
