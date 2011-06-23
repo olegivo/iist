@@ -66,7 +66,6 @@
             this.Controls.Add(this.chartControl1);
             this.Name = "ucChart";
             this.Size = new System.Drawing.Size(640, 480);
-            this.Load += new System.EventHandler(this.ucChart_Load);
             ((System.ComponentModel.ISupportInitialize)(pointSeriesLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(areaSeriesView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).EndInit();
