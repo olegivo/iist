@@ -13,6 +13,7 @@ namespace TP.CommonView
     public partial class ucCommonCharts : XtraUserControl
     {
         private Dictionary<int, ucChart> _chartsMapping;
+        private Dictionary<int, string> _channelsNameDic;
 
         /// <summary>
         /// 
@@ -43,12 +44,26 @@ namespace TP.CommonView
 
             try
             {
-                foreach (var keyValuePair in
-                    GetCharts(this).SelectMany(chart => chart.ChannelsToDisplay.ToDictionary(item => item, item => chart)))
+                IEnumerable<ucChart> charts = GetCharts(this);
+                
+                SetChannelsNames();
+
+                foreach (var channelIdChart in
+                    charts.SelectMany(chart => chart.ChannelsToDisplay.ToDictionary(item => item, item => chart)))
                 {
-                    _chartsMapping.Add(keyValuePair.Key, keyValuePair.Value);
+                    int channelId = channelIdChart.Key;
+                    _chartsMapping.Add(channelId, channelIdChart.Value);
+                    if (!_channelsNameDic.ContainsKey(channelId))
+                        throw new ArgumentOutOfRangeException("channelId", 
+                                                              channelId,
+                                                              "Словарь названий каналов не содержит такой номер канала");
+                    channelIdChart.Value.SetChannelsName(channelId, _channelsNameDic[channelId]);
                 }
 
+                foreach (ucChart chart in charts)
+                {
+                    chart.InitializeChart();
+                }
             }
             catch (Exception ex)
             {
@@ -66,6 +81,39 @@ namespace TP.CommonView
             if (_chartsMapping.ContainsKey(channelNumber))
                 _chartsMapping[channelNumber].AddChartData(channelNumber, newValue);
         }
+
+        /// <summary>
+        /// Задать соответствие номеров и названий каналов
+        /// </summary>
+        private void SetChannelsNames()
+        {
+            _channelsNameDic = new Dictionary<int, string>();
+            _channelsNameDic.Add(1, "ТП1");
+            _channelsNameDic.Add(2, "ТП2");
+            _channelsNameDic.Add(3, "ТП3");
+            _channelsNameDic.Add(4, "ТР4");
+            _channelsNameDic.Add(5, "ТР5");
+            _channelsNameDic.Add(6, "ТС6");
+            _channelsNameDic.Add(7, "ТС7");
+            _channelsNameDic.Add(8, "ТС8");
+            _channelsNameDic.Add(9, "P");
+            _channelsNameDic.Add(10, "PH1");
+            _channelsNameDic.Add(11, "PH2");
+            _channelsNameDic.Add(12, "S");
+            _channelsNameDic.Add(13, "ДУ-9");
+            _channelsNameDic.Add(14, "ДУ-11");
+            _channelsNameDic.Add(15, "ДУ-1");
+            _channelsNameDic.Add(16, "ДУ-4");
+            _channelsNameDic.Add(17, "ДУ-10");
+            _channelsNameDic.Add(18, "Г-O2");
+            _channelsNameDic.Add(19, "Г-СО");
+            _channelsNameDic.Add(20, "Г-O2");
+            _channelsNameDic.Add(21, "Г-СО");
+            _channelsNameDic.Add(22, "Г-SO2");
+            _channelsNameDic.Add(23, "Г-NO");
+            _channelsNameDic.Add(24, "Г-NO2");
+        }
+
 
         private void ucCommonParentChanged(object sender, EventArgs e)
         {
