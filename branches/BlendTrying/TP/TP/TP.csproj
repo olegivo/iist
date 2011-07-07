@@ -35,18 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DMS.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Рабочий стол\iist\TP\Referenced\DMS.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Oleg_ivo.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Рабочий стол\iist\TP\Referenced\Oleg_ivo.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Oleg_ivo.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e9643967fa5cdff5, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Рабочий стол\iist\TP\Referenced\Oleg_ivo.Tools.dll</HintPath>
-    </Reference>
+    <Reference Include="DMS.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Oleg_ivo.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Oleg_ivo.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e9643967fa5cdff5, processorArchitecture=MSIL" />
     <Reference Include="PresentationFramework.Luna" />
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -106,9 +97,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="Properties\Settings.settings">
@@ -120,9 +113,6 @@
   <ItemGroup>
     <Resource Include="factory_yellow_256.png" />
     <Resource Include="Images\Database.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SampleData\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -15,6 +15,10 @@ using System.Windows.Shapes;
 using DMS.Common.Messages;
 using Oleg_ivo.Client;
 
+using System.Windows.Threading;
+using System.Threading;
+
+
 
 namespace TP
 {
@@ -25,7 +29,6 @@ namespace TP
 	public partial class Window1: Window
 
     {
-		//public ChannelController channelController1;
 		public ChannelController channelController1 = new TP.ChannelController();
         public Window1()
         {
@@ -129,53 +132,63 @@ namespace TP
             Protocol(sender);
         }
 
-        private void sbRegister_Click(object sender, EventArgs e)
-        {
-            channelController1.Register();
-            
-        }
-
-        public void sbUnregister_Click(object sender, EventArgs e)
-        {
-            //channelController1.Unregister();
-			//ucConnectionWindow.sbUnregister_Click();
-        }
-
         private void Protocol(object sender)
         {
             if (sender is double || sender is string)
             {
                 string s = string.Format("{0}\t{1}{2}", DateTime.Now, sender, Environment.NewLine);
 
-                //SetText(this.textBox1, s);    //BUG: Необработанное исключение!
+                SetText(this.textBox1, s);
             }
         }
-
-        //private delegate void StDelegate(TextBox info, string s);
-        //private void SetText(TextBox info, string s)
-        //{
-        //    if (info.InvokeRequired)
-        //    {
-        //        StDelegate ddd = SetText;
-        //        info.Invoke(ddd, new object[] { info, s });
-        //    }
-        //    else
-        //    {
-        //        info.AppendText(s);
-        //    }
-        //}
-
-        private void MenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
+        /// <summary>
+        /// Запись протокола с обработкой события, произошедшего в другом потоке
+        /// </summary>
+        /// <param name="info">TextBox</param>
+        /// <param name="s">string</param>
+        private delegate void StDelegate(TextBox info, string s);
+        private void SetText(TextBox info, string s) 
         {
-        	// TODO: Add event handler implementation here.
-			channelController1.Register();
+            if (Dispatcher.Thread != Thread.CurrentThread)
+            {
+                StDelegate ddd = SetText;
+                Dispatcher.Invoke(ddd, new object[]{info,s});
+            }
+            else 
+            {
+                info.AppendText(s);            
+            }
         }
 
         private void ucConnectionWindow_NeedRegister(object sender, EventArgs e)
         {
             channelController1.Register();
         }
+		
+        private void Menu_help_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+			MessageBox.Show("Две вещи действительно бесконечны: вселенная и  человеческая глупость.");
+        }
 
+        private void Menu_exit_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	this.Close();
+        }
+
+        private void Menu_unregister_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	this.channelController1.Unregister();
+        }
+
+        private void Menu_register_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	this.channelController1.Register();
+        }
+        
+        //private void channelController1_CanRegisterChanged(object sender, EventArgs e)
+        //{
+        //    sbUnregister.Enabled = !(sbRegister.Enabled = channelController1.CanRegister);
+        //}
 
     }
 }

@@ -262,6 +262,24 @@
 				</Trigger>
 			</Style.Triggers>
 		</Style>
+		<Style x:Key="MenuStyle1" TargetType="{x:Type Menu}">
+			<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"/>
+			<Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"/>
+			<Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}"/>
+			<Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}"/>
+			<Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}"/>
+			<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
+			<Setter Property="VerticalContentAlignment" Value="Center"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Menu}">
+						<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+							<ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
 	</Window.Resources>
 	<Window.Background>
 		<LinearGradientBrush EndPoint="0.473,0.074" StartPoint="0.474,0.994">
@@ -275,10 +293,16 @@
         		<TextBox x:Name="textBox1" />
         	</Grid>
         </Expander>
-    	<Menu Height="24" VerticalAlignment="Top" Background="#FFEDE6BB">
-    		<MenuItem Header="Register" Margin="0" Click="MenuItem_Click" Style="{DynamicResource MenuItemStyle1}" />
-    		<MenuItem Header="ShowMW" Margin="0"/>
-    	</Menu>
-        <local:ucConnectionWindow NeedRegister="ucConnectionWindow_NeedRegister" d:IsHidden="True"/>
+			<Menu  VerticalAlignment="Top" Height="24" Background="#FFEDE6BB" Style="{DynamicResource MenuStyle1}">
+	    		<MenuItem Header="Тех.Процесс" Margin="0" Style="{DynamicResource MenuItemStyle1}">
+					<MenuItem x:Name="Menu_exit" Header="Выход" Click="Menu_exit_Click" />
+				</MenuItem>
+	    		<MenuItem Header="Соединение" Margin="0" Style="{DynamicResource MenuItemStyle1}">
+					<MenuItem x:Name="Menu_register" Header="Подкоючится к серверу" Click="Menu_register_Click" />
+					<MenuItem x:Name="Menu_unregister" Header="Отключится от сервера" Click="Menu_unregister_Click" />
+				</MenuItem>
+				<MenuItem x:Name="Menu_help" Header="Помощь" Margin="0" ItemContainerStyle="{DynamicResource MenuItemStyle1}" Click="Menu_help_Click" />
+	    	</Menu>	
+    	     <local:ucConnectionWindow NeedRegister="ucConnectionWindow_NeedRegister" d:IsHidden="True"/>
     </Grid>
 </Window>
