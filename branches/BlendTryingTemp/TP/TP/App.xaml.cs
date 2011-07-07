@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 
 namespace TP
 {
@@ -12,5 +7,12 @@ namespace TP
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public App()
+        {
+
+        }
     }
 }
