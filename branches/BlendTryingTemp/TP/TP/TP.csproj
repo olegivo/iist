@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -79,6 +79,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="CycloneAndScrubber\ucCycloneAndScrubber.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\ucConnectionWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -102,6 +106,9 @@
   <ItemGroup>
     <Compile Include="ChannelController.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CycloneAndScrubber\ucCycloneAndScrubber.xaml.cs">
+      <DependentUpon>ucCycloneAndScrubber.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -131,6 +138,12 @@
   <ItemGroup>
     <Resource Include="factory_yellow_256.png" />
     <Resource Include="Images\Database.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UICommonWPF\UICommonWPF.csproj">
+      <Project>{46D87FCA-8216-4BA1-81C6-8288641B573E}</Project>
+      <Name>UICommonWPF</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
