@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace TP
 {
 	/// <summary>
-	/// Interaction logic for ucCycloneAndScrubber.xaml
+	/// Interaction logic for ucHeatExchanger.xaml
 	/// </summary>
-	public partial class ucCycloneAndScrubber : UserControl
+	public partial class ucHeatExchanger : UserControl
 	{
-		public ucCycloneAndScrubber()
+		public ucHeatExchanger()
 		{
 			this.InitializeComponent();
 		}

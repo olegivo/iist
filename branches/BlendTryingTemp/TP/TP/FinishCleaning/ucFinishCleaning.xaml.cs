@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace TP
 {
 	/// <summary>
-	/// Interaction logic for ucCycloneAndScrubber.xaml
+	/// Interaction logic for ucFinishCleaning.xaml
 	/// </summary>
-	public partial class ucCycloneAndScrubber : UserControl
+	public partial class ucFinishCleaning : UserControl
 	{
-		public ucCycloneAndScrubber()
+		public ucFinishCleaning()
 		{
 			this.InitializeComponent();
 		}

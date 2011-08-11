@@ -1,87 +1,100 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Drawing;
-using System.Data;
-using System.Text;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
 using DevExpress.XtraCharts;
 
 namespace UICommon
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class ucChart : DevExpress.XtraEditors.XtraUserControl
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public ucChart()
         {
+            ChartDataStorageTime = 30;
+            ChartTitle = "";
             InitializeComponent();
-
-
         }
+
+        private List<int> _channelsToDisplay = new List<int>();
+        private readonly Dictionary<int, string> _channelsNamedic = new Dictionary<int, string>();
 
         /// <summary>
-        /// Список каналов, Отображаемых на графике
+        /// Список каналов, отображаемых на графике
         /// </summary>
-
-        List<int> _ChannelList = new List<int>();
-
         public List<int> ChannelsToDisplay
         {
-            get { return _ChannelList; }
-            set
-            {
-                if (_ChannelList != value)
-                {
-                    _ChannelList = value;
-                }
-
-            }
+            get { return _channelsToDisplay; }
+            set { _channelsToDisplay = value; }
         }
+        /// <summary>
+        /// Задать соответствие номера и названия канала
+        /// </summary>
+        public void SetChannelsName(int channelId, string name)
+        {
+            _channelsNamedic.Add(channelId, name);
+        }
+
         /// <summary>
         /// Заголовок графика
         /// </summary>
-        private String _ChartTitle = "";
-        public string ChartTitle
-        {
-            get { return _ChartTitle; }
-            set { if (_ChartTitle != value) { _ChartTitle = value; } }
-        }
+        [DefaultValue("")]
+        public string ChartTitle { get; set; }
 
-
-
-
-        Series[] series = new Series[10]; //TODO: непонятно сколько памяти выделять под массив (ChannelsToDisplay.Count)
-        int[] ChannelChartNumbers = new int[10];
         /// <summary>
-        /// инициализация графика и его серий, параметров, итп.
+        /// Настраиваемый временной буфер [сек.]
+        /// </summary>
+        [DefaultValue(30)]
+        public int ChartDataStorageTime { get; set; }
+
+
+        /// <summary>
+        /// инициализация графика и его серий, параметров, и т.п..
         /// </summary>
         public void InitializeChart()
         {
 
-            for (int i = 0; i < ChannelsToDisplay.Count; i++)
+            foreach (int channelNumber in ChannelsToDisplay)
             {
-                ChannelChartNumbers[i] = ChannelsToDisplay[i];
-                series[i] = new Series("Channel #" + Convert.ToString(ChannelsToDisplay[i]), ViewType.Area);
-                chartControl1.Series.Add(series[i]);
+                Series series1 = new Series(_channelsNamedic[channelNumber]+" #" + Convert.ToString(channelNumber), ViewType.Line);
+                string tableName = GetTableName(channelNumber);
+                dtsChart1.Tables.Add(new dtsChart.ChartDataDataTable { TableName = tableName });
+                series1.DataSource = dtsChart1.Tables[tableName];
+                series1.ArgumentDataMember = "TimeStamp";
+                series1.ValueDataMembers.AddRange("Value");
 
-                series[i].Label.Visible = false;
+                
+                //series1.ValueScaleType = ScaleType.Numerical;
+                //series1.ArgumentScaleType = ScaleType.DateTime;         //BUG:  ошибка при отображении
 
+
+                chartControl1.Series.Add(series1);
+
+                series1.Label.Visible = false;
             }
             if (ChartTitle != "")
             {
-                ChartTitle chartTitle1 = new ChartTitle();
-                chartTitle1.Antialiasing = true;
-                chartTitle1.Font = new Font("Tahoma", 12, FontStyle.Bold);
-                chartTitle1.Text = ChartTitle;
+                ChartTitle chartTitle1 = new ChartTitle { 
+                    Antialiasing = true, 
+                    Font = new Font("Tahoma", 12, FontStyle.Bold), 
+                    Text = ChartTitle };
                 chartControl1.Titles.Add(chartTitle1);
 
             }
 
             XYDiagram diagram = (XYDiagram)chartControl1.Diagram;
             diagram.AxisX.Label.Angle = -45;
-            diagram.AxisX.DateTimeOptions.Format = DateTimeFormat.ShortTime; //DateTimeFormat.MonthAndDay;
-            //diagram.AxisX.DateTimeOptions.FormatString = "hh:mm:ss"; //DateTimeFormat.Custom;
-
+            diagram.AxisX.DateTimeMeasureUnit = DateTimeMeasurementUnit.Second;
+            diagram.AxisX.DateTimeOptions.Format = DateTimeFormat.ShortTime;//DateTimeFormat.Custom;
+            diagram.AxisX.DateTimeOptions.FormatString = "hh:mm:ss";
+            
+            //настройка полосы прокрутки
             diagram.EnableAxisXScrolling = true;
             diagram.AxisX.Range.Auto = false;
             diagram.AxisX.Range.SetInternalMinMaxValues(0, 30);
@@ -91,23 +104,30 @@ namespace UICommon
 
         }
 
-
-        public void AddDataChart(int ChannelNumber, int NewValue)
+        private static string GetTableName(int i)
         {
-
-            for (int i = 0; i < ChannelsToDisplay.Count; i++)
-            {
-                if (ChannelsToDisplay[i] == ChannelNumber)
-                {
-                    series[i].Points.Add(new SeriesPoint((DateTime.Now.ToString("hh:mm:ss")), NewValue));
-                    break;
-                }
-            }
-
+            return string.Format("ChartData{0}", i);
         }
+        /// <summary>
+        /// Добавить данные на график
+        /// </summary>
+        /// <param name="channelNumber"></param>
+        /// <param name="newValue"></param>
+        public void AddChartData(int channelNumber, double newValue)
+        {
+            dtsChart.ChartDataDataTable dataTable = dtsChart1.Tables[GetTableName(channelNumber)] as dtsChart.ChartDataDataTable;
+            if (dataTable != null)
+            {
+                DateTime now = DateTime.Now.AddSeconds(-ChartDataStorageTime);//настраиваемый временной буфер
+                foreach (var dr in dataTable.Rows.Cast<dtsChart.ChartDataRow>().Where(dr => dr.TimeStamp < now).ToList())
+                {
+                    dataTable.RemoveChartDataRow(dr);
+                }
 
-
-
+                dataTable.AddChartDataRow(DateTime.Now, newValue);//добавление ряда в таблицу датасета
+                chartControl1.Refresh();
+            }
+        }
 
 
     }

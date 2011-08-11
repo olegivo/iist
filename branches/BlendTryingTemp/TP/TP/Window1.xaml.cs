@@ -87,10 +87,13 @@ namespace TP
             //        ucDrumTypeFurnace1.DU9 = value;
             //        ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
             //        break; //ДУ-9	уровень отходов в бункере
-            //    case 14:
-            //        ucReheatChamber1.Level11 = value;
-            //        ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
-            //        break; //ДУ-11	уровень в РТ
+                  case 14:
+                    ReheatChamber.Temperature = value*100;
+                      //this.ReheatChamber.Temperature=value*100;
+					
+                    //ucReheatChamber1.Level11 = value;
+                    //ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
+                    break; //ДУ-11	уровень в РТ
             //    case 15:
             //        ucReheatChamber1.Level1 = value;
             //        ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
@@ -183,6 +186,31 @@ namespace TP
         private void Menu_register_Click(object sender, System.Windows.RoutedEventArgs e)
         {
         	this.channelController1.Register();
+        }
+
+        private void Path_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+        	// TODO: Add event handler implementation here.
+			base.OnMouseDown(e);
+			DragMove();
+        }
+
+        private void CloseButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	// TODO: Add event handler implementation here.
+			this.Close();
+        }
+
+        private void MaximizeButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	// TODO: Add event handler implementation here.
+			this.WindowState=(this.WindowState==System.Windows.WindowState.Maximized)?System.Windows.WindowState.Normal:System.Windows.WindowState.Maximized;
+        }
+
+        private void MinimizeButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	// TODO: Add event handler implementation here.
+			this.WindowState=System.Windows.WindowState.Minimized;
         }
         
         //private void channelController1_CanRegisterChanged(object sender, EventArgs e)
