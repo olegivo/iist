@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{25D0E44E-94EB-40AD-8425-A637E5524338}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -189,16 +189,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
-    <None Include="dtsChart.xsc">
-      <DependentUpon>dtsChart.xsd</DependentUpon>
-    </None>
     <None Include="dtsChart.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>dtsChart.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="dtsChart.xss">
-      <DependentUpon>dtsChart.xsd</DependentUpon>
     </None>
     <None Include="Properties\DataSources\DevExpress.XtraEditors.BaseEdit.datasource" />
     <None Include="Properties\DataSources\DevExpress.XtraEditors.RadioGroup.datasource" />
