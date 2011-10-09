@@ -25,5 +25,16 @@ namespace EmulationClient
         {
             controlManagementUnitEmulation.RegisterAllChannels();
         }
+
+        private void radioButton1_Checked(object sender, RoutedEventArgs e)
+        {
+            // вкл. горелку
+
+        }
+
+        private void radioButton2_Checked(object sender, RoutedEventArgs e)
+        {
+            // выкл. горелку
+        }
     }
 }
