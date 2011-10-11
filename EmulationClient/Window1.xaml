@@ -6,9 +6,5 @@
         <Button Height="23" Margin="12,12,0,0" Name="btnRegister" VerticalAlignment="Top" HorizontalAlignment="Left" Width="363" Click="btnRegister_Click">Зарегистрировать все каналы</Button>
         <Button Height="23" Margin="381,12,12,0" Name="btnUnregister" VerticalAlignment="Top" Click="btnUnregister_Click">Отменить регистрацию всех каналов</Button>
         <TextBox Margin="12,0,12,12" Name="textBox1" Height="122" VerticalAlignment="Bottom" />
-        <Rectangle Height="72" HorizontalAlignment="Left" Margin="135.441,87.264,0,0" Name="rectangle1" Stroke="Black" VerticalAlignment="Top" Width="62" />
-        <Rectangle Height="25" HorizontalAlignment="Left" Margin="99.081,113.625,0,0" Name="rectangle2" Stroke="Black" VerticalAlignment="Top" Width="30" />
-        <RadioButton Height="16" Margin="211.797,99.99,0,0" Name="radioButton1" VerticalAlignment="Top" Checked="radioButton1_Checked" HorizontalAlignment="Left" Width="119">Вкл. горелку</RadioButton>
-        <RadioButton Height="16" Margin="211.797,122.715,0,0" Name="radioButton2" VerticalAlignment="Top" Checked="radioButton2_Checked" HorizontalAlignment="Left" Width="119">Выкл. горелку</RadioButton>
     </Grid>
 </Window>
