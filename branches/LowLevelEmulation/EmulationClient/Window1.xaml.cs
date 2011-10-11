@@ -25,19 +25,5 @@ namespace EmulationClient
         {
             controlManagementUnitEmulation.RegisterAllChannels();
         }
-
-
-        private void radioButton1_Checked(object sender, RoutedEventArgs e)
-        {
-            // вкл. горелку
-            MessageBox.Show("Горелка была включена");
-           // radioButton1.SetValue(true = ));
-        }
-
-        private void radioButton2_Checked(object sender, RoutedEventArgs e)
-        {
-            // выкл. горелку
-            MessageBox.Show("Горелка выключена");
-        }
     }
 }
