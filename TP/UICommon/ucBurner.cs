@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -15,12 +16,28 @@ namespace UICommon
         public ucBurner()
         {
             InitializeComponent();
+            Click += ucBurner_Click;
         }
+
+        void ucBurner_Click(object sender, EventArgs e)
+        {
+            BurnerStatus =! BurnerStatus;
+            // "сообщение о событии"
+            RaiseChange();
+        }
+       
+        // Метод запускающий событие
+        private void RaiseChange()
+        {
+            EventHandler handler = StateChanged;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
+
+          public event EventHandler StateChanged;
 
         // Включеное состояние
         [Category("Layout"), Description("Огонь")]
         public bool BurnerStatus { get; set; }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
