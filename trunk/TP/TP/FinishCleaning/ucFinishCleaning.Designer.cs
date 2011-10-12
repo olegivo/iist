@@ -781,6 +781,7 @@ namespace TP.FinishCleaning
             this.ucBurner1.Name = "ucBurner1";
             this.ucBurner1.Size = new System.Drawing.Size(60, 40);
             this.ucBurner1.TabIndex = 19;
+            this.ucBurner1.StateChanged += new System.EventHandler(this.ucBurner1_StateChanged);
             // 
             // ucCaptioned3
             // 
@@ -966,7 +967,7 @@ namespace TP.FinishCleaning
             this.Controls.Add(this.ucFilter1);
             this.Controls.Add(this.ucPump1);
             this.Name = "ucFinishCleaning";
-            this.Size = new System.Drawing.Size(1124, 577);
+            this.Size = new System.Drawing.Size(1073, 526);
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit3.Properties)).EndInit();

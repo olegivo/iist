@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows.Forms;
+
 
 namespace TP.FinishCleaning
 {
@@ -9,7 +11,6 @@ namespace TP.FinishCleaning
         {
             InitializeComponent();
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -89,6 +90,12 @@ namespace TP.FinishCleaning
         private void spinEdit7_EditValueChanged(object sender, EventArgs e)
         {
             Temperature_TC6 = (float)Convert.ToDecimal(spinEdit7.EditValue);
+        }
+
+        private void ucBurner1_StateChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show("Состояние горелки " + Convert.ToString(ucBurner1.BurnerStatus));
+            MessageBox.Show("Передача сообщения в MES");
         }
     }
 }
