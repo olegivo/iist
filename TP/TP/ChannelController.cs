@@ -161,6 +161,11 @@ namespace TP
             }
         }
 
+        public void SendMessage(InternalDataMessage message)
+        {
+            Provider.SendMessage(message);
+        }
+
         private bool isitialized;
 
 
