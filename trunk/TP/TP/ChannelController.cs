@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using DMS.Common.Events;
 using DMS.Common.Messages;
 using Oleg_ivo.HighLevelClient;
 
@@ -162,14 +163,14 @@ namespace TP
         }
 
         /// <summary>
-        /// послать управляющее сообщение
+        /// Записать в канал
         /// </summary>
         /// <param name="channelId"></param>
         /// <param name="value"></param>
-        public void SendControlMessage(int channelId, object value)
+        public void WriteChannel(int channelId, object value)
         {
-            Provider.SendMessage(new InternalLogicalChannelDataMessage()
-                                     {
+            Provider.WriteChannel(new InternalLogicalChannelDataMessage
+                                      {
                                          LogicalChannelId = channelId,
                                          Value = value,
                                          DataMode = DataMode.Write,
@@ -205,7 +206,7 @@ namespace TP
         /// <summary>
         /// Прочитан канал
         /// </summary>
-        public event EventHandler<CallbackHandler.DataEventArgs> HasReadChannel
+        public event EventHandler<DataEventArgs> HasReadChannel
         {
             add { Provider.HasReadChannel += value; }
             remove { Provider.HasReadChannel -= value; }

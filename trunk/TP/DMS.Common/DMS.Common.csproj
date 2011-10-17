@@ -57,6 +57,8 @@
     <Compile Include="Clients\IHighLevelMesClient.cs" />
     <Compile Include="Clients\ILowLevelMesClient.cs" />
     <Compile Include="Clients\IMesClient.cs" />
+    <Compile Include="Events\ClientChannelSubscribeEventArgs.cs" />
+    <Compile Include="Events\DataEventArgs.cs" />
     <Compile Include="Exceptions\ChannelSubscribeException.cs" />
     <Compile Include="Exceptions\InternalException.cs" />
     <Compile Include="Exceptions\InternalServiceException.cs" />

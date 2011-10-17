@@ -249,12 +249,38 @@ namespace Oleg_ivo.MES.High
         }
 
         /// <summary>
+        /// Ќачало записи данных в управл€емый канал
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        public IAsyncResult BeginWriteChannel(InternalLogicalChannelDataMessage message, AsyncCallback callback, object state)
+        {
+            Console.WriteLine("Ќачало записи канала {0}", message.LogicalChannelId);
+            var caller = new WriteChannelCaller(WriteChannel);
+            IAsyncResult result = caller.BeginInvoke(message, callback, state);
+            return result;
+        }
+
+        /// <summary>
+        /// «авершение записи данных в управл€емый канал
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="result"></param>
+        public void EndWriteChannel(InternalLogicalChannelDataMessage message, IAsyncResult result)
+        {
+            Console.WriteLine(" анал был записан");
+        }
+
+        /// <summary>
         /// «апись в управл€емый канал
         /// </summary>
         /// <param name="message"></param>
-        public void WriteChannel(IInternalMessage message)
+        public void WriteChannel(InternalLogicalChannelDataMessage message)
         {
-            throw new NotImplementedException();
+            //пришли новые данные по каналу. будем передавать вниз
+            LowLevelMessageExchangeSystem.Instance.WriteChannel(message);
         }
 
         /// <summary>
@@ -459,7 +485,7 @@ namespace Oleg_ivo.MES.High
             else
             {
                 Console.WriteLine(
-                    " анал [{0}] извещает о приходе новых данных от клиента [{1}], но на него никто не подписан",
+                    " анал [{0}] извещает о приходе новых данных (чтение) от клиента [{1}], но на него никто не подписан",
                     message.LogicalChannelId, message.RegName);
             }
         }
@@ -549,5 +575,6 @@ namespace Oleg_ivo.MES.High
         #endregion
 
         private delegate void RigistrationCaller(RegistrationMessage message, IHighLevelClientCallback clientCallback);
+        private delegate void WriteChannelCaller(InternalLogicalChannelDataMessage message);
     }
 }

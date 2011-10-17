@@ -111,4 +111,11 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SendWriteToClient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q11:InternalLogicalChannelDataMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

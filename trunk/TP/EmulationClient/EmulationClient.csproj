@@ -33,18 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DMS.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Referenced\DMS.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Oleg_ivo.LowLevelClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Referenced\Oleg_ivo.LowLevelClient.dll</HintPath>
-    </Reference>
-    <Reference Include="Oleg_ivo.Plc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Referenced\Oleg_ivo.Plc.dll</HintPath>
-    </Reference>
     <Reference Include="Oleg_ivo.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e9643967fa5cdff5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Referenced\Oleg_ivo.Tools.dll</HintPath>
@@ -118,6 +106,20 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DMS.Common\DMS.Common.csproj">
+      <Project>{02BA939D-826A-4D6E-8B42-414AF3F6C7CE}</Project>
+      <Name>DMS.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Oleg_ivo.LowLevelClient\Oleg_ivo.LowLevelClient.csproj">
+      <Project>{E4A5FB38-CE2F-4096-AA67-255D0CE35C0A}</Project>
+      <Name>Oleg_ivo.LowLevelClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Oleg_ivo.Plc\Oleg_ivo.Plc.csproj">
+      <Project>{69B7862C-FA74-4ED5-A0F7-BF7216204016}</Project>
+      <Name>Oleg_ivo.Plc</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

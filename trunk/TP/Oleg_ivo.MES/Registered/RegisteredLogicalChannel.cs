@@ -22,6 +22,13 @@ namespace Oleg_ivo.MES.Registered
         {
             Id = id;
             Read += RegisteredLogicalChannel_Read;
+            Write += RegisteredLogicalChannel_Write;
+        }
+
+        void RegisteredLogicalChannel_Write(object sender, InternalLogicalChannelDataMessageEventArgs e)
+        {
+            //протоколировать прочтённые из канала данные
+            InternalMessageLogger.Instance.ProtocolMessage(e.Message);
         }
 
         private void RegisteredLogicalChannel_Read(object sender, InternalLogicalChannelDataMessageEventArgs e)
@@ -44,6 +51,11 @@ namespace Oleg_ivo.MES.Registered
         /// Чтение канала
         /// </summary>
         public event EventHandler<InternalLogicalChannelDataMessageEventArgs> Read;
+        
+        /// <summary>
+        /// Запись канала
+        /// </summary>
+        public event EventHandler<InternalLogicalChannelDataMessageEventArgs> Write;
 
         private void InvokeRead(InternalLogicalChannelDataMessageEventArgs e)
         {
@@ -51,14 +63,28 @@ namespace Oleg_ivo.MES.Registered
             if (handler != null) handler(this, e);
         }
 
+        private void InvokeWrite(InternalLogicalChannelDataMessageEventArgs e)
+        {
+            EventHandler<InternalLogicalChannelDataMessageEventArgs> handler = Write;
+            if (handler != null) handler(this, e);
+        }
+
         /// <summary>
         /// Послать слушателям канала сообщение о новых данных
         /// </summary>
         /// <param name="message"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void InvokeRead(InternalLogicalChannelDataMessage message)
         {
             InvokeRead(new InternalLogicalChannelDataMessageEventArgs(message));
+        }
+
+        /// <summary>
+        /// Послать слушателям канала сообщение о новых данных
+        /// </summary>
+        /// <param name="message"></param>
+        public void InvokeWrite(InternalLogicalChannelDataMessage message)
+        {
+            InvokeWrite(new InternalLogicalChannelDataMessageEventArgs(message));
         }
 
         /// <summary>

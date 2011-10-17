@@ -1,6 +1,9 @@
 #if BINDING_TCP
+using Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp;
+#else
+using Oleg_ivo.CMU.ServiceReferenceHome;
+#endif
 using System.ServiceModel;
-using Oleg_ivo.CMU.ServiceReferenceHomeTcp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,9 +13,6 @@ using DMS.Common.Messages;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Tools.UI;
-#else
-using Oleg_ivo.CMU.ServiceReferenceHome;
-#endif
 
 namespace Oleg_ivo.LowLevelClient
 {

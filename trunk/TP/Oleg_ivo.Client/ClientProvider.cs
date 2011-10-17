@@ -3,6 +3,7 @@
 using Oleg_ivo.HighLevelClient.ServiceReferenceIISTwsDualHttp;
 #else
 #if TCP_BINDING
+using DMS.Common.Events;
 using Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp;
 using System;
 using System.Collections.Generic;
@@ -242,7 +243,7 @@ namespace Oleg_ivo.HighLevelClient
 
         readonly SortedDictionary<int, double> _actualValues = new SortedDictionary<int, double>();
 
-        void _callbackHandler_HasReadChannel(object sender, CallbackHandler.DataEventArgs e)
+        void _callbackHandler_HasReadChannel(object sender, DataEventArgs e)
         {
             if (RegisteredChannels != null)
             {
@@ -260,11 +261,11 @@ namespace Oleg_ivo.HighLevelClient
         /// <summary>
         /// Был прочтён канал
         /// </summary>
-        public event EventHandler<CallbackHandler.DataEventArgs> HasReadChannel;
+        public event EventHandler<DataEventArgs> HasReadChannel;
 
-        private void InvokeHasReadChannel(CallbackHandler.DataEventArgs e)
+        private void InvokeHasReadChannel(DataEventArgs e)
         {
-            EventHandler<CallbackHandler.DataEventArgs> handler = HasReadChannel;
+            EventHandler<DataEventArgs> handler = HasReadChannel;
             if (handler != null) handler(this, e);
         }
 
@@ -340,9 +341,9 @@ namespace Oleg_ivo.HighLevelClient
         /// 
         /// </summary>
         /// <param name="message"></param>
-        public void SendMessage(InternalMessage message)
+        public void WriteChannel(InternalLogicalChannelDataMessage message)
         {
-            Proxy.SendMessage(message);
+            Proxy.WriteChannelAsync(message);
         }
     }
 }
