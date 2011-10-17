@@ -1,0 +1,337 @@
+#define SECURITY
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading;
+using System.Windows.Forms;
+using DMS.Common.Exceptions;
+using DMS.Common.Messages;
+using Oleg_ivo.Tools.UI;
+
+namespace Oleg_ivo.HighLevelClient.UI
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public partial class HighLevelClientForm : Form
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public ClientProvider Provider
+        {
+            get
+            {
+#if LABVIEW
+                return LabViewClientProvider.Instance;
+#else
+                return ClientProvider.Instance;
+#endif
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public HighLevelClientForm()
+        {
+            InitializeComponent();
+
+            /*
+            Binding binding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.Transport);
+            EndpointAddress endPoint = new EndpointAddress(@"net.pipe://localhost/Oleg_ivo.MES/High/high");
+            */
+
+//режим клиента для LabView BEGIN
+#if LABVIEW
+            Console.WriteLine("Инициализация LabViewClientProvider...");
+// ReSharper disable RedundantAssignment
+            LabViewClientProvider.BindingType bindingType = LabViewClientProvider.BindingType.Unknown;
+// ReSharper restore RedundantAssignment
+
+            //определение типа соединения:
+#if WSHTTP_BINDING
+            bindingType = LabViewClientProvider.BindingType.WSDualHttpBinding;
+#else
+            bindingType = LabViewClientProvider.BindingType.NetNamePype;
+#endif
+
+            //определение защищённого соединения:
+            bool security;
+#if SECURITY
+            security = true;
+#else
+            security = false;
+#endif
+
+            string uri;
+            switch (bindingType)
+            {
+                case LabViewClientProvider.BindingType.NetNamePype:
+                    uri = @"net.pipe://localhost/Oleg_ivo.MES/High/high";
+                    break;
+                case LabViewClientProvider.BindingType.WSDualHttpBinding:
+                    uri = @"http://localhost:8081/Oleg_ivo.MES/High/high";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            LabViewClientProvider.InitBinding(bindingType, security);
+            LabViewClientProvider.InitRemoteAddress(uri);
+#endif
+//режим клиента для LabView END
+
+            Provider.Init(GetRegName());
+
+            Provider.NeedProtocol += Provider_NeedProtocol;
+            Provider.ChannelUnRegistered += Provider_ChannelUnRegistered;
+            Provider.ChannelRegistered += Provider_ChannelRegistered;
+            Provider.ChannelSubscribeCompleted += Provider_ChannelSubscribeCompleted;
+            Provider.ChannelUnSubscribeCompleted += Provider_ChannelUnSubscribeCompleted;
+        }
+
+        private void Provider_ChannelUnSubscribeCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            Protocol(string.Format("Произошла отписка от канала [{0}]", e.UserState));
+        }
+
+        void Provider_ChannelSubscribeCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            Protocol(string.Format("Произошла подписка на канал [{0}]", e.UserState));
+        }
+
+        void Provider_ChannelRegistered(object sender, ClientChannelSubscribeEventArgs e)
+        {
+            AddRegisteredChannel(e.Message);
+        }
+
+        private void AddRegisteredChannel(ChannelSubscribeMessage message)
+        {
+            IList sourceLeft = doubleListBoxControl1.SourceLeft;
+            IList sourceRight = doubleListBoxControl1.SourceRight;
+
+            if (!sourceLeft.Contains(message.LogicalChannelId) && !sourceRight.Contains(message.LogicalChannelId))
+            {
+                sourceLeft.Add(message.LogicalChannelId);
+                doubleListBoxControl1.InitSources(sourceLeft, sourceRight);
+            }
+
+            Protocol(string.Format("Канал [{0}] теперь доступен для подписки", message.LogicalChannelId));
+        }
+
+        void Provider_ChannelUnRegistered(object sender, ClientChannelSubscribeEventArgs e)
+        {
+            RemoveRegisteredChannel(e.Message);
+            Protocol(string.Format("Канал [{0}] теперь недоступен для подписки", e.Message.LogicalChannelId));
+        }
+
+        private void RemoveRegisteredChannel(ChannelSubscribeMessage message)
+        {
+            IList sourceLeft = doubleListBoxControl1.SourceLeft;
+            IList sourceRight = doubleListBoxControl1.SourceRight;
+
+            if (sourceLeft.Contains(message.LogicalChannelId))
+            {
+                sourceLeft.Remove(message.LogicalChannelId);
+            }
+            else if (sourceRight.Contains(message.LogicalChannelId))
+            {
+                ChannelSubscribeMessage unSubscribeMessage = new ChannelSubscribeMessage
+                {
+                    RegName = GetRegName(),
+                    Mode = false,
+                    LogicalChannelId = message.LogicalChannelId
+                };
+
+                sourceRight.Remove(message.LogicalChannelId);
+
+                ParameterizedThreadStart thread = UnSubscribeUnregisteredChannelAsync;
+                thread.Invoke(unSubscribeMessage);
+            }
+
+            doubleListBoxControl1.InitSources(sourceLeft, sourceRight);
+        }
+
+        private void UnSubscribeUnregisteredChannelAsync(object message)
+        {
+            //Thread.Sleep(TimeSpan.FromSeconds(1));
+
+            ChannelSubscribeMessage channelSubscribeMessage = (ChannelSubscribeMessage)message;
+            string s = string.Format("Подписка на канал [{0}] была отменена из-за отмены регистрации канала",
+                                          channelSubscribeMessage.LogicalChannelId);
+            Protocol(s);
+            //            MessageBox.Show(s);
+            //            Program.Proxy.ChannelUnSubscribe(channelSubscribeMessage);
+        }
+
+        void Provider_NeedProtocol(object sender, EventArgs e)
+        {
+            Protocol(sender);
+        }
+
+        private void Protocol(object sender)
+        {
+            if (sender is double || sender is string)
+            {
+                string s = string.Format("{0}\t{1}{2}", DateTime.Now, sender, Environment.NewLine);
+
+                SetText(textBox1, s);
+            }
+        }
+
+        private delegate void StDelegate(TextBox info, string s);
+        private void SetText(TextBox info, string s)
+        {
+            if (info.InvokeRequired)
+            {
+                StDelegate ddd = SetText;
+                info.Invoke(ddd, new object[] { info, s });
+            }
+            else
+            {
+                textBox1.Text += s;
+            }
+        }
+
+        /// <summary>
+        /// Вызывает событие <see cref="E:System.Windows.Forms.Form.Closing"/>.
+        /// </summary>
+        /// <param name="e">Объект <see cref="T:System.ComponentModel.CancelEventArgs"/>, содержащий данные события. </param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+
+            Provider.NeedProtocol -= Provider_NeedProtocol;
+            Provider.ChannelUnRegistered -= Provider_ChannelUnRegistered;
+            Provider.ChannelRegistered -= Provider_ChannelRegistered;
+        }
+
+        private void btnSendMessage_Click(object sender, EventArgs e)
+        {
+            Provider.SendMessage(new InternalMessage());
+        }
+
+        private bool CanRegister
+        {
+            set
+            {
+                btnRegister.Enabled = textBox2.Enabled = value;
+                doubleListBoxControl1.Enabled = btnSendMessage.Enabled = btnSendError.Enabled = btnUnregister.Enabled = !value;
+            }
+        }
+
+        private string GetRegName()
+        {
+            return textBox2.Text;
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            // регистрация
+            try
+            {
+                Provider.Register(RegisterCompleted);
+                CanRegister = false;
+            }
+            catch (Exception)
+            {
+                CanRegister = true;
+                throw;
+            }
+        }
+
+        void RegisterCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            // регистрация завершена
+            var registeredChannels = Provider.RegisteredChannels;
+            if (registeredChannels == null)
+                Protocol("Регистрация завершена успешно. На сервере не опубликовано ни одного канала");
+            else
+                foreach (var registeredChannel in registeredChannels)
+                {
+                    ChannelSubscribeMessage message = new ChannelSubscribeMessage
+                                                          {
+                                                              DataMode = DataMode.Read,
+                                                              LogicalChannelId = registeredChannel
+                                                          };
+                    AddRegisteredChannel(message);
+                }
+        }
+
+
+
+        private void btnUnregister_Click(object sender, EventArgs e)
+        {
+            // отмена регистрации
+            try
+            {
+                Provider.Unregister();
+                doubleListBoxControl1.InitSources(new List<int>(), new List<int>());//убираем все зарегистрированные и подписанные каналы
+                CanRegister = true;
+            }
+            catch (Exception)
+            {
+                CanRegister = false;
+                throw;
+            }
+        }
+
+        private void doubleListBoxControl1_ItemMoved(object sender, MovedEventArgs e)
+        {
+            ChannelSubscribeMessage subscribeMessage = new ChannelSubscribeMessage
+            {
+                RegName = GetRegName(),
+                Mode = e.MoveDirection == DoubleListBoxControl.Direction.LeftToRight,
+                LogicalChannelId = (int)e.MovingObject
+            };
+
+            if (subscribeMessage.Mode)
+                SubscribeChannel(subscribeMessage);
+            else
+                UnSubscribeChannel(subscribeMessage);
+        }
+
+        private void SubscribeChannel(ChannelSubscribeMessage message)
+        {
+            Provider.SubscribeChannel(message);
+        }
+
+        private void UnSubscribeChannel(ChannelSubscribeMessage subscribeMessage)
+        {
+            Provider.UnSubscribeChannel(subscribeMessage);
+        }
+
+        private void HighLevelClientForm_Load(object sender, EventArgs e)
+        {
+            List<int> _left = new List<int>();
+            List<int> _right = new List<int>();
+
+            //            _left.AddRange(Enumerable.Range(28, 10));
+            //            _right.AddRange(Enumerable.Range(11, 10));
+
+            doubleListBoxControl1.InitSources(_left, _right);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            textBox1.SelectionStart = textBox1.Text.Length;
+            textBox1.ScrollToCaret();
+            textBox1.Refresh();
+        }
+
+        private void btnSendError_Click(object sender, EventArgs e)
+        {
+            var exception = new TestException("Произошла тестовая ошибка :(");
+            throw exception;
+            //Provider.Proxy.SendErrorAsync(new InternalErrorMessage(exception));
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            Provider.Init(GetRegName());
+        }
+    }
+}
