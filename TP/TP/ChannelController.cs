@@ -161,9 +161,20 @@ namespace TP
             }
         }
 
-        public void SendMessage(InternalDataMessage message)
+        /// <summary>
+        /// послать управляющее сообщение
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <param name="value"></param>
+        public void SendControlMessage(int channelId, object value)
         {
-            Provider.SendMessage(message);
+            Provider.SendMessage(new InternalLogicalChannelDataMessage()
+                                     {
+                                         LogicalChannelId = channelId,
+                                         Value = value,
+                                         DataMode = DataMode.Write,
+                                         RegName = RegName
+                                     });
         }
 
         private bool isitialized;

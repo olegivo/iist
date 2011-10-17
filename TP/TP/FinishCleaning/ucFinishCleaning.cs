@@ -101,39 +101,12 @@ namespace TP.FinishCleaning
 
         private void RaiseSendMessage(int channelId, object value)
         {
-            if(SendControlMessage!=null) SendControlMessage(this, new SendControlMessageEventArgs(channelId, value));
+            if (SendControlMessage != null) SendControlMessage(this, new SendControlMessageEventArgs(channelId, value));
         }
 
         /// <summary>
         /// Событие необходимости послать управляющее сообщение
         /// </summary>
         public event EventHandler<SendControlMessageEventArgs> SendControlMessage;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class SendControlMessageEventArgs : EventArgs
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="channelId"></param>
-        /// <param name="value"></param>
-        public SendControlMessageEventArgs(int channelId, object value)
-        {
-            ChannelId = channelId;
-            Value = value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected object Value { get; private set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int ChannelId { get; private set; }
     }
 }
