@@ -13,7 +13,6 @@ namespace Oleg_ivo.MES.Registered
         /// Зарегистрировать канал
         /// </summary>
         /// <param name="message"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void ChannelRegister(ChannelSubscribeMessage message)
         {
             RegisteredLogicalChannel registeredLogicalChannel = new RegisteredLogicalChannel(message.LogicalChannelId);
@@ -21,6 +20,31 @@ namespace Oleg_ivo.MES.Registered
 
             registeredLogicalChannel.Subscribed += registeredLogicalChannel_Subscribed;
             registeredLogicalChannel.UnSubscribed += registeredLogicalChannel_UnSubscribed;
+
+            //подписка на событие записи канала
+            registeredLogicalChannel.Write += registeredLogicalChannel_Write;
+        }
+                
+
+        private void registeredLogicalChannel_Write(object sender, InternalLogicalChannelDataMessageEventArgs e)
+        {
+            SendWriteToClient(e.Message);
+        }
+
+        private void SendWriteToClient(InternalLogicalChannelDataMessage message)
+        {
+            lock (Callbacks)
+                foreach (ILowLevelClientCallback callback in Callbacks)
+                    try
+                    {
+                        callback.SendWriteToClient(message);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Ошибка при отправке новых данных клиенту: {0}",
+                                          ex.Message);
+                        throw;
+                    }
         }
 
         void registeredLogicalChannel_Subscribed(object sender, ChannelSubscribeMessageEventArgs e)
@@ -62,7 +86,6 @@ namespace Oleg_ivo.MES.Registered
         /// Отменить регистрацию канала
         /// </summary>
         /// <param name="message"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void ChannelUnRegister(ChannelSubscribeMessage message)
         {
             RegisteredLogicalChannel registeredLogicalChannel = GetRegisteredLogicalChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId));
@@ -70,6 +93,9 @@ namespace Oleg_ivo.MES.Registered
 
             registeredLogicalChannel.Subscribed -= registeredLogicalChannel_Subscribed;
             registeredLogicalChannel.UnSubscribed -= registeredLogicalChannel_UnSubscribed;
+
+            //отписка на событие чтения канала
+            registeredLogicalChannel.Write -= registeredLogicalChannel_Write;
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.ServiceModel;
+using DMS.Common.Events;
 using DMS.Common.Messages;
 using Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp;
 #if IIST
@@ -205,26 +206,6 @@ namespace Oleg_ivo.HighLevelClient
         /// <summary>
         /// 
         /// </summary>
-        public class DataEventArgs : EventArgs
-        {
-            /// <summary>
-            /// 
-            /// </summary>
-            public InternalLogicalChannelDataMessage Message { get; private set; }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="message"></param>
-            public DataEventArgs(InternalLogicalChannelDataMessage message)
-            {
-                Message = message;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="asyncState"></param>
@@ -246,25 +227,5 @@ namespace Oleg_ivo.HighLevelClient
         }
 
         #endregion
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class ClientChannelSubscribeEventArgs : EventArgs
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        public ChannelSubscribeMessage Message { get; private set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="message"></param>
-        public ClientChannelSubscribeEventArgs(ChannelSubscribeMessage message)
-        {
-            Message = message;
-        }
     }
 }

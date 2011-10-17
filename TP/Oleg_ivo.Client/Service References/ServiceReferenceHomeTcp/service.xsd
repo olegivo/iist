@@ -100,24 +100,36 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ChannelRegister">
+  <xs:element name="WriteChannel">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q10:ChannelSubscribeMessage" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q10:InternalLogicalChannelDataMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ChannelUnRegister">
+  <xs:element name="WriteChannelResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChannelRegister">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q11:ChannelSubscribeMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ChannelUnRegister">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q12:ChannelSubscribeMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="SendReadToClient">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q12:InternalLogicalChannelDataMessage" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q13:InternalLogicalChannelDataMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

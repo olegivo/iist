@@ -23,5 +23,11 @@ namespace DMS.Common.MessageExchangeSystem.LowLevel
         [OperationContract(IsOneWay = true)]
         void ChannelUnSubscribe(ChannelSubscribeMessage message);
 
+        /// <summary>
+        /// Операция для записи канала от сервера клиенту (инициатор - сервер)
+        /// </summary>
+        /// <param name="message"></param>
+        [OperationContract(IsOneWay = true)]
+        void SendWriteToClient(InternalLogicalChannelDataMessage message);
     }
 }

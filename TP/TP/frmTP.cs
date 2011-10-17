@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using DevExpress.XtraBars.Helpers;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
+using DMS.Common.Events;
 using Oleg_ivo.HighLevelClient;
 
 namespace TP
@@ -55,11 +56,11 @@ namespace TP
 
         void ucFinishCleaning1_SendControlMessage(object sender, SendControlMessageEventArgs e)
         {
-            channelController1.SendControlMessage(e.ChannelId, e.Value);
+            channelController1.WriteChannel(e.ChannelId, e.Value);
         }
 
 
-        void channelController1_HasReadChannel(object sender, CallbackHandler.DataEventArgs e)
+        void channelController1_HasReadChannel(object sender, DataEventArgs e)
         {
             float value = Convert.ToSingle(e.Message.Value);
             int channelId = e.Message.LogicalChannelId;

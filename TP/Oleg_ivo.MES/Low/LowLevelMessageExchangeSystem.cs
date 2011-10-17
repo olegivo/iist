@@ -490,5 +490,25 @@ namespace Oleg_ivo.MES.Low
         #endregion
 
         private delegate void RigistrationCaller(RegistrationMessage message, ILowLevelClientCallback clientCallback);
+
+        /// <summary>
+        /// Записать канал
+        /// </summary>
+        /// <param name="message"></param>
+        public void WriteChannel(InternalLogicalChannelDataMessage message)
+        {
+            RegisteredLogicalChannel subscribedChannel = FindSubscribedChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId));
+
+            if (subscribedChannel != null)
+            {
+                subscribedChannel.InvokeWrite(message);
+            }
+            else
+            {
+                Console.WriteLine(
+                    "Канал [{0}] извещает о приходе новых данных (запись) от клиента [{1}], но на него никто не подписан",
+                    message.LogicalChannelId, message.RegName);
+            }
+        }
     }
 }

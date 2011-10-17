@@ -59,9 +59,21 @@ namespace DMS.Common.MessageExchangeSystem.HighLevel
         void IsAllowWriteChannel(IInternalMessage message);
 
         /// <summary>
-        /// «апись в управл€емый канал
+        /// Ќачало записи данных в управл€емый канал
         /// </summary>
         /// <param name="message"></param>
-        void WriteChannel(IInternalMessage message);
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        [OperationContract(AsyncPattern = true)]
+        IAsyncResult BeginWriteChannel(InternalLogicalChannelDataMessage message, AsyncCallback callback, object state);
+
+
+        /// <summary>
+        /// «авершение записи данных в управл€емый канал
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="result"></param>
+        void EndWriteChannel(InternalLogicalChannelDataMessage message, IAsyncResult result);
     }
 }

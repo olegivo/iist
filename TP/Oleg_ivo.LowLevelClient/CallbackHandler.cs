@@ -1,11 +1,12 @@
 using System;
 using System.ServiceModel;
+using DMS.Common.Events;
 using DMS.Common.Messages;
 #if IIST
 using Oleg_ivo.CMU.ServiceReferenceIIST;
 #else
 #if BINDING_TCP
-using Oleg_ivo.CMU.ServiceReferenceHomeTcp;
+using Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp;
 #else
 
 #endif
@@ -80,7 +81,6 @@ namespace Oleg_ivo.LowLevelClient
         /// 
         /// </summary>
         /// <param name="message"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void ChannelSubscribe(ChannelSubscribeMessage message)
         {
             InvokeChannelSubsrcibe(new ChannelSubscribeEventArgs(message));
@@ -128,7 +128,6 @@ namespace Oleg_ivo.LowLevelClient
         /// 
         /// </summary>
         /// <param name="message"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void ChannelUnSubscribe(ChannelSubscribeMessage message)
         {
             InvokeChannelUnSubsrcibe(new ChannelSubscribeEventArgs(message));
@@ -143,6 +142,17 @@ namespace Oleg_ivo.LowLevelClient
         {
             EventHandler<ChannelSubscribeEventArgs> handler = ChannelUnSubscribed;
             if (handler != null) handler(this, e);
+        }
+
+        /// <summary>
+        /// Прочитан канал
+        /// </summary>
+        public event EventHandler<DataEventArgs> HasWriteChannel;
+
+        private void OnSendWriteToClient(InternalLogicalChannelDataMessage message)
+        {
+            EventHandler<DataEventArgs> handler = HasWriteChannel;
+            if (handler != null) handler(this, new DataEventArgs(message));
         }
 
         #region ChannelUnSubscribe
@@ -166,6 +176,38 @@ namespace Oleg_ivo.LowLevelClient
         /// <param name="result"></param>
         /// <exception cref="NotImplementedException"></exception>
         public void EndChannelUnSubscribe(IAsyncResult result)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        public void SendWriteToClient(InternalLogicalChannelDataMessage message)
+        {
+            OnSendWriteToClient(message);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="callback"></param>
+        /// <param name="asyncState"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public IAsyncResult BeginSendWriteToClient(InternalLogicalChannelDataMessage message, AsyncCallback callback, object asyncState)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="result"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public void EndSendWriteToClient(IAsyncResult result)
         {
             throw new NotImplementedException();
         }
