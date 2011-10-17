@@ -2,9 +2,8 @@ using System;
 using System.Windows.Forms;
 using DevExpress.LookAndFeel;
 using Oleg_ivo.Tools.ExceptionCatcher;
-using TP;
 
-namespace WindowsApplication1
+namespace TP
 {
     static class Program
     {

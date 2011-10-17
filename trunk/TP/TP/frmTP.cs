@@ -49,6 +49,13 @@ namespace TP
             channelController1.NeedProtocol += channelController1_NeedProtocol;
             channelController1.HasReadChannel += channelController1_HasReadChannel;
             channelController1.CanRegister = true;
+
+            ucFinishCleaning1.SendControlMessage += ucFinishCleaning1_SendControlMessage;
+        }
+
+        void ucFinishCleaning1_SendControlMessage(object sender, SendControlMessageEventArgs e)
+        {
+            channelController1.SendControlMessage(e.ChannelId, e.Value);
         }
 
 
