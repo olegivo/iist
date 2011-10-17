@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f655f649-5534-4c51-bcdc-25a06521e4bd" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="net.tcp://localhost:9000/Oleg_ivo.MES/High/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="b314e63b-8e4d-4ca3-824a-a99bfe6097d6" SourceId="1" SourceUrl="net.tcp://localhost:9000/Oleg_ivo.MES/High/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="7c8c5f4e-82b1-42c7-a0b6-6724965d6fe4" SourceId="1" SourceUrl="net.tcp://localhost:9000/Oleg_ivo.MES/High/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="adc07f71-9817-47da-a83f-b07110c3635b" SourceId="1" SourceUrl="net.tcp://localhost:9000/Oleg_ivo.MES/High/mex" />
+    <MetadataFile FileName="DMS.Common.Messages.xsd" MetadataType="Schema" ID="ae590457-92cd-4329-b780-dae7955abe47" SourceId="1" SourceUrl="net.tcp://localhost:9000/Oleg_ivo.MES/High/mex" />
+    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="ed199dc7-87e3-4d24-a3c8-af1f81de608e" SourceId="1" SourceUrl="net.tcp://localhost:9000/Oleg_ivo.MES/High/mex" />
+    <MetadataFile FileName="DMS.Common.Exceptions.xsd" MetadataType="Schema" ID="fefffbe9-cfb6-46f4-b53b-d81893efd4ec" SourceId="1" SourceUrl="net.tcp://localhost:9000/Oleg_ivo.MES/High/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="f5f7dc17-4495-46e1-81d0-4f7b43e965bb" SourceId="1" SourceUrl="net.tcp://localhost:9000/Oleg_ivo.MES/High/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8e715edf-0754-4e41-9f2f-f856604e3577" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="net.pipe://localhost/Oleg_ivo.MES/Low/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="43627a07-8ce6-4fd1-a3dd-50d3e77ce992" SourceId="1" SourceUrl="net.pipe://localhost/Oleg_ivo.MES/Low/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="2c1f5d23-0378-4746-b886-b8b4673ffd34" SourceId="1" SourceUrl="net.pipe://localhost/Oleg_ivo.MES/Low/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="d7b6cfb6-2e97-443d-873b-9db1a3bc6f25" SourceId="1" SourceUrl="net.pipe://localhost/Oleg_ivo.MES/Low/mex" />
+    <MetadataFile FileName="DMS.Common.Messages.xsd" MetadataType="Schema" ID="720a40e1-43e7-49e0-8e6d-53ae0f6ec219" SourceId="1" SourceUrl="net.pipe://localhost/Oleg_ivo.MES/Low/mex" />
+    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="6345a901-febb-4b7f-ae1c-8d4893c5dbdc" SourceId="1" SourceUrl="net.pipe://localhost/Oleg_ivo.MES/Low/mex" />
+    <MetadataFile FileName="DMS.Common.Exceptions.xsd" MetadataType="Schema" ID="e5f8cb75-22f1-4444-afb3-c87aac5384ab" SourceId="1" SourceUrl="net.pipe://localhost/Oleg_ivo.MES/Low/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

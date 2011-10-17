@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="DMS.Common.MessageExchangeSystem.HighLevel.IHighLevelClientCallback">
+    <Position X="0.75" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>MessageExchangeSystem\HighLevel\IHighLevelClientCallback.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DMS.Common.MessageExchangeSystem.HighLevel.IHighLevelMessageExchangeSystem">
+    <Position X="0.5" Y="3.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AEEABAAAAAAQAAAAAAAAAAAAIAAAAABAAAAAAAACAAA=</HashCode>
+      <FileName>MessageExchangeSystem\HighLevel\IHighLevelMessageExchangeSystem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DMS.Common.MessageExchangeSystem.LowLevel.ILowLevelClientCallback">
+    <Position X="6" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>MessageExchangeSystem\LowLevel\ILowLevelClientCallback.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DMS.Common.MessageExchangeSystem.LowLevel.ILowLevelMessageExchangeSystem">
+    <Position X="5.75" Y="3.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAQABAAAAAAAgAACAAAAAAAIAAAAAA=</HashCode>
+      <FileName>MessageExchangeSystem\LowLevel\ILowLevelMessageExchangeSystem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DMS.Common.MessageExchangeSystem.IClientCallback">
+    <Position X="3.5" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MessageExchangeSystem\IClientCallback.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DMS.Common.MessageExchangeSystem.IMessageExchangeSystem" Collapsed="true">
+    <Position X="3.25" Y="1.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAgIAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>MessageExchangeSystem\IMessageExchangeSystem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DMS.Common.Messages.IMessageReceiver" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAACAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\IMessageReceiver.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="DMS.Common.Messages.IMessageReceiverCallback" Collapsed="true">
+    <Position X="6.25" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\IMessageReceiverCallback.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
