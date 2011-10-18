@@ -16,12 +16,13 @@ namespace Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp {
     public interface IHighLevelMessageExchangeSystem {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageReceiver/SendMessage", ReplyAction="http://tempuri.org/IMessageReceiver/SendMessageResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalServiceMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalErrorMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.RegistrationMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelSubscribeMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalDataMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalLogicalChannelDataMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalServiceMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalErrorMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelSubscribeMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.RegistrationMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
         void SendMessage(DMS.Common.Messages.InternalMessage message);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IMessageReceiver/SendMessage", ReplyAction="http://tempuri.org/IMessageReceiver/SendMessageResponse")]
@@ -30,16 +31,16 @@ namespace Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp {
         void EndSendMessage(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageReceiver/SendError", ReplyAction="http://tempuri.org/IMessageReceiver/SendErrorResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.TestException), Action="http://tempuri.org/IMessageReceiver/SendErrorTestExceptionFault", Name="TestException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.RegistrationException), Action="http://tempuri.org/IMessageReceiver/SendErrorRegistrationExceptionFault", Name="RegistrationException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.TestException), Action="http://tempuri.org/IMessageReceiver/SendErrorTestExceptionFault", Name="TestException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.SystemException))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.ArgumentException))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.ArgumentOutOfRangeException))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.ApplicationException))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Exceptions.InternalException))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Exceptions.TestException))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Exceptions.InternalServiceException))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Exceptions.RegistrationException))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.SystemException))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.ArgumentException))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.ArgumentOutOfRangeException))]
         void SendError(DMS.Common.Messages.InternalErrorMessage message);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IMessageReceiver/SendError", ReplyAction="http://tempuri.org/IMessageReceiver/SendErrorResponse")]
@@ -49,6 +50,7 @@ namespace Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageExchangeSystem/Register", ReplyAction="http://tempuri.org/IMessageExchangeSystem/RegisterResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.RegistrationException), Action="http://tempuri.org/IMessageExchangeSystem/RegisterRegistrationExceptionFault", Name="RegistrationException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
         void Register(DMS.Common.Messages.RegistrationMessage message);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IMessageExchangeSystem/Register", ReplyAction="http://tempuri.org/IMessageExchangeSystem/RegisterResponse")]
@@ -58,6 +60,7 @@ namespace Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageExchangeSystem/Unregister", ReplyAction="http://tempuri.org/IMessageExchangeSystem/UnregisterResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.RegistrationException), Action="http://tempuri.org/IMessageExchangeSystem/UnregisterRegistrationExceptionFault", Name="RegistrationException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
         void Unregister(DMS.Common.Messages.RegistrationMessage message);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IMessageExchangeSystem/Unregister", ReplyAction="http://tempuri.org/IMessageExchangeSystem/UnregisterResponse")]
@@ -66,12 +69,13 @@ namespace Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp {
         void EndUnregister(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IHighLevelMessageExchangeSystem/GetRegisteredChannels", ReplyAction="http://tempuri.org/IHighLevelMessageExchangeSystem/GetRegisteredChannelsResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalServiceMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalErrorMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.RegistrationMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelSubscribeMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalDataMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalLogicalChannelDataMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalServiceMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalErrorMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelSubscribeMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.RegistrationMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
         int[] GetRegisteredChannels(DMS.Common.Messages.InternalMessage message);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IHighLevelMessageExchangeSystem/GetRegisteredChannels", ReplyAction="http://tempuri.org/IHighLevelMessageExchangeSystem/GetRegisteredChannelsResponse")]
@@ -109,12 +113,13 @@ namespace Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageReceiver/SendMessageToClient", ReplyAction="http://tempuri.org/IMessageReceiver/SendMessageToClientResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.InternalException), Action="http://tempuri.org/IMessageReceiver/SendMessageToClientInternalExceptionFault", Name="InternalException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalServiceMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalErrorMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.RegistrationMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelSubscribeMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalDataMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalLogicalChannelDataMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalServiceMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalErrorMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelSubscribeMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.RegistrationMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
         void SendMessageToClient(DMS.Common.Messages.InternalMessage message);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IMessageReceiver/SendMessageToClient", ReplyAction="http://tempuri.org/IMessageReceiver/SendMessageToClientResponse")]
@@ -123,18 +128,18 @@ namespace Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp {
         void EndSendMessageToClient(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IHighLevelMessageExchangeSystem/ChannelRegister")]
-        void ChannelRegister(DMS.Common.Messages.ChannelSubscribeMessage message);
+        void ChannelRegister(DMS.Common.Messages.ChannelRegistrationMessage message);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, AsyncPattern=true, Action="http://tempuri.org/IHighLevelMessageExchangeSystem/ChannelRegister")]
-        System.IAsyncResult BeginChannelRegister(DMS.Common.Messages.ChannelSubscribeMessage message, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginChannelRegister(DMS.Common.Messages.ChannelRegistrationMessage message, System.AsyncCallback callback, object asyncState);
         
         void EndChannelRegister(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IHighLevelMessageExchangeSystem/ChannelUnRegister")]
-        void ChannelUnRegister(DMS.Common.Messages.ChannelSubscribeMessage message);
+        void ChannelUnRegister(DMS.Common.Messages.ChannelRegistrationMessage message);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, AsyncPattern=true, Action="http://tempuri.org/IHighLevelMessageExchangeSystem/ChannelUnRegister")]
-        System.IAsyncResult BeginChannelUnRegister(DMS.Common.Messages.ChannelSubscribeMessage message, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginChannelUnRegister(DMS.Common.Messages.ChannelRegistrationMessage message, System.AsyncCallback callback, object asyncState);
         
         void EndChannelUnRegister(System.IAsyncResult result);
         

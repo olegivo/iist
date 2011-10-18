@@ -151,8 +151,7 @@ namespace Oleg_ivo.LowLevelClient
 
         private void OnSendWriteToClient(InternalLogicalChannelDataMessage message)
         {
-            EventHandler<DataEventArgs> handler = HasWriteChannel;
-            if (handler != null) handler(this, new DataEventArgs(message));
+            if (HasWriteChannel != null) HasWriteChannel(this, new DataEventArgs(message));
         }
 
         #region ChannelUnSubscribe

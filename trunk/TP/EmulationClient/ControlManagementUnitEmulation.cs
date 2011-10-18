@@ -55,11 +55,11 @@ namespace EmulationClient
         {
             foreach (LogicalChannel channel in LogicalChannels)
             {
-                Proxy.ChannelRegisterAsync(new ChannelSubscribeMessage
+                Proxy.ChannelRegisterAsync(new ChannelRegistrationMessage()
                                                {
                                                    LogicalChannelId = channel.Id,
                                                    DataMode = channel.Id > 100 ? DataMode.Write : DataMode.Read,
-                                                   Mode = true
+                                                   Mode = RegistrationMode.Register
                                                },
                                            channel.Id);
             }
@@ -72,11 +72,11 @@ namespace EmulationClient
         {
             foreach (LogicalChannel channel in LogicalChannels)
             {
-                Proxy.ChannelUnRegisterAsync(new ChannelSubscribeMessage
+                Proxy.ChannelUnRegisterAsync(new ChannelRegistrationMessage
                                                {
                                                    LogicalChannelId = channel.Id,
                                                    DataMode = channel.Id > 100 ? DataMode.Write : DataMode.Read,
-                                                   Mode = false
+                                                   Mode = RegistrationMode.Unregister
                                                },
                                            channel.Id);
             }

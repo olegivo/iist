@@ -17,14 +17,14 @@ namespace DMS.Common.MessageExchangeSystem.LowLevel
         /// <param name="callback"></param>
         /// <param name="state"></param>
         [OperationContract(AsyncPattern = true)]
-        IAsyncResult BeginChannelRegister(ChannelSubscribeMessage message, AsyncCallback callback, object state);
+        IAsyncResult BeginChannelRegister(ChannelRegistrationMessage message, AsyncCallback callback, object state);
 
         /// <summary>
         /// Завершение регистрации канала в системе обмена сообщениями
         /// </summary>
         /// <param name="message"></param>
         /// <param name="result"></param>
-        void EndChannelRegister(ChannelSubscribeMessage message, IAsyncResult result);
+        void EndChannelRegister(ChannelRegistrationMessage message, IAsyncResult result);
 
         /// <summary>
         /// Начало отмены регистрации канала в системе обмена сообщениями
@@ -33,14 +33,14 @@ namespace DMS.Common.MessageExchangeSystem.LowLevel
         /// <param name="callback"></param>
         /// <param name="state"></param>
         [OperationContract(AsyncPattern = true)]
-        IAsyncResult BeginChannelUnRegister(ChannelSubscribeMessage message, AsyncCallback callback, object state);
+        IAsyncResult BeginChannelUnRegister(ChannelRegistrationMessage message, AsyncCallback callback, object state);
 
         /// <summary>
         /// Завершение отмены регистрации канала в системе обмена сообщениями
         /// </summary>
         /// <param name="message"></param>
         /// <param name="result"></param>
-        void EndChannelUnRegister(ChannelSubscribeMessage message, IAsyncResult result);
+        void EndChannelUnRegister(ChannelRegistrationMessage message, IAsyncResult result);
 
         /// <summary>
         /// Начало чтения данных из контролируемого канала

@@ -56,13 +56,13 @@ namespace Oleg_ivo.MES.High
         private void Low_ChannelRegistered(object sender, LowRegisteredLogicalChannelSubscribeEventArgs e)
         {
             foreach (RegisteredHighLevelClient registeredHighLevelClient in InterestedRegisteredClients.Where(client => client.Interested))
-                registeredHighLevelClient.ChannelRegister(e.ChannelSubscribeMessage);
+                registeredHighLevelClient.ChannelRegister(e.ChannelRegistrationMessage);
         }
 
         private void Low_ChannelUnregistered(object sender, LowRegisteredLogicalChannelSubscribeEventArgs e)
         {
             foreach (RegisteredHighLevelClient registeredHighLevelClient in InterestedRegisteredClients.Where(client => client.Interested))
-                registeredHighLevelClient.ChannelUnRegister(e.ChannelSubscribeMessage);
+                registeredHighLevelClient.ChannelUnRegister(e.ChannelRegistrationMessage);
         }
 
         #region Вспомогательные классы и свойства для регистрации
@@ -318,7 +318,7 @@ namespace Oleg_ivo.MES.High
         {
             NotifySubscribeEvents();
 
-            if (!message.Mode)
+            if (message.Mode != RegistrationMode.Register)
                 throw new ArgumentException("Для регистрации клиента в сообщении используется флаг отмены регистрации");
 
             RegisteredHighLevelClient registeredHighLevelClient = GetRegisteredHighLevelClient(message, false);
@@ -356,7 +356,7 @@ namespace Oleg_ivo.MES.High
                 var registeredLogicalChannels = LowLevelMessageExchangeSystem.Instance.GetAllRegisteredChannels();
                 foreach (var registeredLogicalChannel in registeredLogicalChannels)
                 {
-                    registeredHighLevelClient.ChannelRegister(new ChannelSubscribeMessage { LogicalChannelId = registeredLogicalChannel.Id });
+                    registeredHighLevelClient.ChannelRegister(new ChannelRegistrationMessage { LogicalChannelId = registeredLogicalChannel.Id });
                 }
 */
 
@@ -400,7 +400,8 @@ namespace Oleg_ivo.MES.High
         /// <param name="clientCallback"></param>
         private void Unregister(RegistrationMessage message, IHighLevelClientCallback clientCallback)
         {
-            if (message.Mode) throw new ArgumentException("Для отмены регистрации клиента в сообщении используется флаг регистрации");
+            if (message.Mode != RegistrationMode.Unregister) 
+                throw new ArgumentException("Для отмены регистрации клиента в сообщении используется флаг регистрации");
 
             //получить рабочий объект из данного тикера и удалить
             //прокси клиента из списка обратных вызовов

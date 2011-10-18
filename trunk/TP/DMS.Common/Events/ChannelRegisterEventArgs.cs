@@ -1,23 +1,23 @@
 ﻿using System;
 using DMS.Common.Messages;
 
-namespace Oleg_ivo.LowLevelClient
+namespace DMS.Common.Events
 {
     /// <summary>
     /// 
     /// </summary>
-    public class ChannelSubscribeEventArgs : EventArgs
+    public class ChannelRegisterEventArgs : EventArgs
     {
         /// <summary>
         /// 
         /// </summary>
-        public ChannelSubscribeMessage Message { get; set; }
+        public ChannelRegistrationMessage Message { get; private set; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="message"></param>
-        public ChannelSubscribeEventArgs(ChannelSubscribeMessage message)
+        public ChannelRegisterEventArgs(ChannelRegistrationMessage message)
         {
             Message = message;
         }

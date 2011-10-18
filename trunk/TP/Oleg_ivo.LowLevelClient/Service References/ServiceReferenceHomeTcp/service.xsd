@@ -64,7 +64,7 @@
   <xs:element name="ChannelRegister">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q6:ChannelSubscribeMessage" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q6:ChannelRegistrationMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -76,7 +76,7 @@
   <xs:element name="ChannelUnRegister">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q7:ChannelSubscribeMessage" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q7:ChannelRegistrationMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

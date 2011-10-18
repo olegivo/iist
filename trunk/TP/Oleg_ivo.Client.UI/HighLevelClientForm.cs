@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
+using DMS.Common.Events;
 using DMS.Common.Exceptions;
 using DMS.Common.Messages;
 using Oleg_ivo.Tools.UI;
@@ -103,12 +104,12 @@ namespace Oleg_ivo.HighLevelClient.UI
             Protocol(string.Format("Произошла подписка на канал [{0}]", e.UserState));
         }
 
-        void Provider_ChannelRegistered(object sender, ClientChannelSubscribeEventArgs e)
+        void Provider_ChannelRegistered(object sender, ChannelRegisterEventArgs e)
         {
             AddRegisteredChannel(e.Message);
         }
 
-        private void AddRegisteredChannel(ChannelSubscribeMessage message)
+        private void AddRegisteredChannel(ChannelRegistrationMessage message)
         {
             IList sourceLeft = doubleListBoxControl1.SourceLeft;
             IList sourceRight = doubleListBoxControl1.SourceRight;
@@ -122,13 +123,13 @@ namespace Oleg_ivo.HighLevelClient.UI
             Protocol(string.Format("Канал [{0}] теперь доступен для подписки", message.LogicalChannelId));
         }
 
-        void Provider_ChannelUnRegistered(object sender, ClientChannelSubscribeEventArgs e)
+        void Provider_ChannelUnRegistered(object sender, ChannelRegisterEventArgs e)
         {
             RemoveRegisteredChannel(e.Message);
             Protocol(string.Format("Канал [{0}] теперь недоступен для подписки", e.Message.LogicalChannelId));
         }
 
-        private void RemoveRegisteredChannel(ChannelSubscribeMessage message)
+        private void RemoveRegisteredChannel(ChannelRegistrationMessage message)
         {
             IList sourceLeft = doubleListBoxControl1.SourceLeft;
             IList sourceRight = doubleListBoxControl1.SourceRight;
@@ -211,7 +212,8 @@ namespace Oleg_ivo.HighLevelClient.UI
 
         private void btnSendMessage_Click(object sender, EventArgs e)
         {
-            Provider.SendMessage(new InternalMessage());
+            throw new NotImplementedException();
+            //Provider.SendMessage(new InternalMessage());
         }
 
         private bool CanRegister
@@ -252,7 +254,7 @@ namespace Oleg_ivo.HighLevelClient.UI
             else
                 foreach (var registeredChannel in registeredChannels)
                 {
-                    ChannelSubscribeMessage message = new ChannelSubscribeMessage
+                    ChannelRegistrationMessage message = new ChannelRegistrationMessage
                                                           {
                                                               DataMode = DataMode.Read,
                                                               LogicalChannelId = registeredChannel

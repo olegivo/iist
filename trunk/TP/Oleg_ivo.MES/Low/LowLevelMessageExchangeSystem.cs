@@ -12,9 +12,9 @@ namespace Oleg_ivo.MES.Low
     /// Система обмена сообщениями c клиентами верхнего уровня
     ///</summary>
     [ServiceBehavior(
-        InstanceContextMode = InstanceContextMode.Single, 
-        ConcurrencyMode = ConcurrencyMode.Reentrant, 
-        AutomaticSessionShutdown = false, 
+        InstanceContextMode = InstanceContextMode.Single,
+        ConcurrencyMode = ConcurrencyMode.Reentrant,
+        AutomaticSessionShutdown = false,
         IncludeExceptionDetailInFaults = true)]
     public class LowLevelMessageExchangeSystem : AbstractLevelMessageExchangeSystem<RegisteredLowLevelClient>, ILowLevelMessageExchangeSystem
     {
@@ -95,17 +95,17 @@ namespace Oleg_ivo.MES.Low
         /// <param name="clientCallback"></param>
         private void Register(RegistrationMessage message, ILowLevelClientCallback clientCallback)
         {
-            if (!message.Mode)
+            if (message.Mode != RegistrationMode.Register)
                 throw new ArgumentException("Для регистрации клиента в сообщении используется флаг отмены регистрации");
 
             RegisteredLowLevelClient registeredLowLevelClient = GetRegisteredLowLevelClient(message, false, false);
 
             if (registeredLowLevelClient != null)
                 throw new Exception("Клиент уже зарегистрирован");
-            
-            registeredLowLevelClient = new RegisteredLowLevelClient {Ticker = message.RegName};
+
+            registeredLowLevelClient = new RegisteredLowLevelClient { Ticker = message.RegName };
             AddClient(message.RegName, registeredLowLevelClient);
-            
+
             //                registeredLowLevelClient = (RegisteredLowLevelClient)_registeredClients[message.RegName];
 
             //Thread t = new Thread(w.RegisteredLowLevelClientProcess.SendUpdateToClient) { IsBackground = true };
@@ -126,7 +126,8 @@ namespace Oleg_ivo.MES.Low
         /// <param name="clientCallback"></param>
         private void Unregister(RegistrationMessage message, ILowLevelClientCallback clientCallback)
         {
-            if (message.Mode) throw new ArgumentException("Для отмены регистрации клиента в сообщении используется флаг регистрации");
+            if (message.Mode != RegistrationMode.Unregister) 
+                throw new ArgumentException("Для отмены регистрации клиента в сообщении используется флаг регистрации");
 
             //получить рабочий объект из данного тикера и удалить
             //прокси клиента из списка обратных вызовов
@@ -138,7 +139,7 @@ namespace Oleg_ivo.MES.Low
 
                 OnUnRegistered(registeredLowLevelClient, message);//уведомляем о том, что клиент отменил регистрацию
 
-//                if (registeredLowLevelClient.HasCallbacks)
+                //                if (registeredLowLevelClient.HasCallbacks)
                 RemoveClient(message.RegName);
 
             }
@@ -159,7 +160,7 @@ namespace Oleg_ivo.MES.Low
         }
 
         private delegate void ReadChannelCaller(InternalLogicalChannelDataMessage message);
-        private delegate void ChannelRegistrationCaller(ChannelSubscribeMessage message);
+        private delegate void ChannelRegistrationCaller(ChannelRegistrationMessage message);
 
         /// <summary>
         /// Начало регистрации канала в системе обмена сообщениями
@@ -167,7 +168,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public IAsyncResult BeginChannelRegister(ChannelSubscribeMessage message, AsyncCallback callback, object state)
+        public IAsyncResult BeginChannelRegister(ChannelRegistrationMessage message, AsyncCallback callback, object state)
         {
             Console.WriteLine("Начало регистрации канала {0}", message.LogicalChannelId);
             var caller = new ChannelRegistrationCaller(ChannelRegister);
@@ -180,7 +181,7 @@ namespace Oleg_ivo.MES.Low
         /// </summary>
         /// <param name="message"></param>
         /// <param name="result"></param>
-        public void EndChannelRegister(ChannelSubscribeMessage message, IAsyncResult result)
+        public void EndChannelRegister(ChannelRegistrationMessage message, IAsyncResult result)
         {
             Console.WriteLine("Канал был зарегистрирован");
         }
@@ -191,7 +192,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public IAsyncResult BeginChannelUnRegister(ChannelSubscribeMessage message, AsyncCallback callback, object state)
+        public IAsyncResult BeginChannelUnRegister(ChannelRegistrationMessage message, AsyncCallback callback, object state)
         {
             Console.WriteLine("Начало отмены регистрации канала {0}", message.LogicalChannelId);
             var caller = new ChannelRegistrationCaller(ChannelUnRegister);
@@ -204,7 +205,7 @@ namespace Oleg_ivo.MES.Low
         /// </summary>
         /// <param name="message"></param>
         /// <param name="result"></param>
-        public void EndChannelUnRegister(ChannelSubscribeMessage message, IAsyncResult result)
+        public void EndChannelUnRegister(ChannelRegistrationMessage message, IAsyncResult result)
         {
             Console.WriteLine("Регистрация канала была отменена");
         }
@@ -328,7 +329,7 @@ namespace Oleg_ivo.MES.Low
             if (registeredLowLevelClient != null)
             {
                 if ((withRegisteredChannels && !registeredLowLevelClient.HasRegisteredLogicalChannels)
-                        || 
+                        ||
                         (withCallbacks && !registeredLowLevelClient.HasCallbacks))
                     registeredLowLevelClient = null;
             }
@@ -340,7 +341,7 @@ namespace Oleg_ivo.MES.Low
         /// Регистрация канала в системе обмена сообщениями
         /// </summary>
         /// <param name="message"></param>
-        public void ChannelRegister(ChannelSubscribeMessage message)
+        public void ChannelRegister(ChannelRegistrationMessage message)
         {
             RegisteredLowLevelClient registeredLowLevelClient = GetRegisteredLowLevelClient(message, false, false);
             if (registeredLowLevelClient == null)
@@ -369,7 +370,7 @@ namespace Oleg_ivo.MES.Low
         /// Отмена регистрации канала в системе обмена сообщениями
         /// </summary>
         /// <param name="message"></param>
-        public void ChannelUnRegister(ChannelSubscribeMessage message)
+        public void ChannelUnRegister(ChannelRegistrationMessage message)
         {
             RegisteredLowLevelClient registeredLowLevelClient = GetRegisteredLowLevelClient(message, false, false);
             if (registeredLowLevelClient == null)
@@ -415,13 +416,13 @@ namespace Oleg_ivo.MES.Low
             {
                 //имитируем посылку сообщения от клиента о том, что он отменяет регистрацию канала 
                 //(тогда подписчики на канал будут об этом уведомлены)
-                ChannelSubscribeMessage channelSubscribeMessage = new ChannelSubscribeMessage
+                ChannelRegistrationMessage registrationMessage = new ChannelRegistrationMessage
                 {
                     LogicalChannelId = registeredLogicalChannelId,
                     RegName = regName,
-                    Mode = false
+                    Mode = RegistrationMode.Unregister
                 };
-                ChannelUnRegister(channelSubscribeMessage);
+                ChannelUnRegister(registrationMessage);
             }
 
             base.RemoveClient(regName);

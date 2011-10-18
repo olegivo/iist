@@ -39,14 +39,7 @@ namespace Oleg_ivo.HighLevelClient
         ///</summary>
         public static ClientProvider Instance
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new ClientProvider();
-                }
-                return _instance;
-            }
+            get { return _instance ?? (_instance = new ClientProvider()); }
         }
 
         /// <summary>
@@ -61,6 +54,7 @@ namespace Oleg_ivo.HighLevelClient
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 throw;
             }
 
@@ -176,16 +170,16 @@ namespace Oleg_ivo.HighLevelClient
         /// <summary>
         /// 
         /// </summary>
-        public event EventHandler<ClientChannelSubscribeEventArgs> ChannelRegistered;
+        public event EventHandler<ChannelRegisterEventArgs> ChannelRegistered;
 
         /// <summary>
         /// 
         /// </summary>
-        public event EventHandler<ClientChannelSubscribeEventArgs> ChannelUnRegistered;
+        public event EventHandler<ChannelRegisterEventArgs> ChannelUnRegistered;
 
         #endregion
 
-        private void CallbackHandler_ChannelRegistered(object sender, ClientChannelSubscribeEventArgs e)
+        private void CallbackHandler_ChannelRegistered(object sender, ChannelRegisterEventArgs e)
         {
             var message = e.Message;
             var newValue = new[] {message.LogicalChannelId};
@@ -199,7 +193,7 @@ namespace Oleg_ivo.HighLevelClient
             if (ChannelRegistered != null) ChannelRegistered(this, e);
         }
 
-        private void CallbackHandler_ChannelUnRegistered(object sender, ClientChannelSubscribeEventArgs e)
+        private void CallbackHandler_ChannelUnRegistered(object sender, ChannelRegisterEventArgs e)
         {
             var message = e.Message;
             var removeValue = new[] {message.LogicalChannelId};
@@ -274,7 +268,7 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public void Register()
         {
-            Proxy.Register(new RegistrationMessage { RegName = RegName, Mode = true });
+            Proxy.Register(new RegistrationMessage { RegName = RegName, Mode = RegistrationMode.Register });
             RegisteredChannels = Proxy.GetRegisteredChannels(new InternalMessage { RegName = RegName });
         }
 
@@ -285,7 +279,7 @@ namespace Oleg_ivo.HighLevelClient
         public void Register(EventHandler<AsyncCompletedEventArgs> proxyRegisterCompleted)
         {
             _proxyRegisterCompleted = proxyRegisterCompleted;
-            Proxy.RegisterAsync(new RegistrationMessage { RegName = RegName, Mode = true });
+            Proxy.RegisterAsync(new RegistrationMessage { RegName = RegName, Mode = RegistrationMode.Register });
             Proxy.RegisterCompleted += Proxy_RegisterCompleted;
         }
 

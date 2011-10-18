@@ -107,7 +107,7 @@ namespace TP
             else
                 foreach (var registeredChannel in registeredChannels)
                 {
-                    ChannelSubscribeMessage message = new ChannelSubscribeMessage
+                    ChannelRegistrationMessage message = new ChannelRegistrationMessage
                     {
                         DataMode = DataMode.Read,
                         LogicalChannelId = registeredChannel
@@ -119,7 +119,7 @@ namespace TP
         readonly IList registeredChannelsList = new List<int>();
         readonly IList subscribedChannelsList = new List<int>();
 
-        private void AddRegisteredChannel(ChannelSubscribeMessage message)
+        private void AddRegisteredChannel(ChannelRegistrationMessage message)
         {
             if (!registeredChannelsList.Contains(message.LogicalChannelId) && !subscribedChannelsList.Contains(message.LogicalChannelId))
             {
@@ -227,13 +227,13 @@ namespace TP
         /// </summary>
         public event EventHandler NeedProtocol;
 
-        private void Provider_ChannelUnRegistered(object sender, ClientChannelSubscribeEventArgs e)
+        private void Provider_ChannelUnRegistered(object sender, ChannelRegisterEventArgs e)
         {
             RemoveRegisteredChannel(e.Message);
             Protocol(string.Format("Канал [{0}] теперь недоступен для подписки", e.Message.LogicalChannelId));
         }
 
-        private void RemoveRegisteredChannel(ChannelSubscribeMessage message)
+        private void RemoveRegisteredChannel(ChannelRegistrationMessage message)
         {
             if (registeredChannelsList.Contains(message.LogicalChannelId))
             {
@@ -272,7 +272,7 @@ namespace TP
         /// </summary>
         protected string RegName { get; set; }
 
-        private void Provider_ChannelRegistered(object sender, ClientChannelSubscribeEventArgs e)
+        private void Provider_ChannelRegistered(object sender, ChannelRegisterEventArgs e)
         {
             AddRegisteredChannel(e.Message);
         }

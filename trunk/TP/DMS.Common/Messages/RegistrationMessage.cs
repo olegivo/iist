@@ -1,4 +1,6 @@
-﻿namespace DMS.Common.Messages
+﻿using System.Runtime.Serialization;
+
+namespace DMS.Common.Messages
 {
     /// <summary>
     /// Сообщение для регистрации/отмены регистрации
@@ -8,6 +10,7 @@
         /// <summary>
         /// Регистрация (<see langword="true"/>) / отмена регистрации (<see langword="false"/>)
         /// </summary>
-        public bool Mode { get; set; }
+        [DataMember]
+        public RegistrationMode Mode { get; set; }
     }
 }

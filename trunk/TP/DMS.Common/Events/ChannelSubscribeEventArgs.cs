@@ -6,7 +6,7 @@ namespace DMS.Common.Events
     /// <summary>
     /// 
     /// </summary>
-    public class ClientChannelSubscribeEventArgs : EventArgs
+    public class ChannelSubscribeEventArgs : EventArgs
     {
         /// <summary>
         /// 
@@ -17,7 +17,7 @@ namespace DMS.Common.Events
         /// 
         /// </summary>
         /// <param name="message"></param>
-        public ClientChannelSubscribeEventArgs(ChannelSubscribeMessage message)
+        public ChannelSubscribeEventArgs(ChannelSubscribeMessage message)
         {
             Message = message;
         }

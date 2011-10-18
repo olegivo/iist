@@ -19,6 +19,7 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalServiceMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalErrorMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.RegistrationMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelSubscribeMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalDataMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalLogicalChannelDataMessage))]
@@ -49,6 +50,7 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageExchangeSystem/Register", ReplyAction="http://tempuri.org/IMessageExchangeSystem/RegisterResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.RegistrationException), Action="http://tempuri.org/IMessageExchangeSystem/RegisterRegistrationExceptionFault", Name="RegistrationException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
         void Register(DMS.Common.Messages.RegistrationMessage message);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IMessageExchangeSystem/Register", ReplyAction="http://tempuri.org/IMessageExchangeSystem/RegisterResponse")]
@@ -58,6 +60,7 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageExchangeSystem/Unregister", ReplyAction="http://tempuri.org/IMessageExchangeSystem/UnregisterResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.RegistrationException), Action="http://tempuri.org/IMessageExchangeSystem/UnregisterRegistrationExceptionFault", Name="RegistrationException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
         void Unregister(DMS.Common.Messages.RegistrationMessage message);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IMessageExchangeSystem/Unregister", ReplyAction="http://tempuri.org/IMessageExchangeSystem/UnregisterResponse")]
@@ -66,18 +69,18 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         void EndUnregister(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILowLevelMessageExchangeSystem/ChannelRegister", ReplyAction="http://tempuri.org/ILowLevelMessageExchangeSystem/ChannelRegisterResponse")]
-        void ChannelRegister(DMS.Common.Messages.ChannelSubscribeMessage message);
+        void ChannelRegister(DMS.Common.Messages.ChannelRegistrationMessage message);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ILowLevelMessageExchangeSystem/ChannelRegister", ReplyAction="http://tempuri.org/ILowLevelMessageExchangeSystem/ChannelRegisterResponse")]
-        System.IAsyncResult BeginChannelRegister(DMS.Common.Messages.ChannelSubscribeMessage message, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginChannelRegister(DMS.Common.Messages.ChannelRegistrationMessage message, System.AsyncCallback callback, object asyncState);
         
         void EndChannelRegister(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILowLevelMessageExchangeSystem/ChannelUnRegister", ReplyAction="http://tempuri.org/ILowLevelMessageExchangeSystem/ChannelUnRegisterResponse")]
-        void ChannelUnRegister(DMS.Common.Messages.ChannelSubscribeMessage message);
+        void ChannelUnRegister(DMS.Common.Messages.ChannelRegistrationMessage message);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ILowLevelMessageExchangeSystem/ChannelUnRegister", ReplyAction="http://tempuri.org/ILowLevelMessageExchangeSystem/ChannelUnRegisterResponse")]
-        System.IAsyncResult BeginChannelUnRegister(DMS.Common.Messages.ChannelSubscribeMessage message, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginChannelUnRegister(DMS.Common.Messages.ChannelRegistrationMessage message, System.AsyncCallback callback, object asyncState);
         
         void EndChannelUnRegister(System.IAsyncResult result);
         
@@ -98,6 +101,7 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalServiceMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalErrorMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.RegistrationMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelSubscribeMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalDataMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalLogicalChannelDataMessage))]
@@ -413,12 +417,12 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
                         message}, this.onEndUnregisterDelegate, this.onUnregisterCompletedDelegate, userState);
         }
         
-        public void ChannelRegister(DMS.Common.Messages.ChannelSubscribeMessage message) {
+        public void ChannelRegister(DMS.Common.Messages.ChannelRegistrationMessage message) {
             base.Channel.ChannelRegister(message);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult BeginChannelRegister(DMS.Common.Messages.ChannelSubscribeMessage message, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult BeginChannelRegister(DMS.Common.Messages.ChannelRegistrationMessage message, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginChannelRegister(message, callback, asyncState);
         }
         
@@ -428,7 +432,7 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         }
         
         private System.IAsyncResult OnBeginChannelRegister(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            DMS.Common.Messages.ChannelSubscribeMessage message = ((DMS.Common.Messages.ChannelSubscribeMessage)(inValues[0]));
+            DMS.Common.Messages.ChannelRegistrationMessage message = ((DMS.Common.Messages.ChannelRegistrationMessage)(inValues[0]));
             return this.BeginChannelRegister(message, callback, asyncState);
         }
         
@@ -444,11 +448,11 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
             }
         }
         
-        public void ChannelRegisterAsync(DMS.Common.Messages.ChannelSubscribeMessage message) {
+        public void ChannelRegisterAsync(DMS.Common.Messages.ChannelRegistrationMessage message) {
             this.ChannelRegisterAsync(message, null);
         }
         
-        public void ChannelRegisterAsync(DMS.Common.Messages.ChannelSubscribeMessage message, object userState) {
+        public void ChannelRegisterAsync(DMS.Common.Messages.ChannelRegistrationMessage message, object userState) {
             if ((this.onBeginChannelRegisterDelegate == null)) {
                 this.onBeginChannelRegisterDelegate = new BeginOperationDelegate(this.OnBeginChannelRegister);
             }
@@ -462,12 +466,12 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
                         message}, this.onEndChannelRegisterDelegate, this.onChannelRegisterCompletedDelegate, userState);
         }
         
-        public void ChannelUnRegister(DMS.Common.Messages.ChannelSubscribeMessage message) {
+        public void ChannelUnRegister(DMS.Common.Messages.ChannelRegistrationMessage message) {
             base.Channel.ChannelUnRegister(message);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult BeginChannelUnRegister(DMS.Common.Messages.ChannelSubscribeMessage message, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult BeginChannelUnRegister(DMS.Common.Messages.ChannelRegistrationMessage message, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginChannelUnRegister(message, callback, asyncState);
         }
         
@@ -477,7 +481,7 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         }
         
         private System.IAsyncResult OnBeginChannelUnRegister(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            DMS.Common.Messages.ChannelSubscribeMessage message = ((DMS.Common.Messages.ChannelSubscribeMessage)(inValues[0]));
+            DMS.Common.Messages.ChannelRegistrationMessage message = ((DMS.Common.Messages.ChannelRegistrationMessage)(inValues[0]));
             return this.BeginChannelUnRegister(message, callback, asyncState);
         }
         
@@ -493,11 +497,11 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
             }
         }
         
-        public void ChannelUnRegisterAsync(DMS.Common.Messages.ChannelSubscribeMessage message) {
+        public void ChannelUnRegisterAsync(DMS.Common.Messages.ChannelRegistrationMessage message) {
             this.ChannelUnRegisterAsync(message, null);
         }
         
-        public void ChannelUnRegisterAsync(DMS.Common.Messages.ChannelSubscribeMessage message, object userState) {
+        public void ChannelUnRegisterAsync(DMS.Common.Messages.ChannelRegistrationMessage message, object userState) {
             if ((this.onBeginChannelUnRegisterDelegate == null)) {
                 this.onBeginChannelUnRegisterDelegate = new BeginOperationDelegate(this.OnBeginChannelUnRegister);
             }

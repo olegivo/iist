@@ -170,19 +170,28 @@ namespace Oleg_ivo.CMU
 
         private void doubleListBoxControl1_ItemMoved(object sender, MovedEventArgs e)
         {
-            ChannelSubscribeMessage subscribeMessage = new ChannelSubscribeMessage
-            {
-                RegName = GetRegName(),
-                Mode = e.MoveDirection == DoubleListBoxControl.Direction.LeftToRight,
-                LogicalChannelId = (int)e.MovingObject
-            };
+            ChannelRegistrationMessage subscribeMessage = new ChannelRegistrationMessage
+                                                              {
+                                                                  RegName = GetRegName(),
+                                                                  Mode =
+                                                                      e.MoveDirection ==
+                                                                      DoubleListBoxControl.Direction.LeftToRight
+                                                                          ? RegistrationMode.Register
+                                                                          : RegistrationMode.Unregister,
+                                                                  LogicalChannelId = (int) e.MovingObject
+                                                              };
 
 
             //регистрация каналов в MES
-            if (subscribeMessage.Mode)
-                RegisterChannel(subscribeMessage);
-            else
-                UnRegisterChannel(subscribeMessage);
+            switch (subscribeMessage.Mode)
+            {
+                case RegistrationMode.Register:
+                    RegisterChannel(subscribeMessage);
+                    break;
+                case RegistrationMode.Unregister:
+                    UnRegisterChannel(subscribeMessage);
+                    break;
+            }
 
             doubleListBoxControl1.Refresh();
             RefreshBtnReadChannel();
@@ -191,15 +200,15 @@ namespace Oleg_ivo.CMU
         /// <summary>
         /// Зарегистрировать канал и настроить его опрос
         /// </summary>
-        /// <param name="subscribeMessage"></param>
-        private void RegisterChannel(ChannelSubscribeMessage subscribeMessage)
+        /// <param name="channelRegistrationMessage"></param>
+        private void RegisterChannel(ChannelRegistrationMessage channelRegistrationMessage)
         {
-            ControlManagementUnit.RegisterChannel(subscribeMessage);
+            ControlManagementUnit.RegisterChannel(channelRegistrationMessage);
         }
 
-        private void UnRegisterChannel(ChannelSubscribeMessage subscribeMessage)
+        private void UnRegisterChannel(ChannelRegistrationMessage channelRegistrationMessage)
         {
-            ControlManagementUnit.UnregisterChannel(subscribeMessage);
+            ControlManagementUnit.UnregisterChannel(channelRegistrationMessage);
         }
 
         private void RefreshBtnReadChannel()

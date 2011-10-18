@@ -38,8 +38,8 @@
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
@@ -55,11 +55,11 @@
   <wsdl:message name="IHighLevelMessageExchangeSystem_SendError_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendErrorResponse" />
   </wsdl:message>
-  <wsdl:message name="IHighLevelMessageExchangeSystem_SendError_TestExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" name="detail" element="q1:TestException" />
-  </wsdl:message>
   <wsdl:message name="IHighLevelMessageExchangeSystem_SendError_RegistrationExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" name="detail" element="q2:RegistrationException" />
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" name="detail" element="q1:RegistrationException" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_SendError_TestExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" name="detail" element="q2:TestException" />
   </wsdl:message>
   <wsdl:message name="IHighLevelMessageExchangeSystem_SendMessageToClient_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendMessageToClient" />
@@ -129,8 +129,8 @@
     <wsdl:operation name="SendError">
       <wsdl:input wsaw:Action="http://tempuri.org/IMessageReceiver/SendError" message="tns:IHighLevelMessageExchangeSystem_SendError_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMessageReceiver/SendErrorResponse" message="tns:IHighLevelMessageExchangeSystem_SendError_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IMessageReceiver/SendErrorTestExceptionFault" name="TestExceptionFault" message="tns:IHighLevelMessageExchangeSystem_SendError_TestExceptionFault_FaultMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IMessageReceiver/SendErrorRegistrationExceptionFault" name="RegistrationExceptionFault" message="tns:IHighLevelMessageExchangeSystem_SendError_RegistrationExceptionFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMessageReceiver/SendErrorTestExceptionFault" name="TestExceptionFault" message="tns:IHighLevelMessageExchangeSystem_SendError_TestExceptionFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendMessageToClient">
       <wsdl:output wsaw:Action="http://tempuri.org/IMessageReceiver/SendMessageToClient" message="tns:IHighLevelMessageExchangeSystem_SendMessageToClient_OutputCallbackMessage" />
@@ -194,11 +194,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="TestExceptionFault">
-        <soap12:fault use="literal" name="TestExceptionFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="RegistrationExceptionFault">
         <soap12:fault use="literal" name="RegistrationExceptionFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="TestExceptionFault">
+        <soap12:fault use="literal" name="TestExceptionFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="SendMessageToClient">
