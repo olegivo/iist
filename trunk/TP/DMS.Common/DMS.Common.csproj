@@ -64,6 +64,8 @@
     <Compile Include="Exceptions\InternalServiceException.cs" />
     <Compile Include="Exceptions\RegistrationException.cs" />
     <Compile Include="Exceptions\TestException.cs" />
+    <Compile Include="Messages\ChannelMode.cs" />
+    <Compile Include="Messages\ChannelRegistrationMessage.cs" />
     <Compile Include="Messages\ChannelSubscribeMessage.cs" />
     <Compile Include="Messages\IMessageReceiver.cs" />
     <Compile Include="MessageExchangeSystem\IClientCallback.cs" />
@@ -81,6 +83,8 @@
     <Compile Include="Messages\InternalLogicalChannelDataMessage.cs" />
     <Compile Include="Messages\InternalMessage.cs" />
     <Compile Include="Messages\RegistrationMessage.cs" />
+    <Compile Include="Messages\RegistrationMode.cs" />
+    <Compile Include="Messages\SubscribeMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
