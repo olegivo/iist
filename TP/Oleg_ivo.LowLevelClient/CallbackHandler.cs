@@ -147,7 +147,7 @@ namespace Oleg_ivo.LowLevelClient
         /// <summary>
         /// Прочитан канал
         /// </summary>
-        public event EventHandler<DataEventArgs> HasWriteChannel;
+        public static event EventHandler<DataEventArgs> HasWriteChannel;
 
         private void OnSendWriteToClient(InternalLogicalChannelDataMessage message)
         {
