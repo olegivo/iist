@@ -17,17 +17,17 @@ namespace Oleg_ivo.MES.Low
         /// <summary>
         /// 
         /// </summary>
-        public ChannelSubscribeMessage ChannelSubscribeMessage { get; private set; }
+        public ChannelRegistrationMessage ChannelRegistrationMessage { get; private set; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="registeredLowLevelClient"></param>
         /// <param name="message"></param>
-        public LowRegisteredLogicalChannelSubscribeEventArgs(RegisteredLowLevelClient registeredLowLevelClient, ChannelSubscribeMessage message)
+        public LowRegisteredLogicalChannelSubscribeEventArgs(RegisteredLowLevelClient registeredLowLevelClient, ChannelRegistrationMessage message)
         {
             RegisteredLowLevelClient = registeredLowLevelClient;
-            ChannelSubscribeMessage = message;
+            ChannelRegistrationMessage = message;
         }
     }
 }

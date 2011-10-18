@@ -46,22 +46,22 @@ namespace Oleg_ivo.HighLevelClient
         /// <summary>
         /// 
         /// </summary>
-        public event EventHandler<ClientChannelSubscribeEventArgs> ChannelRegistered;
+        public event EventHandler<ChannelRegisterEventArgs> ChannelRegistered;
 
-        private void OnChannelRegistered(ClientChannelSubscribeEventArgs e)
+        private void OnChannelRegistered(ChannelRegisterEventArgs e)
         {
-            EventHandler<ClientChannelSubscribeEventArgs> handler = ChannelRegistered;
+            EventHandler<ChannelRegisterEventArgs> handler = ChannelRegistered;
             if (handler != null) handler(null, e);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public event EventHandler<ClientChannelSubscribeEventArgs> ChannelUnRegistered;
+        public event EventHandler<ChannelRegisterEventArgs> ChannelUnRegistered;
 
-        private void OnChannelUnRegistered(ClientChannelSubscribeEventArgs e)
+        private void OnChannelUnRegistered(ChannelRegisterEventArgs e)
         {
-            EventHandler<ClientChannelSubscribeEventArgs> handler = ChannelUnRegistered;
+            EventHandler<ChannelRegisterEventArgs> handler = ChannelUnRegistered;
             if (handler != null) handler(null, e);
         }
 
@@ -111,9 +111,9 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         /// <param name="message"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public void ChannelRegister(ChannelSubscribeMessage message)
+        public void ChannelRegister(ChannelRegistrationMessage message)
         {
-            OnChannelRegistered(new ClientChannelSubscribeEventArgs(message));
+            OnChannelRegistered(new ChannelRegisterEventArgs(message));
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Oleg_ivo.HighLevelClient
         /// <param name="asyncState"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public IAsyncResult BeginChannelRegister(ChannelSubscribeMessage message, AsyncCallback callback, object asyncState)
+        public IAsyncResult BeginChannelRegister(ChannelRegistrationMessage message, AsyncCallback callback, object asyncState)
         {
             throw new NotImplementedException();
         }
@@ -144,9 +144,9 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         /// <param name="message"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public void ChannelUnRegister(ChannelSubscribeMessage message)
+        public void ChannelUnRegister(ChannelRegistrationMessage message)
         {
-            OnChannelUnRegistered(new ClientChannelSubscribeEventArgs(message));
+            OnChannelUnRegistered(new ChannelRegisterEventArgs(message));
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Oleg_ivo.HighLevelClient
         /// <param name="asyncState"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public IAsyncResult BeginChannelUnRegister(ChannelSubscribeMessage message, AsyncCallback callback, object asyncState)
+        public IAsyncResult BeginChannelUnRegister(ChannelRegistrationMessage message, AsyncCallback callback, object asyncState)
         {
             throw new NotImplementedException();
         }

@@ -8,6 +8,7 @@ namespace DMS.Common.Messages
     /// </summary>
     [DataContract]
     [KnownType(typeof(RegistrationMessage))]
+    [KnownType(typeof(ChannelRegistrationMessage))]
     [KnownType(typeof(ChannelSubscribeMessage))]
     [KnownType(typeof(InternalLogicalChannelDataMessage))]
     [KnownType(typeof(InternalErrorMessage))]

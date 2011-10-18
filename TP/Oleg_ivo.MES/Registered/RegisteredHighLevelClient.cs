@@ -134,7 +134,7 @@ namespace Oleg_ivo.MES.Registered
         /// 
         /// </summary>
         /// <param name="message"></param>
-        public void ChannelRegister(ChannelSubscribeMessage message)
+        public void ChannelRegister(ChannelRegistrationMessage message)
         {
             lock (Callbacks)
                 foreach (IHighLevelClientCallback callback in Callbacks)
@@ -154,7 +154,7 @@ namespace Oleg_ivo.MES.Registered
         /// Отменить регистрацию канала на клиенте верхнего уровня
         /// </summary>
         /// <param name="message"></param>
-        public void ChannelUnRegister(ChannelSubscribeMessage message)
+        public void ChannelUnRegister(ChannelRegistrationMessage message)
         {
             //удаляем канал из коллекции зарегистрированных канало данного клиента
             var registeredLogicalChannel =

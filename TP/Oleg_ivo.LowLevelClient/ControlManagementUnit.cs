@@ -3,6 +3,7 @@ using Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp;
 #else
 using Oleg_ivo.CMU.ServiceReferenceHome;
 #endif
+using DMS.Common.Events;
 using System.ServiceModel;
 using System;
 using System.Collections.Generic;
@@ -31,9 +32,20 @@ namespace Oleg_ivo.LowLevelClient
             CallbackHandler.NeedProtocol += CallbackHandler_NeedProtocol;
             CallbackHandler.ChannelSubscribed += CallbackHandler_ChannelSubscribed;
             CallbackHandler.ChannelUnSubscribed += CallbackHandler_ChannelUnSubscribed;
+            CallbackHandler.HasWriteChannel += CallbackHandler_HasWriteChannel;
             
             Planner = Planner.Instance;
             Planner.NewDadaReceived += Instance_NewDadaReceived;
+        }
+
+        void CallbackHandler_HasWriteChannel(object sender, DMS.Common.Events.DataEventArgs e)
+        {
+            string s = string.Format("Канал №{0} клиент - {1} [{2}] получено значение {3}",
+                                     e.Message.LogicalChannelId,
+                                     e.Message.RegName,
+                                     e.Message.TimeStamp,
+                                     e.Message.Value);
+            Protocol(s);
         }
 
         /// <summary>
@@ -214,7 +226,7 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public void Register()
         {
-            LowLevelMessageExchangeSystemClient.RegisterAsync(new RegistrationMessage { RegName = RegName, Mode = true });
+            LowLevelMessageExchangeSystemClient.RegisterAsync(new RegistrationMessage { RegName = RegName, Mode = RegistrationMode.Register });
         }
 
         /// <summary>
@@ -222,7 +234,7 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public void Unregister()
         {
-            LowLevelMessageExchangeSystemClient.UnregisterAsync(new RegistrationMessage { RegName = GetRegName(), Mode = false });
+            LowLevelMessageExchangeSystemClient.UnregisterAsync(new RegistrationMessage { RegName = GetRegName(), Mode = RegistrationMode.Unregister });
         }
 
         /// <summary>
@@ -311,13 +323,13 @@ namespace Oleg_ivo.LowLevelClient
         /// <summary>
         /// Зарегистрировать канал в системе обмена сообщениями
         /// </summary>
-        /// <param name="subscribeMessage"></param>
-        public void RegisterChannel(ChannelSubscribeMessage subscribeMessage)
+        /// <param name="channelRegistrationMessage"></param>
+        public void RegisterChannel(ChannelRegistrationMessage channelRegistrationMessage)
         {
-            LowLevelMessageExchangeSystemClient.ChannelRegisterAsync(subscribeMessage);
+            LowLevelMessageExchangeSystemClient.ChannelRegisterAsync(channelRegistrationMessage);
             LogicalChannel channel =
                 LogicalChannels.AsEnumerable().FirstOrDefault(
-                    LogicalChannel.GetFindChannelPredicate(subscribeMessage.LogicalChannelId));
+                    LogicalChannel.GetFindChannelPredicate(channelRegistrationMessage.LogicalChannelId));
 
             Protocol(string.Format("{0} зарегистрирован в системе обмена сообщениями", channel));
         }
@@ -325,13 +337,13 @@ namespace Oleg_ivo.LowLevelClient
         /// <summary>
         /// Отменить регистрацию канала в системе обмена сообщениями
         /// </summary>
-        /// <param name="subscribeMessage"></param>
-        public void UnregisterChannel(ChannelSubscribeMessage subscribeMessage)
+        /// <param name="channelRegistrationMessage"></param>
+        public void UnregisterChannel(ChannelRegistrationMessage channelRegistrationMessage)
         {
-            LowLevelMessageExchangeSystemClient.ChannelUnRegisterAsync(subscribeMessage);
+            LowLevelMessageExchangeSystemClient.ChannelUnRegisterAsync(channelRegistrationMessage);
             LogicalChannel channel =
                 LogicalChannels.AsEnumerable().FirstOrDefault(
-                    LogicalChannel.GetFindChannelPredicate(subscribeMessage.LogicalChannelId));
+                    LogicalChannel.GetFindChannelPredicate(channelRegistrationMessage.LogicalChannelId));
 
             Protocol(string.Format("{0} отмена регистрации в системе обмена сообщениями", channel));
         }

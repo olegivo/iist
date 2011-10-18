@@ -14,14 +14,14 @@ namespace DMS.Common.MessageExchangeSystem.HighLevel
         /// </summary>
         /// <param name="message"></param>
         [OperationContract(IsOneWay = true)]
-        void ChannelRegister(ChannelSubscribeMessage message);
+        void ChannelRegister(ChannelRegistrationMessage message);
 
         /// <summary>
         /// Отмена регистрации канала в системе обмена сообщениями
         /// </summary>
         /// <param name="message"></param>
         [OperationContract(IsOneWay = true)]
-        void ChannelUnRegister(ChannelSubscribeMessage message);
+        void ChannelUnRegister(ChannelRegistrationMessage message);
 
         /// <summary>
         /// Операция для чтения канала от сервера клиенту (инициатор - сервер)
