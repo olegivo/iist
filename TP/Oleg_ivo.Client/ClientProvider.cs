@@ -268,7 +268,7 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public void Register()
         {
-            Proxy.Register(new RegistrationMessage { RegName = RegName, Mode = RegistrationMode.Register });
+            Proxy.Register(new RegistrationMessage { RegName = RegName, RegistrationMode = RegistrationMode.Register });
             RegisteredChannels = Proxy.GetRegisteredChannels(new InternalMessage { RegName = RegName });
         }
 
@@ -279,7 +279,7 @@ namespace Oleg_ivo.HighLevelClient
         public void Register(EventHandler<AsyncCompletedEventArgs> proxyRegisterCompleted)
         {
             _proxyRegisterCompleted = proxyRegisterCompleted;
-            Proxy.RegisterAsync(new RegistrationMessage { RegName = RegName, Mode = RegistrationMode.Register });
+            Proxy.RegisterAsync(new RegistrationMessage { RegName = RegName, RegistrationMode = RegistrationMode.Register });
             Proxy.RegisterCompleted += Proxy_RegisterCompleted;
         }
 
@@ -309,7 +309,8 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public void Unregister()
         {
-            Proxy.UnregisterAsync(new RegistrationMessage { RegName = RegName });
+            Proxy.UnregisterAsync(new RegistrationMessage
+                                      {RegistrationMode = RegistrationMode.Unregister, RegName = RegName});
         }
 
 

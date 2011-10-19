@@ -39,7 +39,12 @@ namespace Oleg_ivo.Plc.Channels
         ///</summary>
         public ushort ChannelSize
         {
-            get { return _channelSize > 0 ? _channelSize : PhysicalChannel.ChannelSize; }
+            get
+            {
+                return
+                    (ushort)
+                    (_channelSize > 0 ? _channelSize : (PhysicalChannel != null ? PhysicalChannel.ChannelSize : 0));
+            }
             set { _channelSize = value; }
         }
 
@@ -48,7 +53,7 @@ namespace Oleg_ivo.Plc.Channels
         ///</summary>
         public int WriteAddress
         {
-            get { return PhysicalChannel.WriteAddress + AddressShift; }
+            get { return (PhysicalChannel != null ? PhysicalChannel.WriteAddress : 0) + AddressShift; }
         }
 
         ///<summary>

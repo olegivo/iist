@@ -24,8 +24,8 @@
     <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="7502a75a-4500-42c8-9cdb-c23b00e029a0" SourceId="1" SourceUrl="net.tcp://localhost:9000/Oleg_ivo.MES/Low/mex" />
     <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="413b0952-7e4a-4f78-a12e-cf0ce9e85aaf" SourceId="1" SourceUrl="net.tcp://localhost:9000/Oleg_ivo.MES/Low/mex" />
     <MetadataFile FileName="DMS.Common.Messages.xsd" MetadataType="Schema" ID="f9f39784-01e4-4a6a-81e5-b3d395127c9d" SourceId="1" SourceUrl="net.tcp://localhost:9000/Oleg_ivo.MES/Low/mex" />
-    <MetadataFile FileName="DMS.Common.Exceptions.xsd" MetadataType="Schema" ID="7e1bdbe9-507a-4a21-a9fc-c0f0454dd4b0" SourceId="1" SourceUrl="net.tcp://localhost:9000/Oleg_ivo.MES/Low/mex" />
     <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="a3b873e0-c8df-432c-90f1-ea3988300fcf" SourceId="1" SourceUrl="net.tcp://localhost:9000/Oleg_ivo.MES/Low/mex" />
+    <MetadataFile FileName="DMS.Common.Exceptions.xsd" MetadataType="Schema" ID="7e1bdbe9-507a-4a21-a9fc-c0f0454dd4b0" SourceId="1" SourceUrl="net.tcp://localhost:9000/Oleg_ivo.MES/Low/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
