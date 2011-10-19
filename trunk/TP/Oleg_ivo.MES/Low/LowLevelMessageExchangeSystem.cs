@@ -95,7 +95,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="clientCallback"></param>
         private void Register(RegistrationMessage message, ILowLevelClientCallback clientCallback)
         {
-            if (message.Mode != RegistrationMode.Register)
+            if (message.RegistrationMode != RegistrationMode.Register)
                 throw new ArgumentException("Для регистрации клиента в сообщении используется флаг отмены регистрации");
 
             RegisteredLowLevelClient registeredLowLevelClient = GetRegisteredLowLevelClient(message, false, false);
@@ -126,7 +126,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="clientCallback"></param>
         private void Unregister(RegistrationMessage message, ILowLevelClientCallback clientCallback)
         {
-            if (message.Mode != RegistrationMode.Unregister) 
+            if (message.RegistrationMode != RegistrationMode.Unregister) 
                 throw new ArgumentException("Для отмены регистрации клиента в сообщении используется флаг регистрации");
 
             //получить рабочий объект из данного тикера и удалить
@@ -420,7 +420,7 @@ namespace Oleg_ivo.MES.Low
                 {
                     LogicalChannelId = registeredLogicalChannelId,
                     RegName = regName,
-                    Mode = RegistrationMode.Unregister
+                    RegistrationMode = RegistrationMode.Unregister
                 };
                 ChannelUnRegister(registrationMessage);
             }

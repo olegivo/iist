@@ -11,6 +11,6 @@ namespace DMS.Common.Messages
         /// Регистрация (<see langword="true"/>) / отмена регистрации (<see langword="false"/>)
         /// </summary>
         [DataMember]
-        public RegistrationMode Mode { get; set; }
+        public RegistrationMode RegistrationMode { get; set; }
     }
 }

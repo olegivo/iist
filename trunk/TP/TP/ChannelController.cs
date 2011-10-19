@@ -131,7 +131,7 @@ namespace TP
                                          {
                                              DataMode = DataMode.Read,
                                              LogicalChannelId = message.LogicalChannelId,
-                                             Mode = true,
+                                             Mode = SubscribeMode.Subscribe,
                                              RegName = RegName
                                          });
                 }
@@ -244,7 +244,7 @@ namespace TP
                 ChannelSubscribeMessage unSubscribeMessage = new ChannelSubscribeMessage
                 {
                     RegName = RegName,
-                    Mode = false,
+                    Mode = SubscribeMode.Unsubscribe,
                     LogicalChannelId = message.LogicalChannelId
                 };
 

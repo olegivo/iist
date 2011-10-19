@@ -11,7 +11,7 @@ namespace DMS.Common.Messages
         /// Подписка (<see langword="true"/>) / отписки (<see langword="false"/>) от канала
         /// </summary>
         [DataMember]
-        public bool Mode { get; set; }
+        public SubscribeMode Mode { get; set; }
 
         /// <summary>
         /// 

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using DMS.Common.Messages;
 using Oleg_ivo.LowLevelClient;
 using Oleg_ivo.Plc.Channels;
+using Oleg_ivo.Tools.UI;
 
 namespace EmulationClient
 {
@@ -55,11 +57,12 @@ namespace EmulationClient
         {
             foreach (LogicalChannel channel in LogicalChannels)
             {
-                Proxy.ChannelRegisterAsync(new ChannelRegistrationMessage()
+                Proxy.ChannelRegisterAsync(new ChannelRegistrationMessage
                                                {
+                                                   RegName = RegName,
                                                    LogicalChannelId = channel.Id,
                                                    DataMode = channel.Id > 100 ? DataMode.Write : DataMode.Read,
-                                                   Mode = RegistrationMode.Register
+                                                   RegistrationMode = RegistrationMode.Register
                                                },
                                            channel.Id);
             }
@@ -74,9 +77,10 @@ namespace EmulationClient
             {
                 Proxy.ChannelUnRegisterAsync(new ChannelRegistrationMessage
                                                {
+                                                   RegName = RegName,
                                                    LogicalChannelId = channel.Id,
                                                    DataMode = channel.Id > 100 ? DataMode.Write : DataMode.Read,
-                                                   Mode = RegistrationMode.Unregister
+                                                   RegistrationMode = RegistrationMode.Unregister
                                                },
                                            channel.Id);
             }
@@ -87,16 +91,32 @@ namespace EmulationClient
             Console.WriteLine("{0}", sender);
         }
 
-        private List<LogicalChannel> _logicalChannels;
+        private IEnumerable<LogicalChannel> _logicalChannels;
 
-        ///<summary>
-        ///
-        ///</summary>
-        internal new List<LogicalChannel> LogicalChannels
+
+        public List<LogicalChannel> LogicalChannels
         {
-            get { return _logicalChannels; }
-            set { _logicalChannels = value; }
+            get { return GetLogicalChannels() as List<LogicalChannel>; }
+            set
+            {
+                _logicalChannels = value;
+                if (LogicalChannels!=null)
+                {
+                    foreach (var logicalChannel in LogicalChannels)
+                    {
+                        TryAddPoll(new MovingEventArgs(DoubleListBoxControl.Direction.LeftToRight, logicalChannel.Id),
+                                   new Control());
+                    }
+                }
+            }
         }
 
+        ///<summary>
+        /// Логические каналы
+        ///</summary>
+        protected override IEnumerable<LogicalChannel> GetLogicalChannels()
+        {
+            return _logicalChannels;
+        }
     }
 }

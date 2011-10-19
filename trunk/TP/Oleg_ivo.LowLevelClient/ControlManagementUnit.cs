@@ -90,14 +90,10 @@ namespace Oleg_ivo.LowLevelClient
         ///<summary>
         /// Логические каналы
         ///</summary>
-        protected virtual IEnumerable<LogicalChannel> LogicalChannels
+        protected virtual IEnumerable<LogicalChannel> GetLogicalChannels()
         {
-            get
-            {
-                return DistributedMeasurementInformationSystem.PlcManagerBase.LogicalChannels;
-            }
+            return DistributedMeasurementInformationSystem.PlcManagerBase.LogicalChannels;
         }
-
 
 
         void Instance_NewDadaReceived(object sender, NewDataReceivedEventArgs e)
@@ -142,7 +138,7 @@ namespace Oleg_ivo.LowLevelClient
             }
         }
 
-        private string RegName
+        protected string RegName
         {
             get
             {
@@ -161,7 +157,7 @@ namespace Oleg_ivo.LowLevelClient
         void CallbackHandler_ChannelSubscribed(object sender, ChannelSubscribeEventArgs e)
         {
             LogicalChannel channel =
-                LogicalChannels.AsEnumerable().FirstOrDefault(
+                GetLogicalChannels().AsEnumerable().FirstOrDefault(
                     LogicalChannel.GetFindChannelPredicate(e.Message.LogicalChannelId));
 
 
@@ -173,7 +169,7 @@ namespace Oleg_ivo.LowLevelClient
         void CallbackHandler_ChannelUnSubscribed(object sender, ChannelSubscribeEventArgs e)
         {
             LogicalChannel channel =
-                LogicalChannels.AsEnumerable().FirstOrDefault(
+                GetLogicalChannels().AsEnumerable().FirstOrDefault(
                     LogicalChannel.GetFindChannelPredicate(e.Message.LogicalChannelId));
 
             Protocol(string.Format("{0} был отписан от получения новых данных", channel));
@@ -226,7 +222,8 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public void Register()
         {
-            LowLevelMessageExchangeSystemClient.RegisterAsync(new RegistrationMessage { RegName = RegName, Mode = RegistrationMode.Register });
+            RegistrationMessage message = new RegistrationMessage { RegName = RegName, RegistrationMode = RegistrationMode.Register };
+            LowLevelMessageExchangeSystemClient.RegisterAsync(message);
         }
 
         /// <summary>
@@ -234,7 +231,7 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public void Unregister()
         {
-            LowLevelMessageExchangeSystemClient.UnregisterAsync(new RegistrationMessage { RegName = GetRegName(), Mode = RegistrationMode.Unregister });
+            LowLevelMessageExchangeSystemClient.UnregisterAsync(new RegistrationMessage { RegName = GetRegName(), RegistrationMode = RegistrationMode.Unregister });
         }
 
         /// <summary>
@@ -250,11 +247,11 @@ namespace Oleg_ivo.LowLevelClient
         /// Получить доступные логические каналы
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<int> GetLogicalChannels()
+        public IEnumerable<int> GetAvailableLogicalChannels()
         {
             //добавляем только проидентифицированные каналы (Id > 0):
             return 
-                LogicalChannels
+                GetLogicalChannels()
                     .Select(channel => channel.Id > 0 ? channel.Id : 0)
                         .Where(i => i > 0);
 
@@ -270,7 +267,7 @@ namespace Oleg_ivo.LowLevelClient
         public void TryAddPoll(MovingEventArgs e, ISynchronizeInvoke synchronizingObject)
         {
             LogicalChannel channel =
-                LogicalChannels.AsEnumerable().FirstOrDefault(
+                GetLogicalChannels().AsEnumerable().FirstOrDefault(
                     LogicalChannel.GetFindChannelPredicate((int)e.MovingObject));
 
             if (channel == null)
@@ -311,7 +308,7 @@ namespace Oleg_ivo.LowLevelClient
         public void TryRemovePoll(MovingEventArgs e)
         {
             LogicalChannel channel =
-                LogicalChannels.AsEnumerable()
+                GetLogicalChannels().AsEnumerable()
                         .FirstOrDefault(LogicalChannel.GetFindChannelPredicate((int)e.MovingObject));
 
             if (channel == null)
@@ -328,7 +325,7 @@ namespace Oleg_ivo.LowLevelClient
         {
             LowLevelMessageExchangeSystemClient.ChannelRegisterAsync(channelRegistrationMessage);
             LogicalChannel channel =
-                LogicalChannels.AsEnumerable().FirstOrDefault(
+                GetLogicalChannels().AsEnumerable().FirstOrDefault(
                     LogicalChannel.GetFindChannelPredicate(channelRegistrationMessage.LogicalChannelId));
 
             Protocol(string.Format("{0} зарегистрирован в системе обмена сообщениями", channel));
@@ -342,7 +339,7 @@ namespace Oleg_ivo.LowLevelClient
         {
             LowLevelMessageExchangeSystemClient.ChannelUnRegisterAsync(channelRegistrationMessage);
             LogicalChannel channel =
-                LogicalChannels.AsEnumerable().FirstOrDefault(
+                GetLogicalChannels().AsEnumerable().FirstOrDefault(
                     LogicalChannel.GetFindChannelPredicate(channelRegistrationMessage.LogicalChannelId));
 
             Protocol(string.Format("{0} отмена регистрации в системе обмена сообщениями", channel));

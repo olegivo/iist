@@ -173,7 +173,7 @@ namespace Oleg_ivo.CMU
             ChannelRegistrationMessage subscribeMessage = new ChannelRegistrationMessage
                                                               {
                                                                   RegName = GetRegName(),
-                                                                  Mode =
+                                                                  RegistrationMode =
                                                                       e.MoveDirection ==
                                                                       DoubleListBoxControl.Direction.LeftToRight
                                                                           ? RegistrationMode.Register
@@ -183,7 +183,7 @@ namespace Oleg_ivo.CMU
 
 
             //регистрация каналов в MES
-            switch (subscribeMessage.Mode)
+            switch (subscribeMessage.RegistrationMode)
             {
                 case RegistrationMode.Register:
                     RegisterChannel(subscribeMessage);
@@ -227,7 +227,7 @@ namespace Oleg_ivo.CMU
             List<int> _right = new List<int>();
 
             //добавляем только проидентифицированные каналы (Id > 0):
-            _left.AddRange(ControlManagementUnit.GetLogicalChannels());
+            _left.AddRange(ControlManagementUnit.GetAvailableLogicalChannels());
             //_right.AddRange(Enumerable.Range(11, 10));
             
             doubleListBoxControl1.InitSources(_left, _right);

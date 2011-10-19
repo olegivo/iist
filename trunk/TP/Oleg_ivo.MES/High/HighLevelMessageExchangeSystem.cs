@@ -14,9 +14,9 @@ namespace Oleg_ivo.MES.High
     /// Система обмена сообщениями c клиентами верхнего уровня
     ///</summary>
     [ServiceBehavior(
-        InstanceContextMode = InstanceContextMode.Single, 
-        ConcurrencyMode = ConcurrencyMode.Reentrant, 
-        AutomaticSessionShutdown = false, 
+        InstanceContextMode = InstanceContextMode.Single,
+        ConcurrencyMode = ConcurrencyMode.Reentrant,
+        AutomaticSessionShutdown = false,
         IncludeExceptionDetailInFaults = true)]
     public class HighLevelMessageExchangeSystem : AbstractLevelMessageExchangeSystem<RegisteredHighLevelClient>, IHighLevelMessageExchangeSystem
     {
@@ -67,7 +67,7 @@ namespace Oleg_ivo.MES.High
 
         #region Вспомогательные классы и свойства для регистрации
 
-/*
+        /*
         internal void OnUpdate(double d)
         {
             EventHandler handler = BeforeUpdate;
@@ -99,13 +99,13 @@ namespace Oleg_ivo.MES.High
 
             if (!InterestedRegisteredClients.Contains(registeredHighLevelClient))
                 InterestedRegisteredClients.Add(registeredHighLevelClient);//добавляем к заинтересованным клиентам
-            
+
             try
             {
                 return
                     LowLevelMessageExchangeSystem.Instance.GetAllRegisteredChannels().Select(channel => channel.Id).ToArray();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 success = false;
                 throw;
@@ -215,7 +215,8 @@ namespace Oleg_ivo.MES.High
         /// <param name="message"></param>
         private void ChannelSubscribe(ChannelSubscribeMessage message)
         {
-            if (!message.Mode) throw new ArgumentException("Для подписки на канал в сообщении используется флаг отписки");
+            if (message.Mode != SubscribeMode.Subscribe)
+                throw new ArgumentException("Для подписки на канал в сообщении используется флаг отписки");
 
             RegisteredHighLevelClient registeredHighLevelClient = GetRegisteredHighLevelClient(message);
             if (registeredHighLevelClient != null)
@@ -230,7 +231,8 @@ namespace Oleg_ivo.MES.High
         /// <param name="message"></param>
         private void ChannelUnSubscribe(ChannelSubscribeMessage message)
         {
-            if (message.Mode) throw new ArgumentException("Для отписки от канала в сообщении используется флаг подписки");
+            if (message.Mode != SubscribeMode.Unsubscribe)
+                throw new ArgumentException("Для отписки от канала в сообщении используется флаг подписки");
 
             RegisteredHighLevelClient registeredHighLevelClient = GetRegisteredHighLevelClient(message);
             if (registeredHighLevelClient != null)
@@ -318,7 +320,7 @@ namespace Oleg_ivo.MES.High
         {
             NotifySubscribeEvents();
 
-            if (message.Mode != RegistrationMode.Register)
+            if (message.RegistrationMode != RegistrationMode.Register)
                 throw new ArgumentException("Для регистрации клиента в сообщении используется флаг отмены регистрации");
 
             RegisteredHighLevelClient registeredHighLevelClient = GetRegisteredHighLevelClient(message, false);
@@ -336,10 +338,10 @@ namespace Oleg_ivo.MES.High
             {
                 if (registeredHighLevelClient == null)
                 {
-                    registeredHighLevelClient = new RegisteredHighLevelClient {Ticker = message.RegName};
+                    registeredHighLevelClient = new RegisteredHighLevelClient { Ticker = message.RegName };
                     AddClient(message.RegName, registeredHighLevelClient);
                 }
-//                registeredHighLevelClient = (RegisteredHighLevelClient)_registeredClients[message.RegName];
+                //                registeredHighLevelClient = (RegisteredHighLevelClient)_registeredClients[message.RegName];
 
                 //Thread t = new Thread(w.RegisteredHighLevelClientProcess.SendUpdateToClient) { IsBackground = true };
                 //t.Start();
@@ -352,21 +354,26 @@ namespace Oleg_ivo.MES.High
                 OnRegistered(registeredHighLevelClient, message);
 
                 //todo: после регистрации сообщаем клиенту о всех зарегистрированных каналах (в дальнейшем может, через свойство?)
-/*
-                var registeredLogicalChannels = LowLevelMessageExchangeSystem.Instance.GetAllRegisteredChannels();
-                foreach (var registeredLogicalChannel in registeredLogicalChannels)
-                {
-                    registeredHighLevelClient.ChannelRegister(new ChannelRegistrationMessage { LogicalChannelId = registeredLogicalChannel.Id });
-                }
-*/
+                /*
+                                var registeredLogicalChannels = LowLevelMessageExchangeSystem.Instance.GetAllRegisteredChannels();
+                                foreach (var registeredLogicalChannel in registeredLogicalChannels)
+                                {
+                                    registeredHighLevelClient.ChannelRegister(new ChannelRegistrationMessage { LogicalChannelId = registeredLogicalChannel.Id });
+                                }
+                */
 
             }
         }
 
+        private bool subscribed;
         private void NotifySubscribeEvents()
         {
-            LowLevelMessageExchangeSystem.Instance.ChannelRegistered += Low_ChannelRegistered;
-            LowLevelMessageExchangeSystem.Instance.ChannelUnregistered += Low_ChannelUnregistered;
+            if (!subscribed)
+            {
+                LowLevelMessageExchangeSystem.Instance.ChannelRegistered += Low_ChannelRegistered;
+                LowLevelMessageExchangeSystem.Instance.ChannelUnregistered += Low_ChannelUnregistered;
+                subscribed = true;
+            }
         }
 
         private RegisteredHighLevelClient GetRegisteredHighLevelClient(InternalMessage message)
@@ -400,7 +407,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="clientCallback"></param>
         private void Unregister(RegistrationMessage message, IHighLevelClientCallback clientCallback)
         {
-            if (message.Mode != RegistrationMode.Unregister) 
+            if (message.RegistrationMode != RegistrationMode.Unregister)
                 throw new ArgumentException("Для отмены регистрации клиента в сообщении используется флаг регистрации");
 
             //получить рабочий объект из данного тикера и удалить
@@ -410,11 +417,11 @@ namespace Oleg_ivo.MES.High
             if (registeredHighLevelClient != null)
             {
                 registeredHighLevelClient.RemoveCallback(clientCallback);//лишаем клиента уведомлений
-                
+
                 OnUnregistered(registeredHighLevelClient, message);//уведомляем о том, что клиент отменил регистрацию
 
-//                if (registeredHighLevelClient.HasCallbacks) 
-                    RemoveClient(message.RegName);
+                //                if (registeredHighLevelClient.HasCallbacks) 
+                RemoveClient(message.RegName);
 
             }
         }
@@ -479,7 +486,7 @@ namespace Oleg_ivo.MES.High
         {
             RegisteredLogicalChannel subscribedChannel = FindSubscribedChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId));
 
-            if (subscribedChannel!=null)
+            if (subscribedChannel != null)
             {
                 subscribedChannel.InvokeRead(message);
             }
@@ -508,7 +515,7 @@ namespace Oleg_ivo.MES.High
                                                                       {
                                                                           LogicalChannelId = registeredLogicalChannelId,
                                                                           RegName = regName,
-                                                                          Mode = false
+                                                                          Mode = SubscribeMode.Unsubscribe
                                                                       };
                 ChannelUnSubscribe(channelSubscribeMessage);
             }
@@ -528,9 +535,9 @@ namespace Oleg_ivo.MES.High
         public IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state)
         {
             Console.WriteLine("Начало регистрации клиента {0}", message.RegName);
-            
+
             IHighLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IHighLevelClientCallback>();
-            
+
             var caller = new RigistrationCaller(Register);
             IAsyncResult result = caller.BeginInvoke(message, clientCallback, callback, state);
             return result;

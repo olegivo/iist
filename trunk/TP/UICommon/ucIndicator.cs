@@ -186,11 +186,13 @@ namespace UICommon
             //linearScaleStateIndicatorComponent1.StateIndex = linearScaleStateIndicatorComponent1.States.IndexOf(state);
             
             //Console.Clear();
+/*
             Console.WriteLine("High: {0} - {1}", rangeHigh.StartValue, rangeHigh.EndValue);
             Console.WriteLine("Norm: {0} - {1}", rangeNormal.StartValue, rangeNormal.EndValue);
             Console.WriteLine("Low:  {0} - {1}", rangeLow.StartValue, rangeLow.EndValue);
             Console.WriteLine("State: {0}", linearScaleStateIndicatorComponent1.State.Name);
             Console.WriteLine();
+*/
         }
 
         private void linearScaleComponent1_MinMaxValueChanged(object sender, EventArgs e)
