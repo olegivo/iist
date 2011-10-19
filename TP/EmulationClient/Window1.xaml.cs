@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Input;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace EmulationClient
 {
@@ -14,6 +17,11 @@ namespace EmulationClient
             InitializeComponent();
             App app = (App) App.Current;
             controlManagementUnitEmulation = app.ControlManagementUnit;
+            controlManagementUnitEmulation.NeedProtocol += new System.EventHandler<System.EventArgs>(controlManagementUnitEmulation_NeedProtocol);
+        }
+        private void controlManagementUnitEmulation_NeedProtocol(object sender, EventArgs e)
+        {
+            textBox1.Text = System.DateTime.Now + " " + sender;  
         }
 
         private void btnUnregister_Click(object sender, RoutedEventArgs e)
