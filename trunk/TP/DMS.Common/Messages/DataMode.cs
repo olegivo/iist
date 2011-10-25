@@ -1,8 +1,11 @@
+using System;
+
 namespace DMS.Common.Messages
 {
     /// <summary>
-    /// Режим данных
+    /// Режим данных (чтение/запись)
     /// </summary>
+    [Flags]
     public enum DataMode
     {
         /// <summary>

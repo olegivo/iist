@@ -57,14 +57,10 @@ namespace EmulationClient
         {
             foreach (LogicalChannel channel in LogicalChannels)
             {
-                Proxy.ChannelRegisterAsync(new ChannelRegistrationMessage
-                                               {
-                                                   RegName = RegName,
-                                                   LogicalChannelId = channel.Id,
-                                                   DataMode = channel.Id > 100 ? DataMode.Write : DataMode.Read,
-                                                   RegistrationMode = RegistrationMode.Register
-                                               },
-                                           channel.Id);
+                Proxy.ChannelRegisterAsync(
+                    new ChannelRegistrationMessage(RegName, null, RegistrationMode.Register,
+                                                   channel.Id > 100 ? DataMode.Write : DataMode.Read, channel.Id),
+                    channel.Id);
             }
         }
 
@@ -75,14 +71,10 @@ namespace EmulationClient
         {
             foreach (LogicalChannel channel in LogicalChannels)
             {
-                Proxy.ChannelUnRegisterAsync(new ChannelRegistrationMessage
-                                               {
-                                                   RegName = RegName,
-                                                   LogicalChannelId = channel.Id,
-                                                   DataMode = channel.Id > 100 ? DataMode.Write : DataMode.Read,
-                                                   RegistrationMode = RegistrationMode.Unregister
-                                               },
-                                           channel.Id);
+                Proxy.ChannelUnRegisterAsync(
+                    new ChannelRegistrationMessage(RegName, null, RegistrationMode.Unregister,
+                                                   channel.Id > 100 ? DataMode.Write : DataMode.Read, channel.Id),
+                    channel.Id);
             }
         }
 
@@ -100,7 +92,7 @@ namespace EmulationClient
             set
             {
                 _logicalChannels = value;
-                if (LogicalChannels!=null)
+                if (LogicalChannels != null)
                 {
                     foreach (var logicalChannel in LogicalChannels)
                     {

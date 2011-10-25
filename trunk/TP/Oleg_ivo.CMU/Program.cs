@@ -31,7 +31,8 @@ namespace Oleg_ivo.CMU
             ControlManagementUnit.Proxy.SendErrorCompleted += Proxy_SendErrorCompleted;
             try
             {
-                ControlManagementUnit.Proxy.SendErrorAsync(new InternalErrorMessage(e.Exception), e);
+                //TODO: заполнить RegNameFrom
+                ControlManagementUnit.Proxy.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
                 if (e.Exception is ArgumentOutOfRangeException)
                     e.ShowError = false;
             }

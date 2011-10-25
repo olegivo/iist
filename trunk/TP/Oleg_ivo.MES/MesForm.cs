@@ -48,7 +48,7 @@ namespace Oleg_ivo.MES
         {
             InternalErrorMessage internalErrorMessage = e.Message;
             string s = string.Format("{0}\tКлиент {1} сообщает об ошибке:{2}{3}", internalErrorMessage.TimeStamp,
-                                     internalErrorMessage.RegName,
+                                     internalErrorMessage.RegNameFrom,
                                      Environment.NewLine, internalErrorMessage.Error);
             Protocol(s);
             
@@ -73,10 +73,10 @@ namespace Oleg_ivo.MES
                 RegistrationMessage registrationMessage = e.Message as RegistrationMessage;
                 if (registrationMessage != null)
                 {
-                    var client = new { Name = registrationMessage.RegName, Value = e.RegisteredLowLevelClient };
+                    var client = new { Name = registrationMessage.RegNameFrom, Value = e.RegisteredLowLevelClient };
                     RemoveItem(lbRegisteredLow, client);
                     Protocol(string.Format("{0}\tКлиент нижнего уровня [{1}] отменил регистрацию на сервере{2}",
-                                           DateTime.Now, registrationMessage.RegName, Environment.NewLine));
+                                           DateTime.Now, registrationMessage.RegNameFrom, Environment.NewLine));
                 }
             }
         }
@@ -88,10 +88,10 @@ namespace Oleg_ivo.MES
                 RegistrationMessage registrationMessage = e.Message as RegistrationMessage;
                 if (registrationMessage != null)
                 {
-                    var client = new { Name = registrationMessage.RegName, Value = e.RegisteredHighLevelClient };
+                    var client = new { Name = registrationMessage.RegNameFrom, Value = e.RegisteredHighLevelClient };
                     RemoveItem(lbRegisteredHigh, client);
                     Protocol(string.Format("{0}\tКлиент верхнего уровня [{1}] отменил регистрацию на сервере{2}",
-                                           DateTime.Now, registrationMessage.RegName, Environment.NewLine));
+                                           DateTime.Now, registrationMessage.RegNameFrom, Environment.NewLine));
                 }
             }
         }
@@ -103,10 +103,10 @@ namespace Oleg_ivo.MES
                 RegistrationMessage registrationMessage = e.Message as RegistrationMessage;
                 if (registrationMessage != null)
                 {
-                    var client = new {Name = registrationMessage.RegName, Value = e.RegisteredLowLevelClient};
+                    var client = new {Name = registrationMessage.RegNameFrom, Value = e.RegisteredLowLevelClient};
                     AddItem(lbRegisteredLow, client);
                     Protocol(string.Format("{0}\tКлиент нижнего уровня [{1}] зарегистрировался на сервере{2}",
-                                           DateTime.Now, registrationMessage.RegName, Environment.NewLine));
+                                           DateTime.Now, registrationMessage.RegNameFrom, Environment.NewLine));
                 }
             }
         }
@@ -118,10 +118,10 @@ namespace Oleg_ivo.MES
                 RegistrationMessage registrationMessage = e.Message as RegistrationMessage;
                 if (registrationMessage != null)
                 {
-                    var client = new {Name = registrationMessage.RegName, Value = e.RegisteredHighLevelClient};
+                    var client = new {Name = registrationMessage.RegNameFrom, Value = e.RegisteredHighLevelClient};
                     AddItem(lbRegisteredHigh, client);
                     Protocol(string.Format("{0}\tКлиент верхнего уровня [{1}] зарегистрировался на сервере{2}",
-                                           DateTime.Now, registrationMessage.RegName, Environment.NewLine));
+                                           DateTime.Now, registrationMessage.RegNameFrom, Environment.NewLine));
                 }
             }
         }
@@ -132,7 +132,7 @@ namespace Oleg_ivo.MES
             {
                 string s = string.Format("{0}\tКлиент нижнего уровня [{1}] зарегистрировал на сервере канал [{2}]{3}",
                                               DateTime.Now, 
-                                              e.ChannelRegistrationMessage.RegName,
+                                              e.ChannelRegistrationMessage.RegNameFrom,
                                               e.ChannelRegistrationMessage.LogicalChannelId,
                                               Environment.NewLine);
                 Protocol(s);
@@ -145,7 +145,7 @@ namespace Oleg_ivo.MES
             {
                 string s = string.Format("{0}\tКлиент нижнего уровня [{1}] отменил регистрацию на сервере канала [{2}]{3}",
                                               DateTime.Now, 
-                                              e.ChannelRegistrationMessage.RegName,
+                                              e.ChannelRegistrationMessage.RegNameFrom,
                                               e.ChannelRegistrationMessage.LogicalChannelId,
                                               Environment.NewLine);
                 Protocol(s);
@@ -158,7 +158,7 @@ namespace Oleg_ivo.MES
             {
                 string s = string.Format("{0}\tКлиент верхнего уровня [{1}] подписался канал [{2}]{3}",
                                               DateTime.Now,
-                                              e.ChannelSubscribeMessage.RegName,
+                                              e.ChannelSubscribeMessage.RegNameFrom,
                                               e.ChannelSubscribeMessage.LogicalChannelId,
                                               Environment.NewLine);
                 Protocol(s);
@@ -171,7 +171,7 @@ namespace Oleg_ivo.MES
             {
                 string s = string.Format("{0}\tКлиент верхнего уровня [{1}] отписался от канала [{2}]{3}",
                                               DateTime.Now,
-                                              e.ChannelSubscribeMessage.RegName,
+                                              e.ChannelSubscribeMessage.RegNameFrom,
                                               e.ChannelSubscribeMessage.LogicalChannelId,
                                               Environment.NewLine);
                 Protocol(s);
@@ -257,11 +257,24 @@ namespace Oleg_ivo.MES
             foreach (var selectedItem in lbRegisteredHigh.SelectedItems)
             {
                 RegisteredHighLevelClient registeredHighLevelClient =
-                    selectedItem.GetType().GetProperty(lbRegisteredHigh.ValueMember).GetGetMethod().Invoke(
-                        selectedItem, null) as RegisteredHighLevelClient;
+                    GetRegisteredClient(selectedItem, lbRegisteredHigh.ValueMember) as RegisteredHighLevelClient;
+                string clientRegName =
+                    GetClientRegName(selectedItem, lbRegisteredLow.DisplayMember);
                 if (registeredHighLevelClient != null)
-                    registeredHighLevelClient.SendMessageToClient(new InternalMessage());
+                    registeredHighLevelClient.SendMessageToClient(new InternalMessage(HighLevelMessageExchangeSystem.Instance.RegName, clientRegName));
             }
+        }
+
+        private object GetRegisteredClient(object selectedItem, string valueMember)
+        {
+            return selectedItem.GetType().GetProperty(valueMember).GetGetMethod().Invoke(
+                selectedItem, null);
+        }
+
+        private string GetClientRegName(object selectedItem, string displayMember)
+        {
+            return selectedItem.GetType().GetProperty(displayMember).GetGetMethod().Invoke(
+                selectedItem, null) as string;
         }
 
         private void btnSendMessageLow_Click(object sender, EventArgs e)
@@ -269,10 +282,11 @@ namespace Oleg_ivo.MES
             foreach (var selectedItem in lbRegisteredLow.SelectedItems)
             {
                 RegisteredLowLevelClient registeredHighLevelClient =
-                    selectedItem.GetType().GetProperty(lbRegisteredHigh.ValueMember).GetGetMethod().Invoke(
-                        selectedItem, null) as RegisteredLowLevelClient;
+                    GetRegisteredClient(selectedItem, lbRegisteredLow.ValueMember) as RegisteredLowLevelClient;
+                string clientRegName =
+                    GetClientRegName(selectedItem, lbRegisteredHigh.DisplayMember);
                 if (registeredHighLevelClient != null)
-                    registeredHighLevelClient.SendMessageToClient(new InternalMessage());
+                    registeredHighLevelClient.SendMessageToClient(new InternalMessage(LowLevelMessageExchangeSystem.Instance.RegName, clientRegName));
             }
         }
 

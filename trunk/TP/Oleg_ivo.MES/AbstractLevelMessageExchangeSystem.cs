@@ -27,6 +27,11 @@ namespace Oleg_ivo.MES
         }
 
         /// <summary>
+        /// Регистрационое имя системы обмена сообщений
+        /// </summary>
+        public virtual string RegName { get { return "MESHighLevel"; } }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="key"></param>
@@ -67,11 +72,11 @@ namespace Oleg_ivo.MES
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="regName"></param>
-        protected virtual void RemoveClient(String regName)
+        /// <param name="clientRegName"></param>
+        protected virtual void RemoveClient(String clientRegName)
         {
             //убираем из коллекции зарегистрированных клиентов
-            this[regName] = default(TRegisteredClient);
+            this[clientRegName] = default(TRegisteredClient);
         }
 
         private delegate void SendErrorCaller(InternalErrorMessage message);
@@ -84,7 +89,7 @@ namespace Oleg_ivo.MES
         /// <param name="state"></param>
         public IAsyncResult BeginSendError(InternalErrorMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Начало передачи сообщения об ошибке от клиента {0}", message.RegName);
+            Console.WriteLine("Начало передачи сообщения об ошибке от клиента {0}", message.RegNameFrom);
             //TODO: для тестирования BeginSendError: throw new FaultException<InternalException>(new InternalException("Test"),"Reason");
             var caller = new SendErrorCaller(SendError);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);

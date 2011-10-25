@@ -15,13 +15,23 @@ namespace DMS.Common.Messages
     public class InternalMessage : IInternalMessage
     {
         #region constructors
+
         /// <summary>
         /// Конструктор
         /// </summary>
-        public InternalMessage(/*[Optional,DefaultParameterValue(null)] DateTime timeStamp*/)
+        /// <param name="regNameFrom">Регистрационое имя, от которого посылается сообщение</param>
+        /// <param name="regNameTo">Регистрационое имя, которому посылается сообщение</param>
+        public InternalMessage(string regNameFrom, string regNameTo)
         {
+            RegNameFrom = regNameFrom;
+            RegNameTo = regNameTo;
             //если временная метка не указана, она создаётся внутри конструктора как текущее время
             TimeStamp = /*DateTime.MinValue > timeStamp ? timeStamp : */DateTime.Now;
+        }
+
+        protected InternalMessage()
+        {
+            
         }
 
         #endregion
@@ -31,19 +41,19 @@ namespace DMS.Common.Messages
         /// Временная метка создания сообщения
         /// </summary>
         [DataMember]
-        public DateTime TimeStamp { get; private set; }
+        public DateTime TimeStamp { get; set; }
 
         /// <summary>
-        /// Режим данных
+        /// Регистрационое имя, от которого посылается сообщение
         /// </summary>
         [DataMember]
-        public DataMode DataMode { get; set; }
+        public string RegNameFrom { get; set; }
 
         /// <summary>
-        /// Наименование пославшего сообщение
+        /// Регистрационое имя, которому посылается сообщение
         /// </summary>
         [DataMember]
-        public string RegName { get; set; }
+        public string RegNameTo { get; set; }
 
         #endregion
 

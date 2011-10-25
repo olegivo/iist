@@ -89,7 +89,7 @@ namespace Oleg_ivo.CMU
 
         private void btnSendMessage_Click(object sender, EventArgs e)
         {
-            ControlManagementUnit.SendMessage(new InternalMessage());
+            ControlManagementUnit.SendMessage(new InternalMessage(GetRegName(), null));
         }
 
         private bool CanRegister
@@ -170,26 +170,25 @@ namespace Oleg_ivo.CMU
 
         private void doubleListBoxControl1_ItemMoved(object sender, MovedEventArgs e)
         {
-            ChannelRegistrationMessage subscribeMessage = new ChannelRegistrationMessage
-                                                              {
-                                                                  RegName = GetRegName(),
-                                                                  RegistrationMode =
-                                                                      e.MoveDirection ==
-                                                                      DoubleListBoxControl.Direction.LeftToRight
-                                                                          ? RegistrationMode.Register
-                                                                          : RegistrationMode.Unregister,
-                                                                  LogicalChannelId = (int) e.MovingObject
-                                                              };
+            RegistrationMode registrationMode = e.MoveDirection ==
+                                                DoubleListBoxControl.Direction.LeftToRight
+                                                    ? RegistrationMode.Register
+                                                    : RegistrationMode.Unregister;
+            ChannelRegistrationMessage registrationMessage = new ChannelRegistrationMessage(GetRegName(), null,
+                                                                                            registrationMode,
+                                                                                            DataMode.Read |
+                                                                                            DataMode.Write,
+                                                                                            (int) e.MovingObject);
 
 
             //регистрация каналов в MES
-            switch (subscribeMessage.RegistrationMode)
+            switch (registrationMessage.RegistrationMode)
             {
                 case RegistrationMode.Register:
-                    RegisterChannel(subscribeMessage);
+                    RegisterChannel(registrationMessage);
                     break;
                 case RegistrationMode.Unregister:
-                    UnRegisterChannel(subscribeMessage);
+                    UnRegisterChannel(registrationMessage);
                     break;
             }
 
@@ -238,13 +237,10 @@ namespace Oleg_ivo.CMU
             foreach (int logicalChannelId in doubleListBoxControl1.SelectionRight)
             {
                 InternalLogicalChannelDataMessage message =
-                    new InternalLogicalChannelDataMessage
-                    {
-                        DataMode = DataMode.Read,
-                        RegName = GetRegName(),
-                        Value = Math.PI,
-                        LogicalChannelId = logicalChannelId
-                    };
+                    new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Read, logicalChannelId)
+                        {
+                            Value = Math.PI
+                        };
                 ControlManagementUnit.ReadChannel(message);
             }
         }

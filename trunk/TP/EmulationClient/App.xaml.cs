@@ -82,7 +82,8 @@ namespace EmulationClient
             ControlManagementUnitEmulation.Proxy.SendErrorCompleted += Proxy_SendErrorCompleted;
             try
             {
-                ControlManagementUnitEmulation.Proxy.SendErrorAsync(new InternalErrorMessage(e.Exception), e);
+                //TODO: заполнить RegNameFrom
+                ControlManagementUnitEmulation.Proxy.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
                 if (e.Exception is ArgumentOutOfRangeException)
                     e.ShowError = false;
             }
