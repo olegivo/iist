@@ -145,7 +145,7 @@ namespace Oleg_ivo.LowLevelClient
         }
 
         /// <summary>
-        /// Прочитан канал
+        /// Записан канал
         /// </summary>
         public static event EventHandler<DataEventArgs> HasWriteChannel;
 
