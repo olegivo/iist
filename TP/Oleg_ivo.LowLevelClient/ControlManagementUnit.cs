@@ -38,11 +38,11 @@ namespace Oleg_ivo.LowLevelClient
             Planner.NewDadaReceived += Instance_NewDadaReceived;
         }
 
-        void CallbackHandler_HasWriteChannel(object sender, DMS.Common.Events.DataEventArgs e)
+        void CallbackHandler_HasWriteChannel(object sender, DataEventArgs e)
         {
             string s = string.Format("Канал №{0} клиент - {1} [{2}] получено значение {3}",
                                      e.Message.LogicalChannelId,
-                                     e.Message.RegName,
+                                     e.Message.RegNameFrom,
                                      e.Message.TimeStamp,
                                      e.Message.Value);
             Protocol(s);
@@ -98,13 +98,12 @@ namespace Oleg_ivo.LowLevelClient
 
         void Instance_NewDadaReceived(object sender, NewDataReceivedEventArgs e)
         {
-            InternalLogicalChannelDataMessage message = new InternalLogicalChannelDataMessage
-            {
-                DataMode = DataMode.Read,
-                LogicalChannelId = e.LogicalChannel.Id,
-                RegName = RegName,
-                Value = e.Value
-            };
+            InternalLogicalChannelDataMessage message = new InternalLogicalChannelDataMessage(null, RegName, DataMode.Read,
+                                                                                              e.LogicalChannel.Id)
+                //TODO: заполнить RegNameFrom          
+                                                            {
+                                                                Value = e.Value
+                                                            };
 
             //заставляем систему обмена сообщениями реагировать на новые данные:
             ReadChannel(message);
@@ -222,7 +221,7 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public void Register()
         {
-            RegistrationMessage message = new RegistrationMessage { RegName = RegName, RegistrationMode = RegistrationMode.Register };
+            RegistrationMessage message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
             LowLevelMessageExchangeSystemClient.RegisterAsync(message);
         }
 
@@ -231,7 +230,7 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public void Unregister()
         {
-            LowLevelMessageExchangeSystemClient.UnregisterAsync(new RegistrationMessage { RegName = GetRegName(), RegistrationMode = RegistrationMode.Unregister });
+            LowLevelMessageExchangeSystemClient.UnregisterAsync(new RegistrationMessage(GetRegName(), null, RegistrationMode.Unregister, DataMode.Unknown));
         }
 
         /// <summary>

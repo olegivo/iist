@@ -53,6 +53,14 @@ namespace Oleg_ivo.MES.High
 
         #endregion
 
+        /// <summary>
+        /// –егистрационое им€ системы обмена сообщений верхнего уровн€
+        /// </summary>
+        public override string RegName
+        {
+            get { return "MESHighLevel"; }
+        }
+
         private void Low_ChannelRegistered(object sender, LowRegisteredLogicalChannelSubscribeEventArgs e)
         {
             foreach (RegisteredHighLevelClient registeredHighLevelClient in InterestedRegisteredClients.Where(client => client.Interested))
@@ -95,7 +103,7 @@ namespace Oleg_ivo.MES.High
                 throw new Exception(
                     string.Format(
                         "ѕри попытке получить зарегистрированные в системе каналы произошла ошибка: клиент с регистрационным именем [{0}] не найден",
-                        message.RegName));
+                        message.RegNameFrom));
 
             if (!InterestedRegisteredClients.Contains(registeredHighLevelClient))
                 InterestedRegisteredClients.Add(registeredHighLevelClient);//добавл€ем к заинтересованным клиентам
@@ -338,10 +346,10 @@ namespace Oleg_ivo.MES.High
             {
                 if (registeredHighLevelClient == null)
                 {
-                    registeredHighLevelClient = new RegisteredHighLevelClient { Ticker = message.RegName };
-                    AddClient(message.RegName, registeredHighLevelClient);
+                    registeredHighLevelClient = new RegisteredHighLevelClient { Ticker = message.RegNameFrom };
+                    AddClient(message.RegNameFrom, registeredHighLevelClient);
                 }
-                //                registeredHighLevelClient = (RegisteredHighLevelClient)_registeredClients[message.RegName];
+                //                registeredHighLevelClient = (RegisteredHighLevelClient)_registeredClients[message.RegNameFrom];
 
                 //Thread t = new Thread(w.RegisteredHighLevelClientProcess.SendUpdateToClient) { IsBackground = true };
                 //t.Start();
@@ -383,7 +391,7 @@ namespace Oleg_ivo.MES.High
 
         private RegisteredHighLevelClient GetRegisteredHighLevelClient(InternalMessage message, bool withCallbacks)
         {
-            RegisteredHighLevelClient registeredHighLevelClient = this[message.RegName];
+            RegisteredHighLevelClient registeredHighLevelClient = this[message.RegNameFrom];
             if (withCallbacks && registeredHighLevelClient != null && !registeredHighLevelClient.HasCallbacks)
                 registeredHighLevelClient = null;
 
@@ -421,7 +429,7 @@ namespace Oleg_ivo.MES.High
                 OnUnregistered(registeredHighLevelClient, message);//уведомл€ем о том, что клиент отменил регистрацию
 
                 //                if (registeredHighLevelClient.HasCallbacks) 
-                RemoveClient(message.RegName);
+                RemoveClient(message.RegNameFrom);
 
             }
         }
@@ -494,33 +502,31 @@ namespace Oleg_ivo.MES.High
             {
                 Console.WriteLine(
                     " анал [{0}] извещает о приходе новых данных (чтение) от клиента [{1}], но на него никто не подписан",
-                    message.LogicalChannelId, message.RegName);
+                    message.LogicalChannelId, message.RegNameFrom);
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="regName"></param>
-        protected override void RemoveClient(string regName)
+        /// <param name="clientRegName"></param>
+        protected override void RemoveClient(string clientRegName)
         {
             //убираем зарегистрированные каналы
-            var registeredHighLevelClient = this[regName];
+            var registeredHighLevelClient = this[clientRegName];
 
             foreach (int registeredLogicalChannelId in registeredHighLevelClient.RegisteredLogicalChannels.Keys.ToArray())
             {
                 //имитируем посылку сообщени€ от клиента о том, что он отписываетс€ от канала 
                 //(тогда источники подписки будут об этом уведомлены)
-                ChannelSubscribeMessage channelSubscribeMessage = new ChannelSubscribeMessage
-                                                                      {
-                                                                          LogicalChannelId = registeredLogicalChannelId,
-                                                                          RegName = regName,
-                                                                          Mode = SubscribeMode.Unsubscribe
-                                                                      };
+                var channelSubscribeMessage = new ChannelSubscribeMessage(RegName, 
+                                                                          clientRegName,
+                                                                          SubscribeMode.Unsubscribe,
+                                                                          registeredLogicalChannelId);
                 ChannelUnSubscribe(channelSubscribeMessage);
             }
 
-            base.RemoveClient(regName);
+            base.RemoveClient(clientRegName);
 
         }
 
@@ -534,7 +540,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="state"></param>
         public IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Ќачало регистрации клиента {0}", message.RegName);
+            Console.WriteLine("Ќачало регистрации клиента {0}", message.RegNameFrom);
 
             IHighLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IHighLevelClientCallback>();
 
@@ -561,7 +567,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="state"></param>
         public IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Ќачало отмены регистрации клиента {0}", message.RegName);
+            Console.WriteLine("Ќачало отмены регистрации клиента {0}", message.RegNameFrom);
 
             IHighLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IHighLevelClientCallback>();
 

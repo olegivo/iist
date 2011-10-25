@@ -4,7 +4,7 @@
   <xs:complexType name="InternalMessage">
     <xs:sequence>
       <xs:element minOccurs="0" name="DataMode" type="tns:DataMode" />
-      <xs:element minOccurs="0" name="RegName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegNameFrom" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TimeStamp" type="xs:dateTime" />
     </xs:sequence>
   </xs:complexType>

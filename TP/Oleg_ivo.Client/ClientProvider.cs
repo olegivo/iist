@@ -268,8 +268,8 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public void Register()
         {
-            Proxy.Register(new RegistrationMessage { RegName = RegName, RegistrationMode = RegistrationMode.Register });
-            RegisteredChannels = Proxy.GetRegisteredChannels(new InternalMessage { RegName = RegName });
+            Proxy.Register(new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write));
+            RegisteredChannels = Proxy.GetRegisteredChannels(new InternalMessage(RegName, null));
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace Oleg_ivo.HighLevelClient
         public void Register(EventHandler<AsyncCompletedEventArgs> proxyRegisterCompleted)
         {
             _proxyRegisterCompleted = proxyRegisterCompleted;
-            Proxy.RegisterAsync(new RegistrationMessage { RegName = RegName, RegistrationMode = RegistrationMode.Register });
+            Proxy.RegisterAsync(new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write));
             Proxy.RegisterCompleted += Proxy_RegisterCompleted;
         }
 
@@ -288,7 +288,7 @@ namespace Oleg_ivo.HighLevelClient
             Proxy.RegisterCompleted -= Proxy_RegisterCompleted;
             if (e.Error!=null)
                 throw new InvalidOperationException(e.Error.ToString(), e.Error);
-            RegisteredChannels = Proxy.GetRegisteredChannels(new InternalMessage { RegName = RegName });
+            RegisteredChannels = Proxy.GetRegisteredChannels(new InternalMessage(RegName, null));
 
             if (_proxyRegisterCompleted!=null)
             {
@@ -309,8 +309,7 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public void Unregister()
         {
-            Proxy.UnregisterAsync(new RegistrationMessage
-                                      {RegistrationMode = RegistrationMode.Unregister, RegName = RegName});
+            Proxy.UnregisterAsync(new RegistrationMessage(RegName, null, RegistrationMode.Unregister, DataMode.Unknown));
         }
 
 

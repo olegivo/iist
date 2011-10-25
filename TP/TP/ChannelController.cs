@@ -107,11 +107,10 @@ namespace TP
             else
                 foreach (var registeredChannel in registeredChannels)
                 {
-                    ChannelRegistrationMessage message = new ChannelRegistrationMessage
-                    {
-                        DataMode = DataMode.Read,
-                        LogicalChannelId = registeredChannel
-                    };
+                    //TODO: заполнить RegNameFrom
+                    ChannelRegistrationMessage message = new ChannelRegistrationMessage(null, null,
+                                                                                        RegistrationMode.Register,
+                                                                                        DataMode.Read, registeredChannel);
                     AddRegisteredChannel(message);
                 }
         }
@@ -125,15 +124,11 @@ namespace TP
             {
                 registeredChannelsList.Add(message.LogicalChannelId);
                 Protocol(string.Format("Канал [{0}] теперь доступен для подписки", message.LogicalChannelId));
-                if(AutoSubscribeChannels)
+                if (AutoSubscribeChannels)
                 {
-                    SubscribeChannel(new ChannelSubscribeMessage
-                                         {
-                                             DataMode = DataMode.Read,
-                                             LogicalChannelId = message.LogicalChannelId,
-                                             Mode = SubscribeMode.Subscribe,
-                                             RegName = RegName
-                                         });
+                    SubscribeChannel(new ChannelSubscribeMessage(RegName, null, SubscribeMode.Subscribe,
+                                                                 message.LogicalChannelId)
+                        );
                 }
             }
 
@@ -169,13 +164,10 @@ namespace TP
         /// <param name="value"></param>
         public void WriteChannel(int channelId, object value)
         {
-            Provider.WriteChannel(new InternalLogicalChannelDataMessage
+            Provider.WriteChannel(new InternalLogicalChannelDataMessage(RegName, null, DataMode.Write, channelId)
                                       {
-                                         LogicalChannelId = channelId,
-                                         Value = value,
-                                         DataMode = DataMode.Write,
-                                         RegName = RegName
-                                     });
+                                          Value = value
+                                      });
         }
 
         private bool isitialized;
@@ -198,7 +190,7 @@ namespace TP
                 Provider.ChannelRegistered += Provider_ChannelRegistered;
                 Provider.ChannelSubscribeCompleted += Provider_ChannelSubscribeCompleted;
                 Provider.ChannelUnSubscribeCompleted += Provider_ChannelUnSubscribeCompleted;
-                
+
                 isitialized = true;
             }
         }
@@ -219,7 +211,7 @@ namespace TP
 
         private void Protocol(object sender)
         {
-            if(NeedProtocol!=null) NeedProtocol(sender, EventArgs.Empty);
+            if (NeedProtocol != null) NeedProtocol(sender, EventArgs.Empty);
         }
 
         /// <summary>
@@ -241,12 +233,9 @@ namespace TP
             }
             else if (subscribedChannelsList.Contains(message.LogicalChannelId))
             {
-                ChannelSubscribeMessage unSubscribeMessage = new ChannelSubscribeMessage
-                {
-                    RegName = RegName,
-                    Mode = SubscribeMode.Unsubscribe,
-                    LogicalChannelId = message.LogicalChannelId
-                };
+                ChannelSubscribeMessage unSubscribeMessage = new ChannelSubscribeMessage(RegName, null,
+                                                                                         SubscribeMode.Unsubscribe,
+                                                                                         message.LogicalChannelId);
 
                 subscribedChannelsList.Remove(message.LogicalChannelId);
 

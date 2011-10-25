@@ -103,10 +103,10 @@ namespace Oleg_ivo.MES.Low
             if (registeredLowLevelClient != null)
                 throw new Exception(" лиент уже зарегистрирован");
 
-            registeredLowLevelClient = new RegisteredLowLevelClient { Ticker = message.RegName };
-            AddClient(message.RegName, registeredLowLevelClient);
+            registeredLowLevelClient = new RegisteredLowLevelClient { Ticker = message.RegNameFrom };
+            AddClient(message.RegNameFrom, registeredLowLevelClient);
 
-            //                registeredLowLevelClient = (RegisteredLowLevelClient)_registeredClients[message.RegName];
+            //                registeredLowLevelClient = (RegisteredLowLevelClient)_registeredClients[message.RegNameFrom];
 
             //Thread t = new Thread(w.RegisteredLowLevelClientProcess.SendUpdateToClient) { IsBackground = true };
             //t.Start();
@@ -140,7 +140,7 @@ namespace Oleg_ivo.MES.Low
                 OnUnRegistered(registeredLowLevelClient, message);//уведомл€ем о том, что клиент отменил регистрацию
 
                 //                if (registeredLowLevelClient.HasCallbacks)
-                RemoveClient(message.RegName);
+                RemoveClient(message.RegNameFrom);
 
             }
         }
@@ -325,7 +325,7 @@ namespace Oleg_ivo.MES.Low
         /// <returns></returns>
         private RegisteredLowLevelClient GetRegisteredLowLevelClient(InternalMessage message, bool withRegisteredChannels, bool withCallbacks)
         {
-            RegisteredLowLevelClient registeredLowLevelClient = this[message.RegName];
+            RegisteredLowLevelClient registeredLowLevelClient = this[message.RegNameFrom];
             if (registeredLowLevelClient != null)
             {
                 if ((withRegisteredChannels && !registeredLowLevelClient.HasRegisteredLogicalChannels)
@@ -404,28 +404,34 @@ namespace Oleg_ivo.MES.Low
         }
 
         /// <summary>
+        /// –егистрационое им€ системы обмена сообщений нижнего уровн€
+        /// </summary>
+        public override string RegName
+        {
+            get { return "MESLowLevel"; }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
-        /// <param name="regName"></param>
-        protected override void RemoveClient(string regName)
+        /// <param name="clientRegName"></param>
+        protected override void RemoveClient(string clientRegName)
         {
             //убираем зарегистрированные каналы
-            var registeredHighLevelClient = this[regName];
+            var registeredHighLevelClient = this[clientRegName];
 
             foreach (int registeredLogicalChannelId in registeredHighLevelClient.RegisteredLogicalChannels.Keys.ToArray())
             {
                 //имитируем посылку сообщени€ от клиента о том, что он отмен€ет регистрацию канала 
                 //(тогда подписчики на канал будут об этом уведомлены)
-                ChannelRegistrationMessage registrationMessage = new ChannelRegistrationMessage
-                {
-                    LogicalChannelId = registeredLogicalChannelId,
-                    RegName = regName,
-                    RegistrationMode = RegistrationMode.Unregister
-                };
+                var registrationMessage = new ChannelRegistrationMessage(RegName, clientRegName,
+                                                                         RegistrationMode.Unregister,
+                                                                         DataMode.Unknown,
+                                                                         registeredLogicalChannelId);
                 ChannelUnRegister(registrationMessage);
             }
 
-            base.RemoveClient(regName);
+            base.RemoveClient(clientRegName);
         }
 
         #region Implementation of IMessageExchangeSystem
@@ -440,7 +446,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="state"></param>
         public IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Ќачало регистрации клиента {0}", message.RegName);
+            Console.WriteLine("Ќачало регистрации клиента {0}", message.RegNameFrom);
 
             ILowLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<ILowLevelClientCallback>();
 
@@ -467,7 +473,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="state"></param>
         public IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Ќачало отмены регистрации клиента {0}", message.RegName);
+            Console.WriteLine("Ќачало отмены регистрации клиента {0}", message.RegNameFrom);
 
             ILowLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<ILowLevelClientCallback>();
 
@@ -508,7 +514,7 @@ namespace Oleg_ivo.MES.Low
             {
                 Console.WriteLine(
                     " анал [{0}] извещает о приходе новых данных (запись) от клиента [{1}], но на него никто не подписан",
-                    message.LogicalChannelId, message.RegName);
+                    message.LogicalChannelId, message.RegNameFrom);
             }
         }
     }
