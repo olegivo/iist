@@ -38,6 +38,15 @@ namespace Oleg_ivo.LowLevelClient
             Planner.NewDadaReceived += Instance_NewDadaReceived;
         }
 
+        /// <summary>
+        /// Записан канал
+        /// </summary>
+        public event EventHandler<DataEventArgs> HasWriteChannel
+        {
+            add { CallbackHandler.HasWriteChannel += value; }
+            remove { CallbackHandler.HasWriteChannel -= value; }
+        }
+
         void CallbackHandler_HasWriteChannel(object sender, DataEventArgs e)
         {
             string s = string.Format("Канал №{0} клиент - {1} [{2}] получено значение {3}",
