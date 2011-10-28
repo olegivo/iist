@@ -73,6 +73,7 @@ namespace Oleg_ivo.MES.Registered
             if (logicalChannel != null)
                 throw new ArgumentException("Клиент уже подписан на данный канал");
 
+            //TODO:проверять режим данных канала при подписке на него
             RegisteredLogicalChannel registeredLogicalChannel =
                 HighLevelMessageExchangeSystem.Instance.GetRegisteredChannel(predicate);
 

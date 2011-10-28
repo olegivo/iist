@@ -44,6 +44,7 @@ namespace Oleg_ivo.MES.Registered
         /// <returns></returns>
         public static Func<RegisteredLogicalChannel, bool> GetFindChannelPredicate(int id)
         {
+            //TODO:проверять режим данных канала при подписке на него, при чтении и при записи (добавить параметр - режим данных)
             return (channel => channel.Id == id);
         }
 
