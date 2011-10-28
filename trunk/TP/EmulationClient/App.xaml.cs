@@ -54,7 +54,7 @@ namespace EmulationClient
         {
             base.OnStartup(e);
             Init();
-            ControlManagementUnit.Register();
+            //ControlManagementUnit.Register();
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace EmulationClient
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
-            ControlManagementUnit.Unregister();
+            //ControlManagementUnit.Unregister();
             base.OnExit(e);
         }
 

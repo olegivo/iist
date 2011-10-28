@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Forms;
 using DMS.Common.Messages;
 using Oleg_ivo.LowLevelClient;
@@ -11,13 +12,15 @@ namespace EmulationClient
     /// <summary>
     /// Модуль контроля и управления для эмуляции
     /// </summary>
-    public class ControlManagementUnitEmulation : ControlManagementUnit
+    public class ControlManagementUnitEmulation : ControlManagementUnit, INotifyPropertyChanged
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ControlManagementUnit" />.
         /// </summary>
         public ControlManagementUnitEmulation()
         {
+            CanRegister = true;
+
             NeedProtocol += ControlManagementUnitEmulation_NeedProtocol;
             Proxy.RegisterCompleted += Proxy_RegisterCompleted;
             Proxy.UnregisterCompleted += Proxy_UnregisterCompleted;
@@ -25,30 +28,53 @@ namespace EmulationClient
             Proxy.ChannelUnRegisterCompleted += Proxy_ChannelUnRegisterCompleted;
         }
 
-        void Proxy_ChannelUnRegisterCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        void Proxy_ChannelUnRegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
             string s = string.Format("отмена регистрации канала {0} на сервере завершилась {1}", e.UserState, e.Error == null ? "успешно" : string.Format("неудачно: {0}", e.Error));
             Protocol(s);
+            RegisteredChannelsCount--;
         }
 
-        void Proxy_ChannelRegisterCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        void Proxy_ChannelRegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
             string s = string.Format("Регистрация канала {0} на сервере завершилась {1}", e.UserState, e.Error == null ? "успешно" : string.Format("неудачно: {0}", e.Error));
             Protocol(s);
+            RegisteredChannelsCount++;
         }
 
-        void Proxy_UnregisterCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        protected int RegisteredChannelsCount
+        {
+            get
+            {
+                return registeredChannelsCount;
+            }
+            set
+            {
+                if (registeredChannelsCount != value)
+                {
+                    registeredChannelsCount = value;
+                    Console.WriteLine("RegisteredChannelsCount = {0}", RegisteredChannelsCount);
+                    CanUnregisterChannels = registeredChannelsCount > 0;
+                }
+            }
+        }
+
+        void Proxy_UnregisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
             string s = string.Format("Отмена регистрации на сервере завершилась {0}", e.Error == null ? "успешно" : string.Format("неудачно: {0}", e.Error));
             Protocol(s);
+            CanRegister = true;
         }
 
-        void Proxy_RegisterCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        void Proxy_RegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
             string s = string.Format("Регистрация на сервере завершилась {0}", e.Error == null ? "успешно" : string.Format("неудачно: {0}", e.Error));
             Protocol(s);
-            RegisterAllChannels();
+            if (AutoRegisterAllChannels) RegisterAllChannels();
+            CanRegister = false;
         }
+
+        internal bool AutoRegisterAllChannels { get; set; }
 
         /// <summary>
         /// 
@@ -71,10 +97,8 @@ namespace EmulationClient
         {
             foreach (LogicalChannel channel in LogicalChannels)
             {
-                Proxy.ChannelUnRegisterAsync(
-                    new ChannelRegistrationMessage(RegName, null, RegistrationMode.Unregister,
-                                                   channel.Id > 100 ? DataMode.Write : DataMode.Read, channel.Id),
-                    channel.Id);
+                Proxy.ChannelUnRegisterAsync(new ChannelRegistrationMessage(RegName, null, RegistrationMode.Unregister,
+                                                                            DataMode.Unknown, channel.Id));
             }
         }
 
@@ -110,5 +134,65 @@ namespace EmulationClient
         {
             return _logicalChannels;
         }
+
+        private bool canRegister;
+
+        public bool CanUnregister
+        {
+            get { return !canRegister; }
+        }
+
+        public bool CanRegister
+        {
+            get { return canRegister; }
+            set
+            {
+                if (canRegister != value)
+                {
+                    canRegister = value;
+                    InvokePropertyChanged("CanRegister");
+                    InvokePropertyChanged("CanUnregister");
+                    InvokePropertyChanged("CanRegisterChannels");
+                    InvokePropertyChanged("CanUnregisterChannels");
+                }
+            }
+        }
+
+        private bool canUnregisterChannels;
+        private int registeredChannelsCount;
+
+        public bool CanRegisterChannels
+        {
+            get { return !CanUnregisterChannels && CanUnregister; }
+        }
+
+        public bool CanUnregisterChannels
+        {
+            get { return canUnregisterChannels; }
+            set
+            {
+                if (canUnregisterChannels != value)
+                {
+                    canUnregisterChannels = value;
+                    InvokePropertyChanged("CanUnregisterChannels");
+                    InvokePropertyChanged("CanRegisterChannels");
+                }
+            }
+        }
+
+        #region Implementation of INotifyPropertyChanged
+
+        /// <summary>
+        /// Возникает при изменениях значения свойства.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void InvokePropertyChanged(string propertyName)
+        {
+            Console.WriteLine("Изменилось свойство {0}", propertyName);
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
     }
 }

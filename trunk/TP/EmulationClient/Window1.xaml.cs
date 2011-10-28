@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Input;
-using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace EmulationClient
 {
@@ -10,28 +8,42 @@ namespace EmulationClient
     /// </summary>
     public partial class Window1 : Window
     {
-        private ControlManagementUnitEmulation controlManagementUnitEmulation;
-
         public Window1()
         {
             InitializeComponent();
             App app = (App) App.Current;
-            controlManagementUnitEmulation = app.ControlManagementUnit;
-            controlManagementUnitEmulation.NeedProtocol += new System.EventHandler<System.EventArgs>(controlManagementUnitEmulation_NeedProtocol);
-        }
-        private void controlManagementUnitEmulation_NeedProtocol(object sender, EventArgs e)
-        {
-            textBox1.Text = System.DateTime.Now + " " + sender;  
+            ControlManagementUnitEmulation = app.ControlManagementUnit;
+            ControlManagementUnitEmulation.NeedProtocol += controlManagementUnitEmulation_NeedProtocol;
         }
 
-        private void btnUnregister_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        public ControlManagementUnitEmulation ControlManagementUnitEmulation { get; set; }
+
+        private void controlManagementUnitEmulation_NeedProtocol(object sender, EventArgs e)
         {
-            controlManagementUnitEmulation.UnregisterAllChannels();
+            textBox1.Text = DateTime.Now + " " + sender;  
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
-            controlManagementUnitEmulation.RegisterAllChannels();
+            ControlManagementUnitEmulation.Register();
+        }
+
+        private void btnUnregister_Click(object sender, RoutedEventArgs e)
+        {
+            ControlManagementUnitEmulation.Unregister();
+        }
+
+        private void btnRegisterChannels_Click(object sender, RoutedEventArgs e)
+        {
+            ControlManagementUnitEmulation.RegisterAllChannels();
+        }
+
+        private void btnUnregisterChannels_Click(object sender, RoutedEventArgs e)
+        {
+            ControlManagementUnitEmulation.UnregisterAllChannels();
         }
     }
 }
