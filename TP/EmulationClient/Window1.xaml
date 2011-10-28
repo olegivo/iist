@@ -14,6 +14,6 @@
                 IsEnabled="{Binding CanRegisterChannels, UpdateSourceTrigger=PropertyChanged}">Зарегистрировать все каналы</Button>
         <Button Height="23" Margin="0,40.905,11.817,0" Name="btnUnregisterChannels" VerticalAlignment="Top" Click="btnUnregisterChannels_Click" HorizontalAlignment="Right" Width="392.312" 
                 IsEnabled="{Binding CanUnregisterChannels, UpdateSourceTrigger=PropertyChanged}">Отменить регистрацию всех каналов</Button>
-        <TextBox Margin="12,0,12,12" Name="textBox1" Height="122" VerticalAlignment="Bottom" />
+        <TextBox Margin="12,69.993,12,12" Name="textBox1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
     </Grid>
 </Window>

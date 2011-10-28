@@ -11,7 +11,7 @@ namespace EmulationClient
         public Window1()
         {
             InitializeComponent();
-            App app = (App) App.Current;
+            App app = (App) Application.Current;
             ControlManagementUnitEmulation = app.ControlManagementUnit;
             ControlManagementUnitEmulation.NeedProtocol += controlManagementUnitEmulation_NeedProtocol;
         }
@@ -23,7 +23,7 @@ namespace EmulationClient
 
         private void controlManagementUnitEmulation_NeedProtocol(object sender, EventArgs e)
         {
-            textBox1.Text = DateTime.Now + " " + sender;  
+            textBox1.Text += string.Format("{0}\t{1}{2}", DateTime.Now, sender, Environment.NewLine);
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
