@@ -225,7 +225,8 @@ namespace Oleg_ivo.MES.High
         {
             if (message.Mode != SubscribeMode.Subscribe)
                 throw new ArgumentException("Для подписки на канал в сообщении используется флаг отписки");
-
+            
+            //TODO:проверять режим данных канала при подписке на него
             RegisteredHighLevelClient registeredHighLevelClient = GetRegisteredHighLevelClient(message);
             if (registeredHighLevelClient != null)
                 registeredHighLevelClient.ChannelSubscribe(message);
@@ -289,6 +290,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="message"></param>
         public void WriteChannel(InternalLogicalChannelDataMessage message)
         {
+            //TODO:проверять режим данных канала при записи
             //пришли новые данные по каналу. будем передавать вниз
             LowLevelMessageExchangeSystem.Instance.WriteChannel(message);
         }
@@ -441,10 +443,10 @@ namespace Oleg_ivo.MES.High
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public RegisteredLogicalChannel GetRegisteredChannel(Func<RegisteredLogicalChannel, bool> predicate)
         {
             //ищем в верхней службе, если не находим - ищем в нижней службе
+            //TODO:проверять режим данных канала при подписке на него, при чтении и при записи
             RegisteredLogicalChannel channel = FindSubscribedChannel(predicate) ??
                                                LowLevelMessageExchangeSystem.Instance.GetRegisteredLogicalChannel(predicate);
             return channel;
@@ -496,6 +498,7 @@ namespace Oleg_ivo.MES.High
 
             if (subscribedChannel != null)
             {
+                //TODO:проверять режим данных канала при чтении
                 subscribedChannel.InvokeRead(message);
             }
             else
@@ -519,8 +522,8 @@ namespace Oleg_ivo.MES.High
             {
                 //имитируем посылку сообщения от клиента о том, что он отписывается от канала 
                 //(тогда источники подписки будут об этом уведомлены)
-                var channelSubscribeMessage = new ChannelSubscribeMessage(RegName, 
-                                                                          clientRegName,
+                var channelSubscribeMessage = new ChannelSubscribeMessage(clientRegName,
+                                                                          RegName, 
                                                                           SubscribeMode.Unsubscribe,
                                                                           registeredLogicalChannelId);
                 ChannelUnSubscribe(channelSubscribeMessage);
@@ -544,7 +547,7 @@ namespace Oleg_ivo.MES.High
 
             IHighLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IHighLevelClientCallback>();
 
-            var caller = new RigistrationCaller(Register);
+            var caller = new RegistrationCaller(Register);
             IAsyncResult result = caller.BeginInvoke(message, clientCallback, callback, state);
             return result;
         }
@@ -571,7 +574,7 @@ namespace Oleg_ivo.MES.High
 
             IHighLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IHighLevelClientCallback>();
 
-            var caller = new RigistrationCaller(Unregister);
+            var caller = new RegistrationCaller(Unregister);
             IAsyncResult result = caller.BeginInvoke(message, clientCallback, callback, state);
             return result;
         }
@@ -588,7 +591,7 @@ namespace Oleg_ivo.MES.High
 
         #endregion
 
-        private delegate void RigistrationCaller(RegistrationMessage message, IHighLevelClientCallback clientCallback);
+        private delegate void RegistrationCaller(RegistrationMessage message, IHighLevelClientCallback clientCallback);
         private delegate void WriteChannelCaller(InternalLogicalChannelDataMessage message);
     }
 }

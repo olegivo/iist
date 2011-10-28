@@ -48,6 +48,7 @@ namespace Oleg_ivo.MES.Low
 
         private void High_ChannelUnSubscribed(object sender, High.HighRegisteredLogicalChannelSubscribeEventArgs e)
         {
+            //TODO:проверять режим данных канала при подписке на него
             var channel =
                 GetRegisteredLogicalChannel(
                     RegisteredLogicalChannel.GetFindChannelPredicate(e.ChannelSubscribeMessage.LogicalChannelId));
@@ -60,6 +61,7 @@ namespace Oleg_ivo.MES.Low
 
         private void High_ChannelSubscribed(object sender, High.HighRegisteredLogicalChannelSubscribeEventArgs e)
         {
+            //TODO:проверять режим данных канала при подписке на него
             var channel =
                 GetRegisteredLogicalChannel(
                     RegisteredLogicalChannel.GetFindChannelPredicate(e.ChannelSubscribeMessage.LogicalChannelId));
@@ -292,10 +294,10 @@ namespace Oleg_ivo.MES.Low
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public RegisteredLogicalChannel GetRegisteredLogicalChannel(Func<RegisteredLogicalChannel, bool> predicate)
         {
             //ищем в нижней службе
+            //TODO:проверять режим данных канала при подписке на него, при чтении и при записи
             RegisteredLogicalChannel channel = FindSubscribedChannel(predicate);
             return channel;
         }
@@ -424,7 +426,7 @@ namespace Oleg_ivo.MES.Low
             {
                 //имитируем посылку сообщения от клиента о том, что он отменяет регистрацию канала 
                 //(тогда подписчики на канал будут об этом уведомлены)
-                var registrationMessage = new ChannelRegistrationMessage(RegName, clientRegName,
+                var registrationMessage = new ChannelRegistrationMessage(clientRegName, RegName, 
                                                                          RegistrationMode.Unregister,
                                                                          DataMode.Unknown,
                                                                          registeredLogicalChannelId);
@@ -450,7 +452,7 @@ namespace Oleg_ivo.MES.Low
 
             ILowLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<ILowLevelClientCallback>();
 
-            var caller = new RigistrationCaller(Register);
+            var caller = new RegistrationCaller(Register);
             IAsyncResult result = caller.BeginInvoke(message, clientCallback, callback, state);
             return result;
         }
@@ -477,7 +479,7 @@ namespace Oleg_ivo.MES.Low
 
             ILowLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<ILowLevelClientCallback>();
 
-            var caller = new RigistrationCaller(Unregister);
+            var caller = new RegistrationCaller(Unregister);
             IAsyncResult result = caller.BeginInvoke(message, clientCallback, callback, state);
             return result;
         }
@@ -496,7 +498,7 @@ namespace Oleg_ivo.MES.Low
 
         #endregion
 
-        private delegate void RigistrationCaller(RegistrationMessage message, ILowLevelClientCallback clientCallback);
+        private delegate void RegistrationCaller(RegistrationMessage message, ILowLevelClientCallback clientCallback);
 
         /// <summary>
         /// Записать канал
@@ -504,6 +506,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="message"></param>
         public void WriteChannel(InternalLogicalChannelDataMessage message)
         {
+            //TODO:проверять режим данных канала
             RegisteredLogicalChannel subscribedChannel = FindSubscribedChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId));
 
             if (subscribedChannel != null)
