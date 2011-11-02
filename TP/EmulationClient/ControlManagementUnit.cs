@@ -1,8 +1,5 @@
-#if BINDING_TCP
+using Oleg_ivo.LowLevelClient;
 using Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp;
-#else
-using Oleg_ivo.CMU.ServiceReferenceHome;
-#endif
 using DMS.Common.Events;
 using System.ServiceModel;
 using System;
@@ -15,7 +12,7 @@ using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Tools.UI;
 
-namespace Oleg_ivo.LowLevelClient
+namespace EmulationClient
 {
     ///<summary>
     /// Модуль контроля и управления

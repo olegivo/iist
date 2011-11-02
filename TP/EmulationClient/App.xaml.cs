@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Threading;
 using System.Windows;
 using DMS.Common.Messages;
 using EmulationClient.Emulation;
-using Oleg_ivo.LowLevelClient;
 using Oleg_ivo.Tools.ConnectionProvider;
 using Oleg_ivo.Tools.ExceptionCatcher;
 
@@ -14,12 +12,19 @@ namespace EmulationClient
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public App()
         {
-            ControlManagementUnit = new ControlManagementUnitEmulation();
-            ControlManagementUnit.GetRegName = new GetRegNameDelegate(() => "EmulationClient");
-            Emulator = new Emulator();
-            Emulator.ControlManagementUnit = ControlManagementUnit;
+            ControlManagementUnit = new ControlManagementUnitEmulation
+                                        {
+                                            GetRegName = () => "EmulationClient"
+                                        };
+            Emulator = new Emulator
+                           {
+                               ControlManagementUnit = ControlManagementUnit
+                           };
 
             //GasConcentration gasConcentration = new GasConcentration();
             //Temperature temperature = new Temperature();
@@ -49,7 +54,6 @@ namespace EmulationClient
         /// 
         /// </summary>
         /// <param name="e"></param>
-        /// <exception cref="NotImplementedException"></exception>
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -57,6 +61,7 @@ namespace EmulationClient
             //ControlManagementUnit.Register();
         }
 
+/*
         /// <summary>
         /// 
         /// </summary>
@@ -66,6 +71,7 @@ namespace EmulationClient
             //ControlManagementUnit.Unregister();
             base.OnExit(e);
         }
+*/
 
         private void Init()
         {
@@ -79,11 +85,11 @@ namespace EmulationClient
 
         private static void LogError(object sender, ExtendedThreadExceptionEventArgs e)
         {
-            ControlManagementUnitEmulation.Proxy.SendErrorCompleted += Proxy_SendErrorCompleted;
+            EmulationClient.ControlManagementUnit.Proxy.SendErrorCompleted += Proxy_SendErrorCompleted;
             try
             {
                 //TODO: заполнить RegNameFrom
-                ControlManagementUnitEmulation.Proxy.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
+                EmulationClient.ControlManagementUnit.Proxy.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
                 if (e.Exception is ArgumentOutOfRangeException)
                     e.ShowError = false;
             }

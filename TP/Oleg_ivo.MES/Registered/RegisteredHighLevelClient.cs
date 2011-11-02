@@ -1,6 +1,7 @@
 ﻿using System;
 using DMS.Common.MessageExchangeSystem.HighLevel;
 using DMS.Common.Messages;
+using NLog;
 using Oleg_ivo.MES.High;
 
 namespace Oleg_ivo.MES.Registered
@@ -10,6 +11,8 @@ namespace Oleg_ivo.MES.Registered
     /// </summary>
     public class RegisteredHighLevelClient : RegisteredClient<IHighLevelClientCallback>
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         #region fields
 
         #endregion
@@ -67,7 +70,8 @@ namespace Oleg_ivo.MES.Registered
         public void ChannelSubscribe(ChannelSubscribeMessage message)
         {
             //поиск ЛК, где Id - заданный:
-            Func<RegisteredLogicalChannel, bool> predicate = RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId);
+            Func<RegisteredLogicalChannel, bool> predicate =
+                RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId, DataMode.Read);//TODO:для подписки только чтение?
 
             RegisteredLogicalChannel logicalChannel = GetRegisteredLogicalChannel(predicate);
             if (logicalChannel != null)
@@ -96,7 +100,9 @@ namespace Oleg_ivo.MES.Registered
         public void ChannelUnSubscribe(ChannelSubscribeMessage message)
         {
             //поиск ЛК, где Id - заданный:
-            RegisteredLogicalChannel registeredLogicalChannel = GetRegisteredLogicalChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId));
+            RegisteredLogicalChannel registeredLogicalChannel =
+                GetRegisteredLogicalChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId,
+                                                                                             DataMode.Read));//TODO:для подписки только чтение?
             if (registeredLogicalChannel == null)
                 throw new ArgumentException("Клиент не подписан на данный канал");
 
@@ -125,8 +131,8 @@ namespace Oleg_ivo.MES.Registered
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Ошибка при отправке новых данных клиенту: {0}",
-                                          ex.Message);
+                        log.ErrorException("Ошибка при отправке новых данных клиенту: {0}",
+                                          ex);
                         throw;
                     }
         }
@@ -145,8 +151,8 @@ namespace Oleg_ivo.MES.Registered
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Ошибка при сообщении клиенту о регистрации канала: {0}",
-                                          ex.Message);
+                        log.ErrorException("Ошибка при сообщении клиенту о регистрации канала: {0}",
+                                          ex);
                         throw;
                     }
         }
@@ -159,7 +165,8 @@ namespace Oleg_ivo.MES.Registered
         {
             //удаляем канал из коллекции зарегистрированных канало данного клиента
             var registeredLogicalChannel =
-                GetRegisteredLogicalChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId));
+                GetRegisteredLogicalChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId,
+                                                                                             message.DataMode));
             if (registeredLogicalChannel != null)
                 RemoveRegisteredChannel(registeredLogicalChannel);
 
@@ -171,8 +178,8 @@ namespace Oleg_ivo.MES.Registered
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Ошибка при сообщении клиенту об отмене регистрации канала: {0}",
-                                          ex.Message);
+                        log.ErrorException("Ошибка при сообщении клиенту об отмене регистрации канала: {0}",
+                                          ex);
                         throw;
                     }
         }

@@ -18,9 +18,11 @@ namespace Oleg_ivo.MES.Registered
         /// Зарегистрированный логический канал
         /// </summary>
         /// <param name="id">Идентификатор канала</param>
-        public RegisteredLogicalChannel(int id)
+        /// <param name="dataMode">Режим данных канала</param>
+        public RegisteredLogicalChannel(int id, DataMode dataMode)
         {
             Id = id;
+            DataMode = dataMode;
             Read += RegisteredLogicalChannel_Read;
             Write += RegisteredLogicalChannel_Write;
         }
@@ -41,12 +43,20 @@ namespace Oleg_ivo.MES.Registered
         /// 
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="dataMode">Если <see cref="DataMode.Unknown"/>, параметр не учитывается при фильтрации</param>
         /// <returns></returns>
-        public static Func<RegisteredLogicalChannel, bool> GetFindChannelPredicate(int id)
+        public static Func<RegisteredLogicalChannel, bool> GetFindChannelPredicate(int id, DataMode dataMode)
         {
             //TODO:проверять режим данных канала при подписке на него, при чтении и при записи (добавить параметр - режим данных)
-            return (channel => channel.Id == id);
+            return
+                (channel =>
+                 channel.Id == id && (dataMode != DataMode.Unknown || (channel.DataMode & dataMode) == dataMode));
         }
+
+        /// <summary>
+        /// Режим данных канала
+        /// </summary>
+        public DataMode DataMode { get; set; }
 
         /// <summary>
         /// Чтение канала

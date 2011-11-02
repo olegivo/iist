@@ -48,10 +48,11 @@ namespace Oleg_ivo.MES.Low
 
         private void High_ChannelUnSubscribed(object sender, High.HighRegisteredLogicalChannelSubscribeEventArgs e)
         {
-            //TODO:провер€ть режим данных канала при подписке на него
+            //провер€ть режим данных канала при подписке на него
             var channel =
                 GetRegisteredLogicalChannel(
-                    RegisteredLogicalChannel.GetFindChannelPredicate(e.ChannelSubscribeMessage.LogicalChannelId));
+                    RegisteredLogicalChannel.GetFindChannelPredicate(e.ChannelSubscribeMessage.LogicalChannelId,
+                                                                     DataMode.Read));//TODO:дл€ подписки только чтение?
 
             if (channel == null)
                 throw new Exception("Ќевозможно отписатьс€ от канала, который не зарегистрирован");
@@ -61,11 +62,11 @@ namespace Oleg_ivo.MES.Low
 
         private void High_ChannelSubscribed(object sender, High.HighRegisteredLogicalChannelSubscribeEventArgs e)
         {
-            //TODO:провер€ть режим данных канала при подписке на него
+            //провер€ть режим данных канала при подписке на него
             var channel =
                 GetRegisteredLogicalChannel(
-                    RegisteredLogicalChannel.GetFindChannelPredicate(e.ChannelSubscribeMessage.LogicalChannelId));
-
+                    RegisteredLogicalChannel.GetFindChannelPredicate(e.ChannelSubscribeMessage.LogicalChannelId,
+                                                                     DataMode.Read));//TODO:дл€ подписки только чтение?
             if (channel == null)
                 throw new Exception("Ќевозможно подписатьс€ на канал, который не зарегистрирован");
 
@@ -297,7 +298,6 @@ namespace Oleg_ivo.MES.Low
         public RegisteredLogicalChannel GetRegisteredLogicalChannel(Func<RegisteredLogicalChannel, bool> predicate)
         {
             //ищем в нижней службе
-            //TODO:провер€ть режим данных канала при подписке на него, при чтении и при записи
             RegisteredLogicalChannel channel = FindSubscribedChannel(predicate);
             return channel;
         }
@@ -349,7 +349,9 @@ namespace Oleg_ivo.MES.Low
             if (registeredLowLevelClient == null)
                 throw new Exception("ƒанный клиент не зарегистрирован");
 
-            RegisteredLogicalChannel channel = registeredLowLevelClient.GetRegisteredLogicalChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId));
+            RegisteredLogicalChannel channel =
+                registeredLowLevelClient.GetRegisteredLogicalChannel(
+                    RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId, DataMode.Unknown));
             if (channel != null)
                 throw new Exception("ƒанный канал уже зарегистрирован");
 
@@ -378,7 +380,9 @@ namespace Oleg_ivo.MES.Low
             if (registeredLowLevelClient == null)
                 throw new Exception("ƒанный клиент не зарегистрирован");
 
-            RegisteredLogicalChannel channel = registeredLowLevelClient.GetRegisteredLogicalChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId));
+            RegisteredLogicalChannel channel =
+                registeredLowLevelClient.GetRegisteredLogicalChannel(
+                    RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId, DataMode.Unknown));
             if (channel == null)
                 throw new Exception("ƒанный канал не зарегистрирован");
 
@@ -507,7 +511,9 @@ namespace Oleg_ivo.MES.Low
         public void WriteChannel(InternalLogicalChannelDataMessage message)
         {
             //TODO:провер€ть режим данных канала
-            RegisteredLogicalChannel subscribedChannel = FindSubscribedChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId));
+            RegisteredLogicalChannel subscribedChannel =
+                FindSubscribedChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId,
+                                                                                       DataMode.Write));
 
             if (subscribedChannel != null)
             {

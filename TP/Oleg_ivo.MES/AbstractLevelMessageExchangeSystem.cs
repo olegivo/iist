@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DMS.Common.Messages;
+using NLog;
 using Oleg_ivo.MES.Registered;
 
 namespace Oleg_ivo.MES
@@ -10,6 +11,8 @@ namespace Oleg_ivo.MES
     /// </summary>
     public abstract class AbstractLevelMessageExchangeSystem<TRegisteredClient> where TRegisteredClient : IRegisteredChannelsHolder
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         private readonly Dictionary<string, TRegisteredClient> _registeredClients =
             new Dictionary<string, TRegisteredClient>();
 
@@ -45,7 +48,7 @@ namespace Oleg_ivo.MES
                     if (_registeredClients.ContainsKey(key))
                         _registeredClients.Remove(key);//удаляем
                     else
-                        Console.WriteLine("Не найден ключ для удаления {0}", key);
+                        log.Warn("Не найден ключ для удаления {0}", key);
                 }
                 else//другое значение
                 {
@@ -89,7 +92,7 @@ namespace Oleg_ivo.MES
         /// <param name="state"></param>
         public IAsyncResult BeginSendError(InternalErrorMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Начало передачи сообщения об ошибке от клиента {0}", message.RegNameFrom);
+            log.Debug("Начало передачи сообщения об ошибке от клиента {0}", message.RegNameFrom);
             //TODO: для тестирования BeginSendError: throw new FaultException<InternalException>(new InternalException("Test"),"Reason");
             var caller = new SendErrorCaller(SendError);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
@@ -120,7 +123,7 @@ namespace Oleg_ivo.MES
         /// <param name="result"></param>
         public void EndSendError(InternalErrorMessage message, IAsyncResult result)
         {
-            Console.WriteLine("Сообщения об ошибке от клиента передано");
+            log.Debug("Сообщения об ошибке от клиента передано");
         }
 
     }

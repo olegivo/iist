@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Threading;
 using DMS.Common.Messages;
+using NLog;
 using Oleg_ivo.Tools.ConnectionProvider;
 
 namespace Oleg_ivo.MES.Logging
@@ -14,6 +15,8 @@ namespace Oleg_ivo.MES.Logging
     ///</summary>
     public class InternalMessageLogger
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         #region Singleton
 
         private static InternalMessageLogger _instance;
@@ -84,17 +87,17 @@ namespace Oleg_ivo.MES.Logging
             // в режиме остановки обработки оставшейся очереди не ждём, когда очередь обработается, а очищаем её принудительно
             if (forceInterruptProcessing)
             {
-                Console.WriteLine("[{0}]\tЭлементов в очереди - {1}", DateTime.Now, _queue.Count);
+                log.Debug("[{0}]\tЭлементов в очереди - {1}", DateTime.Now, _queue.Count);
                 _queue.Clear();
-                Console.WriteLine("[{0}]\tОчередь принудительно очищена", DateTime.Now);
+                log.Debug("[{0}]\tОчередь принудительно очищена", DateTime.Now);
             }
             else
             {
-                Console.WriteLine("[{0}]\tОжидание обработки оставшейся очереди...", DateTime.Now);
+                log.Debug("[{0}]\tОжидание обработки оставшейся очереди...", DateTime.Now);
                 while (_queue.Count > 0)
                 {
                 }
-                Console.WriteLine("[{0}]\tОчередь обработана", DateTime.Now);
+                log.Debug("[{0}]\tОчередь обработана", DateTime.Now);
             }
         }
 
@@ -129,11 +132,11 @@ namespace Oleg_ivo.MES.Logging
 
             if (_queue.Count > 0)
             {
-                Console.WriteLine("[{0}]\tНайдены данные для отправки", DateTime.Now);
+                log.Debug("[{0}]\tНайдены данные для отправки", DateTime.Now);
 
                 QueueElement queueElement = _queue.Dequeue();
                 //Console.WriteLine("Данные:\t{0}", GetStringBytes(queueElement));
-                Console.WriteLine("[{0}]\tОсталось элементов в очереди - {1}", DateTime.Now, _queue.Count);
+                log.Debug("[{0}]\tОсталось элементов в очереди - {1}", DateTime.Now, _queue.Count);
                 
                 ProtocolMessage(queueElement.Message, queueElement.IncomeTimeStamp);
             }

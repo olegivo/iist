@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL" />
     <Reference Include="Oleg_ivo.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e9643967fa5cdff5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\External\Library\Oleg_ivo.Tools.dll</HintPath>
@@ -61,21 +62,7 @@
     <Compile Include="NewDataReceivedEventArgs.cs" />
     <Compile Include="Planner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Service References\ServiceReferenceIIST\DMS.Common.Messages.xsd" />
-    <None Include="Service References\ServiceReferenceIIST\service.wsdl" />
-    <None Include="Service References\ServiceReferenceIIST\service.xsd" />
-    <None Include="Service References\ServiceReferenceIIST\service1.xsd" />
     <Compile Include="Service References\ServiceReferenceHomeTcp\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\ServiceReferenceIIST\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\ServiceReferenceHome\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -86,34 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ServiceReferenceHomeTcp\" />
-    <WCFMetadataStorage Include="Service References\ServiceReferenceIIST\" />
-    <WCFMetadataStorage Include="Service References\ServiceReferenceHome\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceIIST\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceIIST\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceIIST\DMS.Common.Exceptions.xsd" />
-    <None Include="Service References\ServiceReferenceIIST\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\ServiceReferenceIIST\System.xsd" />
-    <None Include="Service References\ServiceReferenceHome\DMS.Common.Exceptions.xsd" />
-    <None Include="Service References\ServiceReferenceHome\DMS.Common.Messages.xsd" />
-    <None Include="Service References\ServiceReferenceHome\service.wsdl" />
-    <None Include="Service References\ServiceReferenceHome\service.xsd" />
-    <None Include="Service References\ServiceReferenceHome\service1.xsd" />
-    <None Include="Service References\ServiceReferenceHome\System.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceHome\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceHome\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ServiceReferenceHomeTcp\DMS.Common.Exceptions.xsd" />
@@ -122,10 +81,6 @@
     <None Include="Service References\ServiceReferenceHomeTcp\service.xsd" />
     <None Include="Service References\ServiceReferenceHomeTcp\service1.xsd" />
     <None Include="Service References\ServiceReferenceHomeTcp\System.xsd" />
-    <None Include="Service References\ServiceReferenceHome\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ServiceReferenceHomeTcp\configuration91.svcinfo" />
@@ -135,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="NLog.config" />
     <None Include="Service References\ServiceReferenceHomeTcp\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

@@ -4,6 +4,7 @@ using Oleg_ivo.HighLevelClient.ServiceReferenceIISTwsDualHttp;
 #else
 #if TCP_BINDING
 using DMS.Common.Events;
+using NLog;
 using Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ namespace Oleg_ivo.HighLevelClient
     ///</summary>
     public class ClientProvider
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         #region Singleton
 
         private static ClientProvider _instance;
@@ -54,7 +57,7 @@ namespace Oleg_ivo.HighLevelClient
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                log.ErrorException("Ошибка при доступе к Proxy", ex);
                 throw;
             }
 
