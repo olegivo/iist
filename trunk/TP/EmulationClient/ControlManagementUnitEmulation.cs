@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using DMS.Common.Messages;
-using Oleg_ivo.LowLevelClient;
+using NLog;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Tools.UI;
 
@@ -14,6 +14,8 @@ namespace EmulationClient
     /// </summary>
     public class ControlManagementUnitEmulation : ControlManagementUnit, INotifyPropertyChanged
     {
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ControlManagementUnit" />.
         /// </summary>
@@ -53,7 +55,7 @@ namespace EmulationClient
                 if (registeredChannelsCount != value)
                 {
                     registeredChannelsCount = value;
-                    Console.WriteLine("RegisteredChannelsCount = {0}", RegisteredChannelsCount);
+                    //Console.WriteLine("RegisteredChannelsCount = {0}", RegisteredChannelsCount);
                     CanUnregisterChannels = registeredChannelsCount > 0;
                 }
             }
@@ -104,7 +106,7 @@ namespace EmulationClient
 
         void ControlManagementUnitEmulation_NeedProtocol(object sender, EventArgs e)
         {
-            Console.WriteLine("{0}", sender);
+            _log.Debug("{0}", sender);
         }
 
         private IEnumerable<LogicalChannel> _logicalChannels;
@@ -189,7 +191,6 @@ namespace EmulationClient
 
         private void InvokePropertyChanged(string propertyName)
         {
-            Console.WriteLine("Изменилось свойство {0}", propertyName);
             if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using DMS.Common.MessageExchangeSystem.HighLevel;
 using DMS.Common.Messages;
+using NLog;
 using Oleg_ivo.MES.Low;
 using Oleg_ivo.MES.Registered;
 
@@ -20,6 +21,8 @@ namespace Oleg_ivo.MES.High
         IncludeExceptionDetailInFaults = true)]
     public class HighLevelMessageExchangeSystem : AbstractLevelMessageExchangeSystem<RegisteredHighLevelClient>, IHighLevelMessageExchangeSystem
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         #region Singleton
 
         private static HighLevelMessageExchangeSystem _instance;
@@ -137,7 +140,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="state"></param>
         public IAsyncResult BeginChannelSubscribe(ChannelSubscribeMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Начало подписки на чтение канала {0}", message.LogicalChannelId);
+            log.Debug("Начало подписки на чтение канала {0}", message.LogicalChannelId);
 
             var caller = new ChannelSubscribeCaller(ChannelSubscribe);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
@@ -151,7 +154,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="result"></param>
         public void EndChannelSubscribe(ChannelSubscribeMessage message, IAsyncResult result)
         {
-            Console.WriteLine("Клиент был подписан на канал");
+            log.Info("Клиент был подписан на канал {0}", message.LogicalChannelId);
         }
 
         /// <summary>
@@ -162,7 +165,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="state"></param>
         public IAsyncResult BeginChannelUnSubscribe(ChannelSubscribeMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Начало отписки от чтение канала {0}", message.LogicalChannelId);
+            log.Debug("Начало отписки от чтение канала {0}", message.LogicalChannelId);
 
             var caller = new ChannelSubscribeCaller(ChannelUnSubscribe);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
@@ -176,7 +179,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="result"></param>
         public void EndChannelUnSubscribe(ChannelSubscribeMessage message, IAsyncResult result)
         {
-            Console.WriteLine("Клиент был отписан от канала");
+            log.Info("Клиент был отписан от канала {0}", message.LogicalChannelId);
         }
 
         private void OnRegistered(RegisteredHighLevelClient callback, InternalMessage message)
@@ -226,7 +229,7 @@ namespace Oleg_ivo.MES.High
             if (message.Mode != SubscribeMode.Subscribe)
                 throw new ArgumentException("Для подписки на канал в сообщении используется флаг отписки");
             
-            //TODO:проверять режим данных канала при подписке на него
+            //проверять режим данных канала при подписке на него
             RegisteredHighLevelClient registeredHighLevelClient = GetRegisteredHighLevelClient(message);
             if (registeredHighLevelClient != null)
                 registeredHighLevelClient.ChannelSubscribe(message);
@@ -268,7 +271,7 @@ namespace Oleg_ivo.MES.High
         /// <returns></returns>
         public IAsyncResult BeginWriteChannel(InternalLogicalChannelDataMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Начало записи канала {0}", message.LogicalChannelId);
+            log.Debug("Начало записи канала {0}", message.LogicalChannelId);
             var caller = new WriteChannelCaller(WriteChannel);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
@@ -281,7 +284,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="result"></param>
         public void EndWriteChannel(InternalLogicalChannelDataMessage message, IAsyncResult result)
         {
-            Console.WriteLine("Канал был записан");
+            log.Info("Канал {0} был записан", message.LogicalChannelId);
         }
 
         /// <summary>
@@ -290,7 +293,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="message"></param>
         public void WriteChannel(InternalLogicalChannelDataMessage message)
         {
-            //TODO:проверять режим данных канала при записи
+            //проверять режим данных канала при записи
             //пришли новые данные по каналу. будем передавать вниз
             LowLevelMessageExchangeSystem.Instance.WriteChannel(message);
         }
@@ -446,7 +449,7 @@ namespace Oleg_ivo.MES.High
         public RegisteredLogicalChannel GetRegisteredChannel(Func<RegisteredLogicalChannel, bool> predicate)
         {
             //ищем в верхней службе, если не находим - ищем в нижней службе
-            //TODO:проверять режим данных канала при подписке на него, при чтении и при записи
+            //проверять режим данных канала при подписке на него, при чтении и при записи
             RegisteredLogicalChannel channel = FindSubscribedChannel(predicate) ??
                                                LowLevelMessageExchangeSystem.Instance.GetRegisteredLogicalChannel(predicate);
             return channel;
@@ -494,16 +497,17 @@ namespace Oleg_ivo.MES.High
         /// <param name="message"></param>
         public void ReadChannel(InternalLogicalChannelDataMessage message)
         {
-            RegisteredLogicalChannel subscribedChannel = FindSubscribedChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId));
+            RegisteredLogicalChannel subscribedChannel =
+                FindSubscribedChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId,
+                                                                                       DataMode.Read));
 
             if (subscribedChannel != null)
             {
-                //TODO:проверять режим данных канала при чтении
                 subscribedChannel.InvokeRead(message);
             }
             else
             {
-                Console.WriteLine(
+                log.Warn(
                     "Канал [{0}] извещает о приходе новых данных (чтение) от клиента [{1}], но на него никто не подписан",
                     message.LogicalChannelId, message.RegNameFrom);
             }
@@ -543,7 +547,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="state"></param>
         public IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Начало регистрации клиента {0}", message.RegNameFrom);
+            log.Debug("Начало регистрации клиента {0}", message.RegNameFrom);
 
             IHighLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IHighLevelClientCallback>();
 
@@ -559,7 +563,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="result"></param>
         public void EndRegister(RegistrationMessage message, IAsyncResult result)
         {
-            Console.WriteLine("Клиент был зарегистрирован");
+            log.Info("Клиент {0} был зарегистрирован", message.RegNameFrom);
         }
 
         /// <summary>
@@ -570,7 +574,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="state"></param>
         public IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Начало отмены регистрации клиента {0}", message.RegNameFrom);
+            log.Debug("Начало отмены регистрации клиента {0}", message.RegNameFrom);
 
             IHighLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IHighLevelClientCallback>();
 
@@ -586,7 +590,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="result"></param>
         public void EndUnregister(RegistrationMessage message, IAsyncResult result)
         {
-            Console.WriteLine("Регистрация клиента была отменена");
+            log.Info("Регистрация клиента {0} была отменена", message.RegNameFrom);
         }
 
         #endregion
