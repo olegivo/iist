@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using DMS.Common.MessageExchangeSystem.LowLevel;
 using DMS.Common.Messages;
+using NLog;
 using Oleg_ivo.MES.Registered;
 
 namespace Oleg_ivo.MES.Low
@@ -18,6 +19,8 @@ namespace Oleg_ivo.MES.Low
         IncludeExceptionDetailInFaults = true)]
     public class LowLevelMessageExchangeSystem : AbstractLevelMessageExchangeSystem<RegisteredLowLevelClient>, ILowLevelMessageExchangeSystem
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+        
         #region Singleton
 
         private static LowLevelMessageExchangeSystem _instance;
@@ -173,7 +176,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="state"></param>
         public IAsyncResult BeginChannelRegister(ChannelRegistrationMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Начало регистрации канала {0}", message.LogicalChannelId);
+            log.Debug("Начало регистрации канала {0}", message.LogicalChannelId);
             var caller = new ChannelRegistrationCaller(ChannelRegister);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
@@ -186,7 +189,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="result"></param>
         public void EndChannelRegister(ChannelRegistrationMessage message, IAsyncResult result)
         {
-            Console.WriteLine("Канал был зарегистрирован");
+            log.Info("Канал был зарегистрирован");
         }
 
         /// <summary>
@@ -197,7 +200,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="state"></param>
         public IAsyncResult BeginChannelUnRegister(ChannelRegistrationMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Начало отмены регистрации канала {0}", message.LogicalChannelId);
+            log.Debug("Начало отмены регистрации канала {0}", message.LogicalChannelId);
             var caller = new ChannelRegistrationCaller(ChannelUnRegister);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
@@ -210,7 +213,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="result"></param>
         public void EndChannelUnRegister(ChannelRegistrationMessage message, IAsyncResult result)
         {
-            Console.WriteLine("Регистрация канала была отменена");
+            log.Info("Регистрация канала была отменена");
         }
 
         /// <summary>
@@ -222,7 +225,7 @@ namespace Oleg_ivo.MES.Low
         /// <returns></returns>
         public IAsyncResult BeginReadChannel(InternalLogicalChannelDataMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Начало чтения канала {0}", message.LogicalChannelId);
+            log.Debug("Начало чтения канала {0}", message.LogicalChannelId);
             var caller = new ReadChannelCaller(ReadChannel);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
@@ -235,7 +238,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="result"></param>
         public void EndReadChannel(InternalLogicalChannelDataMessage message, IAsyncResult result)
         {
-            Console.WriteLine("Канал был прочитан");
+            log.Info("Канал был прочитан");
         }
 
 
@@ -452,7 +455,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="state"></param>
         public IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Начало регистрации клиента {0}", message.RegNameFrom);
+            log.Debug("Начало регистрации клиента {0}", message.RegNameFrom);
 
             ILowLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<ILowLevelClientCallback>();
 
@@ -468,7 +471,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="result"></param>
         public void EndRegister(RegistrationMessage message, IAsyncResult result)
         {
-            Console.WriteLine("Клиент был зарегистрирован");
+            log.Info("Клиент был зарегистрирован");
         }
 
         /// <summary>
@@ -479,7 +482,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="state"></param>
         public IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state)
         {
-            Console.WriteLine("Начало отмены регистрации клиента {0}", message.RegNameFrom);
+            log.Debug("Начало отмены регистрации клиента {0}", message.RegNameFrom);
 
             ILowLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<ILowLevelClientCallback>();
 
@@ -495,7 +498,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="result"></param>
         public void EndUnregister(RegistrationMessage message, IAsyncResult result)
         {
-            Console.WriteLine("Регистрация клиента была отменена");
+            log.Info("Регистрация клиента была отменена");
         }
 
         #endregion
@@ -521,7 +524,7 @@ namespace Oleg_ivo.MES.Low
             }
             else
             {
-                Console.WriteLine(
+                log.Warn(
                     "Канал [{0}] извещает о приходе новых данных (запись) от клиента [{1}], но на него никто не подписан",
                     message.LogicalChannelId, message.RegNameFrom);
             }

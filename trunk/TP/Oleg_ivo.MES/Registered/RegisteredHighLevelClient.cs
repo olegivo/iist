@@ -51,7 +51,7 @@ namespace Oleg_ivo.MES.Registered
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine("Ошибка при отправке кэшированного значения клиенту: {0}",
+                            log.("Ошибка при отправке кэшированного значения клиенту: {0}",
                                               ex.Message);
                         }
             }
