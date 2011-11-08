@@ -1,6 +1,7 @@
 ﻿using System;
 using DMS.Common.MessageExchangeSystem.LowLevel;
 using DMS.Common.Messages;
+using NLog;
 
 namespace Oleg_ivo.MES.Registered
 {
@@ -9,6 +10,8 @@ namespace Oleg_ivo.MES.Registered
     /// </summary>
     public class RegisteredLowLevelClient : RegisteredClient<ILowLevelClientCallback>
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Зарегистрировать канал
         /// </summary>
@@ -41,8 +44,8 @@ namespace Oleg_ivo.MES.Registered
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Ошибка при отправке новых данных клиенту: {0}",
-                                          ex.Message);
+                        log.ErrorException("Ошибка при отправке новых данных клиенту: {0}",
+                                          ex);
                         throw;
                     }
         }
@@ -58,8 +61,8 @@ namespace Oleg_ivo.MES.Registered
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Ошибка при уведомлении клиента о первой подписке на канал: {0}",
-                                          ex.Message);
+                        log.ErrorException("Ошибка при уведомлении клиента о первой подписке на канал: {0}",
+                                          ex);
                         throw;
                     }
 
@@ -76,8 +79,8 @@ namespace Oleg_ivo.MES.Registered
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Ошибка при уведомлении клиента о последней отписке от канала: {0}",
-                                          ex.Message);
+                        log.ErrorException("Ошибка при уведомлении клиента о последней отписке от канала: {0}",
+                                          ex);
                         throw;
                     }
         }

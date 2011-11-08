@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DMS.Common.MessageExchangeSystem;
 using DMS.Common.Messages;
+using NLog;
 
 namespace Oleg_ivo.MES.Registered
 {
@@ -11,6 +12,8 @@ namespace Oleg_ivo.MES.Registered
     /// </summary>
     public abstract class RegisteredClient<TClientCallback> : IRegisteredChannelsHolder where TClientCallback : IClientCallback
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         #region fields
 
         #endregion
@@ -110,8 +113,8 @@ namespace Oleg_ivo.MES.Registered
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Ошибка при отправке кэшированного значения клиенту: {0}",
-                                          ex.Message);
+                        log.ErrorException("Ошибка при отправке кэшированного значения клиенту: {0}",
+                                          ex);
                         throw;
                     }
         }

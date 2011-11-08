@@ -154,7 +154,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="result"></param>
         public void EndChannelSubscribe(ChannelSubscribeMessage message, IAsyncResult result)
         {
-            log.Info("Клиент был подписан на канал {0}", message.LogicalChannelId);
+            log.Info("Клиент был подписан на канал");
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="result"></param>
         public void EndChannelUnSubscribe(ChannelSubscribeMessage message, IAsyncResult result)
         {
-            log.Info("Клиент был отписан от канала {0}", message.LogicalChannelId);
+            log.Info("Клиент был отписан от канала");
         }
 
         private void OnRegistered(RegisteredHighLevelClient callback, InternalMessage message)
@@ -284,7 +284,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="result"></param>
         public void EndWriteChannel(InternalLogicalChannelDataMessage message, IAsyncResult result)
         {
-            log.Info("Канал {0} был записан", message.LogicalChannelId);
+            log.Info("Канал был записан");
         }
 
         /// <summary>
@@ -563,7 +563,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="result"></param>
         public void EndRegister(RegistrationMessage message, IAsyncResult result)
         {
-            log.Info("Клиент {0} был зарегистрирован", message.RegNameFrom);
+            log.Info("Клиент был зарегистрирован");
         }
 
         /// <summary>
@@ -590,7 +590,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="result"></param>
         public void EndUnregister(RegistrationMessage message, IAsyncResult result)
         {
-            log.Info("Регистрация клиента {0} была отменена", message.RegNameFrom);
+            log.Info("Регистрация клиента была отменена");
         }
 
         #endregion
