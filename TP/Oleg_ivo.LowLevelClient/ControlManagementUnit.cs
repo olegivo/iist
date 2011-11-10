@@ -1,8 +1,4 @@
-#if BINDING_TCP
 using Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp;
-#else
-using Oleg_ivo.CMU.ServiceReferenceHome;
-#endif
 using DMS.Common.Events;
 using System.ServiceModel;
 using System;
@@ -162,9 +158,9 @@ namespace Oleg_ivo.LowLevelClient
         /// <summary>
         /// 
         /// </summary>
-        public GetRegNameDelegate GetRegName
+        public virtual GetRegNameDelegate GetRegName
         {
-            private get { return getRegName; }
+            protected get { return getRegName; }
             set { getRegName = value; }
         }
 

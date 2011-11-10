@@ -159,9 +159,9 @@ namespace EmulationClient
         /// <summary>
         /// 
         /// </summary>
-        public GetRegNameDelegate GetRegName
+        public virtual GetRegNameDelegate GetRegName
         {
-            private get { return getRegName; }
+            protected get { return getRegName; }
             set { getRegName = value; }
         }
 

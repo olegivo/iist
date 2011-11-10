@@ -17,10 +17,7 @@ namespace EmulationClient
         /// </summary>
         public App()
         {
-            ControlManagementUnit = new ControlManagementUnitEmulation
-                                        {
-                                            GetRegName = () => "EmulationClient"
-                                        };
+            ControlManagementUnit = new ControlManagementUnitEmulation {GetRegName = GetRegName};
             Emulator = new Emulator
                            {
                                ControlManagementUnit = ControlManagementUnit
@@ -48,6 +45,11 @@ namespace EmulationClient
             //gasConcentration.Refresh();
             //concentrationValue = gasConcentration.GetOutputValue();
             //Console.WriteLine("outputValue = {0}", concentrationValue);
+        }
+
+        private string GetRegName()
+        {
+            return "EmulationClient";
         }
 
         /// <summary>
@@ -85,11 +87,11 @@ namespace EmulationClient
 
         private static void LogError(object sender, ExtendedThreadExceptionEventArgs e)
         {
-            EmulationClient.ControlManagementUnit.Proxy.SendErrorCompleted += Proxy_SendErrorCompleted;
+            Oleg_ivo.LowLevelClient.ControlManagementUnit.Proxy.SendErrorCompleted += Proxy_SendErrorCompleted;
             try
             {
                 //TODO: заполнить RegNameFrom
-                EmulationClient.ControlManagementUnit.Proxy.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
+                Oleg_ivo.LowLevelClient.ControlManagementUnit.Proxy.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
                 if (e.Exception is ArgumentOutOfRangeException)
                     e.ShowError = false;
             }
