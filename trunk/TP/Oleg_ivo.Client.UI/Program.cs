@@ -8,6 +8,8 @@ namespace Oleg_ivo.HighLevelClient.UI
 {
     static class Program
     {
+        private static GetRegNameDelegate GetRegName;
+        private delegate string GetRegNameDelegate();
 
         /// <summary>
         /// The main entry point for the application.
@@ -22,7 +24,9 @@ namespace Oleg_ivo.HighLevelClient.UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new HighLevelClientForm());
+            var form = new HighLevelClientForm();
+            GetRegName = form.GetRegName;
+            Application.Run(form);
         }
 
 
@@ -33,7 +37,7 @@ namespace Oleg_ivo.HighLevelClient.UI
             ClientProvider.Instance.Proxy.SendErrorCompleted += Proxy_SendErrorCompleted;
             try
             {
-                ClientProvider.Instance.Proxy.SendErrorAsync(new InternalErrorMessage(e.Exception), e);
+                ClientProvider.Instance.Proxy.SendErrorAsync(new InternalErrorMessage(GetRegName(), null, e.Exception), e);
                 if (e.Exception is TestException)
                     e.ShowError = false;
             }

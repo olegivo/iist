@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oleg_ivo.CMU", "Oleg_ivo.CM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oleg_ivo.WAGO", "Oleg_ivo.WAGO\Oleg_ivo.WAGO.csproj", "{79953745-7102-46D2-B9D9-5459EDC21ADB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oleg_ivo.HighLevelClient.UI", "Oleg_ivo.Client.UI\Oleg_ivo.HighLevelClient.UI.csproj", "{6A7CE610-0249-415B-A0F4-C21A16C6D574}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{79953745-7102-46D2-B9D9-5459EDC21ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79953745-7102-46D2-B9D9-5459EDC21ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79953745-7102-46D2-B9D9-5459EDC21ADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A7CE610-0249-415B-A0F4-C21A16C6D574}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A7CE610-0249-415B-A0F4-C21A16C6D574}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A7CE610-0249-415B-A0F4-C21A16C6D574}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A7CE610-0249-415B-A0F4-C21A16C6D574}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

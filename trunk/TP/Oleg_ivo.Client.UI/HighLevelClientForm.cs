@@ -140,13 +140,9 @@ namespace Oleg_ivo.HighLevelClient.UI
             }
             else if (sourceRight.Contains(message.LogicalChannelId))
             {
-                ChannelSubscribeMessage unSubscribeMessage = new ChannelSubscribeMessage
-                {
-                    RegName = GetRegName(),
-                    Mode = false,
-                    LogicalChannelId = message.LogicalChannelId
-                };
-
+                ChannelSubscribeMessage unSubscribeMessage = new ChannelSubscribeMessage(GetRegName(), null,
+                                                                                         SubscribeMode.Unsubscribe,
+                                                                                         message.LogicalChannelId);
                 sourceRight.Remove(message.LogicalChannelId);
 
                 ParameterizedThreadStart thread = UnSubscribeUnregisteredChannelAsync;
@@ -225,7 +221,7 @@ namespace Oleg_ivo.HighLevelClient.UI
             }
         }
 
-        private string GetRegName()
+        internal string GetRegName()
         {
             return textBox2.Text;
         }
@@ -254,11 +250,9 @@ namespace Oleg_ivo.HighLevelClient.UI
             else
                 foreach (var registeredChannel in registeredChannels)
                 {
-                    ChannelRegistrationMessage message = new ChannelRegistrationMessage
-                                                          {
-                                                              DataMode = DataMode.Read,
-                                                              LogicalChannelId = registeredChannel
-                                                          };
+                    ChannelRegistrationMessage message = new ChannelRegistrationMessage(GetRegName(), null,
+                                                                                        RegistrationMode.Register,
+                                                                                        DataMode.Read, registeredChannel);
                     AddRegisteredChannel(message);
                 }
         }
@@ -283,17 +277,21 @@ namespace Oleg_ivo.HighLevelClient.UI
 
         private void doubleListBoxControl1_ItemMoved(object sender, MovedEventArgs e)
         {
-            ChannelSubscribeMessage subscribeMessage = new ChannelSubscribeMessage
-            {
-                RegName = GetRegName(),
-                Mode = e.MoveDirection == DoubleListBoxControl.Direction.LeftToRight,
-                LogicalChannelId = (int)e.MovingObject
-            };
+            SubscribeMode regMode = e.MoveDirection == DoubleListBoxControl.Direction.LeftToRight
+                                        ? SubscribeMode.Subscribe
+                                        : SubscribeMode.Unsubscribe;
+            ChannelSubscribeMessage subscribeMessage = new ChannelSubscribeMessage(GetRegName(), null, regMode,
+                                                                                   (int) e.MovingObject);
 
-            if (subscribeMessage.Mode)
-                SubscribeChannel(subscribeMessage);
-            else
-                UnSubscribeChannel(subscribeMessage);
+            switch (subscribeMessage.Mode)
+            {
+                case SubscribeMode.Subscribe:
+                    SubscribeChannel(subscribeMessage);
+                    break;
+                case SubscribeMode.Unsubscribe:
+                    UnSubscribeChannel(subscribeMessage);
+                    break;
+            }
         }
 
         private void SubscribeChannel(ChannelSubscribeMessage message)

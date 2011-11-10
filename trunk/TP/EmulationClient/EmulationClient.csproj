@@ -80,7 +80,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControlManagementUnit.cs" />
     <Compile Include="Emulation\CPBase.cs" />
     <Compile Include="ControlManagementUnitEmulation.cs" />
     <Compile Include="Emulation\Emulator.cs" />
