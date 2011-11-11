@@ -24,7 +24,7 @@ namespace EmulationClient
         public ControlManagementUnitEmulation()
         {
             CanRegister = true;
-            HasWriteChannel += ControlManagementUnitEmulation_HasWriteChannel;
+            
             NeedProtocol += ControlManagementUnitEmulation_NeedProtocol;
             Proxy.RegisterCompleted += Proxy_RegisterCompleted;
             Proxy.UnregisterCompleted += Proxy_UnregisterCompleted;
@@ -32,9 +32,10 @@ namespace EmulationClient
             Proxy.ChannelUnRegisterCompleted += Proxy_ChannelUnRegisterCompleted;
         }
 
-        private void ControlManagementUnitEmulation_HasWriteChannel(object sender, DataEventArgs e)
+        public event EventHandler<DataEventArgs> HasWriteChannel
         {
-            Console.WriteLine("{0}", sender);
+            add { CallbackHandler.HasWriteChannel += value; }
+            remove { CallbackHandler.HasWriteChannel -= value; }
         }
 
         void Proxy_ChannelUnRegisterCompleted(object sender, AsyncCompletedEventArgs e)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DMS.Common.Events;
 using Oleg_ivo.Plc.Channels;
 
 namespace EmulationClient.Emulation
@@ -21,7 +22,13 @@ namespace EmulationClient.Emulation
             {
                 _controlManagementUnit = value;
                 InitChannels();
+                ControlManagementUnit.HasWriteChannel += ControlManagementUnit_HasWriteChannel;
             }
+        }
+
+        private void ControlManagementUnit_HasWriteChannel(object sender, DataEventArgs e)
+        {
+            SetManagedValue(e.Message.LogicalChannelId, e.Message.Value);
         }
 
         private Temperature T6;
@@ -96,10 +103,10 @@ namespace EmulationClient.Emulation
         {
             switch (logicalChannelId)
             {
-                case 101:
+                case 10001:
                     T6.IsBurnerOn = (bool)value;//Горелка
                     break;
-                case 102:
+                case 10002:
                     Speed.SetSpeedValue((double)value);//Количество оборотов дымососа
                     break;
                 default:
