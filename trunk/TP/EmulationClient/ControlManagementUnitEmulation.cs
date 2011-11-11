@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
+using DMS.Common.Events;
 using DMS.Common.Messages;
 using NLog;
 using Oleg_ivo.LowLevelClient;
@@ -23,12 +24,17 @@ namespace EmulationClient
         public ControlManagementUnitEmulation()
         {
             CanRegister = true;
-
+            HasWriteChannel += ControlManagementUnitEmulation_HasWriteChannel;
             NeedProtocol += ControlManagementUnitEmulation_NeedProtocol;
             Proxy.RegisterCompleted += Proxy_RegisterCompleted;
             Proxy.UnregisterCompleted += Proxy_UnregisterCompleted;
             Proxy.ChannelRegisterCompleted += Proxy_ChannelRegisterCompleted;
             Proxy.ChannelUnRegisterCompleted += Proxy_ChannelUnRegisterCompleted;
+        }
+
+        private void ControlManagementUnitEmulation_HasWriteChannel(object sender, DataEventArgs e)
+        {
+            Console.WriteLine("{0}", sender);
         }
 
         void Proxy_ChannelUnRegisterCompleted(object sender, AsyncCompletedEventArgs e)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using DMS.Common.Events;
 
 namespace EmulationClient
 {
@@ -14,7 +15,13 @@ namespace EmulationClient
             App app = (App) Application.Current;
             ControlManagementUnitEmulation = app.ControlManagementUnit;
             ControlManagementUnitEmulation.NeedProtocol += controlManagementUnitEmulation_NeedProtocol;
+            ControlManagementUnitEmulation.HasWriteChannel += ControlManagementUnitEmulation_HasWriteChannel;
             grid.DataContext = ControlManagementUnitEmulation;
+        }
+
+        private void ControlManagementUnitEmulation_HasWriteChannel(object sender, DataEventArgs e)
+        {
+            //данные, которые придут в канал должны влиять на флаг горелки (и т.п.) 
         }
 
         /// <summary>
