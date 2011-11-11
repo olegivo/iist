@@ -67,7 +67,7 @@ namespace EmulationClient.Emulation
                 //управляемые параметры
                 logicalChannels.Add(new OutputLogicalChannel(null, 0, 0)
                 {
-                    Id = 101,
+                    Id = 10001,
                     Description = "Горелка",
                     PollPeriod = TimeSpan.FromMilliseconds(500),
                     MinValue = 0,
@@ -75,7 +75,7 @@ namespace EmulationClient.Emulation
                 });
                 logicalChannels.Add(new OutputLogicalChannel(null, 0, 0)
                 {
-                    Id = 102,
+                    Id = 10002,
                     Description = "Количество оборотов дымососа",
                     PollPeriod = TimeSpan.FromMilliseconds(500),
                     MinValue = 0,
