@@ -29,7 +29,7 @@ namespace Oleg_ivo.CMU
             ControlManagementUnit.NeedProtocol += ControlManagementUnit_NeedProtocol;
         }
 
-        private ControlManagementUnit ControlManagementUnit
+        internal ControlManagementUnit ControlManagementUnit
         {
             get
             {

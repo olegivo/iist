@@ -103,9 +103,8 @@ namespace Oleg_ivo.LowLevelClient
 
         void Instance_NewDadaReceived(object sender, NewDataReceivedEventArgs e)
         {
-            InternalLogicalChannelDataMessage message = new InternalLogicalChannelDataMessage(null, RegName, DataMode.Read,
+            InternalLogicalChannelDataMessage message = new InternalLogicalChannelDataMessage(RegName, null, DataMode.Read,
                                                                                               e.LogicalChannel.Id)
-                //TODO: заполнить RegNameFrom          
                                                             {
                                                                 Value = e.Value
                                                             };
@@ -122,24 +121,32 @@ namespace Oleg_ivo.LowLevelClient
             get { return Proxy; }
         }
 
-        static InstanceContext site;
-        static LowLevelMessageExchangeSystemClient proxy;
+        InstanceContext site;
+        LowLevelMessageExchangeSystemClient proxy;
 
         /// <summary>
         /// 
         /// </summary>
-        public static LowLevelMessageExchangeSystemClient Proxy
+        public LowLevelMessageExchangeSystemClient Proxy
         {
             get
             {
                 if (proxy == null)
                 {
-                    CallbackHandler callbackHandler = new CallbackHandler();
-                    site = new InstanceContext(callbackHandler);
+                    site = new InstanceContext(CallbackHandler);
                     proxy = new LowLevelMessageExchangeSystemClient(site);
                 }
                 return proxy;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        protected CallbackHandler CallbackHandler
+        {
+            get { return callbackHandler ?? (callbackHandler = new CallbackHandler()); }
         }
 
         protected string RegName
@@ -154,6 +161,7 @@ namespace Oleg_ivo.LowLevelClient
         }
 
         private GetRegNameDelegate getRegName;
+        private CallbackHandler callbackHandler;
 
         /// <summary>
         /// 

@@ -15,24 +15,38 @@ namespace Oleg_ivo.CMU
         [STAThread]
         static void Main()
         {
-#pragma warning disable 168
-            ExceptionHandler exceptionHandler = new ExceptionHandler(LogError);
-#pragma warning restore 168
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            DbConnectionProvider.Instance.SetupConnectionStringFromConfigurationFile();
 
-            Application.Run(new LowLevelClientForm());
+            LowLevelClientForm form = new LowLevelClientForm();
+            
+#pragma warning disable 168
+            ExceptionHandler exceptionHandler = new ExceptionHandler((new Errors(form.ControlManagementUnit)).LogError);
+#pragma warning restore 168
+
+            DbConnectionProvider.Instance.SetupConnectionStringFromConfigurationFile();
+            Application.Run(form);
         }
 
-        private static void LogError(object sender, ExtendedThreadExceptionEventArgs e)
+    }
+
+    internal class Errors
+    {
+        private readonly ControlManagementUnit controlManagementUnit;
+
+        public Errors(ControlManagementUnit controlManagementUnit)
         {
-            ControlManagementUnit.Proxy.SendErrorCompleted += Proxy_SendErrorCompleted;
+            this.controlManagementUnit = controlManagementUnit;
+        }
+
+        internal void LogError(object sender, ExtendedThreadExceptionEventArgs e)
+        {
+            controlManagementUnit.Proxy.SendErrorCompleted += Proxy_SendErrorCompleted;
             try
             {
                 //TODO: заполнить RegNameFrom
-                ControlManagementUnit.Proxy.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
+                controlManagementUnit.Proxy.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
                 if (e.Exception is ArgumentOutOfRangeException)
                     e.ShowError = false;
             }
@@ -42,16 +56,16 @@ namespace Oleg_ivo.CMU
             }
         }
 
-        static void Proxy_SendErrorCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        void Proxy_SendErrorCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-/*
- * TODO: если не удалось передать ошибку службе обмена сообщениями, выбрасывать ошибку здесь?
-            Proxy.SendErrorCompleted -= Proxy_SendErrorCompleted;
-            if(e.Error!=null)
-            {
-                ExtendedThreadExceptionEventArgs args = e.UserState as ExtendedThreadExceptionEventArgs;
-            }
-*/
+            /*
+             * TODO: если не удалось передать ошибку службе обмена сообщениями, выбрасывать ошибку здесь?
+                        Proxy.SendErrorCompleted -= Proxy_SendErrorCompleted;
+                        if(e.Error!=null)
+                        {
+                            ExtendedThreadExceptionEventArgs args = e.UserState as ExtendedThreadExceptionEventArgs;
+                        }
+            */
         }
     }
 }
