@@ -85,13 +85,13 @@ namespace EmulationClient
             
         }
 
-        private static void LogError(object sender, ExtendedThreadExceptionEventArgs e)
+        private void LogError(object sender, ExtendedThreadExceptionEventArgs e)
         {
-            Oleg_ivo.LowLevelClient.ControlManagementUnit.Proxy.SendErrorCompleted += Proxy_SendErrorCompleted;
+            ControlManagementUnit.Proxy.SendErrorCompleted += Proxy_SendErrorCompleted;
             try
             {
                 //TODO: заполнить RegNameFrom
-                Oleg_ivo.LowLevelClient.ControlManagementUnit.Proxy.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
+                ControlManagementUnit.Proxy.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
                 if (e.Exception is ArgumentOutOfRangeException)
                     e.ShowError = false;
             }

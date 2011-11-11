@@ -2,10 +2,12 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:EmulationClient="clr-namespace:EmulationClient" Title="Window1" Height="399" Width="807"
         >
+<!--
     <Window.Resources>
         <EmulationClient:ControlManagementUnitEmulation x:Key="CMU" />
     </Window.Resources>
-    <Grid DataContext="{Binding Source={StaticResource CMU}}">
+-->
+    <Grid Name="grid" ><!--DataContext="{Binding Source={StaticResource CMU}}"-->
         <Button Height="23" Margin="12,12,0,0" Name="btnRegister" VerticalAlignment="Top" HorizontalAlignment="Left" Width="363" Click="btnRegister_Click" 
                 IsEnabled="{Binding CanRegister, UpdateSourceTrigger=PropertyChanged}">Зарегистрироваться</Button>
         <Button Height="23" Margin="381,12,12,0" Name="btnUnregister" VerticalAlignment="Top" Click="btnUnregister_Click" 

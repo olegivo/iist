@@ -31,7 +31,7 @@ namespace Oleg_ivo.LowLevelClient
         /// <summary>
         /// 
         /// </summary>
-        public static event EventHandler NeedProtocol;
+        public event EventHandler NeedProtocol;
 
         /// <summary>
         /// 
@@ -89,7 +89,7 @@ namespace Oleg_ivo.LowLevelClient
         /// <summary>
         /// 
         /// </summary>
-        public static event EventHandler<ChannelSubscribeEventArgs> ChannelSubscribed;
+        public event EventHandler<ChannelSubscribeEventArgs> ChannelSubscribed;
 
         private void InvokeChannelSubsrcibe(ChannelSubscribeEventArgs e)
         {
@@ -136,7 +136,7 @@ namespace Oleg_ivo.LowLevelClient
         /// <summary>
         /// 
         /// </summary>
-        public static event EventHandler<ChannelSubscribeEventArgs> ChannelUnSubscribed;
+        public event EventHandler<ChannelSubscribeEventArgs> ChannelUnSubscribed;
 
         private void InvokeChannelUnSubsrcibe(ChannelSubscribeEventArgs e)
         {
@@ -147,7 +147,7 @@ namespace Oleg_ivo.LowLevelClient
         /// <summary>
         /// Записан канал
         /// </summary>
-        public static event EventHandler<DataEventArgs> HasWriteChannel;
+        public event EventHandler<DataEventArgs> HasWriteChannel;
 
         private void OnSendWriteToClient(InternalLogicalChannelDataMessage message)
         {

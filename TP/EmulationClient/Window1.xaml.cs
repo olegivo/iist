@@ -14,6 +14,7 @@ namespace EmulationClient
             App app = (App) Application.Current;
             ControlManagementUnitEmulation = app.ControlManagementUnit;
             ControlManagementUnitEmulation.NeedProtocol += controlManagementUnitEmulation_NeedProtocol;
+            grid.DataContext = ControlManagementUnitEmulation;
         }
 
         /// <summary>
