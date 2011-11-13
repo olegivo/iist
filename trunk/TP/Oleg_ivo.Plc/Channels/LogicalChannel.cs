@@ -9,6 +9,7 @@ namespace Oleg_ivo.Plc.Channels
     ///</summary>
     public abstract class LogicalChannel : IIdentified
     {
+        public delegate double GetLogicalChannelValueDelegate();
 
         #region fields
 
@@ -99,6 +100,18 @@ namespace Oleg_ivo.Plc.Channels
         /// </summary>
         public TimeSpan PollPeriod { get; set; }
 
+        /// <summary>
+        /// Делегат альтернативного получения данных из канала.
+        /// Если задан, используется в методе <see cref="GetValue"/>
+        /// </summary>
+        public GetLogicalChannelValueDelegate GetValueAltDelegate { protected get; set; }
+
+        /// <summary>
+        /// Делегат эмуляции альтернативного получения значения из канала.
+        /// Если задан, используется в методе <see cref="GetValueEmulation"/>
+        /// </summary>
+        public GetLogicalChannelValueDelegate GetValueEmulationAltDelegate { protected get; set; }
+
         #endregion
 
         #region constructors
@@ -143,12 +156,19 @@ namespace Oleg_ivo.Plc.Channels
         }
 
         ///<summary>
-        /// Получить значение из логического канала
+        /// Получить значение из логического канала.
+        /// Если задан делегат альтернативного получения данных из канала, используется он,
+        /// иначе из физического канала получается значение, 
+        /// проводится прямое преобразование (если задан полином прямого преобразвания),
+        /// затем производится проверка полученного значения по диапазону изменения величины.
         ///</summary>
         ///<exception cref="ArgumentOutOfRangeException"></exception>
         ///<returns></returns>
         public double GetValue()
         {
+            if (GetValueAltDelegate != null)
+                return GetValueAltDelegate();
+
             object obj = PhysicalChannel.GetValue(AddressShift, ChannelSize);
             if (obj is Array)
             {
@@ -227,11 +247,19 @@ namespace Oleg_ivo.Plc.Channels
         }
 
         /// <summary>
-        /// Эмуляция возвращения значения из канала
+        /// Эмуляция возвращения значения из канала.
+        /// Если задан делегат эмуляции альтернативного получения данных из канала, используется он,
+        /// иначе производится получения функции синуса от аргумента времени, 
+        /// периодом одна минута и диапазоном значений, равным диапазону изменения величины,
+        /// проводится прямое преобразование (если задан полином прямого преобразвания),
+        /// затем производится проверка полученного значения по диапазону изменения величины.
         /// </summary>
         /// <returns></returns>
         public double GetValueEmulation()
         {
+            if (GetValueEmulationAltDelegate != null)
+                return GetValueEmulationAltDelegate();
+
             int second = DateTime.Now.Second;
             double value = Math.Sin(second * 6 * (Math.PI / 180));//синус [-1;+1]
             value = ((value + 1) / 2);//сдвиг - синус [0;+1]
