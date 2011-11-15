@@ -503,7 +503,12 @@ namespace Oleg_ivo.MES.High
 
             if (subscribedChannel != null)
             {
-                subscribedChannel.InvokeRead(message);
+                if ((subscribedChannel.DataMode & DataMode.Read) != DataMode.Unknown)
+                    subscribedChannel.InvokeRead(message);
+                else
+                    log.Warn(
+                        " анал [{0}] извещает о приходе новых данных (чтение) от клиента [{1}], но не может быть использован в режиме чтени€. ѕроверьте настройки режима данных дл€ канала",
+                        message.LogicalChannelId, message.RegNameFrom);
             }
             else
             {

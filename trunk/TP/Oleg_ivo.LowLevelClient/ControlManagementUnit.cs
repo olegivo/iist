@@ -1,3 +1,4 @@
+using NLog;
 using Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp;
 using DMS.Common.Events;
 using System.ServiceModel;
@@ -18,6 +19,8 @@ namespace Oleg_ivo.LowLevelClient
     ///</summary>
     public class ControlManagementUnit
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ControlManagementUnit" />.
         /// Для того, чтобы построить конфигурацию каналов, следует задать делегат <see cref="GetDistributedMeasurementInformationSystem"/> 
@@ -29,7 +32,7 @@ namespace Oleg_ivo.LowLevelClient
             CallbackHandler.ChannelSubscribed += CallbackHandler_ChannelSubscribed;
             CallbackHandler.ChannelUnSubscribed += CallbackHandler_ChannelUnSubscribed;
             CallbackHandler.HasWriteChannel += CallbackHandler_HasWriteChannel;
-            
+
             Planner = Planner.Instance;
             Planner.NewDadaReceived += Instance_NewDadaReceived;
         }
@@ -51,6 +54,13 @@ namespace Oleg_ivo.LowLevelClient
                                      e.Message.TimeStamp,
                                      e.Message.Value);
             Protocol(s);
+            OnWriteChannel(e.Message);
+        }
+
+        private void OnWriteChannel(InternalLogicalChannelDataMessage message)
+        {
+            //TODO:если канал в списке подписанных каналов, для которых разрешена запись извне, передавать в канал
+
         }
 
         /// <summary>
@@ -153,9 +163,9 @@ namespace Oleg_ivo.LowLevelClient
         {
             get
             {
-                if (GetRegName == null) 
+                if (GetRegName == null)
                     throw new NullReferenceException("Не задан делегат GetRegName");
-                
+
                 return GetRegName();
             }
         }
@@ -178,10 +188,27 @@ namespace Oleg_ivo.LowLevelClient
                 GetLogicalChannels().AsEnumerable().FirstOrDefault(
                     LogicalChannel.GetFindChannelPredicate(e.Message.LogicalChannelId));
 
+            if (channel == null)
+            {
+                log.Warn("Не удалось найти канал {0} для осуществления подписки. Канал подписан, но с ним ничего не будет происходить");
+                return;
+            }
 
-            Protocol(string.Format("{0} был подписан на получение новых данных", channel));
-            //запустить таймер опроса для зарегистрированного канала после подписки на него
-            Planner.StartPoll(channel);
+            if (channel is InputLogicalChannel || channel is InputOutputLogicalChannel)
+            {
+                Protocol(string.Format("{0} был подписан на получение новых данных", channel));
+                //запустить таймер опроса для зарегистрированного канала после подписки на него
+                Planner.StartPoll(channel);
+            }
+            else if (channel is OutputLogicalChannel)
+            {
+                //TODO:добавить канал в список подписанных каналов, для которых разрешена запись извне
+                Protocol(string.Format("{0} был подписан на установку новых данных", channel));
+            }
+            else
+            {
+                throw new InvalidOperationException(string.Format("{0} имеет неизвестный тип и не может быть обработан при подписке", channel));
+            }
         }
 
         void CallbackHandler_ChannelUnSubscribed(object sender, ChannelSubscribeEventArgs e)
@@ -190,9 +217,26 @@ namespace Oleg_ivo.LowLevelClient
                 GetLogicalChannels().AsEnumerable().FirstOrDefault(
                     LogicalChannel.GetFindChannelPredicate(e.Message.LogicalChannelId));
 
-            Protocol(string.Format("{0} был отписан от получения новых данных", channel));
+            if (channel == null)
+            {
+                log.Warn("Не удалось найти канал {0} для осуществления отписки. Тем не менее, канал отписан.");
+                return;
+            }
 
-            Planner.StopPoll(channel);
+            if (channel is InputLogicalChannel || channel is InputOutputLogicalChannel)
+            {
+                Protocol(string.Format("{0} был отписан от получения новых данных", channel));
+                Planner.StopPoll(channel);
+            }
+            else if (channel is OutputLogicalChannel)
+            {
+                //TODO:удалить канал из списка подписанных каналов, для которых разрешена запись извне
+                Protocol(string.Format("{0} был отписан от установки новых данных", channel));
+            }
+            else
+            {
+                throw new InvalidOperationException(string.Format("{0} имеет неизвестный тип и не может быть обработан при подписке", channel));
+            }
         }
 
         void CallbackHandler_NeedProtocol(object sender, EventArgs e)
@@ -268,7 +312,7 @@ namespace Oleg_ivo.LowLevelClient
         public IEnumerable<int> GetAvailableLogicalChannels()
         {
             //добавляем только проидентифицированные каналы (Id > 0):
-            return 
+            return
                 GetLogicalChannels()
                     .Select(channel => channel.Id > 0 ? channel.Id : 0)
                         .Where(i => i > 0);
