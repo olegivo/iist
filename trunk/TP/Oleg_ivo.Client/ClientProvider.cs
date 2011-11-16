@@ -271,7 +271,7 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public void Register()
         {
-            Proxy.Register(new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write));
+            Proxy.Register(new RegistrationMessage(RegName, null, RegistrationMode.Register, AllowedDataMode));
             RegisteredChannels = Proxy.GetRegisteredChannels(new InternalMessage(RegName, null));
         }
 
@@ -282,8 +282,17 @@ namespace Oleg_ivo.HighLevelClient
         public void Register(EventHandler<AsyncCompletedEventArgs> proxyRegisterCompleted)
         {
             _proxyRegisterCompleted = proxyRegisterCompleted;
-            Proxy.RegisterAsync(new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write));
+            Proxy.RegisterAsync(new RegistrationMessage(RegName, null, RegistrationMode.Register, AllowedDataMode));
             Proxy.RegisterCompleted += Proxy_RegisterCompleted;
+        }
+
+        /// <summary>
+        /// Разрешённый для клиента режим данных
+        /// </summary>
+        /// <value></value>
+        public DataMode AllowedDataMode
+        {
+            get { return DataMode.Read /*| DataMode.Write*/; }
         }
 
         void Proxy_RegisterCompleted(object sender, AsyncCompletedEventArgs e)
