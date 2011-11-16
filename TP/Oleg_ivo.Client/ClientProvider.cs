@@ -292,7 +292,7 @@ namespace Oleg_ivo.HighLevelClient
         /// <value></value>
         public DataMode AllowedDataMode
         {
-            get { return DataMode.Read /*| DataMode.Write*/; }
+            get { return DataMode.Read | DataMode.Write; }
         }
 
         void Proxy_RegisterCompleted(object sender, AsyncCompletedEventArgs e)
