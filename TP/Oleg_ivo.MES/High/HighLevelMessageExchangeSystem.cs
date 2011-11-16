@@ -228,8 +228,7 @@ namespace Oleg_ivo.MES.High
         {
             if (message.Mode != SubscribeMode.Subscribe)
                 throw new ArgumentException("ƒл€ подписки на канал в сообщении используетс€ флаг отписки");
-            
-            //провер€ть режим данных канала при подписке на него
+
             RegisteredHighLevelClient registeredHighLevelClient = GetRegisteredHighLevelClient(message);
             if (registeredHighLevelClient != null)
                 registeredHighLevelClient.ChannelSubscribe(message);
@@ -293,9 +292,16 @@ namespace Oleg_ivo.MES.High
         /// <param name="message"></param>
         public void WriteChannel(InternalLogicalChannelDataMessage message)
         {
-            //провер€ть режим данных канала при записи
-            //пришли новые данные по каналу. будем передавать вниз
-            LowLevelMessageExchangeSystem.Instance.WriteChannel(message);
+            if (message.DataMode == DataMode.Write)
+            {
+                //пришли новые данные по каналу. будем передавать вниз
+                LowLevelMessageExchangeSystem.Instance.WriteChannel(message);
+            }
+            else
+                log.Warn(
+                    " лиент [{0}] извещает о записи новых данных в канал [{1}]. "
+                    + "Ќо в сообщении указан режим данных, отличный от записи",
+                    message.LogicalChannelId, message.RegNameFrom);
         }
 
         /// <summary>
@@ -351,7 +357,7 @@ namespace Oleg_ivo.MES.High
             {
                 if (registeredHighLevelClient == null)
                 {
-                    registeredHighLevelClient = new RegisteredHighLevelClient { Ticker = message.RegNameFrom };
+                    registeredHighLevelClient = new RegisteredHighLevelClient(message.DataMode) { Ticker = message.RegNameFrom };
                     AddClient(message.RegNameFrom, registeredHighLevelClient);
                 }
                 //                registeredHighLevelClient = (RegisteredHighLevelClient)_registeredClients[message.RegNameFrom];
@@ -449,7 +455,6 @@ namespace Oleg_ivo.MES.High
         public RegisteredLogicalChannel GetRegisteredChannel(Func<RegisteredLogicalChannel, bool> predicate)
         {
             //ищем в верхней службе, если не находим - ищем в нижней службе
-            //провер€ть режим данных канала при подписке на него, при чтении и при записи
             RegisteredLogicalChannel channel = FindSubscribedChannel(predicate) ??
                                                LowLevelMessageExchangeSystem.Instance.GetRegisteredLogicalChannel(predicate);
             return channel;
@@ -507,14 +512,17 @@ namespace Oleg_ivo.MES.High
                     subscribedChannel.InvokeRead(message);
                 else
                     log.Warn(
-                        " анал [{0}] извещает о приходе новых данных (чтение) от клиента [{1}], но не может быть использован в режиме чтени€. ѕроверьте настройки режима данных дл€ канала",
+                        " лиент [{0}] извещает о чтении новых данных из канала [{1}]. "
+                            + "Ќо он не может быть использован в режиме чтени€. "
+                            + "ѕроверьте настройки режима данных дл€ канала",
                         message.LogicalChannelId, message.RegNameFrom);
             }
             else
             {
                 log.Warn(
-                    " анал [{0}] извещает о приходе новых данных (чтение) от клиента [{1}], но на него никто не подписан",
-                    message.LogicalChannelId, message.RegNameFrom);
+                    " лиент [{0}] извещает о чтении новых данных из канала [{1}]. Ќо на него никто не подписан", 
+                    message.RegNameFrom,
+                    message.LogicalChannelId);
             }
         }
 

@@ -51,11 +51,10 @@ namespace Oleg_ivo.MES.Low
 
         private void High_ChannelUnSubscribed(object sender, High.HighRegisteredLogicalChannelSubscribeEventArgs e)
         {
-            //провер€ть режим данных канала при подписке на него
             var channel =
                 GetRegisteredLogicalChannel(
                     RegisteredLogicalChannel.GetFindChannelPredicate(e.ChannelSubscribeMessage.LogicalChannelId,
-                                                                     DataMode.Read));//TODO:дл€ подписки только чтение?
+                                                                     DataMode.Unknown));
 
             if (channel == null)
                 throw new Exception("Ќевозможно отписатьс€ от канала, который не зарегистрирован");
@@ -65,11 +64,10 @@ namespace Oleg_ivo.MES.Low
 
         private void High_ChannelSubscribed(object sender, High.HighRegisteredLogicalChannelSubscribeEventArgs e)
         {
-            //провер€ть режим данных канала при подписке на него
             var channel =
                 GetRegisteredLogicalChannel(
                     RegisteredLogicalChannel.GetFindChannelPredicate(e.ChannelSubscribeMessage.LogicalChannelId,
-                                                                     DataMode.Read));//TODO:дл€ подписки только чтение?
+                                                                     DataMode.Unknown));
             if (channel == null)
                 throw new Exception("Ќевозможно подписатьс€ на канал, который не зарегистрирован");
 
@@ -161,8 +159,19 @@ namespace Oleg_ivo.MES.Low
         /// <param name="message"></param>
         private void ReadChannel(InternalLogicalChannelDataMessage message)
         {
-            //пришли новые данные по каналу. будем передавать наверх
-            High.HighLevelMessageExchangeSystem.Instance.ReadChannel(message);
+            if (message.DataMode == DataMode.Read)
+            {
+                //пришли новые данные по каналу. будем передавать наверх
+                High.HighLevelMessageExchangeSystem.Instance.ReadChannel(message);
+            }
+            else
+            {
+                log.Warn(
+                    " лиент [{0}] извещает о чтении новых данных из канала [{1}]. "
+                    + "Ќо в сообщении указан режим данных, отличный от чтени€",
+                    message.LogicalChannelId, message.RegNameFrom);
+
+            }
         }
 
         private delegate void ReadChannelCaller(InternalLogicalChannelDataMessage message);
@@ -176,7 +185,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="state"></param>
         public IAsyncResult BeginChannelRegister(ChannelRegistrationMessage message, AsyncCallback callback, object state)
         {
-            log.Debug("Ќачало регистрации канала {0}", message.LogicalChannelId);
+            log.Debug("Ќачало регистрации канала {0} ({1})", message.LogicalChannelId, message.DataMode.ToString());
             var caller = new ChannelRegistrationCaller(ChannelRegister);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
@@ -513,20 +522,29 @@ namespace Oleg_ivo.MES.Low
         /// <param name="message"></param>
         public void WriteChannel(InternalLogicalChannelDataMessage message)
         {
-            //TODO:провер€ть режим данных канала
             RegisteredLogicalChannel subscribedChannel =
                 FindSubscribedChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId,
                                                                                        DataMode.Write));
 
             if (subscribedChannel != null)
             {
-                subscribedChannel.InvokeWrite(message);
+                if ((subscribedChannel.DataMode & DataMode.Write) != DataMode.Unknown)
+                    subscribedChannel.InvokeWrite(message);
+                else
+                    log.Warn(
+                        " лиент [{0}] извещает о записи новых данных в канал [{1}]. "
+                            + "Ќо он не может быть использован в режиме записи. "
+                            + "ѕроверьте настройки режима данных дл€ канала",
+                        message.LogicalChannelId, message.RegNameFrom);
             }
             else
             {
                 log.Warn(
-                    " анал [{0}] извещает о приходе новых данных (запись) от клиента [{1}], но на него никто не подписан",
-                    message.LogicalChannelId, message.RegNameFrom);
+                    " лиент [{0}] извещает о записи новых данных в канал [{1}]. "
+                        +"Ќевозможно найти канал с этим номером, удовлетвор€ющий режиму записи. "
+                        +"¬озможно, канал не зарегистрирован или неправильно сконфигурирован его режим данных.", 
+                    message.RegNameFrom,
+                    message.LogicalChannelId);
             }
         }
     }

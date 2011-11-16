@@ -13,6 +13,11 @@ namespace Oleg_ivo.MES.Registered
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
+        public RegisteredHighLevelClient(DataMode dataMode)
+        {
+            DataMode = dataMode;
+        }
+
         #region fields
 
         #endregion
@@ -71,24 +76,39 @@ namespace Oleg_ivo.MES.Registered
         {
             //поиск ЛК, где Id - заданный:
             Func<RegisteredLogicalChannel, bool> predicate =
-                RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId, DataMode.Read);//TODO:для подписки только чтение?
+                RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId, DataMode.Unknown);
 
             RegisteredLogicalChannel logicalChannel = GetRegisteredLogicalChannel(predicate);
             if (logicalChannel != null)
                 throw new ArgumentException("Клиент уже подписан на данный канал");
 
-            //TODO:проверять режим данных канала при подписке на него
             RegisteredLogicalChannel registeredLogicalChannel =
                 HighLevelMessageExchangeSystem.Instance.GetRegisteredChannel(predicate);
 
             if (registeredLogicalChannel == null) 
                 throw new ArgumentException("Искомый канал недоступен для подписки");
-
-            AddRegisteredChannel(registeredLogicalChannel);
             
-            //подписка на событие чтения канала
-            registeredLogicalChannel.Read += registeredLogicalChannel_Read;
+            if((DataMode & registeredLogicalChannel.DataMode) != DataMode.Unknown)
+            {
+                AddRegisteredChannel(registeredLogicalChannel);
+                
+                //подписка на событие чтения канала
+                registeredLogicalChannel.Read += registeredLogicalChannel_Read;
+            }
+            else
+            {
+                var s = String.Format(
+                    "Разрешённый режим данных для клиента [{0}] ({1}) не совпадает с режимом данных канала [{2}] ({3}). Подписка не состоится.",
+                    message.RegNameFrom, DataMode, registeredLogicalChannel.Id, registeredLogicalChannel.DataMode);
+                log.Warn(s);
+                throw new Exception(s);
+            }
         }
+
+        /// <summary>
+        /// Разрешённый режим данных клиента
+        /// </summary>
+        public DataMode DataMode { get; private set; }
 
         /// <summary>
         /// Отписка от 
@@ -102,7 +122,7 @@ namespace Oleg_ivo.MES.Registered
             //поиск ЛК, где Id - заданный:
             RegisteredLogicalChannel registeredLogicalChannel =
                 GetRegisteredLogicalChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId,
-                                                                                             DataMode.Read));//TODO:для подписки только чтение?
+                                                                                             DataMode.Unknown));
             if (registeredLogicalChannel == null)
                 throw new ArgumentException("Клиент не подписан на данный канал");
 

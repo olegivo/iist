@@ -50,7 +50,7 @@ namespace Oleg_ivo.MES.Registered
             //TODO:проверять режим данных канала при подписке на него, при чтении и при записи (добавить параметр - режим данных)
             return
                 (channel =>
-                 channel.Id == id && (dataMode != DataMode.Unknown || (channel.DataMode & dataMode) == dataMode));
+                 channel.Id == id && (dataMode == DataMode.Unknown || (channel.DataMode & dataMode) == dataMode));
         }
 
         /// <summary>
