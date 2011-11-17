@@ -110,7 +110,7 @@ namespace Oleg_ivo.Plc.Channels
         /// Делегат эмуляции альтернативного получения значения из канала.
         /// Если задан, используется в методе <see cref="GetValueEmulation"/>
         /// </summary>
-        public GetLogicalChannelValueDelegate GetValueEmulationAltDelegate { protected get; set; }
+        public GetLogicalChannelValueDelegate GetValueEmulationAltDelegate { get; set; }
 
         #endregion
 
