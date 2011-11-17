@@ -11,7 +11,7 @@ namespace EmulationClient.Emulation
     public class Emulator
     {
         private ControlManagementUnitEmulation _controlManagementUnit;
-
+       
         /// <summary>
         /// Модуль контроля и управления
         /// </summary>
@@ -60,7 +60,9 @@ namespace EmulationClient.Emulation
                     Description = "Температура",
                     PollPeriod = TimeSpan.FromMilliseconds(500),
                     MinValue = 0,
-                    MaxValue = 1000
+                    MaxValue = 1000,
+                    GetValueEmulationAltDelegate = T6.GetOutputValue
+                    
                 });
                 logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
                 {
@@ -68,7 +70,8 @@ namespace EmulationClient.Emulation
                     Description = "Концентрация",
                     PollPeriod = TimeSpan.FromMilliseconds(500),
                     MinValue = 0,
-                    MaxValue = 1000
+                    MaxValue = 1000,
+                    GetValueEmulationAltDelegate = COConcentration.GetOutputValue
                 });
 
                 //управляемые параметры
@@ -90,6 +93,7 @@ namespace EmulationClient.Emulation
                 });
 
                 ControlManagementUnit.LogicalChannels = logicalChannels;
+                
             }
         }
 
