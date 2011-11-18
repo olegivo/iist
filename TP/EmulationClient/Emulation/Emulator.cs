@@ -56,7 +56,7 @@ namespace EmulationClient.Emulation
                 //контролируемые параметры
                 logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
                 {
-                    Id = 1,
+                    Id = 6,//TС6	температура перед рукавным фильтром
                     Description = "Температура",
                     PollPeriod = TimeSpan.FromMilliseconds(500),
                     MinValue = 0,
@@ -66,7 +66,7 @@ namespace EmulationClient.Emulation
                 });
                 logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
                 {
-                    Id = 2,
+                    Id = 21,//Г-СО	концентрация газа СО
                     Description = "Концентрация",
                     PollPeriod = TimeSpan.FromMilliseconds(500),
                     MinValue = 0,

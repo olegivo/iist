@@ -4,7 +4,6 @@ using DevExpress.XtraBars.Helpers;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DMS.Common.Events;
-using Oleg_ivo.HighLevelClient;
 
 namespace TP
 {

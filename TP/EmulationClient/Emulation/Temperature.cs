@@ -33,10 +33,10 @@ namespace EmulationClient.Emulation
         /// Обновить значение (используется функция пересчёта входных параметров в выходной)
         /// </summary>
         public override void Refresh()
-        {
-            double delta = (IsBurnerOn ? 1/2 : -1/2)
-                            * Math.Exp(GetPassedSeconds());
-            _outputValue += delta;
+       {
+           double delta = (IsBurnerOn ? 1 : -1)
+                          *Math.Exp(Math.Sqrt(GetPassedSeconds())/100);
+           if (_outputValue > 20 || delta > 0) _outputValue += delta;
             startTime = DateTime.Now;
         }
     }
