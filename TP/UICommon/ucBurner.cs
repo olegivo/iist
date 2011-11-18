@@ -27,8 +27,8 @@ namespace UICommon
         // Метод запускающий событие
         private void RaiseStatusChanged()
         {
-            EventHandler handler = StateChanged;
-            if (handler != null) handler(this, EventArgs.Empty);
+            if (StateChanged != null) 
+                StateChanged(this, EventArgs.Empty);
             Refresh();
         }
 
