@@ -12,7 +12,7 @@ namespace EmulationClient.Emulation
         /// </summary>
         public override void Refresh()
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <summary>

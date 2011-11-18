@@ -189,11 +189,11 @@ namespace TP.FinishCleaning
             0,
             0,
             0});
-            this.spinEdit6.Location = new System.Drawing.Point(412, 125);
+            this.spinEdit6.Location = new System.Drawing.Point(442, 408);
             this.spinEdit6.Name = "spinEdit6";
             this.spinEdit6.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.spinEdit6.Size = new System.Drawing.Size(87, 20);
+            this.spinEdit6.Size = new System.Drawing.Size(57, 20);
             this.spinEdit6.TabIndex = 72;
             this.spinEdit6.EditValueChanged += new System.EventHandler(this.spinEdit6_EditValueChanged);
             // 
@@ -219,7 +219,7 @@ namespace TP.FinishCleaning
             this.ucCaptioned17.Appearance.Options.UseBackColor = true;
             this.ucCaptioned17.Appearance.Options.UseFont = true;
             this.ucCaptioned17.Caption = "ДН";
-            this.ucCaptioned17.Location = new System.Drawing.Point(466, 406);
+            this.ucCaptioned17.Location = new System.Drawing.Point(466, 377);
             this.ucCaptioned17.Name = "ucCaptioned17";
             this.ucCaptioned17.Size = new System.Drawing.Size(33, 24);
             this.ucCaptioned17.TabIndex = 71;
@@ -967,7 +967,7 @@ namespace TP.FinishCleaning
             this.Controls.Add(this.ucFilter1);
             this.Controls.Add(this.ucPump1);
             this.Name = "ucFinishCleaning";
-            this.Size = new System.Drawing.Size(1073, 526);
+            this.Size = new System.Drawing.Size(1056, 509);
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit3.Properties)).EndInit();

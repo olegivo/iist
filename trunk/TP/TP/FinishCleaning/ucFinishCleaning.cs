@@ -89,7 +89,7 @@ namespace TP.FinishCleaning
 
         private void spinEdit7_EditValueChanged(object sender, EventArgs e)
         {
-            Temperature_TC6 = (float)Convert.ToDecimal(spinEdit7.EditValue);
+            RaiseSendMessage(10002, spinEdit7.Value);
         }
 
         private void ucBurner1_StateChanged(object sender, EventArgs e)
@@ -101,7 +101,8 @@ namespace TP.FinishCleaning
 
         private void RaiseSendMessage(int channelId, object value)
         {
-            if (SendControlMessage != null) SendControlMessage(this, new SendControlMessageEventArgs(channelId, value));
+            if (SendControlMessage != null) 
+                SendControlMessage(this, new SendControlMessageEventArgs(channelId, value));
         }
 
         /// <summary>

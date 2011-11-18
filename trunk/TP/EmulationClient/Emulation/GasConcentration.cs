@@ -60,7 +60,11 @@ namespace EmulationClient.Emulation
         public override void Refresh()
         {
             int passedSeconds = GetPassedSeconds();
-            _outputValue = Math.Abs(Math.Sin(0.005 * passedSeconds)) * 500 + 3500 + Temperature + Speed;
+            double temperature = Temperature;
+            double speed = Speed;
+            _outputValue = Math.Abs(Math.Sin(0.005 * passedSeconds)) * 50 + 3500
+                + (temperature > 150 ? (30 * temperature - 2500) : 0)
+                + (-33 * speed + 1500);
         }
 
     }
