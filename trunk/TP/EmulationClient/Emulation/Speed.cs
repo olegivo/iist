@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EmulationClient.Emulation
+﻿namespace EmulationClient.Emulation
 {
     /// <summary>
     /// Количество оборотов дымососа
