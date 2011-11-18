@@ -94,8 +94,8 @@ namespace TP.FinishCleaning
 
         private void ucBurner1_StateChanged(object sender, EventArgs e)
         {
-            MessageBox.Show("Состояние горелки " + Convert.ToString(ucBurner1.BurnerStatus));
-            MessageBox.Show("Передача сообщения в MES");
+            //MessageBox.Show("Состояние горелки " + Convert.ToString(ucBurner1.BurnerStatus));
+            //MessageBox.Show("Передача сообщения в MES");
             RaiseSendMessage(10001, ucBurner1.BurnerStatus);
         }
 

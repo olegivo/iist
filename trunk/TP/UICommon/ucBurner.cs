@@ -22,22 +22,38 @@ namespace UICommon
         void ucBurner_Click(object sender, EventArgs e)
         {
             BurnerStatus =! BurnerStatus;
-            // "сообщение о событии"
-            RaiseChange();
         }
        
         // Метод запускающий событие
-        private void RaiseChange()
+        private void RaiseStatusChanged()
         {
             EventHandler handler = StateChanged;
             if (handler != null) handler(this, EventArgs.Empty);
+            Refresh();
         }
 
-          public event EventHandler StateChanged;
+        public event EventHandler StateChanged;
 
-        // Включеное состояние
+        private bool burnerStatus;
+
+        /// <summary>
+        /// Включеное состояние
+        /// </summary>
         [Category("Layout"), Description("Огонь")]
-        public bool BurnerStatus { get; set; }
+        public bool BurnerStatus
+        {
+            get { return burnerStatus; }
+            set
+            {
+                if(burnerStatus != value)
+                {
+                    burnerStatus = value;
+                    // сообщение о событии
+                    RaiseStatusChanged();
+                }
+            }
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -100,6 +116,11 @@ namespace UICommon
                                                      new Point(2*XMax/6, YMax),
                                                  });
                     break;
+            }
+
+            if (BurnerStatus)
+            {
+                g.FillEllipse(Brushes.OrangeRed, XMax/2 - 5, YMax/2 - 5, 10, 10);
             }
 
             base.OnPaint(e);//вызов базового метода ucCaptioned.OnPaint
