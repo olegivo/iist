@@ -63,8 +63,8 @@ namespace EmulationClient.Emulation
             double temperature = Temperature;
             double speed = Speed;
             _outputValue = Math.Abs(Math.Sin(0.005 * passedSeconds)) * 50 + 3500
-                + (temperature > 150 ? (30 * temperature - 2500) : 0)
-                + (-33 * speed + 1500);
+                + (temperature > 150 ? (30 * temperature - 4500) : 0)
+                + (-31.25 * speed + 1250);
         }
 
     }
