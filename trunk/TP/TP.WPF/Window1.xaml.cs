@@ -1,23 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-//Pirate's libs 
-using DMS.Common.Messages;
-using Oleg_ivo.Client;
-
-using System.Windows.Threading;
 using System.Threading;
-
+using DMS.Common.Events;
 
 
 namespace TP
@@ -43,7 +28,7 @@ namespace TP
         }
 
 
-        void channelController1_HasReadChannel(object sender, Oleg_ivo.Client.CallbackHandler.DataEventArgs e)
+        void channelController1_HasReadChannel(object sender, DataEventArgs e)
         {
             float value = Convert.ToSingle(e.Message.Value);
             int channelId = e.Message.LogicalChannelId;
