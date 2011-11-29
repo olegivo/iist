@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using DMS.Common.Events;
 using DMS.Common.Messages;
-using Oleg_ivo.Client;
+using Oleg_ivo.HighLevelClient;
 
 namespace TP
 {
@@ -32,7 +31,7 @@ namespace TP
         public ChannelController(IContainer container)
         {
             container.Add(this);
-            components = new System.ComponentModel.Container();
+            components = new Container();
             //InitializeComponent();
         }
 
@@ -110,11 +109,10 @@ namespace TP
             else
                 foreach (var registeredChannel in registeredChannels)
                 {
-                    ChannelSubscribeMessage message = new ChannelSubscribeMessage
-                    {
-                        DataMode = DataMode.Read,
-                        LogicalChannelId = registeredChannel
-                    };
+                    //TODO: заполнить RegNameFrom
+                    ChannelRegistrationMessage message = new ChannelRegistrationMessage(null, null,
+                                                                                        RegistrationMode.Register,
+                                                                                        DataMode.Read, registeredChannel);
                     AddRegisteredChannel(message);
                 }
         }
@@ -122,7 +120,7 @@ namespace TP
         readonly IList registeredChannelsList = new List<int>();
         readonly IList subscribedChannelsList = new List<int>();
 
-        private void AddRegisteredChannel(ChannelSubscribeMessage message)
+        private void AddRegisteredChannel(ChannelRegistrationMessage message)
         {
             if (!registeredChannelsList.Contains(message.LogicalChannelId) && !subscribedChannelsList.Contains(message.LogicalChannelId))
             {
@@ -130,13 +128,9 @@ namespace TP
                 Protocol(string.Format("Канал [{0}] теперь доступен для подписки", message.LogicalChannelId));
                 if (AutoSubscribeChannels)
                 {
-                    SubscribeChannel(new ChannelSubscribeMessage
-                    {
-                        DataMode = DataMode.Read,
-                        LogicalChannelId = message.LogicalChannelId,
-                        Mode = true,
-                        RegName = RegName
-                    });
+                    SubscribeChannel(new ChannelSubscribeMessage(RegName, null, SubscribeMode.Subscribe,
+                                                                 message.LogicalChannelId)
+                        );
                 }
             }
 
@@ -163,6 +157,19 @@ namespace TP
                 CanRegister = false;
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Записать в канал
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <param name="value"></param>
+        public void WriteChannel(int channelId, object value)
+        {
+            Provider.WriteChannel(new InternalLogicalChannelDataMessage(RegName, null, DataMode.Write, channelId)
+            {
+                Value = value
+            });
         }
 
         private bool isitialized;
@@ -193,7 +200,7 @@ namespace TP
         /// <summary>
         /// Прочитан канал
         /// </summary>
-        public event EventHandler<CallbackHandler.DataEventArgs> HasReadChannel
+        public event EventHandler<DataEventArgs> HasReadChannel
         {
             add { Provider.HasReadChannel += value; }
             remove { Provider.HasReadChannel -= value; }
@@ -214,13 +221,13 @@ namespace TP
         /// </summary>
         public event EventHandler NeedProtocol;
 
-        private void Provider_ChannelUnRegistered(object sender, ClientChannelSubscribeEventArgs e)
+        private void Provider_ChannelUnRegistered(object sender, ChannelRegisterEventArgs e)
         {
             RemoveRegisteredChannel(e.Message);
             Protocol(string.Format("Канал [{0}] теперь недоступен для подписки", e.Message.LogicalChannelId));
         }
 
-        private void RemoveRegisteredChannel(ChannelSubscribeMessage message)
+        private void RemoveRegisteredChannel(ChannelRegistrationMessage message)
         {
             if (registeredChannelsList.Contains(message.LogicalChannelId))
             {
@@ -228,12 +235,9 @@ namespace TP
             }
             else if (subscribedChannelsList.Contains(message.LogicalChannelId))
             {
-                ChannelSubscribeMessage unSubscribeMessage = new ChannelSubscribeMessage
-                {
-                    RegName = RegName,
-                    Mode = false,
-                    LogicalChannelId = message.LogicalChannelId
-                };
+                ChannelSubscribeMessage unSubscribeMessage = new ChannelSubscribeMessage(RegName, null,
+                                                                                         SubscribeMode.Unsubscribe,
+                                                                                         message.LogicalChannelId);
 
                 subscribedChannelsList.Remove(message.LogicalChannelId);
 
@@ -259,7 +263,7 @@ namespace TP
         /// </summary>
         protected string RegName { get; set; }
 
-        private void Provider_ChannelRegistered(object sender, ClientChannelSubscribeEventArgs e)
+        private void Provider_ChannelRegistered(object sender, ChannelRegisterEventArgs e)
         {
             AddRegisteredChannel(e.Message);
         }

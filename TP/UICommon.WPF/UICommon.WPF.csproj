@@ -6,17 +6,19 @@
     <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{46D87FCA-8216-4BA1-81C6-8288641B573E}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <DefaultClrNameSpace>UICommonWPF</DefaultClrNameSpace>
-    <RootNamespace>UICommonWPF</RootNamespace>
-    <AssemblyName>UICommonWPF</AssemblyName>
+    <RootNamespace>UICommon.WPF</RootNamespace>
+    <AssemblyName>UICommon.WPF</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <ApplicationIcon>Application.ico</ApplicationIcon>
     <Utf8Output>true</Utf8Output>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,10 +59,6 @@
     <Reference Include="WPFToolkit" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
     <Compile Include="UIComponents\ucChamber.xaml.cs">
       <DependentUpon>ucChamber.xaml</DependentUpon>
     </Compile>

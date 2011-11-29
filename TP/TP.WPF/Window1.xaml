@@ -23,9 +23,23 @@
 	2.Неясно как подключать WPF компоненты DevExpress 2011.
 	3.Неординарное реагирование кнопок на событие onMouseOver.
 -->
-<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:TP" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic" xmlns:System_Windows_Controls_Primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Layout.Toolkit" xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" xmlns:UICommon="clr-namespace:UICommon;assembly=UICommon" mc:Ignorable="d"
-	x:Class="TP.Window1"
-    Title="Технологический процесс термического уничтожения отходов" Height="768" Width="1024" x:Name="TechnologicalProcess" Icon="factory_yellow_256.png" Foreground="Black" WindowStartupLocation="CenterOwner" Visibility="Visible" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}">
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:local="clr-namespace:TP" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        mc:Ignorable="d"
+	    x:Class="TP.Window1"
+        x:Name="TechnologicalProcess" 
+        Title="Технологический процесс термического уничтожения отходов" 
+        Height="768" Width="1024" 
+        Icon="factory_yellow_256.png" 
+        Foreground="Black" 
+        WindowStartupLocation="CenterOwner" 
+        Visibility="Visible" 
+        AllowsTransparency="True" 
+        WindowStyle="None" 
+        Background="{x:Null}">
 
    
 	<!--Рабочая поверхность-->
