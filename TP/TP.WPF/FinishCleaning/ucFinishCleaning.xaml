@@ -4,9 +4,10 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
-	x:Class="TP.ucFinishCleaning"
+	x:Class="TP.WPF.FinishCleaning.ucFinishCleaning"
 	x:Name="UserControl"
-	d:DesignWidth="640" d:DesignHeight="480" Width="1024" Height="768">
+	d:DesignWidth="640" d:DesignHeight="480" Width="1024" Height="768"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
 	<Viewbox>
 		<Canvas x:Name="LayoutRoot" Height="768" Width="1024">
@@ -65,20 +66,18 @@
 			<TextBlock x:Name="textBlock4_Copy5" Canvas.Left="985.67" TextWrapping="Wrap" Canvas.Top="141.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="газ"/>
 			<TextBlock x:Name="textBlock4_Copy6" Canvas.Left="976" TextWrapping="Wrap" Canvas.Top="192" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="к РТ"/>
 			<TextBlock x:Name="textBlock4_Copy7" Canvas.Left="904.156" TextWrapping="Wrap" Canvas.Top="89.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="от Скруббера"/>
-            <Button
-                Height="35"               
+            <CheckBox
                 Canvas.Left="740"
-                Canvas.Top="289"
-                Name="button1"  
-                Width="60"> 
-                Вкл\Выкл               
-            </Button>
+                Canvas.Top="295"
+                Name="CheckBox1" IsChecked="{Binding BurnerStatus}">
+                Горелка
+            </CheckBox>
             <TextBox                 
                 Canvas.Top="370"
                 Canvas.Right="215"                              
-                Name="textBox2" 
-                Width="66"
-             />
+                Text="{Binding Temperature_TC6}"
+                Width="66">                
+            </TextBox>
             <Label 
                 Height="26" 
                 Canvas.Right="205"
@@ -91,8 +90,9 @@
                 Canvas.Top="340"
                 Canvas.Left="315"                              
                 Name="textBox3" 
-                Width="66"
-             />
+                Text="{Binding V}"
+                Width="66" >               
+            </TextBox>
             <Label 
                 Height="26" 
                 Canvas.Left="315"
@@ -104,9 +104,9 @@
             <TextBox                
                 Canvas.Top="170"
                 Canvas.Left="15"                              
-                Name="textBox4" 
-                Width="66"
-             />
+                Text="{Binding GasConcentration_CO}"
+                Width="66">                
+            </TextBox>
             <Label 
                 Height="26" 
                 Canvas.Left="10"

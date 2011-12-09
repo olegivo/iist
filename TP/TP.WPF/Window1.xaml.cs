@@ -24,7 +24,6 @@ namespace TP
             channelController1.NeedProtocol += channelController1_NeedProtocol;
             channelController1.HasReadChannel += channelController1_HasReadChannel;
             channelController1.CanRegister = true;
-
         }
 
 
@@ -48,9 +47,9 @@ namespace TP
             //    case 5:
             //        ucAllHeatExchanger1.Temperature_TP5 = value;
             //        break; //TР5	температура в теплообменнике ТО2
-            //    case 6:
-            //        ucFinishCleaning1.Temperature_TC6 = value;
-            //        break; //TС6	температура перед рукавным фильтром
+                  case 6:
+                    FinishCleaning.Temperature_TC6 = value;
+                    break; //TС6	температура перед рукавным фильтром
             //    case 7:
             //        ucFinishCleaning1.Temperature_TC7 = value;
             //        break; //TС7	температура перед дымососом
@@ -100,9 +99,9 @@ namespace TP
             //    case 20:
             //        ucFinishCleaning1.GasConcentration_O2 = value;
             //        break; //Г-О2	концентрация газа О2
-            //    case 21:
-            //        ucFinishCleaning1.GasConcentration_CO = value;
-            //        break; //Г-СО	концентрация газа СО
+                  case 21:
+                    FinishCleaning.GasConcentration_CO = value;
+                    break; //Г-СО	концентрация газа СО
             //    case 22:
             //        ucFinishCleaning1.GasConcentration_SO2 = value;
             //        break; //Г-SО2	концентрация газа SО2
@@ -196,6 +195,11 @@ namespace TP
         {
         	// TODO: Add event handler implementation here.
 			this.WindowState=System.Windows.WindowState.Minimized;
+        }
+
+        private void FinishCleaning_SendControlMessage(object sender, TP.WPF.SendControlMessageEventArgs e)
+        {
+            channelController1.WriteChannel(e.ChannelId, e.Value);
         }
         
         //private void channelController1_CanRegisterChanged(object sender, EventArgs e)
