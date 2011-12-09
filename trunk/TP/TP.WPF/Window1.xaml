@@ -27,8 +27,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:local="clr-namespace:TP" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        mc:Ignorable="d"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:FinishCleaning="clr-namespace:TP.WPF.FinishCleaning" mc:Ignorable="d"
 	    x:Class="TP.Window1"
         x:Name="TechnologicalProcess" 
         Title="Технологический процесс термического уничтожения отходов" 
@@ -54,7 +53,7 @@
         		<TabControl x:Name="tabControl" Background="{x:Null}" Style="{DynamicResource TabControlStyle1}">
         			<TabItem Header="Общий вид" Style="{DynamicResource TabItemStyle1}">
         				<UniformGrid Rows="2" Columns="3">
-        					<local:ucFinishCleaning Height="Auto" Width="Auto"/>
+        					<FinishCleaning:ucFinishCleaning Height="Auto" Width="Auto"/>
         					<local:ucCycloneAndScrubber Height="Auto" Width="Auto"/>
         					<local:ucHeatExchanger Width="Auto" Height="Auto"/>
         					<local:ucDrumTypeFurnace Height="Auto" Width="Auto"/>
@@ -84,7 +83,7 @@
         			</TabItem>
         			<TabItem Header="Финишная очистка" Style="{DynamicResource TabItemStyle1}">
         				<Grid>
-        					<local:ucFinishCleaning HorizontalAlignment="Left" Height="Auto" Width="Auto"/>
+        					<FinishCleaning:ucFinishCleaning x:Name="FinishCleaning" HorizontalAlignment="Left" Height="Auto" Width="Auto" SendControlMessage="FinishCleaning_SendControlMessage" />
         				</Grid>
         			</TabItem>
         		</TabControl>
