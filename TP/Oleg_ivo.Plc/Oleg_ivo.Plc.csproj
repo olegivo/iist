@@ -110,6 +110,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="FieldBus\ModbusAccessorTimeouts.cs" />
+    <Compile Include="FieldBus\ModbusAdapter.cs" />
+    <Compile Include="FieldBus\NModbusAdapter.cs" />
     <Compile Include="FieldBus\ModbusIpAccessor.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -122,6 +124,8 @@
     <Compile Include="FieldBus\ucFieldBusTypeCombobox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="FieldBus\WagoTcpModbusAdapter.cs" />
+    <Compile Include="ModbusTCP\MBTDLL.cs" />
     <Compile Include="MeasurementSystemLevelLoadOptions.cs" />
     <Compile Include="FieldBusLoadOptions.cs" />
     <Compile Include="PlcManagerBase.cs">
@@ -203,6 +207,11 @@
       <SubType>Designer</SubType>
       <DependentUpon>ucLevelGrid.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ModbusTCP\MBT.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
