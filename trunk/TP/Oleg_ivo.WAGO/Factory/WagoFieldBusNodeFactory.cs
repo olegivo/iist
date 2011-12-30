@@ -578,7 +578,7 @@ namespace Oleg_ivo.WAGO.Factory
                     byte[] bytes = BitConverter.GetBytes(registers[0]);
                     registers = ModbusAccessor.ReadInputRegisters(plcAddress, 0x2000, 1);
                     cells = ModbusAccessor.ReadCoils(plcAddress, 0, 2000);
-                    cells = ModbusAccessor.ModbusMaster.ReadInputs(plcAddress.SlaveAddress, 0, 2000);
+                    cells = ModbusAccessor.ModbusAdapter.ReadInputs(plcAddress.SlaveAddress, 0, 2000);
 
 
 

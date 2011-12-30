@@ -114,11 +114,11 @@ namespace Oleg_ivo.Plc.FieldBus
             {
                 case AsciiRtuMode.ASCII:
                     System.Diagnostics.Debug.WriteLine("Инициализация управления по Modbus в ASCII-режиме...");
-                    _modbusMaster = ModbusSerialMaster.CreateAscii(_serialPort);
+                    ModbusAdapter = new NModbusAdapter(ModbusSerialMaster.CreateAscii(_serialPort));
                     break;
                 case AsciiRtuMode.RTU:
                     System.Diagnostics.Debug.WriteLine("Инициализация управления по Modbus в RTU-режиме...");
-                    _modbusMaster = ModbusSerialMaster.CreateRtu(_serialPort);
+                    ModbusAdapter = new NModbusAdapter(ModbusSerialMaster.CreateRtu(_serialPort));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

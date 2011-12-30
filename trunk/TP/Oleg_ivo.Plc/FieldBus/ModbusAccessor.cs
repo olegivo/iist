@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using Modbus.Device;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
 
@@ -19,7 +18,7 @@ namespace Oleg_ivo.Plc.FieldBus
         ///<summary>
         ///
         ///</summary>
-        protected IModbusMaster _modbusMaster;
+        protected ModbusAdapter _modbusAdapter;
 
         ///<summary>
         /// Минимальное количество миллисекунд для ответа
@@ -43,41 +42,36 @@ namespace Oleg_ivo.Plc.FieldBus
         ///<summary>
         /// 
         ///</summary>
-        public IModbusMaster ModbusMaster
+        public ModbusAdapter ModbusAdapter
         {
             get
             {
-                //TODO: ModbusAccessor.ModbusMaster - Инициализировать управление по Modbus при каждом обращении к данному свойству??? Может лучше кэшировать?
-                //if (_modbusMaster == null || _modbusMaster)
+                //TODO: ModbusAccessor.ModbusAdapter - Инициализировать управление по Modbus при каждом обращении к данному свойству??? Может лучше кэшировать?
+                //if (_modbusAdapter == null || _modbusAdapter)
                 InitializeModbusMaster();
-                return _modbusMaster;
+                return _modbusAdapter;
             }
-            protected set { _modbusMaster = value; }
+            protected set { _modbusAdapter = value; }
         }
 
         /// <summary>
-        /// 
+        /// Параметры транспорта Modbus
         /// </summary>
-        public ModbusAccessorTimeouts ModbusAccessorTimeouts
+        /// <remarks>Действует только для NModbusAdapter</remarks>
+        public ModbusAccessorTimeouts ModbusAccessorTimeouts//NOTE:Внимание! Действует только для NModbusAdapter!
         {
             get
             {
-                return new ModbusAccessorTimeouts
-                           {
-                               WaitToRetryMilliseconds = ModbusMaster.Transport.WaitToRetryMilliseconds,
-                               Retries = ModbusMaster.Transport.Retries,
-                               ReadTimeout = ModbusMaster.Transport.ReadTimeout,
-                               WriteTimeout = ModbusMaster.Transport.WriteTimeout
-
-                           };
+                var nModbusAdapter = ModbusAdapter as NModbusAdapter;
+                if (nModbusAdapter != null)
+                    return nModbusAdapter.ModbusAccessorTimeouts;
+                return null;
             }
             set
             {
-                ModbusMaster.Transport.WaitToRetryMilliseconds = value.WaitToRetryMilliseconds;
-                ModbusMaster.Transport.Retries = value.Retries;
-                ModbusMaster.Transport.ReadTimeout = value.ReadTimeout;
-                ModbusMaster.Transport.WriteTimeout = value.WriteTimeout;
-                
+                var nModbusAdapter = ModbusAdapter as NModbusAdapter;
+                if (nModbusAdapter != null)
+                    nModbusAdapter.ModbusAccessorTimeouts = value;
             }
         }
 
@@ -93,15 +87,17 @@ namespace Oleg_ivo.Plc.FieldBus
         ///<summary>
         ///
         ///</summary>
-        protected ModbusAccessor() : this(null, null)
+        protected ModbusAccessor()
+            : this(null, null)
         {
         }
 
         ///<summary>
         ///
         ///</summary>
-        ///<param name="modbusMaster"></param>
-        protected ModbusAccessor(IModbusMaster modbusMaster) : this(modbusMaster, null)
+        ///<param name="modbusAdapter"></param>
+        protected ModbusAccessor(ModbusAdapter modbusAdapter)
+            : this(modbusAdapter, null)
         {
         }
 
@@ -109,18 +105,19 @@ namespace Oleg_ivo.Plc.FieldBus
         ///
         ///</summary>
         ///<param name="addressRange"></param>
-        protected ModbusAccessor(List<object> addressRange) : this(null, addressRange)
+        protected ModbusAccessor(List<object> addressRange)
+            : this(null, addressRange)
         {
         }
 
         ///<summary>
         ///
         ///</summary>
-        ///<param name="modbusMaster"></param>
+        ///<param name="modbusAdapter"></param>
         ///<param name="addressRange"></param>
-        protected ModbusAccessor(IModbusMaster modbusMaster, List<object> addressRange)
+        protected ModbusAccessor(ModbusAdapter modbusAdapter, List<object> addressRange)
         {
-            _modbusMaster = modbusMaster;
+            _modbusAdapter = modbusAdapter;
 
             _addressRange = addressRange;
 
@@ -439,7 +436,7 @@ namespace Oleg_ivo.Plc.FieldBus
 
             try
             {
-                return ModbusMaster.ReadHoldingRegisters(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, numberOfPoints);
+                return ModbusAdapter.ReadHoldingRegisters(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, numberOfPoints);
 
             }
             catch (Exception ex)
@@ -448,7 +445,7 @@ namespace Oleg_ivo.Plc.FieldBus
                     string.Format("Ошибка чтения выходных {0} регистров (Holding Registers) по адресу {1}",
                                   numberOfPoints, address), ex);
             }
-            
+
         }
 
         /// <summary>
@@ -480,7 +477,7 @@ namespace Oleg_ivo.Plc.FieldBus
         {
             try
             {
-                return ModbusMaster.ReadInputRegisters(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, numberOfPoints);
+                return ModbusAdapter.ReadInputRegisters(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, numberOfPoints);
 
             }
             catch (Exception ex)
@@ -502,7 +499,7 @@ namespace Oleg_ivo.Plc.FieldBus
         {
             try
             {
-                return ModbusMaster.ReadCoils(fieldBusNodeAddress.FieldBusNodeAddress.SlaveAddress, address, numberOfPoints);
+                return ModbusAdapter.ReadCoils(fieldBusNodeAddress.FieldBusNodeAddress.SlaveAddress, address, numberOfPoints);
             }
             catch (Exception ex)
             {
@@ -522,7 +519,7 @@ namespace Oleg_ivo.Plc.FieldBus
         {
             try
             {
-                ModbusMaster.WriteSingleRegister(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, value);
+                ModbusAdapter.WriteSingleRegister(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, value);
                 return true;
             }
             catch (Exception ex)
@@ -542,7 +539,7 @@ namespace Oleg_ivo.Plc.FieldBus
         {
             try
             {
-                ModbusMaster.WriteSingleCoil(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, value);
+                ModbusAdapter.WriteSingleCoil(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, value);
                 return true;
             }
             catch (Exception ex)
@@ -603,7 +600,7 @@ namespace Oleg_ivo.Plc.FieldBus
                                                 {
                                                     try
                                                     {
-                                                        //register = ModbusMaster.ReadInputRegisters(fieldBusNodeAccessor.SlaveAddress, address, 1);
+                                                        //register = ModbusAdapter.ReadInputRegisters(fieldBusNodeAccessor.SlaveAddress, address, 1);
                                                         byte[] bytes = BitConverter.GetBytes(register);
                                                         string s = string.Format("address 0x{0}, value {1} ({2})", address.ToString("X"), BitConverter.ToString(bytes), register);
                                                         Trace.WriteLine(s);
@@ -658,7 +655,7 @@ namespace Oleg_ivo.Plc.FieldBus
         {
             try
             {
-                ModbusMaster.WriteMultipleRegisters(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, values);
+                ModbusAdapter.WriteMultipleRegisters(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, values);
                 return true;
             }
             catch (Exception ex)
@@ -678,7 +675,7 @@ namespace Oleg_ivo.Plc.FieldBus
         {
             try
             {
-                ModbusMaster.WriteMultipleCoils(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, values);
+                ModbusAdapter.WriteMultipleCoils(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, values);
                 return true;
             }
             catch (Exception ex)
