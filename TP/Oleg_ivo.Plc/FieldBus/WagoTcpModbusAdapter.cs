@@ -1,5 +1,7 @@
 using WAGO.IO.Modbus;
 
+//#define MBT
+
 namespace Oleg_ivo.Plc.FieldBus
 {
     public class WagoTcpModbusAdapter : ModbusAdapter
@@ -7,16 +9,23 @@ namespace Oleg_ivo.Plc.FieldBus
         private readonly string _ipAddress;
         private readonly ushort _port;
         private readonly bool _useTcp;
-        private readonly MBTDLL _mbtdll;//TODO: организовать обработку ошибок
+        private MBTDLL _mbtdll;//TODO: организовать обработку ошибок
 
         public WagoTcpModbusAdapter(string ipAddress, ushort port, bool useTcp, ushort timeout)
         {
-            _mbtdll = new MBTDLL();
 
             _ipAddress = ipAddress;
             _port = port;
             _useTcp = useTcp;
             Timeout = timeout;
+#if MBT
+            InitMBT();
+#endif
+        }
+
+        private void InitMBT()
+        {
+            _mbtdll = new MBTDLL();
             Connect();
         }
 
@@ -89,8 +98,10 @@ namespace Oleg_ivo.Plc.FieldBus
         /// <filterpriority>2</filterpriority>
         public override void Dispose()
         {
+#if MBT
             _mbtdll.Disconnect();
             _mbtdll.Destroy();
+#endif
         }
     }
 }
