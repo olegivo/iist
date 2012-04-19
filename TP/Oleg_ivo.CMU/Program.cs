@@ -19,13 +19,13 @@ namespace Oleg_ivo.CMU
             Application.SetCompatibleTextRenderingDefault(false);
 
 
+            DbConnectionProvider.Instance.SetupConnectionStringFromConfigurationFile();
             LowLevelClientForm form = new LowLevelClientForm();
             
 #pragma warning disable 168
             ExceptionHandler exceptionHandler = new ExceptionHandler((new Errors(form.ControlManagementUnit)).LogError);
 #pragma warning restore 168
 
-            DbConnectionProvider.Instance.SetupConnectionStringFromConfigurationFile();
             Application.Run(form);
         }
 
