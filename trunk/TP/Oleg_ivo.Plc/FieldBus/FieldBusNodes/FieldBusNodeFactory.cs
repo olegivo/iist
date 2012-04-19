@@ -223,7 +223,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
             if (isNodeActive)
             {
                 Debug.WriteLine("создаём активный узел полевой шины...");
-                IFieldBusAccessor fieldBusAccessor = DistributedMeasurementInformationSystemBase.Instance.PlcManagerBase.FieldBusFactory.CreateFieldbusAccessor(fieldBusManager.FieldBusType, fieldBusNodeAddress.SlaveAddress);
+                IFieldBusAccessor fieldBusAccessor = DistributedMeasurementInformationSystemBase.Instance.PlcManagerBase.FieldBusFactory.CreateFieldbusAccessor(fieldBusManager.FieldBusType, fieldBusNodeAddress);
                 fieldBusNode = new ActiveFieldBusNode(fieldBusManager, fieldBusAccessor, fieldBusNodeAddress);
             }
             else
