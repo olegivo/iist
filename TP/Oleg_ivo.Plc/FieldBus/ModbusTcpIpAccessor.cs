@@ -83,23 +83,26 @@ namespace Oleg_ivo.Plc.FieldBus
             if (_modbusAdapter == null)
             {
                 Debug.WriteLine("Инициализация управления по Modbus...");
-                if (IPAddress!=null)
+                if (IPAddress != null)
 #if MBT
                     _modbusAdapter = new WagoTcpModbusAdapter(IPAddress.ToString(), (ushort)Port, true, 1000);
 #else
-                    _modbusAdapter = new NModbusAdapter(GetModbusMaster());
+                {
+                    ModbusIpMaster modbusIpMaster = GetModbusMaster();
+                    _modbusAdapter = new NModbusAdapter(modbusIpMaster);
+                }
 #endif
                 else
                     Console.WriteLine("Не задан IPAddress");
             }
         }
 
+        ModbusIpMaster modbusMaster = null;
         private ModbusIpMaster GetModbusMaster()
         {
             //throw new NotImplementedException("InitializeModbusMaster");
             // открываем соединение
             //_client = null;//todo: ModbusTcpIpAccessor.InitializeModbusMaster() - всё время переинициализация?
-            ModbusIpMaster modbusMaster = null;
             if (Client != null)
             {
                 if (!Client.Connected)
@@ -124,6 +127,10 @@ namespace Oleg_ivo.Plc.FieldBus
                 }
 
             }
+            else
+            {
+                
+            }
 
             return modbusMaster;
         }
@@ -137,6 +144,11 @@ namespace Oleg_ivo.Plc.FieldBus
             if (_modbusAdapter == null)
             {
                 Console.WriteLine("Не инициализирован _modbusAdapter");
+                return false;
+            }
+            if (_client == null)
+            {
+                Console.WriteLine("Не инициализирован _client");
                 return false;
             }
             Console.WriteLine("Тестирование подключения к {0}...", _client);
