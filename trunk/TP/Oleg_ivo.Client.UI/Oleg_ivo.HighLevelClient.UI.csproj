@@ -75,6 +75,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetValueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GetValueForm.Designer.cs">
+      <DependentUpon>GetValueForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="HighLevelClientForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +89,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GetValueForm.resx">
+      <DependentUpon>GetValueForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="HighLevelClientForm.resx">
       <DependentUpon>HighLevelClientForm.cs</DependentUpon>
     </EmbeddedResource>
