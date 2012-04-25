@@ -182,8 +182,8 @@ namespace Oleg_ivo.Plc.Channels
                 }
                 else//один регистр
                 {
-                    if (value is ushort)
-                        success = FieldBusNode.WriteSingleRegister(address, (ushort) value);
+                    //if (value is ushort)
+                    success = FieldBusNode.WriteSingleRegister(address, Convert.ToUInt16(value));
                 }
             }
             else//пишем €чейками
@@ -201,9 +201,10 @@ namespace Oleg_ivo.Plc.Channels
                         success = FieldBusNode.WriteSingleCoil(address, (bool) value);
                     else if(value is decimal || value is float || value is double || value is int)
                     {
-                        if(1.0.Equals((double)value))
+                        var d = Convert.ToDouble(value);
+                        if(1.0.Equals(d))
                             success = FieldBusNode.WriteSingleCoil(address, true);
-                        else if (0.0.Equals((double)value))
+                        else if (0.0.Equals(d))
                             success = FieldBusNode.WriteSingleCoil(address, false);
                     }
                 }
@@ -221,7 +222,7 @@ namespace Oleg_ivo.Plc.Channels
             if (value is Int16 || value is Int32 || value is Int64
                 || value is UInt16 || value is UInt32 || value is UInt64)
             {
-                ushort u = (ushort) value;
+                Int64 u = Int64.Parse(value.ToString());
 
                 while (u>0)
                 {
@@ -230,7 +231,7 @@ namespace Oleg_ivo.Plc.Channels
                     u /= 2;
                 }
 
-                u = (ushort)value;
+                u = Int64.Parse(value.ToString());
                 ushort u2 = (ushort)(bools.Count / 8);
                 if (u2 > u / 8 || u2==0)
                     u2++;

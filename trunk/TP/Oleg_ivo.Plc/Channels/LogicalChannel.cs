@@ -152,7 +152,10 @@ namespace Oleg_ivo.Plc.Channels
         public void SetValue(double value)
         {
             if (ReverseTransform != null) value = ReverseTransform.GetValue(value);
-            PhysicalChannel.SetValue(AddressShift, ChannelSize, value);
+            object v;
+            if (Math.Abs(Math.Round(value) - value) < 0.001) v = Convert.ToInt32(value);
+            else v = value;
+            PhysicalChannel.SetValue(AddressShift, ChannelSize, v);
         }
 
         ///<summary>
@@ -173,9 +176,22 @@ namespace Oleg_ivo.Plc.Channels
             if (obj is Array)
             {
                 Array ar = (Array) obj;
-                if(ar.Length!=1)
-                    throw new ArgumentOutOfRangeException("ChannelSize", ChannelSize, "Для логического канала неправильно задан размер (при попытке прочитать одно значение был прочитан массив значений)");
-                obj = ar.GetValue(0);
+                if(PhysicalChannel.IOModule.IsDiscrete && ChannelSize==ar.Length)
+                {
+                    Int64 result = 0;
+                    for (int i = 0; i < ChannelSize; i++)
+                    {
+                        var b = (bool) ar.GetValue(i);
+                        if (b) result += Convert.ToInt64(Math.Pow(2, i));
+                    }
+                    obj = result;
+                }
+                else
+                {
+                    if(ar.Length!=1)
+                        throw new ArgumentOutOfRangeException("ChannelSize", ChannelSize, "Для логического канала неправильно задан размер (при попытке прочитать одно значение был прочитан массив значений)");
+                    obj = ar.GetValue(0);
+                }
             }
             double value = Convert.ToDouble(obj);
             if (DirectTransform != null)
