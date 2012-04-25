@@ -517,6 +517,12 @@ namespace Oleg_ivo.Plc.FieldBus
         /// <returns></returns>
         public bool WriteSingleRegister(IFieldBusNodeAccessor fieldBusNodeAccessor, ushort address, ushort value)
         {
+            Debug.WriteLine(
+                string.Format(
+                    "Попытка записи регистра. Порт - {0}, адрес ПЛК - {1}, адрес регистра - {2}",
+                    PortName,
+                    fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
+                    address));
             try
             {
                 ModbusAdapter.WriteSingleRegister(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, value);
@@ -537,6 +543,12 @@ namespace Oleg_ivo.Plc.FieldBus
         /// <returns></returns>
         public bool WriteSingleCoil(IFieldBusNodeAccessor fieldBusNodeAccessor, ushort address, bool value)
         {
+            Debug.WriteLine(
+                string.Format(
+                    "Попытка записи ячейки. Порт - {0}, адрес ПЛК - {1}, адрес ячейки - {2}",
+                    PortName,
+                    fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
+                    address));
             try
             {
                 ModbusAdapter.WriteSingleCoil(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, value);
@@ -653,6 +665,13 @@ namespace Oleg_ivo.Plc.FieldBus
         /// <returns></returns>
         public bool WriteMultipleRegisters(IFieldBusNodeAccessor fieldBusNodeAccessor, ushort address, ushort[] values)
         {
+            Debug.WriteLine(
+                string.Format(
+                    "Попытка записи регистров ({3}). Порт - {0}, адрес ПЛК - {1}, адрес регистров - {2}",
+                    PortName,
+                    fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
+                    address,
+                    values.Length));
             try
             {
                 ModbusAdapter.WriteMultipleRegisters(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, values);
@@ -673,6 +692,13 @@ namespace Oleg_ivo.Plc.FieldBus
         /// <returns></returns>
         public bool WriteMultipleCoils(IFieldBusNodeAccessor fieldBusNodeAccessor, ushort address, bool[] values)
         {
+            Debug.WriteLine(
+                string.Format(
+                    "Попытка записи ячеек ({3}). Порт - {0}, адрес ПЛК - {1}, адрес ячеек - {2}",
+                    PortName,
+                    fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
+                    address,
+                    values.Length));
             try
             {
                 ModbusAdapter.WriteMultipleCoils(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, values);
