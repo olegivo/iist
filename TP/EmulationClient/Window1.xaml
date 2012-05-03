@@ -16,6 +16,28 @@
                 IsEnabled="{Binding CanRegisterChannels, UpdateSourceTrigger=PropertyChanged}">Зарегистрировать все каналы</Button>
         <Button Height="23" Margin="0,40.905,11.817,0" Name="btnUnregisterChannels" VerticalAlignment="Top" Click="btnUnregisterChannels_Click" HorizontalAlignment="Right" Width="392.312" 
                 IsEnabled="{Binding CanUnregisterChannels, UpdateSourceTrigger=PropertyChanged}">Отменить регистрацию всех каналов</Button>
-        <TextBox Margin="12,69.993,12,12" Name="textBox1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
+        <TextBox Margin="12.183,0,11.817,12" Name="textBox1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="61" VerticalAlignment="Bottom" />
+        <TextBox Height="27" HorizontalAlignment="Left" Margin="88,90,0,0" Name="txtO2" VerticalAlignment="Top" Width="81" Tag="O2" />
+        <Label Height="28" HorizontalAlignment="Left" Margin="12.183,90,0,0" Name="label1" VerticalAlignment="Top" Width="36">O2</Label>
+        <TextBox Height="27" HorizontalAlignment="Left" Margin="88,123,0,0" Name="txtCO" Tag="CO" VerticalAlignment="Top" Width="81" />
+        <Label Height="28" HorizontalAlignment="Left" Margin="12.183,123,0,0" Name="label2" VerticalAlignment="Top" Width="36">CO</Label>
+        <TextBox HorizontalAlignment="Left" Margin="88,156,0,178" Name="txtSO2" Tag="SO2" Width="81" />
+        <Label HorizontalAlignment="Left" Margin="12.183,156,0,177" Name="label3" Width="36">SO2</Label>
+        <TextBox Height="27" HorizontalAlignment="Left" Margin="88,0,0,145" Name="txtNO" Tag="NO" VerticalAlignment="Bottom" Width="81" />
+        <Label Height="28" HorizontalAlignment="Left" Margin="12.183,0,0,144" Name="label4" VerticalAlignment="Bottom" Width="36">NO</Label>
+        <TextBox Height="27" HorizontalAlignment="Left" Margin="88,0,0,112" Name="txtNO2" Tag="NO2" VerticalAlignment="Bottom" Width="81" />
+        <Label Height="28" HorizontalAlignment="Left" Margin="12.183,0,0,111" Name="label5" VerticalAlignment="Bottom" Width="36">NO2</Label>
+        <TextBox Height="27" HorizontalAlignment="Right" Margin="0,91,232,0" Name="txtT6" Tag="T6" VerticalAlignment="Top" Width="81" />
+        <Label Height="28" HorizontalAlignment="Right" Margin="0,91,353,0" Name="label6" VerticalAlignment="Top" Width="36">T6</Label>
+        <TextBox Height="27" HorizontalAlignment="Right" Margin="0,124,232,0" Name="txtT7" Tag="T7" VerticalAlignment="Top" Width="81" />
+        <Label Height="28" HorizontalAlignment="Right" Margin="0,124,353,0" Name="label7" VerticalAlignment="Top" Width="36">T7</Label>
+        <CheckBox Height="26" HorizontalAlignment="Left" Margin="189,90,0,0" Name="chkO2" VerticalAlignment="Top" Width="107">Моделирование</CheckBox>
+        <CheckBox Height="26" HorizontalAlignment="Left" Margin="189,122,0,0" Name="chkCO" VerticalAlignment="Top" Width="107">Моделирование</CheckBox>
+        <CheckBox Height="26" HorizontalAlignment="Left" Margin="189,154,0,0" Name="chkSO2" VerticalAlignment="Top" Width="107">Моделирование</CheckBox>
+        <CheckBox Height="26" HorizontalAlignment="Left" Margin="189,0,0,149" Name="chkNO" VerticalAlignment="Bottom" Width="107">Моделирование</CheckBox>
+        <CheckBox Height="26" HorizontalAlignment="Left" Margin="189,0,0,117" Name="chkNO2" VerticalAlignment="Bottom" Width="107">Моделирование</CheckBox>
+        <CheckBox Height="26" HorizontalAlignment="Right" Margin="0,90,104,0" Name="chkT6" VerticalAlignment="Top" Width="107">Моделирование</CheckBox>
+        <CheckBox Height="26" HorizontalAlignment="Right" Margin="0,122,104,0" Name="chkT7" VerticalAlignment="Top" Width="107">Моделирование</CheckBox>
+        <CheckBox Height="34" HorizontalAlignment="Right" Margin="0,0,80,117" Name="checkBox1" VerticalAlignment="Bottom" Width="233">Автоматический режим управления</CheckBox>
     </Grid>
 </Window>
