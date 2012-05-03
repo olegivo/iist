@@ -83,8 +83,8 @@
                 Canvas.Right="205"
                 Canvas.Top="345"                
                 Name="label1"                 
-                Width="90">
-                Температура
+                Width="110">
+                Температура Т6
             </Label>
             <TextBox                
                 Canvas.Top="340"
@@ -115,6 +115,76 @@
                 Width="120">
                 Концентрация СО
             </Label>
-		</Canvas>
+            <Label 
+                Height="26" 
+                Canvas.Left="10"
+                Canvas.Top="95"                
+                Name="label4"                 
+                Width="120">
+                Концентрация О2
+            </Label>
+            <TextBox                
+                Canvas.Top="120"
+                Canvas.Left="15"                              
+                Text=""
+                Width="66">
+            </TextBox>
+            <Label 
+                Height="26" 
+                Canvas.Left="10"
+                Canvas.Top="195"                
+                Name="label5"                 
+                Width="120">
+                Концентрация SО2
+            </Label>
+            <TextBox                
+                Canvas.Top="220"
+                Canvas.Left="15"                              
+                Text=""
+                Width="66">
+            </TextBox>
+            <Label 
+                Height="26" 
+                Canvas.Left="10"
+                Canvas.Top="245"                
+                Name="label6"                 
+                Width="120">
+                Концентрация NO
+            </Label>
+            <TextBox                
+                Canvas.Top="270"
+                Canvas.Left="15"                              
+                Text=""
+                Width="66">
+            </TextBox>
+            <Label 
+                Height="26" 
+                Canvas.Left="10"
+                Canvas.Top="295"                
+                Name="label7"                 
+                Width="120">
+                Концентрация NO2
+            </Label>
+            <TextBox                
+                Canvas.Top="320"
+                Canvas.Left="15"                              
+                Text=""
+                Width="66">
+            </TextBox>
+            <Label 
+                Height="26" 
+                Canvas.Left="315"
+                Canvas.Top="545"                
+                Name="label8"                 
+                Width="110">
+                Температура Т7
+            </Label>
+            <TextBox                
+                Canvas.Top="570"
+                Canvas.Left="315"                              
+                Text=""
+                Width="66">
+            </TextBox>
+        </Canvas>
 	</Viewbox>
 </UserControl>
