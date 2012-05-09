@@ -1,10 +1,12 @@
 using System;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 using DMS.Common.Messages;
 using Oleg_ivo.MES.High;
 using Oleg_ivo.MES.Low;
 using Oleg_ivo.MES.Registered;
+using Oleg_ivo.Tools.ConnectionProvider;
 
 namespace Oleg_ivo.MES
 {
@@ -47,7 +49,7 @@ namespace Oleg_ivo.MES
         void Instance_ErrorReceived(object sender, ErrorReceivedEventArgs e)
         {
             InternalErrorMessage internalErrorMessage = e.Message;
-            string s = string.Format("{0}\tКлиент {1} сообщает об ошибке:{2}{3}", internalErrorMessage.TimeStamp,
+            string s = String.Format("{0}\tКлиент {1} сообщает об ошибке:{2}{3}", internalErrorMessage.TimeStamp,
                                      internalErrorMessage.RegNameFrom,
                                      Environment.NewLine, internalErrorMessage.Error);
             Protocol(s);
@@ -75,7 +77,7 @@ namespace Oleg_ivo.MES
                 {
                     var client = new { Name = registrationMessage.RegNameFrom, Value = e.RegisteredLowLevelClient };
                     RemoveItem(lbRegisteredLow, client);
-                    Protocol(string.Format("{0}\tКлиент нижнего уровня [{1}] отменил регистрацию на сервере{2}",
+                    Protocol(String.Format("{0}\tКлиент нижнего уровня [{1}] отменил регистрацию на сервере{2}",
                                            DateTime.Now, registrationMessage.RegNameFrom, Environment.NewLine));
                 }
             }
@@ -90,7 +92,7 @@ namespace Oleg_ivo.MES
                 {
                     var client = new { Name = registrationMessage.RegNameFrom, Value = e.RegisteredHighLevelClient };
                     RemoveItem(lbRegisteredHigh, client);
-                    Protocol(string.Format("{0}\tКлиент верхнего уровня [{1}] отменил регистрацию на сервере{2}",
+                    Protocol(String.Format("{0}\tКлиент верхнего уровня [{1}] отменил регистрацию на сервере{2}",
                                            DateTime.Now, registrationMessage.RegNameFrom, Environment.NewLine));
                 }
             }
@@ -105,7 +107,7 @@ namespace Oleg_ivo.MES
                 {
                     var client = new {Name = registrationMessage.RegNameFrom, Value = e.RegisteredLowLevelClient};
                     AddItem(lbRegisteredLow, client);
-                    Protocol(string.Format("{0}\tКлиент нижнего уровня [{1}] зарегистрировался на сервере{2}",
+                    Protocol(String.Format("{0}\tКлиент нижнего уровня [{1}] зарегистрировался на сервере{2}",
                                            DateTime.Now, registrationMessage.RegNameFrom, Environment.NewLine));
                 }
             }
@@ -120,7 +122,7 @@ namespace Oleg_ivo.MES
                 {
                     var client = new {Name = registrationMessage.RegNameFrom, Value = e.RegisteredHighLevelClient};
                     AddItem(lbRegisteredHigh, client);
-                    Protocol(string.Format("{0}\tКлиент верхнего уровня [{1}] зарегистрировался на сервере{2}",
+                    Protocol(String.Format("{0}\tКлиент верхнего уровня [{1}] зарегистрировался на сервере{2}",
                                            DateTime.Now, registrationMessage.RegNameFrom, Environment.NewLine));
                 }
             }
@@ -130,7 +132,7 @@ namespace Oleg_ivo.MES
         {
             if (e.RegisteredLowLevelClient != null && e.ChannelRegistrationMessage != null)
             {
-                string s = string.Format("{0}\tКлиент нижнего уровня [{1}] зарегистрировал на сервере канал [{2}]{3}",
+                string s = String.Format("{0}\tКлиент нижнего уровня [{1}] зарегистрировал на сервере канал [{2}]{3}",
                                               DateTime.Now, 
                                               e.ChannelRegistrationMessage.RegNameFrom,
                                               e.ChannelRegistrationMessage.LogicalChannelId,
@@ -143,7 +145,7 @@ namespace Oleg_ivo.MES
         {
             if (e.RegisteredLowLevelClient != null && e.ChannelRegistrationMessage != null)
             {
-                string s = string.Format("{0}\tКлиент нижнего уровня [{1}] отменил регистрацию на сервере канала [{2}]{3}",
+                string s = String.Format("{0}\tКлиент нижнего уровня [{1}] отменил регистрацию на сервере канала [{2}]{3}",
                                               DateTime.Now, 
                                               e.ChannelRegistrationMessage.RegNameFrom,
                                               e.ChannelRegistrationMessage.LogicalChannelId,
@@ -156,7 +158,7 @@ namespace Oleg_ivo.MES
         {
             if (e.RegisteredHighLevelClient != null && e.ChannelSubscribeMessage != null)
             {
-                string s = string.Format("{0}\tКлиент верхнего уровня [{1}] подписался канал [{2}]{3}",
+                string s = String.Format("{0}\tКлиент верхнего уровня [{1}] подписался канал [{2}]{3}",
                                               DateTime.Now,
                                               e.ChannelSubscribeMessage.RegNameFrom,
                                               e.ChannelSubscribeMessage.LogicalChannelId,
@@ -169,7 +171,7 @@ namespace Oleg_ivo.MES
         {
             if (e.RegisteredHighLevelClient != null && e.ChannelSubscribeMessage != null)
             {
-                string s = string.Format("{0}\tКлиент верхнего уровня [{1}] отписался от канала [{2}]{3}",
+                string s = String.Format("{0}\tКлиент верхнего уровня [{1}] отписался от канала [{2}]{3}",
                                               DateTime.Now,
                                               e.ChannelSubscribeMessage.RegNameFrom,
                                               e.ChannelSubscribeMessage.LogicalChannelId,
@@ -305,6 +307,26 @@ namespace Oleg_ivo.MES
             textBox1.SelectionStart = textBox1.Text.Length;
             textBox1.ScrollToCaret();
             textBox1.Refresh();
+        }
+
+        private void MesForm_Load(object sender, EventArgs e)
+        {
+            TestConnection(DbConnectionProvider.Instance);
+        }
+
+
+        private void TestConnection(DbConnectionProvider dbConnectionProvider)
+        {
+            var command = new SqlCommand("select 1");
+            dbConnectionProvider.OpenConnection(command);
+            try
+            {
+                var result = command.ExecuteScalar();
+            }
+            finally
+            {
+                dbConnectionProvider.CloseConnection(command);
+            }
         }
     }
 }
