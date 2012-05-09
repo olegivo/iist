@@ -140,10 +140,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\External\Library\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="Oleg_ivo.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e9643967fa5cdff5, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\External\Library\Oleg_ivo.Tools.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
@@ -414,6 +410,10 @@
     <ProjectReference Include="..\DMS.Common\DMS.Common.csproj">
       <Project>{02BA939D-826A-4D6E-8B42-414AF3F6C7CE}</Project>
       <Name>DMS.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\External\Oleg_ivo.Tools\Oleg_ivo.Tools.csproj">
+      <Project>{332A1894-922F-49A1-BD6A-E4E981FA2FEC}</Project>
+      <Name>Oleg_ivo.Tools</Name>
     </ProjectReference>
     <ProjectReference Include="..\Oleg_ivo.Client\Oleg_ivo.HighLevelClient.csproj">
       <Project>{D3640EED-9D98-4EBC-9F8B-98B74B67ED21}</Project>
