@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using DMS.Common.Events;
@@ -45,7 +46,7 @@ namespace Oleg_ivo.HighLevelClient.UI
             EndpointAddress endPoint = new EndpointAddress(@"net.pipe://localhost/Oleg_ivo.MES/High/high");
             */
 
-//режим клиента для LabView BEGIN
+            //режим клиента для LabView BEGIN
 #if LABVIEW
             Console.WriteLine("Инициализация LabViewClientProvider...");
 // ReSharper disable RedundantAssignment
@@ -83,7 +84,7 @@ namespace Oleg_ivo.HighLevelClient.UI
             LabViewClientProvider.InitBinding(bindingType, security);
             LabViewClientProvider.InitRemoteAddress(uri);
 #endif
-//режим клиента для LabView END
+            //режим клиента для LabView END
 
             Provider.Init(GetRegName());
 
@@ -281,7 +282,7 @@ namespace Oleg_ivo.HighLevelClient.UI
                                         ? SubscribeMode.Subscribe
                                         : SubscribeMode.Unsubscribe;
             ChannelSubscribeMessage subscribeMessage = new ChannelSubscribeMessage(GetRegName(), null, regMode,
-                                                                                   (int) e.MovingObject);
+                                                                                   (int)e.MovingObject);
 
             switch (subscribeMessage.Mode)
             {
@@ -324,9 +325,19 @@ namespace Oleg_ivo.HighLevelClient.UI
 
         private void btnSendError_Click(object sender, EventArgs e)
         {
-            var exception = new TestException("Произошла тестовая ошибка :(");
-            throw exception;
+            var channelId = doubleListBoxControl1.SelectionRight.Count == 1 ? (int)doubleListBoxControl1.SelectionRight[0] : 0;
+            var message = new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Write, channelId) { Value = GetValueToWrite() };
+            Provider.WriteChannel(message);
+            //var exception = new TestException("Произошла тестовая ошибка :(");
+            //throw exception;
             //Provider.Proxy.SendErrorAsync(new InternalErrorMessage(exception));
+        }
+
+        private object GetValueToWrite()
+        {
+            var form = new GetValueForm(){Value = "0"};
+            DialogResult result = form.ShowDialog();
+            return result == DialogResult.OK ? Convert.ToUInt16(form.Value) : 0;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
