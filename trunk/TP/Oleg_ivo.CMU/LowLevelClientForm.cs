@@ -24,21 +24,17 @@ namespace Oleg_ivo.CMU
         public LowLevelClientForm()
         {
             InitializeComponent();
-
-            ControlManagementUnit.GetRegName = GetRegName;
-            ControlManagementUnit.NeedProtocol += ControlManagementUnit_NeedProtocol;
         }
 
         internal ControlManagementUnit ControlManagementUnit
         {
             get
             {
-                if (_ControlManagementUnit==null)
+                if (_ControlManagementUnit == null)
                 {
                     _ControlManagementUnit = new ControlManagementUnit();
                     _ControlManagementUnit.GetDistributedMeasurementInformationSystem =
                         GetDistributedMeasurementInformationSystem;
-                    _ControlManagementUnit.BuildSystemConfiguration();
                 }
                 return _ControlManagementUnit;
             }
@@ -66,14 +62,14 @@ namespace Oleg_ivo.CMU
         private delegate void StDelegate(TextBox info, string s);
         private void SetText(TextBox info, string s)
         {
-            if(info.InvokeRequired)
+            if (info.InvokeRequired)
             {
                 StDelegate ddd = SetText;
                 info.Invoke(ddd, new object[] { info, s });
             }
             else
             {
-                textBox1.Text += s;                
+                textBox1.Text += s;
             }
         }
 
@@ -108,7 +104,7 @@ namespace Oleg_ivo.CMU
                 ControlManagementUnit.Register();
                 CanRegister = false;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 CanRegister = true;
                 throw;
@@ -178,7 +174,7 @@ namespace Oleg_ivo.CMU
                                                                                             registrationMode,
                                                                                             DataMode.Read |
                                                                                             DataMode.Write,
-                                                                                            (int) e.MovingObject);
+                                                                                            (int)e.MovingObject);
 
 
             //регистрация каналов в MES
@@ -222,13 +218,18 @@ namespace Oleg_ivo.CMU
 
         private void LowLevelClientForm_Load(object sender, EventArgs e)
         {
+            ControlManagementUnit controlManagementUnit = ControlManagementUnit;
+            controlManagementUnit.BuildSystemConfiguration();
+            controlManagementUnit.GetRegName = GetRegName;
+            controlManagementUnit.NeedProtocol += ControlManagementUnit_NeedProtocol;
+
             List<int> _left = new List<int>();
             List<int> _right = new List<int>();
 
             //добавляем только проидентифицированные каналы (Id > 0):
-            _left.AddRange(ControlManagementUnit.GetAvailableLogicalChannels());
+            _left.AddRange(controlManagementUnit.GetAvailableLogicalChannels());
             //_right.AddRange(Enumerable.Range(11, 10));
-            
+
             doubleListBoxControl1.InitSources(_left, _right);
         }
 
