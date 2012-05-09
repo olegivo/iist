@@ -84,6 +84,9 @@ namespace Oleg_ivo.Plc.FieldBus
         ///</summary>
         public override void InitializeModbusMaster()
         {
+#if EMULATIONMODE
+            Console.WriteLine("Инициализация управления по Modbus/RS-485 в режиме эмуляции не требуется");
+#else
             try
             {
                 //открываем или переоткрываем порт
@@ -113,16 +116,17 @@ namespace Oleg_ivo.Plc.FieldBus
             switch (Mode)
             {
                 case AsciiRtuMode.ASCII:
-                    System.Diagnostics.Debug.WriteLine("Инициализация управления по Modbus в ASCII-режиме...");
+                    Console.WriteLine("Инициализация управления по Modbus в ASCII-режиме...");
                     ModbusAdapter = new NModbusAdapter(ModbusSerialMaster.CreateAscii(_serialPort));
                     break;
                 case AsciiRtuMode.RTU:
-                    System.Diagnostics.Debug.WriteLine("Инициализация управления по Modbus в RTU-режиме...");
+                    Console.WriteLine("Инициализация управления по Modbus в RTU-режиме...");
                     ModbusAdapter = new NModbusAdapter(ModbusSerialMaster.CreateRtu(_serialPort));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+#endif
         }
 
         /// <summary>

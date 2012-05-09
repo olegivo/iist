@@ -80,6 +80,9 @@ namespace Oleg_ivo.Plc.FieldBus
         ///</summary>
         public override void InitializeModbusMaster()
         {
+#if EMULATIONMODE
+            Console.WriteLine("Инициализация управления по Modbus/TCP в режиме эмуляции не требуется");
+#else
             if (_modbusAdapter == null)
             {
                 Debug.WriteLine("Инициализация управления по Modbus...");
@@ -95,6 +98,7 @@ namespace Oleg_ivo.Plc.FieldBus
                 else
                     Console.WriteLine("Не задан IPAddress");
             }
+#endif
         }
 
         ModbusIpMaster modbusMaster = null;
@@ -129,7 +133,7 @@ namespace Oleg_ivo.Plc.FieldBus
             }
             else
             {
-                
+                Console.WriteLine("Client is null");
             }
 
             return modbusMaster;
