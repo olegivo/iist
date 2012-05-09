@@ -57,7 +57,7 @@ namespace Oleg_ivo.LowLevelClient
 
             try
             {
-#if !IIST || EMULATION_MODE
+#if EMULATIONMODE
                 newValue = LogicalChannel.GetNewValueEmulation();
 #else
                 newValue = LogicalChannel.GetNewValue();
