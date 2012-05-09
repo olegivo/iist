@@ -185,7 +185,7 @@ namespace Oleg_ivo.HighLevelClient
         private void CallbackHandler_ChannelRegistered(object sender, ChannelRegisterEventArgs e)
         {
             var message = e.Message;
-            var newValue = new[] {message.LogicalChannelId};
+            var newValue = new[] { message.LogicalChannelId };
             RegisteredChannels = RegisteredChannels != null ? RegisteredChannels.Union(newValue, EqualityComparer<int>.Default).ToArray() : newValue;
 
             if (_actualValues.ContainsKey(message.LogicalChannelId))
@@ -199,10 +199,10 @@ namespace Oleg_ivo.HighLevelClient
         private void CallbackHandler_ChannelUnRegistered(object sender, ChannelRegisterEventArgs e)
         {
             var message = e.Message;
-            var removeValue = new[] {message.LogicalChannelId};
+            var removeValue = new[] { message.LogicalChannelId };
             if (RegisteredChannels != null)
                 RegisteredChannels = RegisteredChannels.Except(removeValue, EqualityComparer<int>.Default).ToArray();
-            else 
+            else
                 throw new InvalidOperationException(string.Format("Невозможно найти зарегистрированный канал {0}", e.Message.LogicalChannelId));
 
             if (_actualValues.ContainsKey(message.LogicalChannelId))
@@ -245,7 +245,7 @@ namespace Oleg_ivo.HighLevelClient
             if (RegisteredChannels != null)
             {
                 var message = e.Message;
-                double value = (double) message.Value;
+                double value = (double)message.Value;
                 if (_actualValues.ContainsKey(message.LogicalChannelId))
                     _actualValues[message.LogicalChannelId] = value;
                 else
@@ -271,19 +271,33 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public void Register()
         {
-            Proxy.Register(new RegistrationMessage(RegName, null, RegistrationMode.Register, AllowedDataMode));
-            RegisteredChannels = Proxy.GetRegisteredChannels(new InternalMessage(RegName, null));
+            Register(false, null);
         }
 
         /// <summary>
         /// Асинхронная регистрация
         /// </summary>
+        public void RegisterAsync(EventHandler<AsyncCompletedEventArgs> proxyRegisterCompleted)
+        {
+            Register(true, proxyRegisterCompleted);
+        }
+
+        /// <summary>
+        /// Универсальная регистрация
+        /// </summary>
+        /// <param name="async"></param>
         /// <param name="proxyRegisterCompleted"></param>
-        public void Register(EventHandler<AsyncCompletedEventArgs> proxyRegisterCompleted)
+        public void Register(bool async, EventHandler<AsyncCompletedEventArgs> proxyRegisterCompleted)
         {
             _proxyRegisterCompleted = proxyRegisterCompleted;
-            Proxy.RegisterAsync(new RegistrationMessage(RegName, null, RegistrationMode.Register, AllowedDataMode));
             Proxy.RegisterCompleted += Proxy_RegisterCompleted;
+            if (async)
+                Proxy.RegisterAsync(new RegistrationMessage(RegName, null, RegistrationMode.Register, AllowedDataMode));
+            else
+            {
+                Proxy.Register(new RegistrationMessage(RegName, null, RegistrationMode.Register, AllowedDataMode));
+                Proxy_RegisterCompleted(this, new AsyncCompletedEventArgs(null, false, null));
+            }
         }
 
         /// <summary>
@@ -298,11 +312,11 @@ namespace Oleg_ivo.HighLevelClient
         void Proxy_RegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
             Proxy.RegisterCompleted -= Proxy_RegisterCompleted;
-            if (e.Error!=null)
+            if (e.Error != null)
                 throw new InvalidOperationException(e.Error.ToString(), e.Error);
             RegisteredChannels = Proxy.GetRegisteredChannels(new InternalMessage(RegName, null));
 
-            if (_proxyRegisterCompleted!=null)
+            if (_proxyRegisterCompleted != null)
             {
                 // чтобы снаружи знали, что регистрация завершена, каналы передаются сохраняются в UserState
                 _proxyRegisterCompleted(this, e);
