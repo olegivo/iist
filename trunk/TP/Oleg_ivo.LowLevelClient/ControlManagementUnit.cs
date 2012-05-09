@@ -285,7 +285,7 @@ namespace Oleg_ivo.LowLevelClient
         public void Register()
         {
             RegistrationMessage message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
-            LowLevelMessageExchangeSystemClient.RegisterAsync(message);
+            LowLevelMessageExchangeSystemClient.Register(message);
         }
 
         /// <summary>
