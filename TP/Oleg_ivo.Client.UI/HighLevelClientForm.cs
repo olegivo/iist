@@ -232,7 +232,7 @@ namespace Oleg_ivo.HighLevelClient.UI
             // регистрация
             try
             {
-                Provider.Register(RegisterCompleted);
+                Provider.Register(false, RegisterCompleted);
             }
             catch (Exception)
             {
