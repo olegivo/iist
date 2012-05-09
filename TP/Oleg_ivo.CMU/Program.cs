@@ -17,15 +17,16 @@ namespace Oleg_ivo.CMU
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 
 
             DbConnectionProvider.Instance.SetupConnectionStringFromConfigurationFile();
             LowLevelClientForm form = new LowLevelClientForm();
-            
-#pragma warning disable 168
-            ExceptionHandler exceptionHandler = new ExceptionHandler((new Errors(form.ControlManagementUnit)).LogError);
-#pragma warning restore 168
 
+#pragma warning disable 168
+            var errors = new Errors(form.ControlManagementUnit);
+            var exceptionHandler = new ExceptionHandler(errors.LogError);
+#pragma warning restore 168
             Application.Run(form);
         }
 
@@ -33,20 +34,33 @@ namespace Oleg_ivo.CMU
 
     internal class Errors
     {
-        private readonly ControlManagementUnit controlManagementUnit;
+        private readonly Func<ControlManagementUnit> controlManagementUnitProvider;
+        private ControlManagementUnit controlManagementUnit;
 
+        private ControlManagementUnit ControlManagementUnit
+        {
+            get
+            {
+                return controlManagementUnit ?? (controlManagementUnit = controlManagementUnitProvider());
+            }
+        }
         public Errors(ControlManagementUnit controlManagementUnit)
         {
             this.controlManagementUnit = controlManagementUnit;
         }
 
+        public Errors(Func<ControlManagementUnit> controlManagementUnitProvider)
+        {
+            this.controlManagementUnitProvider = controlManagementUnitProvider;
+        }
+
         internal void LogError(object sender, ExtendedThreadExceptionEventArgs e)
         {
-            controlManagementUnit.Proxy.SendErrorCompleted += Proxy_SendErrorCompleted;
+            ControlManagementUnit.Proxy.SendErrorCompleted += Proxy_SendErrorCompleted;
             try
             {
                 //TODO: заполнить RegNameFrom
-                controlManagementUnit.Proxy.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
+                ControlManagementUnit.Proxy.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
                 if (e.Exception is ArgumentOutOfRangeException)
                     e.ShowError = false;
             }
