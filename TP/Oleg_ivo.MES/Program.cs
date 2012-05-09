@@ -22,6 +22,7 @@ namespace Oleg_ivo.MES
         [STAThread]
         static void Main()
         {
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 #pragma warning disable 168
             ExceptionHandler exceptionHandler = new ExceptionHandler();
 #pragma warning restore 168
