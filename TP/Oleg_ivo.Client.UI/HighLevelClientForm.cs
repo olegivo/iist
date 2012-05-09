@@ -233,7 +233,6 @@ namespace Oleg_ivo.HighLevelClient.UI
             try
             {
                 Provider.Register(RegisterCompleted);
-                CanRegister = false;
             }
             catch (Exception)
             {
@@ -244,6 +243,7 @@ namespace Oleg_ivo.HighLevelClient.UI
 
         void RegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
+            CanRegister = false;
             // регистрация завершена
             var registeredChannels = Provider.RegisteredChannels;
             if (registeredChannels == null)
