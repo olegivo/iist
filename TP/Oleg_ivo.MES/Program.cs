@@ -31,16 +31,22 @@ namespace Oleg_ivo.MES
 
             Logger logger;
 
+            var lowLevelMessageExchangeSystem = LowLevelMessageExchangeSystem.Instance;
+            var highLevelMessageExchangeSystem = HighLevelMessageExchangeSystem.Instance;
+            //взаимная подписка событий:
+            lowLevelMessageExchangeSystem.NotifySubscribeEvents(highLevelMessageExchangeSystem);
+            highLevelMessageExchangeSystem.NotifySubscribeEvents(lowLevelMessageExchangeSystem);
+
 #if LOW_LEVEL
             logger = new Logger("Запуск сервиса нижнего уровня");
-            ServiceHost serviceHostLowLevel = new ServiceHost(LowLevelMessageExchangeSystem.Instance);
+            ServiceHost serviceHostLowLevel = new ServiceHost(lowLevelMessageExchangeSystem);
             serviceHostLowLevel.Open();
             logger.End(2);
 #endif
 
 #if HIGH_LEVEL
             logger = new Logger("Запуск сервиса верхнего уровня");
-            ServiceHost serviceHostHighLevel = new ServiceHost(HighLevelMessageExchangeSystem.Instance);
+            ServiceHost serviceHostHighLevel = new ServiceHost(highLevelMessageExchangeSystem);
             serviceHostHighLevel.Open();
             logger.End(2);
 #endif

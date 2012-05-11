@@ -5,6 +5,7 @@ using System.ServiceModel;
 using DMS.Common.MessageExchangeSystem.LowLevel;
 using DMS.Common.Messages;
 using NLog;
+using Oleg_ivo.MES.High;
 using Oleg_ivo.MES.Registered;
 
 namespace Oleg_ivo.MES.Low
@@ -45,11 +46,20 @@ namespace Oleg_ivo.MES.Low
         /// </summary>
         private LowLevelMessageExchangeSystem()
         {
-            High.HighLevelMessageExchangeSystem.Instance.ChannelSubscribed += High_ChannelSubscribed;
-            High.HighLevelMessageExchangeSystem.Instance.ChannelUnSubscribed += High_ChannelUnSubscribed;
         }
 
-        private void High_ChannelUnSubscribed(object sender, High.HighRegisteredLogicalChannelSubscribeEventArgs e)
+        private bool subscribed;
+        internal void NotifySubscribeEvents(HighLevelMessageExchangeSystem highLevelMessageExchangeSystem)
+        {
+            if (!subscribed)
+            {
+                highLevelMessageExchangeSystem.ChannelSubscribed += High_ChannelSubscribed;
+                highLevelMessageExchangeSystem.ChannelUnSubscribed += High_ChannelUnSubscribed;
+                subscribed = true;
+            }
+        }
+
+        private void High_ChannelUnSubscribed(object sender, HighRegisteredLogicalChannelSubscribeEventArgs e)
         {
             var channel =
                 GetRegisteredLogicalChannel(
@@ -62,7 +72,7 @@ namespace Oleg_ivo.MES.Low
             channel.InvokeUnSubscribed(e.ChannelSubscribeMessage);
         }
 
-        private void High_ChannelSubscribed(object sender, High.HighRegisteredLogicalChannelSubscribeEventArgs e)
+        private void High_ChannelSubscribed(object sender, HighRegisteredLogicalChannelSubscribeEventArgs e)
         {
             var channel =
                 GetRegisteredLogicalChannel(
@@ -162,7 +172,7 @@ namespace Oleg_ivo.MES.Low
             if (message.DataMode == DataMode.Read)
             {
                 //пришли новые данные по каналу. будем передавать наверх
-                High.HighLevelMessageExchangeSystem.Instance.ReadChannel(message);
+                HighLevelMessageExchangeSystem.Instance.ReadChannel(message);
             }
             else
             {

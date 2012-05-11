@@ -36,15 +36,7 @@ namespace Oleg_ivo.MES.High
         ///</summary>
         public static HighLevelMessageExchangeSystem Instance
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new HighLevelMessageExchangeSystem();
-                    _instance.NotifySubscribeEvents();
-                }
-                return _instance;
-            }
+            get { return _instance ?? (_instance = new HighLevelMessageExchangeSystem()); }
         }
 
         /// <summary>
@@ -337,8 +329,6 @@ namespace Oleg_ivo.MES.High
         /// <param name="clientCallback"></param>
         private void Register(RegistrationMessage message, IHighLevelClientCallback clientCallback)
         {
-            NotifySubscribeEvents();
-
             if (message.RegistrationMode != RegistrationMode.Register)
                 throw new ArgumentException("Для регистрации клиента в сообщении используется флаг отмены регистрации");
 
@@ -385,12 +375,12 @@ namespace Oleg_ivo.MES.High
         }
 
         private bool subscribed;
-        private void NotifySubscribeEvents()
+        internal void NotifySubscribeEvents(LowLevelMessageExchangeSystem lowLevelMessageExchangeSystem)
         {
             if (!subscribed)
             {
-                LowLevelMessageExchangeSystem.Instance.ChannelRegistered += Low_ChannelRegistered;
-                LowLevelMessageExchangeSystem.Instance.ChannelUnregistered += Low_ChannelUnregistered;
+                lowLevelMessageExchangeSystem.ChannelRegistered += Low_ChannelRegistered;
+                lowLevelMessageExchangeSystem.ChannelUnregistered += Low_ChannelUnregistered;
                 subscribed = true;
             }
         }
