@@ -61,8 +61,7 @@ namespace TP
         {
             try
             {
-                Provider.Register(RegisterCompleted);
-                CanRegister = false;
+                Provider.Register(false, RegisterCompleted);
             }
             catch (Exception ex)
             {
@@ -99,6 +98,8 @@ namespace TP
         void RegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
             // регистрация завершена
+            CanRegister = false;
+
             var registeredChannels = Provider.RegisteredChannels;
             if (registeredChannels == null || registeredChannels.Length == 0)
             {
