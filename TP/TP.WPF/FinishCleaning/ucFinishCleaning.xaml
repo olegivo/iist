@@ -68,6 +68,12 @@
 			<TextBlock x:Name="textBlock4_Copy7" Canvas.Left="904.156" TextWrapping="Wrap" Canvas.Top="89.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="от Скруббера"/>
             <CheckBox
                 Canvas.Left="740"
+                Canvas.Top="450"
+                Name="CheckBox2">
+                Автоматический режим управления
+            </CheckBox>
+            <CheckBox
+                Canvas.Left="740"
                 Canvas.Top="295"
                 Name="CheckBox1" IsChecked="{Binding BurnerStatus}">
                 Горелка
