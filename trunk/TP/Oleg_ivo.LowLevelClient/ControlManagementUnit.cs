@@ -289,6 +289,15 @@ namespace Oleg_ivo.LowLevelClient
         }
 
         /// <summary>
+        /// Асинхронно послать в систему обмена сообщениями сообщение о регистрации
+        /// </summary>
+        public void RegisterAsync()
+        {
+            RegistrationMessage message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
+            LowLevelMessageExchangeSystemClient.RegisterAsync(message);
+        }
+
+        /// <summary>
         /// Послать в систему обмена сообщениями сообщение об отмене регистрации
         /// </summary>
         public void Unregister()
