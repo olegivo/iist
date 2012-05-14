@@ -132,7 +132,7 @@
             <TextBox                
                 Canvas.Top="120"
                 Canvas.Left="15"                              
-                Text=""
+                Text="{Binding GasConcentration_O2}"
                 Width="66">
             </TextBox>
             <Label 
@@ -146,7 +146,7 @@
             <TextBox                
                 Canvas.Top="220"
                 Canvas.Left="15"                              
-                Text=""
+                Text="{Binding GasConcentration_SO2}"
                 Width="66">
             </TextBox>
             <Label 
@@ -160,7 +160,7 @@
             <TextBox                
                 Canvas.Top="270"
                 Canvas.Left="15"                              
-                Text=""
+                Text="{Binding GasConcentration_NO}"
                 Width="66">
             </TextBox>
             <Label 
@@ -174,7 +174,7 @@
             <TextBox                
                 Canvas.Top="320"
                 Canvas.Left="15"                              
-                Text=""
+                Text="{Binding GasConcentration_NO2}"
                 Width="66">
             </TextBox>
             <Label 
@@ -188,7 +188,7 @@
             <TextBox                
                 Canvas.Top="570"
                 Canvas.Left="315"                              
-                Text=""
+                Text="{Binding Temperature_TC7}"
                 Width="66">
             </TextBox>
         </Canvas>

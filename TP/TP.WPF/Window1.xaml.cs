@@ -4,8 +4,7 @@ using System.Windows.Controls;
 using System.Threading;
 using DMS.Common.Events;
 
-
-namespace TP
+namespace TP.WPF
 {
     /// <summary>
     /// Interaction logic for Window1.xaml
@@ -14,7 +13,7 @@ namespace TP
 	public partial class Window1: Window
 
     {
-		public ChannelController channelController1 = new TP.ChannelController();
+		public ChannelController channelController1 = new ChannelController();
         public Window1()
         {
             InitializeComponent(); 
@@ -50,9 +49,9 @@ namespace TP
                   case 6:
                     FinishCleaning.Temperature_TC6 = value;
                     break; //TС6	температура перед рукавным фильтром
-            //    case 7:
-            //        ucFinishCleaning1.Temperature_TC7 = value;
-            //        break; //TС7	температура перед дымососом
+                  case 7:
+                    FinishCleaning.Temperature_TC7 = value;
+                    break; //TС7	температура перед дымососом
             //    case 8:
             //        ucDrumTypeFurnace1.T8 = value;
             //        break; //TС8	температура воды в системе охлаждения
@@ -96,21 +95,21 @@ namespace TP
             //    case 19:
             //        ucAllHeatExchanger1.Concentration_CO = value;
             //        break; //Г-СО	концентрация газа СО
-            //    case 20:
-            //        ucFinishCleaning1.GasConcentration_O2 = value;
-            //        break; //Г-О2	концентрация газа О2
+                  case 20:
+                    FinishCleaning.GasConcentration_O2 = value;
+                    break; //Г-О2	концентрация газа О2
                   case 21:
                     FinishCleaning.GasConcentration_CO = value;
                     break; //Г-СО	концентрация газа СО
-            //    case 22:
-            //        ucFinishCleaning1.GasConcentration_SO2 = value;
-            //        break; //Г-SО2	концентрация газа SО2
-            //    case 23:
-            //        ucFinishCleaning1.GasConcentration_NO = value;
-            //        break; //Г-NО	концентрация газа NО
-            //    case 24:
-            //        ucFinishCleaning1.GasConcentration_NO2 = value;
-            //        break; //Г-NО2	концентрация газа NО2
+                  case 22:
+                    FinishCleaning.GasConcentration_SO2 = value;
+                    break; //Г-SО2	концентрация газа SО2
+                  case 23:
+                    FinishCleaning.GasConcentration_NO = value;
+                    break; //Г-NО	концентрация газа NО
+                  case 24:
+                    FinishCleaning.GasConcentration_NO2 = value;
+                    break; //Г-NО2	концентрация газа NО2
             }
         }
 
