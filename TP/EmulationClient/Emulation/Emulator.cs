@@ -49,25 +49,40 @@ namespace EmulationClient.Emulation
             T7 = new Temperature();
             Speed = new Speed();
 
-            COConcentration = new GasConcentration();
-            COConcentration.GetTemperature = new GetDoubleValueDelegate(() => T6.GetOutputValue());
-            COConcentration.GetSpeed = new GetDoubleValueDelegate(() => Speed.GetOutputValue());
+            COConcentration = new GasConcentration
+                                  {
+                                      GetTemperature = () => T6.GetOutputValue(),
+                                      GetSpeed = () => Speed.GetOutputValue(),
+                                      GetConcentration =
+                                          (speed, temperature, passedSeconds) =>
+                                          Math.Abs(Math.Sin(0.005*passedSeconds))*50 + 3500
+                                          + (temperature > 150 ? (30*temperature - 4500) : 0)
+                                          + (-31.25*speed + 1250)
+                                  };
 
-            O2Concentration = new GasConcentration();
-            O2Concentration.GetTemperature = new GetDoubleValueDelegate(() => T6.GetOutputValue());
-            O2Concentration.GetSpeed = new GetDoubleValueDelegate(() => Speed.GetOutputValue());
+            O2Concentration = new GasConcentration
+                                  {
+                                      GetTemperature = () => T6.GetOutputValue(),
+                                      GetSpeed = () => Speed.GetOutputValue()
+                                  };
 
-            SÎ2Concentration = new GasConcentration();
-            SÎ2Concentration.GetTemperature = new GetDoubleValueDelegate(() => T6.GetOutputValue());
-            SÎ2Concentration.GetSpeed = new GetDoubleValueDelegate(() => Speed.GetOutputValue());
+            SÎ2Concentration = new GasConcentration
+                                   {
+                                       GetTemperature = () => T6.GetOutputValue(),
+                                       GetSpeed = () => Speed.GetOutputValue()
+                                   };
 
-            NOConcentration = new GasConcentration();
-            NOConcentration.GetTemperature = new GetDoubleValueDelegate(() => T6.GetOutputValue());
-            NOConcentration.GetSpeed = new GetDoubleValueDelegate(() => Speed.GetOutputValue());
+            NOConcentration = new GasConcentration
+                                  {
+                                      GetTemperature = () => T6.GetOutputValue(),
+                                      GetSpeed = () => Speed.GetOutputValue()
+                                  };
 
-            NO2Concentration = new GasConcentration();
-            NO2Concentration.GetTemperature = new GetDoubleValueDelegate(() => T6.GetOutputValue());
-            NO2Concentration.GetSpeed = new GetDoubleValueDelegate(() => Speed.GetOutputValue());
+            NO2Concentration = new GasConcentration
+                                   {
+                                       GetTemperature = () => T6.GetOutputValue(),
+                                       GetSpeed = () => Speed.GetOutputValue()
+                                   };
         }
 
         private void InitChannels()
