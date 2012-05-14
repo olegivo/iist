@@ -45,8 +45,19 @@ namespace EmulationClient.Emulation
         /// </summary>
         public Emulator()
         {
-            T6 = new Temperature();
-            T7 = new Temperature();
+            T6 = new Temperature
+                                 {
+                                     GetTemperature =
+                                     (passedSeconds) =>
+                                     Math.Abs((Math.Sin(0.01 * passedSeconds)) * 100 + 130)
+                                 };
+            T7 = new Temperature
+                                {
+                                    GetTemperature =
+                                    (passedSeconds) =>
+                                    Math.Abs((Math.Sin(0.01 * passedSeconds)) * 100 + 150)
+                                };
+
             Speed = new Speed();
 
             COConcentration = new GasConcentration
@@ -55,7 +66,7 @@ namespace EmulationClient.Emulation
                                       GetSpeed = () => Speed.GetOutputValue(),
                                       GetConcentration =
                                           (speed, temperature, passedSeconds) =>
-                                          Math.Abs(Math.Sin(0.005*passedSeconds))*50 + 3500
+                                          Math.Abs(Math.Sin(0.011*passedSeconds))*3000 + 1000
                                           + (temperature > 150 ? (30*temperature - 4500) : 0)
                                           + (-31.25*speed + 1250)
                                   };
@@ -63,25 +74,45 @@ namespace EmulationClient.Emulation
             O2Concentration = new GasConcentration
                                   {
                                       GetTemperature = () => T6.GetOutputValue(),
-                                      GetSpeed = () => Speed.GetOutputValue()
+                                      GetSpeed = () => Speed.GetOutputValue(),
+                                      GetConcentration =
+                                          (speed, temperature, passedSeconds) =>
+                                          (Math.Cos(0.021 * passedSeconds)) * 10 + 13
+                                          + (0.183 * temperature - 25)
+                                          + (0.833 * speed - 21.33)
                                   };
 
             SÎ2Concentration = new GasConcentration
                                    {
                                        GetTemperature = () => T6.GetOutputValue(),
-                                       GetSpeed = () => Speed.GetOutputValue()
+                                       GetSpeed = () => Speed.GetOutputValue(),
+                                       GetConcentration =
+                                          (speed, temperature, passedSeconds) =>
+                                          (Math.Sin(0.010 * passedSeconds)) * 500 + 200
+                                          + (8.33 * temperature - 1300)
+                                          + (-16.67 * speed + 366.67)
                                    };
 
             NOConcentration = new GasConcentration
                                   {
                                       GetTemperature = () => T6.GetOutputValue(),
-                                      GetSpeed = () => Speed.GetOutputValue()
+                                      GetSpeed = () => Speed.GetOutputValue(),
+                                      GetConcentration =
+                                          (speed, temperature, passedSeconds) =>
+                                          (Math.Sin(0.01 * passedSeconds)) * 500 + 300
+                                          + (10 * temperature - 900)
+                                          + (-20 * speed + 500)
                                   };
 
             NO2Concentration = new GasConcentration
                                    {
                                        GetTemperature = () => T6.GetOutputValue(),
-                                       GetSpeed = () => Speed.GetOutputValue()
+                                       GetSpeed = () => Speed.GetOutputValue(),
+                                       GetConcentration =
+                                          (speed, temperature, passedSeconds) =>
+                                          (Math.Sin(0.011 * passedSeconds)) * 300 + 450
+                                          + (10 * temperature - 1050)
+                                          + (-23.3 * speed + 533.3)
                                    };
         }
 

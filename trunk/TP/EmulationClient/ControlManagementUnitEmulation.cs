@@ -24,6 +24,7 @@ namespace EmulationClient
         public ControlManagementUnitEmulation()
         {
             CanRegister = true;
+            IsModulationMode = true; 
             NeedProtocol += ControlManagementUnitEmulation_NeedProtocol;
             Proxy.RegisterCompleted += Proxy_RegisterCompleted;
             Proxy.UnregisterCompleted += Proxy_UnregisterCompleted;
@@ -275,6 +276,7 @@ namespace EmulationClient
         }
 
         private int _concentrationNO2;
+
         public int ConcentrationNO2
         {
             get { return _concentrationNO2; }
@@ -287,6 +289,26 @@ namespace EmulationClient
                 }
             }
         }
+
+        private bool _ismodulationmode;
+        public bool IsModulationMode
+        {
+            get { return _ismodulationmode; }
+            set
+            {
+                if (_ismodulationmode != value)
+                {
+                    _ismodulationmode = value;
+                    InvokePropertyChanged("IsModulationMode");
+                    InvokePropertyChanged("OffModulationMode");
+                }
+            }
+        }
+        public  bool OffModulationMode
+        {
+            get { return !_ismodulationmode; }
+        }
+
         public bool CanRegisterChannels
         {
             get { return !CanUnregisterChannels && CanUnregister; }
