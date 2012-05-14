@@ -7,7 +7,7 @@ using DMS.Common.Events;
 using DMS.Common.Messages;
 using Oleg_ivo.HighLevelClient;
 
-namespace TP
+namespace TP.WPF
 {
     /// <summary>
     /// 

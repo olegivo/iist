@@ -24,7 +24,6 @@ namespace EmulationClient
         public ControlManagementUnitEmulation()
         {
             CanRegister = true;
-            
             NeedProtocol += ControlManagementUnitEmulation_NeedProtocol;
             Proxy.RegisterCompleted += Proxy_RegisterCompleted;
             Proxy.UnregisterCompleted += Proxy_UnregisterCompleted;
@@ -82,6 +81,14 @@ namespace EmulationClient
             Protocol(s);
             if (AutoRegisterAllChannels) RegisterAllChannels();
             CanRegister = false;
+
+            Temperatura6 = 120;
+            Temperatura7 = 110;
+            ConcentrationO2 = 5;
+            ConcentrationCO = 3000;
+            ConcentrationSO2 = 500;
+            ConcentrationNO = 600;
+            ConcentrationNO2 = 650;
         }
 
         internal bool AutoRegisterAllChannels { get; set; }
@@ -183,6 +190,103 @@ namespace EmulationClient
         private bool canUnregisterChannels;
         private int registeredChannelsCount;
 
+        private int _temperatura6;
+        public int Temperatura6
+        {
+            get{ return _temperatura6;}
+            set
+            {
+                if (_temperatura6 != value)
+                {
+                    _temperatura6 = value;
+                    InvokePropertyChanged("Temperatura6");
+                }
+            }
+        }
+
+        private int _temperatura7;
+        public int Temperatura7
+        {
+            get { return _temperatura7; }
+            set
+            {
+                if (_temperatura7 != value)
+                {
+                    _temperatura7 = value;
+                    InvokePropertyChanged("Temperatura7");
+                }
+            }
+        }
+
+        private int _concentrationO2;
+        public int ConcentrationO2
+        {
+            get { return _concentrationO2; }
+            set
+            {
+                if (_concentrationO2 != value)
+                {
+                    _concentrationO2 = value;
+                    InvokePropertyChanged("ConcentrationO2");
+                }
+            }
+        }
+
+        private int _concentrationCO;
+        public int ConcentrationCO
+        {
+            get { return _concentrationCO; }
+            set
+            {
+                if (_concentrationCO != value)
+                {
+                    _concentrationCO = value;
+                    InvokePropertyChanged("ConcentrationCO");
+                }
+            }
+        }
+
+        private int _concentrationSO2;
+        public int ConcentrationSO2
+        {
+            get { return _concentrationSO2; }
+            set
+            {
+                if (_concentrationSO2 != value)
+                {
+                    _concentrationSO2 = value;
+                    InvokePropertyChanged("ConcentrationSO2");
+                }
+            }
+        }
+
+        private int _concentrationNO;
+        public int ConcentrationNO
+        {
+            get { return _concentrationNO; }
+            set
+            {
+                if (_concentrationNO != value)
+                {
+                    _concentrationNO = value;
+                    InvokePropertyChanged("ConcentrationNO");
+                }
+            }
+        }
+
+        private int _concentrationNO2;
+        public int ConcentrationNO2
+        {
+            get { return _concentrationNO2; }
+            set
+            {
+                if (_concentrationNO2 != value)
+                {
+                    _concentrationNO2 = value;
+                    InvokePropertyChanged("ConcentrationNO2");
+                }
+            }
+        }
         public bool CanRegisterChannels
         {
             get { return !CanUnregisterChannels && CanUnregister; }

@@ -13,17 +13,32 @@ namespace TP.WPF.FinishCleaning
             this.InitializeComponent();
         }
 
-        private float _temperature;
+        private float _temperature6;
 
         public float Temperature_TC6
         {
-            get { return _temperature; }
+            get { return _temperature6; }
             set
             {
-                if (_temperature != value)
+                if (_temperature6 != value)
                 {
-                    _temperature = value;
+                    _temperature6 = value;
                     OnPropertyChanged("Temperature_TC6");
+                }
+            }
+        }
+
+        private float _temperature7;
+
+        public float Temperature_TC7
+        {
+            get { return _temperature7; }
+            set
+            {
+                if (_temperature7 != value)
+                {
+                    _temperature7 = value;
+                    OnPropertyChanged("Temperature_TC7");
                 }
             }
         }
@@ -43,6 +58,65 @@ namespace TP.WPF.FinishCleaning
             }
         }
 
+        private float _concentration_O2;
+
+        public float GasConcentration_O2
+        {
+            get { return _concentration_O2; }
+            set
+            {
+                if (_concentration_O2 != value)
+                {
+                    _concentration_O2 = value;
+                    OnPropertyChanged("GasConcentration_O2");
+                }
+            }
+        }
+
+        private float _concentration_SO2;
+
+        public float GasConcentration_SO2
+        {
+            get { return _concentration_SO2; }
+            set
+            {
+                if (_concentration_SO2 != value)
+                {
+                    _concentration_SO2 = value;
+                    OnPropertyChanged("GasConcentration_SO2");
+                }
+            }
+        }
+
+        private float _concentration_NO2;
+
+        public float GasConcentration_NO2
+        {
+            get { return _concentration_NO2; }
+            set
+            {
+                if (_concentration_NO2 != value)
+                {
+                    _concentration_NO2 = value;
+                    OnPropertyChanged("GasConcentration_NO2");
+                }
+            }
+        }
+
+        private float _concentration_NO;
+
+        public float GasConcentration_NO
+        {
+            get { return _concentration_NO; }
+            set
+            {
+                if (_concentration_NO != value)
+                {
+                    _concentration_NO = value;
+                    OnPropertyChanged("GasConcentration_NO");
+                }
+            }
+        }
         private bool burnerStatus;
 
         /// <summary>

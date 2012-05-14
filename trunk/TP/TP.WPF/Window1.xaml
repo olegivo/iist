@@ -28,7 +28,7 @@
         xmlns:local="clr-namespace:TP" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:FinishCleaning="clr-namespace:TP.WPF.FinishCleaning" mc:Ignorable="d"
-	    x:Class="TP.Window1"
+	    x:Class="TP.WPF.Window1"
         x:Name="TechnologicalProcess" 
         Title="Технологический процесс термического уничтожения отходов" 
         Height="768" Width="1024" 
@@ -103,7 +103,7 @@
         	<Button Content="Button" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="25" Style="{DynamicResource MenuButtonStyle}"/>
         	<Menu Margin="0" HorizontalAlignment="Left" Background="{x:Null}" Height="25" VerticalAlignment="Top" Width="30">
         		<MenuItem Width="25" Height="25" d:IsHidden="True">
-        			<MenuItem x:Name="Menu_register" Header="Подкоючится к серверу" Click="Menu_register_Click">
+        			<MenuItem x:Name="Menu_register" Header="Подключится к серверу" Click="Menu_register_Click">
         				<MenuItem.Icon>
         					<Image Source="Images/connect.png"/>
         				</MenuItem.Icon>

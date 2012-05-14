@@ -32,8 +32,13 @@ namespace EmulationClient.Emulation
         }
 
         private Temperature T6;
+        private Temperature T7;
         private Speed Speed;
         private GasConcentration COConcentration;
+        private GasConcentration O2Concentration;
+        private GasConcentration SО2Concentration;
+        private GasConcentration NOConcentration;
+        private GasConcentration NO2Concentration;
 
         /// <summary>
         /// 
@@ -41,11 +46,28 @@ namespace EmulationClient.Emulation
         public Emulator()
         {
             T6 = new Temperature();
+            T7 = new Temperature();
             Speed = new Speed();
 
             COConcentration = new GasConcentration();
             COConcentration.GetTemperature = new GetDoubleValueDelegate(() => T6.GetOutputValue());
             COConcentration.GetSpeed = new GetDoubleValueDelegate(() => Speed.GetOutputValue());
+
+            O2Concentration = new GasConcentration();
+            O2Concentration.GetTemperature = new GetDoubleValueDelegate(() => T6.GetOutputValue());
+            O2Concentration.GetSpeed = new GetDoubleValueDelegate(() => Speed.GetOutputValue());
+
+            SО2Concentration = new GasConcentration();
+            SО2Concentration.GetTemperature = new GetDoubleValueDelegate(() => T6.GetOutputValue());
+            SО2Concentration.GetSpeed = new GetDoubleValueDelegate(() => Speed.GetOutputValue());
+
+            NOConcentration = new GasConcentration();
+            NOConcentration.GetTemperature = new GetDoubleValueDelegate(() => T6.GetOutputValue());
+            NOConcentration.GetSpeed = new GetDoubleValueDelegate(() => Speed.GetOutputValue());
+
+            NO2Concentration = new GasConcentration();
+            NO2Concentration.GetTemperature = new GetDoubleValueDelegate(() => T6.GetOutputValue());
+            NO2Concentration.GetSpeed = new GetDoubleValueDelegate(() => Speed.GetOutputValue());
         }
 
         private void InitChannels()
@@ -57,7 +79,7 @@ namespace EmulationClient.Emulation
                 logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
                 {
                     Id = 6,//TС6	температура перед рукавным фильтром
-                    Description = "Температура",
+                    Description = "Температура перед фильтром",
                     PollPeriod = TimeSpan.FromMilliseconds(500),
                     MinValue = 0,
                     MaxValue = 1000,
@@ -66,14 +88,59 @@ namespace EmulationClient.Emulation
                 });
                 logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
                 {
+                    Id = 7,//TС7	температура перед дымососом
+                    Description = "Температура перед дымососом",
+                    PollPeriod = TimeSpan.FromMilliseconds(500),
+                    MinValue = 0,
+                    MaxValue = 1000,
+                    GetValueEmulationAltDelegate = T7.GetOutputValue
+
+                });
+                logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
+                {
+                    Id = 20,//Г-О2	концентрация газа О2
+                    Description = "Концентрация О2",
+                    PollPeriod = TimeSpan.FromMilliseconds(500),
+                    MinValue = 0,
+                    MaxValue = 1000,
+                    GetValueEmulationAltDelegate = O2Concentration.GetOutputValue
+                });
+                logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
+                {
                     Id = 21,//Г-СО	концентрация газа СО
-                    Description = "Концентрация",
+                    Description = "Концентрация СО",
                     PollPeriod = TimeSpan.FromMilliseconds(500),
                     MinValue = 0,
                     MaxValue = 1000,
                     GetValueEmulationAltDelegate = COConcentration.GetOutputValue
                 });
-
+                logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
+                {
+                    Id = 22,//Г-SО2	концентрация газа SО2
+                    Description = "Концентрация SО2",
+                    PollPeriod = TimeSpan.FromMilliseconds(500),
+                    MinValue = 0,
+                    MaxValue = 1000,
+                    GetValueEmulationAltDelegate = SО2Concentration.GetOutputValue
+                });
+                logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
+                {
+                    Id = 23,//Г-NO	концентрация газа NO
+                    Description = "Концентрация NO",
+                    PollPeriod = TimeSpan.FromMilliseconds(500),
+                    MinValue = 0,
+                    MaxValue = 1000,
+                    GetValueEmulationAltDelegate = NOConcentration.GetOutputValue
+                });
+                logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
+                {
+                    Id = 24,//Г-NO2	концентрация газа NO2
+                    Description = "Концентрация NO2",
+                    PollPeriod = TimeSpan.FromMilliseconds(500),
+                    MinValue = 0,
+                    MaxValue = 1000,
+                    GetValueEmulationAltDelegate = NO2Concentration.GetOutputValue
+                });
                 //управляемые параметры
                 logicalChannels.Add(new OutputLogicalChannel(null, 0, 0)
                 {
@@ -127,9 +194,19 @@ namespace EmulationClient.Emulation
             switch (logicalChannelId)
             {
                 case 1:
-                    return T6.GetOutputValue();//Температура
+                    return T6.GetOutputValue();//Температура Т6
                 case 2:
-                    return COConcentration.GetOutputValue();//Концентрация
+                    return T7.GetOutputValue();//Температура Т7
+                case 3:
+                    return COConcentration.GetOutputValue();//Концентрация CO
+                case 4:
+                    return O2Concentration.GetOutputValue();//Концентрация O2
+                case 5:
+                    return SО2Concentration.GetOutputValue();//Концентрация SО2
+                case 6:
+                    return NOConcentration.GetOutputValue();//Концентрация NO
+                case 7:
+                    return NO2Concentration.GetOutputValue();//Концентрация NO2
                 default:
                     throw new ArgumentOutOfRangeException("logicalChannelId", logicalChannelId, "Неожиданное значение номера логического канала");
             }
