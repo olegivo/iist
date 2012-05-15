@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Timers;
+using System.Windows;
 
 namespace TP.WPF.FinishCleaning
 {
@@ -8,9 +10,13 @@ namespace TP.WPF.FinishCleaning
     /// </summary>
     public partial class ucFinishCleaning : INotifyPropertyChanged
     {
+        private Timer tmrAutoControlMode;
         public ucFinishCleaning()
         {
             this.InitializeComponent();
+            tmrAutoControlMode = new Timer();
+            tmrAutoControlMode.Interval = 5000;
+            tmrAutoControlMode.Elapsed += new ElapsedEventHandler(tmrAutoControlMode_Elapsed);
         }
 
         private float _temperature6;
@@ -136,6 +142,41 @@ namespace TP.WPF.FinishCleaning
             }
         }
 
+        private bool isAutomaticControl;
+        public bool IsAutomaticControl
+        {
+            get { return isAutomaticControl; }
+            set
+            {
+                if (isAutomaticControl != value)
+                {
+                    isAutomaticControl = value;
+                    ApplyAutoControlMode();
+                    OnPropertyChanged("IsAutomaticControl");
+                }
+            }
+        }
+     
+        private void ApplyAutoControlMode()
+        {
+            if (IsAutomaticControl)
+            {
+               
+               tmrAutoControlMode.Start();
+               
+            }
+            else
+            {
+                tmrAutoControlMode.Stop();
+            }
+            
+        }
+
+        private void tmrAutoControlMode_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            DoAutoControl();
+        }
+
         private double v;
         public double V
         {
@@ -152,6 +193,55 @@ namespace TP.WPF.FinishCleaning
         }
 
 
+
+        public void DoAutoControl()
+        {
+            int oborot = 0;
+            int gorelka = 0;
+            int delta_v = 10;
+
+            if (GasConcentration_CO > 3000)
+            {oborot = oborot + 1;}
+
+            if (GasConcentration_O2 < 5)
+            {oborot = oborot + 1;}
+
+            if (GasConcentration_O2 > 21)
+            {oborot = oborot - 1;}
+
+            if (GasConcentration_SO2 > 600)
+            {oborot = oborot + 1;}
+
+            if (GasConcentration_NO > 700)
+            {oborot = oborot + 1;}
+
+            if (GasConcentration_NO2 > 750)
+            {oborot = oborot + 1;}
+
+            if (Temperature_TC6 < 120)
+            { gorelka = gorelka + 1;}
+
+            if (Temperature_TC6 > 180)
+            { gorelka = gorelka - 1; }
+
+            if (Temperature_TC7 < 160)
+            { gorelka = gorelka + 1; }
+
+            if (oborot > 0)
+            {v = v + delta_v;}
+
+            if (oborot < 0)
+            { v = v - delta_v; }
+
+            if (gorelka > 0)
+            {burnerStatus = true;}
+
+            if (gorelka < 0)
+            { burnerStatus = false; }
+         
+        }
+
+     
         private void RaiseSendMessage(int channelId, object value)
         {
             if (SendControlMessage != null)
@@ -166,7 +256,7 @@ namespace TP.WPF.FinishCleaning
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged(string propertyName)
-        {
+        { 
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
             {
@@ -174,5 +264,7 @@ namespace TP.WPF.FinishCleaning
                 handler(this, args);
             }
         }
+
+
     }
 }
