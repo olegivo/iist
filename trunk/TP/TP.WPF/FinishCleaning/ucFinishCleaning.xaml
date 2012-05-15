@@ -69,7 +69,7 @@
             <CheckBox
                 Canvas.Left="740"
                 Canvas.Top="450"
-                Name="CheckBox2">
+                Name="CheckBox2" IsChecked="{Binding IsAutomaticControl}">
                 Автоматический режим управления
             </CheckBox>
             <CheckBox
