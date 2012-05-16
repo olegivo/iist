@@ -60,9 +60,18 @@ namespace TP.WPF.FinishCleaning
                 {
                     _concentration_CO = value;
                     OnPropertyChanged("GasConcentration_CO");
+                    OnPropertyChanged("Massa_CO");
                 }
             }
         }
+
+    public float Massa_CO
+        {
+            get { return (float)(GasConcentration_CO * Math.PI * 0.36 * 4.96 / 10000); }
+            
+        }
+
+        
 
         private float _concentration_O2;
 
@@ -90,10 +99,16 @@ namespace TP.WPF.FinishCleaning
                 {
                     _concentration_SO2 = value;
                     OnPropertyChanged("GasConcentration_SO2");
+                    OnPropertyChanged("Massa_SO2");
                 }
             }
         }
 
+        public float Massa_SO2
+        {
+            get { return (float)(GasConcentration_SO2 * Math.PI * 0.36 * 4.96 / 10000); }
+
+        }
         private float _concentration_NO2;
 
         public float GasConcentration_NO2
@@ -105,8 +120,15 @@ namespace TP.WPF.FinishCleaning
                 {
                     _concentration_NO2 = value;
                     OnPropertyChanged("GasConcentration_NO2");
+                    OnPropertyChanged("Massa_NO2");
                 }
             }
+        }
+
+        public float Massa_NO2
+        {
+            get { return (float)(GasConcentration_NO2 * Math.PI * 0.36 * 4.96 / 10000); }
+
         }
 
         private float _concentration_NO;
@@ -120,9 +142,17 @@ namespace TP.WPF.FinishCleaning
                 {
                     _concentration_NO = value;
                     OnPropertyChanged("GasConcentration_NO");
+                    OnPropertyChanged("Massa_NO");
                 }
             }
         }
+
+        public float Massa_NO
+        {
+            get { return (float)(GasConcentration_NO * Math.PI * 0.36 * 4.96 / 10000); }
+
+        }
+
         private bool burnerStatus;
 
         /// <summary>
@@ -198,7 +228,7 @@ namespace TP.WPF.FinishCleaning
         {
             int oborot = 0;
             int gorelka = 0;
-            int delta_v = 10;
+            double delta_v = 10;
 
             if (GasConcentration_CO > 3000)
             {oborot = oborot + 1;}
@@ -228,16 +258,16 @@ namespace TP.WPF.FinishCleaning
             { gorelka = gorelka + 1; }
 
             if (oborot > 0)
-            {v = v + delta_v;}
+            {V = V + delta_v;}
 
             if (oborot < 0)
-            { v = v - delta_v; }
+            { V = V - delta_v; }
 
             if (gorelka > 0)
-            {burnerStatus = true;}
-
+            {BurnerStatus = true;}
+            
             if (gorelka < 0)
-            { burnerStatus = false; }
+            {BurnerStatus = false;}
          
         }
 
