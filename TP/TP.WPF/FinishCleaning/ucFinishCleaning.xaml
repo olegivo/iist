@@ -191,6 +191,62 @@
                 Text="{Binding Temperature_TC7}"
                 Width="66">
             </TextBox>
+            <TextBox                
+                Canvas.Top="600"
+                Canvas.Left="580"                              
+                Text="{Binding Massa_CO, Mode=OneWay}"
+                Width="66">
+            </TextBox>
+            <Label 
+                Height="26" 
+                Canvas.Left="570"
+                Canvas.Top="570"                
+                Name="label9"                 
+                Width="120">
+                Масса выброса CO
+            </Label>
+            <TextBox                
+                Canvas.Top="600"
+                Canvas.Left="710"                              
+                Text="{Binding Massa_SO2, Mode=OneWay}"
+                Width="66">
+            </TextBox>
+            <Label 
+                Height="26" 
+                Canvas.Left="700"
+                Canvas.Top="570"                
+                Name="label10"                 
+                Width="125">
+                Масса выброса SO2
+            </Label>
+            <TextBox                
+                Canvas.Top="600"
+                Canvas.Left="830"                              
+                Text="{Binding Massa_NO, Mode=OneWay}"
+                Width="66">
+            </TextBox>
+            <Label 
+                Height="26" 
+                Canvas.Left="820"
+                Canvas.Top="570"                
+                Name="label11"                 
+                Width="120">
+                Масса выброса NO
+            </Label>
+            <TextBox                
+                Canvas.Top="600"
+                Canvas.Left="950"                              
+                Text="{Binding Massa_NO2, Mode=OneWay}"
+                Width="66">
+            </TextBox>
+            <Label 
+                Height="26" 
+                Canvas.Left="940"
+                Canvas.Top="570"                
+                Name="label12"                 
+                Width="125">
+                Масса выброса NO2
+            </Label>
         </Canvas>
 	</Viewbox>
 </UserControl>
