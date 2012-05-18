@@ -36,6 +36,7 @@ namespace Oleg_ivo.Plc.FieldBus
 
         public override ushort[] ReadHoldingRegisters(byte slaveAddress, ushort address, ushort numberOfPoints)
         {
+            
             return _modbusMaster.ReadHoldingRegisters(slaveAddress, address, numberOfPoints);
         }
 

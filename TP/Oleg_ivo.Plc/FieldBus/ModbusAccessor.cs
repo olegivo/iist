@@ -404,7 +404,6 @@ namespace Oleg_ivo.Plc.FieldBus
             try
             {
                 return ReadHoldingRegisters(fieldBusNodeAccessor, address, 1)[0];
-
             }
             catch (Exception ex)
             {
@@ -427,17 +426,18 @@ namespace Oleg_ivo.Plc.FieldBus
         /// <returns></returns>
         public ushort[] ReadHoldingRegisters(IFieldBusNodeAccessor fieldBusNodeAccessor, ushort address, ushort numberOfPoints)
         {
-            Debug.WriteLine(
-                string.Format(
-                    "Попытка чтения регистра. Порт - {0}, адрес ПЛК - {1}, адрес регистра - {2}",
-                    PortName,
-                    fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
-                    address));
-
             try
             {
-                return ModbusAdapter.ReadHoldingRegisters(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, numberOfPoints);
+                var modbusAdapter = ModbusAdapter;
 
+                Debug.WriteLine(
+                    string.Format(
+                        "Попытка чтения регистра. Порт - {0}, адрес ПЛК - {1}, адрес регистра - {2}",
+                        PortName,
+                        fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
+                        address));
+
+                return modbusAdapter.ReadHoldingRegisters(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, numberOfPoints);
             }
             catch (Exception ex)
             {
@@ -477,7 +477,14 @@ namespace Oleg_ivo.Plc.FieldBus
         {
             try
             {
-                return ModbusAdapter.ReadInputRegisters(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, numberOfPoints);
+                var modbusAdapter = ModbusAdapter;
+                Debug.WriteLine(
+                    string.Format(
+                        "Попытка чтения регистров (Input Registers). Порт - {0}, адрес ПЛК - {1}, адрес регистра - {2}",
+                        PortName,
+                        fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
+                        address));
+                return modbusAdapter.ReadInputRegisters(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, numberOfPoints);
 
             }
             catch (Exception ex)
@@ -499,7 +506,9 @@ namespace Oleg_ivo.Plc.FieldBus
         {
             try
             {
-                return ModbusAdapter.ReadCoils(fieldBusNodeAddress.FieldBusNodeAddress.SlaveAddress, address, numberOfPoints);
+                var modbusAdapter = ModbusAdapter;
+                Console.WriteLine("Чтение {0} ячеек по адресу {1}", numberOfPoints, address);
+                return modbusAdapter.ReadCoils(fieldBusNodeAddress.FieldBusNodeAddress.SlaveAddress, address, numberOfPoints);
             }
             catch (Exception ex)
             {
@@ -517,15 +526,16 @@ namespace Oleg_ivo.Plc.FieldBus
         /// <returns></returns>
         public bool WriteSingleRegister(IFieldBusNodeAccessor fieldBusNodeAccessor, ushort address, ushort value)
         {
-            Debug.WriteLine(
-                string.Format(
-                    "Попытка записи регистра. Порт - {0}, адрес ПЛК - {1}, адрес регистра - {2}",
-                    PortName,
-                    fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
-                    address));
             try
             {
-                ModbusAdapter.WriteSingleRegister(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, value);
+                var modbusAdapter = ModbusAdapter;
+                Debug.WriteLine(
+                    string.Format(
+                        "Попытка записи регистра. Порт - {0}, адрес ПЛК - {1}, адрес регистра - {2}",
+                        PortName,
+                        fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
+                        address));
+                modbusAdapter.WriteSingleRegister(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, value);
                 return true;
             }
             catch (Exception ex)
@@ -543,15 +553,16 @@ namespace Oleg_ivo.Plc.FieldBus
         /// <returns></returns>
         public bool WriteSingleCoil(IFieldBusNodeAccessor fieldBusNodeAccessor, ushort address, bool value)
         {
-            Debug.WriteLine(
-                string.Format(
-                    "Попытка записи ячейки. Порт - {0}, адрес ПЛК - {1}, адрес ячейки - {2}",
-                    PortName,
-                    fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
-                    address));
             try
             {
-                ModbusAdapter.WriteSingleCoil(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, value);
+                var modbusAdapter = ModbusAdapter;
+                Debug.WriteLine(
+                    string.Format(
+                        "Попытка записи ячейки. Порт - {0}, адрес ПЛК - {1}, адрес ячейки - {2}",
+                        PortName,
+                        fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
+                        address));
+                modbusAdapter.WriteSingleCoil(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, value);
                 return true;
             }
             catch (Exception ex)
@@ -665,16 +676,17 @@ namespace Oleg_ivo.Plc.FieldBus
         /// <returns></returns>
         public bool WriteMultipleRegisters(IFieldBusNodeAccessor fieldBusNodeAccessor, ushort address, ushort[] values)
         {
-            Debug.WriteLine(
-                string.Format(
-                    "Попытка записи регистров ({3}). Порт - {0}, адрес ПЛК - {1}, адрес регистров - {2}",
-                    PortName,
-                    fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
-                    address,
-                    values.Length));
             try
             {
-                ModbusAdapter.WriteMultipleRegisters(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, values);
+                var modbusAdapter = ModbusAdapter;
+                Debug.WriteLine(
+                    string.Format(
+                        "Попытка записи регистров ({3}). Порт - {0}, адрес ПЛК - {1}, адрес регистров - {2}",
+                        PortName,
+                        fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
+                        address,
+                        values.Length));
+                modbusAdapter.WriteMultipleRegisters(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, values);
                 return true;
             }
             catch (Exception ex)
@@ -692,16 +704,17 @@ namespace Oleg_ivo.Plc.FieldBus
         /// <returns></returns>
         public bool WriteMultipleCoils(IFieldBusNodeAccessor fieldBusNodeAccessor, ushort address, bool[] values)
         {
-            Debug.WriteLine(
-                string.Format(
-                    "Попытка записи ячеек ({3}). Порт - {0}, адрес ПЛК - {1}, адрес ячеек - {2}",
-                    PortName,
-                    fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
-                    address,
-                    values.Length));
             try
             {
-                ModbusAdapter.WriteMultipleCoils(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, values);
+                var modbusAdapter = ModbusAdapter;
+                Debug.WriteLine(
+                    string.Format(
+                        "Попытка записи ячеек ({3}). Порт - {0}, адрес ПЛК - {1}, адрес ячеек - {2}",
+                        PortName,
+                        fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress,
+                        address,
+                        values.Length));
+                modbusAdapter.WriteMultipleCoils(fieldBusNodeAccessor.FieldBusNodeAddress.SlaveAddress, address, values);
                 return true;
             }
             catch (Exception ex)
