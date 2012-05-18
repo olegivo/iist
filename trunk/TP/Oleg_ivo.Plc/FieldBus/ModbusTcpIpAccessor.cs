@@ -83,22 +83,68 @@ namespace Oleg_ivo.Plc.FieldBus
 #if EMULATIONMODE
             Console.WriteLine("Инициализация управления по Modbus/TCP в режиме эмуляции не требуется");
 #else
+            CheckClient();
             if (_modbusAdapter == null)
             {
-                Debug.WriteLine("Инициализация управления по Modbus...");
-                if (IPAddress != null)
+                CreateModbusMaster();
+            }
+#endif
+        }
+
+        private void CreateModbusMaster()
+        {
+            if (IPAddress != null)
 #if MBT
                     _modbusAdapter = new WagoTcpModbusAdapter(IPAddress.ToString(), (ushort)Port, true, 1000);
 #else
-                {
-                    ModbusIpMaster modbusIpMaster = GetModbusMaster();
-                    _modbusAdapter = new NModbusAdapter(modbusIpMaster);
-                }
-#endif
-                else
-                    Console.WriteLine("Не задан IPAddress");
+            {
+                Debug.WriteLine("Инициализация управления по Modbus...");
+                ModbusIpMaster modbusIpMaster = GetModbusMaster();
+                _modbusAdapter = new NModbusAdapter(modbusIpMaster);
             }
 #endif
+            else
+                Console.WriteLine("Не задан IPAddress");
+        }
+
+        /// <summary>
+        /// Проверить подключен ли клиент, если возможно - переподключить
+        /// </summary>
+        private void CheckClient()
+        {
+            Console.WriteLine("Проверка подключенности TCP-клиента");
+            var pollFailed = (Client.Client.Poll(10, SelectMode.SelectRead) && (Client.Available == 0));
+            if (!Client.Connected || pollFailed)
+            {
+                Console.WriteLine("TCP-клиент не подключен, попытка подключения");
+                //TcpClient t = Client;
+                //t.BeginConnect(IPAddress, Port, ConnectCallback, t);
+                try
+                {
+                    //Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, );
+                    Client.LingerState = new LingerOption(true, 3600);
+                    Client.Connect(IPAddress, Port);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Console.WriteLine("Невозможно выполнить операцию подключения к TCP-клиенту. Попытка пересоздать TCP-клиент", ex);
+                    //сброс полей для их повторной инициализации
+                    //_client.Client.Shutdown();
+                    _client.Client.Close();
+                    _client = null;
+                    _modbusAdapter = null;
+                    modbusMaster = null;
+                    CreateModbusMaster();
+                }
+                catch(Exception ex)
+                {
+                    throw;
+                }
+            }
+            else
+            {
+                Console.WriteLine("TCP-клиент подключен");
+            }
         }
 
         ModbusIpMaster modbusMaster = null;
@@ -109,21 +155,6 @@ namespace Oleg_ivo.Plc.FieldBus
             //_client = null;//todo: ModbusTcpIpAccessor.InitializeModbusMaster() - всё время переинициализация?
             if (Client != null)
             {
-                if (!Client.Connected)
-                {
-                    //TcpClient t = Client;
-                    //t.BeginConnect(IPAddress, Port, ConnectCallback, t);
-                    try
-                    {
-                        Client.Connect(IPAddress, Port);
-                        Client.LingerState = new LingerOption(true, 3600);
-                    }
-                    catch (InvalidOperationException ex)
-                    {
-                        throw new InvalidOperationException("Невозможно выполнить операцию подключения к TCP-клиенту", ex);
-                    }
-                }
-
                 if (modbusMaster == null)
                 {
                     Debug.WriteLine("Инициализация управления по Modbus...");
