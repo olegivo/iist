@@ -27,8 +27,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:local="clr-namespace:TP" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:FinishCleaning="clr-namespace:TP.WPF.FinishCleaning" mc:Ignorable="d"
-	    x:Class="TP.WPF.Window1"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:FinishCleaning="clr-namespace:TP.WPF.Views" mc:Ignorable="d"
+	    x:Class="TP.WPF.Views.MainWindow"
         x:Name="TechnologicalProcess" 
         Title="Технологический процесс термического уничтожения отходов" 
         Height="768" Width="1024" 
@@ -54,31 +55,31 @@
         			<TabItem Header="Общий вид" Style="{DynamicResource TabItemStyle1}">
         				<UniformGrid Rows="2" Columns="3">
         					<FinishCleaning:ucFinishCleaning Height="Auto" Width="Auto"/>
-        					<local:ucCycloneAndScrubber Height="Auto" Width="Auto"/>
-        					<local:ucHeatExchanger Width="Auto" Height="Auto"/>
-        					<local:ucDrumTypeFurnace Height="Auto" Width="Auto"/>
-        					<local:ucReheatChamber Height="Auto" Width="Auto"/>
+        					<FinishCleaning:ucCycloneAndScrubber Height="Auto" Width="Auto"/>
+        					<FinishCleaning:ucHeatExchanger Width="Auto" Height="Auto"/>
+        					<FinishCleaning:ucDrumTypeFurnace Height="Auto" Width="Auto"/>
+        					<FinishCleaning:ucReheatChamber Height="Auto" Width="Auto"/>
         			
         				</UniformGrid>
         			</TabItem>
         			<TabItem x:Name="tabItem" Header="Барабанная печь" Style="{DynamicResource TabItemStyle1}">
         				<Grid>
-        					<local:ucDrumTypeFurnace HorizontalAlignment="Left" Height="Auto" Width="Auto"/>
+        					<FinishCleaning:ucDrumTypeFurnace HorizontalAlignment="Left" Height="Auto" Width="Auto"/>
         				</Grid>
         			</TabItem>
         			<TabItem Header="Камера дожигания" Style="{DynamicResource TabItemStyle1}">
         				<Grid>
-        					<local:ucReheatChamber x:Name="ReheatChamber" HorizontalAlignment="Left" Height="Auto" Width="Auto"/>
+        					<FinishCleaning:ucReheatChamber x:Name="ReheatChamber" HorizontalAlignment="Left" Height="Auto" Width="Auto"/>
         				</Grid>
         			</TabItem>
         			<TabItem Header="Теплообменник" Style="{DynamicResource TabItemStyle1}">
         				<Grid>
-        					<local:ucHeatExchanger HorizontalAlignment="Left" Height="Auto" Width="Auto"/>
+        					<FinishCleaning:ucHeatExchanger HorizontalAlignment="Left" Height="Auto" Width="Auto"/>
         				</Grid>
         			</TabItem>
         			<TabItem Header="Циклон и скруббер" Style="{DynamicResource TabItemStyle1}">
         				<Grid>
-        					<local:ucCycloneAndScrubber HorizontalAlignment="Left" Height="Auto" Width="Auto"/>
+        					<FinishCleaning:ucCycloneAndScrubber HorizontalAlignment="Left" Height="Auto" Width="Auto"/>
         				</Grid>
         			</TabItem>
         			<TabItem Header="Финишная очистка" Style="{DynamicResource TabItemStyle1}">

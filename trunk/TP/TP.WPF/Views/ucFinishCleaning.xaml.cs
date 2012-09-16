@@ -1,9 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Timers;
-using System.Windows;
 
-namespace TP.WPF.FinishCleaning
+namespace TP.WPF.Views
 {
     /// <summary>
     /// Interaction logic for ucFinishCleaning.xaml
@@ -14,9 +13,8 @@ namespace TP.WPF.FinishCleaning
         public ucFinishCleaning()
         {
             this.InitializeComponent();
-            tmrAutoControlMode = new Timer();
-            tmrAutoControlMode.Interval = 5000;
-            tmrAutoControlMode.Elapsed += new ElapsedEventHandler(tmrAutoControlMode_Elapsed);
+            tmrAutoControlMode = new Timer {Interval = 5000};
+            tmrAutoControlMode.Elapsed += tmrAutoControlMode_Elapsed;
         }
 
         private float _temperature6;
