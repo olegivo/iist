@@ -118,47 +118,65 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="dtsChannelConfiguration1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>140, 17</value>
+    <value>17, 173</value>
   </metadata>
   <metadata name="dataManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+    <value>17, 134</value>
   </metadata>
   <metadata name="SDA.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>320, 17</value>
+    <value>17, 95</value>
+  </metadata>
+  <metadata name="sqlDeleteCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
   </metadata>
   <metadata name="sqlDeleteCommand1.DesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
-  <metadata name="sqlDeleteCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>False</value>
+  <metadata name="sqlDeleteCommand1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
   <data name="sqlDeleteCommand1.CommandText" xml:space="preserve">
     <value>DELETE FROM [FieldBusNode] WHERE (([Id] = @Original_Id) AND ((@IsNull_FieldBusTypeId = 1 AND [FieldBusTypeId] IS NULL) OR ([FieldBusTypeId] = @Original_FieldBusTypeId)) AND ((@IsNull_AddressPart1 = 1 AND [AddressPart1] IS NULL) OR ([AddressPart1] = @Original_AddressPart1)) AND ((@IsNull_AddressPart2 = 1 AND [AddressPart2] IS NULL) OR ([AddressPart2] = @Original_AddressPart2)))</value>
   </data>
   <metadata name="sqlConnection1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>454, 17</value>
+    <value>17, 56</value>
+  </metadata>
+  <metadata name="sqlInsertCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
   </metadata>
   <metadata name="sqlInsertCommand1.DesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
-  <metadata name="sqlInsertCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>False</value>
+  <metadata name="sqlInsertCommand1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
   <data name="sqlInsertCommand1.CommandText" xml:space="preserve">
     <value>INSERT INTO [FieldBusNode] ([FieldBusTypeId], [AddressPart1], [AddressPart2]) VALUES (@FieldBusTypeId, @AddressPart1, @AddressPart2);
 SELECT Id, FieldBusTypeId, AddressPart1, AddressPart2 FROM FieldBusNode WHERE (Id = SCOPE_IDENTITY())</value>
   </data>
+  <metadata name="sqlSelectCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
   <metadata name="sqlSelectCommand1.DesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
-  <metadata name="sqlSelectCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="sqlSelectCommand1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="sqlSelectCommand1.CommandText" xml:space="preserve">
+    <value>SELECT        Id, FieldBusTypeId, AddressPart1, AddressPart2
+FROM            FieldBusNode
+WHERE        (@FieldBusTypeId IS NOT NULL) AND (FieldBusTypeId = @FieldBusTypeId) AND (Enabled = 1) OR
+                         (@Id IS NOT NULL) AND (Id = @Id) AND (Enabled = 1)</value>
+  </data>
+  <metadata name="sqlUpdateCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
   <metadata name="sqlUpdateCommand1.DesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
-  <metadata name="sqlUpdateCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>False</value>
+  <metadata name="sqlUpdateCommand1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
   <data name="sqlUpdateCommand1.CommandText" xml:space="preserve">
     <value>UPDATE [FieldBusNode] SET [FieldBusTypeId] = @FieldBusTypeId, [AddressPart1] = @AddressPart1, [AddressPart2] = @AddressPart2 WHERE (([Id] = @Original_Id) AND ((@IsNull_FieldBusTypeId = 1 AND [FieldBusTypeId] IS NULL) OR ([FieldBusTypeId] = @Original_FieldBusTypeId)) AND ((@IsNull_AddressPart1 = 1 AND [AddressPart1] IS NULL) OR ([AddressPart1] = @Original_AddressPart1)) AND ((@IsNull_AddressPart2 = 1 AND [AddressPart2] IS NULL) OR ([AddressPart2] = @Original_AddressPart2)));
