@@ -4,17 +4,17 @@ using System.Windows.Controls;
 using System.Threading;
 using DMS.Common.Events;
 
-namespace TP.WPF
+namespace TP.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
 
-	public partial class Window1: Window
+	public partial class MainWindow: Window
 
     {
 		public ChannelController channelController1 = new ChannelController();
-        public Window1()
+        public MainWindow()
         {
             InitializeComponent(); 
             channelController1.AutoSubscribeChannels = true;

@@ -95,23 +95,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="CycloneAndScrubber\ucCycloneAndScrubber.xaml">
+    <Page Include="Views\ucCycloneAndScrubber.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="DrumTypeFurnace\ucDrumTypeFurnace.xaml">
+    <Page Include="Views\ucDrumTypeFurnace.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="FinishCleaning\ucFinishCleaning.xaml">
+    <Page Include="Views\ucFinishCleaning.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="HeatExchanger\ucHeatExchanger.xaml">
+    <Page Include="Views\ucHeatExchanger.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ReheatChamber\ucReheatChamber.xaml">
+    <Page Include="Views\ucReheatChamber.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -123,7 +123,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Window1.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -131,26 +131,26 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CycloneAndScrubber\ucCycloneAndScrubber.xaml.cs">
+    <Compile Include="Views\ucCycloneAndScrubber.xaml.cs">
       <DependentUpon>ucCycloneAndScrubber.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DrumTypeFurnace\ucDrumTypeFurnace.xaml.cs">
+    <Compile Include="Views\ucDrumTypeFurnace.xaml.cs">
       <DependentUpon>ucDrumTypeFurnace.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FinishCleaning\ucFinishCleaning.xaml.cs">
+    <Compile Include="Views\ucFinishCleaning.xaml.cs">
       <DependentUpon>ucFinishCleaning.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HeatExchanger\ucHeatExchanger.xaml.cs">
+    <Compile Include="Views\ucHeatExchanger.xaml.cs">
       <DependentUpon>ucHeatExchanger.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ReheatChamber\ucReheatChamber.xaml.cs">
+    <Compile Include="Views\ucReheatChamber.xaml.cs">
       <DependentUpon>ucReheatChamber.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\ucConnectionWindow.xaml.cs">
       <DependentUpon>ucConnectionWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="WindowStyles.xaml">
@@ -189,11 +189,11 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="factory_yellow_256.png" />
-    <Resource Include="Images\connect.png" />
-    <Resource Include="Images\cross.png" />
-    <Resource Include="Images\Database.png" />
-    <Resource Include="Images\disconnect.png" />
+    <Resource Include="Views\factory_yellow_256.png" />
+    <Resource Include="Views\Images\connect.png" />
+    <Resource Include="Views\Images\cross.png" />
+    <Resource Include="Views\Images\Database.png" />
+    <Resource Include="Views\Images\disconnect.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DMS.Common\DMS.Common.csproj">
