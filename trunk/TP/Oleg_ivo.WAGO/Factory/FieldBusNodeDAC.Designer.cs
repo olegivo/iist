@@ -32,12 +32,12 @@ namespace Oleg_ivo.WAGO.Factory
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FieldBusNodeDAC));
             this.dtsChannelConfiguration1 = new Oleg_ivo.WAGO.DtsChannelConfiguration();
             this.dataManager1 = new Oleg_ivo.Plc.DataManager(this.components);
-            this.sqlSelectCommand1 = new System.Data.SqlClient.SqlCommand();
-            this.sqlInsertCommand1 = new System.Data.SqlClient.SqlCommand();
-            this.sqlUpdateCommand1 = new System.Data.SqlClient.SqlCommand();
-            this.sqlDeleteCommand1 = new System.Data.SqlClient.SqlCommand();
             this.SDA = new System.Data.SqlClient.SqlDataAdapter();
+            this.sqlDeleteCommand1 = new System.Data.SqlClient.SqlCommand();
             this.sqlConnection1 = new System.Data.SqlClient.SqlConnection();
+            this.sqlInsertCommand1 = new System.Data.SqlClient.SqlCommand();
+            this.sqlSelectCommand1 = new System.Data.SqlClient.SqlCommand();
+            this.sqlUpdateCommand1 = new System.Data.SqlClient.SqlCommand();
             ((System.ComponentModel.ISupportInitialize)(this.dtsChannelConfiguration1)).BeginInit();
             // 
             // dtsChannelConfiguration1
@@ -50,14 +50,36 @@ namespace Oleg_ivo.WAGO.Factory
             this.dataManager1.DataAdapter = this.SDA;
             this.dataManager1.DataSet = this.dtsChannelConfiguration1;
             // 
-            // sqlSelectCommand1
+            // SDA
             // 
-            this.sqlSelectCommand1.CommandText = "SELECT     *\r\nFROM         FieldBusNode\r\nWHERE     (@FieldBusTypeId IS NOT NULL A" +
-                "ND FieldBusTypeId = @FieldBusTypeId) OR (@Id IS NOT NULL AND Id = @Id)";
-            this.sqlSelectCommand1.Connection = this.sqlConnection1;
-            this.sqlSelectCommand1.Parameters.AddRange(new System.Data.SqlClient.SqlParameter[] {
-            new System.Data.SqlClient.SqlParameter("@FieldBusTypeId", System.Data.SqlDbType.Int, 4, "FieldBusTypeId"),
-            new System.Data.SqlClient.SqlParameter("@Id", System.Data.SqlDbType.Int, 4, "Id")});
+            this.SDA.DeleteCommand = this.sqlDeleteCommand1;
+            this.SDA.InsertCommand = this.sqlInsertCommand1;
+            this.SDA.SelectCommand = this.sqlSelectCommand1;
+            this.SDA.TableMappings.AddRange(new System.Data.Common.DataTableMapping[] {
+            new System.Data.Common.DataTableMapping("Table", "FieldBusNode", new System.Data.Common.DataColumnMapping[] {
+                        new System.Data.Common.DataColumnMapping("Id", "Id"),
+                        new System.Data.Common.DataColumnMapping("FieldBusTypeId", "FieldBusTypeId"),
+                        new System.Data.Common.DataColumnMapping("AddressPart1", "AddressPart1"),
+                        new System.Data.Common.DataColumnMapping("AddressPart2", "AddressPart2")})});
+            this.SDA.UpdateCommand = this.sqlUpdateCommand1;
+            // 
+            // sqlDeleteCommand1
+            // 
+            this.sqlDeleteCommand1.CommandText = resources.GetString("sqlDeleteCommand1.CommandText");
+            this.sqlDeleteCommand1.Connection = this.sqlConnection1;
+            this.sqlDeleteCommand1.Parameters.AddRange(new System.Data.SqlClient.SqlParameter[] {
+            new System.Data.SqlClient.SqlParameter("@Original_Id", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "Id", System.Data.DataRowVersion.Original, null),
+            new System.Data.SqlClient.SqlParameter("@IsNull_FieldBusTypeId", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "FieldBusTypeId", System.Data.DataRowVersion.Original, true, null, "", "", ""),
+            new System.Data.SqlClient.SqlParameter("@Original_FieldBusTypeId", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "FieldBusTypeId", System.Data.DataRowVersion.Original, null),
+            new System.Data.SqlClient.SqlParameter("@IsNull_AddressPart1", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "AddressPart1", System.Data.DataRowVersion.Original, true, null, "", "", ""),
+            new System.Data.SqlClient.SqlParameter("@Original_AddressPart1", System.Data.SqlDbType.NVarChar, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "AddressPart1", System.Data.DataRowVersion.Original, null),
+            new System.Data.SqlClient.SqlParameter("@IsNull_AddressPart2", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "AddressPart2", System.Data.DataRowVersion.Original, true, null, "", "", ""),
+            new System.Data.SqlClient.SqlParameter("@Original_AddressPart2", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "AddressPart2", System.Data.DataRowVersion.Original, null)});
+            // 
+            // sqlConnection1
+            // 
+            this.sqlConnection1.ConnectionString = "Data Source=OLEG-A\\SQLEXPRESS2005;Initial Catalog=Plc;Integrated Security=True";
+            this.sqlConnection1.FireInfoMessageEventOnUserErrors = false;
             // 
             // sqlInsertCommand1
             // 
@@ -67,6 +89,14 @@ namespace Oleg_ivo.WAGO.Factory
             new System.Data.SqlClient.SqlParameter("@FieldBusTypeId", System.Data.SqlDbType.Int, 0, "FieldBusTypeId"),
             new System.Data.SqlClient.SqlParameter("@AddressPart1", System.Data.SqlDbType.NVarChar, 0, "AddressPart1"),
             new System.Data.SqlClient.SqlParameter("@AddressPart2", System.Data.SqlDbType.Int, 0, "AddressPart2")});
+            // 
+            // sqlSelectCommand1
+            // 
+            this.sqlSelectCommand1.CommandText = resources.GetString("sqlSelectCommand1.CommandText");
+            this.sqlSelectCommand1.Connection = this.sqlConnection1;
+            this.sqlSelectCommand1.Parameters.AddRange(new System.Data.SqlClient.SqlParameter[] {
+            new System.Data.SqlClient.SqlParameter("@FieldBusTypeId", System.Data.SqlDbType.Int, 4, "FieldBusTypeId"),
+            new System.Data.SqlClient.SqlParameter("@Id", System.Data.SqlDbType.Int, 4, "Id")});
             // 
             // sqlUpdateCommand1
             // 
@@ -84,37 +114,6 @@ namespace Oleg_ivo.WAGO.Factory
             new System.Data.SqlClient.SqlParameter("@IsNull_AddressPart2", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "AddressPart2", System.Data.DataRowVersion.Original, true, null, "", "", ""),
             new System.Data.SqlClient.SqlParameter("@Original_AddressPart2", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "AddressPart2", System.Data.DataRowVersion.Original, null),
             new System.Data.SqlClient.SqlParameter("@Id", System.Data.SqlDbType.Int, 4, "Id")});
-            // 
-            // sqlDeleteCommand1
-            // 
-            this.sqlDeleteCommand1.CommandText = resources.GetString("sqlDeleteCommand1.CommandText");
-            this.sqlDeleteCommand1.Connection = this.sqlConnection1;
-            this.sqlDeleteCommand1.Parameters.AddRange(new System.Data.SqlClient.SqlParameter[] {
-            new System.Data.SqlClient.SqlParameter("@Original_Id", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "Id", System.Data.DataRowVersion.Original, null),
-            new System.Data.SqlClient.SqlParameter("@IsNull_FieldBusTypeId", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "FieldBusTypeId", System.Data.DataRowVersion.Original, true, null, "", "", ""),
-            new System.Data.SqlClient.SqlParameter("@Original_FieldBusTypeId", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "FieldBusTypeId", System.Data.DataRowVersion.Original, null),
-            new System.Data.SqlClient.SqlParameter("@IsNull_AddressPart1", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "AddressPart1", System.Data.DataRowVersion.Original, true, null, "", "", ""),
-            new System.Data.SqlClient.SqlParameter("@Original_AddressPart1", System.Data.SqlDbType.NVarChar, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "AddressPart1", System.Data.DataRowVersion.Original, null),
-            new System.Data.SqlClient.SqlParameter("@IsNull_AddressPart2", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "AddressPart2", System.Data.DataRowVersion.Original, true, null, "", "", ""),
-            new System.Data.SqlClient.SqlParameter("@Original_AddressPart2", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "AddressPart2", System.Data.DataRowVersion.Original, null)});
-            // 
-            // SDA
-            // 
-            this.SDA.DeleteCommand = this.sqlDeleteCommand1;
-            this.SDA.InsertCommand = this.sqlInsertCommand1;
-            this.SDA.SelectCommand = this.sqlSelectCommand1;
-            this.SDA.TableMappings.AddRange(new System.Data.Common.DataTableMapping[] {
-            new System.Data.Common.DataTableMapping("Table", "FieldBusNode", new System.Data.Common.DataColumnMapping[] {
-                        new System.Data.Common.DataColumnMapping("Id", "Id"),
-                        new System.Data.Common.DataColumnMapping("FieldBusTypeId", "FieldBusTypeId"),
-                        new System.Data.Common.DataColumnMapping("AddressPart1", "AddressPart1"),
-                        new System.Data.Common.DataColumnMapping("AddressPart2", "AddressPart2")})});
-            this.SDA.UpdateCommand = this.sqlUpdateCommand1;
-            // 
-            // sqlConnection1
-            // 
-            this.sqlConnection1.ConnectionString = "Data Source=AM2\\SQLEXPRESS;Initial Catalog=Plc;Integrated Security=True";
-            this.sqlConnection1.FireInfoMessageEventOnUserErrors = false;
             ((System.ComponentModel.ISupportInitialize)(this.dtsChannelConfiguration1)).EndInit();
 
         }
