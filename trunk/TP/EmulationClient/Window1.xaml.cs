@@ -25,7 +25,8 @@ namespace EmulationClient
 
         private void controlManagementUnitEmulation_NeedProtocol(object sender, EventArgs e)
         {
-            textBox1.Text += string.Format("{0}\t{1}{2}", DateTime.Now, sender, Environment.NewLine);
+            textBox1.AppendText(string.Format("{0}\t{1}{2}", DateTime.Now, sender, Environment.NewLine));
+            textBox1.ScrollToEnd();
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
