@@ -192,6 +192,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SendControlMessageEventArgs.cs" />
+    <Compile Include="ViewModels\AllHeatExchangerViewModel.cs" />
+    <Compile Include="ViewModels\CycloneAndScrubberViewModel.cs" />
+    <Compile Include="ViewModels\DrumTypeFurnaceViewModel.cs" />
     <Compile Include="ViewModels\FinishCleaningViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ReheatChamberViewModel.cs" />
