@@ -123,6 +123,13 @@
 			<TextBlock x:Name="textBlock_Copy8" Canvas.Left="913.14" TextWrapping="Wrap" Canvas.Top="64" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="в атмосферу"/>
 			<TextBlock x:Name="textBlock_Copy9" TextWrapping="Wrap" Canvas.Top="119.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="к ТО" Canvas.Left="42.695"/>
 			<TextBlock x:Name="textBlock_Copy10" Canvas.Left="120" TextWrapping="Wrap" Canvas.Top="119.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="21.333" Text="{Binding Temperature, ElementName=UserControl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-		</Canvas>
+            <!--Добавление Биндинговых ТекстБоксов-->
+            <TextBox Canvas.Top="25" Canvas.Right="15"  Text="{Binding Level_DU1}" Width="50"></TextBox>
+            <Label Name="label1" Canvas.Right="100" Canvas.Top="25" Height="25" Width="100">Уровень ДУ-1:</Label>
+            <TextBox Canvas.Top="50" Canvas.Right="15"  Text="{Binding Level_DU4}" Width="50"></TextBox>
+            <Label Name="label2" Canvas.Right="100" Canvas.Top="50" Height="25" Width="100">Уровень ДУ-4:</Label>
+            <TextBox Canvas.Top="75" Canvas.Right="15"  Text="{Binding Level_DU11}" Width="50"></TextBox>
+            <Label Name="label3" Canvas.Right="100" Canvas.Top="75" Height="25" Width="100">Уровень ДУ-11:</Label>
+        </Canvas>
 	</Viewbox>
 </UserControl>

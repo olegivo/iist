@@ -7,7 +7,6 @@
 	x:Class="TP.WPF.Views.ucFinishCleaning"
 	x:Name="UserControl"
 	d:DesignWidth="640" d:DesignHeight="480" Width="1024" Height="768">
-
     <Viewbox>
 		<Canvas x:Name="LayoutRoot" Height="768" Width="1024">
 			<Control Canvas.Left="112" Style="{DynamicResource ShapePipe}" Canvas.Top="96"/>

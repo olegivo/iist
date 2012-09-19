@@ -77,22 +77,22 @@
                 </TabItem>
                 <TabItem x:Name="tabItem" Header="Барабанная печь" Style="{DynamicResource TabItemStyle1}">
                     <Grid>
-                        <Views:ucDrumTypeFurnace HorizontalAlignment="Left" Height="Auto" Width="Auto"/>
+                        <Views:ucDrumTypeFurnace HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding DrumTypeFurnace}"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Камера дожигания" Style="{DynamicResource TabItemStyle1}">
                     <Grid>
-                        <Views:ucReheatChamber x:Name="ReheatChamber" HorizontalAlignment="Left" Height="Auto" Width="Auto"/>
+                        <Views:ucReheatChamber x:Name="ReheatChamber" HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding ReheatChamber}"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Теплообменник" Style="{DynamicResource TabItemStyle1}">
                     <Grid>
-                        <Views:ucHeatExchanger HorizontalAlignment="Left" Height="Auto" Width="Auto"/>
+                        <Views:ucHeatExchanger HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding HeatExchanger}"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Циклон и скруббер" Style="{DynamicResource TabItemStyle1}">
                     <Grid>
-                        <Views:ucCycloneAndScrubber HorizontalAlignment="Left" Height="Auto" Width="Auto"/>
+                        <Views:ucCycloneAndScrubber HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding CycloneAndScrubber}"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Финишная очистка" Style="{DynamicResource TabItemStyle1}">

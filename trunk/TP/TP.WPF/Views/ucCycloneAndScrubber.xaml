@@ -213,6 +213,13 @@
 			<TextBlock x:Name="textBlock6" Canvas.Left="407" TextWrapping="Wrap" Canvas.Top="581.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ФС1"/>
 			<TextBlock x:Name="textBlock7" Canvas.Left="519.07" TextWrapping="Wrap" Canvas.Top="598.056" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="Б1"/>
 			<TextBlock x:Name="textBlock8" Canvas.Left="976.565" TextWrapping="Wrap" Canvas.Top="600" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="Б2"/>
-		</Canvas>
+            <!--Добавление Биндинговых ТекстБоксов-->
+            <TextBox Canvas.Top="25" Canvas.Right="15"  Text="{Binding PhLevel_CF1}" Width="50"></TextBox>
+            <Label Name="label1" Canvas.Right="100" Canvas.Top="25" Height="25" Width="100">рН1	уровень в СФ1:</Label>
+            <TextBox Canvas.Top="50" Canvas.Right="15"  Text="{Binding PhLevel_CF2}" Width="50"></TextBox>
+            <Label Name="label2" Canvas.Right="100" Canvas.Top="50" Height="25" Width="100">рН2	уровень в СФ2:</Label>
+            <TextBox Canvas.Top="75" Canvas.Right="15"  Text="{Binding Level_DU10}" Width="50"></TextBox>
+            <Label Name="label3" Canvas.Right="100" Canvas.Top="75" Height="25" Width="100">ДУ-10 уровень в СБ:</Label>
+        </Canvas>
 	</Viewbox>
 </UserControl>

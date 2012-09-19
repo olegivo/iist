@@ -202,6 +202,20 @@
 			<TextBlock x:Name="textBlock4_Copy9" Canvas.Left="488" TextWrapping="Wrap" Canvas.Top="497.39" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ВК"/>
 			<TextBlock x:Name="textBlock4_Copy10" Canvas.Left="568.146" TextWrapping="Wrap" Canvas.Top="397.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ПВ"/>
 			<TextBlock x:Name="textBlock4_Copy11" Canvas.Left="904" TextWrapping="Wrap" Canvas.Top="384" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ЗУ"/>
-		</Canvas>
+            <!--Добавление Биндинговых ТекстБоксов-->
+            <TextBox Canvas.Top="25" Canvas.Right="15"  Text="{Binding Temperature_TC1}" Width="50"></TextBox>
+            <Label Name="label1" Canvas.Right="100" Canvas.Top="25" Height="25" Width="100">Температура ТП1:</Label>
+            <TextBox Canvas.Top="50" Canvas.Right="15"  Text="{Binding Temperature_TC2}" Width="50"></TextBox>
+            <Label Name="label2" Canvas.Right="100" Canvas.Top="50" Height="25" Width="100">Температура ТП1:</Label>
+            <TextBox Canvas.Top="75" Canvas.Right="15"  Text="{Binding Speed_S}" Width="50"></TextBox>
+            <Label Name="label3" Canvas.Right="100" Canvas.Top="75" Height="25" Width="100">Скорость S:</Label>
+            <TextBox Canvas.Top="100" Canvas.Right="15"  Text="{Binding Temperature_TC8}" Width="50"></TextBox>
+            <Label Name="label4" Canvas.Right="100" Canvas.Top="100" Height="25" Width="100">Температура ТС8:</Label>
+            <TextBox Canvas.Top="125" Canvas.Right="15"  Text="{Binding Level_DU9}" Width="50"></TextBox>
+            <Label Name="label5" Canvas.Right="100" Canvas.Top="125" Height="25" Width="100">Уровень ДУ-9:</Label>
+
+
+
+        </Canvas>
 	</Viewbox>
 </UserControl>
