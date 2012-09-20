@@ -1,62 +1,128 @@
 ﻿using System;
-using System.Timers;
 using JulMar.Windows.Mvvm;
+using TP.WPF.ViewModels.AutoControl;
 
 namespace TP.WPF.ViewModels
 {
     public class FinishCleaningViewModel : ViewModel
     {
-        private readonly Timer tmrAutoControlMode;
+        private readonly AutoControl<FinishCleaningViewModel>  autoControl;
+
         public FinishCleaningViewModel()
         {
-            tmrAutoControlMode = new Timer { Interval = 5000 };
-            tmrAutoControlMode.Elapsed += tmrAutoControlMode_Elapsed;
+            autoControl = new FinishCleaningAutoControl(this);
         }
 
-        private float _temperature6;
+        private float temperature6;
+        private float temperature7;
+        private float concentration_CO;
+        private float concentration_O2;
+        private float concentration_SO2;
+        private float concentration_NO2;
+        private float concentration_NO;
+        private bool burnerStatus;
+        private double v;
 
         public float Temperature_TC6
         {
-            get { return _temperature6; }
+            get { return temperature6; }
             set
             {
-                if (_temperature6 != value)
+                if (temperature6 != value)
                 {
-                    _temperature6 = value;
+                    temperature6 = value;
                     OnPropertyChanged("Temperature_TC6");
                 }
             }
         }
 
-        private float _temperature7;
-
         public float Temperature_TC7
         {
-            get { return _temperature7; }
+            get { return temperature7; }
             set
             {
-                if (_temperature7 != value)
+                if (temperature7 != value)
                 {
-                    _temperature7 = value;
+                    temperature7 = value;
                     OnPropertyChanged("Temperature_TC7");
                 }
             }
         }
 
-        private float _concentration_CO;
-
         public float GasConcentration_CO
         {
-            get { return _concentration_CO; }
+            get { return concentration_CO; }
             set
             {
-                if (_concentration_CO != value)
+                if (concentration_CO != value)
                 {
-                    _concentration_CO = value;
+                    concentration_CO = value;
                     OnPropertyChanged("GasConcentration_CO");
                     OnPropertyChanged("Massa_CO");
                 }
             }
+        }
+
+        public float GasConcentration_O2
+        {
+            get { return concentration_O2; }
+            set
+            {
+                if (concentration_O2 != value)
+                {
+                    concentration_O2 = value;
+                    OnPropertyChanged("GasConcentration_O2");
+                }
+            }
+        }
+
+        public float GasConcentration_SO2
+        {
+            get { return concentration_SO2; }
+            set
+            {
+                if (concentration_SO2 != value)
+                {
+                    concentration_SO2 = value;
+                    OnPropertyChanged("GasConcentration_SO2");
+                    OnPropertyChanged("Massa_SO2");
+                }
+            }
+        }
+
+        public float GasConcentration_NO2
+        {
+            get { return concentration_NO2; }
+            set
+            {
+                if (concentration_NO2 != value)
+                {
+                    concentration_NO2 = value;
+                    OnPropertyChanged("GasConcentration_NO2");
+                    OnPropertyChanged("Massa_NO2");
+                }
+            }
+        }
+
+        public float GasConcentration_NO
+        {
+            get { return concentration_NO; }
+            set
+            {
+                if (concentration_NO != value)
+                {
+                    concentration_NO = value;
+                    OnPropertyChanged("GasConcentration_NO");
+                    OnPropertyChanged("Massa_NO");
+                }
+            }
+        }
+
+#region Расчётные значения массы веществ
+        public float Massa_SO2
+        {
+            get { return (float)(GasConcentration_SO2 * Math.PI * 0.36 * 4.96 / 10000); }
+
         }
 
         public float Massa_CO
@@ -65,80 +131,10 @@ namespace TP.WPF.ViewModels
 
         }
 
-
-
-        private float _concentration_O2;
-
-        public float GasConcentration_O2
-        {
-            get { return _concentration_O2; }
-            set
-            {
-                if (_concentration_O2 != value)
-                {
-                    _concentration_O2 = value;
-                    OnPropertyChanged("GasConcentration_O2");
-                }
-            }
-        }
-
-        private float _concentration_SO2;
-
-        public float GasConcentration_SO2
-        {
-            get { return _concentration_SO2; }
-            set
-            {
-                if (_concentration_SO2 != value)
-                {
-                    _concentration_SO2 = value;
-                    OnPropertyChanged("GasConcentration_SO2");
-                    OnPropertyChanged("Massa_SO2");
-                }
-            }
-        }
-
-        public float Massa_SO2
-        {
-            get { return (float)(GasConcentration_SO2 * Math.PI * 0.36 * 4.96 / 10000); }
-
-        }
-        private float _concentration_NO2;
-
-        public float GasConcentration_NO2
-        {
-            get { return _concentration_NO2; }
-            set
-            {
-                if (_concentration_NO2 != value)
-                {
-                    _concentration_NO2 = value;
-                    OnPropertyChanged("GasConcentration_NO2");
-                    OnPropertyChanged("Massa_NO2");
-                }
-            }
-        }
-
         public float Massa_NO2
         {
             get { return (float)(GasConcentration_NO2 * Math.PI * 0.36 * 4.96 / 10000); }
 
-        }
-
-        private float _concentration_NO;
-
-        public float GasConcentration_NO
-        {
-            get { return _concentration_NO; }
-            set
-            {
-                if (_concentration_NO != value)
-                {
-                    _concentration_NO = value;
-                    OnPropertyChanged("GasConcentration_NO");
-                    OnPropertyChanged("Massa_NO");
-                }
-            }
         }
 
         public float Massa_NO
@@ -146,11 +142,10 @@ namespace TP.WPF.ViewModels
             get { return (float)(GasConcentration_NO * Math.PI * 0.36 * 4.96 / 10000); }
 
         }
-
-        private bool burnerStatus;
+#endregion
 
         /// <summary>
-        /// Включеное состояние
+        /// Состояние горелки
         /// </summary>
         public bool BurnerStatus
         {
@@ -166,42 +161,9 @@ namespace TP.WPF.ViewModels
             }
         }
 
-        private bool isAutomaticControl;
-        public bool IsAutomaticControl
-        {
-            get { return isAutomaticControl; }
-            set
-            {
-                if (isAutomaticControl != value)
-                {
-                    isAutomaticControl = value;
-                    ApplyAutoControlMode();
-                    OnPropertyChanged("IsAutomaticControl");
-                }
-            }
-        }
-
-        private void ApplyAutoControlMode()
-        {
-            if (IsAutomaticControl)
-            {
-
-                tmrAutoControlMode.Start();
-
-            }
-            else
-            {
-                tmrAutoControlMode.Stop();
-            }
-
-        }
-
-        private void tmrAutoControlMode_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            DoAutoControl();
-        }
-
-        private double v;
+        /// <summary>
+        /// Количество оборотов дымососа в минуту
+        /// </summary>
         public double V
         {
             get { return v; }
@@ -216,55 +178,18 @@ namespace TP.WPF.ViewModels
             }
         }
 
-
-
-        public void DoAutoControl()
+        public bool IsAutomaticControl
         {
-            int oborot = 0;
-            int gorelka = 0;
-            const double deltaV = 10;
-
-            if (GasConcentration_CO > 3000)
-            { oborot = oborot + 1; }
-
-            if (GasConcentration_O2 < 5)
-            { oborot = oborot + 1; }
-
-            if (GasConcentration_O2 > 21)
-            { oborot = oborot - 1; }
-
-            if (GasConcentration_SO2 > 600)
-            { oborot = oborot + 1; }
-
-            if (GasConcentration_NO > 700)
-            { oborot = oborot + 1; }
-
-            if (GasConcentration_NO2 > 750)
-            { oborot = oborot + 1; }
-
-            if (Temperature_TC6 < 120)
-            { gorelka = gorelka + 1; }
-
-            if (Temperature_TC6 > 180)
-            { gorelka = gorelka - 1; }
-
-            if (Temperature_TC7 < 160)
-            { gorelka = gorelka + 1; }
-
-            if (oborot > 0)
-            { V = V + deltaV; }
-
-            if (oborot < 0)
-            { V = V - deltaV; }
-
-            if (gorelka > 0)
-            { BurnerStatus = true; }
-
-            if (gorelka < 0)
-            { BurnerStatus = false; }
-
+            get { return autoControl.IsAutomaticControl; }
+            set
+            {
+                if (autoControl.IsAutomaticControl != value)
+                {
+                    autoControl.IsAutomaticControl = value;
+                    OnPropertyChanged("IsAutomaticControl");
+                }
+            }
         }
-
 
         private void RaiseSendMessage(int channelId, object value)
         {
@@ -277,18 +202,5 @@ namespace TP.WPF.ViewModels
         /// </summary>
         public event EventHandler<SendControlMessageEventArgs> SendControlMessage;
 
-/*
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                PropertyChangedEventArgs args = new PropertyChangedEventArgs(propertyName);
-                handler(this, args);
-            }
-        }
-*/
     }
 }
