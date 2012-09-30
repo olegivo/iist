@@ -100,6 +100,11 @@
                         <Views:ucFinishCleaning HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding FinishCleaning}"/>
                     </Grid>
                 </TabItem>
+                <TabItem Header="Сводная таблица" Style="{DynamicResource TabItemStyle1}">
+                    <Grid>
+                        <Views:ucSummaryTable HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding SummaryTable}"/>
+                    </Grid>
+                </TabItem>
             </TabControl>
 
         </DockPanel>
