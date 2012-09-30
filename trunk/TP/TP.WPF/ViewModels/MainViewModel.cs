@@ -23,6 +23,7 @@ namespace TP.WPF.ViewModels
             CyclonAndScrubber = new CycloneAndScrubberViewModel();
             ReheatChamber = new ReheatChamberViewModel();
             AllHeatExchanger = new AllHeatExchangerViewModel();
+            SummaryTable = new SummaryTableViewModel();
 
             channelController1.AutoSubscribeChannels = true;
             //channelController1.CanRegisterChanged += new System.EventHandler(this.channelController1_CanRegisterChanged);
@@ -77,6 +78,7 @@ namespace TP.WPF.ViewModels
         public CycloneAndScrubberViewModel CyclonAndScrubber { get; private set; }
         public AllHeatExchangerViewModel AllHeatExchanger { get; private set; }
         public ReheatChamberViewModel ReheatChamber { get; private set; }
+        public SummaryTableViewModel SummaryTable { get; private set; }
 
 
         void channelController1_NeedProtocol(object sender, EventArgs e)
@@ -131,6 +133,7 @@ namespace TP.WPF.ViewModels
         {
             float value = Convert.ToSingle(e.Message.Value);
             int channelId = e.Message.LogicalChannelId;
+            SummaryTable.Add(channelId,value);
             switch (channelId)
             {
                 case 1:
