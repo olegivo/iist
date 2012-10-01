@@ -24,6 +24,7 @@ namespace TP.WPF.ViewModels
             ReheatChamber = new ReheatChamberViewModel();
             AllHeatExchanger = new AllHeatExchangerViewModel();
             SummaryTable = new SummaryTableViewModel();
+            SummaryTable.CreateDataTable();
 
             channelController1.AutoSubscribeChannels = true;
             //channelController1.CanRegisterChanged += new System.EventHandler(this.channelController1_CanRegisterChanged);
@@ -133,7 +134,7 @@ namespace TP.WPF.ViewModels
         {
             float value = Convert.ToSingle(e.Message.Value);
             int channelId = e.Message.LogicalChannelId;
-            SummaryTable.Add(channelId,value);
+            SummaryTable.UpdateSummarySet(channelId, value);
             switch (channelId)
             {
                 case 1:
