@@ -24,7 +24,7 @@ namespace TP.WPF.ViewModels
             ReheatChamber = new ReheatChamberViewModel();
             AllHeatExchanger = new AllHeatExchangerViewModel();
             SummaryTable = new SummaryTableViewModel();
-            SummaryTable.CreateDataTable();
+            SummaryTable.UpdateSummarySet(1, 1);
 
             channelController1.AutoSubscribeChannels = true;
             //channelController1.CanRegisterChanged += new System.EventHandler(this.channelController1_CanRegisterChanged);
