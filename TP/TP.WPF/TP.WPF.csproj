@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1302B0C4-6D10-4647-8A1D-D5F396024F10}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -199,6 +199,11 @@
     <Compile Include="ViewModels\AllHeatExchangerViewModel.cs" />
     <Compile Include="ViewModels\AutoControl\AutoControl.cs" />
     <Compile Include="ViewModels\CycloneAndScrubberViewModel.cs" />
+    <Compile Include="ViewModels\DataSetChannels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetChannels.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\DrumTypeFurnaceViewModel.cs" />
     <Compile Include="ViewModels\AutoControl\FinishCleaningAutoControl.cs" />
     <Compile Include="ViewModels\FinishCleaningViewModel.cs" />
@@ -217,6 +222,17 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ViewModels\DataSetChannels.xsc">
+      <DependentUpon>DataSetChannels.xsd</DependentUpon>
+    </None>
+    <None Include="ViewModels\DataSetChannels.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetChannels.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ViewModels\DataSetChannels.xss">
+      <DependentUpon>DataSetChannels.xsd</DependentUpon>
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>

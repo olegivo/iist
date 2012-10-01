@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using JulMar.Windows.Mvvm;
-using System.Linq;
-using System.Text;
+﻿using JulMar.Windows.Mvvm;
 
 namespace TP.WPF.ViewModels
 {
@@ -12,37 +7,36 @@ namespace TP.WPF.ViewModels
     {
 
         //private Dictionary<int, float> _summaryTable = new Dictionary<int, float>();
-        private DataSet _summarySet = new DataSet("SummaryTable");
-        private DataTable _summaryTable;
+        private readonly DataSetChannels summarySet = new DataSetChannels();
 
-        public DataSet SummarySet
+        public DataSetChannels SummarySet
         {
-            get { return _summarySet; }
-
+            get { return summarySet; }
         }
-    
-        public void UpdateSummarySet(int chanalNumber, float chanelValue)
+
+        public DataSetChannels.ChannelsDataTable SummaryTable
         {
-            //TODO: Не баянчик-ли?
-            if (!_summaryTable.Rows.Contains(chanalNumber))
-            {
-                _summaryTable.Rows.Add(chanalNumber, chanelValue); //всетаки баян
-            }
-            //else
-            //{
-                _summarySet.Tables["SummaryTable"].Rows[chanalNumber].ItemArray[1] = chanelValue;
-                OnPropertyChanged("SummaryTable");
-                //dataSet1.Tables[0].Rows[4].ItemArray[0] = "Updated Company Name";
-            //}
-
-
+            get { return SummarySet.Channels; }
         }
+        
+        public void UpdateSummarySet(int channelId, float chanelValue)
+        {
+            //TODO: добавить метод инициализации
+            var row = SummaryTable.FindById(channelId);
+            if (row == null)
+                row = SummaryTable.AddChannelsRow(channelId, "Канал №" + channelId, chanelValue, true, 0, 0, 0, 0);
+            else
+                row.CurrentValue = chanelValue;
+                
+            OnPropertyChanged("SummaryTable");
+        }
+/*
         public void CreateDataTable()
         {
             DataTable _summaryTable = new DataTable("SummaryTable");
             UniqueConstraint custUnique = new UniqueConstraint(new DataColumn[] { _summaryTable.Columns["ChanelId"] });
             
-            _summarySet.Tables["SummaryTable"].Constraints.Add(custUnique);
+            summarySet.Tables["SummaryTable"].Constraints.Add(custUnique);
             _summaryTable.Columns.Add("ChanelValue");
             _summaryTable.Columns.Add("ChanelName");
 
@@ -76,6 +70,7 @@ namespace TP.WPF.ViewModels
             _summaryTable.Rows.Add(23, 0, "Г-NO");
             _summaryTable.Rows.Add(24, 0, "Г-NO2");
         }
+*/
 
 
         //private void ucCommonParentChanged(object sender, EventArgs e)
