@@ -461,6 +461,14 @@ namespace TP.WPF.ViewModels {
                                 this.columnId}, true));
                 this.columnId.AllowDBNull = false;
                 this.columnId.Unique = true;
+                this.columnId.Caption = "№";
+                this.columnDescription.Caption = "Описание";
+                this.columnCurrentValue.Caption = "Текущее значение";
+                this.columnIsActive.Caption = "Активен";
+                this.columnMinValue.Caption = "Мин.";
+                this.columnMaxValue.Caption = "Макс.";
+                this.columnMinNormalValue.Caption = "Мин. норм.";
+                this.columnMaxNormalValue.Caption = "Макс. норм.";
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
