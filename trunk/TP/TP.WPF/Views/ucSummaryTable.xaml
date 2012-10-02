@@ -8,8 +8,6 @@
 	x:Name="UserControl"
 	d:DesignWidth="640" d:DesignHeight="480" Width="1024" Height="768">
     <Grid>
-        <dg:DataGrid ItemsSource="{Binding SummaryTable}" Width="200"/>
-        <!--<dg:DataGrid ItemsSource="{Binding SummarySet}" Width="200"/>
-        <TextBox Canvas.Top="100" Canvas.Right="100"  Text="{Binding Level_DU10}" Width="50"></TextBox>-->
+        <dg:DataGrid  Name="grid" ItemsSource="{Binding SummaryTable}" IsReadOnly="True" Width="Auto" />->
     </Grid>
 </UserControl>

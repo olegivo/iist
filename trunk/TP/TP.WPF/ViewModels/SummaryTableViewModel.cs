@@ -1,4 +1,5 @@
-﻿using JulMar.Windows.Mvvm;
+﻿using System;
+using JulMar.Windows.Mvvm;
 
 namespace TP.WPF.ViewModels
 {
@@ -6,7 +7,6 @@ namespace TP.WPF.ViewModels
     public class SummaryTableViewModel : ViewModel
     {
 
-        //private Dictionary<int, float> _summaryTable = new Dictionary<int, float>();
         private readonly DataSetChannels summarySet = new DataSetChannels();
 
         public DataSetChannels SummarySet
@@ -18,16 +18,29 @@ namespace TP.WPF.ViewModels
         {
             get { return SummarySet.Channels; }
         }
-        
-        public void UpdateSummarySet(int channelId, float chanelValue)
+
+        public void AddChannel(int channelId, string description, float defaultValue, bool isActive, float minValue, float maxValue, float minNormalValue, float maxNormalValue)
         {
-            //TODO: добавить метод инициализации
+            //TODO:if already exists?
+            SummaryTable.AddChannelsRow(channelId, description, defaultValue, isActive, minValue, maxValue, minNormalValue, maxNormalValue);
+        }
+
+        public void RemoveChannel()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetActive(int channelId, bool isActive)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ActualizeChannelValue(int channelId, float chanelValue)
+        {
             var row = SummaryTable.FindById(channelId);
-            if (row == null)
-                row = SummaryTable.AddChannelsRow(channelId, "Канал №" + channelId, chanelValue, true, 0, 0, 0, 0);
-            else
+            if (row != null)
                 row.CurrentValue = chanelValue;
-                
+
             OnPropertyChanged("SummaryTable");
         }
 /*
@@ -75,7 +88,7 @@ namespace TP.WPF.ViewModels
 
         //private void ucCommonParentChanged(object sender, EventArgs e)
         //{
-        //    UpdateSummarySet();
+        //    ActualizeChannelValue();
         //}
 
 
