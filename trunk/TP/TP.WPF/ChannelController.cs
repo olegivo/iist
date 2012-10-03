@@ -96,6 +96,22 @@ namespace TP.WPF
         /// Событие изменения возможности регистрирации на сервере
         /// </summary>
         public event EventHandler CanRegisterChanged;
+        /// <summary>
+        /// Событие регистрации канала
+        /// </summary>
+        public event EventHandler ChannelRegistered;
+        /// <summary>
+        /// Событие снятия с регистрации канала
+        /// </summary>
+        public event EventHandler ChannelUnRegistered;
+        /// <summary>
+        /// Событие подписки на канал
+        /// </summary>
+        public event EventHandler ChannelSubscribed;
+        /// <summary>
+        /// Событие снятия подписки на канал
+        /// </summary>
+        public event EventHandler ChannelUnSubscribed;
 
         void RegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
@@ -129,7 +145,8 @@ namespace TP.WPF
             {
                 registeredChannelsList.Add(message.LogicalChannelId);
                 Protocol(string.Format("Канал [{0}] теперь доступен для подписки", message.LogicalChannelId));
-                //TODO: бросать событие о регистрации канала, ловить его в MainViewModel                
+                EventHandler handler = ChannelRegistered;
+                if (handler != null) handler(this, EventArgs.Empty);
                 if (AutoSubscribeChannels)
                 {
                     SubscribeChannel(new ChannelSubscribeMessage(RegName, null, SubscribeMode.Subscribe,
@@ -232,7 +249,8 @@ namespace TP.WPF
 
         private void RemoveRegisteredChannel(ChannelRegistrationMessage message)
         {
-            //TODO: бросать событие об отмене регистрации канала, ловить его в MainViewModel                
+            EventHandler handler = ChannelUnRegistered;
+            if (handler != null) handler(this, EventArgs.Empty);    
             if (registeredChannelsList.Contains(message.LogicalChannelId))
             {
                 registeredChannelsList.Remove(message.LogicalChannelId);
@@ -275,13 +293,15 @@ namespace TP.WPF
         private void Provider_ChannelSubscribeCompleted(object sender, AsyncCompletedEventArgs e)
         {
             Protocol(string.Format("Произошла подписка на канал [{0}]", e.UserState));
-            //TODO: бросать событие о подписке на канал, ловить его в MainViewModel                
+            EventHandler handler = ChannelSubscribed;
+            if (handler != null) handler(this, EventArgs.Empty);   
         }
 
         private void Provider_ChannelUnSubscribeCompleted(object sender, AsyncCompletedEventArgs e)
         {
             Protocol(string.Format("Произошла отписка от канала [{0}]", e.UserState));
-            //TODO: бросать событие об отрписке от канала, ловить его в MainViewModel                
+            EventHandler handler = ChannelUnSubscribed;
+            if (handler != null) handler(this, EventArgs.Empty);    
         }
 
         /// <summary> 
