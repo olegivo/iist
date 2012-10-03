@@ -25,8 +25,10 @@ namespace TP.WPF.ViewModels
             AllHeatExchanger = new AllHeatExchangerViewModel();
             SummaryTable = new SummaryTableViewModel();
             //тестовый вызов, чтобы посмотреть, как добавляются данные:
-            SummaryTable.AddChannel(1, "Канал №1", 0, true, 0, 0, 0, 0);
-            SummaryTable.ActualizeChannelValue(1, 2);
+            //SummaryTable.AddChannel(1, "Канал №1", 0, true, 0, 0, 0, 0);
+            SummaryTable.SetChannelsNames();
+            //SummaryTable.ActualizeChannelValue(1, 2);
+            
 
             channelController1.AutoSubscribeChannels = true;
             //channelController1.CanRegisterChanged += new System.EventHandler(this.channelController1_CanRegisterChanged);
@@ -136,7 +138,21 @@ namespace TP.WPF.ViewModels
         {
             float value = Convert.ToSingle(e.Message.Value);
             int channelId = e.Message.LogicalChannelId;
-            SummaryTable.ActualizeChannelValue(channelId, value);
+            if (channelController1.RegisteredChannelsList.Contains(channelId))
+            {
+                SummaryTable.ActualizeChannelValue(channelId, value);
+            }
+            if (channelController1.SubscribedChannelsList.Contains(channelId))
+            {
+                SummaryTable.SetActive(channelId, true);
+            }
+            else
+            {
+                SummaryTable.SetActive(channelId, false);   
+            }
+
+
+
             switch (channelId)
             {
                 case 1:
