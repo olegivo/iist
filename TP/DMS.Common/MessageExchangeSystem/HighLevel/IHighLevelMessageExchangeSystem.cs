@@ -17,8 +17,8 @@ namespace DMS.Common.MessageExchangeSystem.HighLevel
         /// </summary>
         /// <param name="message">Сообщение с идентификацией запрашивающего</param>
         /// <returns></returns>
-        [OperationContract]
-        int[] GetRegisteredChannels(InternalMessage message);
+        [OperationContract()]
+        RegisteredLogicalChannel[] GetRegisteredChannels(InternalMessage message);
 
         /// <summary>
         /// Начало подписки на чтение контролируемого канала

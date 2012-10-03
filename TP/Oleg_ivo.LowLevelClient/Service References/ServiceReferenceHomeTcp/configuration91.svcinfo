@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="5rEy1tkmpLg2Jc4YJb2HOchTU4g=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="TcAqi9HPRMmr+TaTrgyeMBgZDog=">
   <bindingConfigurations>
-    <bindingConfiguration bindingType="netTcpBinding" name="LowLevelMessageExchangeSystem3">
+    <bindingConfiguration bindingType="netTcpBinding" name="LowLevelMessageExchangeSystem">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>LowLevelMessageExchangeSystem3</serializedValue>
+          <serializedValue>LowLevelMessageExchangeSystem</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>00:01:00</serializedValue>
@@ -118,7 +118,7 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="LowLevelMessageExchangeSystem2" contract="ServiceReferenceHomeTcp.ILowLevelMessageExchangeSystem" bindingType="netTcpBinding" address="net.tcp://localhost:9000/Oleg_ivo.MES/Low/low" bindingConfiguration="LowLevelMessageExchangeSystem3">
+    <endpoint name="LowLevelMessageExchangeSystem" contract="ServiceReferenceHomeTcp.ILowLevelMessageExchangeSystem" bindingType="netTcpBinding" address="net.tcp://localhost:9000/Oleg_ivo.MES/Low/low" bindingConfiguration="LowLevelMessageExchangeSystem">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>net.tcp://localhost:9000/Oleg_ivo.MES/Low/low</serializedValue>
@@ -130,7 +130,7 @@
           <serializedValue>netTcpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>LowLevelMessageExchangeSystem3</serializedValue>
+          <serializedValue>LowLevelMessageExchangeSystem</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>ServiceReferenceHomeTcp.ILowLevelMessageExchangeSystem</serializedValue>
@@ -193,7 +193,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>LowLevelMessageExchangeSystem2</serializedValue>
+          <serializedValue>LowLevelMessageExchangeSystem</serializedValue>
         </property>
       </properties>
     </endpoint>

@@ -85,6 +85,9 @@
     </Reference>
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.ServiceModel">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -93,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractLevelMessageExchangeSystem.cs" />
+    <Compile Include="High\LogicalChannelExtensions.cs" />
     <Compile Include="Logging\InternalMessageLogger.cs" />
     <Compile Include="ErrorReceivedEventArgs.cs" />
     <Compile Include="High\HighLevelClientEventArgs.cs" />
@@ -138,7 +142,7 @@
     <Compile Include="Registered\ChannelSubscribeMessageEventArgs.cs" />
     <Compile Include="Registered\InternalLogicalChannelDataMessageEventArgs.cs" />
     <Compile Include="Registered\RegisteredClient.cs" />
-    <Compile Include="Registered\RegisteredLogicalChannel.cs" />
+    <Compile Include="Registered\RegisteredLogicalChannelExtended.cs" />
     <Compile Include="Low\LowRegisteredLogicalChannelSubscribeEventArgs.cs" />
     <Compile Include="Registered\RegisteredLowLevelClient.cs" />
     <Compile Include="Registered\RegisteredHighLevelClient.cs" />
@@ -151,6 +155,10 @@
     <ProjectReference Include="..\External\Oleg_ivo.Tools\Oleg_ivo.Tools.csproj">
       <Project>{332A1894-922F-49A1-BD6A-E4E981FA2FEC}</Project>
       <Name>Oleg_ivo.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Oleg_ivo.Plc\Oleg_ivo.Plc.csproj">
+      <Project>{69B7862C-FA74-4ED5-A0F7-BF7216204016}</Project>
+      <Name>Oleg_ivo.Plc</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

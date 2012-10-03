@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.ServiceModel;
+using DMS.Common.MessageExchangeSystem;
 using DMS.Common.MessageExchangeSystem.HighLevel;
 using DMS.Common.Messages;
 using NLog;
@@ -19,6 +21,7 @@ namespace Oleg_ivo.MES.High
         ConcurrencyMode = ConcurrencyMode.Reentrant,
         AutomaticSessionShutdown = false,
         IncludeExceptionDetailInFaults = true)]
+    [KnownType(typeof(RegisteredLogicalChannel))]
     public class HighLevelMessageExchangeSystem : AbstractLevelMessageExchangeSystem<RegisteredHighLevelClient>, IHighLevelMessageExchangeSystem
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
@@ -90,7 +93,7 @@ namespace Oleg_ivo.MES.High
         /// </summary>
         /// <param name="message">—ообщение с идентификацией запрашивающего</param>
         /// <returns></returns>
-        public int[] GetRegisteredChannels(InternalMessage message)
+        public RegisteredLogicalChannel[] GetRegisteredChannels(InternalMessage message)
         {
             bool success = true;
             var registeredHighLevelClient = GetRegisteredHighLevelClient(message);
@@ -105,10 +108,14 @@ namespace Oleg_ivo.MES.High
 
             try
             {
-                return
-                    LowLevelMessageExchangeSystem.Instance.GetAllRegisteredChannels().Select(channel => channel.Id).ToArray();
+                var channels =
+                    LowLevelMessageExchangeSystem.Instance
+                        .GetAllRegisteredChannels()
+                        .Cast<RegisteredLogicalChannel>()
+                        .ToArray();
+                return channels;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 success = false;
                 throw;
@@ -365,9 +372,9 @@ namespace Oleg_ivo.MES.High
                 //todo: после регистрации сообщаем клиенту о всех зарегистрированных каналах (в дальнейшем может, через свойство?)
                 /*
                                 var registeredLogicalChannels = LowLevelMessageExchangeSystem.Instance.GetAllRegisteredChannels();
-                                foreach (var registeredLogicalChannel in registeredLogicalChannels)
+                                foreach (var RegisteredLogicalChannelExtended in registeredLogicalChannels)
                                 {
-                                    registeredHighLevelClient.ChannelRegister(new ChannelRegistrationMessage { LogicalChannelId = registeredLogicalChannel.Id });
+                                    registeredHighLevelClient.ChannelRegister(new ChannelRegistrationMessage { LogicalChannelId = RegisteredLogicalChannelExtended.Id });
                                 }
                 */
 
@@ -442,10 +449,10 @@ namespace Oleg_ivo.MES.High
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public RegisteredLogicalChannel GetRegisteredChannel(Func<RegisteredLogicalChannel, bool> predicate)
+        public RegisteredLogicalChannelExtended GetRegisteredChannel(Func<RegisteredLogicalChannelExtended, bool> predicate)
         {
             //ищем в верхней службе, если не находим - ищем в нижней службе
-            RegisteredLogicalChannel channel = FindSubscribedChannel(predicate) ??
+            RegisteredLogicalChannelExtended channel = FindSubscribedChannel(predicate) ??
                                                LowLevelMessageExchangeSystem.Instance.GetRegisteredLogicalChannel(predicate);
             return channel;
         }
@@ -455,9 +462,9 @@ namespace Oleg_ivo.MES.High
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        private RegisteredLogicalChannel FindSubscribedChannel(Func<RegisteredLogicalChannel, bool> predicate)
+        private RegisteredLogicalChannelExtended FindSubscribedChannel(Func<RegisteredLogicalChannelExtended, bool> predicate)
         {
-            RegisteredLogicalChannel registeredLogicalChannel =
+            RegisteredLogicalChannelExtended registeredLogicalChannel =
                 RegisteredClients
                     .SelectMany(client => client.RegisteredLogicalChannels.Values)//выбираем все каналы всех клиентов
                     .Where(predicate).Distinct().FirstOrDefault();//TODO: попробовать когда на один канал подписано несколько клиентов
@@ -492,8 +499,8 @@ namespace Oleg_ivo.MES.High
         /// <param name="message"></param>
         public void ReadChannel(InternalLogicalChannelDataMessage message)
         {
-            RegisteredLogicalChannel subscribedChannel =
-                FindSubscribedChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId,
+            RegisteredLogicalChannelExtended subscribedChannel =
+                FindSubscribedChannel(RegisteredLogicalChannelExtended.GetFindChannelPredicate(message.LogicalChannelId,
                                                                                        DataMode.Read));
 
             if (subscribedChannel != null)
@@ -510,7 +517,7 @@ namespace Oleg_ivo.MES.High
             else
             {
                 log.Warn(
-                    " лиент [{0}] извещает о чтении новых данных из канала [{1}]. Ќо на него никто не подписан", 
+                    " лиент [{0}] извещает о чтении новых данных из канала [{1}]. Ќо на него никто не подписан",
                     message.RegNameFrom,
                     message.LogicalChannelId);
             }
@@ -530,12 +537,13 @@ namespace Oleg_ivo.MES.High
                 //имитируем посылку сообщени€ от клиента о том, что он отписываетс€ от канала 
                 //(тогда источники подписки будут об этом уведомлены)
                 var channelSubscribeMessage = new ChannelSubscribeMessage(clientRegName,
-                                                                          RegName, 
+                                                                          RegName,
                                                                           SubscribeMode.Unsubscribe,
                                                                           registeredLogicalChannelId);
                 ChannelUnSubscribe(channelSubscribeMessage);
             }
 
+            InterestedRegisteredClients.Remove(registeredHighLevelClient);
             base.RemoveClient(clientRegName);
 
         }
@@ -556,6 +564,7 @@ namespace Oleg_ivo.MES.High
 
             var caller = new RegistrationCaller(Register);
             IAsyncResult result = caller.BeginInvoke(message, clientCallback, callback, state);
+
             return result;
         }
 
@@ -567,6 +576,36 @@ namespace Oleg_ivo.MES.High
         public void EndRegister(RegistrationMessage message, IAsyncResult result)
         {
             log.Info(" лиент был зарегистрирован");
+
+            NotifyRegisteredChannelsToClients();
+        }
+
+        /// <summary>
+        /// ”ведомить зарегистрированных новых клиентов о зарегистрированных в системе каналах
+        /// </summary>
+        private void NotifyRegisteredChannelsToClients()
+        {
+            var highLevelClients = RegisteredClients.Except(InterestedRegisteredClients);
+            foreach (var client in highLevelClients)
+            {
+                var registeredChannels = GetRegisteredChannels(new InternalMessage(client.Ticker, null));
+                foreach (var registeredChannel in registeredChannels)
+                {
+                    var registrationMessage = new ChannelRegistrationMessage(null,
+                                                                             client.Ticker,
+                                                                             RegistrationMode.Register,
+                                                                             registeredChannel.DataMode,
+                                                                             registeredChannel.LogicalChannelId)
+                        {
+                            MinValue = registeredChannel.MinValue,
+                            MaxValue = registeredChannel.MaxValue,
+                            MinNormalValue = registeredChannel.MinNormalValue,
+                            MaxNormalValue = registeredChannel.MaxNormalValue,
+                            Description = registeredChannel.Description
+                        };
+                    client.ChannelRegisterAsync(registrationMessage);
+                }
+            }
         }
 
         /// <summary>

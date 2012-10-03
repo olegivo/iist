@@ -18,7 +18,14 @@ namespace Oleg_ivo.MES.Registered
         /// <param name="message"></param>
         public void ChannelRegister(ChannelRegistrationMessage message)
         {
-            RegisteredLogicalChannel registeredLogicalChannel = new RegisteredLogicalChannel(message.LogicalChannelId, message.DataMode);
+            var registeredLogicalChannel = new RegisteredLogicalChannelExtended(message.LogicalChannelId, message.DataMode)
+                {
+                    MinValue = message.MinValue,
+                    MaxValue = message.MaxValue,
+                    MinNormalValue = message.MinNormalValue,
+                    MaxNormalValue = message.MaxNormalValue,
+                    Description = message.Description
+                };
             AddRegisteredChannel(registeredLogicalChannel);
 
             registeredLogicalChannel.Subscribed += registeredLogicalChannel_Subscribed;
@@ -91,8 +98,8 @@ namespace Oleg_ivo.MES.Registered
         /// <param name="message"></param>
         public void ChannelUnRegister(ChannelRegistrationMessage message)
         {
-            RegisteredLogicalChannel registeredLogicalChannel =
-                GetRegisteredLogicalChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId,
+            RegisteredLogicalChannelExtended registeredLogicalChannel =
+                GetRegisteredLogicalChannel(RegisteredLogicalChannelExtended.GetFindChannelPredicate(message.LogicalChannelId,
                                                                                              message.DataMode));RemoveRegisteredChannel(registeredLogicalChannel);
 
             registeredLogicalChannel.Subscribed -= registeredLogicalChannel_Subscribed;

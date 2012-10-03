@@ -101,7 +101,7 @@ namespace TP
             CanRegister = false;
 
             var registeredChannels = Provider.RegisteredChannels;
-            if (registeredChannels == null || registeredChannels.Length == 0)
+            if (registeredChannels == null || registeredChannels.Count == 0)
             {
                 Protocol("Регистрация завершена успешно. На сервере не опубликовано ни одного канала");
             }
@@ -111,7 +111,8 @@ namespace TP
                     //TODO: заполнить RegNameFrom
                     ChannelRegistrationMessage message = new ChannelRegistrationMessage(null, null,
                                                                                         RegistrationMode.Register,
-                                                                                        DataMode.Read, registeredChannel);
+                                                                                        DataMode.Read, 
+                                                                                        registeredChannel.LogicalChannelId);
                     AddRegisteredChannel(message);
                 }
         }
