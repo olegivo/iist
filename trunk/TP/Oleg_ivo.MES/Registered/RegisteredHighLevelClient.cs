@@ -67,7 +67,7 @@ namespace Oleg_ivo.MES.Registered
         /// <summary>
         /// Добавление канала к зарегистрированным
         /// и подписка на 
-        /// событие чтения канала (<see cref="RegisteredLogicalChannel.Read"/>)
+        /// событие чтения канала (<see cref="RegisteredLogicalChannelExtended.Read"/>)
         /// </summary>
         /// <param name="message"></param>
         /// <exception cref="ArgumentException">Если Клиент уже подписан на данный канал 
@@ -75,14 +75,14 @@ namespace Oleg_ivo.MES.Registered
         public void ChannelSubscribe(ChannelSubscribeMessage message)
         {
             //поиск ЛК, где Id - заданный:
-            Func<RegisteredLogicalChannel, bool> predicate =
-                RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId, DataMode.Unknown);
+            Func<RegisteredLogicalChannelExtended, bool> predicate =
+                RegisteredLogicalChannelExtended.GetFindChannelPredicate(message.LogicalChannelId, DataMode.Unknown);
 
-            RegisteredLogicalChannel logicalChannel = GetRegisteredLogicalChannel(predicate);
+            RegisteredLogicalChannelExtended logicalChannel = GetRegisteredLogicalChannel(predicate);
             if (logicalChannel != null)
                 throw new ArgumentException("Клиент уже подписан на данный канал");
 
-            RegisteredLogicalChannel registeredLogicalChannel =
+            RegisteredLogicalChannelExtended registeredLogicalChannel =
                 HighLevelMessageExchangeSystem.Instance.GetRegisteredChannel(predicate);
 
             if (registeredLogicalChannel == null) 
@@ -112,7 +112,7 @@ namespace Oleg_ivo.MES.Registered
 
         /// <summary>
         /// Отписка от 
-        /// событие чтения канала (<see cref="RegisteredLogicalChannel.Read"/>)
+        /// событие чтения канала (<see cref="RegisteredLogicalChannelExtended.Read"/>)
         /// и удаление канала из зарегистрированных
         /// </summary>
         /// <param name="message"></param>
@@ -120,8 +120,8 @@ namespace Oleg_ivo.MES.Registered
         public void ChannelUnSubscribe(ChannelSubscribeMessage message)
         {
             //поиск ЛК, где Id - заданный:
-            RegisteredLogicalChannel registeredLogicalChannel =
-                GetRegisteredLogicalChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId,
+            RegisteredLogicalChannelExtended registeredLogicalChannel =
+                GetRegisteredLogicalChannel(RegisteredLogicalChannelExtended.GetFindChannelPredicate(message.LogicalChannelId,
                                                                                              DataMode.Unknown));
             if (registeredLogicalChannel == null)
                 throw new ArgumentException("Клиент не подписан на данный канал");
@@ -157,6 +157,21 @@ namespace Oleg_ivo.MES.Registered
                     }
         }
 
+        private delegate void ChannelRegisterCaller(ChannelRegistrationMessage message);
+
+        public void ChannelRegisterAsync(ChannelRegistrationMessage message)
+        {
+            AsyncCallback callback = EndChannelRegister;
+            object state = null;
+            var caller = new ChannelRegisterCaller(ChannelRegister);
+            IAsyncResult result = caller.BeginInvoke(message, callback, state);
+        }
+
+        private void EndChannelRegister(IAsyncResult result)
+        {
+            
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -185,7 +200,7 @@ namespace Oleg_ivo.MES.Registered
         {
             //удаляем канал из коллекции зарегистрированных канало данного клиента
             var registeredLogicalChannel =
-                GetRegisteredLogicalChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId,
+                GetRegisteredLogicalChannel(RegisteredLogicalChannelExtended.GetFindChannelPredicate(message.LogicalChannelId,
                                                                                              message.DataMode));
             if (registeredLogicalChannel != null)
                 RemoveRegisteredChannel(registeredLogicalChannel);

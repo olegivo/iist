@@ -4,12 +4,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using DMS.Common.Events;
-using DMS.Common.Exceptions;
+using DMS.Common.MessageExchangeSystem.HighLevel;
 using DMS.Common.Messages;
+using NLog;
 using Oleg_ivo.Tools.UI;
 
 namespace Oleg_ivo.HighLevelClient.UI
@@ -19,6 +20,8 @@ namespace Oleg_ivo.HighLevelClient.UI
     /// </summary>
     public partial class HighLevelClientForm : Form
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// 
         /// </summary>
@@ -112,16 +115,49 @@ namespace Oleg_ivo.HighLevelClient.UI
 
         private void AddRegisteredChannel(ChannelRegistrationMessage message)
         {
-            IList sourceLeft = doubleListBoxControl1.SourceLeft;
-            IList sourceRight = doubleListBoxControl1.SourceRight;
+            var sourceLeft = (List<RegisteredLogicalChannel>)doubleListBoxControl1.SourceLeft;
+            var sourceRight = (List<RegisteredLogicalChannel>)doubleListBoxControl1.SourceRight;
 
-            if (!sourceLeft.Contains(message.LogicalChannelId) && !sourceRight.Contains(message.LogicalChannelId))
+            var channelId = message.LogicalChannelId;
+            Func<RegisteredLogicalChannel, bool> func = c => c.LogicalChannelId == channelId;
+
+            var hasLeft = sourceLeft.Any(func);
+            var hasRight = sourceRight.Any(func);
+            if (!hasLeft && !hasRight)
             {
-                sourceLeft.Add(message.LogicalChannelId);
+                var channel = new RegisteredLogicalChannel(channelId)
+                    {
+                        Description = message.Description,
+                        MinValue = message.MinValue,
+                        MaxValue = message.MaxValue,
+                        MinNormalValue = message.MinNormalValue,
+                        MaxNormalValue = message.MaxNormalValue
+                    };
+                sourceLeft.Add(channel);
                 doubleListBoxControl1.InitSources(sourceLeft, sourceRight);
-            }
 
-            Protocol(string.Format("Канал [{0}] теперь доступен для подписки", message.LogicalChannelId));
+                Protocol(string.Format("Канал [{0}] теперь доступен для подписки ({1}) [{2};{3}]",
+                                       message.LogicalChannelId,
+                                       message.Description,
+                                       message.MinValue,
+                                       message.MaxValue));
+            }
+            else if(hasLeft)
+            {
+                Protocol(string.Format("Канал [{0}] уже был доступен для подписки ({1}) [{2};{3}]",
+                                       message.LogicalChannelId,
+                                       message.Description,
+                                       message.MinValue,
+                                       message.MaxValue));
+            }
+            else
+            {
+                Protocol(string.Format("На канал [{0}] уже была подписка ({1}) [{2};{3}]",
+                                       message.LogicalChannelId,
+                                       message.Description,
+                                       message.MinValue,
+                                       message.MaxValue));
+            }
         }
 
         void Provider_ChannelUnRegistered(object sender, ChannelRegisterEventArgs e)
@@ -132,19 +168,21 @@ namespace Oleg_ivo.HighLevelClient.UI
 
         private void RemoveRegisteredChannel(ChannelRegistrationMessage message)
         {
-            IList sourceLeft = doubleListBoxControl1.SourceLeft;
-            IList sourceRight = doubleListBoxControl1.SourceRight;
+            var sourceLeft = (List<RegisteredLogicalChannel>)doubleListBoxControl1.SourceLeft;
+            var sourceRight = (List<RegisteredLogicalChannel>)doubleListBoxControl1.SourceRight;
 
-            if (sourceLeft.Contains(message.LogicalChannelId))
+            var channelId = message.LogicalChannelId;
+            Func<RegisteredLogicalChannel, bool> func = c => c.LogicalChannelId == channelId;
+            foreach (var source in sourceLeft.Where(func).ToList())
+                sourceLeft.Remove(source);
+
+            foreach (var source in sourceRight.Where(func).ToList())
             {
-                sourceLeft.Remove(message.LogicalChannelId);
-            }
-            else if (sourceRight.Contains(message.LogicalChannelId))
-            {
-                ChannelSubscribeMessage unSubscribeMessage = new ChannelSubscribeMessage(GetRegName(), null,
-                                                                                         SubscribeMode.Unsubscribe,
-                                                                                         message.LogicalChannelId);
-                sourceRight.Remove(message.LogicalChannelId);
+                var unSubscribeMessage = new ChannelSubscribeMessage(GetRegName(),
+                                                                     null,
+                                                                     SubscribeMode.Unsubscribe,
+                                                                     channelId);
+                sourceRight.Remove(source);
 
                 ParameterizedThreadStart thread = UnSubscribeUnregisteredChannelAsync;
                 thread.Invoke(unSubscribeMessage);
@@ -175,7 +213,7 @@ namespace Oleg_ivo.HighLevelClient.UI
             if (sender is double || sender is string)
             {
                 string s = string.Format("{0}\t{1}{2}", DateTime.Now, sender, Environment.NewLine);
-
+                log.Debug(s);
                 SetText(textBox1, s);
             }
         }
@@ -232,9 +270,9 @@ namespace Oleg_ivo.HighLevelClient.UI
             // регистрация
             try
             {
-                Provider.Register(false, RegisterCompleted);
+                Provider.Register(true, RegisterCompleted);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 CanRegister = true;
                 throw;
@@ -245,17 +283,21 @@ namespace Oleg_ivo.HighLevelClient.UI
         {
             CanRegister = false;
             // регистрация завершена
+            /*
             var registeredChannels = Provider.RegisteredChannels;
             if (registeredChannels == null)
                 Protocol("Регистрация завершена успешно. На сервере не опубликовано ни одного канала");
             else
                 foreach (var registeredChannel in registeredChannels)
                 {
-                    ChannelRegistrationMessage message = new ChannelRegistrationMessage(GetRegName(), null,
-                                                                                        RegistrationMode.Register,
-                                                                                        DataMode.Read, registeredChannel);
+                    var message = new ChannelRegistrationMessage(GetRegName(),
+                                                                 null,
+                                                                 RegistrationMode.Register,
+                                                                 DataMode.Read,
+                                                                 registeredChannel.LogicalChannelId);
                     AddRegisteredChannel(message);
                 }
+            */
         }
 
 
@@ -266,7 +308,7 @@ namespace Oleg_ivo.HighLevelClient.UI
             try
             {
                 Provider.Unregister();
-                doubleListBoxControl1.InitSources(new List<int>(), new List<int>());//убираем все зарегистрированные и подписанные каналы
+                doubleListBoxControl1.InitSources(new List<RegisteredLogicalChannel>(), new List<RegisteredLogicalChannel>());//убираем все зарегистрированные и подписанные каналы
                 CanRegister = true;
             }
             catch (Exception)
@@ -281,8 +323,9 @@ namespace Oleg_ivo.HighLevelClient.UI
             SubscribeMode regMode = e.MoveDirection == DoubleListBoxControl.Direction.LeftToRight
                                         ? SubscribeMode.Subscribe
                                         : SubscribeMode.Unsubscribe;
+            RegisteredLogicalChannel logicalChannel = (RegisteredLogicalChannel) e.MovingObject;
             ChannelSubscribeMessage subscribeMessage = new ChannelSubscribeMessage(GetRegName(), null, regMode,
-                                                                                   (int)e.MovingObject);
+                                                                                   logicalChannel.LogicalChannelId);
 
             switch (subscribeMessage.Mode)
             {
@@ -307,13 +350,11 @@ namespace Oleg_ivo.HighLevelClient.UI
 
         private void HighLevelClientForm_Load(object sender, EventArgs e)
         {
-            List<int> _left = new List<int>();
-            List<int> _right = new List<int>();
+            var left = new List<RegisteredLogicalChannel>();
+            var right = new List<RegisteredLogicalChannel>();
 
-            //            _left.AddRange(Enumerable.Range(28, 10));
-            //            _right.AddRange(Enumerable.Range(11, 10));
-
-            doubleListBoxControl1.InitSources(_left, _right);
+            doubleListBoxControl1.InitDisplayMember("Id");
+            doubleListBoxControl1.InitSources(left, right);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -335,7 +376,7 @@ namespace Oleg_ivo.HighLevelClient.UI
 
         private object GetValueToWrite()
         {
-            var form = new GetValueForm(){Value = "0"};
+            var form = new GetValueForm() { Value = "0" };
             DialogResult result = form.ShowDialog();
             return result == DialogResult.OK ? Convert.ToUInt16(form.Value) : 0;
         }

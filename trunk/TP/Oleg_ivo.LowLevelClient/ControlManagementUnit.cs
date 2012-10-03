@@ -318,14 +318,12 @@ namespace Oleg_ivo.LowLevelClient
         /// Получить доступные логические каналы
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<int> GetAvailableLogicalChannels()
+        public IEnumerable<LogicalChannel> GetAvailableLogicalChannels()
         {
             //добавляем только проидентифицированные каналы (Id > 0):
             return
                 GetLogicalChannels()
-                    .Select(channel => channel.Id > 0 ? channel.Id : 0)
-                        .Where(i => i > 0);
-
+                    .Where(channel => channel.Id > 0);
         }
 
 
@@ -337,9 +335,13 @@ namespace Oleg_ivo.LowLevelClient
         /// <exception cref="Exception"></exception>
         public void TryAddPoll(MovingEventArgs e, ISynchronizeInvoke synchronizingObject)
         {
-            LogicalChannel channel =
-                GetLogicalChannels().AsEnumerable().FirstOrDefault(
-                    LogicalChannel.GetFindChannelPredicate((int)e.MovingObject));
+            var logicalChannel = e.MovingObject as LogicalChannel;
+            if (logicalChannel == null) return;
+
+            var channel =
+                GetLogicalChannels()
+                    .AsEnumerable()
+                    .FirstOrDefault(LogicalChannel.GetFindChannelPredicate(logicalChannel.Id));
 
             if (channel == null)
                 throw new Exception("Канал не найден");
@@ -356,7 +358,7 @@ namespace Oleg_ivo.LowLevelClient
                         s = InputBox.Show("Укажите интервал опроса канала (в миллисекундах)",
                                           string.Format("Интервал опроса канала [{0}]", channel),
                                           "1000");
-            */
+                */
 
 
             if (double.TryParse(s, out interval))
@@ -378,9 +380,12 @@ namespace Oleg_ivo.LowLevelClient
         /// <exception cref="Exception"></exception>
         public void TryRemovePoll(MovingEventArgs e)
         {
-            LogicalChannel channel =
-                GetLogicalChannels().AsEnumerable()
-                        .FirstOrDefault(LogicalChannel.GetFindChannelPredicate((int)e.MovingObject));
+            var logicalChannel = e.MovingObject as LogicalChannel;
+            if (logicalChannel == null) return;
+            var channel =
+                GetLogicalChannels()
+                    .AsEnumerable()
+                    .FirstOrDefault(LogicalChannel.GetFindChannelPredicate(logicalChannel.Id));
 
             if (channel == null)
                 throw new Exception("Канал не найден");

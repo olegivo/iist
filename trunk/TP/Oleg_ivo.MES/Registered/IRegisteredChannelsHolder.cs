@@ -10,6 +10,6 @@ namespace Oleg_ivo.MES.Registered
         /// <summary>
         /// Зарегистрированные логические каналы
         /// </summary>
-        Dictionary<int, RegisteredLogicalChannel> RegisteredLogicalChannels { get; }
+        Dictionary<int, RegisteredLogicalChannelExtended> RegisteredLogicalChannels { get; }
     }
 }

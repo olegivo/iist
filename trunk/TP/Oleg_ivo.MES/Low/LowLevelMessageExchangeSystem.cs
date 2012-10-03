@@ -63,7 +63,7 @@ namespace Oleg_ivo.MES.Low
         {
             var channel =
                 GetRegisteredLogicalChannel(
-                    RegisteredLogicalChannel.GetFindChannelPredicate(e.ChannelSubscribeMessage.LogicalChannelId,
+                    RegisteredLogicalChannelExtended.GetFindChannelPredicate(e.ChannelSubscribeMessage.LogicalChannelId,
                                                                      DataMode.Unknown));
 
             if (channel == null)
@@ -76,7 +76,7 @@ namespace Oleg_ivo.MES.Low
         {
             var channel =
                 GetRegisteredLogicalChannel(
-                    RegisteredLogicalChannel.GetFindChannelPredicate(e.ChannelSubscribeMessage.LogicalChannelId,
+                    RegisteredLogicalChannelExtended.GetFindChannelPredicate(e.ChannelSubscribeMessage.LogicalChannelId,
                                                                      DataMode.Unknown));
             if (channel == null)
                 throw new Exception("Ќевозможно подписатьс€ на канал, который не зарегистрирован");
@@ -317,10 +317,10 @@ namespace Oleg_ivo.MES.Low
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public RegisteredLogicalChannel GetRegisteredLogicalChannel(Func<RegisteredLogicalChannel, bool> predicate)
+        public RegisteredLogicalChannelExtended GetRegisteredLogicalChannel(Func<RegisteredLogicalChannelExtended, bool> predicate)
         {
             //ищем в нижней службе
-            RegisteredLogicalChannel channel = FindSubscribedChannel(predicate);
+            RegisteredLogicalChannelExtended channel = FindSubscribedChannel(predicate);
             return channel;
         }
 
@@ -329,10 +329,10 @@ namespace Oleg_ivo.MES.Low
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        private RegisteredLogicalChannel FindSubscribedChannel(Func<RegisteredLogicalChannel, bool> predicate)
+        private RegisteredLogicalChannelExtended FindSubscribedChannel(Func<RegisteredLogicalChannelExtended, bool> predicate)
         {
             //HACK: почему-то в некоторых случа€х без указани€ Instance. в _registeredClients нет ни одного элемента  !!!
-            RegisteredLogicalChannel registeredLogicalChannel =
+            RegisteredLogicalChannelExtended registeredLogicalChannel =
                 Instance.RegisteredClients
                     .SelectMany(client => client.RegisteredLogicalChannels.Values)//выбираем все каналы всех клиентов
                     .Where(predicate).FirstOrDefault();//где Id - заданный
@@ -371,9 +371,9 @@ namespace Oleg_ivo.MES.Low
             if (registeredLowLevelClient == null)
                 throw new Exception("ƒанный клиент не зарегистрирован");
 
-            RegisteredLogicalChannel channel =
+            RegisteredLogicalChannelExtended channel =
                 registeredLowLevelClient.GetRegisteredLogicalChannel(
-                    RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId, DataMode.Unknown));
+                    RegisteredLogicalChannelExtended.GetFindChannelPredicate(message.LogicalChannelId, DataMode.Unknown));
             if (channel != null)
                 throw new Exception("ƒанный канал уже зарегистрирован");
 
@@ -402,9 +402,9 @@ namespace Oleg_ivo.MES.Low
             if (registeredLowLevelClient == null)
                 throw new Exception("ƒанный клиент не зарегистрирован");
 
-            RegisteredLogicalChannel channel =
+            RegisteredLogicalChannelExtended channel =
                 registeredLowLevelClient.GetRegisteredLogicalChannel(
-                    RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId, DataMode.Unknown));
+                    RegisteredLogicalChannelExtended.GetFindChannelPredicate(message.LogicalChannelId, DataMode.Unknown));
             if (channel == null)
                 throw new Exception("ƒанный канал не зарегистрирован");
 
@@ -426,7 +426,7 @@ namespace Oleg_ivo.MES.Low
         /// ѕолучить все зарегистрированные в нижней системе каналы
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<RegisteredLogicalChannel> GetAllRegisteredChannels()
+        public IEnumerable<RegisteredLogicalChannelExtended> GetAllRegisteredChannels()
         {
             return RegisteredClients.SelectMany(client => client.RegisteredLogicalChannels.Values);
         }
@@ -532,8 +532,8 @@ namespace Oleg_ivo.MES.Low
         /// <param name="message"></param>
         public void WriteChannel(InternalLogicalChannelDataMessage message)
         {
-            RegisteredLogicalChannel subscribedChannel =
-                FindSubscribedChannel(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId,
+            RegisteredLogicalChannelExtended subscribedChannel =
+                FindSubscribedChannel(RegisteredLogicalChannelExtended.GetFindChannelPredicate(message.LogicalChannelId,
                                                                                        DataMode.Write));
 
             if (subscribedChannel != null)

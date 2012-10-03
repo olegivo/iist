@@ -267,7 +267,6 @@
     <None Include="Service References\ServiceReferenceHomeWsDualHttp\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\ServiceReferenceHomeTcp\Arrays.xsd" />
     <None Include="Service References\ServiceReferenceHomeTcp\DMS.Common.Exceptions.xsd" />
     <None Include="Service References\ServiceReferenceHomeTcp\DMS.Common.Messages.xsd" />
     <None Include="Service References\ServiceReferenceHomeTcp\service.wsdl" />
@@ -286,6 +285,8 @@
     <None Include="Service References\ServiceReferenceHomeTcp\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\DMS.Common.MessageExchangeSystem.HighLevel.RegisteredLogicalChannel.datasource" />
+    <None Include="Service References\ServiceReferenceHomeTcp\DMS.Common.MessageExchangeSystem.HighLevel.xsd" />
     <None Include="Service References\ServiceReferenceHomeTcp\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

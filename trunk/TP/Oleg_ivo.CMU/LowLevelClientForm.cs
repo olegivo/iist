@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using DMS.Common.Messages;
 using Oleg_ivo.LowLevelClient;
 using Oleg_ivo.Plc;
+using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Tools.UI;
 using Oleg_ivo.WAGO;
 
@@ -131,13 +132,13 @@ namespace Oleg_ivo.CMU
             ControlManagementUnit.UnregisterCompleted -= Proxy_UnregisterCompleted;
             IList left = doubleListBoxControl1.SourceLeft;
 
-            foreach (int id in doubleListBoxControl1.SourceRight)
+            foreach (LogicalChannel channel in doubleListBoxControl1.SourceRight)
             {
-                TryRemovePoll(new MovingEventArgs(DoubleListBoxControl.Direction.RightToLeft, id));
-                left.Add(id);
+                TryRemovePoll(new MovingEventArgs(DoubleListBoxControl.Direction.RightToLeft, channel));
+                left.Add(channel);
             }
 
-            doubleListBoxControl1.InitSources(left, new List<int>());
+            doubleListBoxControl1.InitSources(left, new List<LogicalChannel>());
 
         }
 
@@ -170,22 +171,34 @@ namespace Oleg_ivo.CMU
                                                 DoubleListBoxControl.Direction.LeftToRight
                                                     ? RegistrationMode.Register
                                                     : RegistrationMode.Unregister;
-            ChannelRegistrationMessage registrationMessage = new ChannelRegistrationMessage(GetRegName(), null,
-                                                                                            registrationMode,
-                                                                                            DataMode.Read |
-                                                                                            DataMode.Write,
-                                                                                            (int)e.MovingObject);
+            LogicalChannel channel = e.MovingObject as LogicalChannel;
 
-
-            //регистрация каналов в MES
-            switch (registrationMessage.RegistrationMode)
+            if (channel != null)
             {
-                case RegistrationMode.Register:
-                    RegisterChannel(registrationMessage);
-                    break;
-                case RegistrationMode.Unregister:
-                    UnRegisterChannel(registrationMessage);
-                    break;
+                var registrationMessage = new ChannelRegistrationMessage(GetRegName(),
+                                                                         null,
+                                                                         registrationMode,
+                                                                         DataMode.Read | DataMode.Write,
+                                                                         channel.Id)
+                    {
+                        Description = channel.Description,
+                        MinValue = channel.MinValue,
+                        MaxValue = channel.MaxValue,
+                        MinNormalValue = channel.MinNormalValue,
+                        MaxNormalValue = channel.MaxNormalValue
+                    };
+
+
+                //регистрация каналов в MES
+                switch (registrationMessage.RegistrationMode)
+                {
+                    case RegistrationMode.Register:
+                        RegisterChannel(registrationMessage);
+                        break;
+                    case RegistrationMode.Unregister:
+                        UnRegisterChannel(registrationMessage);
+                        break;
+                }
             }
 
             doubleListBoxControl1.Refresh();
@@ -223,22 +236,23 @@ namespace Oleg_ivo.CMU
             controlManagementUnit.GetRegName = GetRegName;
             controlManagementUnit.NeedProtocol += ControlManagementUnit_NeedProtocol;
 
-            List<int> _left = new List<int>();
-            List<int> _right = new List<int>();
+            List<LogicalChannel> left = new List<LogicalChannel>();
+            List<LogicalChannel> right = new List<LogicalChannel>();
 
             //добавляем только проидентифицированные каналы (Id > 0):
-            _left.AddRange(controlManagementUnit.GetAvailableLogicalChannels());
+            left.AddRange(controlManagementUnit.GetAvailableLogicalChannels());
             //_right.AddRange(Enumerable.Range(11, 10));
 
-            doubleListBoxControl1.InitSources(_left, _right);
+            doubleListBoxControl1.InitDisplayMember("Id");
+            doubleListBoxControl1.InitSources(left, right);
         }
 
         private void btnChannelRead_Click(object sender, EventArgs e)
         {
-            foreach (int logicalChannelId in doubleListBoxControl1.SelectionRight)
+            foreach (LogicalChannel logicalChannelId in doubleListBoxControl1.SelectionRight)
             {
                 InternalLogicalChannelDataMessage message =
-                    new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Read, logicalChannelId)
+                    new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Read, logicalChannelId.Id)
                         {
                             Value = Math.PI
                         };

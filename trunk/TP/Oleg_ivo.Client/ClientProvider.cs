@@ -4,6 +4,7 @@ using Oleg_ivo.HighLevelClient.ServiceReferenceIISTwsDualHttp;
 #else
 #if TCP_BINDING
 using DMS.Common.Events;
+using DMS.Common.MessageExchangeSystem.HighLevel;
 using NLog;
 using Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp;
 using System;
@@ -102,7 +103,7 @@ namespace Oleg_ivo.HighLevelClient
                     //    permission.Assert();
 
                     //    System.Configuration.ConfigurationManager.OpenExeConfiguration(appConfigFileName);
-                        
+
                     //    CodeAccessPermission.RevertAssert();
                     //}
                     //catch (Exception ex)
@@ -185,8 +186,11 @@ namespace Oleg_ivo.HighLevelClient
         private void CallbackHandler_ChannelRegistered(object sender, ChannelRegisterEventArgs e)
         {
             var message = e.Message;
-            var newValue = new[] { message.LogicalChannelId };
-            RegisteredChannels = RegisteredChannels != null ? RegisteredChannels.Union(newValue, EqualityComparer<int>.Default).ToArray() : newValue;
+            var newValue = new List<IRegisteredChannel> { new RegisteredLogicalChannel(message.LogicalChannelId) };
+            if (RegisteredChannels != null)
+                RegisteredChannels.AddRange(newValue);
+            else 
+                RegisteredChannels = newValue;
 
             if (_actualValues.ContainsKey(message.LogicalChannelId))
                 _actualValues[message.LogicalChannelId] = default(double);
@@ -199,9 +203,10 @@ namespace Oleg_ivo.HighLevelClient
         private void CallbackHandler_ChannelUnRegistered(object sender, ChannelRegisterEventArgs e)
         {
             var message = e.Message;
-            var removeValue = new[] { message.LogicalChannelId };
-            if (RegisteredChannels != null)
-                RegisteredChannels = RegisteredChannels.Except(removeValue, EqualityComparer<int>.Default).ToArray();
+            var removeValue = RegisteredChannels.FirstOrDefault(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId ));
+
+            if (removeValue != null)
+                RegisteredChannels.Remove(removeValue);
             else
                 throw new InvalidOperationException(string.Format("Невозможно найти зарегистрированный канал {0}", e.Message.LogicalChannelId));
 
@@ -291,11 +296,12 @@ namespace Oleg_ivo.HighLevelClient
         {
             _proxyRegisterCompleted = proxyRegisterCompleted;
             Proxy.RegisterCompleted += Proxy_RegisterCompleted;
+            var registrationMessage = new RegistrationMessage(RegName, null, RegistrationMode.Register, AllowedDataMode);
             if (async)
-                Proxy.RegisterAsync(new RegistrationMessage(RegName, null, RegistrationMode.Register, AllowedDataMode));
+                Proxy.RegisterAsync(registrationMessage, registrationMessage);
             else
             {
-                Proxy.Register(new RegistrationMessage(RegName, null, RegistrationMode.Register, AllowedDataMode));
+                Proxy.Register(registrationMessage);
                 Proxy_RegisterCompleted(this, new AsyncCompletedEventArgs(null, false, null));
             }
         }
@@ -314,7 +320,16 @@ namespace Oleg_ivo.HighLevelClient
             Proxy.RegisterCompleted -= Proxy_RegisterCompleted;
             if (e.Error != null)
                 throw new InvalidOperationException(e.Error.ToString(), e.Error);
-            RegisteredChannels = Proxy.GetRegisteredChannels(new InternalMessage(RegName, null));
+
+            object channels;
+            //try
+            //{
+            //    channels = Proxy.GetRegisteredChannels(new InternalMessage(RegName, null));
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw;
+            //}            //RegisteredChannels = Proxy.GetRegisteredChannels(new InternalMessage(RegName, null));
 
             if (_proxyRegisterCompleted != null)
             {
@@ -326,7 +341,7 @@ namespace Oleg_ivo.HighLevelClient
         /// <summary>
         /// 
         /// </summary>
-        public int[] RegisteredChannels { get; private set; }
+        public List<IRegisteredChannel> RegisteredChannels { get; private set; }
 
         private EventHandler<AsyncCompletedEventArgs> _proxyRegisterCompleted;
 
@@ -336,6 +351,7 @@ namespace Oleg_ivo.HighLevelClient
         public void Unregister()
         {
             Proxy.UnregisterAsync(new RegistrationMessage(RegName, null, RegistrationMode.Unregister, DataMode.Unknown));
+            RegisteredChannels.Clear();
         }
 
 

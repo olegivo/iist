@@ -25,7 +25,7 @@ namespace Oleg_ivo.MES.Registered
         protected RegisteredClient()
         {
             Callbacks = new List<TClientCallback>();
-            RegisteredLogicalChannels = new Dictionary<int, RegisteredLogicalChannel>();
+            RegisteredLogicalChannels = new Dictionary<int, RegisteredLogicalChannelExtended>();
         }
 
         #endregion
@@ -52,7 +52,7 @@ namespace Oleg_ivo.MES.Registered
         /// <summary>
         /// «арегистрированные логические каналы
         /// </summary>
-        public Dictionary<int, RegisteredLogicalChannel> RegisteredLogicalChannels { get; private set; }
+        public Dictionary<int, RegisteredLogicalChannelExtended> RegisteredLogicalChannels { get; private set; }
 
         /// <summary>
         /// ≈сть зарегистрированные логические каналы
@@ -126,7 +126,7 @@ namespace Oleg_ivo.MES.Registered
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public RegisteredLogicalChannel GetRegisteredLogicalChannel(Func<RegisteredLogicalChannel, bool> predicate)
+        public RegisteredLogicalChannelExtended GetRegisteredLogicalChannel(Func<RegisteredLogicalChannelExtended, bool> predicate)
         {
             return RegisteredLogicalChannels.Values.FirstOrDefault(predicate);
         }
@@ -135,7 +135,7 @@ namespace Oleg_ivo.MES.Registered
         /// ƒобавить канал в зарегистрированные дл€ клиента
         /// </summary>
         /// <param name="registeredLogicalChannel"></param>
-        protected void AddRegisteredChannel(RegisteredLogicalChannel registeredLogicalChannel)
+        protected void AddRegisteredChannel(RegisteredLogicalChannelExtended registeredLogicalChannel)
         {
             RegisteredLogicalChannels.Add(registeredLogicalChannel.Id, registeredLogicalChannel);
         }
@@ -144,7 +144,7 @@ namespace Oleg_ivo.MES.Registered
         /// ”далить канал из зарегистрированные дл€ клиента
         /// </summary>
         /// <param name="registeredLogicalChannel"></param>
-        protected void RemoveRegisteredChannel(RegisteredLogicalChannel registeredLogicalChannel)
+        protected void RemoveRegisteredChannel(RegisteredLogicalChannelExtended registeredLogicalChannel)
         {
             RegisteredLogicalChannels.Remove(registeredLogicalChannel.Id);
         }
