@@ -129,6 +129,7 @@ namespace TP.WPF
             {
                 registeredChannelsList.Add(message.LogicalChannelId);
                 Protocol(string.Format("Канал [{0}] теперь доступен для подписки", message.LogicalChannelId));
+                //TODO: бросать событие о регистрации канала, ловить его в MainViewModel                
                 if (AutoSubscribeChannels)
                 {
                     SubscribeChannel(new ChannelSubscribeMessage(RegName, null, SubscribeMode.Subscribe,
@@ -231,6 +232,7 @@ namespace TP.WPF
 
         private void RemoveRegisteredChannel(ChannelRegistrationMessage message)
         {
+            //TODO: бросать событие об отмене регистрации канала, ловить его в MainViewModel                
             if (registeredChannelsList.Contains(message.LogicalChannelId))
             {
                 registeredChannelsList.Remove(message.LogicalChannelId);
@@ -273,11 +275,13 @@ namespace TP.WPF
         private void Provider_ChannelSubscribeCompleted(object sender, AsyncCompletedEventArgs e)
         {
             Protocol(string.Format("Произошла подписка на канал [{0}]", e.UserState));
+            //TODO: бросать событие о подписке на канал, ловить его в MainViewModel                
         }
 
         private void Provider_ChannelUnSubscribeCompleted(object sender, AsyncCompletedEventArgs e)
         {
             Protocol(string.Format("Произошла отписка от канала [{0}]", e.UserState));
+            //TODO: бросать событие об отрписке от канала, ловить его в MainViewModel                
         }
 
         /// <summary> 
