@@ -120,6 +120,8 @@ namespace TP.WPF
 
         readonly IList registeredChannelsList = new List<int>();
         readonly IList subscribedChannelsList = new List<int>();
+        public IList RegisteredChannelsList { get {return registeredChannelsList;}}
+        public IList SubscribedChannelsList { get { return subscribedChannelsList; } } 
 
         private void AddRegisteredChannel(ChannelRegistrationMessage message)
         {
@@ -145,7 +147,6 @@ namespace TP.WPF
             try
             {
                 Provider.Unregister();
-
                 //убираем все зарегистрированные и подписанные каналы:
                 registeredChannelsList.Clear();
                 subscribedChannelsList.Clear();
