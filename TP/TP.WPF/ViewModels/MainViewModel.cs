@@ -36,6 +36,31 @@ namespace TP.WPF.ViewModels
             channelController1.NeedProtocol += channelController1_NeedProtocol;
             channelController1.HasReadChannel += channelController1_HasReadChannel;
             channelController1.CanRegister = true;
+            channelController1.ChannelRegistered += new EventHandler(channelController1_ChannelRegistered);
+            channelController1.ChannelUnRegistered += new EventHandler(channelController1_ChannelUnRegistered);
+            channelController1.ChannelSubscribed += new EventHandler(channelController1_ChannelSubscribed);
+            channelController1.ChannelUnSubscribed += new EventHandler(channelController1_ChannelUnSubscribed);
+        }
+
+        void channelController1_ChannelUnSubscribed(object sender, EventArgs e)
+        {
+            SummaryTable.SetActive(channelId, false);
+        }
+
+        void channelController1_ChannelSubscribed(object sender, EventArgs e)
+        {
+            SummaryTable.SetActive(channelId, true);
+        }
+
+        void channelController1_ChannelUnRegistered(object sender, EventArgs e)
+        {
+            SummaryTable.RemoveChannel(channelId);
+        }
+
+        void channelController1_ChannelRegistered(object sender, EventArgs e)
+        {
+            //TODO:Отображать только зарегистрированые каналы
+            SummaryTable.AddChannel(25, "Канал №99", 0, true, 0, 0, 0, 0);
         }
 
         private void OnRegister()

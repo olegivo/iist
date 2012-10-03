@@ -51,7 +51,7 @@ namespace TP.WPF.ViewModels
             }
             else
             {
-                RemoveChannel(channelId);
+                SummaryTable.FindById(channelId).IsActive = false;
             }
         }
 
