@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="dtsChannelConfiguration1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 91</value>
+    <value>17, 95</value>
   </metadata>
   <metadata name="dataManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 128</value>
+    <value>17, 134</value>
   </metadata>
   <metadata name="SDA.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 165</value>
+    <value>17, 173</value>
   </metadata>
   <metadata name="sqlDeleteCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -136,10 +136,10 @@
     <value>17, 17</value>
   </metadata>
   <data name="sqlDeleteCommand1.CommandText" xml:space="preserve">
-    <value>DELETE FROM [LogicalChannel] WHERE (([Id] = @Original_Id) AND ((@IsNull_PhysicalChannelId = 1 AND [PhysicalChannelId] IS NULL) OR ([PhysicalChannelId] = @Original_PhysicalChannelId)) AND ((@IsNull_Size = 1 AND [Size] IS NULL) OR ([Size] = @Original_Size)) AND ((@IsNull_AddressShift = 1 AND [AddressShift] IS NULL) OR ([AddressShift] = @Original_AddressShift)) AND ((@IsNull_PollPeriod = 1 AND [PollPeriod] IS NULL) OR ([PollPeriod] = @Original_PollPeriod)) AND ((@IsNull_SensivityDelta = 1 AND [SensivityDelta] IS NULL) OR ([SensivityDelta] = @Original_SensivityDelta)) AND ((@IsNull_MinValue = 1 AND [MinValue] IS NULL) OR ([MinValue] = @Original_MinValue)) AND ((@IsNull_MaxValue = 1 AND [MaxValue] IS NULL) OR ([MaxValue] = @Original_MaxValue)))</value>
+    <value>DELETE FROM [LogicalChannel] WHERE (([Id] = @Original_Id) AND ((@IsNull_ParameterId = 1 AND [ParameterId] IS NULL) OR ([ParameterId] = @Original_ParameterId)) AND ((@IsNull_PhysicalChannelId = 1 AND [PhysicalChannelId] IS NULL) OR ([PhysicalChannelId] = @Original_PhysicalChannelId)) AND ((@IsNull_Size = 1 AND [Size] IS NULL) OR ([Size] = @Original_Size)) AND ((@IsNull_AddressShift = 1 AND [AddressShift] IS NULL) OR ([AddressShift] = @Original_AddressShift)) AND ((@IsNull_PollPeriod = 1 AND [PollPeriod] IS NULL) OR ([PollPeriod] = @Original_PollPeriod)) AND ((@IsNull_SensivityDelta = 1 AND [SensivityDelta] IS NULL) OR ([SensivityDelta] = @Original_SensivityDelta)) AND ((@IsNull_MinValue = 1 AND [MinValue] IS NULL) OR ([MinValue] = @Original_MinValue)) AND ((@IsNull_MaxValue = 1 AND [MaxValue] IS NULL) OR ([MaxValue] = @Original_MaxValue)) AND ((@IsNull_MinNormalValue = 1 AND [MinNormalValue] IS NULL) OR ([MinNormalValue] = @Original_MinNormalValue)) AND ((@IsNull_MaxNormalValue = 1 AND [MaxNormalValue] IS NULL) OR ([MaxNormalValue] = @Original_MaxNormalValue)))</value>
   </data>
   <metadata name="sqlConnection1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 54</value>
+    <value>17, 56</value>
   </metadata>
   <metadata name="sqlInsertCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -151,8 +151,8 @@
     <value>17, 17</value>
   </metadata>
   <data name="sqlInsertCommand1.CommandText" xml:space="preserve">
-    <value>INSERT INTO [LogicalChannel] ([Id], [PhysicalChannelId], [DirectPolynom], [ReversePolynom], [Size], [AddressShift], [PollPeriod], [Description], [SensivityDelta], [MinValue], [MaxValue]) VALUES (@Id, @PhysicalChannelId, @DirectPolynom, @ReversePolynom, @Size, @AddressShift, @PollPeriod, @Description, @SensivityDelta, @MinValue, @MaxValue);
-SELECT Id, PhysicalChannelId, DirectPolynom, ReversePolynom, Size, AddressShift, PollPeriod, Description, SensivityDelta, MinValue, MaxValue FROM LogicalChannel WHERE (Id = @Id)</value>
+    <value>INSERT INTO [LogicalChannel] ([Id], [ParameterId], [PhysicalChannelId], [DirectPolynom], [ReversePolynom], [Size], [AddressShift], [PollPeriod], [Description], [SensivityDelta], [MinValue], [MaxValue], [MinNormalValue], [MaxNormalValue]) VALUES (@Id, @ParameterId, @PhysicalChannelId, @DirectPolynom, @ReversePolynom, @Size, @AddressShift, @PollPeriod, @Description, @SensivityDelta, @MinValue, @MaxValue, @MinNormalValue, @MaxNormalValue);
+SELECT Id, ParameterId, PhysicalChannelId, DirectPolynom, ReversePolynom, Size, AddressShift, PollPeriod, Description, SensivityDelta, MinValue, MaxValue, MinNormalValue, MaxNormalValue FROM LogicalChannel WHERE (Id = @Id)</value>
   </data>
   <metadata name="sqlSelectCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -173,8 +173,8 @@ SELECT Id, PhysicalChannelId, DirectPolynom, ReversePolynom, Size, AddressShift,
     <value>17, 17</value>
   </metadata>
   <data name="sqlUpdateCommand1.CommandText" xml:space="preserve">
-    <value>UPDATE [LogicalChannel] SET [Id] = @Id, [PhysicalChannelId] = @PhysicalChannelId, [DirectPolynom] = @DirectPolynom, [ReversePolynom] = @ReversePolynom, [Size] = @Size, [AddressShift] = @AddressShift, [PollPeriod] = @PollPeriod, [Description] = @Description, [SensivityDelta] = @SensivityDelta, [MinValue] = @MinValue, [MaxValue] = @MaxValue WHERE (([Id] = @Original_Id) AND ((@IsNull_PhysicalChannelId = 1 AND [PhysicalChannelId] IS NULL) OR ([PhysicalChannelId] = @Original_PhysicalChannelId)) AND ((@IsNull_Size = 1 AND [Size] IS NULL) OR ([Size] = @Original_Size)) AND ((@IsNull_AddressShift = 1 AND [AddressShift] IS NULL) OR ([AddressShift] = @Original_AddressShift)) AND ((@IsNull_PollPeriod = 1 AND [PollPeriod] IS NULL) OR ([PollPeriod] = @Original_PollPeriod)) AND ((@IsNull_SensivityDelta = 1 AND [SensivityDelta] IS NULL) OR ([SensivityDelta] = @Original_SensivityDelta)) AND ((@IsNull_MinValue = 1 AND [MinValue] IS NULL) OR ([MinValue] = @Original_MinValue)) AND ((@IsNull_MaxValue = 1 AND [MaxValue] IS NULL) OR ([MaxValue] = @Original_MaxValue)));
-SELECT Id, PhysicalChannelId, DirectPolynom, ReversePolynom, Size, AddressShift, PollPeriod, Description, SensivityDelta, MinValue, MaxValue FROM LogicalChannel WHERE (Id = @Id)</value>
+    <value>UPDATE [LogicalChannel] SET [Id] = @Id, [ParameterId] = @ParameterId, [PhysicalChannelId] = @PhysicalChannelId, [DirectPolynom] = @DirectPolynom, [ReversePolynom] = @ReversePolynom, [Size] = @Size, [AddressShift] = @AddressShift, [PollPeriod] = @PollPeriod, [Description] = @Description, [SensivityDelta] = @SensivityDelta, [MinValue] = @MinValue, [MaxValue] = @MaxValue, [MinNormalValue] = @MinNormalValue, [MaxNormalValue] = @MaxNormalValue WHERE (([Id] = @Original_Id) AND ((@IsNull_ParameterId = 1 AND [ParameterId] IS NULL) OR ([ParameterId] = @Original_ParameterId)) AND ((@IsNull_PhysicalChannelId = 1 AND [PhysicalChannelId] IS NULL) OR ([PhysicalChannelId] = @Original_PhysicalChannelId)) AND ((@IsNull_Size = 1 AND [Size] IS NULL) OR ([Size] = @Original_Size)) AND ((@IsNull_AddressShift = 1 AND [AddressShift] IS NULL) OR ([AddressShift] = @Original_AddressShift)) AND ((@IsNull_PollPeriod = 1 AND [PollPeriod] IS NULL) OR ([PollPeriod] = @Original_PollPeriod)) AND ((@IsNull_SensivityDelta = 1 AND [SensivityDelta] IS NULL) OR ([SensivityDelta] = @Original_SensivityDelta)) AND ((@IsNull_MinValue = 1 AND [MinValue] IS NULL) OR ([MinValue] = @Original_MinValue)) AND ((@IsNull_MaxValue = 1 AND [MaxValue] IS NULL) OR ([MaxValue] = @Original_MaxValue)) AND ((@IsNull_MinNormalValue = 1 AND [MinNormalValue] IS NULL) OR ([MinNormalValue] = @Original_MinNormalValue)) AND ((@IsNull_MaxNormalValue = 1 AND [MaxNormalValue] IS NULL) OR ([MaxNormalValue] = @Original_MaxNormalValue)));
+SELECT Id, ParameterId, PhysicalChannelId, DirectPolynom, ReversePolynom, Size, AddressShift, PollPeriod, Description, SensivityDelta, MinValue, MaxValue, MinNormalValue, MaxNormalValue FROM LogicalChannel WHERE (Id = @Id)</value>
   </data>
   <metadata name="$this.TrayLargeIcon" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
