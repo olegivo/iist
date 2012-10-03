@@ -26,7 +26,7 @@ namespace Oleg_ivo.Plc.Channels
         public PhysicalChannel PhysicalChannel { get; private set; }
 
         ///<summary>
-        ///
+        /// ќписание канала
         ///</summary>
         public string Description { get; set; }
 
@@ -84,6 +84,16 @@ namespace Oleg_ivo.Plc.Channels
         /// ћаксимальное допустимое значение дл€ канала
         /// </summary>
         public double? MaxValue { get; set; }
+
+        /// <summary>
+        /// ћинимальное нормальное значение дл€ канала
+        /// </summary>
+        public double? MinNormalValue { get; set; }
+
+        /// <summary>
+        /// ћаксимальное нормальное значение дл€ канала
+        /// </summary>
+        public double? MaxNormalValue { get; set; }
 
         /// <summary>
         /// ѕолином пр€мого преобразовани€

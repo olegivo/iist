@@ -58,6 +58,7 @@ namespace Oleg_ivo.WAGO.Factory
             this.SDA.TableMappings.AddRange(new System.Data.Common.DataTableMapping[] {
             new System.Data.Common.DataTableMapping("Table", "LogicalChannel", new System.Data.Common.DataColumnMapping[] {
                         new System.Data.Common.DataColumnMapping("Id", "Id"),
+                        new System.Data.Common.DataColumnMapping("ParameterId", "ParameterId"),
                         new System.Data.Common.DataColumnMapping("PhysicalChannelId", "PhysicalChannelId"),
                         new System.Data.Common.DataColumnMapping("DirectPolynom", "DirectPolynom"),
                         new System.Data.Common.DataColumnMapping("ReversePolynom", "ReversePolynom"),
@@ -67,7 +68,9 @@ namespace Oleg_ivo.WAGO.Factory
                         new System.Data.Common.DataColumnMapping("Description", "Description"),
                         new System.Data.Common.DataColumnMapping("SensivityDelta", "SensivityDelta"),
                         new System.Data.Common.DataColumnMapping("MinValue", "MinValue"),
-                        new System.Data.Common.DataColumnMapping("MaxValue", "MaxValue")})});
+                        new System.Data.Common.DataColumnMapping("MaxValue", "MaxValue"),
+                        new System.Data.Common.DataColumnMapping("MinNormalValue", "MinNormalValue"),
+                        new System.Data.Common.DataColumnMapping("MaxNormalValue", "MaxNormalValue")})});
             this.SDA.UpdateCommand = this.sqlUpdateCommand1;
             // 
             // sqlDeleteCommand1
@@ -76,6 +79,8 @@ namespace Oleg_ivo.WAGO.Factory
             this.sqlDeleteCommand1.Connection = this.sqlConnection1;
             this.sqlDeleteCommand1.Parameters.AddRange(new System.Data.SqlClient.SqlParameter[] {
             new System.Data.SqlClient.SqlParameter("@Original_Id", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "Id", System.Data.DataRowVersion.Original, null),
+            new System.Data.SqlClient.SqlParameter("@IsNull_ParameterId", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ParameterId", System.Data.DataRowVersion.Original, true, null, "", "", ""),
+            new System.Data.SqlClient.SqlParameter("@Original_ParameterId", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "ParameterId", System.Data.DataRowVersion.Original, null),
             new System.Data.SqlClient.SqlParameter("@IsNull_PhysicalChannelId", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "PhysicalChannelId", System.Data.DataRowVersion.Original, true, null, "", "", ""),
             new System.Data.SqlClient.SqlParameter("@Original_PhysicalChannelId", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "PhysicalChannelId", System.Data.DataRowVersion.Original, null),
             new System.Data.SqlClient.SqlParameter("@IsNull_Size", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Size", System.Data.DataRowVersion.Original, true, null, "", "", ""),
@@ -89,11 +94,15 @@ namespace Oleg_ivo.WAGO.Factory
             new System.Data.SqlClient.SqlParameter("@IsNull_MinValue", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "MinValue", System.Data.DataRowVersion.Original, true, null, "", "", ""),
             new System.Data.SqlClient.SqlParameter("@Original_MinValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MinValue", System.Data.DataRowVersion.Original, null),
             new System.Data.SqlClient.SqlParameter("@IsNull_MaxValue", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "MaxValue", System.Data.DataRowVersion.Original, true, null, "", "", ""),
-            new System.Data.SqlClient.SqlParameter("@Original_MaxValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MaxValue", System.Data.DataRowVersion.Original, null)});
+            new System.Data.SqlClient.SqlParameter("@Original_MaxValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MaxValue", System.Data.DataRowVersion.Original, null),
+            new System.Data.SqlClient.SqlParameter("@IsNull_MinNormalValue", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "MinNormalValue", System.Data.DataRowVersion.Original, true, null, "", "", ""),
+            new System.Data.SqlClient.SqlParameter("@Original_MinNormalValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MinNormalValue", System.Data.DataRowVersion.Original, null),
+            new System.Data.SqlClient.SqlParameter("@IsNull_MaxNormalValue", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "MaxNormalValue", System.Data.DataRowVersion.Original, true, null, "", "", ""),
+            new System.Data.SqlClient.SqlParameter("@Original_MaxNormalValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MaxNormalValue", System.Data.DataRowVersion.Original, null)});
             // 
             // sqlConnection1
             // 
-            this.sqlConnection1.ConnectionString = "Data Source=IVS-8;Initial Catalog=Plc;Integrated Security=True";
+            this.sqlConnection1.ConnectionString = "Data Source=OLEG-A\\SQLEXPRESS2005;Initial Catalog=Plc27;Integrated Security=True";
             this.sqlConnection1.FireInfoMessageEventOnUserErrors = false;
             // 
             // sqlInsertCommand1
@@ -102,6 +111,7 @@ namespace Oleg_ivo.WAGO.Factory
             this.sqlInsertCommand1.Connection = this.sqlConnection1;
             this.sqlInsertCommand1.Parameters.AddRange(new System.Data.SqlClient.SqlParameter[] {
             new System.Data.SqlClient.SqlParameter("@Id", System.Data.SqlDbType.Int, 0, "Id"),
+            new System.Data.SqlClient.SqlParameter("@ParameterId", System.Data.SqlDbType.Int, 0, "ParameterId"),
             new System.Data.SqlClient.SqlParameter("@PhysicalChannelId", System.Data.SqlDbType.Int, 0, "PhysicalChannelId"),
             new System.Data.SqlClient.SqlParameter("@DirectPolynom", System.Data.SqlDbType.NVarChar, 0, "DirectPolynom"),
             new System.Data.SqlClient.SqlParameter("@ReversePolynom", System.Data.SqlDbType.NVarChar, 0, "ReversePolynom"),
@@ -111,7 +121,9 @@ namespace Oleg_ivo.WAGO.Factory
             new System.Data.SqlClient.SqlParameter("@Description", System.Data.SqlDbType.NVarChar, 0, "Description"),
             new System.Data.SqlClient.SqlParameter("@SensivityDelta", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "SensivityDelta", System.Data.DataRowVersion.Current, null),
             new System.Data.SqlClient.SqlParameter("@MinValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MinValue", System.Data.DataRowVersion.Current, null),
-            new System.Data.SqlClient.SqlParameter("@MaxValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MaxValue", System.Data.DataRowVersion.Current, null)});
+            new System.Data.SqlClient.SqlParameter("@MaxValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MaxValue", System.Data.DataRowVersion.Current, null),
+            new System.Data.SqlClient.SqlParameter("@MinNormalValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MinNormalValue", System.Data.DataRowVersion.Current, null),
+            new System.Data.SqlClient.SqlParameter("@MaxNormalValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MaxNormalValue", System.Data.DataRowVersion.Current, null)});
             // 
             // sqlSelectCommand1
             // 
@@ -129,6 +141,7 @@ namespace Oleg_ivo.WAGO.Factory
             this.sqlUpdateCommand1.Connection = this.sqlConnection1;
             this.sqlUpdateCommand1.Parameters.AddRange(new System.Data.SqlClient.SqlParameter[] {
             new System.Data.SqlClient.SqlParameter("@Id", System.Data.SqlDbType.Int, 0, "Id"),
+            new System.Data.SqlClient.SqlParameter("@ParameterId", System.Data.SqlDbType.Int, 0, "ParameterId"),
             new System.Data.SqlClient.SqlParameter("@PhysicalChannelId", System.Data.SqlDbType.Int, 0, "PhysicalChannelId"),
             new System.Data.SqlClient.SqlParameter("@DirectPolynom", System.Data.SqlDbType.NVarChar, 0, "DirectPolynom"),
             new System.Data.SqlClient.SqlParameter("@ReversePolynom", System.Data.SqlDbType.NVarChar, 0, "ReversePolynom"),
@@ -139,7 +152,11 @@ namespace Oleg_ivo.WAGO.Factory
             new System.Data.SqlClient.SqlParameter("@SensivityDelta", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "SensivityDelta", System.Data.DataRowVersion.Current, null),
             new System.Data.SqlClient.SqlParameter("@MinValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MinValue", System.Data.DataRowVersion.Current, null),
             new System.Data.SqlClient.SqlParameter("@MaxValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MaxValue", System.Data.DataRowVersion.Current, null),
+            new System.Data.SqlClient.SqlParameter("@MinNormalValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MinNormalValue", System.Data.DataRowVersion.Current, null),
+            new System.Data.SqlClient.SqlParameter("@MaxNormalValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MaxNormalValue", System.Data.DataRowVersion.Current, null),
             new System.Data.SqlClient.SqlParameter("@Original_Id", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "Id", System.Data.DataRowVersion.Original, null),
+            new System.Data.SqlClient.SqlParameter("@IsNull_ParameterId", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ParameterId", System.Data.DataRowVersion.Original, true, null, "", "", ""),
+            new System.Data.SqlClient.SqlParameter("@Original_ParameterId", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "ParameterId", System.Data.DataRowVersion.Original, null),
             new System.Data.SqlClient.SqlParameter("@IsNull_PhysicalChannelId", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "PhysicalChannelId", System.Data.DataRowVersion.Original, true, null, "", "", ""),
             new System.Data.SqlClient.SqlParameter("@Original_PhysicalChannelId", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, false, ((byte)(0)), ((byte)(0)), "PhysicalChannelId", System.Data.DataRowVersion.Original, null),
             new System.Data.SqlClient.SqlParameter("@IsNull_Size", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Size", System.Data.DataRowVersion.Original, true, null, "", "", ""),
@@ -153,7 +170,11 @@ namespace Oleg_ivo.WAGO.Factory
             new System.Data.SqlClient.SqlParameter("@IsNull_MinValue", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "MinValue", System.Data.DataRowVersion.Original, true, null, "", "", ""),
             new System.Data.SqlClient.SqlParameter("@Original_MinValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MinValue", System.Data.DataRowVersion.Original, null),
             new System.Data.SqlClient.SqlParameter("@IsNull_MaxValue", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "MaxValue", System.Data.DataRowVersion.Original, true, null, "", "", ""),
-            new System.Data.SqlClient.SqlParameter("@Original_MaxValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MaxValue", System.Data.DataRowVersion.Original, null)});
+            new System.Data.SqlClient.SqlParameter("@Original_MaxValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MaxValue", System.Data.DataRowVersion.Original, null),
+            new System.Data.SqlClient.SqlParameter("@IsNull_MinNormalValue", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "MinNormalValue", System.Data.DataRowVersion.Original, true, null, "", "", ""),
+            new System.Data.SqlClient.SqlParameter("@Original_MinNormalValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MinNormalValue", System.Data.DataRowVersion.Original, null),
+            new System.Data.SqlClient.SqlParameter("@IsNull_MaxNormalValue", System.Data.SqlDbType.Int, 0, System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "MaxNormalValue", System.Data.DataRowVersion.Original, true, null, "", "", ""),
+            new System.Data.SqlClient.SqlParameter("@Original_MaxNormalValue", System.Data.SqlDbType.Decimal, 0, System.Data.ParameterDirection.Input, false, ((byte)(18)), ((byte)(10)), "MaxNormalValue", System.Data.DataRowVersion.Original, null)});
             ((System.ComponentModel.ISupportInitialize)(this.dtsChannelConfiguration1)).EndInit();
 
         }

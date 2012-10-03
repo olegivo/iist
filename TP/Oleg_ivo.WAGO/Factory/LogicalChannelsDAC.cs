@@ -196,6 +196,8 @@ namespace Oleg_ivo.WAGO.Factory
             logicalChannel.Description = row.Description;
             logicalChannel.MinValue = (double?) row.MinValue;
             logicalChannel.MaxValue = (double?) row.MaxValue;
+            logicalChannel.MinNormalValue = (double?) row.MinNormalValue;
+            logicalChannel.MaxNormalValue = (double?) row.MaxNormalValue;
             logicalChannel.PollPeriod = TimeSpan.FromMilliseconds(row.PollPeriod);
             logicalChannel.DeltaChangeLimit = (double) row.SensivityDelta;
             //row.PhysicalChannelId = physicalChannel.Id;
@@ -236,8 +238,9 @@ namespace Oleg_ivo.WAGO.Factory
             if (!row.IsSensivityDeltaNull()) channel.DeltaChangeLimit = (double) row.SensivityDelta;
             if (!row.IsMinValueNull()) channel.MinValue = (double) row.MinValue;
             if (!row.IsMaxValueNull()) channel.MaxValue = (double) row.MaxValue;
+            if (!row.IsMinNormalValueNull()) channel.MinNormalValue = (double) row.MinNormalValue;
+            if (!row.IsMaxNormalValueNull()) channel.MaxNormalValue = (double) row.MaxNormalValue;
             if (!row.IsAddressShiftNull()) channel.AddressShift = Convert.ToUInt16(row.AddressShift);
-            
 
             return channel;
         }
