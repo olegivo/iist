@@ -1,5 +1,4 @@
-﻿using System;
-using JulMar.Windows.Mvvm;
+﻿using JulMar.Windows.Mvvm;
 
 namespace TP.WPF.ViewModels
 {
@@ -28,7 +27,7 @@ namespace TP.WPF.ViewModels
             get { return SummarySet.Channels; }
         }
 
-        public void AddChannel(int channelId, string description, float defaultValue, bool isActive, float minValue, float maxValue, float minNormalValue, float maxNormalValue)
+        public void AddChannel(int channelId, string description, float defaultValue, bool isActive, double minValue, double maxValue, double minNormalValue, double maxNormalValue)
         {
             var row = SummaryTable.FindById(channelId);
             if (row == null)
