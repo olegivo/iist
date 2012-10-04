@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using DMS.Common.Events;
+using DMS.Common.Messages;
 using JulMar.Windows.Interfaces;
 using JulMar.Windows.Mvvm;
 
@@ -26,7 +27,7 @@ namespace TP.WPF.ViewModels
             SummaryTable = new SummaryTableViewModel();
             //тестовый вызов, чтобы посмотреть, как добавляются данные:
             //SummaryTable.AddChannel(1, "Канал №1", 0, true, 0, 0, 0, 0);
-            SummaryTable.SetChannelsNames();
+            //SummaryTable.SetChannelsNames();
             //SummaryTable.ActualizeChannelValue(1, 2);
             
 
@@ -36,31 +37,47 @@ namespace TP.WPF.ViewModels
             channelController1.NeedProtocol += channelController1_NeedProtocol;
             channelController1.HasReadChannel += channelController1_HasReadChannel;
             channelController1.CanRegister = true;
-            channelController1.ChannelRegistered += new EventHandler(channelController1_ChannelRegistered);
-            channelController1.ChannelUnRegistered += new EventHandler(channelController1_ChannelUnRegistered);
-            channelController1.ChannelSubscribed += new EventHandler(channelController1_ChannelSubscribed);
-            channelController1.ChannelUnSubscribed += new EventHandler(channelController1_ChannelUnSubscribed);
+            channelController1.ChannelRegistered += channelController1_ChannelRegistered;
+            channelController1.ChannelUnRegistered += channelController1_ChannelUnRegistered;
+            channelController1.ChannelSubscribed += channelController1_ChannelSubscribed;
+            channelController1.ChannelUnSubscribed += channelController1_ChannelUnSubscribed;
         }
 
         void channelController1_ChannelUnSubscribed(object sender, EventArgs e)
         {
-            SummaryTable.SetActive(channelId, false);
+            throw new NotImplementedException();
+            //SummaryTable.SetActive(channelId, false);
         }
 
         void channelController1_ChannelSubscribed(object sender, EventArgs e)
         {
-            SummaryTable.SetActive(channelId, true);
+            throw new NotImplementedException();
+            //SummaryTable.SetActive(channelId, true);
         }
 
         void channelController1_ChannelUnRegistered(object sender, EventArgs e)
         {
-            SummaryTable.RemoveChannel(channelId);
+            throw new NotImplementedException();
+            //SummaryTable.RemoveChannel(channelId);
         }
 
-        void channelController1_ChannelRegistered(object sender, EventArgs e)
+        void channelController1_ChannelRegistered(object sender, ChannelRegisterEventArgs e)
         {
             //TODO:Отображать только зарегистрированые каналы
-            SummaryTable.AddChannel(25, "Канал №99", 0, true, 0, 0, 0, 0);
+            var message = e.Message;
+            SummaryTable.AddChannel(message.LogicalChannelId,
+                                    message.Description,
+                                    default(float),
+                                    false,
+                                    GetValue(message.MinValue),
+                                    GetValue(message.MaxValue),
+                                    GetValue(message.MinNormalValue),
+                                    GetValue(message.MaxNormalValue));
+        }
+
+        private static double GetValue(double? d)
+        {
+            return d.HasValue ? d.Value : default(double);
         }
 
         private void OnRegister()
@@ -163,20 +180,7 @@ namespace TP.WPF.ViewModels
         {
             float value = Convert.ToSingle(e.Message.Value);
             int channelId = e.Message.LogicalChannelId;
-            if (channelController1.RegisteredChannelsList.Contains(channelId))
-            {
-                SummaryTable.ActualizeChannelValue(channelId, value);
-            }
-            if (channelController1.SubscribedChannelsList.Contains(channelId))
-            {
-                SummaryTable.SetActive(channelId, true);
-            }
-            else
-            {
-                SummaryTable.SetActive(channelId, false);   
-            }
-
-
+            SummaryTable.ActualizeChannelValue(channelId, value);
 
             switch (channelId)
             {
@@ -204,9 +208,9 @@ namespace TP.WPF.ViewModels
                 case 8:
                     DrumTypeFurnace.Temperature_TC8 = value;
                     break; //TС8	температура воды в системе охлаждения
-                //BUG: канал не реализован
-                //    case 9:
-                //    break; //Р	разрежение в камере дожигания
+                    //BUG: канал не реализован
+                    //    case 9:
+                    //    break; //Р	разрежение в камере дожигания
                 case 10:
                     CyclonAndScrubber.PhLevel_CF1 = value;
                     break; //рН1	уровень рН в СФ1

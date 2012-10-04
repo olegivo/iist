@@ -393,7 +393,7 @@ namespace TP.WPF.ViewModels {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public ChannelsRow AddChannelsRow(int Id, string Description, float CurrentValue, bool IsActive, float MinValue, float MaxValue, float MinNormalValue, float MaxNormalValue) {
+            public ChannelsRow AddChannelsRow(int Id, string Description, float CurrentValue, bool IsActive, double MinValue, double MaxValue, double MinNormalValue, double MaxNormalValue) {
                 ChannelsRow rowChannelsRow = ((ChannelsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Id,
@@ -449,13 +449,13 @@ namespace TP.WPF.ViewModels {
                 base.Columns.Add(this.columnCurrentValue);
                 this.columnIsActive = new global::System.Data.DataColumn("IsActive", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIsActive);
-                this.columnMinValue = new global::System.Data.DataColumn("MinValue", typeof(float), null, global::System.Data.MappingType.Element);
+                this.columnMinValue = new global::System.Data.DataColumn("MinValue", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMinValue);
-                this.columnMaxValue = new global::System.Data.DataColumn("MaxValue", typeof(float), null, global::System.Data.MappingType.Element);
+                this.columnMaxValue = new global::System.Data.DataColumn("MaxValue", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMaxValue);
-                this.columnMinNormalValue = new global::System.Data.DataColumn("MinNormalValue", typeof(float), null, global::System.Data.MappingType.Element);
+                this.columnMinNormalValue = new global::System.Data.DataColumn("MinNormalValue", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMinNormalValue);
-                this.columnMaxNormalValue = new global::System.Data.DataColumn("MaxNormalValue", typeof(float), null, global::System.Data.MappingType.Element);
+                this.columnMaxNormalValue = new global::System.Data.DataColumn("MaxNormalValue", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMaxNormalValue);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("PK_Channels", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
@@ -656,10 +656,10 @@ namespace TP.WPF.ViewModels {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public float MinValue {
+            public double MinValue {
                 get {
                     try {
-                        return ((float)(this[this.tableChannels.MinValueColumn]));
+                        return ((double)(this[this.tableChannels.MinValueColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'MinValue\' in table \'Channels\' is DBNull.", e);
@@ -671,10 +671,10 @@ namespace TP.WPF.ViewModels {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public float MaxValue {
+            public double MaxValue {
                 get {
                     try {
-                        return ((float)(this[this.tableChannels.MaxValueColumn]));
+                        return ((double)(this[this.tableChannels.MaxValueColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'MaxValue\' in table \'Channels\' is DBNull.", e);
@@ -686,10 +686,10 @@ namespace TP.WPF.ViewModels {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public float MinNormalValue {
+            public double MinNormalValue {
                 get {
                     try {
-                        return ((float)(this[this.tableChannels.MinNormalValueColumn]));
+                        return ((double)(this[this.tableChannels.MinNormalValueColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'MinNormalValue\' in table \'Channels\' is DBNull.", e);
@@ -701,10 +701,10 @@ namespace TP.WPF.ViewModels {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public float MaxNormalValue {
+            public double MaxNormalValue {
                 get {
                     try {
-                        return ((float)(this[this.tableChannels.MaxNormalValueColumn]));
+                        return ((double)(this[this.tableChannels.MaxNormalValueColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'MaxNormalValue\' in table \'Channels\' is DBNull.", e);

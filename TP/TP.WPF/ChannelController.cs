@@ -97,10 +97,6 @@ namespace TP.WPF
         /// </summary>
         public event EventHandler CanRegisterChanged;
         /// <summary>
-        /// Событие регистрации канала
-        /// </summary>
-        public event EventHandler ChannelRegistered;
-        /// <summary>
         /// Событие снятия с регистрации канала
         /// </summary>
         public event EventHandler ChannelUnRegistered;
@@ -145,8 +141,6 @@ namespace TP.WPF
             {
                 registeredChannelsList.Add(message.LogicalChannelId);
                 Protocol(string.Format("Канал [{0}] теперь доступен для подписки", message.LogicalChannelId));
-                EventHandler handler = ChannelRegistered;
-                if (handler != null) handler(this, EventArgs.Empty);
                 if (AutoSubscribeChannels)
                 {
                     SubscribeChannel(new ChannelSubscribeMessage(RegName, null, SubscribeMode.Subscribe,
@@ -224,6 +218,16 @@ namespace TP.WPF
         {
             add { Provider.HasReadChannel += value; }
             remove { Provider.HasReadChannel -= value; }
+        }
+
+
+        /// <summary>
+        /// Событие регистрации канала
+        /// </summary>
+        public event EventHandler<ChannelRegisterEventArgs> ChannelRegistered
+        {
+            add { Provider.ChannelRegistered += value; }
+            remove { Provider.ChannelRegistered -= value; }
         }
 
         private void Provider_NeedProtocol(object sender, EventArgs e)
