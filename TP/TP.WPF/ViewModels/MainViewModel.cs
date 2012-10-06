@@ -65,19 +65,7 @@ namespace TP.WPF.ViewModels
         {
             //TODO:Отображать только зарегистрированые каналы
             var message = e.Message;
-            SummaryTable.AddChannel(message.LogicalChannelId,
-                                    message.Description,
-                                    default(float),
-                                    false,
-                                    GetValue(message.MinValue),
-                                    GetValue(message.MaxValue),
-                                    GetValue(message.MinNormalValue),
-                                    GetValue(message.MaxNormalValue));
-        }
-
-        private static double GetValue(double? d)
-        {
-            return d.HasValue ? d.Value : default(double);
+            SummaryTable.AddChannel(message);
         }
 
         private void OnRegister()
