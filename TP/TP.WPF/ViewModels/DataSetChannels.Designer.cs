@@ -393,7 +393,7 @@ namespace TP.WPF.ViewModels {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public ChannelsRow AddChannelsRow(int Id, string Description, float CurrentValue, bool IsActive, double MinValue, double MaxValue, double MinNormalValue, double MaxNormalValue) {
+            public ChannelsRow AddChannelsRow(int Id, string Description, double CurrentValue, bool IsActive, double MinValue, double MaxValue, double MinNormalValue, double MaxNormalValue) {
                 ChannelsRow rowChannelsRow = ((ChannelsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Id,
@@ -445,7 +445,7 @@ namespace TP.WPF.ViewModels {
                 base.Columns.Add(this.columnId);
                 this.columnDescription = new global::System.Data.DataColumn("Description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDescription);
-                this.columnCurrentValue = new global::System.Data.DataColumn("CurrentValue", typeof(float), null, global::System.Data.MappingType.Element);
+                this.columnCurrentValue = new global::System.Data.DataColumn("CurrentValue", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCurrentValue);
                 this.columnIsActive = new global::System.Data.DataColumn("IsActive", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIsActive);
@@ -626,10 +626,10 @@ namespace TP.WPF.ViewModels {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public float CurrentValue {
+            public double CurrentValue {
                 get {
                     try {
-                        return ((float)(this[this.tableChannels.CurrentValueColumn]));
+                        return ((double)(this[this.tableChannels.CurrentValueColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'CurrentValue\' in table \'Channels\' is DBNull.", e);
