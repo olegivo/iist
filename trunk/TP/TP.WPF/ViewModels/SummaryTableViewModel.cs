@@ -98,7 +98,7 @@ namespace TP.WPF.ViewModels
         public override void OnReadChannel(InternalLogicalChannelDataMessage message)
         {
             base.OnReadChannel(message);
-            ActualizeChannelValue(message.LogicalChannelId, (float) message.Value);
+            ActualizeChannelValue(message.LogicalChannelId, (double) message.Value);
         }
     }
 

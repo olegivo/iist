@@ -1,9 +1,10 @@
-﻿<UserControl
+﻿<Views:BaseView
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:UIComponents="clr-namespace:UICommon.WPF.UIComponents;assembly=UICommon.WPF" mc:Ignorable="d"
+	xmlns:UIComponents="clr-namespace:UICommon.WPF.UIComponents;assembly=UICommon.WPF"
+	xmlns:Views="clr-namespace:TP.WPF.Views" mc:Ignorable="d"
 	x:Class="TP.WPF.Views.ucFinishCleaning"
 	x:Name="UserControl"
 	d:DesignWidth="640" d:DesignHeight="480" Width="1024" Height="768">
@@ -77,6 +78,7 @@
                 Горелка
             </CheckBox>
             <UIComponents:ucIndicator
+                Name="indicatorT6"
                 Canvas.Top="390"
                 Canvas.Right="215"
                 Width="166"
@@ -261,4 +263,4 @@
             </Label>
         </Canvas>
     </Viewbox>
-</UserControl>
+</Views:BaseView>
