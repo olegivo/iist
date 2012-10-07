@@ -3,25 +3,22 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:local="clr-namespace:UICommonWPF"
-	mc:Ignorable="d"
-	x:Class="UICommonWPF.ucReheatChamber"
+	xmlns:UIComponents="clr-namespace:UICommon.WPF.UIComponents" mc:Ignorable="d"
+	x:Class="UICommon.WPF.UIComponents.ucReheatChamber"
 	x:Name="UserControl"
 	d:DesignWidth="640" d:DesignHeight="480" Width="1024" Height="768">
-	<UserControl.Resources>
-		<Storyboard x:Key="OnValueChanged1"/>
-	</UserControl.Resources>
+	<UserControl.Resources></UserControl.Resources>
 	<Viewbox Stretch="Fill">
 		<Grid Height="768" Width="1024">
-			<local:ucTank Margin="80,0,0,128" HorizontalAlignment="Left" Width="200" Height="100" VerticalAlignment="Bottom"/>
-			<local:ucTank Margin="320,0,504,128" Width="Auto" Height="100" VerticalAlignment="Bottom"/>
-			<local:ucTank Margin="0,0,264,128" Width="200" Height="100" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-			<local:ucPipe HorizontalAlignment="Right" Margin="0,88,62,128" d:LayoutOverrides="Width, Height"/>
+			<UIComponents:ucTank Margin="80,0,0,128" HorizontalAlignment="Left" Width="200" Height="100" VerticalAlignment="Bottom"/>
+			<UIComponents:ucTank Margin="320,0,504,128" Width="Auto" Height="100" VerticalAlignment="Bottom"/>
+			<UIComponents:ucTank Margin="0,0,264,128" Width="200" Height="100" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+			<UIComponents:ucPipe HorizontalAlignment="Right" Margin="0,88,62,128" d:LayoutOverrides="Width, Height"/>
 			<Grid>
-				<local:ucTank Margin="80,0,0,128" HorizontalAlignment="Left" Width="200" Height="100" VerticalAlignment="Bottom"/>
-				<local:ucTank Margin="320,0,504,128" Width="Auto" Height="100" VerticalAlignment="Bottom"/>
-				<local:ucTank Margin="0,0,264,128" Width="200" Height="100" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-				<local:ucPipe HorizontalAlignment="Right" Margin="0,88,62,128" d:LayoutOverrides="Width, Height"/>
+				<UIComponents:ucTank Margin="80,0,0,128" HorizontalAlignment="Left" Width="200" Height="100" VerticalAlignment="Bottom"/>
+				<UIComponents:ucTank Margin="320,0,504,128" Width="Auto" Height="100" VerticalAlignment="Bottom"/>
+				<UIComponents:ucTank Margin="0,0,264,128" Width="200" Height="100" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+				<UIComponents:ucPipe HorizontalAlignment="Right" Margin="0,88,62,128" d:LayoutOverrides="Width, Height"/>
 				<TextBlock x:Name="TextBox3" HorizontalAlignment="Left" Height="16" Margin="144,0,0,176" TextWrapping="Wrap" Text="PE:" VerticalAlignment="Bottom" Width="48"/>
 				<TextBlock x:Name="TextBox4" HorizontalAlignment="Left" Height="16" Margin="368,0,0,176" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="72" Text="Полный Бак!"/>
 				<Path Data="M640,536 L639.5,479.5 543.5,479.5 543.5,679.5 399.5,679.5 399.5,639.5" Height="205" Margin="397.5,0,381,85.5" Stretch="Fill" Stroke="#FF00458B" StrokeThickness="5" VerticalAlignment="Bottom"/>
@@ -64,7 +61,7 @@
 					</TransformGroup>
 				</Slider.RenderTransform>
 			</Slider>
-			<local:ucChamber Margin="216,88,488,0" VerticalAlignment="Top" Height="240"/>
+			<UIComponents:ucChamber Margin="216,88,488,0" VerticalAlignment="Top" Height="240"/>
 			<Path Data="M536,256 L799.5,255.5" HorizontalAlignment="Right" Height="5.5" Margin="0,253.5,221.5,0" Stretch="Fill" Stroke="#FF00458B" StrokeThickness="5" VerticalAlignment="Top" Width="268.5"/>
 			<Path Data="M536,144 L823.5,143.5 823.5,567.5 759.5,567.5" HorizontalAlignment="Right" Margin="0,141.5,197.5,197.5" Stretch="Fill" Stroke="#FF00458B" StrokeThickness="5" Width="292.5"/>
 			<Path Data="M824,568 L879.5,567.5" HorizontalAlignment="Right" Height="5.5" Margin="0,0,141.5,197" Stretch="Fill" Stroke="#FF00458B" StrokeThickness="5" VerticalAlignment="Bottom" Width="60.5"/>
