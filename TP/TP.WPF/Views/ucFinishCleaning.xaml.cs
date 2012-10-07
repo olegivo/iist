@@ -12,7 +12,7 @@ namespace TP.WPF.Views
         /// </summary>
         public ucFinishCleaning()
         {
-            InitializeComponent(); 
+            InitializeComponent();
         }
     }
 }

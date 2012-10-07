@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Windows.Input;
 using JulMar.Windows.Mvvm;
 using TP.WPF.ViewModels.AutoControl;
 
@@ -11,19 +13,30 @@ namespace TP.WPF.ViewModels
         public FinishCleaningViewModel()
         {
             autoControl = new FinishCleaningAutoControl(this);
+            //TEST: для тестового изменения значения
+            IncreaseCommand = new DelegatingCommand(OnIncrease);
         }
 
-        private float temperature6;
-        private float temperature7;
-        private float concentration_CO;
-        private float concentration_O2;
-        private float concentration_SO2;
-        private float concentration_NO2;
-        private float concentration_NO;
+        //TEST: метод для тестового изменения значения
+        private void OnIncrease()
+        {
+            Temperature_TC6++;
+        }
+
+        //TEST: команда для тестового изменения значения
+        public ICommand IncreaseCommand { get; private set; }
+
+        private double temperature6;
+        private double temperature7;
+        private double concentration_CO;
+        private double concentration_O2;
+        private double concentration_SO2;
+        private double concentration_NO2;
+        private double concentration_NO;
         private bool burnerStatus;
         private double v;
 
-        public float Temperature_TC6
+        public double Temperature_TC6
         {
             get { return temperature6; }
             set
@@ -32,11 +45,14 @@ namespace TP.WPF.ViewModels
                 {
                     temperature6 = value;
                     OnPropertyChanged("Temperature_TC6");
+                    OnPropertyChanged("Temperature_TC6S");
                 }
             }
         }
 
-        public float Temperature_TC7
+        public string Temperature_TC6S { get { return Temperature_TC6.ToString(CultureInfo.InvariantCulture); } }
+
+        public double Temperature_TC7
         {
             get { return temperature7; }
             set
@@ -49,7 +65,7 @@ namespace TP.WPF.ViewModels
             }
         }
 
-        public float GasConcentration_CO
+        public double GasConcentration_CO
         {
             get { return concentration_CO; }
             set
@@ -63,7 +79,7 @@ namespace TP.WPF.ViewModels
             }
         }
 
-        public float GasConcentration_O2
+        public double GasConcentration_O2
         {
             get { return concentration_O2; }
             set
@@ -76,7 +92,7 @@ namespace TP.WPF.ViewModels
             }
         }
 
-        public float GasConcentration_SO2
+        public double GasConcentration_SO2
         {
             get { return concentration_SO2; }
             set
@@ -90,7 +106,7 @@ namespace TP.WPF.ViewModels
             }
         }
 
-        public float GasConcentration_NO2
+        public double GasConcentration_NO2
         {
             get { return concentration_NO2; }
             set
@@ -104,7 +120,7 @@ namespace TP.WPF.ViewModels
             }
         }
 
-        public float GasConcentration_NO
+        public double GasConcentration_NO
         {
             get { return concentration_NO; }
             set
@@ -119,27 +135,27 @@ namespace TP.WPF.ViewModels
         }
 
 #region Расчётные значения массы веществ
-        public float Massa_SO2
+        public double Massa_SO2
         {
-            get { return (float)(GasConcentration_SO2 * Math.PI * 0.36 * 4.96 / 10000); }
+            get { return GasConcentration_SO2 * Math.PI * 0.36 * 4.96 / 10000; }
 
         }
 
-        public float Massa_CO
+        public double Massa_CO
         {
-            get { return (float)(GasConcentration_CO * Math.PI * 0.36 * 4.96 / 10000); }
+            get { return GasConcentration_CO * Math.PI * 0.36 * 4.96 / 10000; }
 
         }
 
-        public float Massa_NO2
+        public double Massa_NO2
         {
-            get { return (float)(GasConcentration_NO2 * Math.PI * 0.36 * 4.96 / 10000); }
+            get { return GasConcentration_NO2 * Math.PI * 0.36 * 4.96 / 10000; }
 
         }
 
-        public float Massa_NO
+        public double Massa_NO
         {
-            get { return (float)(GasConcentration_NO * Math.PI * 0.36 * 4.96 / 10000); }
+            get { return GasConcentration_NO * Math.PI * 0.36 * 4.96 / 10000; }
 
         }
 #endregion
