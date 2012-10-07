@@ -4,7 +4,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
-	x:Class="UICommonWPF.ucTank"
+	x:Class="UICommon.WPF.UIComponents.ucTank"
 	x:Name="UserControl" Height="200" Width="480">
 	<UserControl.Resources>
 		<LinearGradientBrush x:Key="Brush1" EndPoint="0.5,-0.062" StartPoint="0.5,0.996">
