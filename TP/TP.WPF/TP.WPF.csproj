@@ -196,7 +196,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SendControlMessageEventArgs.cs" />
+    <Compile Include="ViewModels\IndicatorInitEventArgs.cs" />
+    <Compile Include="ViewModels\SendControlMessageEventArgs.cs" />
     <Compile Include="ViewModels\AllHeatExchangerViewModel.cs" />
     <Compile Include="ViewModels\AutoControl\AutoControl.cs" />
     <Compile Include="ViewModels\CycloneAndScrubberViewModel.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="ViewModels\DrumTypeFurnaceViewModel.cs" />
     <Compile Include="ViewModels\AutoControl\FinishCleaningAutoControl.cs" />
     <Compile Include="ViewModels\FinishCleaningViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ReheatChamberViewModel.cs" />
     <Compile Include="ViewModels\SummaryTableViewModel.cs" />

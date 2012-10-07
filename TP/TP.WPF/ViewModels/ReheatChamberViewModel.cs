@@ -1,21 +1,22 @@
-using JulMar.Windows.Mvvm;
+using System;
+using DMS.Common.Messages;
 
 namespace TP.WPF.ViewModels
 {
-    public class ReheatChamberViewModel : ViewModel
+    public class ReheatChamberViewModel : ViewModelBase
     {
         /// <summary>
         /// ДУ-1	уровень в НЕ
         /// </summary>
-        private float _level1;
-        public float Level_DU1
+        private double level1;
+        public double Level_DU1
         {
-            get { return _level1; }
+            get { return level1; }
             set
             {
-                if (_level1 != value)
+                if (level1 != value)
                 {
-                    _level1 = value;
+                    level1 = value;
                     OnPropertyChanged("Level_DU1");
                 }
             }
@@ -23,15 +24,15 @@ namespace TP.WPF.ViewModels
         /// <summary>
         /// ДУ-4	уровень в РЕ
         /// </summary>
-        private float _level4;
-        public float Level_DU4
+        private double level4;
+        public double Level_DU4
         {
-            get { return _level4; }
+            get { return level4; }
             set
             {
-                if (_level4 != value)
+                if (level4 != value)
                 {
-                    _level4 = value;
+                    level4 = value;
                     OnPropertyChanged("Level_DU4");
                 }
             }
@@ -40,20 +41,51 @@ namespace TP.WPF.ViewModels
         /// <summary>
         /// ДУ-11	уровень в РТ
         /// </summary>
-        private float _level11;
-        public float Level_DU11
+        private double level11;
+        public double Level_DU11
         {
-            get { return _level11; }
+            get { return level11; }
             set
             {
-                if (_level11 != value)
+                if (level11 != value)
                 {
-                    _level11 = value;
+                    level11 = value;
                     OnPropertyChanged("Level_DU11");
                 }
             }
         }
 
 
+        /// <summary>
+        /// После чтения канала
+        /// </summary>
+        /// <param name="message"></param>
+        public override void OnReadChannel(InternalLogicalChannelDataMessage message)
+        {
+            base.OnReadChannel(message);
+
+            var value = Convert.ToDouble(message.Value);
+            var channelId = message.LogicalChannelId;
+
+            switch (channelId)
+            {
+                case 14:
+                    //BUG: В 14й канале должна быть ЛИБО температура, ЛИБО уровень! (проверить)
+                    //-??-Temperature = value * 100;
+                    //this.Temperature=value*100;
+                    Level_DU11 = value;
+                    //ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
+                    break; //ДУ-11	уровень в РТ
+                case 15:
+                    Level_DU1 = value;
+                    //ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
+                    break; //ДУ-1	уровень в НЕ
+                case 16:
+                    Level_DU4 = value;
+                    //ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
+                    break; //ДУ-4	уровень в РЕ
+            }
+
+        }
     }
 }

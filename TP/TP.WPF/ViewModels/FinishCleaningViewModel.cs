@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Input;
+using DMS.Common.Messages;
 using JulMar.Windows.Mvvm;
 using TP.WPF.ViewModels.AutoControl;
 
 namespace TP.WPF.ViewModels
 {
-    public class FinishCleaningViewModel : ViewModel
+    public class FinishCleaningViewModel : ViewModelBase
     {
         private readonly AutoControl<FinishCleaningViewModel>  autoControl;
 
@@ -35,6 +36,8 @@ namespace TP.WPF.ViewModels
         private double concentration_NO;
         private bool burnerStatus;
         private double v;
+
+        #region "Контрольные параметры"
 
         public double Temperature_TC6
         {
@@ -133,8 +136,9 @@ namespace TP.WPF.ViewModels
                 }
             }
         }
+        #endregion
 
-#region Расчётные значения массы веществ
+        #region Расчётные значения массы веществ
         public double Massa_SO2
         {
             get { return GasConcentration_SO2 * Math.PI * 0.36 * 4.96 / 10000; }
@@ -158,8 +162,9 @@ namespace TP.WPF.ViewModels
             get { return GasConcentration_NO * Math.PI * 0.36 * 4.96 / 10000; }
 
         }
-#endregion
+        #endregion
 
+        #region Управляемые параметры
         /// <summary>
         /// Состояние горелки
         /// </summary>
@@ -194,6 +199,8 @@ namespace TP.WPF.ViewModels
             }
         }
 
+        #endregion
+
         public bool IsAutomaticControl
         {
             get { return autoControl.IsAutomaticControl; }
@@ -207,16 +214,40 @@ namespace TP.WPF.ViewModels
             }
         }
 
-        private void RaiseSendMessage(int channelId, object value)
-        {
-            if (SendControlMessage != null)
-                SendControlMessage(this, new SendControlMessageEventArgs(channelId, value));
-        }
-
         /// <summary>
-        /// Событие необходимости послать управляющее сообщение
+        /// После чтения канала
         /// </summary>
-        public event EventHandler<SendControlMessageEventArgs> SendControlMessage;
+        /// <param name="message"></param>
+        public override void OnReadChannel(InternalLogicalChannelDataMessage message)
+        {
+            base.OnReadChannel(message);
+            double value = Convert.ToDouble(message.Value);
+            int channelId = message.LogicalChannelId;
 
+            switch (channelId)
+            {
+                case 6:
+                    Temperature_TC6 = value;
+                    break; //TС6	температура перед рукавным фильтром
+                case 7:
+                    Temperature_TC7 = value;
+                    break; //TС7	температура перед дымососом
+                case 20:
+                    GasConcentration_O2 = value;
+                    break; //Г-О2	концентрация газа О2
+                case 21:
+                    GasConcentration_CO = value;
+                    break; //Г-СО	концентрация газа СО
+                case 22:
+                    GasConcentration_SO2 = value;
+                    break; //Г-SО2	концентрация газа SО2
+                case 23:
+                    GasConcentration_NO = value;
+                    break; //Г-NО	концентрация газа NО
+                case 24:
+                    GasConcentration_NO2 = value;
+                    break; //Г-NО2	концентрация газа NО2
+            }
+        }
     }
 }

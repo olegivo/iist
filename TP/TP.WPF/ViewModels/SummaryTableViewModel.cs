@@ -1,5 +1,4 @@
 ﻿using DMS.Common.Messages;
-using JulMar.Windows.Mvvm;
 
 namespace TP.WPF.ViewModels
 {
@@ -13,7 +12,7 @@ namespace TP.WPF.ViewModels
 -при получении новых данных от канала отображать текущее (актуальное) значение параметра в таблице параметров
      */
 
-    public class SummaryTableViewModel : ViewModel
+    public class SummaryTableViewModel : ViewModelBase
     {
 
         private readonly DataSetChannels summarySet = new DataSetChannels();
@@ -33,7 +32,7 @@ namespace TP.WPF.ViewModels
             return d.HasValue ? d.Value : default(double);
         }
 
-        public void AddChannel(ChannelRegistrationMessage message)
+        private void AddChannel(ChannelRegistrationMessage message)
         {
             var row = SummaryTable.FindById(message.LogicalChannelId);
             if (row == null)
@@ -54,7 +53,7 @@ namespace TP.WPF.ViewModels
                 SummaryTable.FindById(channelId).Delete();
         }
 
-        public void SetActive(int channelId, bool isActive)
+        private void SetActive(int channelId, bool isActive)
         {
             //throw new NotImplementedException();
             if (isActive)
@@ -67,7 +66,7 @@ namespace TP.WPF.ViewModels
             }
         }
 
-        public void ActualizeChannelValue(int channelId, float chanelValue)
+        private void ActualizeChannelValue(int channelId, double chanelValue)
         {
             var row = SummaryTable.FindById(channelId);
             if (row != null)
@@ -75,25 +74,32 @@ namespace TP.WPF.ViewModels
 
             OnPropertyChanged("SummaryTable");
         }
-        /*
-                public void CreateDataTable()
-                {
-                    DataTable _summaryTable = new DataTable("SummaryTable");
-                    UniqueConstraint custUnique = new UniqueConstraint(new DataColumn[] { _summaryTable.Columns["ChanelId"] });
-            
-                    summarySet.Tables["SummaryTable"].Constraints.Add(custUnique);
-                    _summaryTable.Columns.Add("ChanelValue");
-                    _summaryTable.Columns.Add("ChanelName");
 
-                    SetChannelsNames();
-                }
-        */
+        /// <summary>
+        /// После регистрации канала
+        /// </summary>
+        /// <param name="message"></param>
+        public override void OnChannelRegistered(ChannelRegistrationMessage message)
+        {
+            base.OnChannelRegistered(message);
+            AddChannel(message);
+        }
 
+        public override void OnChannelIsActiveChanged(int channelId, bool isActive)
+        {
+            base.OnChannelIsActiveChanged(channelId, isActive);
+            SetActive(channelId, isActive);
+        }
 
-        //private void ucCommonParentChanged(object sender, EventArgs e)
-        //{
-        //    ActualizeChannelValue();
-        //}
+        /// <summary>
+        /// После чтения канала
+        /// </summary>
+        /// <param name="message"></param>
+        public override void OnReadChannel(InternalLogicalChannelDataMessage message)
+        {
+            base.OnReadChannel(message);
+            ActualizeChannelValue(message.LogicalChannelId, (float) message.Value);
+        }
     }
 
 }
