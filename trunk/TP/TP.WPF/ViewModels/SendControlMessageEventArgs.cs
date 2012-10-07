@@ -1,6 +1,6 @@
 using System;
 
-namespace TP.WPF
+namespace TP.WPF.ViewModels
 {
     /// <summary>
     /// 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
 using DMS.Common.Events;
-using DMS.Common.Messages;
 using JulMar.Windows.Interfaces;
 using JulMar.Windows.Mvvm;
 
@@ -25,11 +24,6 @@ namespace TP.WPF.ViewModels
             ReheatChamber = new ReheatChamberViewModel();
             AllHeatExchanger = new AllHeatExchangerViewModel();
             SummaryTable = new SummaryTableViewModel();
-            //тестовый вызов, чтобы посмотреть, как добавляются данные:
-            //SummaryTable.AddChannel(1, "Канал №1", 0, true, 0, 0, 0, 0);
-            //SummaryTable.SetChannelsNames();
-            //SummaryTable.ActualizeChannelValue(1, 2);
-            
 
             channelController1.AutoSubscribeChannels = true;
             //channelController1.CanRegisterChanged += new System.EventHandler(this.channelController1_CanRegisterChanged);
@@ -37,10 +31,35 @@ namespace TP.WPF.ViewModels
             channelController1.NeedProtocol += channelController1_NeedProtocol;
             channelController1.HasReadChannel += channelController1_HasReadChannel;
             channelController1.CanRegister = true;
-            channelController1.ChannelRegistered += channelController1_ChannelRegistered;
             channelController1.ChannelUnRegistered += channelController1_ChannelUnRegistered;
             channelController1.ChannelSubscribed += channelController1_ChannelSubscribed;
             channelController1.ChannelUnSubscribed += channelController1_ChannelUnSubscribed;
+
+            SubscribeViewModels();
+        }
+
+        /// <summary>
+        /// Подписка моделей представлений на события, связанные с каналами
+        /// </summary>
+        private void SubscribeViewModels()
+        {
+            var viewModels = new ViewModelBase[]
+                {
+                    FinishCleaning,
+                    DrumTypeFurnace,
+                    CyclonAndScrubber,
+                    ReheatChamber,
+                    AllHeatExchanger,
+                    SummaryTable
+                };
+            foreach (var viewModelBase in viewModels)
+            {
+                var viewModel = viewModelBase;
+                channelController1.HasReadChannel += (sender, e) => viewModel.OnReadChannel(e.Message);
+                channelController1.ChannelRegistered += (sender, e) => viewModel.OnChannelRegistered(e.Message);
+                //TODO: viewModel.OnChannelUnRegistered
+                //TODO: viewModel.OnChannelIsActiveChanged
+            }
         }
 
         void channelController1_ChannelUnSubscribed(object sender, EventArgs e)
@@ -59,13 +78,6 @@ namespace TP.WPF.ViewModels
         {
             throw new NotImplementedException();
             //SummaryTable.RemoveChannel(channelId);
-        }
-
-        void channelController1_ChannelRegistered(object sender, ChannelRegisterEventArgs e)
-        {
-            //TODO:Отображать только зарегистрированые каналы
-            var message = e.Message;
-            SummaryTable.AddChannel(message);
         }
 
         private void OnRegister()
@@ -141,117 +153,29 @@ namespace TP.WPF.ViewModels
             }
         }
 
-        /*
-        /// <summary>
-        /// Запись протокола с обработкой события, произошедшего в другом потоке
-        /// </summary>
-        /// <param name="info">TextBox</param>
-        /// <param name="s">string</param>
-        private delegate void StDelegate(TextBox info, string s);
-        private void SetText(TextBox info, string s)
-        {
-            /*TODO: Binding
-            if (Dispatcher.Thread != Thread.CurrentThread)
-            {
-                StDelegate ddd = SetText;
-                Dispatcher.Invoke(ddd, new object[] { info, s });
-            }
-            else
-            {
-                info.AppendText(s);
-            }
-            #1#
-        }
-        */
-
         void channelController1_HasReadChannel(object sender, DataEventArgs e)
         {
-            float value = Convert.ToSingle(e.Message.Value);
-            int channelId = e.Message.LogicalChannelId;
-            SummaryTable.ActualizeChannelValue(channelId, value);
+            //TODO:перенести в реализации BaseViewModel всё, что ниже:
+            var channelId = e.Message.LogicalChannelId;
 
             switch (channelId)
             {
-                case 1:
-                    DrumTypeFurnace.Temperature_TC1 = value;
-                    break; //TП1	температура в циклонной вихревой топке
-                case 2:
-                    DrumTypeFurnace.Temperature_TC2 = value;
-                    break; //TП2	температура в загрузочной системе
-                case 3:
-                    AllHeatExchanger.Temperature_TP3 = value;
-                    break; //TП3	температура в камере дожигания
-                case 4:
-                    AllHeatExchanger.Temperature_TR4 = value;
-                    break; //TР4	температура в теплообменнике ТО1
-                case 5:
-                    AllHeatExchanger.Temperature_TR5 = value;
-                    break; //TР5	температура в теплообменнике ТО2
-                case 6:
-                    FinishCleaning.Temperature_TC6 = value;
-                    break; //TС6	температура перед рукавным фильтром
-                case 7:
-                    FinishCleaning.Temperature_TC7 = value;
-                    break; //TС7	температура перед дымососом
-                case 8:
-                    DrumTypeFurnace.Temperature_TC8 = value;
-                    break; //TС8	температура воды в системе охлаждения
-                    //BUG: канал не реализован
-                    //    case 9:
-                    //    break; //Р	разрежение в камере дожигания
-                case 10:
-                    CyclonAndScrubber.PhLevel_CF1 = value;
-                    break; //рН1	уровень рН в СФ1
-                case 11:
-                    CyclonAndScrubber.PhLevel_CF2 = value;
-                    break; //рН2	уровень рН в СФ2
-                case 12:
-                    DrumTypeFurnace.Speed_S = value;
-                    break; //S	скорость вращения печи
-                case 13:
-                    DrumTypeFurnace.Level_DU9 = value;
-                    //        ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
-                    break; //ДУ-9	уровень отходов в бункере
+                //BUG: канал не реализован
+                //    case 9:
+                //    break; //Р	разрежение в камере дожигания
                 case 14:
                     //BUG: В 14й канале должна быть ЛИБО температура, ЛИБО уровень! (проверить)
-                    //-??-ReheatChamber.Temperature = value * 100;
-                    //this.ReheatChamber.Temperature=value*100;
-                    ReheatChamber.Level_DU11 = value;
                     //ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //ДУ-11	уровень в РТ
                 case 15:
-                    ReheatChamber.Level_DU1 = value;
                     //ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //ДУ-1	уровень в НЕ
                 case 16:
-                    ReheatChamber.Level_DU4 = value;
                     //ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //ДУ-4	уровень в РЕ
                 case 17:
-                    CyclonAndScrubber.Level_DU10 = value;
                     //        ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
                     break; //ДУ-10	уровень в СБ
-                case 18:
-                    AllHeatExchanger.GasConcentration_O2 = value;
-                    break; //Г-О2	концентрация газа О2
-                case 19:
-                    AllHeatExchanger.GasConcentration_CO = value;
-                    break; //Г-СО	концентрация газа СО
-                case 20:
-                    FinishCleaning.GasConcentration_O2 = value;
-                    break; //Г-О2	концентрация газа О2
-                case 21:
-                    FinishCleaning.GasConcentration_CO = value;
-                    break; //Г-СО	концентрация газа СО
-                case 22:
-                    FinishCleaning.GasConcentration_SO2 = value;
-                    break; //Г-SО2	концентрация газа SО2
-                case 23:
-                    FinishCleaning.GasConcentration_NO = value;
-                    break; //Г-NО	концентрация газа NО
-                case 24:
-                    FinishCleaning.GasConcentration_NO2 = value;
-                    break; //Г-NО2	концентрация газа NО2
             }
         }
 

@@ -1,25 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using JulMar.Windows.Mvvm;
+using DMS.Common.Messages;
 
 namespace TP.WPF.ViewModels
 {
-    public class DrumTypeFurnaceViewModel : ViewModel
+    public class DrumTypeFurnaceViewModel : ViewModelBase
     {
         /// <summary>
         /// TП1	температура в циклонной вихревой топке
         /// </summary>
-        private float _temperature1;
-        public float Temperature_TC1
+        private double temperature1;
+        public double Temperature_TC1
         {
-            get { return _temperature1; }
+            get { return temperature1; }
             set
             {
-                if (_temperature1 != value)
+                if (temperature1 != value)
                 {
-                    _temperature1 = value;
+                    temperature1 = value;
                     OnPropertyChanged("Temperature_TC1");
                 }
             }
@@ -27,15 +24,15 @@ namespace TP.WPF.ViewModels
         /// <summary>
         /// TП2	температура в загрузочной системе
         /// </summary>
-        private float _temperature2;
-        public float Temperature_TC2
+        private double temperature2;
+        public double Temperature_TC2
         {
-            get { return _temperature2; }
+            get { return temperature2; }
             set
             {
-                if (_temperature2 != value)
+                if (temperature2 != value)
                 {
-                    _temperature2 = value;
+                    temperature2 = value;
                     OnPropertyChanged("Temperature_TC2");
                 }
             }
@@ -43,15 +40,15 @@ namespace TP.WPF.ViewModels
         /// <summary>
         /// S	скорость вращения печи
         /// </summary>
-        private float _speed;
-        public float Speed_S
+        private double speed;
+        public double Speed_S
         {
-            get { return _speed; }
+            get { return speed; }
             set
             {
-                if (_speed != value)
+                if (speed != value)
                 {
-                    _speed = value;
+                    speed = value;
                     OnPropertyChanged("Speed_S");
                 }
             }
@@ -59,15 +56,15 @@ namespace TP.WPF.ViewModels
         /// <summary>
         /// TС8	температура воды в системе охлаждения
         /// </summary>
-        private float _temperature8;
-        public float Temperature_TC8
+        private double temperature8;
+        public double Temperature_TC8
         {
-            get { return _temperature8; }
+            get { return temperature8; }
             set
             {
-                if (_temperature8 != value)
+                if (temperature8 != value)
                 {
-                    _temperature8 = value;
+                    temperature8 = value;
                     OnPropertyChanged("Temperature_TC8");
                 }
             }
@@ -75,19 +72,49 @@ namespace TP.WPF.ViewModels
         /// <summary>
         /// ДУ-9	уровень отходов в бункере
         /// </summary>
-        private float _level9;
-        public float Level_DU9
+        private double level9;
+        public double Level_DU9
         {
-            get { return _level9; }
+            get { return level9; }
             set
             {
-                if (_level9 != value)
+                if (level9 != value)
                 {
-                    _level9 = value;
+                    level9 = value;
                     OnPropertyChanged("Level_DU9");
                 }
             }
         }
 
+        /// <summary>
+        /// После чтения канала
+        /// </summary>
+        /// <param name="message"></param>
+        public override void OnReadChannel(InternalLogicalChannelDataMessage message)
+        {
+            base.OnReadChannel(message);
+            double value = Convert.ToDouble(message.Value);
+            int channelId = message.LogicalChannelId;
+
+            switch (channelId)
+            {
+                case 1:
+                    Temperature_TC1 = value;
+                    break; //TП1	температура в циклонной вихревой топке
+                case 2:
+                    Temperature_TC2 = value;
+                    break; //TП2	температура в загрузочной системе
+                case 8:
+                    Temperature_TC8 = value;
+                    break; //TС8	температура воды в системе охлаждения
+                case 12:
+                    Speed_S = value;
+                    break; //S	скорость вращения печи
+                case 13:
+                    Level_DU9 = value;
+                    //        ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
+                    break; //ДУ-9	уровень отходов в бункере
+            }
+        }
     }
 }
