@@ -2,15 +2,6 @@
 
 namespace TP.WPF.ViewModels
 {
-    /*
-     * Обеспечить следующую функциональность (каждый пункт оформить методом или 
-     * парой методов в модели представления, и вызывать их из главной модели представления):
-
--при обнаружении зарегистрированных каналов добавлять записи в таблицу параметров
--при обнаружении отсутствия зарегистрированных каналов удалять записи из таблицы
--при подписке/отписки канала на подучение новых данных отображать это состояние в таблице (флаг "Активен" или "Подписка")
--при получении новых данных от канала отображать текущее (актуальное) значение параметра в таблице параметров
-     */
 
     public class SummaryTableViewModel : ViewModelBase
     {
@@ -46,11 +37,11 @@ namespace TP.WPF.ViewModels
                                             GetValue(message.MaxNormalValue));
         }
 
-        public void RemoveChannel(int channelId)
+        private void RemoveChannel(int channelId)
         {
             var row = SummaryTable.FindById(channelId);
-            if (row == null)
-                SummaryTable.FindById(channelId).Delete();
+            if (row != null)
+                SummaryTable.RemoveChannelsRow(row);
         }
 
         private void SetActive(int channelId, bool isActive)
@@ -65,6 +56,7 @@ namespace TP.WPF.ViewModels
                 SummaryTable.FindById(channelId).IsActive = false;
             }
         }
+
 
         private void ActualizeChannelValue(int channelId, double chanelValue)
         {
@@ -99,6 +91,27 @@ namespace TP.WPF.ViewModels
         {
             base.OnReadChannel(message);
             ActualizeChannelValue(message.LogicalChannelId, (double) message.Value);
+        }
+
+        /// <summary>
+        /// После отмены регистрации канала
+        /// </summary>
+        /// <param name="message"></param>
+        public override void OnChannelUnRegistered(ChannelRegistrationMessage message)
+        {
+            base.OnChannelUnRegistered(message);
+            RemoveChannel(message.LogicalChannelId);
+        }
+
+        /// <summary>
+        /// После отмены регистрации.
+        /// В данном состоянии подписка на каналы отсутствует, ни одного зарегистрированного канала нет.
+        /// Необходимо почистить текущие данные, относящиеся к зарегисртированным или подписанным каналам.
+        /// </summary>
+        public override void OnUnregistered()
+        {
+            base.OnUnregistered();
+            SummarySet.Clear();
         }
     }
 
