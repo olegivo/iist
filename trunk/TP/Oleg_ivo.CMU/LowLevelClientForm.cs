@@ -245,7 +245,7 @@ namespace Oleg_ivo.CMU
 
             doubleListBoxControl1.InitDisplayMember("Id");
             doubleListBoxControl1.InitSources(left, right);
-            doubleListBoxControl1.Enabled = false;
+            CanRegister = true;
         }
 
         private void btnChannelRead_Click(object sender, EventArgs e)
