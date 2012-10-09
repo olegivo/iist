@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using DMS.Common.Events;
 using DMS.Common.Messages;
+using NLog;
 using Oleg_ivo.HighLevelClient;
 
 namespace TP.WPF
@@ -12,16 +12,18 @@ namespace TP.WPF
     /// <summary>
     /// 
     /// </summary>
-    public partial class ChannelController : Component
+    public class ChannelController : Component
     {
-        private System.ComponentModel.IContainer components = null;
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
+        private readonly IContainer components;
         /// <summary>
         /// 
         /// </summary>
         public ChannelController()
         {
             //InitializeComponent();
-            components = new System.ComponentModel.Container();
+            components = new Container();
         }
 
         /// <summary>
@@ -61,9 +63,11 @@ namespace TP.WPF
         /// </summary>
         public void Register()
         {
+            log.Debug("Register");
+
             try
             {
-                Provider.Register(false, RegisterCompleted);
+                Provider.Register(true, RegisterCompleted);
             }
             catch (Exception ex)
             {
@@ -99,18 +103,20 @@ namespace TP.WPF
         /// <summary>
         /// Событие снятия с регистрации канала
         /// </summary>
-        public event EventHandler ChannelUnRegistered;
+        //public event EventHandler ChannelUnRegistered;
         /// <summary>
         /// Событие подписки на канал
         /// </summary>
-        public event EventHandler ChannelSubscribed;
+        //public event EventHandler ChannelSubscribed;
         /// <summary>
         /// Событие снятия подписки на канал
         /// </summary>
-        public event EventHandler ChannelUnSubscribed;
+        //public event EventHandler ChannelUnSubscribed;
 
         void RegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
+            log.Debug("RegisterCompleted");
+
             // регистрация завершена
             CanRegister = false;
             var registeredChannels = Provider.RegisteredChannels;
@@ -124,31 +130,35 @@ namespace TP.WPF
                     //TODO: заполнить RegNameFrom
                     ChannelRegistrationMessage message = new ChannelRegistrationMessage(null, null,
                                                                                         RegistrationMode.Register,
-                                                                                        DataMode.Read, 
+                                                                                        DataMode.Read,
                                                                                         registeredChannel.LogicalChannelId);
                     AddRegisteredChannel(message);
                 }
         }
 
-        readonly IList registeredChannelsList = new List<int>();
-        readonly IList subscribedChannelsList = new List<int>();
-        public IList RegisteredChannelsList { get {return registeredChannelsList;}}
-        public IList SubscribedChannelsList { get { return subscribedChannelsList; } } 
+        readonly List<int> registeredChannelsList = new List<int>();
+        readonly List<int> subscribedChannelsList = new List<int>();
 
         private void AddRegisteredChannel(ChannelRegistrationMessage message)
         {
-            if (!registeredChannelsList.Contains(message.LogicalChannelId) && !subscribedChannelsList.Contains(message.LogicalChannelId))
+            var logicalChannelId = message.LogicalChannelId;
+            if (!registeredChannelsList.Contains(logicalChannelId))
             {
-                registeredChannelsList.Add(message.LogicalChannelId);
-                Protocol(string.Format("Канал [{0}] теперь доступен для подписки", message.LogicalChannelId));
-                if (AutoSubscribeChannels)
+                registeredChannelsList.Add(logicalChannelId);
+                Protocol(string.Format("Канал [{0}] теперь доступен для подписки", logicalChannelId));
+                
+                if (!subscribedChannelsList.Contains(logicalChannelId))//TODO:проверить, можно ли без этого условия (не остаются ли каналы после отмены подписки или отмены регистрации)
                 {
-                    SubscribeChannel(new ChannelSubscribeMessage(RegName, null, SubscribeMode.Subscribe,
-                                                                 message.LogicalChannelId)
-                        );
+                    if (AutoSubscribeChannels)
+                    {
+                        SubscribeChannel(new ChannelSubscribeMessage(RegName,
+                                                                     null,
+                                                                     SubscribeMode.Subscribe,
+                                                                     logicalChannelId)
+                            );
+                    }
                 }
             }
-
         }
 
         /// <summary>
@@ -156,13 +166,31 @@ namespace TP.WPF
         /// </summary>
         public void Unregister()
         {
+            log.Debug("Unregister");
+
             try
             {
-                Provider.Unregister();
                 //убираем все зарегистрированные и подписанные каналы:
-                registeredChannelsList.Clear();
-                subscribedChannelsList.Clear();
+                foreach (var channelId in subscribedChannelsList.ToArray())
+                {
+                    UnSubscribeChannel(new ChannelSubscribeMessage(RegName,
+                                                                   null,
+                                                                   SubscribeMode.Unsubscribe,
+                                                                   channelId)
+                        );
+                }
+                //subscribedChannelsList.Clear();
+                foreach (var channelId in registeredChannelsList.ToArray())
+                {
+                    RemoveRegisteredChannel(new ChannelRegistrationMessage(RegName,
+                                                                   null,
+                                                                   RegistrationMode.Unregister, 
+                                                                   DataMode.Unknown,                                                                    
+                                                                   channelId));
+                }
+                //registeredChannelsList.Clear();
 
+                Provider.Unregister();
                 CanRegister = true;
                 Protocol("Отмена регистрации на сервере завершилась успешно");
             }
@@ -180,6 +208,8 @@ namespace TP.WPF
         /// <param name="value"></param>
         public void WriteChannel(int channelId, object value)
         {
+            log.Debug("WriteChannel");
+
             Provider.WriteChannel(new InternalLogicalChannelDataMessage(RegName, null, DataMode.Write, channelId)
             {
                 Value = value
@@ -222,12 +252,47 @@ namespace TP.WPF
 
 
         /// <summary>
-        /// Событие регистрации канала
+        /// Событие постановки канала на регистрацию
         /// </summary>
         public event EventHandler<ChannelRegisterEventArgs> ChannelRegistered
         {
             add { Provider.ChannelRegistered += value; }
             remove { Provider.ChannelRegistered -= value; }
+        }
+        /// <summary>
+        /// Событие снятия канала с регистрации
+        /// </summary>
+        public event EventHandler<ChannelRegisterEventArgs> ChannelUnRegistered
+        {
+            add { Provider.ChannelUnRegistered += value; }
+            remove { Provider.ChannelUnRegistered -= value; }
+        }
+        /// <summary>
+        /// Событие подписки на канал
+        /// </summary>
+        public event EventHandler<AsyncCompletedEventArgs> ChannelSubscribed
+        {
+            add { Provider.ChannelSubscribeCompleted += value; }
+            remove { Provider.ChannelSubscribeCompleted -= value; }
+        }
+
+        /// <summary>
+        /// Событие отписки от канала
+        /// </summary>
+        public event EventHandler<AsyncCompletedEventArgs> ChannelUnSubscribed
+        {
+            add { Provider.ChannelUnSubscribeCompleted += value; }
+            remove { Provider.ChannelUnSubscribeCompleted -= value; }
+
+        }
+
+        /// <summary>
+        /// Событие отмены регистрации
+        /// </summary>
+        public event EventHandler<AsyncCompletedEventArgs> UnregisterCompleted
+        {
+            add { Provider.UnregisterCompleted += value; }
+            remove { Provider.UnregisterCompleted -= value; }
         }
 
         private void Provider_NeedProtocol(object sender, EventArgs e)
@@ -247,41 +312,45 @@ namespace TP.WPF
 
         private void Provider_ChannelUnRegistered(object sender, ChannelRegisterEventArgs e)
         {
+            log.Debug("Provider_ChannelUnRegistered");
+
             RemoveRegisteredChannel(e.Message);
             Protocol(string.Format("Канал [{0}] теперь недоступен для подписки", e.Message.LogicalChannelId));
         }
 
         private void RemoveRegisteredChannel(ChannelRegistrationMessage message)
         {
-            EventHandler handler = ChannelUnRegistered;
-            if (handler != null) handler(this, EventArgs.Empty);    
-            if (registeredChannelsList.Contains(message.LogicalChannelId))
-            {
-                registeredChannelsList.Remove(message.LogicalChannelId);
-            }
-            else if (subscribedChannelsList.Contains(message.LogicalChannelId))
+            log.Debug("RemoveRegisteredChannel");
+
+            //EventHandler handler = ChannelUnRegistered;
+            //if (handler != null) handler(this, EventArgs.Empty);    
+            var channelId = message.LogicalChannelId;
+            if (subscribedChannelsList.Contains(channelId))
             {
                 ChannelSubscribeMessage unSubscribeMessage = new ChannelSubscribeMessage(RegName, null,
                                                                                          SubscribeMode.Unsubscribe,
-                                                                                         message.LogicalChannelId);
-
-                subscribedChannelsList.Remove(message.LogicalChannelId);
+                                                                                         channelId);
 
                 ParameterizedThreadStart thread = UnSubscribeUnregisteredChannelAsync;
                 thread.Invoke(unSubscribeMessage);
             }
+            if (registeredChannelsList.Contains(channelId))
+                registeredChannelsList.Remove(channelId);
         }
 
         private void UnSubscribeUnregisteredChannelAsync(object message)
         {
+            log.Debug("UnSubscribeUnregisteredChannelAsync");
+
             //Thread.Sleep(TimeSpan.FromSeconds(1));
 
             ChannelSubscribeMessage channelSubscribeMessage = (ChannelSubscribeMessage)message;
+            subscribedChannelsList.Remove(channelSubscribeMessage.LogicalChannelId);
             string s = string.Format("Подписка на канал [{0}] была отменена из-за отмены регистрации канала",
                                           channelSubscribeMessage.LogicalChannelId);
             Protocol(s);
-            //            MessageBox.Show(s);
-            //            Program.Proxy.ChannelUnSubscribe(channelSubscribeMessage);
+            //MessageBox.Show(s);
+            //Program.Proxy.ChannelUnSubscribe(channelSubscribeMessage);
         }
 
         /// <summary>
@@ -291,21 +360,32 @@ namespace TP.WPF
 
         private void Provider_ChannelRegistered(object sender, ChannelRegisterEventArgs e)
         {
+            log.Debug("Provider_ChannelRegistered");
             AddRegisteredChannel(e.Message);
         }
 
         private void Provider_ChannelSubscribeCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            Protocol(string.Format("Произошла подписка на канал [{0}]", e.UserState));
-            EventHandler handler = ChannelSubscribed;
-            if (handler != null) handler(this, EventArgs.Empty);   
+            log.Debug("Provider_ChannelSubscribeCompleted");
+
+            var channelId = Convert.ToInt32(e.UserState);
+            Protocol(string.Format("Произошла подписка на канал [{0}]", channelId));
+            if(!subscribedChannelsList.Contains(channelId))
+                subscribedChannelsList.Add(channelId);
+            //EventHandler handler = ChannelSubscribed;
+            //if (handler != null) handler(this, EventArgs.Empty);   
         }
 
         private void Provider_ChannelUnSubscribeCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            Protocol(string.Format("Произошла отписка от канала [{0}]", e.UserState));
-            EventHandler handler = ChannelUnSubscribed;
-            if (handler != null) handler(this, EventArgs.Empty);    
+            log.Debug("Provider_ChannelUnSubscribeCompleted");
+
+            var channelId = Convert.ToInt32(e.UserState);
+            Protocol(string.Format("Произошла отписка от канала [{0}]", channelId));
+            if (subscribedChannelsList.Contains(channelId))
+                subscribedChannelsList.Remove(channelId);
+            //EventHandler handler = ChannelUnSubscribed;
+            //if (handler != null) handler(this, EventArgs.Empty);    
         }
 
         /// <summary> 
@@ -361,12 +441,16 @@ namespace TP.WPF
 
         private void SubscribeChannel(ChannelSubscribeMessage message)
         {
+            log.Debug("SubscribeChannel");
+
             DelayedSubscriber.Subscribe(Provider, message);
             //Provider.SubscribeChannel(message);
         }
 
         private void UnSubscribeChannel(ChannelSubscribeMessage subscribeMessage)
         {
+            log.Debug("UnSubscribeChannel");
+
             Provider.UnSubscribeChannel(subscribeMessage);
         }
 

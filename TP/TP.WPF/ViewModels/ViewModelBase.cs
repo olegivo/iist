@@ -53,6 +53,16 @@ namespace TP.WPF.ViewModels
             
         }
 
+        /// <summary>
+        /// После отмены регистрации.
+        /// В данном состоянии подписка на каналы отсутствует, ни одного зарегистрированного канала нет.
+        /// Необходимо почистить текущие данные, относящиеся к зарегисртированным или подписанным каналам.
+        /// </summary>
+        public virtual void OnUnregistered()
+        {
+            
+        }
+
         protected void RaiseSendMessage(int channelId, object value)
         {
             if (SendControlMessage != null)

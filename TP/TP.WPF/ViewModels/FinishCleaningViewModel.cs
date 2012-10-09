@@ -27,7 +27,7 @@ namespace TP.WPF.ViewModels
         //TEST: команда для тестового изменения значения
         public ICommand IncreaseCommand { get; private set; }
 
-        private double temperature6;
+        private double? temperature6;
         private double temperature7;
         private double concentration_CO;
         private double concentration_O2;
@@ -39,7 +39,7 @@ namespace TP.WPF.ViewModels
 
         #region "Контрольные параметры"
 
-        public double Temperature_TC6
+        public double? Temperature_TC6
         {
             get { return temperature6; }
             set
@@ -53,7 +53,7 @@ namespace TP.WPF.ViewModels
             }
         }
 
-        public string Temperature_TC6S { get { return Temperature_TC6.ToString(CultureInfo.InvariantCulture); } }
+        public string Temperature_TC6S { get { return Temperature_TC6.GetValueOrDefault().ToString(CultureInfo.InvariantCulture); } }
 
         public double Temperature_TC7
         {

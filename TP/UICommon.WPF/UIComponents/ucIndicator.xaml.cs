@@ -94,21 +94,23 @@ namespace UICommon.WPF.UIComponents
 
         private static void CurrentValueChagedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
+/*
             ucIndicator control = sender as ucIndicator;
             if (control == null) return;
 
             control.CurrentValue = (double)e.NewValue;
+*/
         }
 
         public static readonly DependencyProperty CurrentValueProperty =
             DependencyProperty.Register("CurrentValue",
-                                        typeof(double),
+                                        typeof(object),
                                         typeof(ucIndicator),
-                                        new FrameworkPropertyMetadata(default(double), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, CurrentValueChagedCallback));
+                                        new FrameworkPropertyMetadata(default(object), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, CurrentValueChagedCallback));
 
-        public double CurrentValue
+        public object CurrentValue
         {
-            get { return (double)GetValue(CurrentValueProperty); }
+            get { return GetValue(CurrentValueProperty); }
             set { SetValue(CurrentValueProperty, value); }
         }
 

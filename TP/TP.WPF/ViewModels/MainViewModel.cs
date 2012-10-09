@@ -4,6 +4,8 @@ using DMS.Common.Events;
 using JulMar.Windows.Interfaces;
 using JulMar.Windows.Mvvm;
 
+
+
 namespace TP.WPF.ViewModels
 {
     public class MainViewModel : ViewModel
@@ -31,9 +33,6 @@ namespace TP.WPF.ViewModels
             channelController1.NeedProtocol += channelController1_NeedProtocol;
             channelController1.HasReadChannel += channelController1_HasReadChannel;
             channelController1.CanRegister = true;
-            channelController1.ChannelUnRegistered += channelController1_ChannelUnRegistered;
-            channelController1.ChannelSubscribed += channelController1_ChannelSubscribed;
-            channelController1.ChannelUnSubscribed += channelController1_ChannelUnSubscribed;
 
             SubscribeViewModels();
         }
@@ -57,27 +56,11 @@ namespace TP.WPF.ViewModels
                 var viewModel = viewModelBase;
                 channelController1.HasReadChannel += (sender, e) => viewModel.OnReadChannel(e.Message);
                 channelController1.ChannelRegistered += (sender, e) => viewModel.OnChannelRegistered(e.Message);
-                //TODO: viewModel.OnChannelUnRegistered
-                //TODO: viewModel.OnChannelIsActiveChanged
+                channelController1.ChannelUnRegistered += (sender, e) => viewModel.OnChannelUnRegistered(e.Message);
+                channelController1.ChannelSubscribed += (sender, e) => viewModel.OnChannelIsActiveChanged(Convert.ToInt32(e.UserState), true);
+                channelController1.ChannelUnSubscribed += (sender, e) => viewModel.OnChannelIsActiveChanged(Convert.ToInt32(e.UserState), false);
+                channelController1.UnregisterCompleted += (sender, e) => viewModel.OnUnregistered();
             }
-        }
-
-        void channelController1_ChannelUnSubscribed(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-            //SummaryTable.SetActive(channelId, false);
-        }
-
-        void channelController1_ChannelSubscribed(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-            //SummaryTable.SetActive(channelId, true);
-        }
-
-        void channelController1_ChannelUnRegistered(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-            //SummaryTable.RemoveChannel(channelId);
         }
 
         private void OnRegister()
@@ -160,9 +143,9 @@ namespace TP.WPF.ViewModels
 
             switch (channelId)
             {
-                //BUG: канал не реализован
-                //    case 9:
-                //    break; //Р	разрежение в камере дожигания
+                    //BUG: канал не реализован
+                    //    case 9:
+                    //    break; //Р	разрежение в камере дожигания
                 case 14:
                     //BUG: В 14й канале должна быть ЛИБО температура, ЛИБО уровень! (проверить)
                     //ucChart1.AddDataChart(channelId, Convert.ToInt32(value));

@@ -185,6 +185,8 @@ namespace Oleg_ivo.HighLevelClient
 
         private void CallbackHandler_ChannelRegistered(object sender, ChannelRegisterEventArgs e)
         {
+            log.Debug("CallbackHandler_ChannelRegistered");
+
             var message = e.Message;
             var newValue = new List<IRegisteredChannel> { new RegisteredLogicalChannel(message.LogicalChannelId) };
             if (RegisteredChannels != null)
@@ -202,6 +204,8 @@ namespace Oleg_ivo.HighLevelClient
 
         private void CallbackHandler_ChannelUnRegistered(object sender, ChannelRegisterEventArgs e)
         {
+            log.Debug("CallbackHandler_ChannelUnRegistered");
+
             var message = e.Message;
             var removeValue = RegisteredChannels.FirstOrDefault(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId ));
 
@@ -247,6 +251,8 @@ namespace Oleg_ivo.HighLevelClient
 
         void _callbackHandler_HasReadChannel(object sender, DataEventArgs e)
         {
+            log.Debug("_callbackHandler_HasReadChannel");
+
             if (RegisteredChannels != null)
             {
                 var message = e.Message;
@@ -267,6 +273,8 @@ namespace Oleg_ivo.HighLevelClient
 
         private void InvokeHasReadChannel(DataEventArgs e)
         {
+            log.Debug("InvokeHasReadChannel");
+
             EventHandler<DataEventArgs> handler = HasReadChannel;
             if (handler != null) handler(this, e);
         }
@@ -274,8 +282,10 @@ namespace Oleg_ivo.HighLevelClient
         /// <summary>
         /// Синхронная регистрация (используется для LabView)
         /// </summary>
-        public void Register()
+        public void RegisterSync()
         {
+            log.Debug("RegisterSync");
+
             Register(false, null);
         }
 
@@ -284,6 +294,8 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public void RegisterAsync(EventHandler<AsyncCompletedEventArgs> proxyRegisterCompleted)
         {
+            log.Debug("RegisterAsync");
+
             Register(true, proxyRegisterCompleted);
         }
 
@@ -317,6 +329,8 @@ namespace Oleg_ivo.HighLevelClient
 
         void Proxy_RegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
+            log.Debug("Proxy_RegisterCompleted");
+
             Proxy.RegisterCompleted -= Proxy_RegisterCompleted;
             if (e.Error != null)
                 throw new InvalidOperationException(e.Error.ToString(), e.Error);
@@ -350,10 +364,25 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public void Unregister()
         {
+            log.Debug("Unregister");
+
+            Proxy.UnregisterCompleted += Proxy_UnregisterCompleted;
             Proxy.UnregisterAsync(new RegistrationMessage(RegName, null, RegistrationMode.Unregister, DataMode.Unknown));
+        }
+
+        void Proxy_UnregisterCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            log.Debug("Proxy_UnregisterCompleted");
+
+            Proxy.UnregisterCompleted -= Proxy_UnregisterCompleted;
             RegisteredChannels.Clear();
         }
 
+        public event EventHandler<AsyncCompletedEventArgs> UnregisterCompleted
+        {
+            add { Proxy.UnregisterCompleted += value; }
+            remove { Proxy.UnregisterCompleted -= value; }
+        }
 
         /// <summary>
         /// Асинхронная подписка на канал. Номер канала запоминается в userState
@@ -361,6 +390,8 @@ namespace Oleg_ivo.HighLevelClient
         /// <param name="message"></param>
         public void SubscribeChannel(ChannelSubscribeMessage message)
         {
+            log.Debug("SubscribeChannel");
+
             Proxy.ChannelSubscribeAsync(message, message.LogicalChannelId);
         }
 
@@ -370,6 +401,8 @@ namespace Oleg_ivo.HighLevelClient
         /// <param name="message"></param>
         public void UnSubscribeChannel(ChannelSubscribeMessage message)
         {
+            log.Debug("UnSubscribeChannel");
+
             Proxy.ChannelUnSubscribeAsync(message, message.LogicalChannelId);
         }
 
@@ -379,6 +412,8 @@ namespace Oleg_ivo.HighLevelClient
         /// <param name="message"></param>
         public void WriteChannel(InternalLogicalChannelDataMessage message)
         {
+            log.Debug("WriteChannel");
+
             Proxy.WriteChannelAsync(message);
         }
     }
