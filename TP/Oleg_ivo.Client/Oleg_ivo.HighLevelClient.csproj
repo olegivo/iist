@@ -285,6 +285,9 @@
     <None Include="Service References\ServiceReferenceHomeTcp\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\DataSources\DMS.Common.MessageExchangeSystem.HighLevel.RegisteredLogicalChannel.datasource" />
     <None Include="Service References\ServiceReferenceHomeTcp\DMS.Common.MessageExchangeSystem.HighLevel.xsd" />
     <None Include="Service References\ServiceReferenceHomeTcp\Reference.svcmap">
