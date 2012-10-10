@@ -53,9 +53,41 @@ namespace TP.WPF.Views
             base.OnInitIndicator(message);
             switch (message.LogicalChannelId)
             {
+                /*
+                    indicatorT6.Init(message);
+                    indicatorV.Init(message);
+                    indicatorCO.Init(message);
+                    indicatorО2.Init(message);
+                    indicatorSO2.Init(message);
+                    indicatorNO.Init(message);
+                    indicatorNO2.Init(message);
+                    indicatorT7.Init(message);
+                    indicatorMCO.Init(message);
+                    indicatorMSO2.Init(message);
+                    indicatorMNO.Init(message);
+                    indicatorMNO2.Init(message);
+                */
                 case 6:
                     indicatorT6.Init(message);
                     break;
+                case 7:
+                    indicatorT7.Init(message);
+                    break; //TС7	температура перед дымососом
+                case 20:
+                    indicatorО2.Init(message);
+                    break; //Г-О2	концентрация газа О2
+                case 21:
+                    indicatorCO.Init(message);
+                    break; //Г-СО	концентрация газа СО
+                case 22:
+                    indicatorSO2.Init(message);
+                    break; //Г-SО2	концентрация газа SО2
+                case 23:
+                    indicatorNO.Init(message);
+                    break; //Г-NО	концентрация газа NО
+                case 24:
+                    indicatorNO2.Init(message);
+                    break; //Г-NО2	концентрация газа NО2
             }
         }
     }
