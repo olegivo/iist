@@ -9,7 +9,7 @@ namespace TP.WPF.ViewModels
 {
     public class FinishCleaningViewModel : ViewModelBase
     {
-        private readonly AutoControl<FinishCleaningViewModel>  autoControl;
+        private readonly AutoControl<FinishCleaningViewModel> autoControl;
 
         public FinishCleaningViewModel()
         {
@@ -21,7 +21,15 @@ namespace TP.WPF.ViewModels
         //TEST: метод для тестового изменения значения
         private void OnIncrease()
         {
-            Temperature_TC6++;
+            OnChannelRegistered(new ChannelRegistrationMessage("", "", RegistrationMode.Register, DataMode.Read, 6)
+                {
+                    MinValue = 0,
+                    MinNormalValue = 20,
+                    MaxNormalValue = 40,
+                    MaxValue = 50
+                });
+            if (!Temperature_TC6.HasValue) Temperature_TC6 = 0;
+            Temperature_TC6 += (Temperature_TC6 > 50 ? -70 : 5);
         }
 
         //TEST: команда для тестового изменения значения
