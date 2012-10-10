@@ -24,7 +24,7 @@ namespace UICommon.WPF.UIComponents
 
         void ucIndicator_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Console.WriteLine(e.PropertyName);
+            //Console.WriteLine(e.PropertyName);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -39,8 +39,8 @@ namespace UICommon.WPF.UIComponents
         {
             MinValue = message.MinValue;
             MaxValue = message.MaxValue;
-            MinNormalValue = message.MinValue;
-            MaxNormalValue = message.MaxValue;
+            MinNormalValue = message.MinNormalValue;
+            MaxNormalValue = message.MaxNormalValue;
             Caption = message.Description;
         }
 
@@ -94,12 +94,19 @@ namespace UICommon.WPF.UIComponents
 
         private static void CurrentValueChagedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-/*
             ucIndicator control = sender as ucIndicator;
             if (control == null) return;
 
-            control.CurrentValue = (double)e.NewValue;
-*/
+            var propertyNames = new[]
+                    {
+                        "IsValueHigherNormal",
+                        "IsValueLowerNormal",
+                        "IsValueHigherCritycal",
+                        "IsValueLowerCritycal"
+                    };
+            foreach (var propertyName in propertyNames)
+                control.OnPropertyChanged(propertyName);
+
         }
 
         public static readonly DependencyProperty CurrentValueProperty =
@@ -108,12 +115,78 @@ namespace UICommon.WPF.UIComponents
                                         typeof(ucIndicator),
                                         new FrameworkPropertyMetadata(default(object), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, CurrentValueChagedCallback));
 
+        /// <summary>
+        /// Текущее значение
+        /// </summary>
         public object CurrentValue
         {
             get { return GetValue(CurrentValueProperty); }
-            set { SetValue(CurrentValueProperty, value); }
+            set
+            {
+                SetValue(CurrentValueProperty, value);
+                var propertyNames = new[]
+                    {
+                        "IsValueHigherNormal",
+                        "IsValueLowerNormal",
+                        "IsValueHigherCritycal",
+                        "IsValueLowerCritycal"
+                    };
+                foreach (var propertyName in propertyNames)
+                    OnPropertyChanged(propertyName);
+            }
         }
 
-        //TODO: разные стили всех вариантов нахождения CurrentValue в различных диапазонах
+        /// <summary>
+        /// Текущее значение больше нормального
+        /// </summary>
+        public bool IsValueHigherNormal
+        {
+            get
+            {
+                return CompareCurrentValueWith(MaxNormalValue) > 0;
+            }
+        }
+
+        /// <summary>
+        /// Текущее значение больше максимально возможного
+        /// </summary>
+        public bool IsValueHigherCritycal
+        {
+            get
+            {
+                return CompareCurrentValueWith(MaxValue) > 0;
+            }
+        }
+
+        /// <summary>
+        /// Текущее значение меньше нормального
+        /// </summary>
+        public bool IsValueLowerNormal
+        {
+            get
+            {
+                return CompareCurrentValueWith(MinNormalValue) < 0;
+            }
+        }
+
+        /// <summary>
+        /// Текущее значение меньше минимально возможного
+        /// </summary>
+        public bool IsValueLowerCritycal
+        {
+            get
+            {
+                return CompareCurrentValueWith(MinValue) < 0;
+            }
+        }
+
+        private int CompareCurrentValueWith(double? compareValue)
+        {
+            var result = 0;
+            var value = CurrentValue as double?;
+            if (value.HasValue && compareValue.HasValue)
+                result = value.Value.CompareTo(compareValue.Value);
+            return result;
+        }
     }
 }

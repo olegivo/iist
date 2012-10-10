@@ -8,6 +8,16 @@
              Name="parent"
              ><!--DataContext="{Binding RelativeSource={RelativeSource Self}}"-->
     <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=IsValueHigherNormal}" Value="True">
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=IsValueLowerNormal}" Value="True">
+                    <Setter Property="Foreground" Value="Aqua" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <!--<Converters1:StringToNullableDoubleConverter x:Key="Converter" />-->
     </UserControl.Resources>
     <Grid DataContext="{Binding ElementName=parent}">
@@ -22,11 +32,16 @@
             Text="{Binding Path=Caption}" 
             MinWidth="50" 
             MinHeight="20" 
-            Grid.Row="0" VerticalAlignment="Top" Height="20" />
+            Grid.Row="0" 
+            VerticalAlignment="Top" 
+            Height="20" />
         <TextBox 
             Name="tb"
             Text="{Binding Path=CurrentValue}" 
             MinHeight="20" 
-            MinWidth="50" Grid.Column="1"/>
+            MinWidth="50" 
+            Grid.Column="1">
+            
+        </TextBox>
     </Grid>
 </UserControl>
