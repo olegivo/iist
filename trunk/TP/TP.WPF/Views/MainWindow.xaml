@@ -49,10 +49,12 @@
     <Window.Resources>
         <!-- Bindable commands sit in resources and allow keyboard input to target ViewModel commands -->
         <julmar:BindableCommand x:Key="CloseCommand" Command="{Binding CloseAppCommand}" />
+        <julmar:BindableCommand x:Key="TestCommand" Command="{Binding TestCommand}" />
     </Window.Resources>
 
     <Window.InputBindings>
         <KeyBinding Key="X" Modifiers="ALT" Command="{StaticResource CloseCommand}" />
+        <KeyBinding Key="D" Modifiers="Control" Command="{StaticResource TestCommand}" />
     </Window.InputBindings>
 
     <!--Рабочая поверхность-->

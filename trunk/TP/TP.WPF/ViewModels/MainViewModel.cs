@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
-using DMS.Common.Events;
+using DMS.Common.Messages;
 using JulMar.Windows.Interfaces;
 using JulMar.Windows.Mvvm;
 
@@ -8,10 +8,11 @@ using JulMar.Windows.Mvvm;
 
 namespace TP.WPF.ViewModels
 {
-    public class MainViewModel : ViewModel
+    public class MainViewModel : ViewModelBase
     {
         public MainViewModel()
         {
+            TestCommand = new DelegatingCommand(OnTest);
             CloseAppCommand = new DelegatingCommand(OnCloseApp);
             DisplayAboutCommand = new DelegatingCommand(OnShowAbout);
 
@@ -31,19 +32,36 @@ namespace TP.WPF.ViewModels
             //channelController1.CanRegisterChanged += new System.EventHandler(this.channelController1_CanRegisterChanged);
             channelController1.InitProvider("HighLevelClient");
             channelController1.NeedProtocol += channelController1_NeedProtocol;
-            channelController1.HasReadChannel += channelController1_HasReadChannel;
             channelController1.CanRegister = true;
 
-            SubscribeViewModels();
+            SubscribeAndInitViewModels();
+        }
+
+        private void OnTest()
+        {
+            const int channelId = 6;
+            OnChannelRegistered(new ChannelRegistrationMessage("", "", RegistrationMode.Register, DataMode.Read, channelId)
+            {
+                MinValue = 0,
+                MinNormalValue = 20,
+                MaxNormalValue = 40,
+                MaxValue = 50,
+                Description = "Т6"
+            });
+
+            var indicatorViewModel = IndicatorViewModels[channelId];
+            if (!indicatorViewModel.CurrentValue.HasValue) indicatorViewModel.CurrentValue = 0;
+            indicatorViewModel.CurrentValue += (indicatorViewModel.CurrentValue > 50 ? -70 : 5);
         }
 
         /// <summary>
         /// Подписка моделей представлений на события, связанные с каналами
         /// </summary>
-        private void SubscribeViewModels()
+        private void SubscribeAndInitViewModels()
         {
             var viewModels = new ViewModelBase[]
                 {
+                    this,
                     FinishCleaning,
                     DrumTypeFurnace,
                     CyclonAndScrubber,
@@ -51,6 +69,8 @@ namespace TP.WPF.ViewModels
                     AllHeatExchanger,
                     SummaryTable
                 };
+
+            var models = new ObservableDictionary<int, IndicatorViewModel>();
             foreach (var viewModelBase in viewModels)
             {
                 var viewModel = viewModelBase;
@@ -60,6 +80,7 @@ namespace TP.WPF.ViewModels
                 channelController1.ChannelSubscribed += (sender, e) => viewModel.OnChannelIsActiveChanged(Convert.ToInt32(e.UserState), true);
                 channelController1.ChannelUnSubscribed += (sender, e) => viewModel.OnChannelIsActiveChanged(Convert.ToInt32(e.UserState), false);
                 channelController1.UnregisterCompleted += (sender, e) => viewModel.OnUnregistered();
+                viewModel.IndicatorViewModels = models;
             }
         }
 
@@ -136,16 +157,21 @@ namespace TP.WPF.ViewModels
             }
         }
 
-        void channelController1_HasReadChannel(object sender, DataEventArgs e)
+        /// <summary>
+        /// После чтения канала
+        /// </summary>
+        /// <param name="message"></param>
+        public override void OnReadChannel(InternalLogicalChannelDataMessage message)
         {
-            //TODO:перенести в реализации BaseViewModel всё, что ниже:
-            var channelId = e.Message.LogicalChannelId;
+            base.OnReadChannel(message);
+            //TODO:перенести в другие реализации BaseViewModel всё, что ниже:
+            var channelId = message.LogicalChannelId;
 
             switch (channelId)
             {
-                    //BUG: канал не реализован
-                    //    case 9:
-                    //    break; //Р	разрежение в камере дожигания
+                //BUG: канал не реализован
+                //    case 9:
+                //    break; //Р	разрежение в камере дожигания
                 case 14:
                     //BUG: В 14й канале должна быть ЛИБО температура, ЛИБО уровень! (проверить)
                     //ucChart1.AddDataChart(channelId, Convert.ToInt32(value));
@@ -162,6 +188,28 @@ namespace TP.WPF.ViewModels
             }
         }
 
+        /// <summary>
+        /// После регистрации канала
+        /// </summary>
+        /// <param name="message"></param>
+        public override void OnChannelRegistered(ChannelRegistrationMessage message)
+        {
+            base.OnChannelRegistered(message);
+            IndicatorViewModel indicatorViewModel;
+            var channelId = message.LogicalChannelId;
+            if (IndicatorViewModels.ContainsKey(channelId))
+            {
+                indicatorViewModel = IndicatorViewModels[channelId];
+            }
+            else
+            {
+                indicatorViewModel = new IndicatorViewModel();
+                IndicatorViewModels.Add(channelId, indicatorViewModel);
+            }
+            indicatorViewModel.Init(message);
+        }
+
+        //TODO:изменить механизм из событий во что-нибудь другое
         private void FinishCleaning_SendControlMessage(object sender, SendControlMessageEventArgs e)
         {
             channelController1.WriteChannel(e.ChannelId, e.Value);
@@ -179,5 +227,6 @@ namespace TP.WPF.ViewModels
 
         public ICommand RegisterCommand { get; private set; }
         public ICommand UnregisterCommand { get; private set; }
+        public ICommand TestCommand { get; private set; }
     }
 }

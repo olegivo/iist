@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Windows.Input;
 using DMS.Common.Messages;
 using JulMar.Windows.Mvvm;
@@ -60,8 +59,6 @@ namespace TP.WPF.ViewModels
                 }
             }
         }
-
-        public string Temperature_TC6S { get { return Temperature_TC6.GetValueOrDefault().ToString(CultureInfo.InvariantCulture); } }
 
         public double Temperature_TC7
         {

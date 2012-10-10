@@ -1,38 +1,16 @@
-﻿using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-using DMS.Common.Messages;
+﻿using DMS.Common.Messages;
+using JulMar.Windows.Mvvm;
 
-namespace UICommon.WPF.UIComponents
+namespace TP.WPF.ViewModels
 {
-    /// <summary>
-    /// Interaction logic for ucIndicator.xaml
-    /// </summary>
-    public partial class ucIndicator : UserControl, INotifyPropertyChanged
+    public class IndicatorViewModel : ViewModel
     {
         private double? minValue;
         private double? maxValue;
         private double? minNormalValue;
         private double? maxNormalValue;
-
-        public ucIndicator()
-        {
-            InitializeComponent();
-            PropertyChanged += ucIndicator_PropertyChanged;
-        }
-
-        void ucIndicator_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            //Console.WriteLine(e.PropertyName);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
+        private string caption;
+        private double? currentValue;
 
         public void Init(ChannelRegistrationMessage message)
         {
@@ -43,12 +21,14 @@ namespace UICommon.WPF.UIComponents
             Caption = message.Description;
         }
 
-        public static readonly DependencyProperty CaptionProperty = DependencyProperty.Register("Caption", typeof(string), typeof(ucIndicator));
-
         public string Caption
         {
-            get { return (string)GetValue(CaptionProperty); }
-            set { SetValue(CaptionProperty, value); }
+            get { return caption; }
+            set
+            {
+                caption = value;
+                OnPropertyChanged("Caption");
+            }
         }
 
         public double? MinValue
@@ -91,38 +71,16 @@ namespace UICommon.WPF.UIComponents
             }
         }
 
-        private static void CurrentValueChagedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        {
-            ucIndicator control = sender as ucIndicator;
-            if (control == null) return;
-
-            var propertyNames = new[]
-                    {
-                        "IsValueHigherNormal",
-                        "IsValueLowerNormal",
-                        "IsValueHigherCritycal",
-                        "IsValueLowerCritycal"
-                    };
-            foreach (var propertyName in propertyNames)
-                control.OnPropertyChanged(propertyName);
-
-        }
-
-        public static readonly DependencyProperty CurrentValueProperty =
-            DependencyProperty.Register("CurrentValue",
-                                        typeof(object),
-                                        typeof(ucIndicator),
-                                        new FrameworkPropertyMetadata(default(object), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, CurrentValueChagedCallback));
-
         /// <summary>
         /// Текущее значение
         /// </summary>
-        public object CurrentValue
+        public double? CurrentValue
         {
-            get { return GetValue(CurrentValueProperty); }
+            get { return currentValue; }
             set
             {
-                SetValue(CurrentValueProperty, value);
+                currentValue = value;
+                OnPropertyChanged("CurrentValue");
                 var propertyNames = new[]
                     {
                         "IsValueHigherNormal",
@@ -134,6 +92,7 @@ namespace UICommon.WPF.UIComponents
                     OnPropertyChanged(propertyName);
             }
         }
+
 
         /// <summary>
         /// Текущее значение больше нормального
@@ -181,11 +140,9 @@ namespace UICommon.WPF.UIComponents
 
         private int CompareCurrentValueWith(double? compareValue)
         {
-            var result = 0;
-            var value = CurrentValue as double?;
-            if (value.HasValue && compareValue.HasValue)
-                result = value.Value.CompareTo(compareValue.Value);
-            return result;
+            return CurrentValue.HasValue && compareValue.HasValue
+                       ? CurrentValue.Value.CompareTo(compareValue.Value)
+                       : 0;
         }
     }
 }

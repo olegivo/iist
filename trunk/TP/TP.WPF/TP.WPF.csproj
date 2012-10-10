@@ -200,7 +200,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\ObservableDictionary.cs" />
     <Compile Include="ViewModels\IndicatorInitEventArgs.cs" />
+    <Compile Include="ViewModels\IndicatorViewModel.cs" />
     <Compile Include="ViewModels\SendControlMessageEventArgs.cs" />
     <Compile Include="ViewModels\AllHeatExchangerViewModel.cs" />
     <Compile Include="ViewModels\AutoControl\AutoControl.cs" />
