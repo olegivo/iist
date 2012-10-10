@@ -114,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UIComponents\Indicator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UIComponents\ucChamber.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -144,6 +148,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\StringToNullableDoubleConverter.cs" />
+    <Compile Include="UIComponents\Indicator.xaml.cs">
+      <DependentUpon>Indicator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIComponents\ucIndicator.xaml.cs">
       <DependentUpon>ucIndicator.xaml</DependentUpon>
     </Compile>
