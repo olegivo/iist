@@ -55,7 +55,6 @@ namespace TP.WPF.ViewModels
                 {
                     temperature6 = value;
                     OnPropertyChanged("Temperature_TC6");
-                    OnPropertyChanged("Temperature_TC6S");
                 }
             }
         }
