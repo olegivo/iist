@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oleg_ivo.HighLevelClient", "Oleg_ivo.Client\Oleg_ivo.HighLevelClient.csproj", "{D3640EED-9D98-4EBC-9F8B-98B74B67ED21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMS.Common", "DMS.Common\DMS.Common.csproj", "{02BA939D-826A-4D6E-8B42-414AF3F6C7CE}"

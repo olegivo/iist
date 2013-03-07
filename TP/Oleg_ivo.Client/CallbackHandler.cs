@@ -3,6 +3,7 @@ using System.ServiceModel;
 using DMS.Common.Events;
 using DMS.Common.Messages;
 using Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp;
+
 #if IIST
 #if WSHTTP_BINDING
 using Oleg_ivo.HighLevelClient.ServiceReferenceIISTwsDualHttp;
@@ -70,7 +71,7 @@ namespace Oleg_ivo.HighLevelClient
         /// 
         /// </summary>
         /// <param name="message"></param>
-        public void SendMessageToClient(InternalMessage message)
+        public void SendMessageToClient(DMS.Common.Messages.InternalMessage message)
         {
             string s = string.Format("MessageExchangeSystem -> Client : {0}", message.TimeStamp);
             OnNeedProtocol(s);
