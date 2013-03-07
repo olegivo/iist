@@ -51,7 +51,7 @@ namespace Oleg_ivo.WAGO.Meta
             if (needLoad)
                 FillChannelsFromDb(physicalChannel.Id);
 
-            foreach (DtsChannelConfiguration.LogicalChannelRow row in dtsWago1.WagoMeta)
+            foreach (DtsWago.WagoMetaRow row in dtsWago1.WagoMeta)
             {
                 LogicalChannel channel = CreateChannelFromData(row, physicalChannel);
                 channels.Add(channel);
@@ -150,7 +150,7 @@ namespace Oleg_ivo.WAGO.Meta
             if (logicalChannel.Id > 0) row.Id = logicalChannel.Id;
         }
 
-        private LogicalChannel CreateChannelFromData(DtsChannelConfiguration.LogicalChannelRow row, PhysicalChannel physicalChannel)
+        private LogicalChannel CreateChannelFromData(DtsWago.WagoMetaRow row, PhysicalChannel physicalChannel)
         {
             LogicalChannel channel = LogicalChannelsFactory.Instance.BuildLogicalChannel(physicalChannel)[0];
             channel.Id = row.Id;
