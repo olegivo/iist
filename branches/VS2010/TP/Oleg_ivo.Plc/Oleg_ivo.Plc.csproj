@@ -1,0 +1,246 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{69B7862C-FA74-4ED5-A0F7-BF7216204016}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Oleg_ivo.Plc</RootNamespace>
+    <AssemblyName>Oleg_ivo.Plc</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;EMULATIONMODE;</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Modbus, Version=1.11.0.0, Culture=neutral, PublicKeyToken=b5aba55fcbc8d946, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Oleg_ivo.WAGO\NModbus_net\Modbus.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Channels\DtsPolynom.Designer.cs">
+      <DependentUpon>DtsPolynom.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Channels\Polynom.cs" />
+    <Compile Include="Common\IIdentified.cs" />
+    <Compile Include="Channels\InputLogicalChannel.cs" />
+    <Compile Include="Channels\InputOutputLogicalChannel.cs" />
+    <Compile Include="Channels\LogicalChannelCollection.cs" />
+    <Compile Include="Devices\Contollers\FieldBusNodeAddressCollection.cs" />
+    <Compile Include="Factory\ILogicalChannelsFactory.cs" />
+    <Compile Include="Factory\IPhysicalChannelsFactory.cs" />
+    <Compile Include="Channels\PhysicalChannelCollection.cs" />
+    <Compile Include="Channels\LogicalChannel.cs" />
+    <Compile Include="Channels\OutputLogicalChannel.cs" />
+    <Compile Include="Channels\PhysicalChannel.cs" />
+    <Compile Include="DataManager.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataManager.Designer.cs">
+      <DependentUpon>DataManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DateAdapterProcessType.cs" />
+    <Compile Include="Devices\Contollers\FieldBusNodeAddress.cs" />
+    <Compile Include="Devices\Contollers\FieldBusNodeIpAddress.cs" />
+    <Compile Include="Devices\Contollers\FieldBusNodeSerialAddress.cs" />
+    <Compile Include="Devices\Modules\IIOModule.cs" />
+    <Compile Include="Factory\IPlcFactory.cs" />
+    <Compile Include="Devices\Contollers\PLC.cs" />
+    <Compile Include="Devices\Contollers\PLCCollection.cs" />
+    <Compile Include="Devices\Contollers\PLCFactory.cs" />
+    <Compile Include="Devices\Modules\IOModule.cs" />
+    <Compile Include="Devices\Modules\IOModuleCollection.cs" />
+    <Compile Include="DistributedMeasurementInformationSystemBase.cs" />
+    <Compile Include="DistributedSystemSettingsBase.cs" />
+    <Compile Include="FieldBus\FieldBusFactory.cs" />
+    <Compile Include="FieldBus\FieldBusManagers\ActiveFieldBusManager.cs" />
+    <Compile Include="FieldBus\FieldBusManagers\FieldBusManager.cs" />
+    <Compile Include="FieldBus\FieldBusManagers\FieldBusManagerCollection.cs" />
+    <Compile Include="FieldBus\FieldBusNodes\ActiveFieldBusNode.cs" />
+    <Compile Include="FieldBus\FieldBusNodes\FieldBusNode.cs" />
+    <Compile Include="FieldBus\FieldBusNodes\FieldBusNodeCollection.cs" />
+    <Compile Include="FieldBus\FieldBusNodes\FieldBusNodeFactory.cs" />
+    <Compile Include="FieldBus\FieldBusNodes\IFieldBusNodeAccessor.cs" />
+    <Compile Include="Factory\IFieldBusNodeFactory.cs" />
+    <Compile Include="FieldBus\FieldBusType.cs" />
+    <Compile Include="FieldBus\IFieldBusAccessor.cs" />
+    <Compile Include="Factory\IFieldBusFactory.cs" />
+    <Compile Include="FieldBus\ModbusAccessor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FieldBus\ModbusAccessorTimeouts.cs" />
+    <Compile Include="FieldBus\ModbusAdapter.cs" />
+    <Compile Include="FieldBus\NModbusAdapter.cs" />
+    <Compile Include="FieldBus\ModbusIpAccessor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FieldBus\ModbusSerialAccessor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FieldBus\ModbusTcpIpAccessor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FieldBus\ucFieldBusTypeCombobox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FieldBus\WagoTcpModbusAdapter.cs" />
+    <Compile Include="ModbusTCP\MBTDLL.cs" />
+    <Compile Include="MeasurementSystemLevelLoadOptions.cs" />
+    <Compile Include="FieldBusLoadOptions.cs" />
+    <Compile Include="PlcManagerBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Ports\ASCIIRTUMode.cs" />
+    <Compile Include="Ports\FieldBusPortParameters.cs" />
+    <Compile Include="Ports\frmFieldBus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ports\frmFieldBus.Designer.cs">
+      <DependentUpon>frmFieldBus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ports\frmFieldBusNode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ports\frmFieldBusNode.Designer.cs">
+      <DependentUpon>frmFieldBusNode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ports\ModbusFieldBusPort.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Ports\ModbusIpFieldBusPort.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Ports\ModbusSerialFieldBusPort.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Ports\ModbusTcpFieldBusPort.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Ports\RS232FieldBusManager.cs" />
+    <Compile Include="Ports\SerialPortParameters.cs" />
+    <Compile Include="Ports\TCPFieldBusPortParameters.cs" />
+    <Compile Include="Ports\ucDevicePortCombobox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Ports\ucPairCombobox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Ports\ValueDescriptionPair.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerialPortConnect.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ucLevelGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucLevelGrid.Designer.cs">
+      <DependentUpon>ucLevelGrid.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Channels\cdChannels.cd" />
+    <None Include="Channels\DtsPolynom.xsc">
+      <DependentUpon>DtsPolynom.xsd</DependentUpon>
+    </None>
+    <None Include="Channels\DtsPolynom.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DtsPolynom.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Channels\DtsPolynom.xss">
+      <DependentUpon>DtsPolynom.xsd</DependentUpon>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="Ports\cdFieldBus.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Ports\frmFieldBusNode.resx">
+      <DependentUpon>frmFieldBusNode.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ports\ucDevicePortCombobox.resx">
+      <DependentUpon>ucDevicePortCombobox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucLevelGrid.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ucLevelGrid.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ModbusTCP\MBT.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\External\Oleg_ivo.Tools\Oleg_ivo.Tools.csproj">
+      <Project>{332A1894-922F-49A1-BD6A-E4E981FA2FEC}</Project>
+      <Name>Oleg_ivo.Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
