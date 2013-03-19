@@ -4,176 +4,149 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:UIComponents="clr-namespace:UICommon.WPF.UIComponents;assembly=UICommon.WPF"
-	xmlns:UserControl="clr-namespace:TP.WPF.Views" mc:Ignorable="d"
+	xmlns:UserControl="clr-namespace:TP.WPF.Views" xmlns:UICommon_WPF="clr-namespace:UICommon.WPF;assembly=UICommon.WPF" mc:Ignorable="d"
 	x:Class="TP.WPF.Views.ucFinishCleaning"
 	x:Name="UserControl"
 	d:DesignWidth="640" d:DesignHeight="480" Width="1024" Height="768">
     <Viewbox>
-        <Canvas x:Name="LayoutRoot" Height="768" Width="1024">
-            <Control Canvas.Left="112" Style="{DynamicResource ShapePipe}" Canvas.Top="96"/>
-            <Control Canvas.Left="320" Style="{DynamicResource ShapePump}" Canvas.Top="400"/>
-            <Control Canvas.Left="479" Style="{DynamicResource ShapeTransporter}" Canvas.Top="526"/>
-            <Control Canvas.Left="880" Style="{DynamicResource ShapeValve}" Canvas.Top="143"/>
-            <Path Data="M1.0000004,161.16701 L80.167175,161.16701 80.166686,161.20001 40.583347,201.00002 1.0000004,161.20001 z M1.0000004,8.9999994 L24.999999,8.9999994 24.999999,65 1.0000004,65 z M80.999999,1.0000033 L81.000022,65.000016 96.999999,65.000016 96.999999,105.00002 81.000022,105.00002 80.285796,153.16701 1.0000004,153.16701 1.0000004,105 80.999999,105 80.999999,65 56.999999,65 56.999999,8.9999994 80.999999,8.9999994 z M1.0000004,65 L24.999999,65 56.999999,65 80.999999,65 80.999999,105 1.0000004,105 z M24.999999,8.9999994 L56.999999,8.9999994 56.999999,65 24.999999,65 z M1,1.0000039 L80.999999,1.0000039 80.999999,9.0000004 56.999999,9.0000004 24.999999,9.0000004 1,9.0000004 z M1.0000002,153.16701 L80.285796,153.16701 80.167175,161.16701 1.0000002,161.16701 z M80.285796,153.16701 L80.999999,153.16701 80.999999,161.16701 80.167175,161.16701 z M1,1 L80.999999,1 z" Fill="{DynamicResource BrushLightBlue}" Height="202" Canvas.Left="479" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="2" Canvas.Top="95" Width="98" />
-            <Path Data="M17.357143,350.5 L16.642858,509.5 130.92857,509.5 130.92857,349.5 z" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Height="81" Canvas.Left="720" Canvas.Top="159" Width="81"/>
-            <Control Canvas.Left="776" Style="{DynamicResource ShapeBurner}" Canvas.Top="176" RenderTransformOrigin="0.5,0.5">
-                <Control.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="180"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Control.RenderTransform>
-            </Control>
-            <Control Canvas.Left="880" Style="{DynamicResource ShapeValve}" Canvas.Top="174.999"/>
-            <Control Canvas.Left="880" Style="{DynamicResource ShapeValve}" Canvas.Top="200"/>
-            <Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="836.333" Canvas.Top="180" Width="46.833" Height="8"/>
-            <Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="36" Canvas.Left="828.208" Canvas.Top="144"/>
-            <Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="836.333" Canvas.Top="204.333" Width="46.833" Height="8"/>
-            <Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlue}" Canvas.Left="824" Canvas.Top="148" Width="59.166" Height="8"/>
-            <Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlue}" Canvas.Left="916.834" Canvas.Top="148" Width="59.166" Height="8"/>
-            <Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="916.834" Canvas.Top="180" Width="59.166" Height="8"/>
-            <Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="916.834" Canvas.Top="204.333" Width="59.166" Height="8"/>
-            <Path Data="M200.5,488 L32,488" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="10" Stroke="{DynamicResource BrushOrange}" Canvas.Left="603.333" Canvas.Top="169.25" Width="76.667"/>
-            <Path Data="M880,112 L896,104 896,120 z" Fill="{DynamicResource BrushOrange}" Height="26" Canvas.Left="584" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="10" Canvas.Top="162" Width="26"/>
-            <Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushOrange}" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="10" Height="101.667" Canvas.Left="670" Canvas.Top="164.333"/>
-            <Path Data="M200.5,488 L32,488" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="10" Stroke="{DynamicResource BrushOrange}" Canvas.Left="665.666" Canvas.Top="250.916" Width="99.334"/>
-            <Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushOrange}" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="10" Height="30.833" Canvas.Left="750" Canvas.Top="235.167"/>
-            <Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlack}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Height="41.667" Canvas.Left="512" Canvas.Top="443"/>
-            <Path Data="M800,192 L808,208 816,192 z" Fill="{DynamicResource BrushBlack}" Height="24" Canvas.Left="504" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Canvas.Top="480" Width="24"/>
-            <Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushOrange}" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="8" Height="200.667" Canvas.Left="416" Canvas.Top="232"/>
-            <Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="412" Canvas.Top="235.167" Width="71" Height="8"/>
-            <Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="372.833" Canvas.Top="420.667" Width="55.166" Height="8"/>
-            <Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="277.167" Canvas.Top="404.667" Width="46.833" Height="8"/>
-            <Path Data="M880,112 L896,104 896,120 z" Fill="{DynamicResource BrushOrange}" Height="26" Canvas.Left="256" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="10" Canvas.Top="395" Width="26"/>
-            <Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlack}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Height="53" Canvas.Left="346.666" Canvas.Top="443"/>
-            <Path Data="M17,34 L17,42 1,50 1,42 z M33,26 L17,34 z M49,18 L49,26 33,34 33,26 z M65,10 L49,18 z M81,2.0000002 L81,10 65,18 65,10 z M81,10 L81,81 1,81 1,50 17,42 17,34 33,26 33,34 49,26 49,18 65,10 65,18 z M81,1 L81,2.0000002 65,10 49,18 33,26 17,34 1,42 1,41 z" Fill="{DynamicResource BrushLightBlue}" Height="82" Canvas.Left="479" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="2" Canvas.Top="366" Width="82"/>
-            <Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushOrange}" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="10" Height="27" Canvas.Left="750" Canvas.Top="107"/>
-            <Path Data="M200.5,488 L32,488" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="10" Stroke="{DynamicResource BrushOrange}" Canvas.Left="745.25" Canvas.Top="112" Width="230.75"/>
-            <Path Data="M891,123 L883,107 899,107 z" Fill="{DynamicResource BrushOrange}" Height="26" Canvas.Left="742" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="10" Canvas.Top="129" Width="26"/>
-            <Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlack}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Height="152.853" Canvas.Left="600" Canvas.Top="235.167"/>
-            <Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="554.834" Canvas.Top="376" Width="57.145" Height="8"/>
-            <Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="572.334" Canvas.Top="237.417" Width="39.645" Height="8"/>
-            <Path Data="M886,108.66667 L896.66669,103.33333 896.66667,114 z" Fill="{DynamicResource BrushBlack}" Height="18" Canvas.Left="560" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="2" Canvas.Top="232" Width="18"/>
-            <TextBlock x:Name="textBlock4_Copy8" Canvas.Left="146.743" TextWrapping="Wrap" Canvas.Top="61.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="в Атмосферу"/>
-            <TextBlock x:Name="textBlock4_Copy" Canvas.Left="330.072" TextWrapping="Wrap" Canvas.Top="377.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ДН"/>
-            <TextBlock x:Name="textBlock4_Copy1" Canvas.Left="330.072" TextWrapping="Wrap" Canvas.Top="500" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ЧР2"/>
-            <TextBlock x:Name="textBlock4_Copy2" Canvas.Left="462.786" TextWrapping="Wrap" Canvas.Top="347.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="адсорбент"/>
-            <TextBlock x:Name="textBlock4_Copy3" Canvas.Left="621" TextWrapping="Wrap" Canvas.Top="526" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="в Скруббер"/>
-            <TextBlock x:Name="textBlock4_Copy4" Canvas.Left="104" TextWrapping="Wrap" Canvas.Top="624" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="залив системы водой"/>
-            <TextBlock x:Name="textBlock4_Copy5" Canvas.Left="985.67" TextWrapping="Wrap" Canvas.Top="141.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="газ"/>
-            <TextBlock x:Name="textBlock4_Copy6" Canvas.Left="976" TextWrapping="Wrap" Canvas.Top="192" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="к РТ"/>
-            <TextBlock x:Name="textBlock4_Copy7" Canvas.Left="904.156" TextWrapping="Wrap" Canvas.Top="89.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="от Скруббера"/>
-            <CheckBox
-                Canvas.Left="740"
-                Canvas.Top="450"
-                Name="CheckBox2" IsChecked="{Binding IsAutomaticControl}">
-                Автоматический режим управления
-            </CheckBox>
-            <CheckBox
-                Canvas.Left="740"
-                Canvas.Top="295"
-                Name="CheckBox1" IsChecked="{Binding BurnerStatus}">
-                Горелка
-            </CheckBox>
-            <!--Кнопка для тестового изменения значения в ViewModel-->
-            <Button 
-                Command="{Binding IncreaseCommand}"
-                Canvas.Top="370"
-                Canvas.Right="150" 
-                Content="+1"
+    	<Canvas x:Name="LayoutRoot" Height="768" Width="1024">
+    		<Control Canvas.Left="112" Style="{DynamicResource ShapePipe}" Canvas.Top="96"/>
+    		<Control Canvas.Left="320" Style="{DynamicResource ShapePump}" Canvas.Top="400"/>
+    		<Control Canvas.Left="479" Style="{DynamicResource ShapeTransporter}" Canvas.Top="526"/>
+    		<Control Canvas.Left="880" Style="{DynamicResource ShapeValve}" Canvas.Top="143"/>
+    		<Path Data="M1.0000004,161.16701 L80.167175,161.16701 80.166686,161.20001 40.583347,201.00002 1.0000004,161.20001 z M1.0000004,8.9999994 L24.999999,8.9999994 24.999999,65 1.0000004,65 z M80.999999,1.0000033 L81.000022,65.000016 96.999999,65.000016 96.999999,105.00002 81.000022,105.00002 80.285796,153.16701 1.0000004,153.16701 1.0000004,105 80.999999,105 80.999999,65 56.999999,65 56.999999,8.9999994 80.999999,8.9999994 z M1.0000004,65 L24.999999,65 56.999999,65 80.999999,65 80.999999,105 1.0000004,105 z M24.999999,8.9999994 L56.999999,8.9999994 56.999999,65 24.999999,65 z M1,1.0000039 L80.999999,1.0000039 80.999999,9.0000004 56.999999,9.0000004 24.999999,9.0000004 1,9.0000004 z M1.0000002,153.16701 L80.285796,153.16701 80.167175,161.16701 1.0000002,161.16701 z M80.285796,153.16701 L80.999999,153.16701 80.999999,161.16701 80.167175,161.16701 z M1,1 L80.999999,1 z" Fill="{DynamicResource BrushLightBlue}" Height="202" Canvas.Left="479" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="2" Canvas.Top="95" Width="98" />
+    		<Path Data="M17.357143,350.5 L16.642858,509.5 130.92857,509.5 130.92857,349.5 z" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Height="81" Canvas.Left="720" Canvas.Top="159" Width="81"/>
+    		<Control Canvas.Left="776" Style="{DynamicResource ShapeBurner}" Canvas.Top="176" RenderTransformOrigin="0.5,0.5">
+    			<Control.RenderTransform>
+    				<TransformGroup>
+    					<ScaleTransform/>
+    					<SkewTransform/>
+    					<RotateTransform Angle="180"/>
+    					<TranslateTransform/>
+    				</TransformGroup>
+    			</Control.RenderTransform>
+    		</Control>
+    		<Control Canvas.Left="880" Style="{DynamicResource ShapeValve}" Canvas.Top="174.999"/>
+    		<Control Canvas.Left="880" Style="{DynamicResource ShapeValve}" Canvas.Top="200"/>
+    		<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="836.333" Canvas.Top="180" Width="46.833" Height="8"/>
+    		<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="36" Canvas.Left="828.208" Canvas.Top="144"/>
+    		<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="836.333" Canvas.Top="204.333" Width="46.833" Height="8"/>
+    		<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlue}" Canvas.Left="824" Canvas.Top="148" Width="59.166" Height="8"/>
+    		<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlue}" Canvas.Left="916.834" Canvas.Top="148" Width="59.166" Height="8"/>
+    		<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="916.834" Canvas.Top="180" Width="59.166" Height="8"/>
+    		<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="916.834" Canvas.Top="204.333" Width="59.166" Height="8"/>
+    		<Path Data="M200.5,488 L32,488" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="10" Stroke="{DynamicResource BrushOrange}" Canvas.Left="603.333" Canvas.Top="169.25" Width="76.667"/>
+    		<Path Data="M880,112 L896,104 896,120 z" Fill="{DynamicResource BrushOrange}" Height="26" Canvas.Left="584" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="10" Canvas.Top="162" Width="26"/>
+    		<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushOrange}" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="10" Height="101.667" Canvas.Left="670" Canvas.Top="164.333"/>
+    		<Path Data="M200.5,488 L32,488" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="10" Stroke="{DynamicResource BrushOrange}" Canvas.Left="665.666" Canvas.Top="250.916" Width="99.334"/>
+    		<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushOrange}" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="10" Height="30.833" Canvas.Left="750" Canvas.Top="235.167"/>
+    		<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlack}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Height="41.667" Canvas.Left="512" Canvas.Top="443"/>
+    		<Path Data="M800,192 L808,208 816,192 z" Fill="{DynamicResource BrushBlack}" Height="24" Canvas.Left="504" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Canvas.Top="480" Width="24"/>
+    		<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushOrange}" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="8" Height="200.667" Canvas.Left="416" Canvas.Top="232"/>
+    		<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="412" Canvas.Top="235.167" Width="71" Height="8"/>
+    		<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="372.833" Canvas.Top="420.667" Width="55.166" Height="8"/>
+    		<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="277.167" Canvas.Top="404.667" Width="46.833" Height="8"/>
+    		<Path Data="M880,112 L896,104 896,120 z" Fill="{DynamicResource BrushOrange}" Height="26" Canvas.Left="256" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="10" Canvas.Top="395" Width="26"/>
+    		<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlack}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Height="53" Canvas.Left="346.666" Canvas.Top="443"/>
+    		<Path Data="M17,34 L17,42 1,50 1,42 z M33,26 L17,34 z M49,18 L49,26 33,34 33,26 z M65,10 L49,18 z M81,2.0000002 L81,10 65,18 65,10 z M81,10 L81,81 1,81 1,50 17,42 17,34 33,26 33,34 49,26 49,18 65,10 65,18 z M81,1 L81,2.0000002 65,10 49,18 33,26 17,34 1,42 1,41 z" Fill="{DynamicResource BrushLightBlue}" Height="82" Canvas.Left="479" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="2" Canvas.Top="366" Width="82"/>
+    		<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushOrange}" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="10" Height="27" Canvas.Left="750" Canvas.Top="107"/>
+    		<Path Data="M200.5,488 L32,488" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="10" Stroke="{DynamicResource BrushOrange}" Canvas.Left="745.25" Canvas.Top="112" Width="230.75"/>
+    		<Path Data="M891,123 L883,107 899,107 z" Fill="{DynamicResource BrushOrange}" Height="26" Canvas.Left="742" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="10" Canvas.Top="129" Width="26"/>
+    		<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlack}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Height="152.853" Canvas.Left="600" Canvas.Top="235.167"/>
+    		<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="554.834" Canvas.Top="376" Width="57.145" Height="8"/>
+    		<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="572.334" Canvas.Top="237.417" Width="39.645" Height="8"/>
+    		<Path Data="M886,108.66667 L896.66669,103.33333 896.66667,114 z" Fill="{DynamicResource BrushBlack}" Height="18" Canvas.Left="560" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="2" Canvas.Top="232" Width="18"/>
+    		<TextBlock x:Name="textBlock4_Copy8" Canvas.Left="146.743" TextWrapping="Wrap" Canvas.Top="61.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="в Атмосферу"/>
+    		<TextBlock x:Name="textBlock4_Copy" Canvas.Left="330.072" TextWrapping="Wrap" Canvas.Top="377.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ДН"/>
+    		<TextBlock x:Name="textBlock4_Copy1" Canvas.Left="330.072" TextWrapping="Wrap" Canvas.Top="500" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ЧР2"/>
+    		<TextBlock x:Name="textBlock4_Copy2" Canvas.Left="462.786" TextWrapping="Wrap" Canvas.Top="347.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="адсорбент"/>
+    		<TextBlock x:Name="textBlock4_Copy3" Canvas.Left="621" TextWrapping="Wrap" Canvas.Top="526" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="в Скруббер"/>
+    		<TextBlock x:Name="textBlock4_Copy4" Canvas.Left="104" TextWrapping="Wrap" Canvas.Top="624" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="залив системы водой"/>
+    		<TextBlock x:Name="textBlock4_Copy5" Canvas.Left="985.67" TextWrapping="Wrap" Canvas.Top="141.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="газ"/>
+    		<TextBlock x:Name="textBlock4_Copy6" Canvas.Left="976" TextWrapping="Wrap" Canvas.Top="192" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="к РТ"/>
+    		<TextBlock x:Name="textBlock4_Copy7" Canvas.Left="904.156" TextWrapping="Wrap" Canvas.Top="89.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="от Скруббера"/>
+    		<CheckBox
+    			Canvas.Left="740"
+    			Canvas.Top="450"
+    			x:Name="CheckBox2" IsChecked="{Binding IsAutomaticControl}" Content="Автоматический режим управления"/>
+    		<CheckBox
+    			Canvas.Left="740"
+    			Canvas.Top="295"
+    			x:Name="CheckBox1" IsChecked="{Binding BurnerStatus}" Content="Горелка"/>
+    		<!--Кнопка для тестового изменения значения в ViewModel-->
+    		<Button 
+    			Command="{Binding IncreaseCommand}"
+    			Canvas.Top="370"
+    			Canvas.Right="150" 
+    			Content="+1"
                 />
-            <UIComponents:Indicator
-                Name="indicatorT6"
-                Canvas.Top="20"
-                Canvas.Right="620"
-                Width="166"
-                DataContext="{Binding IndicatorViewModels[6]}"
-				>
-            </UIComponents:Indicator>
-            <UIComponents:Indicator
-                Name="indicatorCO"
-                Canvas.Top="60"
-                Canvas.Right="620"
-                Width="166"
-                DataContext="{Binding IndicatorViewModels[21]}">
-            </UIComponents:Indicator>
-            <UIComponents:Indicator
-                Name="indicatorО2"
-                Canvas.Top="80"
-                Canvas.Right="620"
-                Width="166"
-                DataContext="{Binding IndicatorViewModels[20]}">
-            </UIComponents:Indicator>
-            <UIComponents:Indicator
-                Name="indicatorSO2"
-                Canvas.Top="100"
-                Canvas.Right="620"
-                Width="166"
-                DataContext="{Binding IndicatorViewModels[22]}">
-            </UIComponents:Indicator>
-            <UIComponents:Indicator
-                Name="indicatorNO"
-                Canvas.Top="120"
-                Canvas.Right="620"
-                Width="166"
-                DataContext="{Binding IndicatorViewModels[23]}">
-            </UIComponents:Indicator>
-            <UIComponents:Indicator
-                Name="indicatorNO2"
-                Canvas.Top="140"
-                Canvas.Right="620"
-                Width="166"
-                DataContext="{Binding IndicatorViewModels[24]}">
-            </UIComponents:Indicator>
-            <UIComponents:ucIndicator
-                Name="indicatorV"
-                Canvas.Top="40"
-                Canvas.Right="620"
-                Width="166"
-				Caption="Обороты"
-                CurrentValue="{Binding V}">
-            </UIComponents:ucIndicator>
-            <UIComponents:Indicator
-                Name="indicatorT7"
-                Canvas.Top="160"
-                Canvas.Right="620"
-                Width="166"
-                DataContext="{Binding IndicatorViewModels[7]}">
-            </UIComponents:Indicator>
-            <UIComponents:ucIndicator
-                Name="indicatorMCO"
-                Canvas.Top="180"
-                Canvas.Right="620"
-                Width="166"
-				Caption="Масса выброса CO"
-                CurrentValue="{Binding Massa_CO, Mode=OneWay}">
-            </UIComponents:ucIndicator>
-            <UIComponents:ucIndicator
-                Name="indicatorMSO2"
-                Canvas.Top="200"
-                Canvas.Right="620"
-                Width="166"
-				Caption="Масса выброса SO2"
-                CurrentValue="{Binding Massa_SO2, Mode=OneWay}">
-            </UIComponents:ucIndicator>
-            <UIComponents:ucIndicator
-                Name="indicatorMNO"
-                Canvas.Top="220"
-                Canvas.Right="620"
-                Width="166"
-				Caption="Масса выброса NO"
-                CurrentValue="{Binding Massa_NO, Mode=OneWay}">
-            </UIComponents:ucIndicator>
-            <UIComponents:ucIndicator
-                Name="indicatorMNO2"
-                Canvas.Top="240"
-                Canvas.Right="620"
-                Width="166"
-				Caption="Масса выброса NO2"
-                CurrentValue="{Binding Massa_NO2, Mode=OneWay}">
-            </UIComponents:ucIndicator>
-        </Canvas>
+
+    		<UIComponents:ucIndicator
+    			x:Name="indicatorО2"
+    			Canvas.Top="80"
+    			Canvas.Right="620"
+    			Width="166"
+    			DataContext="{Binding IndicatorViewModels[20]}"/>
+    		<UIComponents:ucIndicator
+    			x:Name="indicatorSO2"
+    			Canvas.Top="100"
+    			Canvas.Right="620"
+    			Width="166"
+    			DataContext="{Binding IndicatorViewModels[22]}"/>
+    		<UIComponents:ucIndicator
+    			x:Name="indicatorNO"
+    			Canvas.Top="120"
+    			Canvas.Right="620"
+    			Width="166"
+    			DataContext="{Binding IndicatorViewModels[23]}"/>
+    		<UIComponents:ucIndicator
+    			x:Name="indicatorNO2"
+    			Canvas.Top="140"
+    			Canvas.Right="620"
+    			Width="166"
+    			DataContext="{Binding IndicatorViewModels[24]}"/>
+    		<UIComponents:ucIndicator
+    			x:Name="indicatorV"
+    			Canvas.Top="40"
+    			Canvas.Right="620"
+    			Width="166"
+    			Caption="Обороты"
+    			CurrentValue="{Binding V}"/>
+    		<UIComponents:ucIndicator
+    			x:Name="indicatorT7"
+    			Canvas.Top="160"
+    			Canvas.Right="620"
+    			Width="166"
+    			DataContext="{Binding IndicatorViewModels[7]}"/>
+    		<UIComponents:ucIndicator
+    			x:Name="indicatorMCO"
+    			Canvas.Top="180"
+    			Canvas.Right="620"
+    			Width="166"
+    			Caption="Масса выброса CO"
+    			CurrentValue="{Binding Massa_CO, Mode=OneWay}"/>
+    		<UIComponents:ucIndicator
+    			x:Name="indicatorMSO2"
+    			Canvas.Top="200"
+    			Canvas.Right="620"
+    			Width="166"
+    			Caption="Масса выброса SO2"
+    			CurrentValue="{Binding Massa_SO2, Mode=OneWay}"/>
+    		<UIComponents:ucIndicator
+    			x:Name="indicatorMNO"
+    			Canvas.Top="220"
+    			Canvas.Right="620"
+    			Width="166"
+    			Caption="Масса выброса NO"
+    			CurrentValue="{Binding Massa_NO, Mode=OneWay}"/>
+    		<UIComponents:ucIndicator
+    			x:Name="indicatorMNO2"
+    			Canvas.Top="240"
+    			Canvas.Right="620"
+    			Width="166"
+    			Caption="Масса выброса NO2"
+    			CurrentValue="{Binding Massa_NO2, Mode=OneWay}"/>
+    		<UICommon_WPF:ucCircularIndicator DataContext="{Binding IndicatorViewModels[7]}" Caption="AC / DC" Height="75.313" Canvas.Left="456" Canvas.Top="568" Width="152"/>
+    	</Canvas>
     </Viewbox>
 </UserControl:BaseView>

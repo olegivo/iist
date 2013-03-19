@@ -1,22 +1,36 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using DMS.Common.Messages;
-using System.Windows.Data;
 
-namespace UICommon.WPF.UIComponents
+
+namespace UICommon.WPF
 {
     /// <summary>
     /// Interaction logic for ucIndicator.xaml
     /// </summary>
-    public partial class ucIndicator : UserControl, INotifyPropertyChanged
+    public partial class ucCircularIndicator : UserControl, INotifyPropertyChanged
     {
         private double? minValue;
         private double? maxValue;
         private double? minNormalValue;
         private double? maxNormalValue;
 
-        public ucIndicator()
+        public ucCircularIndicator()
         {
             InitializeComponent();
             PropertyChanged += ucIndicator_PropertyChanged;
@@ -44,7 +58,7 @@ namespace UICommon.WPF.UIComponents
             Caption = message.Description;
         }
 
-        public static readonly DependencyProperty CaptionProperty = DependencyProperty.Register("Caption", typeof(string), typeof(ucIndicator));
+        public static readonly DependencyProperty CaptionProperty = DependencyProperty.Register("Caption", typeof(string), typeof(ucCircularIndicator));
 
         public string Caption
         {
@@ -94,7 +108,7 @@ namespace UICommon.WPF.UIComponents
 
         private static void CurrentValueChagedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            ucIndicator control = sender as ucIndicator;
+            ucCircularIndicator control = sender as ucCircularIndicator;
             if (control == null) return;
 
             var propertyNames = new[]
@@ -112,7 +126,7 @@ namespace UICommon.WPF.UIComponents
         public static readonly DependencyProperty CurrentValueProperty =
             DependencyProperty.Register("CurrentValue",
                                         typeof(object),
-                                        typeof(ucIndicator),
+                                        typeof(ucCircularIndicator),
                                         new FrameworkPropertyMetadata(default(object), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, CurrentValueChagedCallback));
 
         /// <summary>
@@ -188,6 +202,5 @@ namespace UICommon.WPF.UIComponents
                 result = value.Value.CompareTo(compareValue.Value);
             return result;
         }
-
     }
 }
