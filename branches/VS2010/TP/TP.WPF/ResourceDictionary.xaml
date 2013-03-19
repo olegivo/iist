@@ -34,9 +34,31 @@
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type Control}">
+						<ControlTemplate.Resources>
+							<Storyboard x:Key="ValveOnMouseMove">
+								<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="path">
+									<SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+									<SplineDoubleKeyFrame KeyTime="0:0:1" Value="180"/>
+								</DoubleAnimationUsingKeyFrames>
+							</Storyboard>
+						</ControlTemplate.Resources>
 						<Grid Height="17" Width="41">
-							<Path Data="M239.5,79.5 L239.5,95.5 279.5,79.5 279.5,95.5 z" Fill="{DynamicResource BrushGreen}" Height="Auto" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Width="Auto"/>
+							<Path x:Name="path" Data="M239.5,79.5 L239.5,95.5 279.5,79.5 279.5,95.5 z" Fill="{DynamicResource BrushGreen}" Height="Auto" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Width="Auto" RenderTransformOrigin="0.5,0.5">
+								<Path.RenderTransform>
+									<TransformGroup>
+										<ScaleTransform/>
+										<SkewTransform/>
+										<RotateTransform/>
+										<TranslateTransform/>
+									</TransformGroup>
+								</Path.RenderTransform>
+							</Path>
 						</Grid>
+						<ControlTemplate.Triggers>
+							<EventTrigger RoutedEvent="Mouse.MouseMove">
+								<BeginStoryboard x:Name="ValveOnMouseMove_BeginStoryboard" Storyboard="{StaticResource ValveOnMouseMove}"/>
+							</EventTrigger>
+						</ControlTemplate.Triggers>
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
