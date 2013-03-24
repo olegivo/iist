@@ -107,23 +107,11 @@
     <Reference Include="WPFToolkit" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UIComponents\ucChamber.xaml.cs">
-      <DependentUpon>ucChamber.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UIComponents\ucPipe.xaml.cs">
-      <DependentUpon>ucPipe.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UIComponents\ucReheatChamber.xaml.cs">
-      <DependentUpon>ucReheatChamber.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UIComponents\ucTank.xaml.cs">
-      <DependentUpon>ucTank.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UIComponents\ucFlame.xaml.cs">
-      <DependentUpon>ucFlame.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UIIndicators\Clock.xaml.cs">
       <DependentUpon>Clock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIIndicators\ucSimpleIndicator.xaml.cs">
+      <DependentUpon>ucSimpleIndicator.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIIndicators\ucCircularIndicator.xaml.cs">
       <DependentUpon>ucCircularIndicator.xaml</DependentUpon>
@@ -148,43 +136,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UIComponents\ucChamber.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UIComponents\ucIndicator.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UIComponents\ucPipe.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UIComponents\ucReheatChamber.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UIComponents\ucTank.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UIComponents\ucFlame.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="UIIndicators\Clock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIIndicators\ucSimpleIndicator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -198,9 +154,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\StringToNullableDoubleConverter.cs" />
-    <Compile Include="UIComponents\ucIndicator.xaml.cs">
-      <DependentUpon>ucIndicator.xaml</DependentUpon>
-    </Compile>
     <AppDesigner Include="Properties\" />
     <None Include="Application.ico">
       <Visible>false</Visible>
