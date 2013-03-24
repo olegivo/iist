@@ -1,5 +1,4 @@
-﻿using System;
-using DMS.Common.Messages;
+﻿using DMS.Common.Messages;
 using JulMar.Windows.Mvvm;
 
 namespace TP.WPF.ViewModels
@@ -24,7 +23,7 @@ namespace TP.WPF.ViewModels
 
         public string Caption
         {
-            get { return caption.Substring(0, 4); }
+            get { return caption; }
             set
             {
                 caption = value;
@@ -87,8 +86,7 @@ namespace TP.WPF.ViewModels
                         "IsValueHigherNormal",
                         "IsValueLowerNormal",
                         "IsValueHigherCritycal",
-                        "IsValueLowerCritycal",
-						"CurrentAngleValue180"
+                        "IsValueLowerCritycal"
                     };
                 foreach (var propertyName in propertyNames)
                     OnPropertyChanged(propertyName);
@@ -146,12 +144,5 @@ namespace TP.WPF.ViewModels
                        ? CurrentValue.Value.CompareTo(compareValue.Value)
                        : 0;
         }
-        public double? CurrentAngleValue180
-        {
-            //TODO: Придумать более адыкватную формулу!
-            get { return    180 / ((MaxValue - MinValue)/currentValue*Math.PI); }
-
-        }
-
     }
 }

@@ -2,11 +2,11 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" x:Name="userControl"
 	mc:Ignorable="d"
 	x:Class="UICommon.WPF.ucCircularIndicator"
-	x:Name="CircularControl" Width="160" Height="80">
-	<UserControl.Resources>
+    Width="160" Height="80">
+	<!--<UserControl.Resources>
 		<Storyboard x:Key="ArrowMovement">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="IndicatorArrow">
 				<SplineDoubleKeyFrame KeyTime="0" Value="0"/>
@@ -18,9 +18,9 @@
 		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
 			<BeginStoryboard Storyboard="{StaticResource ArrowMovement}"/>
 		</EventTrigger>
-	</UserControl.Triggers>
+	</UserControl.Triggers>-->
 
-	<Viewbox Stretch="Fill" DataContext="{Binding ElementName=CircularControl}">
+	<Viewbox Stretch="Fill">
 		<Canvas Width="160" Height="88" RenderTransformOrigin="0.5,0.5">
 			<Path x:Name="WhiteBackground" Data="M0.5,79.7 C0.5,79.7 0.5,0.49999999 72.5,0.49999999 C144.5,0.49999999 144.5,79.700003 144.5,79.700003 z" Fill="#FFF4F4F5" Height="80.7" Canvas.Left="7.5" Canvas.Top="8.3" Width="145"/>
 			<Path Data="M0.5,88.5 C0.5,88.5 0.5,0.5 80.5,0.5 C160.5,0.5 160.5,88.5 160.5,88.5 L144.5,88.5 C144.5,88.5 144.10158,18.099621 80.5,18.1 C16.499887,18.100381 16.5,88.5 16.5,88.5 z" Stroke="Black" Width="161" Height="89" Canvas.Left="-0.5" Canvas.Top="-0.5">
@@ -38,7 +38,7 @@
 					<TransformGroup>
 						<ScaleTransform/>
 						<SkewTransform/>
-						<RotateTransform/>
+						<RotateTransform Angle="{Binding Path=CurrentAngleValue180}"/>
 						<TranslateTransform/>
 					</TransformGroup>
 				</Path.RenderTransform>
