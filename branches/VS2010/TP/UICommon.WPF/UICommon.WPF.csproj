@@ -107,6 +107,7 @@
     <Reference Include="WPFToolkit" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\ValueAngleConverter.cs" />
     <Compile Include="UIIndicators\Clock.xaml.cs">
       <DependentUpon>Clock.xaml</DependentUpon>
     </Compile>
