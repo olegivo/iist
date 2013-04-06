@@ -9,12 +9,43 @@
     Width="160" Height="80">
 	<UserControl.Resources>
         <local:ValueAngleConverter x:Key="valueAngleConverter" />
+        <Storyboard x:Key="IndicatorBackgroundAnimation">
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Color)" Storyboard.TargetName="WhiteBackground">
+        		<SplineColorKeyFrame KeyTime="0" Value="White"/>
+        		<SplineColorKeyFrame KeyTime="0:0:1" Value="#FFF90808"/>
+        		<SplineColorKeyFrame KeyTime="0:0:2" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Color)" Storyboard.TargetName="WhiteBackground">
+        		<SplineColorKeyFrame KeyTime="0" Value="White"/>
+        		<SplineColorKeyFrame KeyTime="0:0:1" Value="#FFF1FF00"/>
+        		<SplineColorKeyFrame KeyTime="0:0:2" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
 	</UserControl.Resources>
-
-
+	<!-- Дататриггеры для запуска анимации аварийного состояния индикатора-->
+	<UserControl.Style>
+		<Style>
+			<Style.Triggers>
+				<DataTrigger Binding="{Binding Path=IsValueHigherNormal}" Value="true">
+					<DataTrigger.EnterActions>
+						<BeginStoryboard Storyboard="{StaticResource IndicatorBackgroundAnimation}"/>
+					</DataTrigger.EnterActions>
+				</DataTrigger>
+			</Style.Triggers>
+		</Style>
+	</UserControl.Style>
+	<!-- Начало рабочего холста-->
 	<Viewbox Stretch="Fill">
 		<Canvas Width="160" Height="88" RenderTransformOrigin="0.5,0.5">
-			<Path x:Name="WhiteBackground" Data="M0.5,79.7 C0.5,79.7 0.5,0.49999999 72.5,0.49999999 C144.5,0.49999999 144.5,79.700003 144.5,79.700003 z" Fill="#FFF4F4F5" Height="80.7" Canvas.Left="7.5" Canvas.Top="8.3" Width="145"/>
+			<Path x:Name="WhiteBackground" Data="M0.5,79.7 C0.5,79.7 0.5,0.49999999 72.5,0.49999999 C144.5,0.49999999 144.5,79.700003 144.5,79.700003 z" Height="80.7" Canvas.Left="7.5" Canvas.Top="8.3" Width="145">
+				<Path.Fill>
+					<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+						<GradientStop Color="White" Offset="0"/>
+						<GradientStop Color="White" Offset="1"/>
+						<GradientStop Color="White" Offset="0.75"/>
+					</LinearGradientBrush>
+				</Path.Fill>
+			</Path>
 			<Path Data="M0.5,88.5 C0.5,88.5 0.5,0.5 80.5,0.5 C160.5,0.5 160.5,88.5 160.5,88.5 L144.5,88.5 C144.5,88.5 144.10158,18.099621 80.5,18.1 C16.499887,18.100381 16.5,88.5 16.5,88.5 z" Stroke="Black" Width="161" Height="89" Canvas.Left="-0.5" Canvas.Top="-0.5">
 				<Path.Fill>
 					<LinearGradientBrush EndPoint="1,1" MappingMode="RelativeToBoundingBox" StartPoint="0,0">
@@ -39,10 +70,39 @@
                     </RotateTransform>
 				</Path.RenderTransform>
 			</Path>
-			<Border BorderBrush="Black" BorderThickness="0,0,0,1" Height="14.117" Canvas.Left="56" Canvas.Top="26.4" Width="48" Background="White">
-				<TextBlock x:Name="IndicatorValue" TextWrapping="Wrap" Text="{Binding Path=CurrentValue}" FontFamily="Tahoma" TextAlignment="Center"/>
+            <TextBlock x:Name="IndicatorCapture" Height="17.6" Canvas.Left="56" TextWrapping="Wrap" Text="{Binding Path=Caption}" Canvas.Top="35.2" Width="48" FontSize="9.333" TextAlignment="Center" Foreground="#FF817979"/>
+            <Path Data="M55.500203,87.5 C55.500203,87.5 55.5,61.1 79.5,61.1 103.5,61.1 103.4998,87.5 103.4998,87.5 z" Fill="#FFF4F4F5" Height="27.4" Canvas.Left="55.5" Stretch="Fill" Stroke="Black" Canvas.Top="61.1" Width="49"/>
+			<Border BorderBrush="Black" BorderThickness="0,0,0,1" Height="14.117" Canvas.Left="64" Canvas.Top="70.083" Width="32">
+				<TextBlock x:Name="IndicatorValue" TextWrapping="Wrap" Text="{Binding CurrentValue}" FontFamily="Tahoma" TextAlignment="Center"/>
 			</Border>
-            <TextBlock Height="17.6" Canvas.Left="40" TextWrapping="Wrap" Text="{Binding Path=Caption}" Canvas.Top="44" Width="80" FontSize="9.333" TextAlignment="Center" Foreground="#FF817979"/>
+			<!-- стрелка, указывающая нижнюю границу безаварийной работы
+			<Path x:Name="MinNormalArrow" Data="M11.7368,-16.19858 L11.7368,22.677574 45.870133,2.4623134 z" Fill="#FFF4F4F5" Height="5" Stretch="Fill" Stroke="Black" Canvas.Top="78.575" Width="5" RenderTransformOrigin="16,0.205">
+				<Path.RenderTransform>
+					<RotateTransform>
+						<RotateTransform.Angle>
+							<MultiBinding Converter="{StaticResource valueAngleConverter}">
+                                <Binding Path="MinNormalValue"/>
+								<Binding Path="MinValue"/>
+								<Binding Path="MaxValue"/>
+                            </MultiBinding>
+						</RotateTransform.Angle>
+					</RotateTransform>
+				</Path.RenderTransform>
+			</Path>
+			-->
+			<Path x:Name="MaxNormalArrow" Data="M11.7368,-16.19858 L11.7368,22.677574 45.870133,2.4623134 z" Fill="#FFF4F4F5" Height="5" Stretch="Fill" Stroke="Black" Canvas.Top="78.575" Width="5" RenderTransformOrigin="16,0.205">
+				<Path.RenderTransform>
+					<RotateTransform>
+						<RotateTransform.Angle>
+							<MultiBinding Converter="{StaticResource valueAngleConverter}">
+                                <Binding Path="MaxNormalValue"/>
+								<Binding Path="MinValue"/>
+								<Binding Path="MaxValue"/>
+                            </MultiBinding>
+						</RotateTransform.Angle>
+					</RotateTransform>
+				</Path.RenderTransform>
+			</Path>
 		</Canvas>
 	</Viewbox>
 </UserControl>
