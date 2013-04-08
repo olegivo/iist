@@ -213,6 +213,40 @@
             <Label Name="label4" Canvas.Right="100" Canvas.Top="100" Height="25" Width="100">Температура ТС8:</Label>
             <TextBox Canvas.Top="125" Canvas.Right="15"  Text="{Binding Level_DU9}" Width="50"></TextBox>
             <Label Name="label5" Canvas.Right="100" Canvas.Top="125" Height="25" Width="100">Уровень ДУ-9:</Label>
+            <Path Data="M240,504 L440,504 440,296 240,296 z" Height="208" Canvas.Left="240" Stretch="Fill" StrokeThickness="0" Canvas.Top="296" Width="200" Fill="#FF6E6D6D"/>
+            <Path Data="M240,280 L240,296 440,296 440,280 z" Height="16" Canvas.Left="240" Stretch="Fill" StrokeThickness="0" Canvas.Top="280" Width="200">
+            	<Path.Fill>
+            		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            			<GradientStop Color="White" Offset="0"/>
+            			<GradientStop Color="#FF6E6D6D" Offset="1"/>
+            		</LinearGradientBrush>
+            	</Path.Fill>
+            </Path>
+            <Path Data="M240,520 L240,504 440,504 440,520" Height="16" Canvas.Left="240" Stretch="Fill" StrokeThickness="0" Canvas.Top="504" Width="200">
+            	<Path.Fill>
+            		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            			<GradientStop Color="#FF6E6D6D" Offset="0"/>
+            			<GradientStop Color="#FF272626" Offset="1"/>
+            		</LinearGradientBrush>
+            	</Path.Fill>
+            </Path>
+            <Path Data="M440,280 L440,296 480,336 480,320 z" Height="56" Canvas.Left="440" Stretch="Fill" StrokeThickness="0" Canvas.Top="280" Width="40">
+            	<Path.Fill>
+            		<LinearGradientBrush EndPoint="0.368,0.553" StartPoint="0.579,0.402">
+            			<GradientStop Color="White" Offset="0"/>
+            			<GradientStop Color="#FF6E6D6D" Offset="1"/>
+            		</LinearGradientBrush>
+            	</Path.Fill>
+            </Path>
+            <Path Data="M304,457 L344,417 344,289 304,249 z" Height="208" Canvas.Left="440" Stretch="Fill" StrokeThickness="0" Canvas.Top="296" Width="40" Fill="#FF6E6D6D"/>
+            <Path Data="M260,524.5 L260,508.5 300,468.5 300,484.5" Height="56" Canvas.Left="440" Stretch="Fill" StrokeThickness="0" Canvas.Top="464" Width="40">
+            	<Path.Fill>
+            		<LinearGradientBrush EndPoint="0.572,0.609" StartPoint="0.352,0.441">
+            			<GradientStop Color="#FF6E6D6D" Offset="0"/>
+            			<GradientStop Color="#FF272626" Offset="1"/>
+            		</LinearGradientBrush>
+            	</Path.Fill>
+            </Path>
 
 
 

@@ -3,6 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:UICommon_WPF_UIIndicators="clr-namespace:UICommon.WPF.UIIndicators;assembly=UICommon.WPF"
 	mc:Ignorable="d"
 	x:Class="TP.WPF.Views.ucCycloneAndScrubber"
 	x:Name="UserControl"
@@ -214,12 +215,13 @@
 			<TextBlock x:Name="textBlock7" Canvas.Left="519.07" TextWrapping="Wrap" Canvas.Top="598.056" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="Б1"/>
 			<TextBlock x:Name="textBlock8" Canvas.Left="976.565" TextWrapping="Wrap" Canvas.Top="600" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="Б2"/>
             <!--Добавление Биндинговых ТекстБоксов-->
-            <TextBox Canvas.Top="25" Canvas.Right="15"  Text="{Binding PhLevel_CF1}" Width="50"></TextBox>
-            <Label Name="label1" Canvas.Right="100" Canvas.Top="25" Height="25" Width="100">рН1	уровень в СФ1:</Label>
-            <TextBox Canvas.Top="50" Canvas.Right="15"  Text="{Binding PhLevel_CF2}" Width="50"></TextBox>
-            <Label Name="label2" Canvas.Right="100" Canvas.Top="50" Height="25" Width="100">рН2	уровень в СФ2:</Label>
-            <TextBox Canvas.Top="75" Canvas.Right="15"  Text="{Binding Level_DU10}" Width="50"></TextBox>
-            <Label Name="label3" Canvas.Right="100" Canvas.Top="75" Height="25" Width="100">ДУ-10 уровень в СБ:</Label>
+            <TextBox Canvas.Top="25" Canvas.Right="15"  Text="{Binding PhLevel_CF1}" Width="50"/>
+            <Label x:Name="label1" Canvas.Right="100" Canvas.Top="25" Height="25" Width="100" Content="рН1 уровень в СФ1:"/>
+            <TextBox Canvas.Top="50" Canvas.Right="15"  Text="{Binding PhLevel_CF2}" Width="50"/>
+            <Label x:Name="label2" Canvas.Right="100" Canvas.Top="50" Height="25" Width="100" Content="рН2 уровень в СФ2:"/>
+            <TextBox Canvas.Top="75" Canvas.Right="15"  Text="{Binding Level_DU10}" Width="50"/>
+            <Label x:Name="label3" Canvas.Right="100" Canvas.Top="75" Height="25" Width="100" Content="ДУ-10 уровень в СБ:"/>
+			<UICommon_WPF_UIIndicators:ucSimpleIndicator Height="6" Canvas.Left="763.667" Canvas.Top="362" Width="234.251" DataContext="{Binding IndicatorViewModels[21]}"/>
         </Canvas>
 	</Viewbox>
 </UserControl>

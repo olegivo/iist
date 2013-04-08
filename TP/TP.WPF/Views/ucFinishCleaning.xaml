@@ -85,49 +85,6 @@
                 Canvas.Right="150" 
                 Content="+1"
                 />
-            <UiIndicators:ucSimpleIndicator
-                Name="indicatorT6"
-                Canvas.Top="20"
-                Canvas.Right="620"
-                Width="166"
-                DataContext="{Binding IndicatorViewModels[6]}"
-				>
-            </UiIndicators:ucSimpleIndicator>
-            <UiIndicators:ucSimpleIndicator
-                Name="indicatorCO"
-                Canvas.Top="60"
-                Canvas.Right="620"
-                Width="166"
-                DataContext="{Binding IndicatorViewModels[21]}">
-            </UiIndicators:ucSimpleIndicator>
-            <UiIndicators:ucSimpleIndicator
-                Name="indicatorО2"
-                Canvas.Top="80"
-                Canvas.Right="620"
-                Width="166"
-                DataContext="{Binding IndicatorViewModels[20]}">
-            </UiIndicators:ucSimpleIndicator>
-            <UiIndicators:ucSimpleIndicator
-                Name="indicatorSO2"
-                Canvas.Top="100"
-                Canvas.Right="620"
-                Width="166"
-                DataContext="{Binding IndicatorViewModels[22]}">
-            </UiIndicators:ucSimpleIndicator>
-            <UiIndicators:ucSimpleIndicator
-                Name="indicatorNO"
-                Canvas.Top="120"
-                Canvas.Right="620"
-                Width="166"
-                DataContext="{Binding IndicatorViewModels[23]}">
-            </UiIndicators:ucSimpleIndicator>
-            <UiIndicators:ucSimpleIndicator
-                Name="indicatorNO2"
-                Canvas.Top="140"
-                Canvas.Right="620"
-                Width="166"
-                DataContext="{Binding IndicatorViewModels[24]}">
-            </UiIndicators:ucSimpleIndicator>
             <!--<UIComponents:ucIndicator
                 Name="indicatorV"
                 Canvas.Top="40"
@@ -136,16 +93,49 @@
 				Caption="Обороты"
                 CurrentValue="{Binding V}">
             </UIComponents:ucIndicator>-->
-            <UiIndicators:ucSimpleIndicator
-                Name="indicatorT7"
-                Canvas.Top="160"
-                Canvas.Right="620"
-                Width="166"
-                DataContext="{Binding IndicatorViewModels[7]}">
-            </UiIndicators:ucSimpleIndicator>
-            <Wpf:ucCircularIndicator Canvas.Left="776" Canvas.Top="581" Height="80" Name="ucCircularIndicator1" Width="160" DataContext="{Binding IndicatorViewModels[21]}"/>
-            <Wpf:ucCircularIndicator Canvas.Left="587" Canvas.Top="582" Height="80" Name="ucCircularIndicator2" Width="160" DataContext="{Binding IndicatorViewModels[23]}"/>
-            <Wpf:ucCircularIndicator Canvas.Left="402" Canvas.Top="583" Height="80" Name="ucCircularIndicator3" Width="160" DataContext="{Binding IndicatorViewModels[24]}"/>
+            
+            <Expander Header="Числовые показатели" Height="768" Width="256" Background="#00A94D4D" Grid.IsSharedSizeScope="True">
+            	<Grid>
+            		<Grid.Background>
+            			<SolidColorBrush Color="#FFFBFBFB" Opacity="0.4"/>
+            		</Grid.Background>
+            		<StackPanel Height="144.02" Width="254" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Right">
+            			<UiIndicators:ucSimpleIndicator
+            				x:Name="indicatorT7"
+            				Width="Auto"
+            				DataContext="{Binding IndicatorViewModels[7]}" />
+            			<UiIndicators:ucSimpleIndicator
+            				x:Name="indicatorNO2"
+            				Width="Auto"
+            				DataContext="{Binding IndicatorViewModels[24]}" />
+            			<UiIndicators:ucSimpleIndicator
+            				x:Name="indicatorNO"
+            				Width="Auto"
+            				DataContext="{Binding IndicatorViewModels[23]}" />
+            			<UiIndicators:ucSimpleIndicator
+            				x:Name="indicatorSO2"
+            				Width="Auto"
+            				DataContext="{Binding IndicatorViewModels[22]}" />
+            			<UiIndicators:ucSimpleIndicator
+            				x:Name="indicatorО2"
+            				Width="Auto"
+            				DataContext="{Binding IndicatorViewModels[20]}" />
+            			<UiIndicators:ucSimpleIndicator
+            				x:Name="indicatorCO"
+            				Width="Auto"
+            				DataContext="{Binding IndicatorViewModels[21]}" />
+            			<UiIndicators:ucSimpleIndicator
+            				x:Name="indicatorT6"
+            				Width="Auto"
+            				DataContext="{Binding IndicatorViewModels[6]}" />
+            		</StackPanel>
+            	</Grid>
+            </Expander>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_O2" Width="192" DataContext="{Binding IndicatorViewModels[20]}" Canvas.Left="8"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_CO" Width="192" DataContext="{Binding IndicatorViewModels[21]}" Canvas.Left="208"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_SO2" Width="192" DataContext="{Binding IndicatorViewModels[22]}" Canvas.Left="412"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_NO" Width="192" DataContext="{Binding IndicatorViewModels[23]}" Canvas.Left="621"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_NO2" Width="192" DataContext="{Binding IndicatorViewModels[24]}" Canvas.Left="824"/>
             <!--<UIComponents:ucIndicator
                 Name="indicatorMCO"
                 Canvas.Top="180"
