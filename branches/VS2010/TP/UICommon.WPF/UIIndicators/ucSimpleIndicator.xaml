@@ -20,8 +20,8 @@
     </UserControl.Resources>
     <Grid>
     	<Grid.ColumnDefinitions>
-    		<ColumnDefinition Width="0.7*"/>
-    		<ColumnDefinition Width="0.3*"/>
+    		<ColumnDefinition/>
+    		<ColumnDefinition Width="72"/>
     	</Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -30,9 +30,7 @@
             Text="{Binding Path=Caption}" 
             MinWidth="50" 
             MinHeight="20" 
-            Grid.Row="0" 
-            VerticalAlignment="Top" 
-            Height="20" TextAlignment="Right" />
+            Grid.Row="0" TextAlignment="Right" />
         <TextBox 
             Name="tb"
             Text="{Binding Path=CurrentValue}" 
