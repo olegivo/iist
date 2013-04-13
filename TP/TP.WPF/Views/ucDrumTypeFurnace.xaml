@@ -3,10 +3,11 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:Wpf="clr-namespace:UICommon.WPF;assembly=UICommon.WPF"
 	mc:Ignorable="d"
 	x:Class="TP.WPF.Views.ucDrumTypeFurnace"
 	x:Name="UserControl"
-	d:DesignWidth="640" d:DesignHeight="480" Width="1024" Height="768">
+	Width="1024" Height="768">
 
 
 	<Viewbox>
@@ -437,16 +438,12 @@
 			<TextBlock x:Name="textBlock4_Copy10" Canvas.Left="568.146" TextWrapping="Wrap" Canvas.Top="397.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ПВ"/>
 			<TextBlock x:Name="textBlock4_Copy11" Canvas.Left="904" TextWrapping="Wrap" Canvas.Top="384" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ЗУ"/>
             <!--Добавление Биндинговых ТекстБоксов-->
-            <TextBox Canvas.Top="25" Canvas.Right="15"  Text="{Binding Temperature_TC1}" Width="50"></TextBox>
-            <Label Name="label1" Canvas.Right="100" Canvas.Top="25" Height="25" Width="100">Температура ТП1:</Label>
-            <TextBox Canvas.Top="50" Canvas.Right="15"  Text="{Binding Temperature_TC2}" Width="50"></TextBox>
-            <Label Name="label2" Canvas.Right="100" Canvas.Top="50" Height="25" Width="100">Температура ТП1:</Label>
-            <TextBox Canvas.Top="75" Canvas.Right="15"  Text="{Binding Speed_S}" Width="50"></TextBox>
-            <Label Name="label3" Canvas.Right="100" Canvas.Top="75" Height="25" Width="100">Скорость S:</Label>
-            <TextBox Canvas.Top="100" Canvas.Right="15"  Text="{Binding Temperature_TC8}" Width="50"></TextBox>
-            <Label Name="label4" Canvas.Right="100" Canvas.Top="100" Height="25" Width="100">Температура ТС8:</Label>
-            <TextBox Canvas.Top="125" Canvas.Right="15"  Text="{Binding Level_DU9}" Width="50"></TextBox>
-            <Label Name="label5" Canvas.Right="100" Canvas.Top="125" Height="25" Width="100">Уровень ДУ-9:</Label>
+            <!--Добавление Биндинговых Индикаторов-->
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_T1" Width="192" DataContext="{Binding IndicatorViewModels[1]}" Canvas.Left="8"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_T2" Width="192" DataContext="{Binding IndicatorViewModels[2]}" Canvas.Left="208"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_T8" Width="192" DataContext="{Binding IndicatorViewModels[8]}" Canvas.Left="408"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_S12" Width="192" DataContext="{Binding IndicatorViewModels[12]}" Canvas.Left="608"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_L13" Width="192" DataContext="{Binding IndicatorViewModels[13]}" Canvas.Left="808"/>
 
 
 

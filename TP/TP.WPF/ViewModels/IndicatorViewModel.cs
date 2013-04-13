@@ -87,13 +87,17 @@ namespace TP.WPF.ViewModels
                         "IsValueHigherNormal",
                         "IsValueLowerNormal",
                         "IsValueHigherCritycal",
-                        "IsValueLowerCritycal"
+                        "IsValueLowerCritycal",
+                        "ShortCurrentValue"
                     };
                 foreach (var propertyName in propertyNames)
                     OnPropertyChanged(propertyName);
             }
         }
 
+        public Decimal ShortCurrentValue {
+            get { return Decimal.Round((Decimal) CurrentValue, 2); }
+        }
 
         /// <summary>
         /// Текущее значение больше нормального
