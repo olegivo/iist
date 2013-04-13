@@ -1,9 +1,8 @@
-﻿<UserControl:BaseView
+﻿<UserControl
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:UserControl="clr-namespace:TP.WPF.Views"
 	xmlns:UiIndicators="clr-namespace:UICommon.WPF.UIIndicators;assembly=UICommon.WPF"
 	xmlns:Wpf="clr-namespace:UICommon.WPF;assembly=UICommon.WPF" mc:Ignorable="d"
 	x:Class="TP.WPF.Views.ucFinishCleaning"
@@ -93,7 +92,7 @@
 				Caption="Обороты"
                 CurrentValue="{Binding V}">
             </UIComponents:ucIndicator>-->
-            
+            <TextBox Canvas.Top="100" Canvas.Right="15"  Text="{Binding Temperature_TC6}" Width="50"/>
             <Expander Header="Числовые показатели" Height="768" Width="256" Background="#00A94D4D" Grid.IsSharedSizeScope="True">
             	<Grid>
             		<Grid.Background>
@@ -131,13 +130,13 @@
             		</StackPanel>
             	</Grid>
             </Expander>
-            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_O2" Width="192" DataContext="{Binding IndicatorViewModels[20]}" Canvas.Left="8"/>
-            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_CO" Width="192" DataContext="{Binding IndicatorViewModels[21]}" Canvas.Left="208"/>
-            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_SO2" Width="192" DataContext="{Binding IndicatorViewModels[22]}" Canvas.Left="412"/>
-            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_NO" Width="192" DataContext="{Binding IndicatorViewModels[23]}" Canvas.Left="621"/>
-            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_NO2" Width="192" DataContext="{Binding IndicatorViewModels[24]}" Canvas.Left="824"/>
-            <Wpf:ucTemperatureIndicator Canvas.Left="240" Height="155" Width="80" Canvas.Top="162"/>
-            <Wpf:ucTemperatureIndicator Canvas.Left="640" Height="155" Width="80" Canvas.Top="320"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G20" Width="192" DataContext="{Binding IndicatorViewModels[20]}" Canvas.Left="8"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G21" Width="192" DataContext="{Binding IndicatorViewModels[21]}" Canvas.Left="208"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G22" Width="192" DataContext="{Binding IndicatorViewModels[22]}" Canvas.Left="412"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G23" Width="192" DataContext="{Binding IndicatorViewModels[23]}" Canvas.Left="621"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G24" Width="192" DataContext="{Binding IndicatorViewModels[24]}" Canvas.Left="824"/>
+            <Wpf:ucTemperatureIndicator Canvas.Left="240" Height="155" x:Name="indicator_T6" Width="80" DataContext="{Binding IndicatorViewModels[6]}" Canvas.Top="162"/>
+            <Wpf:ucTemperatureIndicator Canvas.Left="640" Height="155" x:Name="indicator_T7" Width="80" DataContext="{Binding IndicatorViewModels[7]}" Canvas.Top="320"/>
             <!--<UIComponents:ucIndicator
                 Name="indicatorMCO"
                 Canvas.Top="180"
@@ -172,4 +171,4 @@
             </UIComponents:ucIndicator>-->
         </Canvas>
     </Viewbox>
-</UserControl:BaseView>
+</UserControl>

@@ -23,13 +23,12 @@ namespace TP.WPF.ViewModels
             FinishCleaning.SendControlMessage += FinishCleaning_SendControlMessage;
 
             DrumTypeFurnace = new DrumTypeFurnaceViewModel();
-            CyclonAndScrubber = new CycloneAndScrubberViewModel();
+            CycloneAndScrubber = new CycloneAndScrubberViewModel();
             ReheatChamber = new ReheatChamberViewModel();
-            AllHeatExchanger = new AllHeatExchangerViewModel();
+            HeatExchanger = new HeatExchangerViewModel();
             SummaryTable = new SummaryTableViewModel();
 
             channelController1.AutoSubscribeChannels = true;
-            //channelController1.CanRegisterChanged += new System.EventHandler(this.channelController1_CanRegisterChanged);
             channelController1.InitProvider("HighLevelClient");
             channelController1.NeedProtocol += channelController1_NeedProtocol;
             channelController1.CanRegister = true;
@@ -64,9 +63,9 @@ namespace TP.WPF.ViewModels
                     this,
                     FinishCleaning,
                     DrumTypeFurnace,
-                    CyclonAndScrubber,
+                    CycloneAndScrubber,
                     ReheatChamber,
-                    AllHeatExchanger,
+                    HeatExchanger,
                     SummaryTable
                 };
 
@@ -126,8 +125,8 @@ namespace TP.WPF.ViewModels
 
         public FinishCleaningViewModel FinishCleaning { get; private set; }
         public DrumTypeFurnaceViewModel DrumTypeFurnace { get; private set; }
-        public CycloneAndScrubberViewModel CyclonAndScrubber { get; private set; }
-        public AllHeatExchangerViewModel AllHeatExchanger { get; private set; }
+        public CycloneAndScrubberViewModel CycloneAndScrubber { get; private set; }
+        public HeatExchangerViewModel HeatExchanger { get; private set; }
         public ReheatChamberViewModel ReheatChamber { get; private set; }
         public SummaryTableViewModel SummaryTable { get; private set; }
 

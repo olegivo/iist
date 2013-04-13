@@ -15,16 +15,6 @@
 *.....^......^......^......^....*
 *....|L|....|E|....|T|....|I|...*
 *******************************-->
-<!--
-	xmlns:CyclonAndScrubber="clr-namespace:TP"
-	xmlns:UICommonWPF="clr-namespace:UICommonWPF;assembly=UICommonWPF"
--->
-<!-- 
-	TODO-LIST
-	1.избавиться от пространства имен Microsoft_Windows_Themes (ибо все элементы нарисованы вручную).
-	2.Неясно как подключать WPF компоненты DevExpress 2011.
-	3.Неординарное реагирование кнопок на событие onMouseOver.
--->
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -79,7 +69,7 @@
                 </TabItem>
                 <TabItem x:Name="tabItem" Header="Барабанная печь" Style="{DynamicResource TabItemStyle1}">
                     <Grid>
-                        <Views:ucDrumTypeFurnace HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding DrumTypeFurnace}"/>
+                        <Views:ucDrumTypeFurnace x:Name="DrumTypeFurnace" HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding DrumTypeFurnace}"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Камера дожигания" Style="{DynamicResource TabItemStyle1}">
@@ -89,17 +79,17 @@
                 </TabItem>
                 <TabItem Header="Теплообменник" Style="{DynamicResource TabItemStyle1}">
                     <Grid>
-                        <Views:ucHeatExchanger HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding HeatExchanger}"/>
+                        <Views:ucHeatExchanger x:Name="HeatExchanger" HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding HeatExchanger}"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Циклон и скруббер" Style="{DynamicResource TabItemStyle1}">
                     <Grid>
-                        <Views:ucCycloneAndScrubber HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding CycloneAndScrubber}"/>
+                        <Views:ucCycloneAndScrubber x:Name="CycloneAndScrubber" HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding CycloneAndScrubber}"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Финишная очистка" Style="{DynamicResource TabItemStyle1}">
                     <Grid>
-                        <Views:ucFinishCleaning HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding FinishCleaning}"/>
+                        <Views:ucFinishCleaning x:Name="FinishCleaning" HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding FinishCleaning}"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Сводная таблица" Style="{DynamicResource TabItemStyle1}">
