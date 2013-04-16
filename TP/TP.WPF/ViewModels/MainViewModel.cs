@@ -25,7 +25,7 @@ namespace TP.WPF.ViewModels
             DrumTypeFurnace = new DrumTypeFurnaceViewModel();
             CycloneAndScrubber = new CycloneAndScrubberViewModel();
             ReheatChamber = new ReheatChamberViewModel();
-            HeatExchanger = new HeatExchangerViewModel();
+            HeatExchanger = new AllHeatExchangerViewModel();
             SummaryTable = new SummaryTableViewModel();
 
             channelController1.AutoSubscribeChannels = true;
@@ -126,7 +126,7 @@ namespace TP.WPF.ViewModels
         public FinishCleaningViewModel FinishCleaning { get; private set; }
         public DrumTypeFurnaceViewModel DrumTypeFurnace { get; private set; }
         public CycloneAndScrubberViewModel CycloneAndScrubber { get; private set; }
-        public HeatExchangerViewModel HeatExchanger { get; private set; }
+        public AllHeatExchangerViewModel HeatExchanger { get; private set; }
         public ReheatChamberViewModel ReheatChamber { get; private set; }
         public SummaryTableViewModel SummaryTable { get; private set; }
 
