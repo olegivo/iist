@@ -118,8 +118,14 @@
     <Compile Include="UIIndicators\ucCircularIndicator.xaml.cs">
       <DependentUpon>ucCircularIndicator.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIIndicators\ucTemperatureIndicator.xaml.cs">
-      <DependentUpon>ucTemperatureIndicator.xaml</DependentUpon>
+    <Compile Include="UIIndicators\DarkStyleIndicators\ucTemperatureIndicator1.xaml.cs">
+      <DependentUpon>ucTemperatureIndicator1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIIndicators\DarkStyleIndicators\ucTemperatureIndicator2.xaml.cs">
+      <DependentUpon>ucTemperatureIndicator2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIIndicators\DarkStyleIndicators\ucTemperatureIndicator3.xaml.cs">
+      <DependentUpon>ucTemperatureIndicator3.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -153,7 +159,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UIIndicators\ucTemperatureIndicator.xaml">
+    <Page Include="UIIndicators\DarkStyleIndicators\ucTemperatureIndicator1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIIndicators\DarkStyleIndicators\ucTemperatureIndicator2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIIndicators\DarkStyleIndicators\ucTemperatureIndicator3.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
