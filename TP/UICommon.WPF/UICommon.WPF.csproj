@@ -112,6 +112,9 @@
     <Compile Include="UIIndicators\Clock.xaml.cs">
       <DependentUpon>Clock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIIndicators\UcLevelIndicator.xaml.cs">
+      <DependentUpon>UcLevelIndicator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIIndicators\ucSimpleIndicator.xaml.cs">
       <DependentUpon>ucSimpleIndicator.xaml</DependentUpon>
     </Compile>
@@ -148,6 +151,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIIndicators\Clock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIIndicators\UcLevelIndicator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

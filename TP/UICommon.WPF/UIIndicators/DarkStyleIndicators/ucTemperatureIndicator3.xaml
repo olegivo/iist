@@ -3,11 +3,13 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:UICommon.WPF.Converters" xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="userControl"
 	mc:Ignorable="d"
 	x:Class="UICommon.WPF.ucTemperatureIndicator3"
-	x:Name="UserControl"
 	d:DesignWidth="100" d:DesignHeight="200">
-
+   <UserControl.Resources>
+        <local:ValueHeightConverter x:Key="valueHeightConverter" />
+	</UserControl.Resources>
 	<Viewbox x:Name="LayoutRoot" Stretch="Fill">
 		<Canvas Margin="0" Height="400" Width="200">
 			<Rectangle Fill="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" Height="360" Canvas.Left="25.73" Stroke="Black" Canvas.Top="16.688" Width="144" RadiusY="39.5" RadiusX="39.5"/>
@@ -15,76 +17,100 @@
 				<Rectangle.Fill>
 					<LinearGradientBrush EndPoint="0.515,0.021" StartPoint="0.501,1.004">
 						<GradientStop Color="Black"/>
-						<GradientStop Color="#FF165C6E" Offset="1"/>
+						<GradientStop Color="#FFFBF2B8" Offset="1"/>
 						<GradientStop Color="#FF020B0D"/>
 						<GradientStop Color="#FF04161B"/>
 						<GradientStop Color="#FF04161B"/>
-						<GradientStop Color="#FF0B343F" Offset="0.352"/>
-						<GradientStop Color="#FF104957" Offset="0.543"/>
-						<GradientStop Color="#FF12505F" Offset="0.726"/>
-						<GradientStop Color="#FF145667" Offset="0.93"/>
+						<GradientStop Color="#FFDAEBAC" Offset="0.364"/>
+						<GradientStop Color="#FFEBF3B8" Offset="0.543"/>
+						<GradientStop Color="#FFEFE6AB" Offset="0.726"/>
+						<GradientStop Color="#FFE9DC9F" Offset="0.93"/>
 						<GradientStop Color="#FE04161B"/>
-						<GradientStop Color="#FF051B21"/>
-						<GradientStop Color="#FF051E25" Offset="0.152"/>
+						<GradientStop Color="#FF93903E"/>
+						<GradientStop Color="#FFB6B069" Offset="0.152"/>
 					</LinearGradientBrush>
 				</Rectangle.Fill>
 			</Rectangle>
-			<Rectangle Height="80" Canvas.Left="67.23" Stroke="{DynamicResource BrushRed}" Canvas.Top="72.688" Width="14.5" Fill="{DynamicResource BrushRed}"/>
-			<Rectangle Height="80" Canvas.Left="67.23" Stroke="{DynamicResource BrushOrange}" Canvas.Top="152.688" Width="14.5" Fill="{DynamicResource BrushOrange}"/>
-			<Rectangle Height="80" Canvas.Left="67.23" Stroke="{DynamicResource BrushGreen}" Canvas.Top="232.688" Width="14.5" Fill="{DynamicResource BrushGreen}"/>
-			<Rectangle Height="272" Canvas.Left="96.48" Stroke="{DynamicResource BrushBlack}" Canvas.Top="47.095" Width="16" RadiusY="7.5" RadiusX="7.5">
+			<Border Height="279.544" Canvas.Left="93.898" Canvas.Top="76.3" Width="20.75">
+				<Rectangle x:Name="IndicatorHeight" StrokeThickness="0" RenderTransformOrigin="0.5,1" Margin="0,-103.99,-0.352,99.816">
+					<Rectangle.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform/>
+							<SkewTransform/>
+							<RotateTransform Angle="180"/>
+							<TranslateTransform Y="-184"/>
+						</TransformGroup>
+					</Rectangle.RenderTransform>
+					<Rectangle.Fill>
+						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+							<GradientStop Color="#FFD8D8D8" Offset="1"/>
+							<GradientStop Color="DimGray" Offset="0"/>
+						</LinearGradientBrush>
+					</Rectangle.Fill>
+				</Rectangle>
+			</Border>
+			<Ellipse Height="14.75" Canvas.Left="93.274" Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Canvas.Top="345.958" Width="22.25" Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+			<Rectangle Height="294.173" Canvas.Left="92.796" Stroke="DimGray" Canvas.Top="67.82" Width="23.227" RadiusY="7.5" RadiusX="7.5" StrokeThickness="2" RenderTransformOrigin="0.5,0.5">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="0.097"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle Height="294.175" Canvas.Left="92.42" Stroke="{DynamicResource BrushBlack}" Canvas.Top="67.819" Width="24.238" RadiusY="7.5" RadiusX="7.5">
 				<Rectangle.Fill>
 					<ImageBrush/>
 				</Rectangle.Fill>
 			</Rectangle>
-			<Rectangle Height="206.583" Canvas.Left="98.48" Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Canvas.Top="105.345" Width="12" Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
-			<Ellipse Height="11.833" Canvas.Left="98.73" Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Canvas.Top="305.762" Width="11.75" Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="73.252" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="296.23" Width="9"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.23" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="304.204" Width="7"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.211" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="288.188" Width="7"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="73.246" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="280.188" Width="9"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.23" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="272.204" Width="7"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="73.23" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="264.204" Width="9"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.23" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="256.188" Width="7"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="73.23" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="248.188" Width="9"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.23" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="240.188" Width="7"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="73.23" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="232.188" Width="9"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="73.232" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="216.209" Width="9"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.21" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="224.183" Width="7"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.19" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="208.167" Width="7"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="73.226" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="200.167" Width="9"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.21" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="192.183" Width="7"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="73.21" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="184.183" Width="9"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.21" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="176.167" Width="7"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="73.21" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="168.167" Width="9"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.21" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="160.167" Width="7"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="73.21" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="152.167" Width="9"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="73.252" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="136.214" Width="9"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.23" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="144.188" Width="7"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.211" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="128.172" Width="7"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="73.246" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="120.172" Width="9"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.23" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="112.188" Width="7"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="73.23" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="104.188" Width="9"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.23" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="96.172" Width="7"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="73.23" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="88.172" Width="9"/>
-			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1" Canvas.Left="75.23" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="80.172" Width="7"/>
-			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.2" Canvas.Left="80.62" Stroke="{DynamicResource BrushBlack}" Canvas.Top="311.562" Width="2.2"/>
-			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.2" Canvas.Left="80.639" Stroke="{DynamicResource BrushBlack}" Canvas.Top="279.579" Width="2.2" RenderTransformOrigin="2.138,-9.9"/>
-			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.2" Canvas.Left="80.639" Stroke="{DynamicResource BrushBlack}" Canvas.Top="247.61" Width="2.2"/>
-			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.2" Canvas.Left="80.655" Stroke="{DynamicResource BrushBlack}" Canvas.Top="215.626" Width="2.2"/>
-			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.2" Canvas.Left="80.639" Stroke="{DynamicResource BrushBlack}" Canvas.Top="183.602" Width="2.2"/>
-			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.2" Canvas.Left="80.639" Stroke="{DynamicResource BrushBlack}" Canvas.Top="151.61" Width="2.2"/>
-			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.2" Canvas.Left="80.636" Stroke="{DynamicResource BrushBlack}" Canvas.Top="119.597" Width="2.2"/>
-			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.2" Canvas.Left="80.647" Stroke="{DynamicResource BrushBlack}" Canvas.Top="87.584" Width="2.2"/>
-			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.2" Canvas.Left="80.639" Stroke="{DynamicResource BrushBlack}" Canvas.Top="71.61" Width="2.2"/>
-			<TextBlock Height="13.75" Canvas.Left="59.397" TextWrapping="Wrap" Text="0" Canvas.Top="303.355" Width="8" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D"/>
-			<TextBlock Height="13.75" Canvas.Left="53.896" TextWrapping="Wrap" Text="20" Canvas.Top="272.688" Width="14.167" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D"/>
-			<TextBlock Height="13.75" Canvas.Left="54.063" TextWrapping="Wrap" Text="40" Canvas.Top="239.688" Width="14.167" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D"/>
-			<TextBlock Height="13.75" Canvas.Left="54.063" TextWrapping="Wrap" Text="60" Canvas.Top="207.855" Width="14.167" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D"/>
-			<TextBlock Height="13.75" Canvas.Left="54.063" TextWrapping="Wrap" Text="80" Canvas.Top="175.438" Width="14.167" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D"/>
-			<TextBlock Height="13.75" Canvas.Left="47.771" TextWrapping="Wrap" Text="100" Canvas.Top="143.771" Width="20.417" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D"/>
-			<TextBlock Height="13.75" Canvas.Left="47.73" TextWrapping="Wrap" Text="120" Canvas.Top="111.938" Width="20.417" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D"/>
-			<TextBlock Height="13.75" Canvas.Left="48" TextWrapping="Wrap" Text="140" Canvas.Top="80" Width="20.418" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.148" Canvas.Left="100.394" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="335.604" Width="13.634"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.148" Canvas.Left="103.408" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="344.81" Width="10.604"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.148" Canvas.Left="103.378" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="326.32" Width="10.604"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.148" Canvas.Left="100.388" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="317.084" Width="13.636"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.148" Canvas.Left="103.408" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="307.868" Width="10.604"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.148" Canvas.Left="100.36" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="298.632" Width="13.634"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.156" Canvas.Left="103.408" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="289.378" Width="10.604"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.148" Canvas.Left="100.36" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="280.144" Width="13.634"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.148" Canvas.Left="103.408" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="270.908" Width="10.604"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.154" Canvas.Left="100.36" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="261.654" Width="13.634"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.156" Canvas.Left="100.364" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="243.226" Width="13.634"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.15" Canvas.Left="103.378" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="252.432" Width="10.604"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.156" Canvas.Left="103.344" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="233.942" Width="10.604"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.15" Canvas.Left="100.354" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="224.708" Width="13.634"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.156" Canvas.Left="103.378" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="215.49" Width="10.604"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.15" Canvas.Left="100.33" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="206.256" Width="13.634"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.15" Canvas.Left="103.378" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="197.002" Width="10.604"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.15" Canvas.Left="100.33" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="187.766" Width="13.634"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.15" Canvas.Left="103.378" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="178.532" Width="10.604"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.15" Canvas.Left="100.33" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="169.296" Width="13.634"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.15" Canvas.Left="100.394" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="150.88" Width="13.634"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.156" Canvas.Left="103.408" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="160.084" Width="10.604"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.15" Canvas.Left="103.378" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="141.596" Width="10.604"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.149" Canvas.Left="100.388" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="132.348" Width="13.636"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.152" Canvas.Left="103.408" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="123.144" Width="10.604"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.152" Canvas.Left="100.36" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="113.908" Width="13.634"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.152" Canvas.Left="103.408" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="104.654" Width="10.604"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.152" Canvas.Left="100.36" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="95.42" Width="13.634"/>
+			<Path Data="M265.5,336 L280,336" Fill="{DynamicResource BrushBlack}" Height="1.152" Canvas.Left="103.408" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="86.184" Width="10.604"/>
+			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.54" Canvas.Left="111.556" Stroke="{DynamicResource BrushBlack}" Canvas.Top="353.304" Width="3.332"/>
+			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.54" Canvas.Left="111.584" Stroke="{DynamicResource BrushBlack}" Canvas.Top="316.382" Width="3.331" RenderTransformOrigin="2.138,-9.9"/>
+			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.54" Canvas.Left="111.584" Stroke="{DynamicResource BrushBlack}" Canvas.Top="279.476" Width="3.331"/>
+			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.538" Canvas.Left="111.608" Stroke="{DynamicResource BrushBlack}" Canvas.Top="242.554" Width="3.331"/>
+			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.538" Canvas.Left="111.584" Stroke="{DynamicResource BrushBlack}" Canvas.Top="205.584" Width="3.331"/>
+			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.538" Canvas.Left="111.584" Stroke="{DynamicResource BrushBlack}" Canvas.Top="168.652" Width="3.331"/>
+			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.529" Canvas.Left="111.582" Stroke="{DynamicResource BrushBlack}" Canvas.Top="131.688" Width="3.33"/>
+			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.54" Canvas.Left="111.596" Stroke="{DynamicResource BrushBlack}" Canvas.Top="94.74" Width="3.331"/>
+			<Ellipse Fill="{DynamicResource BrushBlack}" Height="2.54" Canvas.Left="111.584" Stroke="{DynamicResource BrushBlack}" Canvas.Top="76.3" Width="3.331"/>
+			<TextBlock Height="15.872" Canvas.Left="79.428" TextWrapping="Wrap" Text="0" Canvas.Top="343.83" Width="12.116" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D" TextAlignment="Right"/>
+			<TextBlock Height="15.874" Canvas.Left="71.086" TextWrapping="Wrap" Text="20" Canvas.Top="308.426" Width="21.464" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D" TextAlignment="Right"/>
+			<TextBlock Height="15.872" Canvas.Left="71.332" TextWrapping="Wrap" Text="40" Canvas.Top="270.332" Width="21.464" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D" TextAlignment="Right"/>
+			<TextBlock Height="15.87" Canvas.Left="71.332" TextWrapping="Wrap" Text="60" Canvas.Top="233.582" Width="21.464" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D" TextAlignment="Right"/>
+			<TextBlock Height="15.87" Canvas.Left="71.332" TextWrapping="Wrap" Text="80" Canvas.Top="196.16" Width="21.464" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D" TextAlignment="Right"/>
+			<TextBlock Height="15.87" Canvas.Left="61.802" TextWrapping="Wrap" Text="100" Canvas.Top="159.604" Width="30.924" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D" TextAlignment="Right"/>
+			<TextBlock Height="15.868" Canvas.Left="61.752" TextWrapping="Wrap" Text="120" Canvas.Top="122.856" Width="30.926" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D" TextAlignment="Right"/>
+			<TextBlock Height="15.872" Canvas.Left="62.158" TextWrapping="Wrap" Text="140" Canvas.Top="85.986" Width="30.928" RenderTransformOrigin="0.427,0.606" Foreground="#FF27839D" TextAlignment="Right"/>
 		</Canvas>
 	</Viewbox>
 </UserControl>
