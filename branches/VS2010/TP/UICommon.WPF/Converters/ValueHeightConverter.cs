@@ -18,9 +18,9 @@ namespace UICommon.WPF.Converters
             double? minValue = values[1] as double?;
             double? maxValue = values[2] as double?;
 
-            if (values[0] != null)
+            if (values[0] != null && currentValue!=0)
             {
-                total = (maxValue - minValue)/currentValue*185;
+                total = (maxValue - minValue*10)/currentValue*185;
             }
 
             return total;

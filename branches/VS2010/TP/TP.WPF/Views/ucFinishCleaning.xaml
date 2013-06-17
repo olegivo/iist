@@ -135,8 +135,8 @@
             <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G22" Width="192" DataContext="{Binding IndicatorViewModels[22]}" Canvas.Left="412"/>
             <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G23" Width="192" DataContext="{Binding IndicatorViewModels[23]}" Canvas.Left="621"/>
             <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G24" Width="192" DataContext="{Binding IndicatorViewModels[24]}" Canvas.Left="824"/>
-            <Wpf:ucTemperatureIndicator Canvas.Left="240" Height="155" x:Name="indicator_T6" Width="80" DataContext="{Binding IndicatorViewModels[6]}" Canvas.Top="162"/>
-            <Wpf:ucTemperatureIndicator Canvas.Left="640" Height="155" x:Name="indicator_T7" Width="80" DataContext="{Binding IndicatorViewModels[7]}" Canvas.Top="320"/>
+            <!--<Wpf:ucTemperatureIndicator Canvas.Left="240" Height="155" x:Name="indicator_T6" Width="80" DataContext="{Binding IndicatorViewModels[6]}" Canvas.Top="162"/>
+            <Wpf:ucTemperatureIndicator Canvas.Left="640" Height="155" x:Name="indicator_T7" Width="80" DataContext="{Binding IndicatorViewModels[7]}" Canvas.Top="320"/>-->
             <!--<UIComponents:ucIndicator
                 Name="indicatorMCO"
                 Canvas.Top="180"

@@ -106,7 +106,7 @@ namespace TP.WPF.ViewModels
         {
             get
             {
-                return CompareCurrentValueWith(MaxNormalValue) > 0;
+                return CompareCurrentValueWith(/*MaxNormalValue*/1) > 0;
             }
         }
 
