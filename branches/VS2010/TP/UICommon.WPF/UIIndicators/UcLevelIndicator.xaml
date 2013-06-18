@@ -10,10 +10,27 @@
         <!-- конвертер для преобразования входного значения в высоту столбика уровня -->
         <local:ValueHeightConverter x:Key="valueHeightConverter" />
         <!-- триггер для переключения индикатора в аварийное состояние-->
-        <Style TargetType="Rectangle">
+        <Style TargetType="Rectangle" x:Key="IndicatorAlarmStyle">
+            <!-- Стандартный фон индикатора-->
+            <Setter Property="Fill">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="#FFEDBC50" Offset="1"/>
+                        <GradientStop Color="#FFEDDEB5"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=IsValueHigherNormal}" Value="True">
-                    <Setter Property="Fill" Value="Red" />
+                    <!-- Аварийный фон индикатора-->
+                    <Setter Property="Fill">
+					    <Setter.Value>
+					        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+						        <GradientStop Color="#FFEDBC50" Offset="1"/>
+						        <GradientStop Color="#FFB81B0B"/>
+					        </LinearGradientBrush>
+        				</Setter.Value>
+					</Setter>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -22,13 +39,14 @@
 	<Viewbox x:Name="LayoutRoot" Stretch="Fill">
 		<Canvas Margin="0" Height="264" Width="120">
 			<Rectangle Fill="#FFE7D996" Height="264" Stroke="Black" Width="120" RadiusY="20" RadiusX="20"/>
-			<Rectangle Height="248" RadiusY="18" RadiusX="18" Stroke="DimGray" Width="104" Canvas.Left="8" Canvas.Top="8">
-				<Rectangle.Fill>
+            <Rectangle  Height="248" RadiusY="18" RadiusX="18" Stroke="DimGray" Width="104" Canvas.Left="8" Canvas.Top="8" Style="{StaticResource IndicatorAlarmStyle}">
+				<!-- реализовано сеттером из ресурсов-->
+                <!--<Rectangle.Fill>
 					<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
 						<GradientStop Color="#FFEDBC50" Offset="1"/>
 						<GradientStop Color="#FFEDDEB5"/>
 					</LinearGradientBrush>
-				</Rectangle.Fill>
+				</Rectangle.Fill>-->
 			</Rectangle>
 			<Rectangle Height="56" Canvas.Left="48" Stroke="{DynamicResource BrushRed}" Canvas.Top="24" Width="16" Fill="{DynamicResource BrushRed}"/>
 			<Rectangle Height="64" Canvas.Left="48" Stroke="{DynamicResource BrushOrange}" Canvas.Top="80" Width="16" Fill="{DynamicResource BrushOrange}"/>
@@ -94,8 +112,8 @@
 			<TextBlock Height="16" Canvas.Left="16" TextWrapping="Wrap" Text="{Binding MinNormalValue}" Canvas.Top="97.188" Width="24" RenderTransformOrigin="0.427,0.606" Foreground="Black" TextAlignment="Right"/>
 			<TextBlock Height="16" Canvas.Left="16" TextWrapping="Wrap" Text="{Binding MaxNormalValue}" Canvas.Top="56.5" Width="24" RenderTransformOrigin="0.427,0.606" Foreground="Black" TextAlignment="Right"/>
 			<TextBlock Height="16" Canvas.Left="16" TextWrapping="Wrap" Text="{Binding MaxValue}" Canvas.Top="16.5" Width="24" RenderTransformOrigin="0.427,0.606" Foreground="Black" TextAlignment="Right"/>
-			<TextBlock x:Name="IndicatorValue" TextWrapping="Wrap" Text="{Binding ShortCurrentValue}" FontFamily="Tahoma" TextAlignment="Center" Width="72" Height="24" Canvas.Left="24" Canvas.Top="224" RenderTransformOrigin="0.5,0.5" FontSize="16"/>
-			<TextBlock x:Name="IndicatorValue_Copy" TextWrapping="Wrap" Text="{Binding Caption}" FontFamily="Tahoma" TextAlignment="Right" Width="226.931" Height="15.27" Canvas.Left="-9.1" Canvas.Top="124.197" RenderTransformOrigin="0.5,0.5" FontSize="9.333">
+			<TextBlock x:Name="IndicatorValue" TextWrapping="Wrap" Text="{Binding ShortCurrentValue}" FontFamily="Tahoma" TextAlignment="Center" Width="72" Height="24" Canvas.Left="24" Canvas.Top="224" RenderTransformOrigin="0.5,0.5" FontSize="16" FontWeight="ExtraBold" />
+			<TextBlock x:Name="IndicatorCaption" TextWrapping="Wrap" Text="{Binding Caption}" FontFamily="Tahoma" TextAlignment="Right" Width="226.931" Height="15.27" Canvas.Left="-9.1" Canvas.Top="124.197" RenderTransformOrigin="0.5,0.5" FontSize="9.333">
 				<TextBlock.RenderTransform>
 					<TransformGroup>
 						<ScaleTransform/>
