@@ -560,9 +560,7 @@
 			<TextBlock x:Name="textBlock4_Copy9" Canvas.Left="488" TextWrapping="Wrap" Canvas.Top="474.39" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ВК"/>
 			<TextBlock x:Name="textBlock4_Copy10" Canvas.Left="648.328" TextWrapping="Wrap" Canvas.Top="386.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ПВ"/>
 			<TextBlock x:Name="textBlock4_Copy11" Canvas.Left="882.151" TextWrapping="Wrap" Canvas.Top="385.665" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ЗУ"/>
-			<!--Добавление Биндинговых ТекстБоксов-->
-			<!--Добавление Биндинговых Индикаторов-->
-			<Wpf:ucCircularIndicator Canvas.Top="599.889" Height="55" x:Name="indicator_S12" Width="120" DataContext="{Binding IndicatorViewModels[24]}" Canvas.Left="796.833"/>
+			
 			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushLightBlue}" Canvas.Left="274.002" Canvas.Top="254.185" Width="27.9" Height="{DynamicResource WidthLine1}" RenderTransformOrigin="0.5,0.5">
 				<Path.RenderTransform>
 					<TransformGroup>
@@ -699,10 +697,11 @@
 			</Rectangle>
 			<TextBlock x:Name="textBlock4_Copy12" Canvas.Left="742.957" TextWrapping="Wrap" Canvas.Top="438.509" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}"><Run Language="ru-ru" Text="ЗК"/></TextBlock>
 			<TextBlock x:Name="textBlock4_Copy13" Canvas.Left="487.684" TextWrapping="Wrap" Canvas.Top="568.067" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}"><Run Text="П"/><Run Language="ru-ru" Text="Л"/></TextBlock>
-			<Wpf:ucLevelIndicator Height="160.083" Canvas.Left="720" DataContext="{Binding IndicatorViewModels[8]}" Width="80"/>
-			<Wpf:ucLevelIndicator Height="160.083" Canvas.Left="840" DataContext="{Binding IndicatorViewModels[2]}" Width="80"/>
-			<Wpf:ucLevelIndicator Height="160.083" Canvas.Left="600" DataContext="{Binding IndicatorViewModels[1]}" Width="80"/>
-			<Wpf:ucLevelIndicator Height="160.083" Canvas.Left="480" DataContext="{Binding IndicatorViewModels[6]}" Width="80"/>
+			<Wpf:ucLevelIndicator x:Name="indicator_T8" Height="160.083" Canvas.Left="720" DataContext="{Binding IndicatorViewModels[8]}" Width="80"/>
+			<Wpf:ucLevelIndicator x:Name="indicator_T2" Height="160.083" Canvas.Left="840" DataContext="{Binding IndicatorViewModels[2]}" Width="80"/>
+			<Wpf:ucLevelIndicator x:Name="indicator_T1" Height="160.083" Canvas.Left="600" DataContext="{Binding IndicatorViewModels[1]}" Width="80"/>
+			<Wpf:ucLevelIndicator x:Name="indicator_L13" Height="160.083" Canvas.Left="480" DataContext="{Binding IndicatorViewModels[13]}" Width="80"/>
+			<Wpf:ucCircularIndicator x:Name="indicator_S12" Height="96"  Width="192" DataContext="{Binding IndicatorViewModels[13]}" Canvas.Left="256" Canvas.Top="24"/>
 		</Canvas>
 	</Viewbox>
 </UserControl>
