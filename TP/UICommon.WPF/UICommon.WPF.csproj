@@ -109,6 +109,9 @@
   <ItemGroup>
     <Compile Include="Converters\ValueHeightConverter.cs" />
     <Compile Include="Converters\ValueAngleConverter.cs" />
+    <Compile Include="UIElements\ucBurner.xaml.cs">
+      <DependentUpon>ucBurner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIIndicators\Clock.xaml.cs">
       <DependentUpon>Clock.xaml</DependentUpon>
     </Compile>
@@ -147,6 +150,10 @@
     <Page Include="Simple Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIElements\ucBurner.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
