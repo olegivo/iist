@@ -12,6 +12,7 @@ namespace TP.WPF.ViewModels
         private double? maxNormalValue;
         private string caption;
         private double? currentValue;
+        private bool discreteOnState;
 
         public void Init(ChannelRegistrationMessage message)
         {
@@ -88,7 +89,8 @@ namespace TP.WPF.ViewModels
                         "IsValueLowerNormal",
                         "IsValueHigherCritycal",
                         "IsValueLowerCritycal",
-                        "ShortCurrentValue"
+                        "ShortCurrentValue",
+                        "DiscreteOnState"
                     };
                 foreach (var propertyName in propertyNames)
                     OnPropertyChanged(propertyName);
@@ -106,7 +108,7 @@ namespace TP.WPF.ViewModels
         {
             get
             {
-                return CompareCurrentValueWith(/*MaxNormalValue*/1) > 0;
+                return CompareCurrentValueWith(MaxNormalValue) > 0;
             }
         }
 
@@ -149,6 +151,24 @@ namespace TP.WPF.ViewModels
                        ? CurrentValue.Value.CompareTo(compareValue.Value)
                        : 0;
         }
+
+
+        //TODO: создать отдельную модель представления для дискретных индикаторов
+        public bool DiscreteOnState
+        {
+            get { return discreteOnState; }
+            set
+            {
+                if (CurrentValue != null && CurrentValue > 0.9)
+                    discreteOnState = true;
+                else
+                    discreteOnState = false;
+
+            }
+        }
+
+
+
 
     }
 }
