@@ -21,7 +21,7 @@ namespace Oleg_ivo.Plc.Channels
         /// <returns></returns>
         public double GetValue(double argument)
         {
-            return PowerCoefficients.PolynomCoefficients.Sum(polynomCoefficient => polynomCoefficient.Coefficient * Math.Pow(argument, polynomCoefficient.Power));
+            return PowerCoefficients.PolynomCoefficients.OfType<DtsPolynom.PolynomCoefficientsRow>().Sum(polynomCoefficient => polynomCoefficient.Coefficient * Math.Pow(argument, polynomCoefficient.Power));
         }
 
         /// <summary>
