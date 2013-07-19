@@ -1,6 +1,11 @@
 using System;
+using Autofac;
 using Oleg_ivo.Plc.Devices.Contollers;
+using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
+using Oleg_ivo.PrismExtensions.Autofac;
+using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
+using Oleg_ivo.WAGO.Meta;
 
 namespace Oleg_ivo.WAGO.Devices
 {
@@ -9,33 +14,19 @@ namespace Oleg_ivo.WAGO.Devices
     ///</summary>
     public class WagoPlcFactory : PlcFactory
     {
-        #region Singleton
-
-        private static WagoPlcFactory _instance;
-
-        ///<summary>
-        /// ≈динственный экземпл€р
-        ///</summary>
-        public static WagoPlcFactory Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new WagoPlcFactory();
-                }
-                return _instance;
-            }
-        }
+        private readonly IPhysicalChannelsFactory physicalChannelsFactory;
+        private readonly WagoMetaFactory wagoMetaFactory;
 
         /// <summary>
         /// »нициализирует новый экземпл€р класса <see cref="WagoPlcFactory" />.
         /// </summary>
-        private WagoPlcFactory()
+        /// <param name="context"></param>
+        public WagoPlcFactory(IComponentContext context)
         {
+            var componentContext = Enforce.ArgumentNotNull(context, "context");
+            physicalChannelsFactory = componentContext.Resolve<IPhysicalChannelsFactory>();
+            wagoMetaFactory = componentContext.ResolveUnregistered<WagoMetaFactory>();
         }
-
-        #endregion
 
         ///<summary>
         /// —оздать ѕЋ  на основе узла полевой шины
@@ -46,7 +37,7 @@ namespace Oleg_ivo.WAGO.Devices
         {
             if (fieldBusNode == null) throw new ArgumentNullException("fieldBusNode");
 
-            WagoPlc plc = new WagoPlc(fieldBusNode);
+            WagoPlc plc = new WagoPlc(fieldBusNode, physicalChannelsFactory, wagoMetaFactory);
             InitPLC(plc);
             return plc;
         }

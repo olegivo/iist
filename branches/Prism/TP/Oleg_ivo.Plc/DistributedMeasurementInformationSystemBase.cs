@@ -1,9 +1,11 @@
+using Autofac;
+
 namespace Oleg_ivo.Plc
 {
     ///<summary>
     /// Распределённая информационно-измерительная система (фасад)
     ///</summary>
-    public class DistributedMeasurementInformationSystemBase
+    public abstract class DistributedMeasurementInformationSystemBase : IDistributedMeasurementInformationSystem
     {
         #region fields
 
@@ -11,8 +13,9 @@ namespace Oleg_ivo.Plc
         ///
         ///</summary>
         protected static DistributedMeasurementInformationSystemBase _instance;
-        private readonly PlcManagerBase _plcManager;
-        private readonly DistributedSystemSettingsBase _settings;
+        private IPlcManager plcManager;
+        private IDistributedSystemSettings settings;
+        protected IComponentContext Context;
 
         #endregion
 
@@ -21,9 +24,9 @@ namespace Oleg_ivo.Plc
         ///<summary>
         /// Диспетчер ПЛК системы
         ///</summary>
-        public PlcManagerBase PlcManagerBase
+        public IPlcManager PlcManager
         {
-            get { return _plcManager; }
+            get { return plcManager; }
         }
 
         #endregion
@@ -32,62 +35,36 @@ namespace Oleg_ivo.Plc
 
         #region Singleton
 
-
-        ///<summary>
-        /// Единственный экземпляр
-        ///</summary>
-        public static DistributedMeasurementInformationSystemBase Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new DistributedMeasurementInformationSystemBase();
-                }
-                return _instance;
-            }
-        }
-
         ///<summary>
         /// Настройки распределённой системы
         ///</summary>
-        public DistributedSystemSettingsBase Settings
+        public IDistributedSystemSettings Settings
         {
-            get { return _settings; }
+            get { return settings; }
         }
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="DistributedMeasurementInformationSystemBase" />.
         /// </summary>
-        protected DistributedMeasurementInformationSystemBase()
+        /// <param name="context"></param>
+        protected DistributedMeasurementInformationSystemBase(IComponentContext context)
         {
-            _plcManager = CreatePlcManager();
-            _settings = CreateSettings();
+            Context = context;
         }
 
-        ///<summary>
-        ///
-        ///</summary>
-        ///<returns></returns>
-        protected virtual DistributedSystemSettingsBase CreateSettings()
-        {
-            return new DistributedSystemSettingsBase();
-        }
-
-        ///<summary>
-        ///
-        ///</summary>
-        ///<returns></returns>
-        protected virtual PlcManagerBase CreatePlcManager()
-        {
-            return new PlcManagerBase();
-        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        protected abstract IDistributedSystemSettings CreateSettings();
 
         ///<summary>
         /// Построить конфигурацию системы
         ///</summary>
         public virtual void BuildSystemConfiguration()
         {
+            plcManager = Context.Resolve<IPlcManager>();
+            settings = CreateSettings();
         }
 
         #endregion
@@ -97,9 +74,6 @@ namespace Oleg_ivo.Plc
         ///<summary>
         ///
         ///</summary>
-        public virtual void ShowConfiguration()
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract void ShowConfiguration();
     }
 }

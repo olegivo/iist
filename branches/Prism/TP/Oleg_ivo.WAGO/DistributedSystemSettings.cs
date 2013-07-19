@@ -21,73 +21,73 @@ namespace Oleg_ivo.WAGO
             //RS-485
             var fieldBusType = FieldBusType.RS485;
             var fieldBusLoadOptions = new FieldBusLoadOptions(fieldBusType)
-                                            {
-                                              FieldBusNodeAddresses =
-                                                  fieldBusDAC.GetAddresses(fieldBusType),
-                                              FieldNodesLevel =
-                                                  new MeasurementSystemLevelLoadOptions
-                                                      {
-                                                          ComputeCurrentConfiguration = false,
-                                                          LoadSavedConfiguration = true
-                                                      },
-                                              PhysicalChannelsLevel =
-                                                  new MeasurementSystemLevelLoadOptions
-                                                      {
-                                                          ComputeCurrentConfiguration = false,
-                                                          LoadSavedConfiguration = true
-                                                      },
-                                              LogicalChannelsLevel =
-                                                  new MeasurementSystemLevelLoadOptions
-                                                      {
-                                                          ComputeCurrentConfiguration = false,
-                                                          LoadSavedConfiguration = true
-                                                      }
-                                            };
+                {
+                    FieldBusNodeAddresses =
+                        fieldBusDAC.GetAddresses(fieldBusType),
+                    FieldNodesLevel =
+                        new MeasurementSystemLevelLoadOptions
+                            {
+                                ComputeCurrentConfiguration = false,
+                                LoadSavedConfiguration = true
+                            },
+                    PhysicalChannelsLevel =
+                        new MeasurementSystemLevelLoadOptions
+                            {
+                                ComputeCurrentConfiguration = false,
+                                LoadSavedConfiguration = true
+                            },
+                    LogicalChannelsLevel =
+                        new MeasurementSystemLevelLoadOptions
+                            {
+                                ComputeCurrentConfiguration = false,
+                                LoadSavedConfiguration = true
+                            }
+                };
             FieldBusLoadOptions.Add(fieldBusType, fieldBusLoadOptions); 
 
             //Ethernet
             fieldBusType = FieldBusType.Ethernet;
             fieldBusLoadOptions = new FieldBusLoadOptions(fieldBusType)
-                                            {
-                                                FieldBusNodeAddresses =
-                                                    fieldBusDAC.GetAddresses(fieldBusType),
-                                                FieldNodesLevel =
-                                                    new MeasurementSystemLevelLoadOptions
-                                                    {
-                                                        ComputeCurrentConfiguration = 
+                {
+                    FieldBusNodeAddresses =
+                        fieldBusDAC.GetAddresses(fieldBusType),
+                    FieldNodesLevel =
+                        new MeasurementSystemLevelLoadOptions
+                            {
+                                ComputeCurrentConfiguration =
 #if IIST
-                                                        true
+                                    true
 #else
                                                         false
 #endif
-                                                        ,
-                                                        LoadSavedConfiguration = true
-                                                    },
-                                                PhysicalChannelsLevel =
-                                                    new MeasurementSystemLevelLoadOptions
-                                                    {
-                                                        ComputeCurrentConfiguration = 
+                                ,
+                                LoadSavedConfiguration = true
+                            },
+                    PhysicalChannelsLevel =
+                        new MeasurementSystemLevelLoadOptions
+                            {
+                                ComputeCurrentConfiguration =
 #if IIST
-                                                        true
+                                    true
 #else
                                                         false
 #endif
-                                                        ,
-                                                        LoadSavedConfiguration = true
-                                                    },
-                                                LogicalChannelsLevel =
-                                                    new MeasurementSystemLevelLoadOptions
-                                                    {
-                                                        ComputeCurrentConfiguration = 
+                                ,
+                                LoadSavedConfiguration = true
+                            },
+                    LogicalChannelsLevel =
+                        new MeasurementSystemLevelLoadOptions
+                            {
+                                ComputeCurrentConfiguration =
 #if IIST
-                                                        true
+                                    true
 #else
                                                         false
 #endif
-                                                        ,
-                                                        LoadSavedConfiguration = true
-                                                    }
-                                            };
+                                ,
+                                LoadSavedConfiguration = true
+                            }
+                };
             FieldBusLoadOptions.Add(fieldBusType, fieldBusLoadOptions);
         }
 

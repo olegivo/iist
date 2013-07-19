@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using Oleg_ivo.Plc.Channels;
-using Oleg_ivo.WAGO.Factory;
+using Oleg_ivo.Plc.Factory;
 
 namespace Oleg_ivo.WAGO.Meta
 {
@@ -12,22 +12,14 @@ namespace Oleg_ivo.WAGO.Meta
     ///</summary>
     public partial class WagoMetaDAC : Component
     {
-        ///<summary>
-        ///
-        ///</summary>
-        public WagoMetaDAC()
-        {
-            InitializeComponent();
-        }
+        private readonly ILogicalChannelsFactory logicalChannelsFactory;
 
         ///<summary>
         ///
         ///</summary>
-        ///<param name="container"></param>
-        public WagoMetaDAC(IContainer container)
+        public WagoMetaDAC(ILogicalChannelsFactory logicalChannelsFactory)
         {
-            container.Add(this);
-
+            this.logicalChannelsFactory = logicalChannelsFactory;
             InitializeComponent();
         }
 
@@ -152,7 +144,7 @@ namespace Oleg_ivo.WAGO.Meta
 
         private LogicalChannel CreateChannelFromData(DtsWago.WagoMetaRow row, PhysicalChannel physicalChannel)
         {
-            LogicalChannel channel = LogicalChannelsFactory.Instance.BuildLogicalChannel(physicalChannel)[0];
+            LogicalChannel channel = logicalChannelsFactory.BuildLogicalChannel(physicalChannel)[0];
             channel.Id = row.Id;
             return channel;
         }

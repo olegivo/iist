@@ -17,34 +17,13 @@ namespace Oleg_ivo.Plc.FieldBus
     ///</summary>
     public class FieldBusFactory : IFieldBusFactory
     {
-        #region Singleton
-
-        private static FieldBusFactory _instance;
-
-        ///<summary>
-        /// ≈динственный экземпл€р
-        ///</summary>
-        public static FieldBusFactory Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new FieldBusFactory();
-                }
-                return _instance;
-            }
-        }
-
         /// <summary>
         /// »нициализирует новый экземпл€р класса <see cref="FieldBusFactory" />.
         /// </summary>
-        private FieldBusFactory()
+        public FieldBusFactory(IDistributedMeasurementInformationSystem dmis)
         {
+            this.dmis = dmis;
         }
-
-        #endregion
-
 
         #region methods
 
@@ -115,6 +94,7 @@ namespace Oleg_ivo.Plc.FieldBus
         }
 
         private readonly Hashtable _serialPorts = new Hashtable();
+        private readonly IDistributedMeasurementInformationSystem dmis;
 
         /// <summary>
         /// —оздать <see cref="ModbusSerialFieldBusPort"/>
@@ -218,7 +198,7 @@ namespace Oleg_ivo.Plc.FieldBus
                         fieldBusManager = new ActiveFieldBusManager(fieldBusAccessor);
                         break;
                     case FieldBusType.Ethernet:
-                        fieldBusManager = new FieldBusManager(fieldBusAccessor.FieldBusType);
+                        fieldBusManager = new FieldBusManager(fieldBusAccessor.FieldBusType, dmis);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException("fieldBusAccessor", fieldBusAccessor.FieldBusType, "неизвестный тип полевой шины");

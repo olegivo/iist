@@ -5,7 +5,7 @@ namespace Oleg_ivo.Plc.Devices.Modules
     ///<summary>
     /// Коллекция модулей ввода-вывода
     ///</summary>
-    public class IOModuleCollection : List<IOModule>
+    public class IOModuleCollection : List<IOModule>//TODO:inline
     {
         #region fields
 

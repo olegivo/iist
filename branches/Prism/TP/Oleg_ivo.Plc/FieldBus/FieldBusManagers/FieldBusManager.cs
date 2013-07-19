@@ -18,6 +18,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
         #region fields
 
         private readonly FieldBusType _fieldBusType;
+        private readonly IDistributedMeasurementInformationSystem dmis;
 
         #endregion
 
@@ -91,8 +92,9 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
         ///<summary>
         /// Диспетчер полевой шины
         ///</summary>
-        public FieldBusManager(FieldBusType fieldBusType):this()
+        public FieldBusManager(FieldBusType fieldBusType, IDistributedMeasurementInformationSystem dmis):this()
         {
+            this.dmis = dmis;
             _fieldBusType = fieldBusType;
         }
 
@@ -111,7 +113,10 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
         /// </summary>
         public FieldBusLoadOptions FieldBusLoadOptions
         {
-            get { return DistributedMeasurementInformationSystemBase.Instance.Settings.FieldBusLoadOptions[FieldBusType]; }
+            get
+            {
+                return dmis.Settings.FieldBusLoadOptions[FieldBusType];
+            }
         }
 
         ///<summary>

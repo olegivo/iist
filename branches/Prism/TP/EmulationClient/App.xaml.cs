@@ -60,6 +60,8 @@ namespace EmulationClient
         {
             base.OnStartup(e);
             Init();
+            //MyOwnBootStraper bootstrapper = new MyOwnBootStraper();
+            //bootstrapper.Run();
             //ControlManagementUnit.Register();
         }
 

@@ -7,6 +7,8 @@ using DMS.Common.Messages;
 using Oleg_ivo.LowLevelClient;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
+using Oleg_ivo.PrismExtensions.Autofac;
+using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
 using Oleg_ivo.Tools.UI;
 using Oleg_ivo.WAGO;
 
@@ -31,19 +33,21 @@ namespace Oleg_ivo.CMU
         {
             get
             {
-                if (_ControlManagementUnit == null)
-                {
-                    _ControlManagementUnit = new ControlManagementUnit();
-                    _ControlManagementUnit.GetDistributedMeasurementInformationSystem =
-                        GetDistributedMeasurementInformationSystem;
-                }
-                return _ControlManagementUnit;
+                return _ControlManagementUnit ??
+                       (_ControlManagementUnit =
+                        new ControlManagementUnit
+                            {
+                                GetDistributedMeasurementInformationSystem = GetDistributedMeasurementInformationSystem
+                            });
             }
         }
 
-        private DistributedMeasurementInformationSystemBase GetDistributedMeasurementInformationSystem()
+        [Dependency]
+        public IDistributedMeasurementInformationSystem DMIS { private get; set; }
+
+        private IDistributedMeasurementInformationSystem GetDistributedMeasurementInformationSystem()
         {
-            return DistributedMeasurementInformationSystem.Instance;
+            return DMIS;
         }
 
 

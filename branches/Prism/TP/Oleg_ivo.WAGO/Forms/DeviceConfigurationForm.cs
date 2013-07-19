@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
+using Autofac;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
+using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
 
 namespace Oleg_ivo.WAGO.Forms
 {
@@ -12,6 +15,8 @@ namespace Oleg_ivo.WAGO.Forms
     ///</summary>
     public partial class DeviceConfigurationForm : Form
     {
+        private IComponentContext context;
+
         ///<summary>
         ///
         ///</summary>
@@ -20,8 +25,26 @@ namespace Oleg_ivo.WAGO.Forms
             InitializeComponent();
         }
 
+        [Dependency]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IDistributedMeasurementInformationSystem DMIS { private get; set; }
+
+        [Dependency]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IComponentContext Context
+        {
+            private get { return context; }
+            set
+            {
+                context = value;
+                levelEditor1.Context = value;
+            }
+        }
+
         private void SystemConfigurationForm_Load(object sender, EventArgs e)
         {
+            DMIS.BuildSystemConfiguration();
+
             btnFieldNodes.Enabled = btnModules.Enabled = false;
             tree.SelectedNode = tree.Nodes.Add("System");
             BuildPortsConfig();
@@ -43,7 +66,7 @@ namespace Oleg_ivo.WAGO.Forms
 
             parentNode.Nodes.Clear();
             
-            foreach (FieldBusManager fieldBusManager in DistributedMeasurementInformationSystem.Instance.PlcManagerBase.FieldBusManagers)
+            foreach (FieldBusManager fieldBusManager in DMIS.PlcManager.FieldBusManagers)
             {
                 TreeNode portNode = parentNode.Nodes.Add(fieldBusManager.ToString());
                 portNode.Tag = fieldBusManager;
@@ -62,7 +85,7 @@ namespace Oleg_ivo.WAGO.Forms
             {
                 if (busManager.FieldBusNodes == null || busManager.FieldBusNodes.Count == 0)
                 {
-                    busManager.BuildFieldBusNodes(DistributedMeasurementInformationSystem.Instance.PlcManagerBase.FieldBusNodesFactory);
+                    busManager.BuildFieldBusNodes(DMIS.PlcManager.FieldBusNodesFactory);
                 }
 
                 if (busManager.FieldBusNodes != null)
@@ -212,7 +235,7 @@ namespace Oleg_ivo.WAGO.Forms
             FieldBusNode fieldBusNodeAccessor = tree.SelectedNode.Tag as FieldBusNode;
             if (fieldBusNodeAccessor != null)
             {
-                TestIOForm testIOForm = new TestIOForm(fieldBusNodeAccessor);
+                TestIOForm testIOForm = new TestIOForm(fieldBusNodeAccessor, Context);
                 testIOForm.ShowDialog();
             }
         }
@@ -256,7 +279,7 @@ namespace Oleg_ivo.WAGO.Forms
             TreeNode selectedNode = tree.SelectedNode;
             if (selectedNode != null && selectedNode.Tag != null)
             {
-                PlcManagerBase plcManager = DistributedMeasurementInformationSystem.Instance.PlcManagerBase;
+                var plcManager = DMIS.PlcManager;
 
                 if (selectedNode.Tag is FieldBusManager)
                 {

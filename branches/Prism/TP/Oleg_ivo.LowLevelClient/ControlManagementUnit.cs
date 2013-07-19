@@ -80,7 +80,7 @@ namespace Oleg_ivo.LowLevelClient
         ///<summary>
         /// Распределённая информационно-измерительная система (фасад)
         ///</summary>
-        private DistributedMeasurementInformationSystemBase DistributedMeasurementInformationSystem
+        private IDistributedMeasurementInformationSystem DistributedMeasurementInformationSystem
         {
             get
             {
@@ -100,14 +100,14 @@ namespace Oleg_ivo.LowLevelClient
         /// Делегат для получения фасада распределённой информационно-измерительной системы
         /// </summary>
         /// <returns></returns>
-        public delegate DistributedMeasurementInformationSystemBase GetDistributedMeasurementInformationSystemDelegate();
+        public delegate IDistributedMeasurementInformationSystem GetDistributedMeasurementInformationSystemDelegate();
 
         ///<summary>
         /// Логические каналы
         ///</summary>
         protected virtual IEnumerable<LogicalChannel> GetLogicalChannels()
         {
-            return DistributedMeasurementInformationSystem.PlcManagerBase.LogicalChannels;
+            return DistributedMeasurementInformationSystem.PlcManager.LogicalChannels;
         }
 
 

@@ -6,7 +6,7 @@ namespace Oleg_ivo.Plc
     ///<summary>
     /// Настройки распределённой системы
     ///</summary>
-    public class DistributedSystemSettingsBase
+    public class DistributedSystemSettingsBase : IDistributedSystemSettings
     {
         private Dictionary<FieldBusType, FieldBusLoadOptions> _fieldBusLoadOptions;
 

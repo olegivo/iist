@@ -1,8 +1,11 @@
 using System;
 using System.Windows.Forms;
+using Autofac;
 using Oleg_ivo.Tools.ConnectionProvider;
 using Oleg_ivo.Tools.ExceptionCatcher;
+using Oleg_ivo.WAGO.Autofac;
 using Oleg_ivo.WAGO.Configuration;
+using Oleg_ivo.WAGO.Forms;
 
 namespace Oleg_ivo.WAGO
 {
@@ -27,9 +30,10 @@ namespace Oleg_ivo.WAGO
             //DbConnectionProvider.Instance.DefaultConnectionString =
             //    @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\WORK\Oleg_ivo\Oleg_ivo.WAGO\Oleg_ivo.WAGO\test.mdb;Persist Security Info=True";
 
-            Form form;
-            //form = new Ports.frmFieldBus();
-            form = new Forms.MDIParentMain();
+            var builder = new ContainerBuilder();
+            builder.RegisterModule<WagoAutofacModule>();
+            var container = builder.Build();
+            var form = container.Resolve<MDIParentMain>();
             Application.Run(form);
         }
 

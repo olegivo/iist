@@ -2,7 +2,9 @@ using System;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
+using Oleg_ivo.WAGO.Factory;
 
 namespace Oleg_ivo.WAGO.Controls.LevelEditors
 {
@@ -11,6 +13,8 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
     ///</summary>
     public partial class FieldBusNodeEditControl : UserControl, IDbEditor
     {
+        private readonly FieldBusNodeDAC fieldBusNodeDAC;
+
         ///<summary>
         ///
         ///</summary>
@@ -18,8 +22,12 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
         {
             InitializeComponent();
 
-            fieldBusNodeDAC1.DataSet = dtsChannelConfiguration1;
+            fieldBusNodeDAC = new FieldBusNodeDAC();
+            fieldBusNodeDAC.DataSet = dtsChannelConfiguration1;
         }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IFieldBusNodeFactory FieldBusNodeFactory { set { fieldBusNodeDAC.FieldBusNodesFactory = value; } }
 
         ///<summary>
         /// Сохранить
@@ -29,7 +37,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
             CurrencyManager cm = GetCurrencyManager();
             if (cm != null) cm.EndCurrentEdit();
 
-            fieldBusNodeDAC1.Save();
+            fieldBusNodeDAC.Save();
         }
 
         private CurrencyManager GetCurrencyManager()
@@ -55,7 +63,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
 
         private SqlDataAdapter DataAdapter()
         {
-            return (SqlDataAdapter)fieldBusNodeDAC1.DataAdapter;
+            return (SqlDataAdapter)fieldBusNodeDAC.DataAdapter;
         }
 
         ///<summary>
@@ -91,7 +99,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
             CurrencyManager cm = GetCurrencyManager();
             cm.SuspendBinding();
             //physicalChannelsDAC1.DataSet
-            fieldBusNodeDAC1.FillFieldBusNodesFromDb(0, 0);
+            fieldBusNodeDAC.FillFieldBusNodesFromDb(0, 0);
             cm.ResumeBinding();
             //dataManager1.Fill();
         }

@@ -36,7 +36,7 @@ namespace Oleg_ivo.Plc.Factory
         /// <summary>
         /// Фабрика ПЛК
         /// </summary>
-        IPlcFactory PlcFactory { get; set; }
+        IPlcFactory PlcFactory { get; }
 
         /// <summary>
         /// Загрузить настроенные узлы для полевой шины

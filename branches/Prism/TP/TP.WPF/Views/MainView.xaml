@@ -22,8 +22,9 @@
         xmlns:Views="clr-namespace:TP.WPF.Views" 
         xmlns:ViewModels="clr-namespace:TP.WPF.ViewModels"
         xmlns:julmar="http://www.julmar.com/wpfhelpers"
+        xmlns:cal="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
         mc:Ignorable="d"
-	    x:Class="TP.WPF.Views.MainWindow"
+	    x:Class="TP.WPF.Views.MainView"
         x:Name="TechnologicalProcess" 
         Title="Технологический процесс термического уничтожения отходов" 
         Height="768" Width="1024" 
@@ -68,34 +69,30 @@
                     </UniformGrid>
                 </TabItem>
                 <TabItem x:Name="tabItem" Header="Барабанная печь" Style="{DynamicResource TabItemStyle1}">
-                    <Grid>
-                        <Views:ucDrumTypeFurnace x:Name="DrumTypeFurnace" HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding DrumTypeFurnace}"/>
-                    </Grid>
+                    <ItemsControl Name="DrumTypeFurnaceRegion" 
+                                  cal:RegionManager.RegionName="DrumTypeFurnaceRegion"
+                                  DataContext="{Binding DrumTypeFurnace}"/>
                 </TabItem>
                 <TabItem Header="Камера дожигания" Style="{DynamicResource TabItemStyle1}">
-                    <Grid>
-                        <Views:ucReheatChamber x:Name="ReheatChamber" HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding ReheatChamber}"/>
-                    </Grid>
+                    <ItemsControl Name="ReheatChamberRegion" 
+                                  cal:RegionManager.RegionName="ReheatChamberRegion"
+                                  DataContext="{Binding ReheatChamber}"/>
                 </TabItem>
                 <TabItem Header="Теплообменник" Style="{DynamicResource TabItemStyle1}">
-                    <Grid>
-                        <Views:ucHeatExchanger x:Name="HeatExchanger" HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding HeatExchanger}"/>
-                    </Grid>
+                    <ItemsControl cal:RegionManager.RegionName="HeatExchangerRegion"
+                                  DataContext="{Binding HeatExchanger}"/>
                 </TabItem>
                 <TabItem Header="Циклон и скруббер" Style="{DynamicResource TabItemStyle1}">
-                    <Grid>
-                        <Views:ucCycloneAndScrubber x:Name="CycloneAndScrubber" HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding CycloneAndScrubber}"/>
-                    </Grid>
+                    <ItemsControl cal:RegionManager.RegionName="CycloneAndScrubberRegion"
+                                  DataContext="{Binding CycloneAndScrubber}"/>
                 </TabItem>
                 <TabItem Header="Финишная очистка" Style="{DynamicResource TabItemStyle1}">
-                    <Grid>
-                        <Views:ucFinishCleaning x:Name="FinishCleaning" HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding FinishCleaning}"/>
-                    </Grid>
+                    <ItemsControl cal:RegionManager.RegionName="FinishCleaningRegion"
+                                  DataContext="{Binding FinishCleaning}"/>
                 </TabItem>
                 <TabItem Header="Сводная таблица" Style="{DynamicResource TabItemStyle1}">
-                    <Grid>
-                        <Views:ucSummaryTable HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding SummaryTable}"/>
-                    </Grid>
+                    <ItemsControl cal:RegionManager.RegionName="SummaryTableRegion"
+                                  DataContext="{Binding SummaryTable}"/>
                 </TabItem>
             </TabControl>
 

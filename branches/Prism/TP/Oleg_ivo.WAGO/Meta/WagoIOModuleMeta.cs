@@ -1,3 +1,4 @@
+using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.WAGO.Devices;
 
 namespace Oleg_ivo.WAGO.Meta
@@ -107,9 +108,9 @@ namespace Oleg_ivo.WAGO.Meta
         /// Создать модуль по описанию
         ///</summary>
         ///<returns></returns>
-        public WagoIOModule CreateModule()
+        public WagoIOModule CreateModule(ILogicalChannelsFactory logicalChannelFactory)
         {
-            WagoIOModule module = new WagoIOModule {Meta = this};
+            WagoIOModule module = new WagoIOModule(logicalChannelFactory) {Meta = this};
             return module;
         }
 

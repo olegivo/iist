@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus;
 using Oleg_ivo.WAGO.Devices;
 
@@ -10,38 +11,20 @@ namespace Oleg_ivo.WAGO.Meta
     ///</summary>
     public class WagoMetaFactory
     {
-        #region Singleton
-
-        private static WagoMetaFactory _instance;
         private DtsWago _dtsWago;
-
-        ///<summary>
-        /// ≈динственный экземпл€р
-        ///</summary>
-        public static WagoMetaFactory Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new WagoMetaFactory();
-                }
-                return _instance;
-            }
-        }
+        private readonly ILogicalChannelsFactory logicalChannelsFactory;
 
         /// <summary>
         /// »нициализирует новый экземпл€р класса <see cref="WagoMetaFactory" />.
         /// </summary>
-        private WagoMetaFactory()
+        public WagoMetaFactory(ILogicalChannelsFactory logicalChannelsFactory)
         {
+            this.logicalChannelsFactory = logicalChannelsFactory;
         }
-
-        #endregion
 
         private void FillWagoMeta()
         {
-            WagoMetaDAC wagoMetaDAC = new WagoMetaDAC();
+            WagoMetaDAC wagoMetaDAC = new WagoMetaDAC(logicalChannelsFactory);
             wagoMetaDAC.FillChannelsFromDb(0);
             _dtsWago = wagoMetaDAC.DataSet;
         }

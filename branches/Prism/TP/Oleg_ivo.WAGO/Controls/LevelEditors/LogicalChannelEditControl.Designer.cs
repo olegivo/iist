@@ -36,7 +36,6 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
             this.label2 = new System.Windows.Forms.Label();
             this.btnEditDirectPolynom = new System.Windows.Forms.Button();
             this.btnEditReversePolynom = new System.Windows.Forms.Button();
-            this.logicalChannelsDAC1 = new Oleg_ivo.WAGO.Factory.LogicalChannelsDAC(this.components);
             this.label3 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -119,7 +118,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
             this.btnEditReversePolynom.UseVisualStyleBackColor = true;
             this.btnEditReversePolynom.Click += new System.EventHandler(this.btnEditReversePolynom_Click);
             // 
-            // logicalChannelsDAC1
+            // logicalChannelsDac
             // 
             // 
             // label3
@@ -305,7 +304,6 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label2;
-        private Oleg_ivo.WAGO.Factory.LogicalChannelsDAC logicalChannelsDAC1;
         private System.Windows.Forms.Button btnEditDirectPolynom;
         private System.Windows.Forms.Button btnEditReversePolynom;
         private System.Windows.Forms.Label label3;

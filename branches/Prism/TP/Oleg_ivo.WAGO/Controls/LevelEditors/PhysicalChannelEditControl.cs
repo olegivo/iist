@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using Oleg_ivo.Plc.Channels;
+using Oleg_ivo.Plc.Factory;
 
 namespace Oleg_ivo.WAGO.Controls.LevelEditors
 {
@@ -20,6 +21,9 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
 
             physicalChannelsDAC1.DataSet = dtsChannelConfiguration1;
         }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public ILogicalChannelsFactory LogicalChannelsFactory { set { physicalChannelsDAC1.LogicalChannelsFactory = value; } }
 
         ///<summary>
         /// Сохранить
@@ -57,7 +61,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
 
         private SqlDataAdapter DataAdapter()
         {
-            return (SqlDataAdapter) physicalChannelsDAC1.DataAdapter;
+            return (SqlDataAdapter)physicalChannelsDAC1.DataAdapter;
         }
 
 

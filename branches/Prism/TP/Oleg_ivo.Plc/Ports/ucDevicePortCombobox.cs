@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus;
 
 namespace Oleg_ivo.Plc.Ports
@@ -10,6 +13,9 @@ namespace Oleg_ivo.Plc.Ports
     public class ucDevicePortCombobox:ucPairCombobox
     {
         private FieldBusType _fieldBusType;
+        
+        [Browsable(false),DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IFieldBusFactory FieldBusFactory { get; set; }
 
         /// <summary>
         /// Создать элементы
@@ -21,10 +27,9 @@ namespace Oleg_ivo.Plc.Ports
 
             if (FieldBusType!=FieldBusType.Unknown)
             {
-                object[] ports = DistributedMeasurementInformationSystemBase.Instance.PlcManagerBase.FieldBusFactory.FindPorts(FieldBusType.RS485);
+                var ports = FieldBusFactory.FindPorts(FieldBusType.RS485);
                 if (ports != null)
-                    foreach (object port in ports)
-                        list.Add(new ValueDescriptionPair(port, port.ToString()));
+                    list.AddRange(ports.Select(port => new ValueDescriptionPair(port, port.ToString())));
             }
 
             return list;

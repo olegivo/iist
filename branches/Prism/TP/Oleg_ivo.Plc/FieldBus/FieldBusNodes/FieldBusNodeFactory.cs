@@ -4,6 +4,7 @@ using System.Linq;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
+using Oleg_ivo.PrismExtensions.Autofac;
 
 namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
 {
@@ -22,11 +23,15 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         ///</summary>
         private readonly int _minimumWaitToRetryMilliseconds;
 
+        private readonly IFieldBusFactory fieldBusFactory;
+
         ///<summary>
         ///
         ///</summary>
-        protected FieldBusNodeFactory()
+        protected FieldBusNodeFactory(IPlcFactory plcFactory, IFieldBusFactory fieldBusFactory)
         {
+            PlcFactory = Enforce.ArgumentNotNull(plcFactory, "plcFactory");
+            this.fieldBusFactory = Enforce.ArgumentNotNull(fieldBusFactory, "fieldBusFactory");
             _minimumRetries = 3;
             _minimumWaitToRetryMilliseconds = 3;
         }
@@ -65,14 +70,14 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
                 if (activeFieldBusManager != null)
                 {
                     activeFieldBusManager.InitializeModbusMaster();
-                    currentFieldBusNodes = DistributedMeasurementInformationSystemBase.Instance.PlcManagerBase.FieldBusNodesFactory.FindNodes(activeFieldBusManager, activeFieldBusManager.FieldBusAccessor as ModbusAccessor);
+                    currentFieldBusNodes = FindNodes(activeFieldBusManager, activeFieldBusManager.FieldBusAccessor as ModbusAccessor);
                 }
                 else
                 {
                     currentFieldBusNodes = new FieldBusNodeCollection();
                     currentFieldBusNodes.AddRange((from address in fieldBusManager.GetPLCAddressRange()
-                                                   let modbusAccessor = DistributedMeasurementInformationSystemBase.Instance.PlcManagerBase.FieldBusFactory.CreateFieldbusAccessor(fieldBusType, address)
-                                                   select new ActiveFieldBusNode(fieldBusManager, modbusAccessor, address)).Cast<FieldBusNode>());
+                                                   let modbusAccessor = fieldBusFactory.CreateFieldbusAccessor(fieldBusType, address)
+                                                   select new ActiveFieldBusNode(fieldBusManager, modbusAccessor, address)));
                 }
 
             }
@@ -177,8 +182,8 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
 
                     if (TryGetReply(fieldBusNode))
                     {
-                        Debug.WriteLine(string.Format("\nУстройство по адресу {0} ответило на все запросы.\n",
-                                                      fieldBusNodeAddress.SlaveAddress));
+                        Debug.WriteLine("\nУстройство по адресу {0} ответило на все запросы.\n",
+                                        fieldBusNodeAddress.SlaveAddress);
                         nodes.Add(fieldBusNode);
                         //PLC plc =
                         //    DistributedMeasurementInformationSystemBase.Instance.PLCManager.PlcFactory.CreatePLC(
@@ -189,8 +194,8 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
                     }
                     else
                     {
-                        Debug.WriteLine(string.Format("\nУстройство по адресу {0} не ответило на все запросы.\n",
-                                                      fieldBusNodeAddress.SlaveAddress));
+                        Debug.WriteLine("\nУстройство по адресу {0} не ответило на все запросы.\n",
+                                        fieldBusNodeAddress.SlaveAddress);
                     }
                 }
             }
@@ -223,7 +228,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
             if (isNodeActive)
             {
                 Debug.WriteLine("создаём активный узел полевой шины...");
-                IFieldBusAccessor fieldBusAccessor = DistributedMeasurementInformationSystemBase.Instance.PlcManagerBase.FieldBusFactory.CreateFieldbusAccessor(fieldBusManager.FieldBusType, fieldBusNodeAddress);
+                IFieldBusAccessor fieldBusAccessor = fieldBusFactory.CreateFieldbusAccessor(fieldBusManager.FieldBusType, fieldBusNodeAddress);
                 fieldBusNode = new ActiveFieldBusNode(fieldBusManager, fieldBusAccessor, fieldBusNodeAddress);
             }
             else
@@ -237,7 +242,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         /// <summary>
         /// Фабрика ПЛК
         /// </summary>
-        public IPlcFactory PlcFactory { get; set; }
+        public IPlcFactory PlcFactory { get; private set; }
 
 
         /// <summary>

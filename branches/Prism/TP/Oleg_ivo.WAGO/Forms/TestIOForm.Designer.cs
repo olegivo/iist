@@ -1,3 +1,5 @@
+using Oleg_ivo.Plc;
+
 namespace Oleg_ivo.WAGO.Forms
 {
     partial class TestIOForm
@@ -46,7 +48,6 @@ namespace Oleg_ivo.WAGO.Forms
             this.cbWriteType = new System.Windows.Forms.ComboBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnSyncR2W = new System.Windows.Forms.Button();
-            this.wagoPlcManager1 = new Oleg_ivo.WAGO.WagoPlcManager();
             this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -295,6 +296,6 @@ namespace Oleg_ivo.WAGO.Forms
         private System.Windows.Forms.ComboBox cbWriteType;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnSyncR2W;
-        private WagoPlcManager wagoPlcManager1;
+        private IPlcManager plcManager;
     }
 }

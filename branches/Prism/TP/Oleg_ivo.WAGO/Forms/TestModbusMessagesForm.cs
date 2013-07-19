@@ -2,6 +2,7 @@
 using System.IO.Ports;
 using System.Windows.Forms;
 using Modbus.Device;
+using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.FieldBus;
 
 namespace Oleg_ivo.WAGO.Forms
@@ -11,12 +12,14 @@ namespace Oleg_ivo.WAGO.Forms
     ///</summary>
     public partial class TestModbusMessagesForm : Form
     {
-        ///<summary>
-        ///
-        ///</summary>
-        public TestModbusMessagesForm()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dmis"></param>
+        public TestModbusMessagesForm(IDistributedMeasurementInformationSystem dmis)
         {
             InitializeComponent();
+            this.dmis = dmis;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -27,7 +30,7 @@ namespace Oleg_ivo.WAGO.Forms
         private void FillConnectionParameters()
         {
             // lbPorts
-            foreach (string portName in DistributedMeasurementInformationSystem.Instance.PlcManagerBase.FieldBusFactory.FindPorts(FieldBusType.RS485))
+            foreach (string portName in dmis.PlcManager.FieldBusFactory.FindPorts(FieldBusType.RS485))
                 lbPorts.Items.Add(portName);
             lbPorts.SelectedIndex = 0;
 
@@ -149,6 +152,7 @@ namespace Oleg_ivo.WAGO.Forms
         }
 
         private TextBox lastSelectedTextBox;
+        private IDistributedMeasurementInformationSystem dmis;
 
         private void tb_Enter(object sender, EventArgs e)
         {
@@ -219,8 +223,8 @@ namespace Oleg_ivo.WAGO.Forms
 
         private void btnConfig_Click(object sender, EventArgs e)
         {
-            DistributedMeasurementInformationSystem.Instance.BuildSystemConfiguration();
-            DistributedMeasurementInformationSystem.Instance.ShowConfiguration();
+            dmis.BuildSystemConfiguration();
+            dmis.ShowConfiguration();
         }
     }
 }

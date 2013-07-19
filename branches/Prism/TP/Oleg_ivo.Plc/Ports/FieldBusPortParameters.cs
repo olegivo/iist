@@ -19,6 +19,7 @@ namespace Oleg_ivo.Plc.Ports
             _fieldBusType = fieldBusType;
         }
 
+/*
         ///<summary>
         /// Диапазон физических адресов шины
         ///</summary>
@@ -26,6 +27,7 @@ namespace Oleg_ivo.Plc.Ports
         {
             get { return DistributedMeasurementInformationSystemBase.Instance.Settings.FieldBusLoadOptions[FieldBusType].FieldBusNodeAddresses; }
         }
+*/
 
         ///<summary>
         /// Тип полевой шины

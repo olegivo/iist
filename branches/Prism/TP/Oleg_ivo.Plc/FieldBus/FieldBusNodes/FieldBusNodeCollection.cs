@@ -5,7 +5,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
     ///<summary>
     /// Коллекция узлов полевой шины
     ///</summary>
-    public class FieldBusNodeCollection : List<FieldBusNode>
+    public class FieldBusNodeCollection : List<FieldBusNode>//TODO:inline?
     {
         #region fields
 

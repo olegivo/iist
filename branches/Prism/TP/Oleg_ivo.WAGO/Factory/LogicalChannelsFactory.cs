@@ -10,41 +10,6 @@ namespace Oleg_ivo.WAGO.Factory
     ///</summary>
     public class LogicalChannelsFactory : ILogicalChannelsFactory
     {
-        #region fields
-        private static LogicalChannelsFactory instance;
-
-        #endregion
-
-        #region properties
-
-        ///<summary>
-        ///
-        ///</summary>
-        public static LogicalChannelsFactory Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new LogicalChannelsFactory();
-                }
-                return instance;
-            }
-        }
-
-        #endregion
-
-        #region constructors
-
-        ///<summary>
-        ///
-        ///</summary>
-        protected LogicalChannelsFactory()
-        {
-            
-        }
-        #endregion
-
         ///<summary>
         ///
         ///</summary>
@@ -97,7 +62,7 @@ namespace Oleg_ivo.WAGO.Factory
         ///<returns></returns>
         public LogicalChannelCollection LoadLogicalChannels(PhysicalChannel physicalChannel)
         {
-            LogicalChannelsDAC logicalChannelsDAC = new LogicalChannelsDAC();
+            LogicalChannelsDAC logicalChannelsDAC = new LogicalChannelsDAC(this);
             return logicalChannelsDAC.GetChannels(physicalChannel);
         }
 
@@ -107,7 +72,7 @@ namespace Oleg_ivo.WAGO.Factory
         ///<returns></returns>
         public void SaveLogicalChannels(PhysicalChannel physicalChannel)
         {
-            LogicalChannelsDAC logicalChannelsDAC = new LogicalChannelsDAC();
+            LogicalChannelsDAC logicalChannelsDAC = new LogicalChannelsDAC(this);
             logicalChannelsDAC.SaveChannels(physicalChannel);
         }
     }

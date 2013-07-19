@@ -1,5 +1,7 @@
+using Autofac;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.FieldBus;
+using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
 using Oleg_ivo.WAGO.Forms;
 
 namespace Oleg_ivo.WAGO
@@ -19,47 +21,18 @@ namespace Oleg_ivo.WAGO
 
         #region constructors
 
-        #region Singleton
-
-
-        ///<summary>
-        /// ≈динственный экземпл€р
-        ///</summary>
-        public new static DistributedMeasurementInformationSystem Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new DistributedMeasurementInformationSystem();
-                }
-                return _instance as DistributedMeasurementInformationSystem;
-            }
-        }
-
         /// <summary>
         /// »нициализирует новый экземпл€р класса <see cref="DistributedMeasurementInformationSystem" />.
         /// </summary>
-        private DistributedMeasurementInformationSystem()
-        {
-        }
+        public DistributedMeasurementInformationSystem(IComponentContext context):base(context){}
 
-        ///<summary>
-        ///
-        ///</summary>
-        ///<returns></returns>
-        protected override DistributedSystemSettingsBase CreateSettings()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        protected override IDistributedSystemSettings CreateSettings()
         {
-            return new DistributedSystemSettings();
-        }
-
-        ///<summary>
-        ///
-        ///</summary>
-        ///<returns></returns>
-        protected override PlcManagerBase CreatePlcManager()
-        {
-            return new WagoPlcManager();
+            return Context.ResolveUnregistered<DistributedSystemSettings>();
         }
 
         ///<summary>
@@ -69,12 +42,10 @@ namespace Oleg_ivo.WAGO
         {
             base.BuildSystemConfiguration();
 
-            PlcManagerBase.BuildFieldBuses(true, FieldBusType.RS485);
-            PlcManagerBase.BuildFieldBuses(false, FieldBusType.Ethernet);
+            //TODO:PlcManager.BuildFieldBuses(true, FieldBusType.RS485);
+            PlcManager.BuildFieldBuses(false, FieldBusType.Ethernet);
             //WagoPlcManager.BuildPhysicalChannels();
         }
-
-        #endregion
 
         #endregion
 
@@ -83,7 +54,8 @@ namespace Oleg_ivo.WAGO
         ///</summary>
         public override void ShowConfiguration()
         {
-            DeviceConfigurationForm form = new DeviceConfigurationForm();
+            var form = new DeviceConfigurationForm();
+            Context.InjectAttributedProperties(form);
             form.ShowDialog();
         }
     }

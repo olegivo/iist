@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
+using Autofac;
+using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
 
 namespace Oleg_ivo.WAGO.Forms
@@ -14,14 +16,16 @@ namespace Oleg_ivo.WAGO.Forms
     {
         private readonly FieldBusNode _fieldBusNode;
 
-        ///<summary>
-        ///
-        ///</summary>
-        ///<param name="fieldBusNode"></param>
-        public TestIOForm(FieldBusNode fieldBusNode)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fieldBusNode"></param>
+        /// <param name="context"></param>
+        public TestIOForm(FieldBusNode fieldBusNode, IComponentContext context)
         {
             _fieldBusNode = fieldBusNode;
             InitializeComponent();
+            plcManager = context.Resolve<IPlcManager>();
 
             Init();
         }

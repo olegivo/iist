@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Devices.Contollers;
+using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
 using Oleg_ivo.WAGO.Meta;
 
@@ -13,6 +14,9 @@ namespace Oleg_ivo.WAGO.Devices
     ///</summary>
     public class WagoPlc : PLC, IWagoMetaContainer
     {
+        private readonly IPhysicalChannelsFactory physicalChannelsFactory;
+        private WagoMetaFactory wagoMetaFactory;
+
         ///<summary>
         ///
         ///</summary>
@@ -36,12 +40,15 @@ namespace Oleg_ivo.WAGO.Devices
 
         #endregion
 
-        ///<summary>
-        ///
-        ///</summary>
-        ///<param name="fieldBusNode"></param>
-        public WagoPlc(FieldBusNode fieldBusNode) : base(fieldBusNode)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fieldBusNode"></param>
+        /// <param name="physicalChannelsFactory"></param>
+        public WagoPlc(FieldBusNode fieldBusNode, IPhysicalChannelsFactory physicalChannelsFactory, WagoMetaFactory wagoMetaFactory) : base(fieldBusNode)
         {
+            this.physicalChannelsFactory = physicalChannelsFactory;
+            this.wagoMetaFactory = wagoMetaFactory;
         }
 
         ///<summary>
@@ -186,7 +193,7 @@ namespace Oleg_ivo.WAGO.Devices
         /// <returns></returns>
         private WagoMeta ParseModuleMetaRegister(ushort register, ushort address)
         {
-            return WagoMetaFactory.Instance.ParseModuleMetaRegister(register, address, this);
+            return wagoMetaFactory.ParseModuleMetaRegister(register, address, this);
         }
 
         ///<summary>
@@ -227,9 +234,7 @@ namespace Oleg_ivo.WAGO.Devices
         /// </summary>
         public override void BuildPhysicalChannels()
         {
-            PhysicalChannelCollection physicalChannels = DistributedMeasurementInformationSystem.Instance.PlcManagerBase
-                .PhysicalChannelsFactory.
-                BuildPhysicalChannels(this);
+            PhysicalChannelCollection physicalChannels = physicalChannelsFactory.BuildPhysicalChannels(this);
             if (physicalChannels==null)
             {
                 Console.WriteLine("Ќе построено ни одного физического канала");

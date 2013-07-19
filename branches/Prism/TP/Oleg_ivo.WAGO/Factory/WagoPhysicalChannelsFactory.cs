@@ -17,33 +17,12 @@ namespace Oleg_ivo.WAGO.Factory
     ///</summary>
     public class WagoPhysicalChannelsFactory : IPhysicalChannelsFactory
     {
-        #region Singleton
+        private readonly ILogicalChannelsFactory logicalChannelsFactory;
 
-        private static WagoPhysicalChannelsFactory _instance;
-
-        ///<summary>
-        /// Единственный экземпляр
-        ///</summary>
-        public static WagoPhysicalChannelsFactory Instance
+        public WagoPhysicalChannelsFactory(ILogicalChannelsFactory logicalChannelsFactory)
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new WagoPhysicalChannelsFactory();
-                }
-                return _instance;
-            }
+            this.logicalChannelsFactory = logicalChannelsFactory;
         }
-
-        /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="WagoPhysicalChannelsFactory" />.
-        /// </summary>
-        private WagoPhysicalChannelsFactory()
-        {
-        }
-
-        #endregion
 
         ///<summary>
         /// Построить физические каналы
@@ -163,10 +142,10 @@ namespace Oleg_ivo.WAGO.Factory
                     WagoIOModuleMeta moduleMeta = wagoMeta as WagoIOModuleMeta;
                     if (moduleMeta != null)//метаданные модуля
                     {
-                        WagoIOModule module = moduleMeta.CreateModule();//создание модуля на основе метаданных
+                        WagoIOModule module = moduleMeta.CreateModule(logicalChannelsFactory);//создание модуля на основе метаданных
                         if (module != null)//создание физического канала на основе модуля
                         {
-                            PhysicalChannel physicalChannel = new PhysicalChannel(wagoPlc.FieldBusNode, module, 0, 0);
+                            PhysicalChannel physicalChannel = new PhysicalChannel(logicalChannelsFactory, wagoPlc.FieldBusNode, module, 0, 0);
                             currentPhysicalChannels.Add(physicalChannel);//добавление ФК к узлу
                         }
                     }
@@ -196,12 +175,13 @@ namespace Oleg_ivo.WAGO.Factory
         /// <param name="physicalChannels"></param>
         private void CheckUniqueChannels(IEnumerable<PhysicalChannel> physicalChannels)
         {
-            foreach (var physicalChannel in physicalChannels)
+            var channelsList = physicalChannels as IList<PhysicalChannel> ?? physicalChannels.ToList();
+            foreach (var physicalChannel in channelsList)
             {
                 try
                 {
                     //ищем единственный ряд с уникальными параметрами
-                    IEnumerable<PhysicalChannel> channels = physicalChannels.
+                    var channels = channelsList.
                         Where(channel1 =>
                               channel1.EqualsPredicate(physicalChannel, true, true, true)
                         );
@@ -241,7 +221,7 @@ namespace Oleg_ivo.WAGO.Factory
         ///<returns></returns>
         public PhysicalChannelCollection LoadPhysicalChannels(FieldBusNode fieldBusNode)
         {
-            PhysicalChannelsDAC physicalChannelsDAC = new PhysicalChannelsDAC();
+            PhysicalChannelsDAC physicalChannelsDAC = new PhysicalChannelsDAC{LogicalChannelsFactory = logicalChannelsFactory};
             return physicalChannelsDAC.GetChannels(fieldBusNode);
         }
     }

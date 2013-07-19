@@ -5,7 +5,7 @@ namespace Oleg_ivo.Plc.Channels
     ///<summary>
     /// Коллекция физических каналов
     ///</summary>
-    public class PhysicalChannelCollection : List<PhysicalChannel>
+    public class PhysicalChannelCollection : List<PhysicalChannel>//TODO:inline?
     {
         #region fields
 

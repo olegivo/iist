@@ -1,3 +1,5 @@
+using Oleg_ivo.Plc;
+
 namespace Oleg_ivo.WAGO.Controls.LevelEditors
 {
     partial class FieldBusNodeEditControl
@@ -37,7 +39,6 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
             this.label2 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.fieldBusNodeDAC1 = new Oleg_ivo.WAGO.Factory.FieldBusNodeDAC(this.components);
             this.label4 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dtsChannelConfiguration1)).BeginInit();
@@ -108,7 +109,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
             this.label3.TabIndex = 1;
             this.label3.Text = "FieldNodeAddress1";
             // 
-            // fieldBusNodeDAC1
+            // fieldBusNodeDAC
             // 
             // 
             // label4
@@ -160,7 +161,6 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label3;
-        private Oleg_ivo.WAGO.Factory.FieldBusNodeDAC fieldBusNodeDAC1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox4;
     }

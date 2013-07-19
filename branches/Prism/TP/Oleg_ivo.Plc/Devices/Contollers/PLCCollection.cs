@@ -5,7 +5,7 @@ namespace Oleg_ivo.Plc.Devices.Contollers
     ///<summary>
     /// Коллекция ПЛК
     ///</summary>
-    public class PLCCollection : List<PLC>
+    public class PLCCollection : List<PLC>//TODO:inline
     {
         
     }

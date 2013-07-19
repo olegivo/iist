@@ -1,10 +1,14 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using Autofac;
 using Oleg_ivo.Plc.Channels;
+using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
+using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
+using Oleg_ivo.WAGO.Factory;
 using Oleg_ivo.WAGO.Forms;
 
 namespace Oleg_ivo.WAGO.Controls.LevelEditors
@@ -21,6 +25,17 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
         public LevelEditControl()
         {
             InitializeComponent();
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IComponentContext Context
+        {
+            set
+            {
+                logicalChannelEditControl1.LogicalChannelsDac = value.ResolveUnregistered<LogicalChannelsDAC>();//TODO: сделать так же, как и ниже
+                physicalChannelEditControl1.LogicalChannelsFactory = value.Resolve<ILogicalChannelsFactory>();
+                fieldBusNodeEditControl1.FieldBusNodeFactory = value.Resolve<IFieldBusNodeFactory>();
+            }
         }
 
         ///<summary>

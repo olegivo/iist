@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using Oleg_ivo.Plc.Channels;
+using Oleg_ivo.Plc.Factory;
 using Enumerable = System.Linq.Enumerable;
 
 namespace Oleg_ivo.WAGO.Factory
@@ -14,22 +15,14 @@ namespace Oleg_ivo.WAGO.Factory
     ///</summary>
     public partial class LogicalChannelsDAC : Component
     {
-        ///<summary>
-        ///
-        ///</summary>
-        public LogicalChannelsDAC()
-        {
-            InitializeComponent();
-        }
+        public ILogicalChannelsFactory LogicalChannelsFactory { get; private set; }
 
         ///<summary>
         ///
         ///</summary>
-        ///<param name="container"></param>
-        public LogicalChannelsDAC(IContainer container)
+        public LogicalChannelsDAC(ILogicalChannelsFactory logicalChannelsFactory)
         {
-            container.Add(this);
-
+            LogicalChannelsFactory = logicalChannelsFactory;
             InitializeComponent();
         }
 
@@ -227,7 +220,7 @@ namespace Oleg_ivo.WAGO.Factory
 
         private LogicalChannel CreateChannelFromData(DtsChannelConfiguration.LogicalChannelRow row, PhysicalChannel physicalChannel)
         {
-            var logicalChannels = LogicalChannelsFactory.Instance.BuildLogicalChannel(physicalChannel);
+            var logicalChannels = LogicalChannelsFactory.BuildLogicalChannel(physicalChannel);
             LogicalChannel channel = logicalChannels[0];
             channel.Id = row.Id;
             if(!row.IsDirectPolynomNull()) channel.DirectTransform = Polynom.DeSerializePolynom(row.DirectPolynom);

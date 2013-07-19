@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using Oleg_ivo.Plc.Common;
 using Oleg_ivo.Plc.Devices.Modules;
+using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
+using Oleg_ivo.PrismExtensions.Autofac;
 
 namespace Oleg_ivo.Plc.Channels
 {
@@ -16,6 +18,7 @@ namespace Oleg_ivo.Plc.Channels
         #region fields
         private IOModule _ioModule;
         private readonly ushort _channelSize;
+        private readonly ILogicalChannelsFactory logicalChannelsFactory;
 
         #endregion
 
@@ -84,7 +87,7 @@ namespace Oleg_ivo.Plc.Channels
 
         #region constructors
 
-/*
+        /*
         ///<summary>
         ///
         ///</summary>
@@ -97,20 +100,19 @@ namespace Oleg_ivo.Plc.Channels
         }
 */
 
-        ///<summary>
-        ///
-        ///</summary>
-        ///<param name="fieldBusNode"></param>
-        ///<param name="ioModule"></param>
-        ///<param name="addressShift"></param>
-        ///<param name="channelSize"></param>
-        public PhysicalChannel(FieldBusNode fieldBusNode, IOModule ioModule, ushort addressShift, ushort channelSize)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logicalChannelsFactory"></param>
+        /// <param name="fieldBusNode"></param>
+        /// <param name="ioModule"></param>
+        /// <param name="addressShift"></param>
+        /// <param name="channelSize"></param>
+        public PhysicalChannel(ILogicalChannelsFactory logicalChannelsFactory, FieldBusNode fieldBusNode, IOModule ioModule, ushort addressShift, ushort channelSize)
         {
-            if (fieldBusNode == null) throw new ArgumentNullException("fieldBusNode");
-            if (ioModule == null) throw new ArgumentNullException("ioModule");
-
-            IOModule = ioModule;
-            FieldBusNode = fieldBusNode;
+            this.logicalChannelsFactory = Enforce.ArgumentNotNull(logicalChannelsFactory, "logicalChannelsFactory");
+            IOModule = Enforce.ArgumentNotNull(ioModule, "ioModule");
+            FieldBusNode = Enforce.ArgumentNotNull(fieldBusNode, "fieldBusNode");
             AddressShift = addressShift;
             _channelSize = channelSize;
         }
@@ -126,10 +128,10 @@ namespace Oleg_ivo.Plc.Channels
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-            return string.Format("<{3}> Физический канал [{0}-{1}]{2}", 
-                WriteAddress, 
+            return string.Format("<{3}> Физический канал [{0}-{1}]{2}",
+                WriteAddress,
                 WriteAddress + ChannelSize - 1,
-                IOModule!=null ? string.Format(" ({0})", IOModule): "",
+                IOModule != null ? string.Format(" ({0})", IOModule) : "",
                 Id);
         }
 
@@ -142,7 +144,9 @@ namespace Oleg_ivo.Plc.Channels
         {
             //если нет сохранённых, нужно построить по умолчанию
             if (LogicalChannels == null || LogicalChannels.Count == 0)
-                LogicalChannels = DistributedMeasurementInformationSystemBase.Instance.PlcManagerBase.LogicalChannelsFactory.BuildLogicalChannel(this);
+            {
+                LogicalChannels = logicalChannelsFactory.BuildLogicalChannel(this);
+            }
             //LogicalChannels.AddRange(IOModule.BuildDefaultLogicalChannels());
         }
 
@@ -152,7 +156,7 @@ namespace Oleg_ivo.Plc.Channels
         ///<returns></returns>
         public void LoadLogicalChannels()
         {
-            LogicalChannels = DistributedMeasurementInformationSystemBase.Instance.PlcManagerBase.LogicalChannelsFactory.LoadLogicalChannels(this);
+            LogicalChannels = logicalChannelsFactory.LoadLogicalChannels(this);
         }
 
         ///<summary>
@@ -174,10 +178,10 @@ namespace Oleg_ivo.Plc.Channels
 
             if (size % 16 == 0)//кратно 16 бит - пишем регистрами
             {
-                if (size>16)//несколько регистров
+                if (size > 16)//несколько регистров
                 {
                     ushort[] registers = value as ushort[];
-                    if (registers != null && registers.Length == size/16)
+                    if (registers != null && registers.Length == size / 16)
                         success = FieldBusNode.WriteMultipleRegisters(address, registers);
                 }
                 else//один регистр
@@ -190,7 +194,7 @@ namespace Oleg_ivo.Plc.Channels
             {
                 if (size > 1)//несколько ячеек
                 {
-                    bool[] coils = value is bool[] ? (bool[]) value : GetBools(value);
+                    bool[] coils = value is bool[] ? (bool[])value : GetBools(value);
 
                     if (coils != null && coils.Length == size)
                         success = FieldBusNode.WriteMultipleCoils(address, coils);
@@ -198,11 +202,11 @@ namespace Oleg_ivo.Plc.Channels
                 else//одна ячейка
                 {
                     if (value is bool)
-                        success = FieldBusNode.WriteSingleCoil(address, (bool) value);
-                    else if(value is decimal || value is float || value is double || value is int)
+                        success = FieldBusNode.WriteSingleCoil(address, (bool)value);
+                    else if (value is decimal || value is float || value is double || value is int)
                     {
                         var d = Convert.ToDouble(value);
-                        if(1.0.Equals(d))
+                        if (1.0.Equals(d))
                             success = FieldBusNode.WriteSingleCoil(address, true);
                         else if (0.0.Equals(d))
                             success = FieldBusNode.WriteSingleCoil(address, false);
@@ -224,16 +228,16 @@ namespace Oleg_ivo.Plc.Channels
             {
                 Int64 u = Int64.Parse(value.ToString());
 
-                while (u>0)
+                while (u > 0)
                 {
-                    ushort reminder = (ushort) (u%2);
-                    bools.Add(reminder!=0);
+                    ushort reminder = (ushort)(u % 2);
+                    bools.Add(reminder != 0);
                     u /= 2;
                 }
 
                 u = Int64.Parse(value.ToString());
                 ushort u2 = (ushort)(bools.Count / 8);
-                if (u2 > u / 8 || u2==0)
+                if (u2 > u / 8 || u2 == 0)
                     u2++;
 
                 for (int i = bools.Count; i < u2 * 8; i++) bools.Add(false);
@@ -256,7 +260,7 @@ namespace Oleg_ivo.Plc.Channels
 
             if (size % 16 == 0)//кратно 16 бит - читаем регистрами
             {
-                ushort[] registers = FieldBusNode.ReadHoldingRegisters(address, (ushort) (size/16));
+                ushort[] registers = FieldBusNode.ReadHoldingRegisters(address, (ushort)(size / 16));
                 result = registers;
             }
             else

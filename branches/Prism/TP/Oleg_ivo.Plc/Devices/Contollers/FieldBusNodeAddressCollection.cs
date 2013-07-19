@@ -6,7 +6,7 @@ namespace Oleg_ivo.Plc.Devices.Contollers
     ///<summary>
     /// Коллекция адресов ПЛК на шине
     ///</summary>
-    public class FieldBusNodeAddressCollection : List<FieldBusNodeAddress>
+    public class FieldBusNodeAddressCollection : List<FieldBusNodeAddress>//TODO:inline?
     {
         /// <summary>
         /// Поиск адреса по его частям

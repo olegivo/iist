@@ -1,5 +1,7 @@
 using System;
 using System.Windows.Forms;
+using Autofac;
+using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
 
 namespace Oleg_ivo.WAGO.Forms
 {
@@ -17,6 +19,9 @@ namespace Oleg_ivo.WAGO.Forms
         {
             InitializeComponent();
         }
+
+        [Dependency]
+        public IContainer UnityContainer { private get; set; }
 
         private void ShowNewForm(object sender, EventArgs e)
         {
@@ -124,9 +129,9 @@ namespace Oleg_ivo.WAGO.Forms
 
         private void nodesConfigToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DistributedMeasurementInformationSystem.Instance.BuildSystemConfiguration();
+            //DistributedMeasurementInformationSystem.Instance.BuildSystemConfiguration();
             //DistributedMeasurementInformationSystem.Instance.ShowConfiguration();
-            ShowMDIChild(new DeviceConfigurationForm());
+            ShowMDIChild(UnityContainer.Resolve<DeviceConfigurationForm>());
         }
 
         private void addressConfigToolStripMenuItem_Click(object sender, EventArgs e)

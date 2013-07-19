@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
 using Oleg_ivo.WAGO.Devices;
@@ -11,33 +12,13 @@ namespace Oleg_ivo.WAGO.Factory
     ///</summary>
     public class WagoFieldBusNodeFactory : FieldBusNodeFactory
     {
-        #region Singleton
-
-        private static WagoFieldBusNodeFactory _instance;
-
-        ///<summary>
-        /// Единственный экземпляр
-        ///</summary>
-        public static WagoFieldBusNodeFactory Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new WagoFieldBusNodeFactory();
-                }
-                return _instance;
-            }
-        }
-
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="WagoFieldBusNodeFactory" />.
         /// </summary>
-        private WagoFieldBusNodeFactory()
+        public WagoFieldBusNodeFactory(IPlcFactory plcFactory, IFieldBusFactory fieldBusFactory)
+            : base(plcFactory, fieldBusFactory)
         {
         }
-
-        #endregion
 
         /// <summary>
         /// Загрузить настроенные узлы для полевой шины
@@ -46,7 +27,7 @@ namespace Oleg_ivo.WAGO.Factory
         /// <returns></returns>
         public override FieldBusNodeCollection LoadFieldBusNodes(FieldBusManager fieldBusManager)
         {
-            FieldBusNodeDAC fieldBusNodeDAC = new FieldBusNodeDAC();
+            FieldBusNodeDAC fieldBusNodeDAC = new FieldBusNodeDAC {FieldBusNodesFactory = this};
             return fieldBusNodeDAC.GetFieldBusNodes(fieldBusManager);
         }
 
@@ -56,7 +37,7 @@ namespace Oleg_ivo.WAGO.Factory
         /// <param name="fieldBusNode"></param>
         protected override void CreatePlcForFieldBusNode(FieldBusNode fieldBusNode)
         {
-            if (fieldBusNode!=null)
+            if (fieldBusNode != null)
             {
                 if (PlcFactory != null)
                 {

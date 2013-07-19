@@ -2,7 +2,9 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
+using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
 using Oleg_ivo.WAGO.Devices;
 using Oleg_ivo.WAGO.Meta;
@@ -21,6 +23,9 @@ namespace Oleg_ivo.WAGO.Factory
         {
             InitializeComponent();
         }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public ILogicalChannelsFactory LogicalChannelsFactory { get; set; }
 
         ///<summary>
         ///
@@ -164,14 +169,14 @@ namespace Oleg_ivo.WAGO.Factory
 
         private PhysicalChannel CreateChannelFromData(DtsChannelConfiguration.PhysicalChannelRow row, FieldBusNode fieldBusNode)
         {
-            var ioModule = new WagoIOModule
+            var ioModule = new WagoIOModule(LogicalChannelsFactory)
                                {
                                    Meta =
                                        new WagoIOModuleMeta(row.IsAnalog, row.IsDiscrete, row.IsInput, row.IsOutput,
                                                             (ushort) row.PhysicalChannelSize, 0, row.AddressShift)
                                };
 
-            var channel = new PhysicalChannel(fieldBusNode, ioModule, (ushort)row.AddressShift, (ushort)row.PhysicalChannelSize)
+            var channel = new PhysicalChannel(LogicalChannelsFactory, fieldBusNode, ioModule, (ushort)row.AddressShift, (ushort)row.PhysicalChannelSize)
                               {Id = row.Id, WriteAddress = row.WriteAddress, ReadAddress = row.ReadAddress};
             return channel;
         }

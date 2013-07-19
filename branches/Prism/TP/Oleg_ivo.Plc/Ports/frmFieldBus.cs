@@ -8,6 +8,7 @@ namespace Oleg_ivo.Plc.Ports
         public frmFieldBus()
         {
             InitializeComponent();
+            //TODO:при использовании необходимо инициализировать ucDevicePortCombobox1.FieldBusFactory;
         }
 
         private void ucFieldBusTypeCombobox1_SelectedIndexChanged(object sender, EventArgs e)

@@ -1,4 +1,6 @@
 using Oleg_ivo.Plc.Channels;
+using Oleg_ivo.Plc.Factory;
+using Oleg_ivo.PrismExtensions.Autofac;
 
 namespace Oleg_ivo.Plc.Devices.Modules
 {
@@ -8,6 +10,11 @@ namespace Oleg_ivo.Plc.Devices.Modules
     public abstract class IOModule : IIOModule
     {
         private PhysicalChannel _physicalChannel;
+
+        protected IOModule(ILogicalChannelsFactory logicalChannelsFactory)
+        {
+            LogicalChannelsFactory = Enforce.ArgumentNotNull(logicalChannelsFactory, "logicalChannelsFactory");
+        }
 
         #region fields
 
@@ -63,6 +70,8 @@ namespace Oleg_ivo.Plc.Devices.Modules
         /// Модуль вывода
         /// </summary>
         public abstract bool IsOutput { get; }
+
+        protected ILogicalChannelsFactory LogicalChannelsFactory { get; private set; }
 
         #endregion
 

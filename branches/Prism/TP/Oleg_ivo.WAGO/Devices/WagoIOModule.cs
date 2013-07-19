@@ -1,6 +1,6 @@
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Devices.Modules;
-using Oleg_ivo.WAGO.Factory;
+using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.WAGO.Meta;
 
 namespace Oleg_ivo.WAGO.Devices
@@ -17,6 +17,10 @@ namespace Oleg_ivo.WAGO.Devices
         #endregion
 
         #region properties
+
+        public WagoIOModule(ILogicalChannelsFactory logicalChannelsFactory) : base(logicalChannelsFactory)
+        {
+        }
 
         ///<summary>
         /// Мета-описание
@@ -109,7 +113,7 @@ namespace Oleg_ivo.WAGO.Devices
         /// </summary>
         public override bool IsOutput
         {
-            get { return ModuleMeta != null ? ModuleMeta.IsOutput : false; }
+            get { return ModuleMeta != null && ModuleMeta.IsOutput; }
         }
 
         /// <summary>
@@ -117,7 +121,7 @@ namespace Oleg_ivo.WAGO.Devices
         /// </summary>
         public override LogicalChannelCollection BuildDefaultLogicalChannels()
         {
-            return LogicalChannelsFactory.Instance.BuildLogicalChannel(PhysicalChannel);
+            return LogicalChannelsFactory.BuildLogicalChannel(PhysicalChannel);
         }
     }
 }

@@ -1,10 +1,9 @@
 using System;
 using System.ComponentModel;
 using System.Data;
-using System.Linq;
-using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Devices.Contollers;
+using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
@@ -17,24 +16,16 @@ namespace Oleg_ivo.WAGO.Factory
     ///</summary>
     public partial class FieldBusNodeDAC : Component
     {
-        ///<summary>
-        ///
-        ///</summary>
+        /// <summary>
+        /// 
+        /// </summary>
         public FieldBusNodeDAC()
         {
             InitializeComponent();
         }
 
-        ///<summary>
-        ///
-        ///</summary>
-        ///<param name="container"></param>
-        public FieldBusNodeDAC(IContainer container)
-        {
-            container.Add(this);
-
-            InitializeComponent();
-        }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IFieldBusNodeFactory FieldBusNodesFactory { get; set; }
 
         ///<summary>
         ///
@@ -183,9 +174,7 @@ namespace Oleg_ivo.WAGO.Factory
                     throw new Exception("Ќе найден адрес дл€ активного узла полевой шины");
                 }
 
-                fieldBusNode =
-                    DistributedMeasurementInformationSystemBase.Instance.PlcManagerBase.FieldBusNodesFactory.
-                        CreateFieldBusNode(fieldBusManager, fieldBusNodeAddress);
+                fieldBusNode = FieldBusNodesFactory.CreateFieldBusNode(fieldBusManager, fieldBusNodeAddress);
             }
 
             return fieldBusNode;
