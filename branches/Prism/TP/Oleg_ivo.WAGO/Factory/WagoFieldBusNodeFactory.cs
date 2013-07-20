@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using NLog;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
@@ -444,12 +443,12 @@ namespace Oleg_ivo.WAGO.Factory
 
                                                 try
                                                 {
-                                                    Trace.WriteLine(string.Format("{0}-{1}", GetINFO_SERIES(fieldBusNodeAccessor),
+                                                    Log.Debug(string.Format("{0}-{1}", GetINFO_SERIES(fieldBusNodeAccessor),
                                                                                   GetINFO_ITEM(fieldBusNodeAccessor)));
-                                                    Trace.WriteLine(string.Format("Выходных аналоговых слов: {0}", GetICnfLen_AnalogOut(fieldBusNodeAccessor) / 16));
-                                                    Trace.WriteLine(string.Format("Входных аналоговых слов: {0}", GetICnfLen_AnalogInp(fieldBusNodeAccessor) / 16));
-                                                    Trace.WriteLine(string.Format("Выходных цифровых битов: {0}", GetICnfLen_DigitalOut(fieldBusNodeAccessor)));
-                                                    Trace.WriteLine(string.Format("Входных цифровых битов:{0}", GetICnfLen_DigitalInp(fieldBusNodeAccessor)));
+                                                    Log.Debug(string.Format("Выходных аналоговых слов: {0}", GetICnfLen_AnalogOut(fieldBusNodeAccessor) / 16));
+                                                    Log.Debug(string.Format("Входных аналоговых слов: {0}", GetICnfLen_AnalogInp(fieldBusNodeAccessor) / 16));
+                                                    Log.Debug(string.Format("Выходных цифровых битов: {0}", GetICnfLen_DigitalOut(fieldBusNodeAccessor)));
+                                                    Log.Debug(string.Format("Входных цифровых битов:{0}", GetICnfLen_DigitalInp(fieldBusNodeAccessor)));
                                                 }
                                                 catch (Exception ex)
                                                 {
@@ -468,7 +467,7 @@ namespace Oleg_ivo.WAGO.Factory
                                                         //register = ModbusAccessor.ReadInputRegisters(fieldBusNodeAccessor.SlaveAddress, address, 1);
                                                         byte[] bytes = BitConverter.GetBytes(register);
                                                         string s = string.Format("address 0x{0}, value {1} ({2})", address.ToString("X"), BitConverter.ToString(bytes), register);
-                                                        Trace.WriteLine(s);
+                                                        Log.Debug(s);
                                                     }
                                                     catch (Exception ex)
                                                     {
@@ -483,7 +482,7 @@ namespace Oleg_ivo.WAGO.Factory
                                                         register = ReadInputRegister(fieldBusNodeAccessor, address);
                                                         byte[] bytes = BitConverter.GetBytes(register);
                                                         string s = string.Format("address 0x{0}, value {1} ({2})", address.ToString("X"), BitConverter.ToString(bytes), register);
-                                                        Trace.WriteLine(s);
+                                                        Log.Debug(s);
                                                     }
                                                     catch (Exception ex)
                                                     {

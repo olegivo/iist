@@ -60,7 +60,7 @@ namespace Oleg_ivo.MES.Logging
             public DateTime IncomeTimeStamp { get; internal set; }
         }
 
-        private readonly Queue<QueueElement> _queue = new Queue<QueueElement>();
+        private readonly Queue<QueueElement> queue = new Queue<QueueElement>();
 
         /// <summary>
         /// Запустить очередь протоколирования
@@ -87,17 +87,17 @@ namespace Oleg_ivo.MES.Logging
             // в режиме остановки обработки оставшейся очереди не ждём, когда очередь обработается, а очищаем её принудительно
             if (forceInterruptProcessing)
             {
-                Log.Debug("[{0}]\tЭлементов в очереди - {1}", DateTime.Now, _queue.Count);
-                _queue.Clear();
-                Log.Debug("[{0}]\tОчередь принудительно очищена", DateTime.Now);
+                Log.Debug("Элементов в очереди - {0}", queue.Count);
+                queue.Clear();
+                Log.Debug("Очередь принудительно очищена");
             }
             else
             {
-                Log.Debug("[{0}]\tОжидание обработки оставшейся очереди...", DateTime.Now);
-                while (_queue.Count > 0)
+                Log.Debug("Ожидание обработки оставшейся очереди...");
+                while (queue.Count > 0)
                 {
                 }
-                Log.Debug("[{0}]\tОчередь обработана", DateTime.Now);
+                Log.Debug("Очередь обработана");
             }
         }
 
@@ -110,12 +110,12 @@ namespace Oleg_ivo.MES.Logging
             if (_stopped)
                 throw new InvalidOperationException("Невозможно добавить сообщение в очередь, т.к. протоколирование остановлено");
 
-            _queue.Enqueue(new QueueElement { IncomeTimeStamp = DateTime.Now, Message = message });
+            queue.Enqueue(new QueueElement { IncomeTimeStamp = DateTime.Now, Message = message });
         }
 
         private void MainLoop()
         {
-            while (!_stopped || _queue.Count > 0)
+            while (!_stopped || queue.Count > 0)
             {
                 CheckNewData();
             }
@@ -130,13 +130,13 @@ namespace Oleg_ivo.MES.Logging
         {
             //ClearExcessQueueElements();
 
-            if (_queue.Count > 0)
+            if (queue.Count > 0)
             {
-                Log.Debug("[{0}]\tНайдены данные для отправки", DateTime.Now);
+                Log.Debug("Найдены данные для отправки");
 
-                QueueElement queueElement = _queue.Dequeue();
+                QueueElement queueElement = queue.Dequeue();
                 //Log.Debug("Данные:\t{0}", GetStringBytes(queueElement));
-                Log.Debug("[{0}]\tОсталось элементов в очереди - {1}", DateTime.Now, _queue.Count);
+                Log.Debug("Осталось элементов в очереди - {0}", queue.Count);
                 
                 ProtocolMessage(queueElement.Message, queueElement.IncomeTimeStamp);
             }

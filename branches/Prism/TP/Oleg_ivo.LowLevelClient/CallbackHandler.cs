@@ -224,7 +224,7 @@ namespace Oleg_ivo.LowLevelClient
         {
             OnNeedProtocol(price);
 
-            Log.Debug("Получено извещение в : {0}. {1}:{2}", DateTime.Now, ticker, price);
+            Log.Debug("Получено извещение в : {0}:{1}", ticker, price);
         }
 
         #region PriceUpdate

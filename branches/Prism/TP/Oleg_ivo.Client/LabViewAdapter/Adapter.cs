@@ -70,13 +70,13 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
         {
             ClearExcessQueueElements();
 
-            if(_queue.Count > 0)
+            if(queue.Count > 0)
             {
-                Log.Debug("Найдены данные для отправки\t[{0}]", DateTime.Now);
+                Log.Debug("Найдены данные для отправки");
 
-                byte[] bytes = _queue.Dequeue();
+                byte[] bytes = queue.Dequeue();
                 Log.Debug("Данные:\t{0}", GetStringBytes(bytes));
-                Log.Debug("Осталось элементов в очереди - {0} {1}\t[{1}]", _queue.Count, DateTime.Now);
+                Log.Debug("Осталось элементов в очереди - {0}", queue.Count);
                 Send(socket, LabViewServerState.TF_NEW_DATA, bytes);
             }
         }
@@ -87,12 +87,12 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
         private void ClearExcessQueueElements()
         {
             int counter = 0;
-            while (_queue.Count > QueueMaxSize)
+            while (queue.Count > QueueMaxSize)
             {
                 if(counter==0) 
                     Log.Debug("В очереди обнаружены лишние элементы, тормозящие очередь. Они будут удалены:");
 
-                byte[] bytes = _queue.Dequeue();
+                byte[] bytes = queue.Dequeue();
                 Log.Debug("Данные №{1}:\t{0}", GetStringBytes(bytes), ++counter);
             }
             if(counter > 0)
@@ -112,13 +112,13 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
         {
             ClearExcessQueueElements();
 
-            Log.Debug("Необходимо добавить данные в очередь\t[{0}]\t", DateTime.Now);
+            Log.Debug("Необходимо добавить данные в очередь");
             Log.Debug("Данные:\t{0}", GetStringBytes(value));
-            _queue.Enqueue(value);
-            Log.Debug("Данные добавлены в очередь, элементов в очереди - {1}\t[{0}]", DateTime.Now, _queue.Count);
+            queue.Enqueue(value);
+            Log.Debug("Данные добавлены в очередь, элементов в очереди - {0}", queue.Count);
         }
 
-        private readonly Queue<byte[]> _queue = new Queue<byte[]>();
+        private readonly Queue<byte[]> queue = new Queue<byte[]>();
 
         /// <summary>
         /// Получить несколько нулевых байтов
@@ -145,7 +145,7 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
 
         private static void Send(Socket socket, LabViewServerState state, IEnumerable<byte> data)
         {
-            Log.Debug("Отправка данных в LabView...\t[{0}]", DateTime.Now);
+            Log.Debug("Отправка данных в LabView...");
 
             List<byte> bytes = new List<byte>(GetEmptyBytes(2));
             bytes[0] = (byte)state;//заполняем тип сообщения
@@ -156,7 +156,7 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
             }
             socket.Send(bytes.ToArray());
 
-            Log.Debug("Данные отправлены\t[{0}]", DateTime.Now);
+            Log.Debug("Данные отправлены");
         }
 
         private static bool ReceiveWHO_AM_I(Socket socket)
