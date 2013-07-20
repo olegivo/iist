@@ -92,7 +92,10 @@ namespace Oleg_ivo.PrismExtensions.Autofac.DependencyInjection
                 IComponentRegistration reg;
                 innerScope.ComponentRegistry.TryGetRegistration(new TypedService(serviceType), out reg);
 
-                return context.ResolveComponent(reg, parameters);
+                var component = context.ResolveComponent(reg, parameters);
+                if (context.IsRegistered<PropertyInjectionModule>())
+                    context.InjectAttributedProperties(component);
+                return component;
             }
         }
 

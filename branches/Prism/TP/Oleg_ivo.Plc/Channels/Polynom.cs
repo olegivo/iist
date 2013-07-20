@@ -47,7 +47,7 @@ namespace Oleg_ivo.Plc.Channels
             string xml;
 //            xml = sb.ToString();
             xml = polynom.PowerCoefficients.GetXml();
-            Console.WriteLine(xml);
+            //Console.WriteLine(xml);
             
             byte[] bytes = xml.Select(c => (byte)c).ToArray();
             //TODO: System.Compression?
@@ -64,7 +64,7 @@ namespace Oleg_ivo.Plc.Channels
             // создаем reader
             char[] chars = Convert.FromBase64String(xml).Select(b => (char)b).ToArray();
             string s = new string(chars);
-            Console.WriteLine(s);
+            //Console.WriteLine(s);
 
             StringReader reader = new StringReader(s);
 

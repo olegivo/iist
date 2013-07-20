@@ -1,5 +1,6 @@
 using System;
 using Autofac;
+using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
@@ -16,6 +17,7 @@ namespace Oleg_ivo.WAGO.Devices
     {
         private readonly IPhysicalChannelsFactory physicalChannelsFactory;
         private readonly WagoMetaFactory wagoMetaFactory;
+        private IDistributedMeasurementInformationSystem dmis;
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="WagoPlcFactory" />.
@@ -24,6 +26,7 @@ namespace Oleg_ivo.WAGO.Devices
         public WagoPlcFactory(IComponentContext context)
         {
             var componentContext = Enforce.ArgumentNotNull(context, "context");
+            dmis = componentContext.Resolve<IDistributedMeasurementInformationSystem>();
             physicalChannelsFactory = componentContext.Resolve<IPhysicalChannelsFactory>();
             wagoMetaFactory = componentContext.ResolveUnregistered<WagoMetaFactory>();
         }
@@ -51,6 +54,14 @@ namespace Oleg_ivo.WAGO.Devices
         protected override void InitPLC(PLC plc)
         {
             base.InitPLC(plc);
+            if (dmis.Settings.IsEmulationMode)
+            {
+                Console.WriteLine(
+                    "В настройках системы IsEmulationMode = true, поэтому инициализация объекта PLC и управления по Modbus не требуется. Объект {0} будет в состоянии Offline",
+                    plc);
+                return;
+            }
+
             WagoPlc wagoPlc = plc as WagoPlc;
             if (wagoPlc!=null)
             {

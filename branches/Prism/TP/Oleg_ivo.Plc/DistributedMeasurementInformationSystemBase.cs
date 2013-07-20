@@ -33,8 +33,6 @@ namespace Oleg_ivo.Plc
 
         #region constructors
 
-        #region Singleton
-
         ///<summary>
         /// Настройки распределённой системы
         ///</summary>
@@ -66,8 +64,6 @@ namespace Oleg_ivo.Plc
             plcManager = Context.Resolve<IPlcManager>();
             settings = CreateSettings();
         }
-
-        #endregion
 
         #endregion
 

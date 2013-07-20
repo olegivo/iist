@@ -32,7 +32,10 @@ namespace Oleg_ivo.WAGO
         /// <returns></returns>
         protected override IDistributedSystemSettings CreateSettings()
         {
-            return Context.ResolveUnregistered<DistributedSystemSettings>();
+            //TODO: загружать настройки из внешнего хранилища
+            var distributedSystemSettings = Context.ResolveUnregistered<DistributedSystemSettings>();
+            distributedSystemSettings.IsEmulationMode = true;
+            return distributedSystemSettings;
         }
 
         ///<summary>

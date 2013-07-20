@@ -80,15 +80,12 @@ namespace Oleg_ivo.Plc.FieldBus
         ///</summary>
         public override void InitializeModbusMaster()
         {
-#if EMULATIONMODE
-            Console.WriteLine("Инициализация управления по Modbus/TCP в режиме эмуляции не требуется");
-#else
+            Console.WriteLine("Инициализация управления по Modbus/TCP");
             CheckClient();
             if (_modbusAdapter == null)
             {
                 CreateModbusMaster();
             }
-#endif
         }
 
         private void CreateModbusMaster()

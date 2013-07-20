@@ -93,6 +93,7 @@
     <Compile Include="Autofac\Enforce.cs" />
     <Compile Include="Autofac\EnforceResources.Designer.cs" />
     <Compile Include="Autofac\ServiceConfigurationAction.cs" />
+    <Compile Include="Autofac\BaseAutofacModule.cs" />
     <Compile Include="Extensions\BaseExtensions.cs" />
     <Compile Include="Extensions\ComparerEx.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />

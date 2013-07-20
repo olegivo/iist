@@ -9,5 +9,10 @@ namespace Oleg_ivo.Plc
         /// ќпции загрузки полевых шин
         /// </summary>
         Dictionary<FieldBusType, FieldBusLoadOptions> FieldBusLoadOptions { get; }
+
+        /// <summary>
+        /// –ежим эмул€ции (обращени€ к реальным устройствам не будет)
+        /// </summary>
+        bool IsEmulationMode { get; set; }
     }
 }

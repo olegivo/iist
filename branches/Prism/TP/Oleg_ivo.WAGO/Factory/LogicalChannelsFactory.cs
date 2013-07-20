@@ -1,7 +1,9 @@
 using System;
+using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Devices.Modules;
 using Oleg_ivo.Plc.Factory;
+using Oleg_ivo.PrismExtensions.Autofac;
 
 namespace Oleg_ivo.WAGO.Factory
 {
@@ -10,6 +12,13 @@ namespace Oleg_ivo.WAGO.Factory
     ///</summary>
     public class LogicalChannelsFactory : ILogicalChannelsFactory
     {
+        private readonly IDistributedMeasurementInformationSystem dmis;
+
+        public LogicalChannelsFactory(IDistributedMeasurementInformationSystem dmis)
+        {
+            this.dmis = Enforce.ArgumentNotNull(dmis, "dmis");
+        }
+
         ///<summary>
         ///
         ///</summary>
@@ -34,23 +43,19 @@ namespace Oleg_ivo.WAGO.Factory
                 for (int i = 0; i < count; i++, shift+=1/*logicalChannelSize*/)
                 {
                     //todo:Здесь надо строить логический канал
+                    LogicalChannel logicalChannel;
                     if (ioModule.IsInput && ioModule.IsOutput)
-                    {
-                        channelCollection.Add(new InputOutputLogicalChannel(physicalChannel, shift, logicalChannelSize));
-                    }
+                        logicalChannel = new InputOutputLogicalChannel(physicalChannel, shift, logicalChannelSize);
                     else if (ioModule.IsInput)
-                    {
-                        channelCollection.Add(new InputLogicalChannel(physicalChannel, shift, logicalChannelSize));
-                    }
+                        logicalChannel = new InputLogicalChannel(physicalChannel, shift, logicalChannelSize);
                     else if (ioModule.IsOutput)
-                    {
-                        channelCollection.Add(new OutputLogicalChannel(physicalChannel, shift, logicalChannelSize));
-                    }
+                        logicalChannel = new OutputLogicalChannel(physicalChannel, shift, logicalChannelSize);
                     else
-                    {
-                        throw new ArgumentOutOfRangeException("physicalChannel", "Модуль ввода-вывода физического канала не является ни входным, ни выходным");
-                    }
-                }                
+                        throw new ArgumentOutOfRangeException("physicalChannel",
+                                                              "Модуль ввода-вывода физического канала не является ни входным, ни выходным");
+                    logicalChannel.IsEmulationMode = dmis.Settings.IsEmulationMode;
+                    channelCollection.Add(logicalChannel);
+                }
             }
 
             return channelCollection;
@@ -62,7 +67,7 @@ namespace Oleg_ivo.WAGO.Factory
         ///<returns></returns>
         public LogicalChannelCollection LoadLogicalChannels(PhysicalChannel physicalChannel)
         {
-            LogicalChannelsDAC logicalChannelsDAC = new LogicalChannelsDAC(this);
+            LogicalChannelsDAC logicalChannelsDAC = new LogicalChannelsDAC {LogicalChannelsFactory = this};
             return logicalChannelsDAC.GetChannels(physicalChannel);
         }
 
@@ -72,7 +77,7 @@ namespace Oleg_ivo.WAGO.Factory
         ///<returns></returns>
         public void SaveLogicalChannels(PhysicalChannel physicalChannel)
         {
-            LogicalChannelsDAC logicalChannelsDAC = new LogicalChannelsDAC(this);
+            LogicalChannelsDAC logicalChannelsDAC = new LogicalChannelsDAC {LogicalChannelsFactory = this};
             logicalChannelsDAC.SaveChannels(physicalChannel);
         }
     }

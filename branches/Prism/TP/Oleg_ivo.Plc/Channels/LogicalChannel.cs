@@ -122,6 +122,11 @@ namespace Oleg_ivo.Plc.Channels
         /// </summary>
         public GetLogicalChannelValueDelegate GetValueEmulationAltDelegate { get; set; }
 
+        /// <summary>
+        /// Режим эмуляции (обращения к реальным устройствам не будет)
+        /// </summary>
+        public bool IsEmulationMode { get; set; }
+
         #endregion
 
         #region constructors
@@ -174,11 +179,20 @@ namespace Oleg_ivo.Plc.Channels
         /// иначе из физического канала получается значение, 
         /// проводится прямое преобразование (если задан полином прямого преобразвания),
         /// затем производится проверка полученного значения по диапазону изменения величины.
+        /// Если установлено свойство <see cref="IsEmulationMode"/>=true, происходит эмуляция возвращения значения из канала.
+        /// При этом если задан делегат эмуляции альтернативного получения данных из канала, используется он,
+        /// иначе производится получения функции синуса от аргумента времени, 
+        /// периодом одна минута и диапазоном значений, равным диапазону изменения величины,
+        /// проводится прямое преобразование (если задан полином прямого преобразвания),
+        /// затем производится проверка полученного значения по диапазону изменения величины.
         ///</summary>
         ///<exception cref="ArgumentOutOfRangeException"></exception>
         ///<returns></returns>
         public double GetValue()
         {
+            if (IsEmulationMode) 
+                return GetValueEmulation();
+
             if (GetValueAltDelegate != null)
                 return GetValueAltDelegate();
 
@@ -230,23 +244,6 @@ namespace Oleg_ivo.Plc.Channels
         }
 
         /// <summary>
-        /// Получить новое значение из логического канала. Режим эмеляции.
-        /// </summary>
-        /// <returns>Если новое значение мало отличается от предыдущего, возвращается <see langword="null"/>. 
-        /// Иначе новое значение перезаписывает предыдущее</returns>
-        public double? GetNewValueEmulation()
-        {
-            double? value = GetValueEmulation();
-
-            if (previousValue == null || IsNewData(previousValue, value))
-                previousValue = value;
-            else
-                value = null;
-
-            return value;
-        }
-
-        /// <summary>
         /// Проверка попадения значения в диапазон
         /// </summary>
         /// <param name="value"></param>
@@ -281,7 +278,7 @@ namespace Oleg_ivo.Plc.Channels
         /// затем производится проверка полученного значения по диапазону изменения величины.
         /// </summary>
         /// <returns></returns>
-        public double GetValueEmulation()
+        private double GetValueEmulation()
         {
             if (GetValueEmulationAltDelegate != null)
                 return GetValueEmulationAltDelegate();

@@ -21,7 +21,7 @@ namespace Oleg_ivo.WAGO.Forms
         }
 
         [Dependency]
-        public IContainer UnityContainer { private get; set; }
+        public IComponentContext Context { private get; set; }
 
         private void ShowNewForm(object sender, EventArgs e)
         {
@@ -131,7 +131,7 @@ namespace Oleg_ivo.WAGO.Forms
         {
             //DistributedMeasurementInformationSystem.Instance.BuildSystemConfiguration();
             //DistributedMeasurementInformationSystem.Instance.ShowConfiguration();
-            ShowMDIChild(UnityContainer.Resolve<DeviceConfigurationForm>());
+            ShowMDIChild(Context.ResolveUnregistered<DeviceConfigurationForm>());
         }
 
         private void addressConfigToolStripMenuItem_Click(object sender, EventArgs e)

@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using Autofac;
+using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
 using Oleg_ivo.Tools.ConnectionProvider;
 using Oleg_ivo.Tools.ExceptionCatcher;
 using Oleg_ivo.WAGO.Autofac;
@@ -33,7 +34,8 @@ namespace Oleg_ivo.WAGO
             var builder = new ContainerBuilder();
             builder.RegisterModule<WagoAutofacModule>();
             var container = builder.Build();
-            var form = container.Resolve<MDIParentMain>();
+            var form = container.ResolveUnregistered<MDIParentMain>();
+            container.InjectAttributedProperties(form);
             Application.Run(form);
         }
 

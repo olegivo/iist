@@ -33,5 +33,10 @@ namespace Oleg_ivo.Plc
         {
             get { return _fieldBusLoadOptions; }
         }
+
+        /// <summary>
+        /// –ежим эмул€ции (обращени€ к реальным устройствам не будет)
+        /// </summary>
+        public bool IsEmulationMode { get; set; }
     }
 }

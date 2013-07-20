@@ -1,4 +1,5 @@
 using Autofac;
+using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus;
@@ -7,7 +8,7 @@ using Oleg_ivo.WAGO.Factory;
 
 namespace Oleg_ivo.WAGO.Autofac
 {
-    public class WagoAutofacModule : Module
+    public class WagoAutofacModule : BaseAutofacModule
     {
         protected override void Load(ContainerBuilder builder)
         {

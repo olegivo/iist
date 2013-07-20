@@ -205,6 +205,7 @@ namespace EmulationClient.Emulation
                     MaxValue = 1000
                 });
 
+                foreach (var logicalChannel in logicalChannels) logicalChannel.IsEmulationMode = true;
                 ControlManagementUnit.LogicalChannels = logicalChannels;
                 
             }

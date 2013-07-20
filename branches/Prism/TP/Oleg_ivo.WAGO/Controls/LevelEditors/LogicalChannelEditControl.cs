@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
 using Oleg_ivo.Plc.Channels;
+using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.WAGO.Factory;
 
 namespace Oleg_ivo.WAGO.Controls.LevelEditors
@@ -14,8 +15,10 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
     ///</summary>
     public partial class LogicalChannelEditControl : UserControl, IDbEditor
     {
+        private LogicalChannelsDAC logicalChannelsDac = new LogicalChannelsDAC();
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public LogicalChannelsDAC LogicalChannelsDac { get; set; }
+        public ILogicalChannelsFactory LogicalChannelsFactory { set { logicalChannelsDac.LogicalChannelsFactory = value; } }
 
         ///<summary>
         ///
@@ -23,7 +26,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
         public LogicalChannelEditControl()
         {
             InitializeComponent();
-            LogicalChannelsDac.DataSet = dtsChannelConfiguration1;
+            logicalChannelsDac.DataSet = dtsChannelConfiguration1;
         }
 
         ///<summary>
@@ -34,7 +37,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
             CurrencyManager cm = GetCurrencyManager();
             if (cm != null) cm.EndCurrentEdit();
 
-            LogicalChannelsDac.Save();
+            logicalChannelsDac.Save();
         }
 
         private CurrencyManager GetCurrencyManager()
@@ -61,7 +64,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
         
         private SqlDataAdapter DataAdapter()
         {
-            return (SqlDataAdapter)LogicalChannelsDac.DataAdapter;
+            return (SqlDataAdapter)logicalChannelsDac.DataAdapter;
         }
 
         ///<summary>
@@ -74,7 +77,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
             if (logicalChannel != null)
             {
                 IEnumerable<LogicalChannel> logicalChannels =
-                    LogicalChannelsDac.GetChannels(logicalChannel.PhysicalChannel).Where(
+                    logicalChannelsDac.GetChannels(logicalChannel.PhysicalChannel).Where(
                         LogicalChannel.GetEqualsPredicate(logicalChannel.Id, 
                                                             logicalChannel.PhysicalChannel.Id,
                                                             logicalChannel.AddressShift,
@@ -84,7 +87,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
                     case 0://данный канал - новый
                         //TODO: для редактирования нового несохранённого канала - заполнить им датасет
                         dtsChannelConfiguration1.LogicalChannel.Clear();
-                        LogicalChannelsDac.FillLogicalChannelsData(new []{logicalChannel},
+                        logicalChannelsDac.FillLogicalChannelsData(new []{logicalChannel},
                                                                     dtsChannelConfiguration1.LogicalChannel);
                         break;
                     case 1://найден сохранённый канал

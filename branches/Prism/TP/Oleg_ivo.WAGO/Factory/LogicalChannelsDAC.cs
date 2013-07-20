@@ -15,14 +15,14 @@ namespace Oleg_ivo.WAGO.Factory
     ///</summary>
     public partial class LogicalChannelsDAC : Component
     {
-        public ILogicalChannelsFactory LogicalChannelsFactory { get; private set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public ILogicalChannelsFactory LogicalChannelsFactory { get; set; }
 
         ///<summary>
         ///
         ///</summary>
-        public LogicalChannelsDAC(ILogicalChannelsFactory logicalChannelsFactory)
+        public LogicalChannelsDAC()
         {
-            LogicalChannelsFactory = logicalChannelsFactory;
             InitializeComponent();
         }
 

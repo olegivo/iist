@@ -84,9 +84,7 @@ namespace Oleg_ivo.Plc.FieldBus
         ///</summary>
         public override void InitializeModbusMaster()
         {
-#if EMULATIONMODE
-            Console.WriteLine("»нициализаци€ управлени€ по Modbus/RS-485 в режиме эмул€ции не требуетс€");
-#else
+            Console.WriteLine("»нициализаци€ управлени€ по Modbus/RS-485");
             try
             {
                 //открываем или переоткрываем порт
@@ -126,7 +124,6 @@ namespace Oleg_ivo.Plc.FieldBus
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-#endif
         }
 
         /// <summary>

@@ -7,8 +7,6 @@ using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
-using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
-using Oleg_ivo.WAGO.Factory;
 using Oleg_ivo.WAGO.Forms;
 
 namespace Oleg_ivo.WAGO.Controls.LevelEditors
@@ -32,8 +30,9 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
         {
             set
             {
-                logicalChannelEditControl1.LogicalChannelsDac = value.ResolveUnregistered<LogicalChannelsDAC>();//TODO: сделать так же, как и ниже
-                physicalChannelEditControl1.LogicalChannelsFactory = value.Resolve<ILogicalChannelsFactory>();
+                var logicalChannelsFactory = value.Resolve<ILogicalChannelsFactory>();
+                logicalChannelEditControl1.LogicalChannelsFactory = logicalChannelsFactory;
+                physicalChannelEditControl1.LogicalChannelsFactory = logicalChannelsFactory;
                 fieldBusNodeEditControl1.FieldBusNodeFactory = value.Resolve<IFieldBusNodeFactory>();
             }
         }

@@ -57,12 +57,7 @@ namespace Oleg_ivo.LowLevelClient
 
             try
             {
-#if EMULATIONMODE
-                newValue = LogicalChannel.GetNewValueEmulation();
-#else
                 newValue = LogicalChannel.GetNewValue();
-#endif
-
             }
             catch (ArgumentOutOfRangeException ex)
             {
