@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NLog;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.Factory;
@@ -14,8 +15,9 @@ namespace Oleg_ivo.WAGO.Devices
     ///</summary>
     public class WagoPlc : PLC, IWagoMetaContainer
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private readonly IPhysicalChannelsFactory physicalChannelsFactory;
-        private WagoMetaFactory wagoMetaFactory;
+        private readonly WagoMetaFactory wagoMetaFactory;
 
         ///<summary>
         ///
@@ -45,6 +47,7 @@ namespace Oleg_ivo.WAGO.Devices
         /// </summary>
         /// <param name="fieldBusNode"></param>
         /// <param name="physicalChannelsFactory"></param>
+        /// <param name="wagoMetaFactory"></param>
         public WagoPlc(FieldBusNode fieldBusNode, IPhysicalChannelsFactory physicalChannelsFactory, WagoMetaFactory wagoMetaFactory) : base(fieldBusNode)
         {
             this.physicalChannelsFactory = physicalChannelsFactory;
@@ -237,11 +240,11 @@ namespace Oleg_ivo.WAGO.Devices
             PhysicalChannelCollection physicalChannels = physicalChannelsFactory.BuildPhysicalChannels(this);
             if (physicalChannels==null)
             {
-                Console.WriteLine("Ќе построено ни одного физического канала");
+                Log.Debug("Ќе построено ни одного физического канала");
             }
             else
             {
-                Console.WriteLine("ѕостроено физических каналов: {0}", physicalChannels.Count);
+                Log.Debug("ѕостроено физических каналов: {0}", physicalChannels.Count);
             }
         }
 

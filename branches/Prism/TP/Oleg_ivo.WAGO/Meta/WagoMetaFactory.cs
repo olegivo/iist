@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using NLog;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus;
 using Oleg_ivo.WAGO.Devices;
@@ -11,6 +12,7 @@ namespace Oleg_ivo.WAGO.Meta
     ///</summary>
     public class WagoMetaFactory
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private DtsWago _dtsWago;
         private readonly ILogicalChannelsFactory logicalChannelsFactory;
 
@@ -98,7 +100,7 @@ namespace Oleg_ivo.WAGO.Meta
                     for (int i = 8; i < 15; i++) array[i - 8] = bitArray[i];
                     for (int i = 0; i < 8; i++)
                     {
-                        //System.Diagnostics.Debug.WriteLine(string.Format("{0}: {1}. {2}", i, array[i], (int)(Math.Pow(2, i))));
+                        //System.Diagnostics.Log.Debug(string.Format("{0}: {1}. {2}", i, array[i], (int)(Math.Pow(2, i))));
                         if (array[i]) size += (ushort) (Math.Pow(2, i));
                     }
 
@@ -139,7 +141,7 @@ namespace Oleg_ivo.WAGO.Meta
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    Log.Debug(ex.Message);
                 }
 
             }

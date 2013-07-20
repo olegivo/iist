@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
+using NLog;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Devices.Modules;
 using Oleg_ivo.Plc.FieldBus;
@@ -15,6 +16,8 @@ namespace Oleg_ivo.WAGO.Forms
     ///</summary>
     public partial class ChannelsControl : UserControl
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+
         ///<summary>
         ///
         ///</summary>
@@ -153,7 +156,7 @@ namespace Oleg_ivo.WAGO.Forms
             if (dataManager1.DataAdapter!=null)
                 dataManager1.Fill();
             else
-                Console.WriteLine("ChannelsControl: На уровне {0} не задан ActiveAdapter", ActiveLevel);
+                Log.Debug("ChannelsControl: На уровне {0} не задан ActiveAdapter", ActiveLevel);
         }
 
         private void Save()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using NLog;
 
 namespace Oleg_ivo.HighLevelClient.LabViewAdapter
 {
@@ -11,6 +12,7 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
     /// </summary>
     public class ThreadedServer
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private Socket _serverSocket;
         private readonly int _port;
 
@@ -119,11 +121,11 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
             }
             catch (SocketException exc)
             {
-                Console.WriteLine("Socket exception: " + exc.SocketErrorCode);
+                Log.Debug("Socket exception: " + exc.SocketErrorCode);
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Exception: " + exc);
+                Log.Debug("Exception: " + exc);
             }
             finally
             {

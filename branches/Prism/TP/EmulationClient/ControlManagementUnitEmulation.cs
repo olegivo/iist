@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using DMS.Common.Events;
 using DMS.Common.Messages;
 using NLog;
 using Oleg_ivo.LowLevelClient;
@@ -16,7 +15,7 @@ namespace EmulationClient
     /// </summary>
     public class ControlManagementUnitEmulation : ControlManagementUnit, INotifyPropertyChanged
     {
-        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ControlManagementUnitEmulation" />.
@@ -30,12 +29,6 @@ namespace EmulationClient
             Proxy.UnregisterCompleted += Proxy_UnregisterCompleted;
             Proxy.ChannelRegisterCompleted += Proxy_ChannelRegisterCompleted;
             Proxy.ChannelUnRegisterCompleted += Proxy_ChannelUnRegisterCompleted;
-        }
-
-        public event EventHandler<DataEventArgs> HasWriteChannel
-        {
-            add { CallbackHandler.HasWriteChannel += value; }
-            remove { CallbackHandler.HasWriteChannel -= value; }
         }
 
         void Proxy_ChannelUnRegisterCompleted(object sender, AsyncCompletedEventArgs e)
@@ -63,7 +56,7 @@ namespace EmulationClient
                 if (registeredChannelsCount != value)
                 {
                     registeredChannelsCount = value;
-                    //Console.WriteLine("RegisteredChannelsCount = {0}", RegisteredChannelsCount);
+                    //Log.Debug("RegisteredChannelsCount = {0}", RegisteredChannelsCount);
                     CanUnregisterChannels = registeredChannelsCount > 0;
                 }
             }
@@ -110,7 +103,7 @@ namespace EmulationClient
                     dataMode = DataMode.Read | DataMode.Write;
                 else
                 {
-                    throw new ArgumentOutOfRangeException("Невозможно определить режим данных для данного типа канала");
+                    throw new ArgumentOutOfRangeException("Невозможно определить режим данных для данного типа канала" + channel.GetType());
                 }
 
                 Proxy.ChannelRegisterAsync(
@@ -134,7 +127,7 @@ namespace EmulationClient
 
         void ControlManagementUnitEmulation_NeedProtocol(object sender, EventArgs e)
         {
-            _log.Debug("{0}", sender);
+            Log.Debug("{0}", sender);
         }
 
         private IEnumerable<LogicalChannel> _logicalChannels;

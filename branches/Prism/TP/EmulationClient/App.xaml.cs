@@ -34,17 +34,17 @@ namespace EmulationClient
             //gasConcentration.Temperature = temperatureValue;
             //gasConcentration.Refresh();
             //concentrationValue = gasConcentration.GetOutputValue();
-            //Console.WriteLine("outputValue = {0}", concentrationValue);
+            //Log.Debug("outputValue = {0}", concentrationValue);
 
             //Thread.Sleep(2000);
             //gasConcentration.Refresh();
             //concentrationValue = gasConcentration.GetOutputValue();
-            //Console.WriteLine("outputValue = {0}", concentrationValue);
+            //Log.Debug("outputValue = {0}", concentrationValue);
 
             //Thread.Sleep(2000);
             //gasConcentration.Refresh();
             //concentrationValue = gasConcentration.GetOutputValue();
-            //Console.WriteLine("outputValue = {0}", concentrationValue);
+            //Log.Debug("outputValue = {0}", concentrationValue);
         }
 
         private string GetRegName()
@@ -99,7 +99,7 @@ namespace EmulationClient
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 

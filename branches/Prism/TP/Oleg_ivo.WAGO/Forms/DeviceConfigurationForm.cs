@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using Autofac;
+using NLog;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
@@ -15,6 +16,7 @@ namespace Oleg_ivo.WAGO.Forms
     ///</summary>
     public partial class DeviceConfigurationForm : Form
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private IComponentContext context;
 
         ///<summary>
@@ -116,7 +118,7 @@ namespace Oleg_ivo.WAGO.Forms
             {
                 if (_fieldBusNode.PhysicalChannels == null)
                 {
-                    Console.WriteLine("{0}: надо построить конфигурацию модулей ввода-вывода", _fieldBusNode);
+                    Log.Debug("{0}: надо построить конфигурацию модулей ввода-вывода", _fieldBusNode);
                     return;
                     //throw new NotImplementedException("надо построить конфигурацию модулей ввода-вывода");
                 }

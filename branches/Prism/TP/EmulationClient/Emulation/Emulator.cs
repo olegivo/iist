@@ -31,14 +31,14 @@ namespace EmulationClient.Emulation
             SetManagedValue(e.Message.LogicalChannelId, e.Message.Value);
         }
 
-        private Temperature T6;
-        private Temperature T7;
-        private Speed Speed;
-        private GasConcentration COConcentration;
-        private GasConcentration O2Concentration;
-        private GasConcentration SО2Concentration;
-        private GasConcentration NOConcentration;
-        private GasConcentration NO2Concentration;
+        private readonly Temperature T6;
+        private readonly Temperature T7;
+        private readonly Speed Speed;
+        private readonly GasConcentration COConcentration;
+        private readonly GasConcentration O2Concentration;
+        private readonly GasConcentration SО2Concentration;
+        private readonly GasConcentration NOConcentration;
+        private readonly GasConcentration NO2Concentration;
 
         /// <summary>
         /// 
@@ -48,13 +48,13 @@ namespace EmulationClient.Emulation
             T6 = new Temperature
                                  {
                                      GetTemperature =
-                                     (passedSeconds) =>
+                                     passedSeconds =>
                                      Math.Abs((Math.Sin(0.01 * passedSeconds)) * 100 + 130)
                                  };
             T7 = new Temperature
                                 {
                                     GetTemperature =
-                                    (passedSeconds) =>
+                                    passedSeconds =>
                                     Math.Abs((Math.Sin(0.01 * passedSeconds)) * 100 + 150)
                                 };
 
@@ -120,7 +120,7 @@ namespace EmulationClient.Emulation
         {
             if (ControlManagementUnit != null)
             {
-                List<LogicalChannel> logicalChannels = new List<LogicalChannel>();
+                var logicalChannels = new List<LogicalChannel>();
                 //контролируемые параметры
                 logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
                 {

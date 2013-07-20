@@ -15,7 +15,7 @@ namespace Oleg_ivo.MES.Logging
     ///</summary>
     public class InternalMessageLogger
     {
-        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         #region Singleton
 
@@ -87,17 +87,17 @@ namespace Oleg_ivo.MES.Logging
             // в режиме остановки обработки оставшейся очереди не ждём, когда очередь обработается, а очищаем её принудительно
             if (forceInterruptProcessing)
             {
-                log.Debug("[{0}]\tЭлементов в очереди - {1}", DateTime.Now, _queue.Count);
+                Log.Debug("[{0}]\tЭлементов в очереди - {1}", DateTime.Now, _queue.Count);
                 _queue.Clear();
-                log.Debug("[{0}]\tОчередь принудительно очищена", DateTime.Now);
+                Log.Debug("[{0}]\tОчередь принудительно очищена", DateTime.Now);
             }
             else
             {
-                log.Debug("[{0}]\tОжидание обработки оставшейся очереди...", DateTime.Now);
+                Log.Debug("[{0}]\tОжидание обработки оставшейся очереди...", DateTime.Now);
                 while (_queue.Count > 0)
                 {
                 }
-                log.Debug("[{0}]\tОчередь обработана", DateTime.Now);
+                Log.Debug("[{0}]\tОчередь обработана", DateTime.Now);
             }
         }
 
@@ -132,11 +132,11 @@ namespace Oleg_ivo.MES.Logging
 
             if (_queue.Count > 0)
             {
-                log.Debug("[{0}]\tНайдены данные для отправки", DateTime.Now);
+                Log.Debug("[{0}]\tНайдены данные для отправки", DateTime.Now);
 
                 QueueElement queueElement = _queue.Dequeue();
-                //Console.WriteLine("Данные:\t{0}", GetStringBytes(queueElement));
-                log.Debug("[{0}]\tОсталось элементов в очереди - {1}", DateTime.Now, _queue.Count);
+                //Log.Debug("Данные:\t{0}", GetStringBytes(queueElement));
+                Log.Debug("[{0}]\tОсталось элементов в очереди - {1}", DateTime.Now, _queue.Count);
                 
                 ProtocolMessage(queueElement.Message, queueElement.IncomeTimeStamp);
             }
@@ -160,11 +160,10 @@ namespace Oleg_ivo.MES.Logging
         /// <param name="incomeTimeStamp"></param>
         private void ProtocolMessage(InternalMessage message, DateTime incomeTimeStamp)
         {
-            IDbCommand command;
-            if (message is InternalLogicalChannelDataMessage)
-                command = PrepareDataMessageCommand((InternalLogicalChannelDataMessage) message, incomeTimeStamp);
-            else
+            var dataMessage = message as InternalLogicalChannelDataMessage;
+            if (dataMessage == null)
                 throw new ArgumentOutOfRangeException("Неожиданный тип сообщения" + message.GetType());
+            var command = PrepareDataMessageCommand(dataMessage, incomeTimeStamp);
 
             if(command!=null)
                 try
@@ -200,7 +199,7 @@ namespace Oleg_ivo.MES.Logging
                                                 new SqlParameter("@LogicalChannelId", message.LogicalChannelId),
                                                 new SqlParameter("@TimeStamp", message.TimeStamp),
                                                 new SqlParameter("@QueueTimeStamp", incomeTimeStamp),
-                                                new SqlParameter("@DataValue", message.Value),
+                                                new SqlParameter("@DataValue", message.Value)
                                             });
 
             return command;

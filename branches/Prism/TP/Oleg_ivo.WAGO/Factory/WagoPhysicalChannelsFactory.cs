@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using NLog;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.Factory;
@@ -17,6 +18,7 @@ namespace Oleg_ivo.WAGO.Factory
     ///</summary>
     public class WagoPhysicalChannelsFactory : IPhysicalChannelsFactory
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private readonly ILogicalChannelsFactory logicalChannelsFactory;
 
         public WagoPhysicalChannelsFactory(ILogicalChannelsFactory logicalChannelsFactory)
@@ -43,7 +45,7 @@ namespace Oleg_ivo.WAGO.Factory
 
                 //Получение каналов из текущей конфигурации
                 if (!plc.FieldBusNode.IsOnline)
-                    Console.WriteLine("Узел {0}. Невозможно начать построение физических каналов отключенного узла", plc.FieldBusNode);
+                    Log.Debug("Узел {0}. Невозможно начать построение физических каналов отключенного узла", plc.FieldBusNode);
 
                 PhysicalChannelCollection currentPhysicalChannels = physicalChannelsLevel.ComputeCurrentConfiguration && plc.FieldBusNode.IsOnline
                                                                         ? GetCurrentPhysicalChannels(wagoPlc)
@@ -66,7 +68,7 @@ namespace Oleg_ivo.WAGO.Factory
                         int count = foundChannels.Count();
                         if(count!=1)
                         {
-                            Console.WriteLine(
+                            Log.Debug(
                                 "Поиск дубликатов каналов пока не реализован. Найдено загруженных каналов, похожих на текущий: {0}. Текущий канал - {1}",
                                 count, currentPhysicalChannel);
                         }
@@ -164,7 +166,7 @@ namespace Oleg_ivo.WAGO.Factory
             }
             else
             {
-                Console.WriteLine("Невозможно получить описание подключенных модулей ввода-вывода");
+                Log.Debug("Невозможно получить описание подключенных модулей ввода-вывода");
             }
             return currentPhysicalChannels;
         }

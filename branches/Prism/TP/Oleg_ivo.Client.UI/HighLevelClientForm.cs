@@ -1,7 +1,6 @@
 #define SECURITY
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -51,7 +50,7 @@ namespace Oleg_ivo.HighLevelClient.UI
 
             //режим клиента для LabView BEGIN
 #if LABVIEW
-            Console.WriteLine("Инициализация LabViewClientProvider...");
+            Log.Debug("Инициализация LabViewClientProvider...");
 // ReSharper disable RedundantAssignment
             LabViewClientProvider.BindingType bindingType = LabViewClientProvider.BindingType.Unknown;
 // ReSharper restore RedundantAssignment

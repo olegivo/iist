@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
+using NLog;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.WAGO.Factory;
@@ -15,7 +16,8 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
     ///</summary>
     public partial class LogicalChannelEditControl : UserControl, IDbEditor
     {
-        private LogicalChannelsDAC logicalChannelsDac = new LogicalChannelsDAC();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+        private readonly LogicalChannelsDAC logicalChannelsDac = new LogicalChannelsDAC();
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ILogicalChannelsFactory LogicalChannelsFactory { set { logicalChannelsDac.LogicalChannelsFactory = value; } }
@@ -92,7 +94,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
                         break;
                     case 1://найден сохранённый канал
                         //TODO: для редактирования сохранённого канала - заполнить им датасет
-                        Console.WriteLine("LogicalChannel из дерева: не обработано");
+                        Log.Debug("LogicalChannel из дерева: не обработано");
                         //TODO: LogicalChannel из дерева: не обработано
                         break;
                     default://найдено несоответствие

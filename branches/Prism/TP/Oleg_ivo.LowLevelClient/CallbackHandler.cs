@@ -6,6 +6,7 @@ using DMS.Common.Messages;
 using Oleg_ivo.CMU.ServiceReferenceIIST;
 #else
 #if BINDING_TCP
+using NLog;
 using Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp;
 #else
 
@@ -21,6 +22,7 @@ namespace Oleg_ivo.LowLevelClient
     [CallbackBehavior(IncludeExceptionDetailInFaults = true)]
     public class CallbackHandler : ILowLevelMessageExchangeSystemCallback// IClientCallback
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         private void OnNeedProtocol(object d)
         {
@@ -222,7 +224,7 @@ namespace Oleg_ivo.LowLevelClient
         {
             OnNeedProtocol(price);
 
-            Console.WriteLine("Получено извещение в : {0}. {1}:{2}", DateTime.Now, ticker, price);
+            Log.Debug("Получено извещение в : {0}. {1}:{2}", DateTime.Now, ticker, price);
         }
 
         #region PriceUpdate

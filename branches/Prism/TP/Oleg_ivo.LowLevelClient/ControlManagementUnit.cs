@@ -19,7 +19,7 @@ namespace Oleg_ivo.LowLevelClient
     ///</summary>
     public class ControlManagementUnit
     {
-        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ControlManagementUnit" />.
@@ -170,17 +170,12 @@ namespace Oleg_ivo.LowLevelClient
             }
         }
 
-        private GetRegNameDelegate getRegName;
         private CallbackHandler callbackHandler;
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual GetRegNameDelegate GetRegName
-        {
-            protected get { return getRegName; }
-            set { getRegName = value; }
-        }
+        public virtual GetRegNameDelegate GetRegName { protected get; set; }
 
         void CallbackHandler_ChannelSubscribed(object sender, ChannelSubscribeEventArgs e)
         {
@@ -190,7 +185,7 @@ namespace Oleg_ivo.LowLevelClient
 
             if (channel == null)
             {
-                log.Warn("Не удалось найти канал {0} для осуществления подписки. Канал подписан, но с ним ничего не будет происходить");
+                Log.Warn("Не удалось найти канал {0} для осуществления подписки. Канал подписан, но с ним ничего не будет происходить");
                 return;
             }
 
@@ -219,7 +214,7 @@ namespace Oleg_ivo.LowLevelClient
 
             if (channel == null)
             {
-                log.Warn("Не удалось найти канал {0} для осуществления отписки. Тем не менее, канал отписан.");
+                Log.Warn("Не удалось найти канал {0} для осуществления отписки. Тем не менее, канал отписан.");
                 return;
             }
 
@@ -350,9 +345,7 @@ namespace Oleg_ivo.LowLevelClient
             if (channel.PollPeriod == TimeSpan.Zero)
                 channel.PollPeriod = TimeSpan.FromMilliseconds(1000);
 
-            string s;
-
-            s = channel.PollPeriod.TotalMilliseconds.ToString();
+            string s = channel.PollPeriod.TotalMilliseconds.ToString();
 
             /*
                         s = InputBox.Show("Укажите интервал опроса канала (в миллисекундах)",

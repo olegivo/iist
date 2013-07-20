@@ -1,6 +1,7 @@
 using System;
 using System.IO.Ports;
 using Modbus.Device;
+using NLog;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.Ports;
 
@@ -11,6 +12,7 @@ namespace Oleg_ivo.Plc.FieldBus
     ///</summary>
     public class ModbusSerialAccessor : ModbusAccessor
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         #region fields
         private readonly SerialPort _serialPort;
@@ -75,7 +77,7 @@ namespace Oleg_ivo.Plc.FieldBus
         ///<returns></returns>
         public override bool CheckOnline()
         {
-            Console.WriteLine("Тестирование подключения к {0}...", _serialPort);
+            Log.Debug("Тестирование подключения к {0}...", _serialPort);
             return _serialPort != null && _serialPort.IsOpen;
         }
 
@@ -84,7 +86,7 @@ namespace Oleg_ivo.Plc.FieldBus
         ///</summary>
         public override void InitializeModbusMaster()
         {
-            Console.WriteLine("Инициализация управления по Modbus/RS-485");
+            Log.Debug("Инициализация управления по Modbus/RS-485");
             try
             {
                 //открываем или переоткрываем порт
@@ -98,12 +100,12 @@ namespace Oleg_ivo.Plc.FieldBus
             }
             catch (System.IO.IOException ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
+                Log.Debug(ex.Message);
                 return;
             }
             catch (UnauthorizedAccessException ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
+                Log.Debug(ex.Message);
                 return;
             }
             catch (Exception ex)
@@ -114,11 +116,11 @@ namespace Oleg_ivo.Plc.FieldBus
             switch (Mode)
             {
                 case AsciiRtuMode.ASCII:
-                    Console.WriteLine("Инициализация управления по Modbus в ASCII-режиме...");
+                    Log.Debug("Инициализация управления по Modbus в ASCII-режиме...");
                     ModbusAdapter = new NModbusAdapter(ModbusSerialMaster.CreateAscii(_serialPort));
                     break;
                 case AsciiRtuMode.RTU:
-                    Console.WriteLine("Инициализация управления по Modbus в RTU-режиме...");
+                    Log.Debug("Инициализация управления по Modbus в RTU-режиме...");
                     ModbusAdapter = new NModbusAdapter(ModbusSerialMaster.CreateRtu(_serialPort));
                     break;
                 default:

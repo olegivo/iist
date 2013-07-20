@@ -7,11 +7,14 @@ using FtdAdapter;
 using Modbus.Data;
 using Modbus.Device;
 using Modbus.Utility;
+using NLog;
 
 namespace Oleg_ivo.WAGO
 {
     public class Class1
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+
         ///<summary>
         /// Simple Modbus serial RTU master write holding registers example.
         ///</summary>
@@ -63,7 +66,7 @@ namespace Oleg_ivo.WAGO
                 ushort[] registers = master.ReadHoldingRegisters(slaveID, startAddress, numRegisters);
 
                 for (int i = 0; i < numRegisters; i++)
-                    Console.WriteLine("Register {0}={1}", startAddress + i, registers[i]);
+                    Log.Debug("Register {0}={1}", startAddress + i, registers[i]);
             }
 
             // output: 
@@ -141,7 +144,7 @@ namespace Oleg_ivo.WAGO
                 bool[] inputs = master.ReadInputs(startAddress, numInputs);
 
                 for (int i = 0; i < numInputs; i++)
-                    Console.WriteLine("Input {0}={1}", startAddress + i, inputs[i] ? 1 : 0);
+                    Log.Debug("Input {0}={1}", startAddress + i, inputs[i] ? 1 : 0);
             }
 
             // output: 
@@ -316,7 +319,7 @@ namespace Oleg_ivo.WAGO
             ushort[] inputs = master.ReadInputRegisters(startAddress, numInputs);
 
             for (int i = 0; i < numInputs; i++)
-                Console.WriteLine("Register {0}={1}", startAddress + i, inputs[i]);
+                Log.Debug("Register {0}={1}", startAddress + i, inputs[i]);
 
             // clean up
             masterTcpClient.Close();
@@ -364,7 +367,7 @@ namespace Oleg_ivo.WAGO
                 ushort[] registers = master.ReadHoldingRegisters(slaveID, startAddress, numRegisters);
 
                 for (int i = 0; i < numRegisters; i++)
-                    Console.WriteLine("Register {0}={1}", startAddress + i, registers[i]);
+                    Log.Debug("Register {0}={1}", startAddress + i, registers[i]);
             }
 
             // output

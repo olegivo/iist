@@ -1,8 +1,8 @@
 using System;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using Modbus.Device;
+using NLog;
 
 namespace Oleg_ivo.Plc.FieldBus
 {
@@ -11,6 +11,7 @@ namespace Oleg_ivo.Plc.FieldBus
     ///</summary>
     public class ModbusTcpIpAccessor : ModbusIpAccessor
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         ///<summary>
         ///
@@ -48,8 +49,8 @@ namespace Oleg_ivo.Plc.FieldBus
 
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);
-                        Debug.WriteLine(string.Format("Невозможно подключиться к TCP-IP каналу {0}:{1}", IPAddress, Port));
+                        Log.Debug(ex.Message);
+                        Log.Debug("Невозможно подключиться к TCP-IP каналу {0}:{1}", IPAddress, Port);
                     }
 
                 return _client;
@@ -80,7 +81,7 @@ namespace Oleg_ivo.Plc.FieldBus
         ///</summary>
         public override void InitializeModbusMaster()
         {
-            Console.WriteLine("Инициализация управления по Modbus/TCP");
+            Log.Debug("Инициализация управления по Modbus/TCP");
             CheckClient();
             if (_modbusAdapter == null)
             {
@@ -95,13 +96,13 @@ namespace Oleg_ivo.Plc.FieldBus
                     _modbusAdapter = new WagoTcpModbusAdapter(IPAddress.ToString(), (ushort)Port, true, 1000);
 #else
             {
-                Debug.WriteLine("Инициализация управления по Modbus...");
+                Log.Debug("Инициализация управления по Modbus...");
                 ModbusIpMaster modbusIpMaster = GetModbusMaster();
                 _modbusAdapter = new NModbusAdapter(modbusIpMaster);
             }
 #endif
             else
-                Console.WriteLine("Не задан IPAddress");
+                Log.Debug("Не задан IPAddress");
         }
 
         /// <summary>
@@ -109,11 +110,11 @@ namespace Oleg_ivo.Plc.FieldBus
         /// </summary>
         private void CheckClient()
         {
-            Console.WriteLine("Проверка подключенности TCP-клиента");
+            Log.Debug("Проверка подключенности TCP-клиента");
             var pollFailed = (Client.Client.Poll(10, SelectMode.SelectRead) && (Client.Available == 0));
             if (!Client.Connected || pollFailed)
             {
-                Console.WriteLine("TCP-клиент не подключен, попытка подключения");
+                Log.Debug("TCP-клиент не подключен, попытка подключения");
                 //TcpClient t = Client;
                 //t.BeginConnect(IPAddress, Port, ConnectCallback, t);
                 try
@@ -124,7 +125,7 @@ namespace Oleg_ivo.Plc.FieldBus
                 }
                 catch (InvalidOperationException ex)
                 {
-                    Console.WriteLine("Невозможно выполнить операцию подключения к TCP-клиенту. Попытка пересоздать TCP-клиент", ex);
+                    Log.Debug("Невозможно выполнить операцию подключения к TCP-клиенту. Попытка пересоздать TCP-клиент", ex);
                     //сброс полей для их повторной инициализации
                     //_client.Client.Shutdown();
                     _client.Client.Close();
@@ -140,11 +141,11 @@ namespace Oleg_ivo.Plc.FieldBus
             }
             else
             {
-                Console.WriteLine("TCP-клиент подключен");
+                Log.Debug("TCP-клиент подключен");
             }
         }
 
-        ModbusIpMaster modbusMaster = null;
+        ModbusIpMaster modbusMaster;
         private ModbusIpMaster GetModbusMaster()
         {
             //throw new NotImplementedException("InitializeModbusMaster");
@@ -154,14 +155,14 @@ namespace Oleg_ivo.Plc.FieldBus
             {
                 if (modbusMaster == null)
                 {
-                    Debug.WriteLine("Инициализация управления по Modbus...");
+                    Log.Debug("Инициализация управления по Modbus...");
                     modbusMaster = ModbusIpMaster.CreateIp(Client);
                 }
 
             }
             else
             {
-                Console.WriteLine("Client is null");
+                Log.Debug("Client is null");
             }
 
             return modbusMaster;
@@ -175,15 +176,15 @@ namespace Oleg_ivo.Plc.FieldBus
         {
             if (_modbusAdapter == null)
             {
-                Console.WriteLine("Не инициализирован _modbusAdapter");
+                Log.Debug("Не инициализирован _modbusAdapter");
                 return false;
             }
             if (_client == null)
             {
-                Console.WriteLine("Не инициализирован _client");
+                Log.Debug("Не инициализирован _client");
                 return false;
             }
-            Console.WriteLine("Тестирование подключения к {0}...", _client);
+            Log.Debug("Тестирование подключения к {0}...", _client);
             bool[] coils = _modbusAdapter.ReadCoils(0, 0, 1);
             return coils != null && coils.Length > 0;
         }

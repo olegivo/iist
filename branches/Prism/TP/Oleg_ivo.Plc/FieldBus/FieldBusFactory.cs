@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO.Ports;
 using System.Net;
 using Microsoft.VisualBasic.Devices;
+using NLog;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
@@ -17,6 +17,8 @@ namespace Oleg_ivo.Plc.FieldBus
     ///</summary>
     public class FieldBusFactory : IFieldBusFactory
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// »нициализирует новый экземпл€р класса <see cref="FieldBusFactory" />.
         /// </summary>
@@ -77,7 +79,7 @@ namespace Oleg_ivo.Plc.FieldBus
                         }
                         catch (Exception ex)
                         {
-                            Debug.WriteLine(ex.ToString());
+                            Log.Debug(ex.ToString());
                         }
                         return portNames.ToArray();
                     }
@@ -175,7 +177,7 @@ namespace Oleg_ivo.Plc.FieldBus
         ///<returns></returns>
         private object[] GetAvailableSerialFieldBusAddresses(bool onlyCustomized, bool skipOffline)
         {
-            List<object> list = new List<object>();
+            var list = new List<object>();
             return list.ToArray();
         }
 
@@ -247,16 +249,19 @@ namespace Oleg_ivo.Plc.FieldBus
             {
                 case FieldBusType.RS232:
                 case FieldBusType.RS485:
-                    SerialPortParameters serialPortParameters = new SerialPortParameters();
-                    serialPortParameters.Mode = AsciiRtuMode.RTU;
-                    serialPortParameters.MaxAddress = 2;
-                    serialPortParameters.Port = port;
+                    var serialPortParameters = new SerialPortParameters
+                        {
+                            Mode = AsciiRtuMode.RTU,
+                            MaxAddress = 2,
+                            Port = port
+                        };
                     retValue = serialPortParameters;
                     break;
                 case FieldBusType.Ethernet:
-                    TcpFieldBusPortParameters tcpFieldBusPortParameters = new TcpFieldBusPortParameters();
-                    FieldBusNodeIpAddress ipAddress = port as FieldBusNodeIpAddress;
-                    if(ipAddress!=null) tcpFieldBusPortParameters.IpAddress=new IPAddress(ipAddress.IpSlaveAddress);
+                    var tcpFieldBusPortParameters = new TcpFieldBusPortParameters();
+                    var ipAddress = port as FieldBusNodeIpAddress;
+                    if (ipAddress != null)
+                        tcpFieldBusPortParameters.IpAddress = new IPAddress(ipAddress.IpSlaveAddress);
                     retValue = tcpFieldBusPortParameters;
                     break;
                 default:

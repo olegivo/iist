@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using NLog;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
@@ -13,6 +13,8 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
     ///</summary>
     public abstract class FieldBusNodeFactory : IFieldBusNodeFactory
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+
         ///<summary>
         ///
         ///</summary>
@@ -155,7 +157,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         ///<returns></returns>
         public FieldBusNodeCollection FindNodes(FieldBusManager fieldBusManager, ModbusAccessor modbusAccessor)
         {
-            Debug.WriteLine("Поиск устройств, подключенные к порту " + modbusAccessor.PortName);
+            Log.Debug("Поиск устройств, подключенные к порту " + modbusAccessor.PortName);
             FieldBusNodeCollection nodes = new FieldBusNodeCollection();
 
             // установка режима минимального ожидания
@@ -182,7 +184,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
 
                     if (TryGetReply(fieldBusNode))
                     {
-                        Debug.WriteLine("\nУстройство по адресу {0} ответило на все запросы.\n",
+                        Log.Debug("\nУстройство по адресу {0} ответило на все запросы.\n",
                                         fieldBusNodeAddress.SlaveAddress);
                         nodes.Add(fieldBusNode);
                         //PLC plc =
@@ -194,7 +196,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
                     }
                     else
                     {
-                        Debug.WriteLine("\nУстройство по адресу {0} не ответило на все запросы.\n",
+                        Log.Debug("\nУстройство по адресу {0} не ответило на все запросы.\n",
                                         fieldBusNodeAddress.SlaveAddress);
                     }
                 }
@@ -227,13 +229,13 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
 
             if (isNodeActive)
             {
-                Debug.WriteLine("создаём активный узел полевой шины...");
+                Log.Debug("создаём активный узел полевой шины...");
                 IFieldBusAccessor fieldBusAccessor = fieldBusFactory.CreateFieldbusAccessor(fieldBusManager.FieldBusType, fieldBusNodeAddress);
                 fieldBusNode = new ActiveFieldBusNode(fieldBusManager, fieldBusAccessor, fieldBusNodeAddress);
             }
             else
             {
-                Debug.WriteLine("создаём узел полевой шины...");
+                Log.Debug("создаём узел полевой шины...");
                 fieldBusNode = new FieldBusNode(fieldBusManager, fieldBusNodeAddress);
             }
             return fieldBusNode;

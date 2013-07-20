@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using NLog;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
@@ -12,6 +13,8 @@ namespace Oleg_ivo.WAGO.Factory
     ///</summary>
     public class WagoFieldBusNodeFactory : FieldBusNodeFactory
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// »нициализирует новый экземпл€р класса <see cref="WagoFieldBusNodeFactory" />.
         /// </summary>
@@ -136,7 +139,7 @@ namespace Oleg_ivo.WAGO.Factory
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log.Debug(ex.Message);
             }
             return false;
         }
@@ -155,7 +158,7 @@ namespace Oleg_ivo.WAGO.Factory
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log.Debug(ex.Message);
             }
             return false;
         }
@@ -174,7 +177,7 @@ namespace Oleg_ivo.WAGO.Factory
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log.Debug(ex.Message);
             }
             return false;
         }
@@ -193,7 +196,7 @@ namespace Oleg_ivo.WAGO.Factory
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log.Debug(ex.Message);
             }
             return false;
         }
@@ -212,7 +215,7 @@ namespace Oleg_ivo.WAGO.Factory
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log.Debug(ex.Message);
             }
             return false;
         }
@@ -232,7 +235,7 @@ namespace Oleg_ivo.WAGO.Factory
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log.Debug(ex.Message);
             }
             return false;
         }
@@ -252,7 +255,7 @@ namespace Oleg_ivo.WAGO.Factory
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log.Debug(ex.Message);
             }
             return false;
         }
@@ -272,7 +275,7 @@ namespace Oleg_ivo.WAGO.Factory
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log.Debug(ex.Message);
             }
             return false;
         }
@@ -292,7 +295,7 @@ namespace Oleg_ivo.WAGO.Factory
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log.Debug(ex.Message);
             }
             return false;
         }
@@ -450,7 +453,7 @@ namespace Oleg_ivo.WAGO.Factory
                                                 }
                                                 catch (Exception ex)
                                                 {
-                                                    Debug.WriteLine(ex.Message);
+                                                    Log.Debug(ex.Message);
                                                 }
 
                                                 const ushort start = 0x2030;
@@ -469,7 +472,7 @@ namespace Oleg_ivo.WAGO.Factory
                                                     }
                                                     catch (Exception ex)
                                                     {
-                                                        Debug.WriteLine(ex.Message);
+                                                        Log.Debug(ex.Message);
                                                     }
                                                 }
 
@@ -484,7 +487,7 @@ namespace Oleg_ivo.WAGO.Factory
                                                     }
                                                     catch (Exception ex)
                                                     {
-                                                        Debug.WriteLine(ex.Message);
+                                                        Log.Debug(ex.Message);
                                                     }
                                                 }
                                                 return true;

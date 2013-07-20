@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using NLog;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
 using Oleg_ivo.WAGO.Factory;
@@ -13,6 +14,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
     ///</summary>
     public partial class FieldBusNodeEditControl : UserControl, IDbEditor
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private readonly FieldBusNodeDAC fieldBusNodeDAC;
 
         ///<summary>
@@ -22,8 +24,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
         {
             InitializeComponent();
 
-            fieldBusNodeDAC = new FieldBusNodeDAC();
-            fieldBusNodeDAC.DataSet = dtsChannelConfiguration1;
+            fieldBusNodeDAC = new FieldBusNodeDAC {DataSet = dtsChannelConfiguration1};
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -92,7 +93,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
             FieldBusNode fieldBusNode = editValue as FieldBusNode;
             if (fieldBusNode != null)
             {
-                Console.WriteLine("FieldBusNode из дерева: не обработано");
+                Log.Debug("FieldBusNode из дерева: не обработано");
                 //TODO: FieldBusNode из дерева: не обработано
             }
 

@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
+using NLog;
 using Oleg_ivo.Tools.ConnectionProvider;
 using Oleg_ivo.WAGO.Forms;
 
@@ -12,6 +13,8 @@ namespace Oleg_ivo.Plc
     ///</summary>
     public partial class DataManager : Component
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+
         ///<summary>
         ///
         ///</summary>
@@ -67,66 +70,61 @@ namespace Oleg_ivo.Plc
         ///<exception cref="ArgumentOutOfRangeException"></exception>
         public static void ProcessDataAdapter(IDbDataAdapter adapter, DateAdapterProcessType processType, DataSet dataSource)
         {
-            if (adapter != null)
+            if (adapter == null)
+                throw new ArgumentNullException("adapter",
+                                                "В компоненте DataManager необходимо задать адаптер данных");
+
+            DbConnectionProvider.Instance.OpenConnection(adapter);
+            try
             {
-                DbConnectionProvider.Instance.OpenConnection(adapter);
-
-                try
+                int i = 0;
+                string type;
+                switch (processType)
                 {
-                    int i = 0;
-                    string type;
-                    switch (processType)
-                    {
-                        case DateAdapterProcessType.Unknown:
-                            type = " (неизвестно, как обрабатывать)";
-                            break;
-                        case DateAdapterProcessType.Fill:
-                            if (adapter.TableMappings.Count == 1)
+                    case DateAdapterProcessType.Unknown:
+                        type = " (неизвестно, как обрабатывать)";
+                        break;
+                    case DateAdapterProcessType.Fill:
+                        if (adapter.TableMappings.Count == 1)
+                        {
+                            DataTableMapping mapping = adapter.TableMappings[0] as DataTableMapping;
+                            if (mapping != null)
                             {
-                                DataTableMapping mapping = adapter.TableMappings[0] as DataTableMapping;
-                                if (mapping != null)
-                                {
-                                    DataTable table = dataSource.Tables[mapping.DataSetTable];
-                                    if (table == null)
-                                        throw new Exception("Маппинг для таблицы задан неверно");
-                                    dataSource.Tables[mapping.DataSetTable].Rows.Clear();
-                                }
+                                DataTable table = dataSource.Tables[mapping.DataSetTable];
+                                if (table == null)
+                                    throw new Exception("Маппинг для таблицы задан неверно");
+                                dataSource.Tables[mapping.DataSetTable].Rows.Clear();
                             }
+                        }
 
-                            //если не инициализирован параметр, ставим ему значение DBNull.Value
-                            foreach (DbParameter parameter in adapter.SelectCommand.Parameters)
-                            {
-                                if (parameter.Value == null) parameter.Value = DBNull.Value;
-                            }
+                        //если не инициализирован параметр, ставим ему значение DBNull.Value
+                        foreach (DbParameter parameter in adapter.SelectCommand.Parameters)
+                        {
+                            if (parameter.Value == null) parameter.Value = DBNull.Value;
+                        }
 
-                            i = adapter.Fill(dataSource);
-                            type = " (загружено)";
-                            break;
-                        case DateAdapterProcessType.Update:
-                            i = adapter.Update(dataSource);
-                            type = " (сохранено)";
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException("processType");
-                    }
+                        i = adapter.Fill(dataSource);
+                        type = " (загружено)";
+                        break;
+                    case DateAdapterProcessType.Update:
+                        i = adapter.Update(dataSource);
+                        type = " (сохранено)";
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException("processType");
+                }
 
-                    Console.WriteLine("записей обработано{0} : {1}", type, i);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                    throw;
-                }
-                finally
-                {
-                    DbConnectionProvider.Instance.CloseConnection(adapter);
-                }
+                Log.Debug("записей обработано{0} : {1}", type, i);
             }
-            else
+            catch (Exception ex)
             {
-                throw new ArgumentNullException("DataAdapter", "В компоненте DataManager необходимо задать адаптер данных");
+                Log.Debug(ex);
+                throw;
+            }
+            finally
+            {
+                DbConnectionProvider.Instance.CloseConnection(adapter);
             }
         }
-
     }
 }

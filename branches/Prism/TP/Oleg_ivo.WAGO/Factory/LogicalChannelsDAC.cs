@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using NLog;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Factory;
 using Enumerable = System.Linq.Enumerable;
@@ -15,6 +16,7 @@ namespace Oleg_ivo.WAGO.Factory
     ///</summary>
     public partial class LogicalChannelsDAC : Component
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ILogicalChannelsFactory LogicalChannelsFactory { get; set; }
 
@@ -81,7 +83,7 @@ namespace Oleg_ivo.WAGO.Factory
                 = physicalChannel.Id;
 
             FillLogicalChannelsData(physicalChannel);
-            Console.WriteLine("Подлежит сохранению логических каналов: {0}", dtsChannelConfiguration1.LogicalChannel.Count);
+            Log.Debug("Подлежит сохранению логических каналов: {0}", dtsChannelConfiguration1.LogicalChannel.Count);
             dataManager1.Save();
 
             //при успешном сохранении и перезаполнении перезаполняем и каналы

@@ -1,7 +1,7 @@
-using System;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using NLog;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Factory;
 
@@ -12,6 +12,7 @@ namespace Oleg_ivo.WAGO.Meta
     ///</summary>
     public partial class WagoMetaDAC : Component
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private readonly ILogicalChannelsFactory logicalChannelsFactory;
 
         ///<summary>
@@ -79,7 +80,7 @@ namespace Oleg_ivo.WAGO.Meta
                 = physicalChannel.Id;
 
             FillLogicalChannelsData(physicalChannel);
-            Console.WriteLine("Подлежит сохранению логических каналов: {0}", dtsWago1.WagoMeta.Count);
+            Log.Debug("Подлежит сохранению логических каналов: {0}", dtsWago1.WagoMeta.Count);
             dataManager1.Save();
 
             //при успешном сохранении и перезаполнении перезаполняем и каналы

@@ -177,8 +177,8 @@ Global
 		{5AE6118E-9F28-49D2-83EC-DA5FD263BF6D}.Release|Any CPU.Build.0 = Default|Any CPU
 		{5AE6118E-9F28-49D2-83EC-DA5FD263BF6D}.Release|Any CPU.Deploy.0 = Default|Any CPU
 		{5AE6118E-9F28-49D2-83EC-DA5FD263BF6D}.Release|x86.ActiveCfg = Default|Any CPU
-		{AC7D7F53-A330-45B0-A6B3-498BE85B9739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC7D7F53-A330-45B0-A6B3-498BE85B9739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC7D7F53-A330-45B0-A6B3-498BE85B9739}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{AC7D7F53-A330-45B0-A6B3-498BE85B9739}.Debug|Any CPU.Build.0 = Debug|x86
 		{AC7D7F53-A330-45B0-A6B3-498BE85B9739}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{AC7D7F53-A330-45B0-A6B3-498BE85B9739}.Default|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC7D7F53-A330-45B0-A6B3-498BE85B9739}.Default|Any CPU.Build.0 = Debug|Any CPU
@@ -191,7 +191,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 		VisualSVNWorkingCopyRoot = .
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 	EndGlobalSection
 EndGlobal

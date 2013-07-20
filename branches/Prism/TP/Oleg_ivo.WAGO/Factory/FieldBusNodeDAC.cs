@@ -85,7 +85,7 @@ namespace Oleg_ivo.WAGO.Factory
                 = physicalChannel.Id;
 
             FillFieldBusNodesData(physicalChannel);
-            System.Console.WriteLine("Подлежит сохранению логических каналов: {0}", dtsChannelConfiguration1.LogicalChannel.Count);
+            System.Log.Debug("Подлежит сохранению логических каналов: {0}", dtsChannelConfiguration1.LogicalChannel.Count);
             dataManager1.Save();
 
             //при успешном сохранении и перезаполнении перезаполняем и каналы

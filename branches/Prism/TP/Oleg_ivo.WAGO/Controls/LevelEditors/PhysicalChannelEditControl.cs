@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using NLog;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Factory;
 
@@ -12,6 +13,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
     ///</summary>
     public partial class PhysicalChannelEditControl : UserControl, IDbEditor
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         ///<summary>
         ///
         ///</summary>
@@ -74,7 +76,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
             PhysicalChannel physicalChannel = editValue as PhysicalChannel;
             if (physicalChannel != null)
             {
-                Console.WriteLine("PhysicalChannel из дерева: не обработано");
+                Log.Debug("PhysicalChannel из дерева: не обработано");
                 //TODO: PhysicalChannel из дерева: не обработано
             }
 

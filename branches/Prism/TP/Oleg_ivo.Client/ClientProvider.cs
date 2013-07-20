@@ -91,7 +91,7 @@ namespace Oleg_ivo.HighLevelClient
                     //}
                     //catch (SecurityException s)
                     //{
-                    //    Console.WriteLine(s.Message);
+                    //    Log.Debug(s.Message);
                     //}
 
                     //try
@@ -334,7 +334,7 @@ namespace Oleg_ivo.HighLevelClient
             if (e.Error != null)
                 throw new InvalidOperationException(e.Error.ToString(), e.Error);
 
-            object channels;
+            //object channels;
             //try
             //{
             //    channels = Proxy.GetRegisteredChannels(new InternalMessage(RegName, null));

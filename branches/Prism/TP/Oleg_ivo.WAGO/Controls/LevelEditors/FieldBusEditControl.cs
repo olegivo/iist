@@ -1,6 +1,7 @@
 using System;
 using  System.ComponentModel;
 using System.Windows.Forms;
+using NLog;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 
 namespace Oleg_ivo.WAGO.Controls.LevelEditors
@@ -10,6 +11,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
     ///</summary>
     public partial class FieldBusEditControl : UserControl, IDbEditor
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         ///<summary>
         ///
         ///</summary>
@@ -63,7 +65,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
             FieldBusManager fieldBusManager = editValue as FieldBusManager;
             if (fieldBusManager!=null)
             {
-                Console.WriteLine("FieldBusManager из дерева: не обработано");
+                Log.Debug("FieldBusManager из дерева: не обработано");
                 //TODO: FieldBusManager из дерева: не обработано
             }
 

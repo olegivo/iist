@@ -1,4 +1,5 @@
 using System;
+using NLog;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Common;
 using Oleg_ivo.Plc.Devices.Contollers;
@@ -12,6 +13,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
     ///</summary>
     public class FieldBusNode : IFieldBusNodeAccessor, IIdentified
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private readonly FieldBusManager _fieldBusManager;
 
         #region fields
@@ -26,7 +28,8 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         /// <param name="fieldBusNodeAddress"></param>
         public FieldBusNode(FieldBusManager fieldBusManager, FieldBusNodeAddress fieldBusNodeAddress)
         {
-            if (this is ActiveFieldBusNode && fieldBusManager is ActiveFieldBusManager) throw new InvalidOperationException("fieldBusManager");
+            if (this is ActiveFieldBusNode && fieldBusManager is ActiveFieldBusManager) 
+                throw new InvalidOperationException("ActiveFieldBusManager не может содержать ActiveFieldBusNode");
             _fieldBusManager = fieldBusManager;
             _fieldBusNodeAddress = fieldBusNodeAddress;
         }
@@ -74,7 +77,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
                             channels.AddRange(physicalChannel.LogicalChannels);
                     }
                 else
-                    Console.WriteLine("{0}: физические каналы не определены", this);
+                    Log.Debug("{0}: физические каналы не определены", this);
 
 
                 return channels;
@@ -305,7 +308,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
                 foreach (PhysicalChannel physicalChannel in PhysicalChannels)
                     physicalChannel.BuildDefaultLogicalChannels();
             else
-                Console.WriteLine("{0}: физические каналы не найдены. Построить логические каналы по умолчанию нельзя.", this);
+                Log.Debug("{0}: физические каналы не найдены. Построить логические каналы по умолчанию нельзя.", this);
 
         }
 
@@ -318,7 +321,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
                 foreach (PhysicalChannel physicalChannel in PhysicalChannels)
                     physicalChannel.LoadLogicalChannels();
             else
-                Console.WriteLine("{0}: физические каналы не найдены. Загрузить логические каналы нельзя.", this);
+                Log.Debug("{0}: физические каналы не найдены. Загрузить логические каналы нельзя.", this);
         }
 
         ///<summary>

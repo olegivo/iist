@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using DMS.Common.Messages;
+using NLog;
 
 namespace Oleg_ivo.HighLevelClient.LabViewAdapter
 {
@@ -11,6 +12,7 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
     /// </summary>
     public class Adapter
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         /// <summary>
         /// Максимальный размер очереди на отправку в LabView
         /// </summary>
@@ -70,11 +72,11 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
 
             if(_queue.Count > 0)
             {
-                Console.WriteLine("Найдены данные для отправки\t[{0}]", DateTime.Now);
+                Log.Debug("Найдены данные для отправки\t[{0}]", DateTime.Now);
 
                 byte[] bytes = _queue.Dequeue();
-                Console.WriteLine("Данные:\t{0}", GetStringBytes(bytes));
-                Console.WriteLine("Осталось элементов в очереди - {0} {1}\t[{1}]", _queue.Count, DateTime.Now);
+                Log.Debug("Данные:\t{0}", GetStringBytes(bytes));
+                Log.Debug("Осталось элементов в очереди - {0} {1}\t[{1}]", _queue.Count, DateTime.Now);
                 Send(socket, LabViewServerState.TF_NEW_DATA, bytes);
             }
         }
@@ -88,13 +90,13 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
             while (_queue.Count > QueueMaxSize)
             {
                 if(counter==0) 
-                    Console.WriteLine("В очереди обнаружены лишние элементы, тормозящие очередь. Они будут удалены:");
+                    Log.Debug("В очереди обнаружены лишние элементы, тормозящие очередь. Они будут удалены:");
 
                 byte[] bytes = _queue.Dequeue();
-                Console.WriteLine("Данные №{1}:\t{0}", GetStringBytes(bytes), ++counter);
+                Log.Debug("Данные №{1}:\t{0}", GetStringBytes(bytes), ++counter);
             }
             if(counter > 0)
-                Console.WriteLine("Из очереди убрано элементов:\t{0}", counter);
+                Log.Debug("Из очереди убрано элементов:\t{0}", counter);
         }
 
         private static string GetStringBytes(IEnumerable<byte> bytes)
@@ -110,10 +112,10 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
         {
             ClearExcessQueueElements();
 
-            Console.WriteLine("Необходимо добавить данные в очередь\t[{0}]\t", DateTime.Now);
-            Console.WriteLine("Данные:\t{0}", GetStringBytes(value));
+            Log.Debug("Необходимо добавить данные в очередь\t[{0}]\t", DateTime.Now);
+            Log.Debug("Данные:\t{0}", GetStringBytes(value));
             _queue.Enqueue(value);
-            Console.WriteLine("Данные добавлены в очередь, элементов в очереди - {1}\t[{0}]", DateTime.Now, _queue.Count);
+            Log.Debug("Данные добавлены в очередь, элементов в очереди - {1}\t[{0}]", DateTime.Now, _queue.Count);
         }
 
         private readonly Queue<byte[]> _queue = new Queue<byte[]>();
@@ -143,7 +145,7 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
 
         private static void Send(Socket socket, LabViewServerState state, IEnumerable<byte> data)
         {
-            Console.WriteLine("Отправка данных в LabView...\t[{0}]", DateTime.Now);
+            Log.Debug("Отправка данных в LabView...\t[{0}]", DateTime.Now);
 
             List<byte> bytes = new List<byte>(GetEmptyBytes(2));
             bytes[0] = (byte)state;//заполняем тип сообщения
@@ -154,7 +156,7 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
             }
             socket.Send(bytes.ToArray());
 
-            Console.WriteLine("Данные отправлены\t[{0}]", DateTime.Now);
+            Log.Debug("Данные отправлены\t[{0}]", DateTime.Now);
         }
 
         private static bool ReceiveWHO_AM_I(Socket socket)
@@ -237,21 +239,21 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
             //try
             //{
             //    Socket s = new Socket(remoteEndpoint.Address.AddressFamily, SocketType.Raw, ProtocolType.Unspecified);
-            //    Console.WriteLine("Sending data.");
+            //    Log.Debug("Sending data.");
 
             //    // This call blocks. 
             //    int i = s.SendTo(bytes, remoteEndpoint);
             //    s.Close();
 
-            //    Console.WriteLine("Sent {0} bytes.", i);
+            //    Log.Debug("Sent {0} bytes.", i);
 
             //    //// Get reply from the server.
             //    //i = _serverSocket.Receive(bytes);
-            //    //Console.WriteLine(Encoding.UTF8.GetString(bytes));
+            //    //Log.Debug(Encoding.UTF8.GetString(bytes));
             //}
             //catch (SocketException e)
             //{
-            //    Console.WriteLine("{0} Error code: {1}.", e.Message, e.ErrorCode);
+            //    Log.Debug("{0} Error code: {1}.", e.Message, e.ErrorCode);
             //}
 
         }
@@ -263,7 +265,7 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
         /// <returns></returns>
         private static byte[] GetAdaptedMessage(InternalMessage message)
         {
-            Console.WriteLine("Получение данных для отправки в LabView...");
+            Log.Debug("Получение данных для отправки в LabView...");
 
             byte[] bytes = GetEmptyBytes(32);
             //AIEntry_struct:
@@ -280,13 +282,13 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
 
             //IEntry_struct:
             // Word ID - Идентификатор записи (2 байта)
-            Console.Write("Канал №{0}\t", ((InternalLogicalChannelDataMessage) message).LogicalChannelId);
-            byte[] id = BitConverter.GetBytes((Int16) ((InternalLogicalChannelDataMessage) message).LogicalChannelId);
+            var internalLogicalChannelDataMessage = (InternalLogicalChannelDataMessage) message;
+            Log.Debug("Канал №{0}\t{1}", internalLogicalChannelDataMessage.LogicalChannelId, message.TimeStamp);
+            byte[] id = BitConverter.GetBytes((Int16) internalLogicalChannelDataMessage.LogicalChannelId);
             bytes[shift++] = id[0];//младший байт
             bytes[shift++] = id[1];//старший байт
 
             // Byte EDate[3] 
-            Console.WriteLine("\t{0}", message.TimeStamp);
             //  EDate[0] = (год-2000) 
             bytes[shift++] = (byte)(message.TimeStamp.Year - 2000);
             //  EDate[1] = месяц (число в диапазоне [1;12]) 
@@ -318,7 +320,7 @@ namespace Oleg_ivo.HighLevelClient.LabViewAdapter
 
             bytes[shift] = xcs;
 
-            Console.WriteLine("Данных для отправки в LabView получены");
+            Log.Debug("Данных для отправки в LabView получены");
 
             return bytes;
         }
