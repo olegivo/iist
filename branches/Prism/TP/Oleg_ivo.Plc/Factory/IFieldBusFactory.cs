@@ -1,4 +1,5 @@
 using System;
+using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.FieldBus;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 using Oleg_ivo.Plc.Ports;
@@ -53,5 +54,11 @@ namespace Oleg_ivo.Plc.Factory
         ///<returns></returns>
         ///<exception cref="ArgumentOutOfRangeException"></exception>
         FieldBusPortParameters CreatePortParameters(FieldBusType fieldBusType, object port);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fieldBusType"></param>
+        FieldBusNodeAddressCollection GetFieldBusNodesAddresses(FieldBusType fieldBusType);
     }
 }

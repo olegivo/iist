@@ -2,6 +2,7 @@ using Autofac;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.FieldBus;
 using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
+using Oleg_ivo.WAGO.Configuration;
 using Oleg_ivo.WAGO.Forms;
 
 namespace Oleg_ivo.WAGO
@@ -32,10 +33,8 @@ namespace Oleg_ivo.WAGO
         /// <returns></returns>
         protected override IDistributedSystemSettings CreateSettings()
         {
-            //TODO: загружать настройки из внешнего хранилища
-            var distributedSystemSettings = Context.ResolveUnregistered<DistributedSystemSettings>();
-            distributedSystemSettings.IsEmulationMode = true;
-            return distributedSystemSettings;
+            var configurationManager = Context.Resolve<ConfigurationManager>();
+            return configurationManager.LoadConfig();
         }
 
         ///<summary>

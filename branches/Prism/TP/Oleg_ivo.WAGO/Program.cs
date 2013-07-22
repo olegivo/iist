@@ -1,9 +1,9 @@
 using System;
 using System.Windows.Forms;
 using Autofac;
+using NLog;
+using Oleg_ivo.Base.Autofac.Modules;
 using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
-using Oleg_ivo.Tools.ConnectionProvider;
-using Oleg_ivo.Tools.ExceptionCatcher;
 using Oleg_ivo.WAGO.Autofac;
 using Oleg_ivo.WAGO.Configuration;
 using Oleg_ivo.WAGO.Forms;
@@ -12,37 +12,25 @@ namespace Oleg_ivo.WAGO
 {
     static class Program
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            //Включить обработку исключений
-#pragma warning disable 168
-            ExceptionHandler exceptionHandler = new ExceptionHandler();
-#pragma warning restore 168
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            TestSettings();
-            DbConnectionProvider.Instance.SetupConnectionStringFromConfigurationFile();
             
-            //DbConnectionProvider.Instance.DefaultConnectionString =
-            //    @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\WORK\Oleg_ivo\Oleg_ivo.WAGO\Oleg_ivo.WAGO\test.mdb;Persist Security Info=True";
-
+            Log.Info("Регистрация компонентов");
             var builder = new ContainerBuilder();
+            builder.RegisterModule(new CommandLineHelperAutofacModule<WagoCommandLineOptions>(args));
             builder.RegisterModule<WagoAutofacModule>();
             var container = builder.Build();
-            var form = container.ResolveUnregistered<MDIParentMain>();
-            container.InjectAttributedProperties(form);
-            Application.Run(form);
-        }
 
-        private static void TestSettings()
-        {
-            ConfigurationManager.Instance.LoadConfig("");
-
+            Log.Info("Запуск главной формы");
+            Application.Run(container.ResolveUnregistered<MDIParentMain>());
         }
     }
 }

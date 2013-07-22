@@ -7,7 +7,6 @@ using Oleg_ivo.Plc.FieldBus;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 using Oleg_ivo.Plc.Ports;
 using Oleg_ivo.PrismExtensions.Autofac;
-using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
 
 namespace Oleg_ivo.Plc
 {
@@ -93,7 +92,7 @@ namespace Oleg_ivo.Plc
 
             FieldBusNodesFactory = Context.Resolve<IFieldBusNodeFactory>();
             PlcFactory = Context.Resolve<IPlcFactory>();
-            FieldBusFactory = Context.ResolveUnregistered<FieldBusFactory>();
+            FieldBusFactory = Context.Resolve<IFieldBusFactory>();
             PhysicalChannelsFactory = Context.Resolve<IPhysicalChannelsFactory>();
             LogicalChannelsFactory = Context.Resolve<ILogicalChannelsFactory>();
         }

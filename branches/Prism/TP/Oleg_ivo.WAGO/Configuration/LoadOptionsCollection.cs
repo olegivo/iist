@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using Oleg_ivo.Plc.FieldBus;
 
 namespace Oleg_ivo.WAGO.Configuration
 {
@@ -13,9 +14,9 @@ namespace Oleg_ivo.WAGO.Configuration
         ///</summary>
         public LoadOptionsCollection()
         {
-            LoadOptionsConfigElement url = (LoadOptionsConfigElement)CreateNewElement();
-            // Add the element to the collection.
-            Add(url);
+            //var loadOptionsConfigElement = (LoadOptionsConfigElement)CreateNewElement();
+            //// Add the element to the collection.
+            //Add(loadOptionsConfigElement);
         }
 
         ///<summary>
@@ -74,7 +75,7 @@ namespace Oleg_ivo.WAGO.Configuration
         ///<param name="element">The <see cref="T:System.Configuration.ConfigurationElement"></see> to return the key for. </param>
         protected override Object GetElementKey(ConfigurationElement element)
         {
-            return ((LoadOptionsConfigElement)element).Name;
+            return ((LoadOptionsConfigElement)element).FieldBusType/*Name*/;
         }
 
 
@@ -83,12 +84,8 @@ namespace Oleg_ivo.WAGO.Configuration
         ///</summary>
         public new string AddElementName
         {
-            get
-            { return base.AddElementName; }
-
-            set
-            { base.AddElementName = value; }
-
+            get { return base.AddElementName; }
+            set { base.AddElementName = value; }
         }
 
         ///<summary>
@@ -123,18 +120,22 @@ namespace Oleg_ivo.WAGO.Configuration
         ///<param name="index"></param>
         public LoadOptionsConfigElement this[int index]
         {
-            get
-            {
-                return (LoadOptionsConfigElement)BaseGet(index);
-            }
+            get { return (LoadOptionsConfigElement)BaseGet(index); }
             set
             {
                 if (BaseGet(index) != null)
-                {
                     BaseRemoveAt(index);
-                }
                 BaseAdd(index, value);
             }
+        }
+
+        ///<summary>
+        ///
+        ///</summary>
+        ///<param name="fieldBusType"></param>
+        public new LoadOptionsConfigElement this[FieldBusType fieldBusType]
+        {
+            get { return (LoadOptionsConfigElement)BaseGet(fieldBusType); }
         }
 
         ///<summary>
@@ -143,29 +144,26 @@ namespace Oleg_ivo.WAGO.Configuration
         ///<param name="Name"></param>
         public new LoadOptionsConfigElement this[string Name]
         {
-            get
-            {
-                return (LoadOptionsConfigElement)BaseGet(Name);
-            }
+            get { return (LoadOptionsConfigElement)BaseGet(Name); }
         }
 
         ///<summary>
         ///
         ///</summary>
-        ///<param name="url"></param>
+        ///<param name="loadOptionsConfigElement"></param>
         ///<returns></returns>
-        public int IndexOf(LoadOptionsConfigElement url)
+        public int IndexOf(LoadOptionsConfigElement loadOptionsConfigElement)
         {
-            return BaseIndexOf(url);
+            return BaseIndexOf(loadOptionsConfigElement);
         }
 
         ///<summary>
         ///
         ///</summary>
-        ///<param name="url"></param>
-        public void Add(LoadOptionsConfigElement url)
+        ///<param name="loadOptionsConfigElement"></param>
+        public void Add(LoadOptionsConfigElement loadOptionsConfigElement)
         {
-            BaseAdd(url);
+            BaseAdd(loadOptionsConfigElement);
 
             // Add custom code here.
         }
@@ -184,11 +182,11 @@ namespace Oleg_ivo.WAGO.Configuration
         ///<summary>
         ///
         ///</summary>
-        ///<param name="url"></param>
-        public void Remove(LoadOptionsConfigElement url)
+        ///<param name="loadOptionsConfigElement"></param>
+        public void Remove(LoadOptionsConfigElement loadOptionsConfigElement)
         {
-            if (BaseIndexOf(url) >= 0)
-                BaseRemove(url.Name);
+            if (BaseIndexOf(loadOptionsConfigElement) >= 0)
+                BaseRemove(loadOptionsConfigElement.FieldBusType/*Name*/);
         }
 
         ///<summary>

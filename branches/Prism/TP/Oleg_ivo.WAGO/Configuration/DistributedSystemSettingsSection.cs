@@ -1,53 +1,43 @@
 ﻿using System;
 using System.Configuration;
-using Oleg_ivo.Plc.FieldBus;
 
 namespace Oleg_ivo.WAGO.Configuration
 {
     ///<summary>
     ///
     ///</summary>
-    public class LoadOptionsSection : ConfigurationSection
+    public class DistributedSystemSettingsSection : ConfigurationSection
     {
         ///<summary>
         ///
         ///</summary>
-        public LoadOptionsSection()
-        {
-        }
+        public DistributedSystemSettingsSection() { }
 
         ///<summary>
         ///
         ///</summary>
-        ///<param name="attributeValue"></param>
-        public LoadOptionsSection(String attributeValue)
-        {
-            Name = attributeValue;
-        }
+        ///<param name="name"></param>
+        public DistributedSystemSettingsSection(String name) { Name = name; }
 
         ///<summary>
         ///
         ///</summary>
-        [ConfigurationProperty("Name", DefaultValue = "Clowns", IsRequired = true)]
+        [ConfigurationProperty("Name", DefaultValue = "Default", IsRequired = true, IsKey = true)]
         [StringValidator(InvalidCharacters = "~!@#$%^&*()[]{}/;'\"|\\", MinLength = 1, MaxLength = 60)]
         public String Name
         {
-            get
-            { return (String)this["Name"]; }
-            set
-            { this["Name"] = value; }
+            get { return (String)this["Name"]; }
+            set { this["Name"] = value; }
         }
 
         ///<summary>
         ///
         ///</summary>
-        [ConfigurationProperty("myChildSection")]
-        public MyChildConfigElement MyChildSection
+        [ConfigurationProperty("IsEmulationMode", DefaultValue = "false", IsRequired = false)]
+        public bool IsEmulationMode
         {
-            get
-            { return (MyChildConfigElement)this["myChildSection"]; }
-            set
-            { this["myChildSection"] = value; }
+            get { return (bool)this["IsEmulationMode"]; }
+            set { this["IsEmulationMode"] = value; }
         }
 
         ///<summary>
@@ -58,12 +48,10 @@ namespace Oleg_ivo.WAGO.Configuration
             AddItemName = "addLoadOptions",
             ClearItemsName = "clearLoadOptions",
             RemoveItemName = "RemoveLoadOptions")]
-        public LoadOptionsCollection MyChildSection2
+        public LoadOptionsCollection LoadOptions
         {
             get { return (LoadOptionsCollection)this["LoadOptions"]; }
             set { this["LoadOptions"] = value; }
         }
-
-
     }
 }

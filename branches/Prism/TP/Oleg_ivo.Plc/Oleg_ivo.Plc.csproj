@@ -158,8 +158,8 @@
     <Compile Include="Devices\Modules\IOModule.cs" />
     <Compile Include="Devices\Modules\IOModuleCollection.cs" />
     <Compile Include="DistributedMeasurementInformationSystemBase.cs" />
-    <Compile Include="DistributedSystemSettingsBase.cs" />
-    <Compile Include="FieldBus\FieldBusFactory.cs" />
+    <Compile Include="DistributedSystemSettings.cs" />
+    <Compile Include="FieldBus\FieldBusFactoryBase.cs" />
     <Compile Include="FieldBus\FieldBusManagers\ActiveFieldBusManager.cs" />
     <Compile Include="FieldBus\FieldBusManagers\FieldBusManager.cs" />
     <Compile Include="FieldBus\FieldBusNodes\ActiveFieldBusNode.cs" />

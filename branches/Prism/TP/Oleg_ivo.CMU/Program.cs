@@ -2,11 +2,12 @@ using System;
 using System.Windows.Forms;
 using Autofac;
 using DMS.Common.Messages;
+using Oleg_ivo.Base.Autofac.Modules;
 using Oleg_ivo.LowLevelClient;
 using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
-using Oleg_ivo.Tools.ConnectionProvider;
 using Oleg_ivo.Tools.ExceptionCatcher;
 using Oleg_ivo.WAGO.Autofac;
+using Oleg_ivo.WAGO.Configuration;
 
 namespace Oleg_ivo.CMU
 {
@@ -16,28 +17,22 @@ namespace Oleg_ivo.CMU
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 
-
-            DbConnectionProvider.Instance.SetupConnectionStringFromConfigurationFile();
-            
             var builder = new ContainerBuilder();
+            builder.RegisterModule(new CommandLineHelperAutofacModule<WagoCommandLineOptions>(args));
             builder.RegisterModule<WagoAutofacModule>();
             var container = builder.Build();
             var form = container.ResolveUnregistered<LowLevelClientForm>();
-            container.InjectAttributedProperties(form);
 
-#pragma warning disable 168
             var errors = new Errors(form.ControlManagementUnit);
-            var exceptionHandler = new ExceptionHandler(errors.LogError);
-#pragma warning restore 168
+            container.Resolve<ExceptionHandler>().AdditionalErrorHandler = errors.LogError;
             Application.Run(form);
         }
-
     }
 
     internal class Errors

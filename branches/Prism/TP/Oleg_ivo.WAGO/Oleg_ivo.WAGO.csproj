@@ -135,10 +135,13 @@
     <Compile Include="Autofac\WagoAutofacModule.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
-    <Compile Include="Configuration\LoadOptionsConfigElement.cs" />
-    <Compile Include="Configuration\MyChildConfigElement.cs" />
-    <Compile Include="Configuration\LoadOptionsSection.cs" />
-    <Compile Include="Configuration\LoadOptionsCollection.cs" />
+    <Compile Include="Configuration\ConfigurationSectionDesigner1.csd.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConfigurationSectionDesigner1.csd</DependentUpon>
+    </Compile>
+    <Compile Include="Configuration\DMISConfigurationElement.cs" />
+    <Compile Include="Configuration\WagoCommandLineOptions.cs" />
     <Compile Include="Controls\FieldBusNodesEditControl.Designer.cs">
       <DependentUpon>FieldBusNodesEditControl.cs</DependentUpon>
     </Compile>
@@ -206,7 +209,6 @@
     </Compile>
     <Compile Include="Devices\WagoIoModuleComparer.cs" />
     <Compile Include="DistributedMeasurementInformationSystem.cs" />
-    <Compile Include="DistributedSystemSettings.cs" />
     <Compile Include="DtsChannelConfiguration.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -237,6 +239,7 @@
       <DependentUpon>PhysicalChannelsDAC.cs</DependentUpon>
     </Compile>
     <Compile Include="Factory\LogicalChannelsFactory.cs" />
+    <Compile Include="Factory\FieldBusFactory.cs" />
     <Compile Include="Factory\WagoPhysicalChannelsFactory.cs" />
     <Compile Include="Factory\FieldBusDAC.cs">
       <SubType>Component</SubType>
@@ -422,8 +425,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="ClassDiagram1.cd" />
+    <None Include="Configuration\ConfigurationSectionDesigner1.csd">
+      <Generator>CsdFileGenerator</Generator>
+      <LastGenOutput>ConfigurationSectionDesigner1.csd.cs</LastGenOutput>
+    </None>
+    <None Include="Configuration\ConfigurationSectionDesigner1.csd.config">
+      <DependentUpon>ConfigurationSectionDesigner1.csd</DependentUpon>
+    </None>
+    <None Include="Configuration\ConfigurationSectionDesigner1.csd.diagram">
+      <DependentUpon>ConfigurationSectionDesigner1.csd</DependentUpon>
+    </None>
+    <None Include="Configuration\ConfigurationSectionDesigner1.csd.xsd">
+      <DependentUpon>ConfigurationSectionDesigner1.csd</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Devices\cdModules.cd" />
     <None Include="DtsChannelConfiguration.xsc">
       <DependentUpon>DtsChannelConfiguration.xsd</DependentUpon>
@@ -446,6 +465,9 @@
     </None>
     <None Include="DtsWago.xss">
       <DependentUpon>DtsWago.xsd</DependentUpon>
+    </None>
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -475,6 +497,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

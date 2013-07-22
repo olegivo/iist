@@ -19,6 +19,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
 
         private readonly FieldBusType _fieldBusType;
         private readonly IDistributedMeasurementInformationSystem dmis;
+        private FieldBusNodeAddressCollection fieldBusNodeAddresses;
 
         #endregion
 
@@ -29,9 +30,10 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
         ///</summary>
         public FieldBusNodeAddressCollection FieldBusAddresses
         {
-            get
+            get 
             {
-                return FieldBusLoadOptions.FieldBusNodeAddresses;
+                return fieldBusNodeAddresses ??
+                       (fieldBusNodeAddresses = dmis.PlcManager.FieldBusFactory.GetFieldBusNodesAddresses(FieldBusType));
             }
         }
 
@@ -41,11 +43,11 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
         ///<returns></returns>
         public virtual IEnumerable<FieldBusNodeAddress> GetPLCAddressRange()
         {
-            FieldBusNodeAddressCollection plcAddresses = new FieldBusNodeAddressCollection();
+            var plcAddresses = new FieldBusNodeAddressCollection();
             switch (FieldBusType)
             {
                 case FieldBusType.Ethernet:
-                    plcAddresses.AddRange(FieldBusAddresses.Cast<FieldBusNodeIpAddress>().Cast<FieldBusNodeAddress>());
+                    plcAddresses.AddRange(FieldBusAddresses.Cast<FieldBusNodeIpAddress>());
                     break;
             }
             return plcAddresses.ToArray();

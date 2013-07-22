@@ -1,8 +1,8 @@
 using Autofac;
-using Oleg_ivo.Base.Autofac;
+using Oleg_ivo.Base.Autofac.Modules;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Factory;
-using Oleg_ivo.Plc.FieldBus;
+using Oleg_ivo.WAGO.Configuration;
 using Oleg_ivo.WAGO.Devices;
 using Oleg_ivo.WAGO.Factory;
 
@@ -14,6 +14,8 @@ namespace Oleg_ivo.WAGO.Autofac
         {
             base.Load(builder);
 
+            builder.RegisterType<ConfigurationManager>()
+                   .SingleInstance();
             builder.RegisterType<DistributedMeasurementInformationSystem>()
                 .SingleInstance()
                 .As<IDistributedMeasurementInformationSystem>();

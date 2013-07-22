@@ -15,14 +15,14 @@ namespace Oleg_ivo.Plc.FieldBus
     ///<summary>
     /// ‘абрика полевых шин
     ///</summary>
-    public class FieldBusFactory : IFieldBusFactory
+    public abstract class FieldBusFactoryBase : IFieldBusFactory
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// »нициализирует новый экземпл€р класса <see cref="FieldBusFactory" />.
+        /// »нициализирует новый экземпл€р класса <see cref="FieldBusFactoryBase" />.
         /// </summary>
-        public FieldBusFactory(IDistributedMeasurementInformationSystem dmis)
+        protected FieldBusFactoryBase(IDistributedMeasurementInformationSystem dmis)
         {
             this.dmis = dmis;
         }
@@ -269,5 +269,7 @@ namespace Oleg_ivo.Plc.FieldBus
             }
             return retValue;
         }
+
+        public abstract FieldBusNodeAddressCollection GetFieldBusNodesAddresses(FieldBusType fieldBusType);
     }
 }

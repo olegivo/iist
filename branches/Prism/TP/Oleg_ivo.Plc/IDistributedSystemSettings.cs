@@ -6,13 +6,18 @@ namespace Oleg_ivo.Plc
     public interface IDistributedSystemSettings
     {
         /// <summary>
-        /// Опции загрузки полевых шин
+        /// Название настроек (используется для храниения в конфигурационном файле)
         /// </summary>
-        Dictionary<FieldBusType, FieldBusLoadOptions> FieldBusLoadOptions { get; }
+        string Name { get; set; }
 
         /// <summary>
         /// Режим эмуляции (обращения к реальным устройствам не будет)
         /// </summary>
         bool IsEmulationMode { get; set; }
+
+        /// <summary>
+        /// Опции загрузки полевых шин
+        /// </summary>
+        Dictionary<FieldBusType, FieldBusLoadOptions> FieldBusLoadOptions { get; set; }
     }
 }

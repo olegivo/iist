@@ -1,6 +1,6 @@
 using System;
 using System.Configuration;
-using Oleg_ivo.Plc;
+using System.Diagnostics;
 using Oleg_ivo.Plc.FieldBus;
 
 namespace Oleg_ivo.WAGO.Configuration
@@ -8,6 +8,7 @@ namespace Oleg_ivo.WAGO.Configuration
     ///<summary>
     ///
     ///</summary>
+    [DebuggerDisplay("FieldBusType={FieldBusType}")]
     public class LoadOptionsConfigElement : ConfigurationElement//MeasurementSystemLevelLoadOptions
     {
 
@@ -19,105 +20,56 @@ namespace Oleg_ivo.WAGO.Configuration
         {
         }
 
-        ///<summary>
-        ///
-        ///</summary>
-        ///<param name="a1"></param>
-        ///<param name="a2"></param>
-        public LoadOptionsConfigElement(String a1, String a2)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fieldBusType"></param>
+        public LoadOptionsConfigElement(FieldBusType fieldBusType):this()
         {
-            MyChildAttribute1 = a1;
-            MyChildAttribute2 = a2;
+            FieldBusType = fieldBusType;
         }
 
         ///<summary>
         ///
         ///</summary>
-        ///<param name="name"></param>
-        public LoadOptionsConfigElement(string name)
+        ///<param name="fieldBusType"></param>
+        public LoadOptionsConfigElement(string fieldBusType):this()
         {
-            Name = name;
+            var o = Enum.Parse(typeof (FieldBusType), fieldBusType);
+            FieldBusType = (FieldBusType) o;
         }
 
         #endregion
 
-
         ///<summary>
         ///
         ///</summary>
-        [ConfigurationProperty("FieldBusType", DefaultValue = "Unknown", IsRequired = false)]
-        //[StringValidator(InvalidCharacters = "~!@#$%^&*()[]{}/;'\"|\\", MinLength = 1, MaxLength = 60)]
-            public FieldBusType FieldBusType
+        [ConfigurationProperty("FieldBusType", DefaultValue = "Unknown", IsRequired = true, IsKey = true)]
+        public FieldBusType FieldBusType
         {
-            get
-            { return (FieldBusType)this["FieldBusType"]; }
-            set
-            { this["FieldBusType"] = value; }
+            get { return (FieldBusType)this["FieldBusType"]; }
+            set { this["FieldBusType"] = value; }
         }
 
-        ///<summary>
-        ///
-        ///</summary>
-        [ConfigurationProperty("myChildAttrib1", DefaultValue = "Zippy", IsRequired = false)]
-        [StringValidator(InvalidCharacters = "~!@#$%^&*()[]{}/;'\"|\\", MinLength = 1, MaxLength = 60)]
-        public String MyChildAttribute1
+        [ConfigurationProperty("FieldNodesLevel")]
+        public LevelLoadOptionsConfigElement FieldNodesLevel
         {
-            get
-            { return (String)this["myChildAttrib1"]; }
-            set
-            { this["myChildAttrib1"] = value; }
+            get { return (LevelLoadOptionsConfigElement) this["FieldNodesLevel"]; }
+            set { this["FieldNodesLevel"] = value; }
         }
 
-        ///<summary>
-        ///
-        ///</summary>
-        [ConfigurationProperty("myChildAttrib2", DefaultValue = "Michael Zawondy", IsRequired = false)]
-        [StringValidator(InvalidCharacters = "~!@#$%^&*()[]{}/;'\"|\\", MinLength = 1, MaxLength = 60)]
-        public String MyChildAttribute2
+        [ConfigurationProperty("PhysicalChannelsLevel")]
+        public LevelLoadOptionsConfigElement PhysicalChannelsLevel
         {
-            get
-            { return (String)this["myChildAttrib2"]; }
-            set
-            { this["myChildAttrib2"] = value; }
+            get { return (LevelLoadOptionsConfigElement)this["PhysicalChannelsLevel"]; }
+            set { this["PhysicalChannelsLevel"] = value; }
         }
 
-        ///<summary>
-        ///
-        ///</summary>
-        [ConfigurationProperty("Name", DefaultValue = "Microsoft",
-                    IsRequired = true, IsKey = true)]
-        public string Name
+        [ConfigurationProperty("LogicalChannelsLevel")]
+        public LevelLoadOptionsConfigElement LogicalChannelsLevel
         {
-            get { return (string)this["Name"]; }
-            set { this["Name"] = value; }
-        }
-
-        /// <summary>
-        /// Вычислить текущую конфигурацию
-        /// </summary>
-        [ConfigurationProperty("ComputeCurrentConfiguration", DefaultValue = "true", IsRequired = false)]
-        public bool ComputeCurrentConfiguration
-        {
-            get { return (bool) this["ComputeCurrentConfiguration"]; }
-            set { this["ComputeCurrentConfiguration"] = value; }
-        }
-
-        /// <summary>
-        /// Загрузить сохранённую конфигурацию
-        /// </summary>
-        [ConfigurationProperty("LoadSavedConfiguration", DefaultValue = "true", IsRequired = false)]
-        public bool LoadSavedConfiguration
-        {
-            get { return (bool)this["LoadSavedConfiguration"]; }
-            set { this["LoadSavedConfiguration"] = value; }
-        }
-
-        /// <summary>
-        /// Необходимость каким-либо образом инициализировать конфигурацию
-        /// </summary>
-        public bool IsNeedComputeOrLoad
-        {
-            get { return ComputeCurrentConfiguration || LoadSavedConfiguration; }
+            get { return (LevelLoadOptionsConfigElement)this["LogicalChannelsLevel"]; }
+            set { this["LogicalChannelsLevel"] = value; }
         }
     }
 }
