@@ -283,16 +283,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\External\Oleg_ivo.Tools\Oleg_ivo.Tools.csproj">
-      <Project>{332A1894-922F-49A1-BD6A-E4E981FA2FEC}</Project>
-      <Name>Oleg_ivo.Tools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Oleg_ivo.Base\Oleg_ivo.Base.csproj">
-      <Project>{AC7D7F53-A330-45B0-A6B3-498BE85B9739}</Project>
-      <Name>Oleg_ivo.Base</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -308,6 +298,16 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\External\Oleg_ivo.Tools\Oleg_ivo.Base\Oleg_ivo.Base.csproj">
+      <Project>{ac7d7f53-a330-45b0-a6b3-498be85b9739}</Project>
+      <Name>Oleg_ivo.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\External\Oleg_ivo.Tools\Oleg_ivo.Tools\Oleg_ivo.Tools.csproj">
+      <Project>{332a1894-922f-49a1-bd6a-e4e981fa2fec}</Project>
+      <Name>Oleg_ivo.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

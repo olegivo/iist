@@ -206,8 +206,8 @@
       <Project>{02BA939D-826A-4D6E-8B42-414AF3F6C7CE}</Project>
       <Name>DMS.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\External\Oleg_ivo.Tools\Oleg_ivo.Tools.csproj">
-      <Project>{332A1894-922F-49A1-BD6A-E4E981FA2FEC}</Project>
+    <ProjectReference Include="..\External\Oleg_ivo.Tools\Oleg_ivo.Tools\Oleg_ivo.Tools.csproj">
+      <Project>{332a1894-922f-49a1-bd6a-e4e981fa2fec}</Project>
       <Name>Oleg_ivo.Tools</Name>
     </ProjectReference>
     <ProjectReference Include="..\Oleg_ivo.LowLevelClient\Oleg_ivo.LowLevelClient.csproj">

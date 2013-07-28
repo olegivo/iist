@@ -19,7 +19,7 @@ namespace Oleg_ivo.WAGO.CMS.Prism
         public void Initialize()
         {
             regionManager.RegisterViewWithRegion("MainRegion", typeof(MainView));
-            //regionManager.RegisterViewWithRegion("DrumTypeFurnaceRegion", () => context.Resolve<ucDrumTypeFurnace>());
+            regionManager.RegisterViewWithRegion("DeviceConfigurationRegion", () => context.Resolve<DeviceConfigurationView>());
         }
     }
 }

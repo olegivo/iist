@@ -4,16 +4,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:cal="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
         mc:Ignorable="d"
-	    x:Class="Oleg_ivo.WAGO.CMS.View.MainView"
+	    x:Class="Oleg_ivo.WAGO.CMS.View.MainView" d:DesignWidth="640" d:DesignHeight="480"
         >
 
-    <Grid>
-        <TabControl>
-            <TabItem Header="Настройка каналов" >
-                <ItemsControl Name="DrumTypeFurnaceRegion" 
-                                  cal:RegionManager.RegionName="DrumTypeFurnaceRegion"
-                                  DataContext="{Binding DrumTypeFurnace}"/>
-            </TabItem>
-        </TabControl>
-    </Grid>
+    <TabControl SelectedIndex="0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+        <TabItem Header="Настройка каналов" Margin="0" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                <ItemsControl cal:RegionManager.RegionName="DeviceConfigurationRegion"/>
+                <TextBlock Grid.Row="1">BlaBla</TextBlock>
+            </Grid>
+        </TabItem>
+    </TabControl>
 </UserControl>

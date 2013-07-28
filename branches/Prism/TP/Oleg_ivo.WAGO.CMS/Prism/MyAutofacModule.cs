@@ -11,8 +11,13 @@ namespace Oleg_ivo.WAGO.CMS.Prism
             base.Load(builder);
 
             builder.RegisterType<MyPrismModule>();
+            
             builder.RegisterType<MainViewModel>();
             builder.RegisterType<MainView>().UsingConstructor(typeof(MainViewModel));
+
+            builder.RegisterType<DeviceConfigurationViewModel>();
+            builder.RegisterType<DeviceConfigurationView>().UsingConstructor(typeof(DeviceConfigurationViewModel));
+
         }
     }
 }

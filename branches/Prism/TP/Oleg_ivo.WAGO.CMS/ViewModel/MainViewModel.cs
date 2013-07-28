@@ -35,5 +35,8 @@ namespace Oleg_ivo.WAGO.CMS.ViewModel
 
         [Dependency]
         public IDistributedMeasurementInformationSystem DMIS { get; set; }
+
+        [Dependency]
+        public DeviceConfigurationViewModel DeviceConfiguration { get; set; }
     }
 }

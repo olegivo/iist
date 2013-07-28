@@ -17,7 +17,7 @@ namespace Oleg_ivo.WAGO.CMS.View
         {
             DataContext = viewModel;
             viewModel.DMIS.BuildSystemConfiguration();
-            всё стартует, теперь нужно строить интерфейс
+            //всё стартует, теперь нужно строить интерфейс
         }
     }
 }
