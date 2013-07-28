@@ -1,12 +1,12 @@
 using System;
 using Autofac;
 using NLog;
+using Oleg_ivo.Base.Autofac;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
-using Oleg_ivo.PrismExtensions.Autofac;
-using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
 using Oleg_ivo.WAGO.Meta;
 
 namespace Oleg_ivo.WAGO.Devices

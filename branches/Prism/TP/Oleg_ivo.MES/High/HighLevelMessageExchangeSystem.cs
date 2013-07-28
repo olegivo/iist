@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using DMS.Common.MessageExchangeSystem;
 using DMS.Common.MessageExchangeSystem.HighLevel;
 using DMS.Common.Messages;
 using NLog;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using DMS.Common.Events;
 
 namespace EmulationClient
 {

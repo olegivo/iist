@@ -3,11 +3,11 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using Autofac;
 using NLog;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
-using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
 
 namespace Oleg_ivo.WAGO.Forms
 {

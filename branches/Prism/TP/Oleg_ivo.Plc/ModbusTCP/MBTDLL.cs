@@ -22,8 +22,7 @@
 |-----------------------------------------------------------------------------
 |  20.12.03 CM   0.00  Init
 |---------------------------------------------------------------------------*/
-using System;
-using System.Text;
+
 using System.Runtime.InteropServices; 
 
 namespace WAGO.IO.Modbus

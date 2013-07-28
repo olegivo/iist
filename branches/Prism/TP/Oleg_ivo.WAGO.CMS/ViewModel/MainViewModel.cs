@@ -1,6 +1,6 @@
 using GalaSoft.MvvmLight;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.Plc;
-using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
 
 namespace Oleg_ivo.WAGO.CMS.ViewModel
 {

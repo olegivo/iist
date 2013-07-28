@@ -1,9 +1,7 @@
 using System;
 using System.ComponentModel;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
-using Oleg_ivo.Tools.ConnectionProvider;
 
 namespace Oleg_ivo.MES
 {

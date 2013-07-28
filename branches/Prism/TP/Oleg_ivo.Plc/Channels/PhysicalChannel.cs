@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Plc.Common;
 using Oleg_ivo.Plc.Devices.Modules;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
-using Oleg_ivo.PrismExtensions.Autofac;
 
 namespace Oleg_ivo.Plc.Channels
 {

@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
-using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;

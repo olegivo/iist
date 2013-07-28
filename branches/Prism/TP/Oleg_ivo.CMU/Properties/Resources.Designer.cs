@@ -9,9 +9,6 @@
 //------------------------------------------------------------------------------
 
 namespace Oleg_ivo.CMU.Properties {
-    using System;
-    
-    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>

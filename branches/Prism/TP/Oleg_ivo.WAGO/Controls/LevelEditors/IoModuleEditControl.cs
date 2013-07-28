@@ -1,6 +1,4 @@
 using System;
-using System.Data;
-using System.Data.OleDb;
 using System.Windows.Forms;
 
 namespace Oleg_ivo.WAGO.Controls.LevelEditors
@@ -57,7 +55,7 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
         public void Fill(object editValue)
         {
             throw new NotImplementedException("editValue не обработано");
-            dataManager1.Fill();
+            //dataManager1.Fill();
         }
     }
 }

@@ -1,5 +1,3 @@
-using Oleg_ivo.Plc;
-
 namespace Oleg_ivo.WAGO.Controls.LevelEditors
 {
     partial class FieldBusNodeEditControl

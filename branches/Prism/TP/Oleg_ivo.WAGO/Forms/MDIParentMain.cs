@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 using Autofac;
-using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 
 namespace Oleg_ivo.WAGO.Forms
 {

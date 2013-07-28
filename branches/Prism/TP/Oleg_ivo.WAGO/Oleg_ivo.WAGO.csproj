@@ -140,7 +140,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ConfigurationSectionDesigner1.csd</DependentUpon>
     </Compile>
-    <Compile Include="Configuration\DMISConfigurationElement.cs" />
     <Compile Include="Configuration\WagoCommandLineOptions.cs" />
     <Compile Include="Controls\FieldBusNodesEditControl.Designer.cs">
       <DependentUpon>FieldBusNodesEditControl.cs</DependentUpon>

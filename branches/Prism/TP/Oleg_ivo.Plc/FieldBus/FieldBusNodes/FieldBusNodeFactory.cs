@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using NLog;
+using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
-using Oleg_ivo.PrismExtensions.Autofac;
 
 namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
 {

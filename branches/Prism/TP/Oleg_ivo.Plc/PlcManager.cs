@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Autofac;
+using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 using Oleg_ivo.Plc.Ports;
-using Oleg_ivo.PrismExtensions.Autofac;
 
 namespace Oleg_ivo.Plc
 {

@@ -1,7 +1,7 @@
 using Autofac;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.FieldBus;
-using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
 using Oleg_ivo.WAGO.Configuration;
 using Oleg_ivo.WAGO.Forms;
 

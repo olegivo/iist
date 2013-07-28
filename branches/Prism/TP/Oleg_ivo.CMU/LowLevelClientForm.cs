@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using DMS.Common.Messages;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.LowLevelClient;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
-using Oleg_ivo.PrismExtensions.Autofac.DependencyInjection;
 using Oleg_ivo.Tools.UI;
 
 namespace Oleg_ivo.CMU

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DMS.Common.Messages
+﻿namespace DMS.Common.Messages
 {
     /// <summary>
     /// Сообщение, содержащее управляющую информацию
