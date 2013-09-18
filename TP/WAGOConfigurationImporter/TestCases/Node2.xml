@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Edited with WAGO-I/O-Check 2 Version 02.01.09.01 () -->
+<application application-name="WAGO-I/O-Check 2" application-ver="02.01.09.01 " application-date="" application-lang="en" >
+   <project project-name="WAGO-I/O-Check 2 (Version 02.01.09)">
+     <node node-name="Node1" node-pos="0">
+      <module physical-pos="0" subbus-id="0" subbus-name="0x032F" article-no="0750-0815" article-id="07500815" module-name="MODBUS RS 485 (1.2-115.2 kBaud) Programmable Fieldbus Controller" use-customer-data="0" customer-module-name="" module-type="30">
+      </module>
+      <module physical-pos="1" subbus-id="1" subbus-name="0x8801" article-no="0750-04xx" article-id="" module-name="8DI" use-customer-data="0" customer-module-name="" module-type="3">
+        <channel channel-no="1" channel-name="I 1: Digital Input"/>
+        <channel channel-no="2" channel-name="I 2: Digital Input"/>
+        <channel channel-no="3" channel-name="I 3: Digital Input"/>
+        <channel channel-no="4" channel-name="I 4: Digital Input"/>
+        <channel channel-no="5" channel-name="I 5: Digital Input"/>
+        <channel channel-no="6" channel-name="I 6: Digital Input"/>
+        <channel channel-no="7" channel-name="I 7: Digital Input"/>
+        <channel channel-no="8" channel-name="I 8: Digital Input"/>
+      </module>
+      <module physical-pos="2" subbus-id="2" subbus-name="0x8802" article-no="0750-05xx" article-id="" module-name="8DO" use-customer-data="0" customer-module-name="" module-type="4">
+        <channel channel-no="1" channel-name="O 1: Digital Output"/>
+        <channel channel-no="2" channel-name="O 2: Digital Output"/>
+        <channel channel-no="3" channel-name="O 3: Digital Output"/>
+        <channel channel-no="4" channel-name="O 4: Digital Output"/>
+        <channel channel-no="5" channel-name="O 5: Digital Output"/>
+        <channel channel-no="6" channel-name="O 6: Digital Output"/>
+        <channel channel-no="7" channel-name="O 7: Digital Output"/>
+        <channel channel-no="8" channel-name="O 8: Digital Output"/>
+      </module>
+      <module physical-pos="3" subbus-id="3" subbus-name="0x01D1" article-no="0750-0465" article-id="07500465" module-name="2 AI 0-20mA S.E." use-customer-data="0" customer-module-name="" module-type="1">
+        <channel channel-no="1" channel-name="I 1: Analog Input">
+          <register R09="0x3330" R11="0x0218" R12="0x0098" R13="0x0000" R16="0x0006" R17="0xFF7F" R18="0x115A" R19="0x0000" R20="0x2002" R21="0x0FFF" R32="0x1116" R33="0x0000" R34="0x0100" R35="0x0000"/>
+        </channel>
+        <channel channel-no="2" channel-name="I 2: Analog Input">
+          <register R09="0x0000" R11="0x0000" R12="0x0000" R13="0x0000" R16="0x0000" R17="0xFF7D" R18="0x1158" R19="0x0000" R20="0x2002" R21="0x0FFF" R32="0x1116" R33="0x0000" R34="0x0100" R35="0x0000"/>
+        </channel>
+      </module>
+      <module physical-pos="4" subbus-id="4" subbus-name="0x0228" article-no="0750-0552" article-id="07500552" module-name="2 AO 0-20mA" use-customer-data="0" customer-module-name="" module-type="2">
+        <channel channel-no="1" channel-name="O 1: Analog Output">
+          <register R09="0x3341" R11="0x0218" R12="0x9800" R13="0x0000" R16="0x0005" R17="0x007B" R18="0x004B" R19="0x0000" R20="0x0020" R21="0x0000" R32="0x0006" R33="0x0000" R34="0x0100" R35="0x0000"/>
+        </channel>
+        <channel channel-no="2" channel-name="O 2: Analog Output">
+          <register R09="0x0000" R11="0x0000" R12="0x0000" R13="0x0000" R16="0x0000" R17="0x007D" R18="0x004C" R19="0x0000" R20="0x0020" R21="0x0000" R32="0x0006" R33="0x0000" R34="0x0100" R35="0x0000"/>
+        </channel>
+      </module>
+      <module physical-pos="5" subbus-id="5" subbus-name="0x0228" article-no="0750-0552" article-id="07500552" module-name="2 AO 0-20mA" use-customer-data="0" customer-module-name="" module-type="2">
+        <channel channel-no="1" channel-name="O 1: Analog Output">
+          <register R09="0x3341" R11="0x0218" R12="0x9800" R13="0x0000" R16="0x0005" R17="0x0088" R18="0x0047" R19="0x0000" R20="0x0020" R21="0x0000" R32="0x0006" R33="0x0000" R34="0x0100" R35="0x0000"/>
+        </channel>
+        <channel channel-no="2" channel-name="O 2: Analog Output">
+          <register R09="0x0000" R11="0x0000" R12="0x0000" R13="0x0000" R16="0x0000" R17="0x0070" R18="0x004E" R19="0x0000" R20="0x0020" R21="0x0000" R32="0x0006" R33="0x0000" R34="0x0100" R35="0x0000"/>
+        </channel>
+      </module>
+      <module physical-pos="6" subbus-id="6" subbus-name="0x022A" article-no="0750-0554" article-id="07500554" module-name="2 AO 4-20mA" use-customer-data="0" customer-module-name="" module-type="2">
+        <channel channel-no="1" channel-name="O 1: Analog Output">
+          <register R09="0x3341" R11="0x0218" R12="0x9800" R13="0x0000" R16="0x0007" R17="0x0058" R18="0x003F" R19="0x0000" R20="0x0020" R21="0x0000" R32="0x0006" R33="0x0000" R34="0x0100" R35="0x0000"/>
+        </channel>
+        <channel channel-no="2" channel-name="O 2: Analog Output">
+          <register R09="0x0000" R11="0x0000" R12="0x0000" R13="0x0000" R16="0x0000" R17="0x0058" R18="0x003B" R19="0x0000" R20="0x0020" R21="0x0000" R32="0x0006" R33="0x0000" R34="0x0100" R35="0x0000"/>
+        </channel>
+      </module>
+      <module physical-pos="7" subbus-id="7" subbus-name="0x0000" article-no="0750-0600" article-id="07500600" module-name="End Module" use-customer-data="0" customer-module-name="" module-type="5">
+      </module>
+      </node>
+   </project>
+</application>
