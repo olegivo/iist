@@ -141,6 +141,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\ucChartTab.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ucCycloneAndScrubber.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -192,6 +196,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModels\ChartTabViewModel.cs" />
+    <Compile Include="Views\ucChartTab.xaml.cs">
+      <DependentUpon>ucChartTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ucCycloneAndScrubber.xaml.cs">
       <DependentUpon>ucCycloneAndScrubber.xaml</DependentUpon>
@@ -304,6 +312,10 @@
     <ProjectReference Include="..\DMS.Common\DMS.Common.csproj">
       <Project>{02BA939D-826A-4D6E-8B42-414AF3F6C7CE}</Project>
       <Name>DMS.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\External\QuickChartsWPF\QuickChartsWPF.csproj">
+      <Project>{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}</Project>
+      <Name>QuickChartsWPF</Name>
     </ProjectReference>
     <ProjectReference Include="..\Oleg_ivo.Client\Oleg_ivo.HighLevelClient.csproj">
       <Project>{D3640EED-9D98-4EBC-9F8B-98B74B67ED21}</Project>

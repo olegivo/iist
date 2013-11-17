@@ -64,6 +64,7 @@
                         <Views:ucHeatExchanger Width="Auto" Height="Auto"/>
                         <Views:ucDrumTypeFurnace Height="Auto" Width="Auto"/>
                         <Views:ucReheatChamber Height="Auto" Width="Auto"/>
+                        <Views:ucChartTab Height="Auto" Width="Auto"/>
 
                     </UniformGrid>
                 </TabItem>
@@ -87,9 +88,14 @@
                         <Views:ucCycloneAndScrubber x:Name="CycloneAndScrubber" HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding CycloneAndScrubber}"/>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Финишная очистка" Style="{DynamicResource TabItemStyle1}">
+                <!--<TabItem Header="Финишная очистка" Style="{DynamicResource TabItemStyle1}">
                     <Grid>
                         <Views:ucFinishCleaning x:Name="FinishCleaning" HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding FinishCleaning}"/>
+                    </Grid>
+                </TabItem>-->
+                <TabItem Header="Графики" Style="{DynamicResource TabItemStyle1}">
+                    <Grid>
+                        <Views:ucChartTab x:Name="ChartTab" HorizontalAlignment="Left" Height="Auto" Width="Auto" DataContext="{Binding ChartTab}"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Сводная таблица" Style="{DynamicResource TabItemStyle1}">

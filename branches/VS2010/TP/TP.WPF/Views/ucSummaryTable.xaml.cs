@@ -18,6 +18,7 @@ namespace TP.WPF.Views
             InitializeComponent();
             visibleColumnNames = new StringCollection { "Id", "Description", "CurrentValue", "IsActive" };
             grid.AutoGeneratingColumn += grid_AutoGeneratingColumn;
+            
         }
 
         void grid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
