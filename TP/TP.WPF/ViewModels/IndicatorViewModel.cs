@@ -156,13 +156,18 @@ namespace TP.WPF.ViewModels
         //TODO: создать отдельную модель представления для дискретных индикаторов
         public bool DiscreteOnState
         {
-            get { return discreteOnState; }
+            get
+            {
+                return (CurrentValue != null && CurrentValue > 0.9) ? true : false;
+                //discreteOnState;
+            }
             set
             {
                 if (CurrentValue != null && CurrentValue > 0.9)
-                    discreteOnState = true;
+                    discreteOnState = true;//Convert.ToBoolean(value);
                 else
                     discreteOnState = false;
+                OnPropertyChanged("DiscreteOnState");
 
             }
         }
