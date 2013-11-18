@@ -157,6 +157,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ucDrumTypeFurnaceNew.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ucFinishCleaning.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -206,6 +210,9 @@
     </Compile>
     <Compile Include="Views\ucDrumTypeFurnace.xaml.cs">
       <DependentUpon>ucDrumTypeFurnace.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ucDrumTypeFurnaceNew.xaml.cs">
+      <DependentUpon>ucDrumTypeFurnaceNew.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ucFinishCleaning.xaml.cs">
       <DependentUpon>ucFinishCleaning.xaml</DependentUpon>
