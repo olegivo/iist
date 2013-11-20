@@ -1,0 +1,70 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:UICommon.WPF.Converters" x:Name="userControl"
+	mc:Ignorable="d"
+	x:Class="UICommon.WPF.ucDiscreteIndicator"
+    Width="80" Height="80">
+	<UserControl.Resources>
+        <local:ValueAngleConverter x:Key="valueAngleConverter" />
+                <!-- триггер для переключения индикатора в аварийное состояние-->
+        <Style TargetType="Ellipse" x:Key="IndicatorAlarmStyle">
+            <!-- Стандартный фон индикатора-->
+            <Setter Property="Fill">
+                <Setter.Value>
+					<RadialGradientBrush>
+						<GradientStop Color="Lime"/>
+						<GradientStop Color="Lime" Offset="1"/>
+						<GradientStop Color="#FF1D0C0B" Offset="0.932"/>
+						<GradientStop Color="Lime" Offset="0.86"/>
+					</RadialGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=DiscreteOnState}" Value="True">
+                    <!-- Аварийный фон индикатора-->
+                    <Setter Property="Fill">
+					    <Setter.Value>
+							<RadialGradientBrush>
+								<GradientStop Color="Red"/>
+								<GradientStop Color="#FFEB1717" Offset="1"/>
+								<GradientStop Color="#FF1D0C0B" Offset="0.932"/>
+								<GradientStop Color="Red" Offset="0.86"/>
+							</RadialGradientBrush>
+        				</Setter.Value>
+					</Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+	</UserControl.Resources>
+
+	<!-- Начало рабочего холста-->
+	<Viewbox Stretch="Fill">
+		<Canvas Width="80" Height="80" RenderTransformOrigin="0.5,0.5">
+            <TextBlock x:Name="IndicatorCapture" Height="17.6" TextWrapping="Wrap" Text="{Binding Path=Caption}" Canvas.Top="80" Width="80" TextAlignment="Center" Foreground="#FF817979"/>
+			<Border BorderBrush="Black" BorderThickness="0" Height="32" Canvas.Left="24" Canvas.Top="24" Width="32">
+				<TextBlock x:Name="IndicatorValue" TextWrapping="Wrap" Text="{Binding CurrentValue}" FontFamily="Tahoma" TextAlignment="Center" FontWeight="ExtraBold" FontSize="10.667"/>
+			</Border>
+			
+			<Ellipse Height="64" Canvas.Left="8" Canvas.Top="8" Width="64" Style="{StaticResource IndicatorAlarmStyle}" />
+			
+			<!-- стрелка, указывающая нижнюю границу безаварийной работы
+			<Path x:Name="MinNormalArrow" Data="M11.7368,-16.19858 L11.7368,22.677574 45.870133,2.4623134 z" Fill="#FFF4F4F5" Height="5" Stretch="Fill" Stroke="Black" Canvas.Top="78.575" Width="5" RenderTransformOrigin="16,0.205">
+				<Path.RenderTransform>
+					<RotateTransform>
+						<RotateTransform.Angle>
+							<MultiBinding Converter="{StaticResource valueAngleConverter}">
+                                <Binding Path="MinNormalValue"/>
+								<Binding Path="MinValue"/>
+								<Binding Path="MaxValue"/>
+                            </MultiBinding>
+						</RotateTransform.Angle>
+					</RotateTransform>
+				</Path.RenderTransform>
+			</Path>
+			-->
+		</Canvas>
+	</Viewbox>
+</UserControl>
