@@ -20,7 +20,7 @@ namespace UICommon.WPF.Converters
 
             if (values[0] != null && currentValue!=0)
             {
-                total = (maxValue - minValue*10)/currentValue*185;
+                total = 185/(maxValue - minValue)*currentValue;
             }
 
             return total;
