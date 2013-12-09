@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using AmCharts.Windows.QuickCharts;
 using Microsoft.Windows.Controls;
 using TP.WPF.ViewModels;
+using TP.WPF.ViewModels;
 
 namespace TP.WPF.Views
 {
@@ -20,27 +21,13 @@ namespace TP.WPF.Views
             //grid.AutoGeneratingColumn += grid_AutoGeneratingColumn;
             //this.Chart1.Graphs.Add(new LineGraph(){});
 
-            Chart1.DataContextChanged += new DependencyPropertyChangedEventHandler(Chart1_DataContextChanged);
-        }
 
-        void Chart1_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-
-            //throw new System.NotImplementedException();
-        }
-
-
-
-        //void grid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
-        //{
-        //    var table = grid.ItemsSource as DataSetChannels.ChannelsDataTable;
-        //    if (table == null) return;
             
-        //    var column = e.Column;
-        //    var header = (string) e.Column.Header;
-        //    var col = table.Columns[header];
-        //    column.Visibility = visibleColumnNames.Contains(header) ? Visibility.Visible : Visibility.Hidden;
-        //    column.Header = col.Caption;
-        //}
+            //Chart1.DataSource
+        }
+
+
+
+
     }
 }

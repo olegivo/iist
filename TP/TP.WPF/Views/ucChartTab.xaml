@@ -9,19 +9,18 @@
 	x:Name="UserControl"
 	d:DesignWidth="640" d:DesignHeight="480" Width="1024" Height="768">
     <Grid>
-        <amq:SerialChart x:Name="Chart1"
+        <amq:InheritedLineGraph x:Name="Chart1"
+                         Graphs="{Binding ChartCollection}"
                          DataSource="{Binding ChartBindingData}" 
                          CategoryValueMemberPath="ChannelTime" 
-                         Background="Transparent"
+                         Background="White"
+                         BorderBrush="Black"
                          BorderThickness="1"
-                         AxisForeground="BurlyWood"
-                         ValueFormatString="0.00"
+                         AxisForeground="Chocolate"
+                         ValueFormatString="0.00" 
                          >
-            <amq:SerialChart.Graphs>
-                <amq:LineGraph ValueMemberPath="ChannelValue" Title="ChannelId" />
-               <!-- <amq:ColumnGraph ValueMemberPath="val2" Title="Column #1" ColumnWidthAllocation="0.2" />
-                <amq:AreaGraph ValueMemberPath="val3" Title="Area #1" />-->
-            </amq:SerialChart.Graphs>
-        </amq:SerialChart>
+        </amq:InheritedLineGraph>
+
+
     </Grid>
 </UserControl>

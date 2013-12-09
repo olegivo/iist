@@ -320,13 +320,13 @@
       <Project>{02BA939D-826A-4D6E-8B42-414AF3F6C7CE}</Project>
       <Name>DMS.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\External\QuickChartsWPF\QuickChartsWPF.csproj">
-      <Project>{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}</Project>
-      <Name>QuickChartsWPF</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Oleg_ivo.Client\Oleg_ivo.HighLevelClient.csproj">
       <Project>{D3640EED-9D98-4EBC-9F8B-98B74B67ED21}</Project>
       <Name>Oleg_ivo.HighLevelClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuickChartsWPF\QuickChartsWPF.csproj">
+      <Project>{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}</Project>
+      <Name>QuickChartsWPF</Name>
     </ProjectReference>
     <ProjectReference Include="..\UICommon.WPF\UICommon.WPF.csproj">
       <Project>{46D87FCA-8216-4BA1-81C6-8288641B573E}</Project>
