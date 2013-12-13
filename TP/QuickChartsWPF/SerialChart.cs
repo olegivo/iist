@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -492,14 +490,24 @@ namespace AmCharts.Windows.QuickCharts
             if (this.DataSource != null)
             {
                 var paths = GetDistinctPaths();
+                var chnls = GetSubscribedChannelPaths();
 
-                Dictionary<string, BindingEvaluator> bindingEvaluators = CreateBindingEvaluators(paths);
-                ResetValues(paths);
+                //Канальные 
+                Dictionary<string, BindingEvaluator> bindingEvaluators = CreateBindingEvaluators(chnls);
+                ResetValues(chnls/*paths*/);
 
-                // add data items
-                foreach (object dataItem in this.DataSource)
+                // AddSingleStepValues - записывает данные в _values[], разделяя данные по каналам
+                foreach (var dataItem in this.DataSource)
                 {
-                    AddSingleStepValues(paths, bindingEvaluators, dataItem);
+                    foreach (var chnl in chnls)
+                    {
+                        var chanelNo = "Channel" + bindingEvaluators[chnl].Eval(dataItem, "ChannelId").ToString();
+                        if(chanelNo == chnl)
+                        {
+                            var chanelVal = Convert.ToDouble(bindingEvaluators[chnl].Eval(dataItem));
+                            AddSingleStepValues(chanelNo, chanelVal);
+                        }
+                    }
                 }
 
                 ProcessCategoryData();
@@ -511,6 +519,9 @@ namespace AmCharts.Windows.QuickCharts
             InvalidateMinMax();
         }
 
+        /// <summary>
+        /// Расстановка значений по оси x (время)
+        /// </summary>
         private void ProcessCategoryData()
         {
             _categoryValues.Clear();
@@ -519,17 +530,15 @@ namespace AmCharts.Windows.QuickCharts
                 BindingEvaluator eval = new BindingEvaluator(CategoryValueMemberPath);
                 foreach (object dataItem in this.DataSource)
                 {
-                    _categoryValues.Add(eval.Eval(dataItem).ToString());
+                    _categoryValues.Add(eval.Eval(dataItem, CategoryValueMemberPath).ToString());
                 }
             }
         }
 
-        private void AddSingleStepValues(IEnumerable<string> paths, Dictionary<string, BindingEvaluator> bindingEvaluators, object dataItem)
+        private void AddSingleStepValues(string chnl, double chnval)
         {
-            foreach (string path in paths)
-            {
-                _values[path].Add(Convert.ToDouble(bindingEvaluators[path].Eval(dataItem)));
-            }
+            _values[chnl].Add(chnval);
+
         }
 
         private IEnumerable<string> GetDistinctPaths()
@@ -539,14 +548,21 @@ namespace AmCharts.Windows.QuickCharts
                          select g.ValueMemberPath).Distinct();
             return paths;
         }
+        private IEnumerable<string> GetSubscribedChannelPaths()
+        {
+            var paths = (from g in this.Graphs
+                         select g.ChannelId).Distinct();
+            return paths;
+        }
 
-        private Dictionary<string, BindingEvaluator> CreateBindingEvaluators(IEnumerable<string> paths)
+        private Dictionary<string, BindingEvaluator> CreateBindingEvaluators(IEnumerable<string> chnls)
         {
             Dictionary<string, BindingEvaluator> bindingEvaluators = new Dictionary<string, BindingEvaluator>();
-            foreach (string path in paths)
+            foreach (string chnl in chnls)
             {
-                bindingEvaluators.Add(path, new BindingEvaluator(path));
+                bindingEvaluators.Add(chnl, new BindingEvaluator(chnl));
             }
+
             return bindingEvaluators;
         }
 
@@ -779,8 +795,8 @@ namespace AmCharts.Windows.QuickCharts
 
             if (_values.Count > 0)
             {
-                var paths = GetDistinctPaths();
-
+                //var paths = GetDistinctPaths();
+                var paths = GetSubscribedChannelPaths();
                 foreach (string path in paths)
                 {
                     _locations.Add(path, new PointCollection());
@@ -792,7 +808,7 @@ namespace AmCharts.Windows.QuickCharts
 
                 foreach (SerialGraph graph in this._graphs)
                 {
-                    graph.SetPointLocations(_locations[graph.ValueMemberPath], GetYCoordinate(_groundValue));
+                    graph.SetPointLocations(_locations[graph.ChannelId/*graph.ValueMemberPath*/], GetYCoordinate(_groundValue));
                 }
             }
 

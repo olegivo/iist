@@ -201,6 +201,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\ChartDataItem.cs" />
     <Compile Include="ViewModels\ChartTabViewModel.cs" />
     <Compile Include="Views\ucChartTab.xaml.cs">
       <DependentUpon>ucChartTab.xaml</DependentUpon>

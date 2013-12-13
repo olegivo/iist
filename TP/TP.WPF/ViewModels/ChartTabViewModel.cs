@@ -9,10 +9,10 @@ namespace TP.WPF.ViewModels
     public class ChartTabViewModel : ViewModelBase
     {
         //public DiscreetClearObservableCollection<SerialGraph> ChannelCharts;
-        public ChartTabViewModel() 
+        public ChartTabViewModel()
         {
             //ChannelCharts = new DiscreetClearObservableCollection<SerialGraph>();
-            
+
         }
 
         public ObservableCollection<ChartDataItem> ChartBindingData { get { return _data; } }
@@ -30,27 +30,35 @@ namespace TP.WPF.ViewModels
                     ChannelValue = 12
                     
                 },
-            new ChartDataItem()
+           new ChartDataItem()
                 {
-                    ChannelId = 1,
-                    ChannelTime = "4",
-                    ChannelValue = 15
+                    ChannelId = 2,
+                    ChannelTime = "3",
+                    ChannelValue = 10
                     
                 },
            new ChartDataItem()
                 {
-                    ChannelId = 1,
+                    ChannelId = 2,
+                    ChannelTime = "4",
+                    ChannelValue = 16
+                    
+                },
+           new ChartDataItem()
+                {
+                    ChannelId = 3,
+                    ChannelTime = "4",
+                    ChannelValue = 13
+                    
+                },
+           new ChartDataItem()
+                {
+                    ChannelId = 3,
                     ChannelTime = "5",
-                    ChannelValue = 14
+                    ChannelValue = 13
                     
                 }
             };
-        public class ChartDataItem
-        {
-            public int ChannelId { get; set; }
-            public double ChannelValue { get; set; }
-            public string ChannelTime { get; set; }
-        }
 
         public DiscreetClearObservableCollection<SerialGraph> _chartCollection = new DiscreetClearObservableCollection
             <SerialGraph>()
@@ -58,12 +66,29 @@ namespace TP.WPF.ViewModels
                 new LineGraph()
                     {
                         Title = "TestChart",
-                        ValueMemberPath = "ChannelValue"
-                        
-                        
+                        ValueMemberPath = "ChannelValue",
+                        ChannelId = "Channel1"
+
+                    },
+                new LineGraph()
+                    {
+                        Title = "TestChart2",
+                        ValueMemberPath = "ChannelValue",
+                        ChannelId = "Channel2"
+
+                    },
+               new LineGraph()
+                    {
+                        Title = "TestChart3",
+                        ValueMemberPath = "ChannelValue",
+                        ChannelId = "Channel3"
+
                     }
+
+
             };
-        public DiscreetClearObservableCollection<SerialGraph> ChartCollection {
+        public DiscreetClearObservableCollection<SerialGraph> ChartCollection
+        {
             set { _chartCollection = value; }
             get
             {
@@ -81,17 +106,17 @@ namespace TP.WPF.ViewModels
                 {
                     ChannelId = message.LogicalChannelId,
                     ChannelTime = message.TimeStamp.ToString("mm:ss"),
-                    ChannelValue = (double) message.Value
+                    ChannelValue = (double)message.Value
                 };
             if (!_data.Contains(new ChartDataItem()))
             {
                 _data.Add(newChartDataItem);
             }
-            if (_data.Count>100)
+            if (_data.Count > 100)
             {
                 _data.RemoveAt(0);
             }
-            
+
 
             //ActualizeChannelValue(message.LogicalChannelId, Math.Round((double)message.Value,2)); //согласно требованию представления данных в ИИС
         }
@@ -102,14 +127,15 @@ namespace TP.WPF.ViewModels
                 {
                     Title = "Канал №" + message.LogicalChannelId,
                     ValueMemberPath = "val" + message.LogicalChannelId,
-                    Name = "graph" + message.LogicalChannelId
+                    Name = "graph" + message.LogicalChannelId,
+                    ChannelId = string.Format("Channel{0}", message.LogicalChannelId)
                 }
                 );
         }
         public override void OnChannelUnRegistered(ChannelRegistrationMessage message)
         {
             var gi = SelectSerialGraphItemByChannelId(message.LogicalChannelId);
-            if (gi!=null)
+            if (gi != null)
             {
                 ChartCollection.Remove(gi);
             }
