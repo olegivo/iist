@@ -34,10 +34,11 @@ namespace AmCharts.Windows.QuickCharts
         /// </summary>
         /// <param name="source">Object for which property value should be evaluated</param>
         /// <returns>Value of the property</returns>
-        public object Eval(object source)
+        public object Eval(object source, string Path="ChannelValue")
         {
             ClearValue(BindingEvaluator.EvaluatorProperty);
-            var binding = new Binding(_propertyPath);
+            //var binding = new Binding(_propertyPath);
+            var binding = new Binding(Path);
             binding.Mode = BindingMode.OneTime;
             binding.Source = source;
             SetBinding(BindingEvaluator.EvaluatorProperty, binding);
