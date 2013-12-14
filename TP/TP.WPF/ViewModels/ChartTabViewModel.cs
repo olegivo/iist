@@ -17,47 +17,48 @@ namespace TP.WPF.ViewModels
 
         public ObservableCollection<ChartDataItem> ChartBindingData { get { return _data; } }
         private ObservableCollection<ChartDataItem> _data = new ObservableCollection<ChartDataItem>()
-            {new ChartDataItem()
-                {
-                    ChannelId = 1,
-                    ChannelTime = "2",
-                    ChannelValue = 22
-                },
+            {
             new ChartDataItem()
                 {
                     ChannelId = 1,
-                    ChannelTime = "3",
-                    ChannelValue = 12
-                    
+                    ChannelTime = "2",
+                    ChannelValue = 1
                 },
-           new ChartDataItem()
-                {
-                    ChannelId = 2,
-                    ChannelTime = "3",
-                    ChannelValue = 10
+           // new ChartDataItem()
+           //     {
+           //         ChannelId = 1,
+           //         ChannelTime = "3",
+           //         ChannelValue = 12
                     
-                },
-           new ChartDataItem()
-                {
-                    ChannelId = 2,
-                    ChannelTime = "4",
-                    ChannelValue = 16
+           //     },
+           //new ChartDataItem()
+           //     {
+           //         ChannelId = 2,
+           //         ChannelTime = "3",
+           //         ChannelValue = 10
                     
-                },
-           new ChartDataItem()
-                {
-                    ChannelId = 3,
-                    ChannelTime = "4",
-                    ChannelValue = 13
+           //     },
+           //new ChartDataItem()
+           //     {
+           //         ChannelId = 2,
+           //         ChannelTime = "4",
+           //         ChannelValue = 16
                     
-                },
-           new ChartDataItem()
-                {
-                    ChannelId = 3,
-                    ChannelTime = "5",
-                    ChannelValue = 13
+           //     },
+           //new ChartDataItem()
+           //     {
+           //         ChannelId = 3,
+           //         ChannelTime = "4",
+           //         ChannelValue = 13
                     
-                }
+           //     },
+           //new ChartDataItem()
+           //     {
+           //         ChannelId = 3,
+           //         ChannelTime = "5",
+           //         ChannelValue = 13
+                    
+           //     }
             };
 
         public DiscreetClearObservableCollection<SerialGraph> _chartCollection = new DiscreetClearObservableCollection
@@ -104,6 +105,7 @@ namespace TP.WPF.ViewModels
             //base.OnReadChannel(message);
             var newChartDataItem = new ChartDataItem
                 {
+                    
                     ChannelId = message.LogicalChannelId,
                     ChannelTime = message.TimeStamp.ToString("mm:ss"),
                     ChannelValue = (double)message.Value
@@ -126,9 +128,8 @@ namespace TP.WPF.ViewModels
             ChartCollection.Add(new LineGraph()
                 {
                     Title = "Канал №" + message.LogicalChannelId,
-                    ValueMemberPath = "val" + message.LogicalChannelId,
-                    Name = "graph" + message.LogicalChannelId,
-                    ChannelId = string.Format("Channel{0}", message.LogicalChannelId)
+                    ValueMemberPath = "ChannelValue",
+                    ChannelId = "Channel" + message.LogicalChannelId.ToString()
                 }
                 );
         }

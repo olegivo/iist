@@ -132,5 +132,7 @@ namespace AmCharts.Windows.QuickCharts
             get { return (Brush)GetValue(SerialGraph.BrushProperty); }
             set { SetValue(SerialGraph.BrushProperty, value); }
         }
+
+        public string ChannelId { get; set; }
     }
 }
