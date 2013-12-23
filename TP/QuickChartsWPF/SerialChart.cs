@@ -154,7 +154,7 @@ namespace AmCharts.Windows.QuickCharts
             }
         }
 
-        private void RemoveGraphFromCanvas(SerialGraph graph)
+        protected void RemoveGraphFromCanvas(SerialGraph graph)
         {
             if (_graphCanvas != null && _graphCanvas.Children.Contains(graph))
                 _graphCanvas.Children.Remove(graph);
@@ -251,7 +251,7 @@ namespace AmCharts.Windows.QuickCharts
         }
 #endif
 
-        private void AssignLegend()
+        protected void AssignLegend()
         {
             _legend = (Legend)TreeHelper.TemplateFindName("PART_Legend", this);
             _legend.LegendItemsSource = this.Graphs.Cast<ILegendItem>(); // TODO: handle changes in Graphs
