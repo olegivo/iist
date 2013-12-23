@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using AmCharts.Windows.QuickCharts;
 using DMS.Common.Messages;
 
@@ -11,80 +13,58 @@ namespace TP.WPF.ViewModels
         //public DiscreetClearObservableCollection<SerialGraph> ChannelCharts;
         public ChartTabViewModel()
         {
-            //ChannelCharts = new DiscreetClearObservableCollection<SerialGraph>();
 
+            //ChartBindingData.CollectionChanged+= ChartBindingDataOnCollectionChanged;
+            ChartCollection.CollectionChanged += ChartCollectionOnCollectionChanged;
+
+        }
+
+        private void ChartCollectionOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+
+        }
+
+        private void ChartBindingDataOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            //throw new NotImplementedException();
         }
 
         public ObservableCollection<ChartDataItem> ChartBindingData { get { return _data; } }
         private ObservableCollection<ChartDataItem> _data = new ObservableCollection<ChartDataItem>()
             {
-            new ChartDataItem()
-                {
-                    ChannelId = 1,
-                    ChannelTime = "2",
-                    ChannelValue = 1
-                },
+           // new ChartDataItem()
+           //     {
+           //         ChannelId = 1,
+           //         ChannelTime = "2",
+           //         ChannelValue = 0.1
+           //     },
            // new ChartDataItem()
            //     {
            //         ChannelId = 1,
            //         ChannelTime = "3",
-           //         ChannelValue = 12
+           //         ChannelValue = 0.2
                     
            //     },
            //new ChartDataItem()
            //     {
-           //         ChannelId = 2,
-           //         ChannelTime = "3",
-           //         ChannelValue = 10
-                    
-           //     },
-           //new ChartDataItem()
-           //     {
-           //         ChannelId = 2,
+           //         ChannelId = 1,
            //         ChannelTime = "4",
-           //         ChannelValue = 16
+           //         ChannelValue = 0.15
                     
            //     },
-           //new ChartDataItem()
-           //     {
-           //         ChannelId = 3,
-           //         ChannelTime = "4",
-           //         ChannelValue = 13
-                    
-           //     },
-           //new ChartDataItem()
-           //     {
-           //         ChannelId = 3,
-           //         ChannelTime = "5",
-           //         ChannelValue = 13
-                    
-           //     }
             };
 
         public DiscreetClearObservableCollection<SerialGraph> _chartCollection = new DiscreetClearObservableCollection
             <SerialGraph>()
             {
-                new LineGraph()
-                    {
-                        Title = "TestChart",
-                        ValueMemberPath = "ChannelValue",
-                        ChannelId = "Channel1"
+                //TEST_CHART
+                //new LineGraph()
+                //    {
+                //        Title = "TestChart",
+                //        ValueMemberPath = "ChannelValue",
+                //        ChannelId = "Channel1"
 
-                    },
-                new LineGraph()
-                    {
-                        Title = "TestChart2",
-                        ValueMemberPath = "ChannelValue",
-                        ChannelId = "Channel2"
-
-                    },
-               new LineGraph()
-                    {
-                        Title = "TestChart3",
-                        ValueMemberPath = "ChannelValue",
-                        ChannelId = "Channel3"
-
-                    }
+                //    }
 
 
             };

@@ -1,24 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Shapes;
-using System.Windows.Media;
-using System.Windows.Data;
 
 namespace AmCharts.Windows.QuickCharts
 {
     public class InheritedLineGraph : SerialChart
     {
-
-        public  InheritedLineGraph()
-        {
-            this._graphs.CollectionChanged += new NotifyCollectionChangedEventHandler(OnGraphsCollectionChanged);
-        }
-
 
         public override void OnApplyTemplate()
         {
@@ -55,19 +42,20 @@ namespace AmCharts.Windows.QuickCharts
         //TODO: Разобраться с необходимыми методами, необходимых для рендеринга  см. OnGraphsCollectionChanged
         private void RenderGraphs()
         {
+            this.Graphs.CollectionChanged += new NotifyCollectionChangedEventHandler(OnGraphsCollectionChanged);
+            //base.OnApplyTemplate(); //?
             if(this.Graphs != null)
             {
 
                 foreach (SerialGraph graph in this.Graphs)
                 {
                     graph.Render();
-                    graph.ValueMemberPathChanged += new EventHandler<DataPathEventArgs>(OnGraphValueMemberPathChanged);
                     if (graph.Brush == null && PresetBrushes.Count > 0)
                     {
                         graph.Brush = PresetBrushes[_graphs.IndexOf(graph) % PresetBrushes.Count];
                     }
                     base.AddGraphToCanvas(graph);
-                    base.AddIndicator(graph);
+                    //base.AddIndicator(graph);
                 }
             }
         }
