@@ -19,8 +19,6 @@ namespace AmCharts.Windows.QuickCharts
 
 
             }
-
-
         }
 
 
