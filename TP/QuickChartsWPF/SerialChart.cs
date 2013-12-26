@@ -55,6 +55,7 @@ namespace AmCharts.Windows.QuickCharts
                     AddIndicator(graph);
                 }
             }
+            AssignLegend();
         }
 
         protected void AddIndicator(SerialGraph graph)
@@ -810,9 +811,8 @@ namespace AmCharts.Windows.QuickCharts
                 {
                     graph.SetPointLocations(_locations[graph.ChannelId/*graph.ValueMemberPath*/], GetYCoordinate(_groundValue));
                 }
+                SetCategoryLocations();
             }
-
-            SetCategoryLocations();
         }
 
         private void SetCategoryLocations()

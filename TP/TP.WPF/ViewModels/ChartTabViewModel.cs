@@ -10,28 +10,11 @@ namespace TP.WPF.ViewModels
 
     public class ChartTabViewModel : ViewModelBase
     {
-        //public DiscreetClearObservableCollection<SerialGraph> ChannelCharts;
-        public ChartTabViewModel()
-        {
-
-            //ChartBindingData.CollectionChanged+= ChartBindingDataOnCollectionChanged;
-            ChartCollection.CollectionChanged += ChartCollectionOnCollectionChanged;
-
-        }
-
-        private void ChartCollectionOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-
-        }
-
-        private void ChartBindingDataOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            //throw new NotImplementedException();
-        }
 
         public ObservableCollection<ChartDataItem> ChartBindingData { get { return _data; } }
         private ObservableCollection<ChartDataItem> _data = new ObservableCollection<ChartDataItem>()
             {
+           //TEST_CHART_DATA
            // new ChartDataItem()
            //     {
            //         ChannelId = 1,
@@ -90,17 +73,15 @@ namespace TP.WPF.ViewModels
                     ChannelTime = message.TimeStamp.ToString("mm:ss"),
                     ChannelValue = (double)message.Value
                 };
-            if (!_data.Contains(new ChartDataItem()))
+            if (!ChartBindingData.Contains(new ChartDataItem()))
             {
-                _data.Add(newChartDataItem);
+                ChartBindingData.Add(newChartDataItem);
             }
-            if (_data.Count > 100)
+            if (ChartBindingData.Count > 100)
             {
-                _data.RemoveAt(0);
+                ChartBindingData.RemoveAt(0);
             }
 
-
-            //ActualizeChannelValue(message.LogicalChannelId, Math.Round((double)message.Value,2)); //согласно требованию представления данных в ИИС
         }
 
         public override void OnChannelRegistered(ChannelRegistrationMessage message)
@@ -118,7 +99,13 @@ namespace TP.WPF.ViewModels
             var gi = SelectSerialGraphItemByChannelId(message.LogicalChannelId);
             if (gi != null)
             {
+                //Удалить график из коллекции
                 ChartCollection.Remove(gi);
+
+                //Удалить все даные удаленого графика, а то завалится в методе SetPointLocations
+                ClearUnregisteredChannelData(gi.ChannelId);
+
+
             }
         }
 
@@ -126,12 +113,24 @@ namespace TP.WPF.ViewModels
         {
             foreach (var serialGraph in ChartCollection)
             {
-                string gn = "graph" + channelId;
-                if (serialGraph.Name == gn)
+                string gn = "Channel" + channelId;
+                if (serialGraph.ChannelId == gn)
                     return serialGraph;
 
             }
             return null;
+        }
+
+        private void ClearUnregisteredChannelData(string channelId)
+        {
+            foreach (ChartDataItem chartDataItem in ChartBindingData)
+            {
+                if (chartDataItem.ChannelId == Int32.Parse(channelId.Replace("Channel","")))
+                {
+                    ChartBindingData.Remove(chartDataItem);
+                }
+            }
+
         }
 
     }
