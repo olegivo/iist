@@ -170,6 +170,7 @@ namespace AmCharts.Windows.QuickCharts
         {
             for (int i = 0; i < _valueBoxes.Count; i++)
             {
+                //BUG: _locations[i]=INF {"'бесконечность' is not a valid value for property 'Left'."}
                 _valueBoxes[i].SetValue(Canvas.LeftProperty, _locations[i]);
                 _valueTicks[i].SetValue(Canvas.LeftProperty, _locations[i]);
             }
