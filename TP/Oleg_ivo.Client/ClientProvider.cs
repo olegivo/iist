@@ -24,7 +24,6 @@ using Oleg_ivo.HighLevelClient.ServiceReferenceHomeWsDualHttp;
 using Oleg_ivo.HighLevelClient.ServiceReferenceHome;
 #endif
 #endif
-
 namespace Oleg_ivo.HighLevelClient
 {
     ///<summary>

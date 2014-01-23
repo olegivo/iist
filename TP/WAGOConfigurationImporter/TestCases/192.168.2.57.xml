@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Edited with WAGO-I/O-Check 2 Version 02.01.09.01 () -->
+<application application-name="WAGO-I/O-Check 2" application-ver="02.01.09.01 " application-date="" application-lang="en" >
+   <project project-name="WAGO-I/O-Check 2 (Version 02.01.09)">
+     <node node-name="Node1" node-pos="0">
+      <module physical-pos="0" subbus-id="0" subbus-name="0x0349" article-no="0750-0841" article-id="07500841" module-name="CONTROLLER ETHERNET 10/100" use-customer-data="0" customer-module-name="" module-type="35">
+      </module>
+      <module physical-pos="1" subbus-id="1" subbus-name="0x0228" article-no="0750-0552" article-id="07500552" module-name="2 AO 0-20mA" use-customer-data="0" customer-module-name="" module-type="2">
+        <channel channel-no="1" channel-name="O 1: Analog Output">
+          <register R09="0x3343" R11="0x0218" R12="0x9800" R13="0x0000" R16="0x0007" R17="0x008E" R18="0x004A" R19="0x0000" R20="0x0020" R21="0x0000" R32="0x0006" R33="0x0000" R34="0x0100" R35="0x0000"/>
+        </channel>
+        <channel channel-no="2" channel-name="O 2: Analog Output">
+          <register R09="0x0000" R11="0x0000" R12="0x0000" R13="0x0000" R16="0x0000" R17="0x0077" R18="0x004D" R19="0x0000" R20="0x0020" R21="0x0000" R32="0x0006" R33="0x0000" R34="0x0100" R35="0x0000"/>
+        </channel>
+      </module>
+      <module physical-pos="2" subbus-id="2" subbus-name="0x8801" article-no="0750-04xx" article-id="" module-name="8DI" use-customer-data="0" customer-module-name="" module-type="3">
+        <channel channel-no="1" channel-name="I 1: Digital Input"/>
+        <channel channel-no="2" channel-name="I 2: Digital Input"/>
+        <channel channel-no="3" channel-name="I 3: Digital Input"/>
+        <channel channel-no="4" channel-name="I 4: Digital Input"/>
+        <channel channel-no="5" channel-name="I 5: Digital Input"/>
+        <channel channel-no="6" channel-name="I 6: Digital Input"/>
+        <channel channel-no="7" channel-name="I 7: Digital Input"/>
+        <channel channel-no="8" channel-name="I 8: Digital Input"/>
+      </module>
+      <module physical-pos="3" subbus-id="3" subbus-name="0x01D1" article-no="0750-0465" article-id="07500465" module-name="2 AI 0-20mA S.E." use-customer-data="0" customer-module-name="" module-type="1">
+        <channel channel-no="1" channel-name="I 1: Analog Input">
+          <register R09="0x3330" R11="0x0218" R12="0x0098" R13="0x0000" R16="0x0006" R17="0xFF78" R18="0x1155" R19="0x0000" R20="0x2002" R21="0x0FFF" R32="0x1116" R33="0x0000" R34="0x0100" R35="0x0000"/>
+        </channel>
+        <channel channel-no="2" channel-name="I 2: Analog Input">
+          <register R09="0x0000" R11="0x0000" R12="0x0000" R13="0x0000" R16="0x0000" R17="0xFF72" R18="0x1150" R19="0x0000" R20="0x2002" R21="0x0FFF" R32="0x1116" R33="0x0000" R34="0x0100" R35="0x0000"/>
+        </channel>
+      </module>
+      <module physical-pos="4" subbus-id="4" subbus-name="0x01D1" article-no="0750-0465" article-id="07500465" module-name="2 AI 0-20mA S.E." use-customer-data="0" customer-module-name="" module-type="1">
+        <channel channel-no="1" channel-name="I 1: Analog Input">
+          <register R09="0x3330" R11="0x0218" R12="0x0098" R13="0x0000" R16="0x0006" R17="0xFF76" R18="0x1162" R19="0x0000" R20="0x2002" R21="0x0FFF" R32="0x1116" R33="0x0000" R34="0x0100" R35="0x0000"/>
+        </channel>
+        <channel channel-no="2" channel-name="I 2: Analog Input">
+          <register R09="0x0000" R11="0x0000" R12="0x0000" R13="0x0000" R16="0x0000" R17="0xFF79" R18="0x1174" R19="0x0000" R20="0x2002" R21="0x0FFF" R32="0x1116" R33="0x0000" R34="0x0100" R35="0x0000"/>
+        </channel>
+      </module>
+      <module physical-pos="5" subbus-id="5" subbus-name="0x0000" article-no="0750-0600" article-id="07500600" module-name="End Module" use-customer-data="0" customer-module-name="" module-type="5">
+      </module>
+      </node>
+   </project>
+</application>

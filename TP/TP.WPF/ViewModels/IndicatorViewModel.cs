@@ -1,4 +1,5 @@
-﻿using DMS.Common.Messages;
+﻿using System;
+using DMS.Common.Messages;
 using JulMar.Windows.Mvvm;
 
 namespace TP.WPF.ViewModels
@@ -11,6 +12,7 @@ namespace TP.WPF.ViewModels
         private double? maxNormalValue;
         private string caption;
         private double? currentValue;
+        private bool discreteOnState;
 
         public void Init(ChannelRegistrationMessage message)
         {
@@ -86,13 +88,18 @@ namespace TP.WPF.ViewModels
                         "IsValueHigherNormal",
                         "IsValueLowerNormal",
                         "IsValueHigherCritycal",
-                        "IsValueLowerCritycal"
+                        "IsValueLowerCritycal",
+                        "ShortCurrentValue",
+                        "DiscreteOnState"
                     };
                 foreach (var propertyName in propertyNames)
                     OnPropertyChanged(propertyName);
             }
         }
 
+        public Decimal ShortCurrentValue {
+            get { return Decimal.Round((Decimal) CurrentValue, 2); }
+        }
 
         /// <summary>
         /// Текущее значение больше нормального
@@ -144,5 +151,29 @@ namespace TP.WPF.ViewModels
                        ? CurrentValue.Value.CompareTo(compareValue.Value)
                        : 0;
         }
+
+
+        //TODO: создать отдельную модель представления для дискретных индикаторов
+        public bool DiscreteOnState
+        {
+            get
+            {
+                return (CurrentValue != null && CurrentValue > 0.9) ? true : false;
+                //discreteOnState;
+            }
+            set
+            {
+                if (CurrentValue != null && CurrentValue > 0.9)
+                    discreteOnState = true;//Convert.ToBoolean(value);
+                else
+                    discreteOnState = false;
+                OnPropertyChanged("DiscreteOnState");
+
+            }
+        }
+
+
+
+
     }
 }

@@ -3,33 +3,298 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:Wpf="clr-namespace:UICommon.WPF;assembly=UICommon.WPF"
+	xmlns:System="clr-namespace:System;assembly=mscorlib"
+	xmlns:UICommon_WPF_UIIndicators="clr-namespace:UICommon.WPF.UIIndicators;assembly=UICommon.WPF"
 	mc:Ignorable="d"
 	x:Class="TP.WPF.Views.ucDrumTypeFurnace"
 	x:Name="UserControl"
-	d:DesignWidth="640" d:DesignHeight="480" Width="1024" Height="768">
+	Width="1024" Height="768">
+
+
+	<UserControl.Resources>
+		<System:Double x:Key="WidthLine1">4</System:Double>
+		<Storyboard x:Key="MusorAnimation" RepeatBehavior="Forever">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="ellipse3">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.5" Value="-9.396"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:1" Value="-18.244"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-28.116"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:2" Value="-40.626"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:2.5" Value="-51.588"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="ellipse3">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.5" Value="-20.264"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:1" Value="-38.996"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-59.744"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:2" Value="-86.584"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:2.5" Value="-108.892"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="ellipse4">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.5" Value="-8.83"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:1" Value="-17.696"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-27.556"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:2" Value="-40.548"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:2.5" Value="-50.944"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:3" Value="-59.78"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="ellipse4">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.5" Value="-18.22"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:1" Value="-37.464"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-58.204"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:2" Value="-84.032"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:2.5" Value="-107.296"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:3" Value="-125.02"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="ellipse5">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.5" Value="-8.336"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:1" Value="-16.666"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-27.562"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:2" Value="-40.566"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:2.5" Value="-50.534"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:3" Value="-67.688"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="ellipse5">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:0.5" Value="-16.224"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:1" Value="-34.944"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-56.708"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:2" Value="-82.544"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:2.5" Value="-105.356"/>
+				<SplineDoubleKeyFrame KeyTime="0:0:3" Value="-140.792"/>
+			</DoubleAnimationUsingKeyFrames>
+			<PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="control">
+				<SplinePointKeyFrame KeyTime="0" Value="0.279,0.25"/>
+			</PointAnimationUsingKeyFrames>
+		</Storyboard>
+		<SolidColorBrush x:Key="Gray10" Color="#FF999797"/>
+		<Storyboard x:Key="ColorAnimation" RepeatBehavior="Forever">
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle1">
+				<SplineColorKeyFrame KeyTime="0" Value="#FF9D9DA7"/>
+				<SplineColorKeyFrame KeyTime="0:0:0.5" Value="#FF373736"/>
+			</ColorAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle">
+				<SplineColorKeyFrame KeyTime="0" Value="#FF373736"/>
+				<SplineColorKeyFrame KeyTime="0:0:0.5" Value="#FF9D9DA7"/>
+			</ColorAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle2">
+				<SplineColorKeyFrame KeyTime="0" Value="#FF373736"/>
+				<SplineColorKeyFrame KeyTime="0:0:0.5" Value="#FF9D9DA7"/>
+			</ColorAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle3">
+				<SplineColorKeyFrame KeyTime="0" Value="#FF9D9DA7"/>
+				<SplineColorKeyFrame KeyTime="0:0:0.5" Value="#FF373736"/>
+			</ColorAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle4">
+				<SplineColorKeyFrame KeyTime="0" Value="#FF373736"/>
+				<SplineColorKeyFrame KeyTime="0:0:0.5" Value="#FF9D9DA7"/>
+			</ColorAnimationUsingKeyFrames>
+			<PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="control1">
+				<SplinePointKeyFrame KeyTime="0:0:0.5" Value="0.279,0.25"/>
+			</PointAnimationUsingKeyFrames>
+		</Storyboard>
+		<SolidColorBrush x:Key="Gray11" Color="Black"/>
+		<SolidColorBrush x:Key="Gray12" Color="Black"/>
+		<SolidColorBrush x:Key="Black10" Color="Black"/>
+		<SolidColorBrush x:Key="Dark22" Color="#FF9D9DA7"/>
+		<SolidColorBrush x:Key="Dark44" Color="#FF373736"/>
+		<Storyboard x:Key="StrelkaAnimation" RepeatBehavior="Forever">
+			<PointAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(LinearGradientBrush.StartPoint)" Storyboard.TargetName="path1">
+				<SplinePointKeyFrame KeyTime="0" Value="0.888,-33"/>
+			</PointAnimationUsingKeyFrames>
+			<PointAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(LinearGradientBrush.EndPoint)" Storyboard.TargetName="path1">
+				<SplinePointKeyFrame KeyTime="0" Value="0.441,6.168"/>
+			</PointAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Offset)" Storyboard.TargetName="path1">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0.512"/>
+			</DoubleAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Stroke).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="path">
+				<SplineColorKeyFrame KeyTime="0" Value="#FF736FF1"/>
+			</ColorAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Stroke).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="path1">
+				<SplineColorKeyFrame KeyTime="0" Value="#FF736FF1"/>
+			</ColorAnimationUsingKeyFrames>
+			<PointAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Stroke).(LinearGradientBrush.StartPoint)" Storyboard.TargetName="path">
+				<SplinePointKeyFrame KeyTime="0" Value="0.51,-2.674"/>
+				<SplinePointKeyFrame KeyTime="0:0:2" Value="0.552,-1.251"/>
+			</PointAnimationUsingKeyFrames>
+			<PointAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Stroke).(LinearGradientBrush.StartPoint)" Storyboard.TargetName="path1">
+				<SplinePointKeyFrame KeyTime="0" Value="0.51,-2.674"/>
+				<SplinePointKeyFrame KeyTime="0:0:2" Value="0.552,-1.251"/>
+			</PointAnimationUsingKeyFrames>
+			<PointAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Stroke).(LinearGradientBrush.EndPoint)" Storyboard.TargetName="path">
+				<SplinePointKeyFrame KeyTime="0" Value="0.475,1.368"/>
+				<SplinePointKeyFrame KeyTime="0:0:2" Value="0.517,2.791"/>
+			</PointAnimationUsingKeyFrames>
+			<PointAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Stroke).(LinearGradientBrush.EndPoint)" Storyboard.TargetName="path1">
+				<SplinePointKeyFrame KeyTime="0" Value="0.475,1.368"/>
+				<SplinePointKeyFrame KeyTime="0:0:2" Value="0.517,2.791"/>
+			</PointAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Stroke).(GradientBrush.GradientStops)[1].(GradientStop.Offset)" Storyboard.TargetName="path">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0.624"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Stroke).(GradientBrush.GradientStops)[1].(GradientStop.Offset)" Storyboard.TargetName="path1">
+				<SplineDoubleKeyFrame KeyTime="0" Value="0.624"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="StrelkaAnimation2"/>
+	</UserControl.Resources>
+	<UserControl.Triggers>
+		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
+			<BeginStoryboard Storyboard="{StaticResource MusorAnimation}"/>
+			<BeginStoryboard Storyboard="{StaticResource ColorAnimation}"/>
+			<BeginStoryboard Storyboard="{StaticResource StrelkaAnimation}"/>
+			<BeginStoryboard Storyboard="{StaticResource StrelkaAnimation2}"/>
+		</EventTrigger>
+	</UserControl.Triggers>
 
 
 	<Viewbox>
 		<Canvas x:Name="LayoutRoot" Height="768" Width="1024">
+			<!--
 			<Path Data="M239.5,279.5 L239.5,519.5 439.5,519.5 479.5,479.5 479.5,559.5 519.5,559.5 519.5,439.5 719.5,439.5 719.5,479.5 799.5,479.5 799.5,439.5 879.5,439.5 879.5,415.5 959.5,415.5 959.5,383.5 879.5,383.5 879.5,359.5 799.5,359.5 799.5,319.5 719.5,319.5 719.5,359.5 519.5,359.5 519.5,239.5 479.5,239.5&#xd;&#xa;479.5,319.5 439.5,279.5 z" Fill="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Height="321" Canvas.Left="239.5" Stretch="Fill" Stroke="Black" Canvas.Top="239.5" Width="721"/>
+			-->
+			<!-- замена печи-->
+			<Rectangle Height="180" Canvas.Left="240" Canvas.Top="308" Width="200" Stroke="{DynamicResource BrushGray}">
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.51,-0.452" StartPoint="0.51,1.086">
+						<LinearGradientBrush.RelativeTransform>
+							<TransformGroup>
+								<ScaleTransform CenterY="0.317" CenterX="0.51" ScaleY="0.988" ScaleX="1.048"/>
+								<SkewTransform AngleY="0" AngleX="0" CenterY="0.317" CenterX="0.51"/>
+								<RotateTransform Angle="0" CenterY="0.317" CenterX="0.51"/>
+								<TranslateTransform X="-0.037" Y="0.009"/>
+							</TransformGroup>
+						</LinearGradientBrush.RelativeTransform>
+						<GradientStop Color="Black" Offset="0.031"/>
+						<GradientStop Color="White" Offset="0.735"/>
+						<GradientStop Color="#FF4F4F4F" Offset="0.103"/>
+						<GradientStop Color="#FF7E7E7E" Offset="0.667"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+				<Rectangle.OpacityMask>
+					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+						<GradientStop Color="Black"/>
+						<GradientStop Color="White" Offset="1"/>
+					</LinearGradientBrush>
+				</Rectangle.OpacityMask>
+			</Rectangle>
+			<Path Data="M-198.57066,839.89718 L-118.42208,872.37904 -118.03247,1007.1722 -199.07066,1039.3972 z" Height="180" Canvas.Left="440" Stretch="Fill" Canvas.Top="308" Width="30">
+				<Path.Fill>
+					<LinearGradientBrush EndPoint="3.888,0.042" StartPoint="-1.914,1.012">
+						<LinearGradientBrush.RelativeTransform>
+							<TransformGroup>
+								<ScaleTransform CenterY="0.317" CenterX="0.51" ScaleY="0.988" ScaleX="1.048"/>
+								<SkewTransform AngleY="0" AngleX="0" CenterY="0.317" CenterX="0.51"/>
+								<RotateTransform Angle="0" CenterY="0.317" CenterX="0.51"/>
+								<TranslateTransform X="-0.037" Y="0.009"/>
+							</TransformGroup>
+						</LinearGradientBrush.RelativeTransform>
+						<GradientStop Color="Black" Offset="0.128"/>
+						<GradientStop Color="White" Offset="0.735"/>
+						<GradientStop Color="#FF4F4F4F" Offset="0.223"/>
+						<GradientStop Color="#FF7E7E7E" Offset="0.667"/>
+					</LinearGradientBrush>
+				</Path.Fill>
+			</Path>
+			<Rectangle Height="280" Canvas.Left="469.999" Canvas.Top="259.748" Width="60">
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.536,-0.103" StartPoint="0.492,1.035">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Color="White" Offset="0.952"/>
+						<GradientStop Color="#FF383838" Offset="0.081"/>
+						<GradientStop Color="#FF979797" Offset="0.864"/>
+						<GradientStop Color="#FF3F3F3F" Offset="0.081"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+			<Rectangle Height="83.125" Canvas.Left="530.666" Canvas.Top="358.708" Width="189.334">
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.53,-0.147" StartPoint="0.53,1.122">
+						<GradientStop Color="Black"/>
+						<GradientStop Color="White" Offset="1"/>
+						<GradientStop Color="#FF828282" Offset="0.766"/>
+						<GradientStop Color="#FF4F4F4F" Offset="0.179"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+			<Rectangle Height="135" Canvas.Left="564.5" Canvas.Top="332.5" Width="64" OpacityMask="#FFB13434">
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.51,-0.452" StartPoint="0.52,1.115">
+						<LinearGradientBrush.RelativeTransform>
+							<TransformGroup>
+								<ScaleTransform CenterY="0.317" CenterX="0.51" ScaleY="0.988" ScaleX="1.048"/>
+								<SkewTransform AngleY="0" AngleX="0" CenterY="0.317" CenterX="0.51"/>
+								<RotateTransform Angle="0" CenterY="0.317" CenterX="0.51"/>
+								<TranslateTransform X="-0.037" Y="0.009"/>
+							</TransformGroup>
+						</LinearGradientBrush.RelativeTransform>
+						<GradientStop Color="Black" Offset="0.063"/>
+						<GradientStop Color="White" Offset="0.731"/>
+						<GradientStop Color="#FF4F4F4F" Offset="0.103"/>
+						<GradientStop Color="#FF7E7E7E" Offset="0.689"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+			<Rectangle Height="40" Canvas.Left="786" Canvas.Top="380.323" Width="80">
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.51,-0.452" StartPoint="0.51,1.086">
+						<LinearGradientBrush.RelativeTransform>
+							<TransformGroup>
+								<ScaleTransform CenterY="0.317" CenterX="0.51" ScaleY="0.988" ScaleX="1.048"/>
+								<SkewTransform AngleY="0" AngleX="0" CenterY="0.317" CenterX="0.51"/>
+								<RotateTransform Angle="0" CenterY="0.317" CenterX="0.51"/>
+								<TranslateTransform X="-0.037" Y="0.009"/>
+							</TransformGroup>
+						</LinearGradientBrush.RelativeTransform>
+						<GradientStop Color="Black" Offset="0.008"/>
+						<GradientStop Color="White" Offset="0.779"/>
+						<GradientStop Color="#FF4F4F4F" Offset="0.122"/>
+						<GradientStop Color="#FF7E7E7E" Offset="0.634"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+			<Rectangle Height="15" Canvas.Left="866" Canvas.Top="390" Width="50.833">
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.51,-0.452" StartPoint="0.51,1.086">
+						<LinearGradientBrush.RelativeTransform>
+							<TransformGroup>
+								<ScaleTransform CenterY="0.317" CenterX="0.51" ScaleY="0.988" ScaleX="1.048"/>
+								<SkewTransform AngleY="0" AngleX="0" CenterY="0.317" CenterX="0.51"/>
+								<RotateTransform Angle="0" CenterY="0.317" CenterX="0.51"/>
+								<TranslateTransform X="-0.037" Y="0.009"/>
+							</TransformGroup>
+						</LinearGradientBrush.RelativeTransform>
+						<GradientStop Color="Black"/>
+						<GradientStop Color="White" Offset="0.81"/>
+						<GradientStop Color="#FF4F4F4F" Offset="0.162"/>
+						<GradientStop Color="#FF7E7E7E" Offset="0.612"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+			<!--/замена-->
 			<Control Style="{DynamicResource ShapeBurner}" Canvas.Top="439" Canvas.Left="200"/>
 			<Control Style="{DynamicResource ShapeBurner}" Canvas.Top="319" Canvas.Left="200"/>
-			<Control Style="{DynamicResource ShapeBurner}" Canvas.Top="251.666" Canvas.Left="268.333" RenderTransformOrigin="0.5,0.5">
+			<Control Style="{DynamicResource ShapeBurner}" Canvas.Top="280.166" Canvas.Left="268.333" RenderTransformOrigin="0.5,0.5">
 				<Control.RenderTransform>
 					<TransformGroup>
 						<RotateTransform Angle="90"/>
 					</TransformGroup>
 				</Control.RenderTransform>
 			</Control>
-			<Control Style="{DynamicResource ShapeBurner}" Canvas.Top="507.666" Canvas.Left="268.333" RenderTransformOrigin="0.5,0.5">
+			<Control Style="{DynamicResource ShapeBurner}" Canvas.Top="475.666" Canvas.Left="268.333" RenderTransformOrigin="0.5,0.5">
 				<Control.RenderTransform>
 					<TransformGroup>
 						<RotateTransform Angle="270"/>
 					</TransformGroup>
 				</Control.RenderTransform>
 			</Control>
-			<Control Style="{DynamicResource ShapeBurner}" Canvas.Top="239.5" Canvas.Left="439"/>
-			<Control Style="{DynamicResource ShapeBurner}" Canvas.Top="519.5" Canvas.Left="439"/>
+			<Control Style="{DynamicResource ShapeBurner}" Canvas.Top="259.75" Canvas.Left="429.5"/>
+			<Control Style="{DynamicResource ShapeBurner}" Canvas.Top="498" Canvas.Left="429.5"/>
 			<Control Canvas.Left="120" Style="{DynamicResource ShapeValve}" Canvas.Top="200"/>
 			<Control Canvas.Left="120" Style="{DynamicResource ShapeValve}" Canvas.Top="221"/>
 			<Control Canvas.Left="120" Style="{DynamicResource ShapeValve}" Canvas.Top="242"/>
@@ -41,90 +306,90 @@
 			<Control Canvas.Left="120" Style="{DynamicResource ShapeValve}" Canvas.Top="560"/>
 			<Control Canvas.Left="120" Style="{DynamicResource ShapeValve}" Canvas.Top="581"/>
 			<Control Canvas.Left="120" Style="{DynamicResource ShapeValve}" Canvas.Top="539"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushLightBlue}" Canvas.Left="157.5" Canvas.Top="585.5" Width="161.75" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushLightBlue}" Canvas.Left="60" Canvas.Top="585.5" Width="64" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushLightBlue}" Canvas.Left="157.5" Canvas.Top="368" Width="61.667" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushLightBlue}" Canvas.Left="62.333" Canvas.Top="368" Width="61.667" Height="8"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" Stroke="{DynamicResource BrushLightBlue}" StrokeThickness="8" Height="355.5" Canvas.Left="64" Canvas.Top="242"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushLightBlue}" Canvas.Left="60" Canvas.Top="245" Width="64" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushLightBlue}" Canvas.Left="157.5" Canvas.Top="245" Width="126.833" Height="8"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushRed}" Stretch="Fill" Stroke="{DynamicResource BrushRed}" StrokeThickness="8" Height="508" Canvas.Left="80" Canvas.Top="64"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushRed}" Stretch="Fill" Stroke="{DynamicResource BrushRed}" StrokeThickness="8" Height="471.75" Canvas.Left="96" Canvas.Top="84.25"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="157.5" Canvas.Top="544" Width="126.833" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="157.5" Canvas.Top="564" Width="138.5" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="92" Canvas.Top="544" Width="32" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="76" Canvas.Top="564" Width="48" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="157.5" Canvas.Top="348.667" Width="47" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="157.5" Canvas.Top="325" Width="47" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="77" Canvas.Top="348.667" Width="47" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="92" Canvas.Top="325" Width="32" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="157.5" Canvas.Top="224" Width="138.5" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="157.5" Canvas.Top="204.5" Width="157.833" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="76" Canvas.Top="224" Width="48" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="92" Canvas.Top="204.5" Width="32" Height="8"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushRed}" Stretch="Fill" Stroke="{DynamicResource BrushRed}" StrokeThickness="8" Height="23.5" Canvas.Left="288.333" Canvas.Top="220"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushRed}" Stretch="Fill" Stroke="{DynamicResource BrushRed}" StrokeThickness="8" Height="43" Canvas.Left="307.333" Canvas.Top="200.5"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlack}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Height="573.5" Canvas.Left="48" Canvas.Top="159"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushGreen}" Stretch="Fill" Stroke="{DynamicResource BrushGreen}" StrokeThickness="8" Height="518" Canvas.Left="32" Canvas.Top="138"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushLightBlue}" Canvas.Left="157.066" Canvas.Top="587.628" Width="162.392" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushLightBlue}" Canvas.Left="60" Canvas.Top="587.375" Width="64" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushLightBlue}" Canvas.Left="157" Canvas.Top="370.25" Width="61.667" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushLightBlue}" Canvas.Left="62.333" Canvas.Top="370.25" Width="61.667" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" Stroke="{DynamicResource BrushLightBlue}" StrokeThickness="8" Height="350.75" Canvas.Left="64" Canvas.Top="244.5" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushLightBlue}" Canvas.Left="60" Canvas.Top="248.153" Width="64" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushLightBlue}" Canvas.Left="156.75" Canvas.Top="248.25" Width="135.5" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushRed}" Stretch="Fill" Stroke="{DynamicResource BrushRed}" StrokeThickness="8" Height="508" Canvas.Left="80" Canvas.Top="64" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushRed}" Stretch="Fill" Stroke="{DynamicResource BrushRed}" StrokeThickness="8" Height="468.562" Canvas.Left="96" Canvas.Top="84.25" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="157.5" Canvas.Top="544" Width="133.25" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="157.167" Canvas.Top="566.33" Width="150.583" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="92" Canvas.Top="544.999" Width="32" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="76" Canvas.Top="565.997" Width="48" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="157.066" Canvas.Top="350.03" Width="47" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="157.085" Canvas.Top="327.663" Width="47" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="77" Canvas.Top="349.938" Width="47" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="92" Canvas.Top="327.331" Width="32" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="156.999" Canvas.Top="226.995" Width="150.001" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="156.999" Canvas.Top="206.165" Width="159.118" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="76" Canvas.Top="224" Width="{DynamicResource WidthLine1}" Height="8"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="92" Canvas.Top="205.992" Width="32" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushRed}" Stretch="Fill" Stroke="{DynamicResource BrushRed}" StrokeThickness="8" Height="49.275" Canvas.Left="299.861" Canvas.Top="222.957" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushRed}" Stretch="Fill" Stroke="{DynamicResource BrushRed}" StrokeThickness="8" Height="70" Canvas.Left="312.117" Canvas.Top="202.188" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlack}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Height="572.25" Canvas.Left="48" Canvas.Top="161.839" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushGreen}" Stretch="Fill" Stroke="{DynamicResource BrushGreen}" StrokeThickness="8" Height="518" Canvas.Left="32" Canvas.Top="140.125" Width="{DynamicResource WidthLine1}"/>
 			<Control Canvas.Left="120" Style="{DynamicResource ShapeValve}" Canvas.Top="159"/>
 			<Control Canvas.Left="120" Style="{DynamicResource ShapeValve}" Canvas.Top="138"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="44" Canvas.Top="163" Width="80" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushGreen}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushGreen}" Canvas.Left="28" Canvas.Top="141.333" Width="96" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushGreen}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushGreen}" Canvas.Left="157.5" Canvas.Top="141.333" Width="318.583" Height="8"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlack}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Height="84" Canvas.Left="448" Canvas.Top="159"/>
-			<Path Data="M35.666667,501.08954 L35.666667,600.34269" Fill="{DynamicResource BrushGreen}" Stretch="Fill" Stroke="{DynamicResource BrushGreen}" StrokeThickness="8" Height="101.667" Canvas.Left="464" Canvas.Top="141.333" Width="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushGreen}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushGreen}" Canvas.Left="8" Canvas.Top="448" Width="196.5" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="157.5" Canvas.Top="467.333" Width="47" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="8" Canvas.Top="467.333" Width="116" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="157.5" Canvas.Top="163" Width="298.5" Height="8"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlack}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Height="84" Canvas.Left="448" Canvas.Top="556"/>
-			<Path Data="M35.666667,501.08954 L35.666667,600.34269" Fill="{DynamicResource BrushGreen}" Stretch="Fill" Stroke="{DynamicResource BrushGreen}" StrokeThickness="8" Height="100" Canvas.Left="464" Canvas.Top="556" Width="8"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="44" Canvas.Top="165.82" Width="80" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushGreen}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushGreen}" Canvas.Left="28" Canvas.Top="144.083" Width="96" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushGreen}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushGreen}" Canvas.Left="156.999" Canvas.Top="145.333" Width="307" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlack}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Height="101.253" Canvas.Left="439.98" Canvas.Top="162.747" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,501.08954 L35.666667,600.34269" Fill="{DynamicResource BrushGreen}" Stretch="Fill" Stroke="{DynamicResource BrushGreen}" StrokeThickness="8" Height="118.649" Canvas.Left="456.064" Canvas.Top="145.08" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushGreen}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushGreen}" Canvas.Left="8" Canvas.Top="448" Width="196.5" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="157" Canvas.Top="470.154" Width="47" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="8" Canvas.Top="470.083" Width="116" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="156.832" Canvas.Top="165.988" Width="291.168" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlack}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Height="102.916" Canvas.Left="432.139" Canvas.Top="534.75" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,501.08954 L35.666667,600.34269" Fill="{DynamicResource BrushGreen}" Stretch="Fill" Stroke="{DynamicResource BrushGreen}" StrokeThickness="8" Height="120.938" Canvas.Left="448.009" Canvas.Top="535.062" Width="{DynamicResource WidthLine1}"/>
 			<Control Canvas.Left="120" Style="{DynamicResource ShapeValve}" Canvas.Top="623"/>
 			<Control Canvas.Left="120" Style="{DynamicResource ShapeValve}" Canvas.Top="644"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushGreen}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushGreen}" Canvas.Left="157.5" Canvas.Top="648" Width="318.583" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushGreen}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushGreen}" Canvas.Left="28" Canvas.Top="648" Width="96" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="44" Canvas.Top="627.75" Width="80" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="157.5" Canvas.Top="627.75" Width="298.5" Height="8"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" Stroke="{DynamicResource BrushLightBlue}" StrokeThickness="8" Height="40.833" Canvas.Left="307.333" Canvas.Top="556.667"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" Stroke="{DynamicResource BrushLightBlue}" StrokeThickness="8" Height="24" Canvas.Left="211.167" Canvas.Top="356"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushRed}" Stretch="Fill" Stroke="{DynamicResource BrushRed}" StrokeThickness="8" Height="19.333" Canvas.Left="288" Canvas.Top="556.667"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="157.5" Canvas.Top="304" Width="61.667" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="44" Canvas.Top="304" Width="80" Height="8"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlack}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Height="24" Canvas.Left="211.167" Canvas.Top="300"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushOrange}" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="8" Height="417" Canvas.Left="176" Canvas.Top="263"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="172" Canvas.Top="263" Width="112.333" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="173.833" Canvas.Top="384" Width="61.667" Height="8"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushOrange}" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="8" Height="39.978" Canvas.Left="227.5" Canvas.Top="356"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="176" Canvas.Top="528" Width="108.333" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="172" Canvas.Top="496" Width="61.667" Height="8"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushOrange}" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="8" Height="32" Canvas.Left="227.5" Canvas.Top="476"/>
-			<Viewbox Canvas.Left="129.5" Stretch="Fill" Canvas.Top="683.5" Height="24" Width="31.5">
-				<Control Style="{DynamicResource ShapePump}" Height="48" Width="56.5"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushGreen}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushGreen}" Canvas.Left="157" Canvas.Top="650.875" Width="299" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushGreen}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushGreen}" Canvas.Left="28" Canvas.Top="650.17" Width="96" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="44" Canvas.Top="629.576" Width="80" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="157" Canvas.Top="629.75" Width="283" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" Stroke="{DynamicResource BrushLightBlue}" StrokeThickness="8" Height="68.374" Canvas.Left="311.449" Canvas.Top="524.666" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" Stroke="{DynamicResource BrushLightBlue}" StrokeThickness="8" Height="22.25" Canvas.Left="211.167" Canvas.Top="356" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushRed}" Stretch="Fill" Stroke="{DynamicResource BrushRed}" StrokeThickness="8" Height="47.334" Canvas.Left="299.75" Canvas.Top="524.666" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="156.501" Canvas.Top="305.988" Width="61.667" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="44" Canvas.Top="306.25" Width="80" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlack}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="8" Height="22" Canvas.Left="212.08" Canvas.Top="302" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushOrange}" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="8" Height="396.025" Canvas.Left="176" Canvas.Top="283.975" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="172" Canvas.Top="283.975" Width="112.333" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="173.833" Canvas.Top="384" Width="61.667" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushOrange}" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="8" Height="36" Canvas.Left="227.5" Canvas.Top="356" Width="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="176" Canvas.Top="512.325" Width="108.333" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="172" Canvas.Top="496" Width="61.667" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushOrange}" Stretch="Fill" Stroke="{DynamicResource BrushOrange}" StrokeThickness="8" Height="28" Canvas.Left="227.5" Canvas.Top="476" Width="{DynamicResource WidthLine1}"/>
+			<Viewbox Canvas.Left="129.5" Stretch="Fill" Canvas.Top="684.5" Height="24" Width="31.5">
+				<Control x:Name="control" Style="{DynamicResource ShapePump}" Height="48" Width="56.5"/>
 			</Viewbox>
 			<Viewbox Canvas.Left="129.5" Stretch="Fill" Canvas.Top="724.5" Height="24" Width="31.5">
 				<Control Style="{DynamicResource ShapePump}" Height="48" Width="56.5"/>
 			</Viewbox>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="107.75" Canvas.Top="683.5" Width="25.75" Height="8"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="107.75" Canvas.Top="686.25" Width="25.75" Height="{DynamicResource WidthLine1}"/>
 			<Control Canvas.Left="71" Style="{DynamicResource ShapeValve}" Canvas.Top="680"/>
 			<Control Canvas.Left="71" Style="{DynamicResource ShapeValve}" Canvas.Top="720"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="44" Canvas.Top="683.5" Width="31.5" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="44" Canvas.Top="724.5" Width="31.5" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="107.75" Canvas.Top="724.5" Width="25.75" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="176" Canvas.Top="668" Width="108.333" Height="8"/>
-			<Viewbox Canvas.Left="280" Stretch="Fill" Canvas.Top="668" Height="24" Width="31.5">
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="44" Canvas.Top="686" Width="31.5" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="44" Canvas.Top="726.25" Width="31.5" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlack}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlack}" Canvas.Left="107.75" Canvas.Top="726.5" Width="25.75" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushOrange}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushOrange}" Canvas.Left="176" Canvas.Top="672" Width="108.333" Height="{DynamicResource WidthLine1}"/>
+			<Viewbox Canvas.Left="280" Stretch="Fill" Canvas.Top="670" Height="24" Width="31.5">
 				<Control Style="{DynamicResource ShapePump}" Height="48" Width="56.5"/>
 			</Viewbox>
 			<Viewbox Canvas.Left="680" Stretch="Fill" Canvas.Top="368" Height="24" Width="31.5">
-				<Control Style="{DynamicResource ShapePump}" Height="48" Width="56.5"/>
+				<Control x:Name="control1" Style="{DynamicResource ShapePump}" Height="48" Width="56.5"/>
 			</Viewbox>
 			<Viewbox Canvas.Left="680" Stretch="Fill" Canvas.Top="408" Height="24" Width="31.5">
 				<Control Style="{DynamicResource ShapePump}" Height="48" Width="56.5"/>
 			</Viewbox>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="204" Canvas.Left="656" Canvas.Top="364"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlue}" Canvas.Left="652" Canvas.Top="368" Width="32" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlue}" Canvas.Left="652" Canvas.Top="408" Width="32" Height="8"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="204" Canvas.Left="672.03" Canvas.Top="366.085" Width="4"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlue}" Canvas.Left="668" Canvas.Top="370.058" Width="16" Height="4"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlue}" Canvas.Left="668" Canvas.Top="410.075" Width="16" Height="4"/>
 			<Path Data="M563,355.69232 L563,363.07694 569,363.07692 569,436.92308 563,436.92307 563,444.30769 581,444.30769 581,436.92308 575,436.92308 575,363.07692 581,363.07692 581,355.69231 z" Fill="{DynamicResource BrushDarkPink}" Height="96" Canvas.Left="536" Stretch="Fill" StrokeThickness="8" Canvas.Top="352" Width="24"/>
-			<Path Data="M563,355.69232 L563,363.07694 569,363.07692 569,436.92308 563,436.92307 563,444.30769 581,444.30769 581,436.92308 575,436.92308 575,363.07692 581,363.07692 581,355.69231 z" Height="96" Canvas.Left="600" Stretch="Fill" StrokeThickness="8" Canvas.Top="352" Width="24" Fill="{DynamicResource BrushDarkPink}"/>
+			<Path Data="M563,355.69232 L563,363.07694 569,363.07692 569,436.92308 563,436.92307 563,444.30769 581,444.30769 581,436.92308 575,436.92308 575,363.07692 581,363.07692 581,355.69231 z" Height="96" Canvas.Left="632.375" Stretch="Fill" StrokeThickness="8" Canvas.Top="352" Width="24" Fill="{DynamicResource BrushDarkPink}"/>
 			<Control Canvas.Left="528" Style="{DynamicResource ShapeValve}" Canvas.Top="492.25" RenderTransformOrigin="0.5,0.5">
 				<Control.RenderTransform>
 					<TransformGroup>
@@ -135,8 +400,8 @@
 					</TransformGroup>
 				</Control.RenderTransform>
 			</Control>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="40" Canvas.Left="544" Canvas.Top="444"/>
-			<Control Canvas.Left="592" Style="{DynamicResource ShapeValve}" Canvas.Top="492.25" RenderTransformOrigin="0.5,0.5">
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="40" Canvas.Left="545.998" Canvas.Top="444" Width="4"/>
+			<Control Canvas.Left="623.875" Style="{DynamicResource ShapeValve}" Canvas.Top="492.25" RenderTransformOrigin="0.5,0.5">
 				<Control.RenderTransform>
 					<TransformGroup>
 						<ScaleTransform/>
@@ -146,7 +411,7 @@
 					</TransformGroup>
 				</Control.RenderTransform>
 			</Control>
-			<Control Canvas.Left="591" Style="{DynamicResource ShapeValve}" Canvas.Top="291.208" RenderTransformOrigin="0.5,0.5">
+			<Control Canvas.Left="623.367" Style="{DynamicResource ShapeValve}" Canvas.Top="291.208" RenderTransformOrigin="0.5,0.5">
 				<Control.RenderTransform>
 					<TransformGroup>
 						<ScaleTransform/>
@@ -166,56 +431,280 @@
 					</TransformGroup>
 				</Control.RenderTransform>
 			</Control>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="40" Canvas.Left="608" Canvas.Top="444"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="40" Canvas.Left="544" Canvas.Top="316.042"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="40" Canvas.Left="608" Canvas.Top="316.042"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="43" Canvas.Left="544" Canvas.Top="517.5"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="43" Canvas.Left="608" Canvas.Top="517.5"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="43.25" Canvas.Left="544" Canvas.Top="239.5"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="42.25" Canvas.Left="608" Canvas.Top="240.5"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlue}" Canvas.Left="540" Canvas.Top="240.5" Width="140" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlue}" Canvas.Left="540" Canvas.Top="552.5" Width="80" Height="8"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="44.5" Canvas.Left="576" Canvas.Top="549"/>
-			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="10" Height="88.542" Canvas.Left="757.5" Canvas.Top="235.458" Width="10.5"/>
-			<Path x:Name="сборник" Data="M240,280 L280,320 320,320 360,280" Fill="{DynamicResource BrushGray}" Height="42" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="2" Canvas.Left="646" Canvas.Top="680" Width="122"/>
-			<Path Data="M480,680 L480,720 560,720 600,680 568,680 592,656 640,656 648,664 656,664 648,648 584,648 552,680 z" Fill="{DynamicResource BrushGray}" Height="74" Canvas.Left="480.083" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="2" Canvas.Top="648" Width="178"/>
-			<Path Data="M-222.83333,886.6784 L-222.83333,988.02109" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="10" Height="94.958" Canvas.Left="496" Canvas.Top="556" Width="10"/>
-			<Path Data="M685,197 L701,197 693,213 z" Fill="{DynamicResource BrushBlue}" Height="26" Canvas.Left="488" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="10" Canvas.Top="644" Width="26"/>
-			<Path Data="M685,197 L701,197 693,213 z" Fill="{DynamicResource BrushBlue}" Height="26" Canvas.Left="792" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="10" Canvas.Top="680" Width="26"/>
-			<Path Data="M-222.83333,886.6784 L-222.83333,988.02109" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="10" Height="54.625" Canvas.Left="720" Canvas.Top="625.375" Width="10"/>
-			<Path Data="M-222.83333,886.6784 L-222.83333,988.02109" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="10" Height="59.792" Canvas.Left="800" Canvas.Top="625.375" Width="10"/>
-			<Path Data="M200.5,488 L32,488" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="10" Stroke="{DynamicResource BrushBlue}" Canvas.Left="715.001" Canvas.Top="630" Width="99.333"/>
-			<Path Data="M200.5,488 L32,488" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="10" Stroke="{DynamicResource BrushBlue}" Canvas.Left="757.5" Canvas.Top="240.5" Width="99.333"/>
-			<Path Data="M687.66754,191.79189 L703.6668,199.79193 687.66754,207.79198 z" Fill="{DynamicResource BrushBlue}" Height="26" Canvas.Left="851.75" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="10" Canvas.Top="233" Width="26"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="92" Canvas.Top="88" Width="112.5" Height="8"/>
-			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="80" Canvas.Top="68" Width="124.5" Height="8"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="40" Canvas.Left="642.248" Canvas.Top="444" Width="4"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="40" Canvas.Left="546.331" Canvas.Top="316.042" Width="4"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="40" Canvas.Left="641.998" Canvas.Top="316.042" Width="4"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="43" Canvas.Left="545.998" Canvas.Top="517.5" Width="4"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="43" Canvas.Left="642.518" Canvas.Top="517.29" Width="4"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="43.25" Canvas.Left="547" Canvas.Top="239.5" Width="4"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="42.25" Canvas.Left="642.201" Canvas.Top="240.5" Width="4"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlue}" Canvas.Left="542.96" Canvas.Top="240.5" Width="140" Height="4"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushBlue}" Canvas.Left="541.992" Canvas.Top="552.5" Width="108.542" Height="4"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="8" Height="44.5" Canvas.Left="594.125" Canvas.Top="549" Width="4"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushBlue}" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="10" Height="62.5" Canvas.Left="752.333" Canvas.Top="275.015" Width="4"/>
+			<Path x:Name="сборник" Data="M240,280 L280,320 320,320 360,280" Fill="{DynamicResource BrushGray}" Height="42" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="2" Canvas.Left="606" Canvas.Top="724.002" Width="122"/>
+			<Path Data="M480,680 L480,720 560,720 600,680 568,680 592,656 640,656 648,664 656,664 648,648 584,648 552,680 z" Fill="{DynamicResource BrushGray}" Height="74" Canvas.Left="450.5" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="2" Canvas.Top="691.998" Width="178"/>
+			<Path x:Name="path" Data="M-222.83333,886.6784 L-222.83333,988.02109" Stretch="Fill" StrokeThickness="10" Height="87.125" Canvas.Left="496.93" Canvas.Top="637.375" Width="4" Fill="{DynamicResource BrushBlue}">
+				<Path.Stroke>
+					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Color="White" Offset="1"/>
+					</LinearGradientBrush>
+				</Path.Stroke>
+			</Path>
+			<Path x:Name="path1" Data="M685,197 L701,197 693,213 z" Height="12" Canvas.Left="492.831" Stretch="Fill" StrokeThickness="10" Canvas.Top="710.25" Width="12">
+				<Path.Stroke>
+					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Color="White" Offset="1"/>
+					</LinearGradientBrush>
+				</Path.Stroke>
+				<Path.Fill>
+					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Color="White" Offset="1"/>
+					</LinearGradientBrush>
+				</Path.Fill>
+			</Path>
+			<Path x:Name="path2" Data="M685,197 L701,197 693,213 z" Fill="{DynamicResource BrushBlue}" Height="12" Canvas.Left="742.957" Stretch="Fill" StrokeThickness="10" Canvas.Top="723.994" Width="12" OpacityMask="Black" Stroke="{DynamicResource BrushBlue}"/>
+			<Path x:Name="path3" Data="M-222.83333,886.6784 L-222.83333,988.02109" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="10" Height="54.625" Canvas.Left="672.125" Canvas.Top="675.375" Width="4" OpacityMask="Black" Stroke="{DynamicResource BrushBlue}"/>
+			<Path x:Name="path4" Data="M-222.83333,886.6784 L-222.83333,988.02109" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="10" Height="59.792" Canvas.Left="746.833" Canvas.Top="675.364" Width="4" OpacityMask="Black" Stroke="{DynamicResource BrushBlue}"/>
+			<Path x:Name="path5" Data="M200.5,488 L32,488" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="10" Canvas.Left="667.091" Canvas.Top="676.66" Width="88.75" Height="4" OpacityMask="Black" Stroke="{DynamicResource BrushBlue}"/>
+			<Path Data="M200.5,488 L32,488" Fill="{DynamicResource BrushBlue}" Stretch="Fill" StrokeThickness="10" Stroke="{DynamicResource BrushBlue}" Canvas.Left="747.334" Canvas.Top="280" Width="99.333" Height="4"/>
+			<Path Data="M687.66754,191.79189 L703.6668,199.79193 687.66754,207.79198 z" Fill="{DynamicResource BrushBlue}" Height="12" Canvas.Left="839.578" Stretch="Fill" Stroke="{DynamicResource BrushBlue}" StrokeThickness="10" Canvas.Top="276.02" Width="12"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="92" Canvas.Top="88" Width="112.5" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="80" Canvas.Top="68" Width="124.5" Height="{DynamicResource WidthLine1}"/>
+			<!-- перерисовка -->
+			<Path Data="M438.33333,507.83365 L478.625,473.5 478.62541,484.87505 442.62504,519.50043 442.57464,519.36342 z" Height="29" Canvas.Left="440" Stretch="Fill" Canvas.Top="455" Width="30">
+				<Path.Fill>
+					<LinearGradientBrush EndPoint="0.808,-0.537" StartPoint="1.495,0.971">
+						<LinearGradientBrush.RelativeTransform>
+							<TransformGroup>
+								<ScaleTransform CenterY="0.317" CenterX="0.51" ScaleY="0.988" ScaleX="1.048"/>
+								<SkewTransform AngleY="0" AngleX="0" CenterY="0.317" CenterX="0.51"/>
+								<RotateTransform Angle="0" CenterY="0.317" CenterX="0.51"/>
+								<TranslateTransform X="-0.037" Y="0.009"/>
+							</TransformGroup>
+						</LinearGradientBrush.RelativeTransform>
+						<GradientStop Color="Black"/>
+						<GradientStop Color="White" Offset="1"/>
+						<GradientStop Color="#FF4F4F4F" Offset="0.744"/>
+						<GradientStop Color="#FF7E7E7E" Offset="1"/>
+						<GradientStop Color="#FF2B2B2B" Offset="0.154"/>
+					</LinearGradientBrush>
+				</Path.Fill>
+			</Path>
+			<Rectangle x:Name="rectangle" Height="8" Canvas.Left="564.5" Canvas.Top="348.625" Width="64" RenderTransformOrigin="0.5,0.5" Fill="#FF373736">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle x:Name="rectangle1" Height="8" Canvas.Left="564.5" Canvas.Top="372.25" Width="64" RenderTransformOrigin="0.5,0.5" Fill="#FF9D9DA7">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle x:Name="rectangle2" Height="8" Canvas.Left="564.5" Canvas.Top="396.5" Width="64" RenderTransformOrigin="0.5,0.5" Fill="#FF373736">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle x:Name="rectangle3" Height="8" Canvas.Left="564.5" Canvas.Top="423.5" Width="64" RenderTransformOrigin="0.5,0.5" Fill="#FF9D9DA7">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Rectangle x:Name="rectangle4" Height="8" Canvas.Left="564.5" Canvas.Top="444.5" Width="64" RenderTransformOrigin="0.5,0.5" Fill="#FF373736">
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<!--/-->
+			
+			<!-- статические надписи -->
 			<TextBlock x:Name="textBlock4" Canvas.Left="307.333" TextWrapping="Wrap" Canvas.Top="384" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ЦВТ"/>
-			<TextBlock x:Name="textBlock4_Copy" Canvas.Left="172" TextWrapping="Wrap" Canvas.Top="239.5" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="газ"/>
-			<TextBlock x:Name="textBlock4_Copy1" Canvas.Left="91.616" TextWrapping="Wrap" Canvas.Top="440.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="нефтешлам"/>
-			<TextBlock x:Name="textBlock4_Copy2" Canvas.Left="161" TextWrapping="Wrap" Canvas.Top="692.39" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="Подача воздуха для сжигания" Height="56.11" Width="108.333"/>
-			<TextBlock x:Name="textBlock4_Copy3" Canvas.Left="531.949" TextWrapping="Wrap" Canvas.Top="597.5" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="От водопровода"/>
+			<TextBlock x:Name="textBlock4_Copy" Canvas.Left="185.32" TextWrapping="Wrap" Canvas.Top="262.748" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="газ"/>
+			<TextBlock x:Name="textBlock4_Copy1" Canvas.Left="88" TextWrapping="Wrap" Canvas.Top="422.519" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="нефтешлам" Width="108"/>
+			<TextBlock x:Name="textBlock4_Copy2" Canvas.Left="163" TextWrapping="Wrap" Canvas.Top="696" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="Подача воздуха для сжигания" Height="56.11" Width="135"/>
+			<TextBlock x:Name="textBlock4_Copy3" Canvas.Left="552.449" TextWrapping="Wrap" Canvas.Top="595" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="От водопровода"/>
 			<TextBlock x:Name="textBlock4_Copy4" Canvas.Left="540" TextWrapping="Wrap" Canvas.Top="217.39" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="Слив воды в канализацию"/>
-			<TextBlock x:Name="textBlock4_Copy5" Canvas.Left="211.167" TextWrapping="Wrap" Canvas.Top="77.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="к РТ"/>
-			<TextBlock x:Name="textBlock4_Copy6" Canvas.Left="683.866" TextWrapping="Wrap" Canvas.Top="724.5" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="Выгрузка золы в контейнер"/>
-			<TextBlock x:Name="textBlock4_Copy7" Canvas.Left="674" TextWrapping="Wrap" Canvas.Top="509" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="Подача воздуха для охлаждения" Height="43" Width="136"/>
-			<TextBlock x:Name="textBlock4_Copy8" Canvas.Left="814.093" TextWrapping="Wrap" Canvas.Top="217.39" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="к ТА"/>
-			<TextBlock x:Name="textBlock4_Copy9" Canvas.Left="488" TextWrapping="Wrap" Canvas.Top="497.39" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ВК"/>
-			<TextBlock x:Name="textBlock4_Copy10" Canvas.Left="568.146" TextWrapping="Wrap" Canvas.Top="397.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ПВ"/>
-			<TextBlock x:Name="textBlock4_Copy11" Canvas.Left="904" TextWrapping="Wrap" Canvas.Top="384" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ЗУ"/>
-            <!--Добавление Биндинговых ТекстБоксов-->
-            <TextBox Canvas.Top="25" Canvas.Right="15"  Text="{Binding Temperature_TC1}" Width="50"></TextBox>
-            <Label Name="label1" Canvas.Right="100" Canvas.Top="25" Height="25" Width="100">Температура ТП1:</Label>
-            <TextBox Canvas.Top="50" Canvas.Right="15"  Text="{Binding Temperature_TC2}" Width="50"></TextBox>
-            <Label Name="label2" Canvas.Right="100" Canvas.Top="50" Height="25" Width="100">Температура ТП1:</Label>
-            <TextBox Canvas.Top="75" Canvas.Right="15"  Text="{Binding Speed_S}" Width="50"></TextBox>
-            <Label Name="label3" Canvas.Right="100" Canvas.Top="75" Height="25" Width="100">Скорость S:</Label>
-            <TextBox Canvas.Top="100" Canvas.Right="15"  Text="{Binding Temperature_TC8}" Width="50"></TextBox>
-            <Label Name="label4" Canvas.Right="100" Canvas.Top="100" Height="25" Width="100">Температура ТС8:</Label>
-            <TextBox Canvas.Top="125" Canvas.Right="15"  Text="{Binding Level_DU9}" Width="50"></TextBox>
-            <Label Name="label5" Canvas.Right="100" Canvas.Top="125" Height="25" Width="100">Уровень ДУ-9:</Label>
-
-
-
-        </Canvas>
+			<TextBlock x:Name="textBlock4_Copy5" Canvas.Left="204.167" TextWrapping="Wrap" Canvas.Top="66.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="к РТ"/>
+			<TextBlock x:Name="textBlock4_Copy6" Canvas.Left="755.833" TextWrapping="Wrap" Canvas.Top="724.5" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="Выгрузка золы в контейнер"/>
+			<TextBlock x:Name="textBlock4_Copy7" Canvas.Left="685.5" TextWrapping="Wrap" Canvas.Top="506.5" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="Подача воздуха для охлаждения" Height="59" Width="136.667"/>
+			<TextBlock x:Name="textBlock4_Copy8" Canvas.Left="852.85" TextWrapping="Wrap" Canvas.Top="255.72" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="к ТА"/>
+			<TextBlock x:Name="textBlock4_Copy9" Canvas.Left="488" TextWrapping="Wrap" Canvas.Top="474.39" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ВК"/>
+			<TextBlock x:Name="textBlock4_Copy10" Canvas.Left="648.328" TextWrapping="Wrap" Canvas.Top="386.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ПВ"/>
+			<TextBlock x:Name="textBlock4_Copy11" Canvas.Left="882.151" TextWrapping="Wrap" Canvas.Top="385.665" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ЗУ"/>
+			
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushLightBlue}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushLightBlue}" Canvas.Left="274.002" Canvas.Top="254.185" Width="27.9" Height="{DynamicResource WidthLine1}" RenderTransformOrigin="0.5,0.5">
+				<Path.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="90"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Path.RenderTransform>
+			</Path>
+			<Path Data="M101.70685,486 L29.49256,486" Fill="{DynamicResource BrushRed}" Stretch="Fill" StrokeThickness="8" Stroke="{DynamicResource BrushRed}" Canvas.Left="92" Canvas.Top="227.332" Width="32" Height="{DynamicResource WidthLine1}"/>
+			<Path Data="M35.666667,499 L35.666667,600.34269" Fill="{DynamicResource BrushRed}" Stretch="Fill" Stroke="{DynamicResource BrushRed}" StrokeThickness="8" Height="27.334" Canvas.Left="286.75" Canvas.Top="524.666" Width="{DynamicResource WidthLine1}"/>
+			<Rectangle Height="173" Canvas.Left="844.333" StrokeThickness="10" Canvas.Top="407" Width="45" RenderTransformOrigin="0.5,0.5" RadiusY="5.209" RadiusX="5.209">
+				<Rectangle.Stroke>
+					<LinearGradientBrush EndPoint="0.475,-0.179" StartPoint="0.581,1.096">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Color="White" Offset="1"/>
+					</LinearGradientBrush>
+				</Rectangle.Stroke>
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.464,0" StartPoint="0.565,1.181">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Color="White" Offset="1"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+				<Rectangle.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform AngleX="25" AngleY="-25"/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Rectangle.RenderTransform>
+			</Rectangle>
+			<Ellipse x:Name="ellipse5" Height="20" Canvas.Left="880" StrokeThickness="2" Canvas.Top="548" Width="34" Stroke="#FF5A2A2A" RenderTransformOrigin="0.5,0.5">
+				<Ellipse.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform AngleX="25" AngleY="-25"/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Ellipse.RenderTransform>
+				<Ellipse.Fill>
+					<LinearGradientBrush EndPoint="0.464,0" StartPoint="0.565,1.181">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Color="#FF744B4B" Offset="1"/>
+					</LinearGradientBrush>
+				</Ellipse.Fill>
+			</Ellipse>
+			<Ellipse x:Name="ellipse4" Height="20" Canvas.Left="872" StrokeThickness="2" Canvas.Top="532" Width="34" Stroke="#FF5A2A2A" RenderTransformOrigin="0.5,0.5">
+				<Ellipse.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform AngleX="25" AngleY="-25"/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Ellipse.RenderTransform>
+				<Ellipse.Fill>
+					<LinearGradientBrush EndPoint="0.464,0" StartPoint="0.565,1.181">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Color="#FF744B4B" Offset="1"/>
+					</LinearGradientBrush>
+				</Ellipse.Fill>
+			</Ellipse>
+			<Ellipse x:Name="ellipse3" Height="20" Canvas.Left="864" StrokeThickness="2" Canvas.Top="516" Width="34" Stroke="#FF5A2A2A" RenderTransformOrigin="0.5,0.5">
+				<Ellipse.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform AngleX="25" AngleY="-25"/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Ellipse.RenderTransform>
+				<Ellipse.Fill>
+					<LinearGradientBrush EndPoint="0.464,0" StartPoint="0.565,1.181">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Color="#FF744B4B" Offset="1"/>
+					</LinearGradientBrush>
+				</Ellipse.Fill>
+			</Ellipse>
+			<Rectangle Height="40" Canvas.Left="960.012" Canvas.Top="120.083" Width="40" Fill="{DynamicResource Gray10}"/>
+			<Rectangle Height="40" Canvas.Left="960.012" Canvas.Top="176.083" Width="40" Fill="{DynamicResource Gray10}"/>
+			<Rectangle Height="40" Canvas.Left="960.012" Canvas.Top="232.083" Width="40" Fill="{DynamicResource Gray10}"/>
+			<Rectangle Height="40" Canvas.Left="960.012" Canvas.Top="288.083" Width="40" Fill="{DynamicResource Gray10}"/>
+			<Rectangle Height="40" Canvas.Left="960.012" Canvas.Top="344.083" Width="40" Fill="{DynamicResource Gray10}"/>
+			<Rectangle Height="40" Canvas.Left="960.012" Canvas.Top="400.083" Width="40" Fill="{DynamicResource Gray10}"/>
+			<Rectangle Height="40" Canvas.Left="960.012" Canvas.Top="456.083" Width="40" Fill="{DynamicResource Gray10}"/>
+			<Rectangle Height="40" Canvas.Left="960.012" Canvas.Top="512.083" Width="40" Fill="{DynamicResource Gray10}"/>
+			<Rectangle Height="40" Canvas.Left="960.012" Canvas.Top="568.083" Width="40" Fill="{DynamicResource Gray10}"/>
+			<Rectangle Height="40" Canvas.Left="960.012" Canvas.Top="624.083" Width="40" Fill="{DynamicResource Gray10}"/>
+			<TextBlock Height="20" Canvas.Left="967.512" TextWrapping="Wrap" Canvas.Top="130.248" Width="25" FontSize="12" TextAlignment="Center"><Run Language="ru-ru" Text="КМ1"/></TextBlock>
+			<TextBlock Height="20" Canvas.Left="967.512" TextWrapping="Wrap" Canvas.Top="185.248" Width="25" FontSize="12" TextAlignment="Center"><Run Language="ru-ru" Text="РП4"/></TextBlock>
+			<TextBlock Height="20" Canvas.Left="967.512" TextWrapping="Wrap" Canvas.Top="241.748" Width="25" TextAlignment="Center" FontSize="12"><Run Language="ru-ru" Text="Г1"/></TextBlock>
+			<TextBlock Height="20" Canvas.Left="967.512" TextWrapping="Wrap" Canvas.Top="297.248" Width="25" FontSize="12" TextAlignment="Center"><Run Language="ru-ru" Text="Г2"/></TextBlock>
+			<TextBlock Height="20" Canvas.Left="967.512" TextWrapping="Wrap" Canvas.Top="353.748" Width="25" FontSize="12" TextAlignment="Center"><Run Language="ru-ru" Text="Г3"/></TextBlock>
+			<TextBlock Height="20" Canvas.Left="967.512" TextWrapping="Wrap" Canvas.Top="409.748" Width="25" FontSize="10.667" TextAlignment="Center"><Run Language="ru-ru" Text="ФШ1"/></TextBlock>
+			<TextBlock Height="20" Canvas.Left="967.512" TextWrapping="Wrap" Canvas.Top="465.748" Width="25" FontSize="12" TextAlignment="Center"><Run Language="ru-ru" Text="ФВ"/></TextBlock>
+			<TextBlock Height="20" Canvas.Left="967.512" TextWrapping="Wrap" Canvas.Top="520.748" Width="25" FontSize="12" TextAlignment="Center"><Run Language="ru-ru" Text="ПВ"/></TextBlock>
+			<TextBlock Height="20" Canvas.Left="967.512" TextWrapping="Wrap" Canvas.Top="577.248" Width="25" FontSize="12" TextAlignment="Center"><Run Language="ru-ru" Text="ТР"/></TextBlock>
+			<TextBlock Height="20" Canvas.Left="967.512" TextWrapping="Wrap" Canvas.Top="633.248" Width="25" TextAlignment="Center"><Run Language="ru-ru" Text="ЗУ"/></TextBlock>
+			<Rectangle Height="25" Canvas.Left="475.316" Canvas.Top="539.806" Width="49.998">
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.536,-0.103" StartPoint="0.535,1.045">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Color="White" Offset="0.952"/>
+						<GradientStop Color="#FF383838" Offset="0.081"/>
+						<GradientStop Color="#FF979797" Offset="0.864"/>
+						<GradientStop Color="#FF3F3F3F" Offset="0.081"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+			<Rectangle Height="90" Canvas.Left="458.073" Canvas.Top="564.889" Width="85">
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.536,-0.103" StartPoint="0.535,1.045">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Color="White" Offset="0.952"/>
+						<GradientStop Color="#FF383838" Offset="0.081"/>
+						<GradientStop Color="#FF979797" Offset="0.864"/>
+						<GradientStop Color="#FF3F3F3F" Offset="0.081"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+			<Rectangle Height="135" Canvas.Left="720" Canvas.Top="332.5" Width="66">
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="0.53,-0.147" StartPoint="0.53,1.122">
+						<GradientStop Color="Black"/>
+						<GradientStop Color="White" Offset="1"/>
+						<GradientStop Color="#FF828282" Offset="0.766"/>
+						<GradientStop Color="#FF4F4F4F" Offset="0.179"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+			<TextBlock x:Name="textBlock4_Copy12" Canvas.Left="742.957" TextWrapping="Wrap" Canvas.Top="438.509" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}"><Run Language="ru-ru" Text="ЗК"/></TextBlock>
+			<TextBlock x:Name="textBlock4_Copy13" Canvas.Left="487.684" TextWrapping="Wrap" Canvas.Top="568.067" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}"><Run Text="П"/><Run Language="ru-ru" Text="Л"/></TextBlock>
+			<Wpf:ucLevelIndicator x:Name="indicator_T8" Height="160.083" Canvas.Left="720" DataContext="{Binding IndicatorViewModels[283]}" Width="80"/>
+			<Wpf:ucLevelIndicator x:Name="indicator_T2" Height="160.083" Canvas.Left="840" DataContext="{Binding IndicatorViewModels[284]}" Width="80"/>
+			<Wpf:ucLevelIndicator x:Name="indicator_T1" Height="160.083" Canvas.Left="600" DataContext="{Binding IndicatorViewModels[282]}" Width="80"/>
+			<Wpf:ucLevelIndicator x:Name="indicator_L13" Height="160.083" Canvas.Left="480" DataContext="{Binding IndicatorViewModels[281]}" Width="80"/>
+			<Wpf:ucDiscreteIndicator x:Name="indicator_56_DI_0" Height="48"  Width="51.75" DataContext="{Binding IndicatorViewModels[181]}" Canvas.Left="23.75" Canvas.Top="8"/>
+			<Wpf:ucDiscreteIndicator x:Name="indicator_56_DI_1" Height="48"  Width="51.75" DataContext="{Binding IndicatorViewModels[182]}" Canvas.Left="81.75" Canvas.Top="8"/>
+			<Wpf:ucDiscreteIndicator x:Name="indicator_56_DI_2" Height="48"  Width="51.75" DataContext="{Binding IndicatorViewModels[183]}" Canvas.Left="137.5" Canvas.Top="8"/>
+			<Wpf:ucDiscreteIndicator x:Name="indicator_56_DI_3" Height="48"  Width="51.75" DataContext="{Binding IndicatorViewModels[184]}" Canvas.Left="189.25" Canvas.Top="8"/>
+		</Canvas>
 	</Viewbox>
 </UserControl>

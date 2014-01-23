@@ -3,10 +3,13 @@
 using Oleg_ivo.HighLevelClient.ServiceReferenceIISTwsDualHttp;
 #else
 #if TCP_BINDING
+using Oleg_ivo.HighLevelClient.ServiceReferenceHome;
 using Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp;
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
+using HighLevelMessageExchangeSystemClient = Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp.HighLevelMessageExchangeSystemClient;
+
 #else
 using Oleg_ivo.HighLevelClient.ServiceReferenceIIST;
 #endif

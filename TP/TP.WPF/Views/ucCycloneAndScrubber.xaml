@@ -1,12 +1,10 @@
 ﻿<UserControl
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	mc:Ignorable="d"
+	xmlns:Wpf="clr-namespace:UICommon.WPF;assembly=UICommon.WPF"
 	x:Class="TP.WPF.Views.ucCycloneAndScrubber"
 	x:Name="UserControl"
-	d:DesignWidth="640" d:DesignHeight="480" Width="1024" Height="768">
+	Width="1024" Height="768">
 
 
 <!--Область для рисования-->
@@ -213,13 +211,11 @@
 			<TextBlock x:Name="textBlock6" Canvas.Left="407" TextWrapping="Wrap" Canvas.Top="581.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="ФС1"/>
 			<TextBlock x:Name="textBlock7" Canvas.Left="519.07" TextWrapping="Wrap" Canvas.Top="598.056" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="Б1"/>
 			<TextBlock x:Name="textBlock8" Canvas.Left="976.565" TextWrapping="Wrap" Canvas.Top="600" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="Б2"/>
-            <!--Добавление Биндинговых ТекстБоксов-->
-            <TextBox Canvas.Top="25" Canvas.Right="15"  Text="{Binding PhLevel_CF1}" Width="50"></TextBox>
-            <Label Name="label1" Canvas.Right="100" Canvas.Top="25" Height="25" Width="100">рН1	уровень в СФ1:</Label>
-            <TextBox Canvas.Top="50" Canvas.Right="15"  Text="{Binding PhLevel_CF2}" Width="50"></TextBox>
-            <Label Name="label2" Canvas.Right="100" Canvas.Top="50" Height="25" Width="100">рН2	уровень в СФ2:</Label>
-            <TextBox Canvas.Top="75" Canvas.Right="15"  Text="{Binding Level_DU10}" Width="50"></TextBox>
-            <Label Name="label3" Canvas.Right="100" Canvas.Top="75" Height="25" Width="100">ДУ-10 уровень в СБ:</Label>
+            <!--Добавление Биндинговых Индикаторов-->
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_L10" Width="192" DataContext="{Binding IndicatorViewModels[10]}" Canvas.Left="8"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_L11" Width="192" DataContext="{Binding IndicatorViewModels[11]}" Canvas.Left="208"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_L17" Width="192" DataContext="{Binding IndicatorViewModels[17]}" Canvas.Left="408"/>
+            <Wpf:ucBurner Canvas.Top="354" Height="96" x:Name="indicator_B1" Width="192" DataContext="{Binding IndicatorViewModels[1]}" Canvas.Left="190"/>
         </Canvas>
 	</Viewbox>
 </UserControl>

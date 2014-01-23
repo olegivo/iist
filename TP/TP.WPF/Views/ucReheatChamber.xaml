@@ -3,6 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:Wpf="clr-namespace:UICommon.WPF;assembly=UICommon.WPF"
 	mc:Ignorable="d"
 	x:Class="TP.WPF.Views.ucReheatChamber"
 	x:Name="UserControl"
@@ -124,12 +125,9 @@
 			<TextBlock x:Name="textBlock_Copy9" TextWrapping="Wrap" Canvas.Top="119.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}" Text="к ТО" Canvas.Left="42.695"/>
 			<TextBlock x:Name="textBlock_Copy10" Canvas.Left="120" TextWrapping="Wrap" Canvas.Top="119.89" FontWeight="{DynamicResource FontWeightLablel}" FontSize="21.333" Text="{Binding Temperature, ElementName=UserControl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <!--Добавление Биндинговых ТекстБоксов-->
-            <TextBox Canvas.Top="25" Canvas.Right="15"  Text="{Binding Level_DU1}" Width="50"></TextBox>
-            <Label Name="label1" Canvas.Right="100" Canvas.Top="25" Height="25" Width="100">Уровень ДУ-1:</Label>
-            <TextBox Canvas.Top="50" Canvas.Right="15"  Text="{Binding Level_DU4}" Width="50"></TextBox>
-            <Label Name="label2" Canvas.Right="100" Canvas.Top="50" Height="25" Width="100">Уровень ДУ-4:</Label>
-            <TextBox Canvas.Top="75" Canvas.Right="15"  Text="{Binding Level_DU11}" Width="50"></TextBox>
-            <Label Name="label3" Canvas.Right="100" Canvas.Top="75" Height="25" Width="100">Уровень ДУ-11:</Label>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_L14" Width="192" DataContext="{Binding IndicatorViewModels[14]}" Canvas.Left="8"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_L15" Width="192" DataContext="{Binding IndicatorViewModels[15]}" Canvas.Left="208"/>
+            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_L16" Width="192" DataContext="{Binding IndicatorViewModels[16]}" Canvas.Left="408"/>
         </Canvas>
 	</Viewbox>
 </UserControl>

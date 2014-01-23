@@ -1,4 +1,5 @@
-﻿using DMS.Common.Messages;
+﻿using System;
+using DMS.Common.Messages;
 
 namespace TP.WPF.ViewModels
 {
@@ -90,7 +91,7 @@ namespace TP.WPF.ViewModels
         public override void OnReadChannel(InternalLogicalChannelDataMessage message)
         {
             base.OnReadChannel(message);
-            ActualizeChannelValue(message.LogicalChannelId, (double) message.Value);
+            ActualizeChannelValue(message.LogicalChannelId, Math.Round((double)message.Value,2)); //согласно требованию представления данных в ИИС
         }
 
         /// <summary>

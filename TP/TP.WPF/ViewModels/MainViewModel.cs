@@ -10,6 +10,14 @@ namespace TP.WPF.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        public FinishCleaningViewModel FinishCleaning { get; private set; }
+        public DrumTypeFurnaceViewModel DrumTypeFurnace { get; private set; }
+        public CycloneAndScrubberViewModel CycloneAndScrubber { get; private set; }
+        public AllHeatExchangerViewModel HeatExchanger { get; private set; }
+        public ReheatChamberViewModel ReheatChamber { get; private set; }
+        public SummaryTableViewModel SummaryTable { get; private set; }
+        public ChartTabViewModel ChartTab { get; private set; }
+
         public MainViewModel()
         {
             TestCommand = new DelegatingCommand(OnTest);
@@ -23,13 +31,13 @@ namespace TP.WPF.ViewModels
             FinishCleaning.SendControlMessage += FinishCleaning_SendControlMessage;
 
             DrumTypeFurnace = new DrumTypeFurnaceViewModel();
-            CyclonAndScrubber = new CycloneAndScrubberViewModel();
+            CycloneAndScrubber = new CycloneAndScrubberViewModel();
             ReheatChamber = new ReheatChamberViewModel();
-            AllHeatExchanger = new AllHeatExchangerViewModel();
+            HeatExchanger = new AllHeatExchangerViewModel();
             SummaryTable = new SummaryTableViewModel();
+            ChartTab = new ChartTabViewModel();
 
             channelController1.AutoSubscribeChannels = true;
-            //channelController1.CanRegisterChanged += new System.EventHandler(this.channelController1_CanRegisterChanged);
             channelController1.InitProvider("HighLevelClient");
             channelController1.NeedProtocol += channelController1_NeedProtocol;
             channelController1.CanRegister = true;
@@ -64,10 +72,11 @@ namespace TP.WPF.ViewModels
                     this,
                     FinishCleaning,
                     DrumTypeFurnace,
-                    CyclonAndScrubber,
+                    CycloneAndScrubber,
                     ReheatChamber,
-                    AllHeatExchanger,
-                    SummaryTable
+                    HeatExchanger,
+                    SummaryTable,
+                    ChartTab
                 };
 
             var models = new ObservableDictionary<int, IndicatorViewModel>();
@@ -123,13 +132,6 @@ namespace TP.WPF.ViewModels
 
         public ChannelController channelController1 = new ChannelController();
         private string messages;
-
-        public FinishCleaningViewModel FinishCleaning { get; private set; }
-        public DrumTypeFurnaceViewModel DrumTypeFurnace { get; private set; }
-        public CycloneAndScrubberViewModel CyclonAndScrubber { get; private set; }
-        public AllHeatExchangerViewModel AllHeatExchanger { get; private set; }
-        public ReheatChamberViewModel ReheatChamber { get; private set; }
-        public SummaryTableViewModel SummaryTable { get; private set; }
 
 
         void channelController1_NeedProtocol(object sender, EventArgs e)
