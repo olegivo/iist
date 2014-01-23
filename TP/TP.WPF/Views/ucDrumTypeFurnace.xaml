@@ -9,7 +9,7 @@
 	mc:Ignorable="d"
 	x:Class="TP.WPF.Views.ucDrumTypeFurnace"
 	x:Name="UserControl"
-	Width="1024" Height="768">
+	>
 
 
 	<UserControl.Resources>

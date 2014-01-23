@@ -119,10 +119,6 @@
       <Project>{BF2604F3-AA31-4075-B153-BDA51B9DA85C}</Project>
       <Name>MixModes.Synergy.Themes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MixModes.Synergy.Utilities\MixModes.Synergy.Utilities.csproj">
-      <Project>{DA4B2C0E-D106-49E8-B921-6891149388CB}</Project>
-      <Name>MixModes.Synergy.Utilities</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
