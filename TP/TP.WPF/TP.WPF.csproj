@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TP.WPF</RootNamespace>
     <AssemblyName>TP.WPF</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -20,6 +20,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <IsWebBootstrapper>true</IsWebBootstrapper>
     <PublishUrl>http://localhost/TP.WPF/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -32,9 +33,9 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -111,6 +112,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Referenced\JulMar\System.Windows.Interactivity.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -141,6 +143,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\MainShell.xaml.cs">
+      <DependentUpon>MainShell.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Resources\MainWindowMenus.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ucChartTab.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -203,6 +212,9 @@
     </Compile>
     <Compile Include="ViewModels\ChartDataItem.cs" />
     <Compile Include="ViewModels\ChartTabViewModel.cs" />
+    <Compile Include="Views\Page1.xaml.cs">
+      <DependentUpon>Page1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ucChartTab.xaml.cs">
       <DependentUpon>ucChartTab.xaml</DependentUpon>
     </Compile>
@@ -234,6 +246,10 @@
     <Page Include="Views\ucSummaryTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainShell.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -321,6 +337,18 @@
       <Project>{02BA939D-826A-4D6E-8B42-414AF3F6C7CE}</Project>
       <Name>DMS.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MixModes.Synergy.Resources\MixModes.Synergy.Resources.csproj">
+      <Project>{F81964C1-E1ED-4F85-BF5F-96A95B8541C7}</Project>
+      <Name>MixModes.Synergy.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixModes.Synergy.Themes\MixModes.Synergy.Themes.csproj">
+      <Project>{BF2604F3-AA31-4075-B153-BDA51B9DA85C}</Project>
+      <Name>MixModes.Synergy.Themes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixModes.Synergy.VisualFramework\MixModes.Synergy.VisualFramework.csproj">
+      <Project>{91827FBF-B7E1-4A00-9F06-D6F170855AC6}</Project>
+      <Name>MixModes.Synergy.VisualFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Oleg_ivo.Client\Oleg_ivo.HighLevelClient.csproj">
       <Project>{D3640EED-9D98-4EBC-9F8B-98B74B67ED21}</Project>
       <Name>Oleg_ivo.HighLevelClient</Name>
@@ -350,6 +378,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

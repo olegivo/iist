@@ -13,6 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oleg_ivo.Tools", "External\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickChartsWPF", "QuickChartsWPF\QuickChartsWPF.csproj", "{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixModes.Synergy.Themes", "MixModes.Synergy.Themes\MixModes.Synergy.Themes.csproj", "{BF2604F3-AA31-4075-B153-BDA51B9DA85C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixModes.Synergy.Resources", "MixModes.Synergy.Resources\MixModes.Synergy.Resources.csproj", "{F81964C1-E1ED-4F85-BF5F-96A95B8541C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixModes.Synergy.VisualFramework", "MixModes.Synergy.VisualFramework\MixModes.Synergy.VisualFramework.csproj", "{91827FBF-B7E1-4A00-9F06-D6F170855AC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +87,33 @@ Global
 		{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}.Release|x86.ActiveCfg = Release|Any CPU
+		{BF2604F3-AA31-4075-B153-BDA51B9DA85C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF2604F3-AA31-4075-B153-BDA51B9DA85C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF2604F3-AA31-4075-B153-BDA51B9DA85C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BF2604F3-AA31-4075-B153-BDA51B9DA85C}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF2604F3-AA31-4075-B153-BDA51B9DA85C}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{BF2604F3-AA31-4075-B153-BDA51B9DA85C}.Default|x86.ActiveCfg = Debug|Any CPU
+		{BF2604F3-AA31-4075-B153-BDA51B9DA85C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF2604F3-AA31-4075-B153-BDA51B9DA85C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF2604F3-AA31-4075-B153-BDA51B9DA85C}.Release|x86.ActiveCfg = Release|Any CPU
+		{F81964C1-E1ED-4F85-BF5F-96A95B8541C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F81964C1-E1ED-4F85-BF5F-96A95B8541C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F81964C1-E1ED-4F85-BF5F-96A95B8541C7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F81964C1-E1ED-4F85-BF5F-96A95B8541C7}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{F81964C1-E1ED-4F85-BF5F-96A95B8541C7}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{F81964C1-E1ED-4F85-BF5F-96A95B8541C7}.Default|x86.ActiveCfg = Debug|Any CPU
+		{F81964C1-E1ED-4F85-BF5F-96A95B8541C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F81964C1-E1ED-4F85-BF5F-96A95B8541C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F81964C1-E1ED-4F85-BF5F-96A95B8541C7}.Release|x86.ActiveCfg = Release|Any CPU
+		{91827FBF-B7E1-4A00-9F06-D6F170855AC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91827FBF-B7E1-4A00-9F06-D6F170855AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91827FBF-B7E1-4A00-9F06-D6F170855AC6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{91827FBF-B7E1-4A00-9F06-D6F170855AC6}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{91827FBF-B7E1-4A00-9F06-D6F170855AC6}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{91827FBF-B7E1-4A00-9F06-D6F170855AC6}.Default|x86.ActiveCfg = Debug|Any CPU
+		{91827FBF-B7E1-4A00-9F06-D6F170855AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91827FBF-B7E1-4A00-9F06-D6F170855AC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91827FBF-B7E1-4A00-9F06-D6F170855AC6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
