@@ -108,10 +108,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Controls.DataVisualization.Toolkit" />
     <Reference Include="System.Windows.Controls.Layout.Toolkit" />
-    <Reference Include="System.Windows.Interactivity">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Referenced\JulMar\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -212,9 +209,6 @@
     </Compile>
     <Compile Include="ViewModels\ChartDataItem.cs" />
     <Compile Include="ViewModels\ChartTabViewModel.cs" />
-    <Compile Include="Views\Page1.xaml.cs">
-      <DependentUpon>Page1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ucChartTab.xaml.cs">
       <DependentUpon>ucChartTab.xaml</DependentUpon>
     </Compile>
