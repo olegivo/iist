@@ -16,8 +16,38 @@
         <View:CustomDataTemplateSelector x:Key="myTemplateSelector"/>
         <DataTemplate x:Key="LogicalChannelTemplate">
             <StackPanel>
-                <TextBlock Text="№ логического канала" />
-                <TextBlock Text="{Binding Path=Id}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="№ логического канала" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=Id}" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Описание" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=Description}" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Минимальное допустимое значение для канала" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=MinValue}" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Максимальное допустимое значение для канала" />
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=MaxValue}" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Минимальное нормальное значение для канала" />
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Path=MinNormalValue}" />
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Максимальное нормальное значение для канала" />
+                    <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Path=MaxNormalValue}" />
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Период опроса канала" />
+                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Path=PollPeriod}" />
+                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Порог изменения величины" />
+                    <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding Path=DeltaChangeLimit}" />
+                </Grid>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="PhysicalChannelTemplate">
@@ -45,22 +75,28 @@
                 <HierarchicalDataTemplate DataType = "{x:Type src:FieldBusManager}" ItemsSource = "{Binding Path=FieldBusNodes}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding}"/>
+                        <!--<Button IsEnabled="False">Добавить узел</Button>
+                        <Button IsEnabled="False">Удалить эту шину</Button>-->
                     </StackPanel>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType = "{x:Type FieldBusNodes:FieldBusNode}" ItemsSource = "{Binding Path=PhysicalChannels}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding}"/>
+                        <!--<Button IsEnabled="False">Добавить ФК</Button>
+                        <Button IsEnabled="False">Удалить этот узел</Button>-->
                     </StackPanel> 
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType = "{x:Type Channels:PhysicalChannel}" ItemsSource = "{Binding Path=LogicalChannels}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding}"/>
+                        <!--<Button IsEnabled="False">Добавить ЛК</Button>
+                        <Button IsEnabled="False">Удалить этот ФК</Button>-->
                     </StackPanel>
                 </HierarchicalDataTemplate>
                 <DataTemplate DataType="{x:Type Channels:LogicalChannel}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding}"/>
-                        <Button>Удалить</Button>
+                        <Button>Удалить этот ЛК</Button>
                     </StackPanel>
                 </DataTemplate>
             </TreeView.Resources>
