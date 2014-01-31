@@ -6,8 +6,7 @@
 	xmlns:Wpf="clr-namespace:UICommon.WPF;assembly=UICommon.WPF"
 	mc:Ignorable="d"
 	x:Class="TP.WPF.Views.ucReheatChamber"
-	x:Name="UserControl"
-	d:DesignWidth="640" d:DesignHeight="480" Width="1024" Height="768">
+	x:Name="UserControl">
 
 	<Viewbox>
 		<Canvas Height="768" Width="1024">

@@ -3,8 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:Wpf="clr-namespace:UICommon.WPF;assembly=UICommon.WPF"
 	x:Class="TP.WPF.Views.ucCycloneAndScrubber"
-	x:Name="UserControl"
-	Width="1024" Height="768">
+	x:Name="UserControl">
 
 
 <!--Область для рисования-->
