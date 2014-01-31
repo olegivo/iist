@@ -55,7 +55,7 @@ using System.Windows.Markup;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-[assembly: XmlnsDefinitionAttribute("http://mixmodes.com/visualFx", "MixModes.Synergy.VisualFramework.Adorners")]
+//[assembly: XmlnsDefinitionAttribute("http://mixmodes.com/visualFx", "MixModes.Synergy.VisualFramework.Adorners")]
 [assembly: XmlnsDefinitionAttribute("http://mixmodes.com/visualFx", "MixModes.Synergy.VisualFramework.Behaviors")]
 [assembly: XmlnsDefinitionAttribute("http://mixmodes.com/visualFx", "MixModes.Synergy.VisualFramework.Commands")]
 [assembly: XmlnsDefinitionAttribute("http://mixmodes.com/visualFx", "MixModes.Synergy.VisualFramework.Controls")]
