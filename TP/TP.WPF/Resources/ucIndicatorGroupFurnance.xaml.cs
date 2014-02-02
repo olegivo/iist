@@ -15,15 +15,15 @@ using System.Windows.Shapes;
 namespace TP.WPF.Resources
 {
     /// <summary>
-    /// Interaction logic for ucIndicatorGroup1.xaml
+    /// Interaction logic for ucIndicatorGroupFurnance.xaml
     /// </summary>
-    public partial class ucIndicatorGroup1 : UserControl
+    public partial class ucIndicatorGroupFurnance : UserControl
     {
         //public List<Button> ButItems = new List<Button>()
         //    {
         //        new Button(){Name = "bu2",}
         //    };
-        public ucIndicatorGroup1()
+        public ucIndicatorGroupFurnance()
         {
             InitializeComponent();
             //DataList = new List<Button>();

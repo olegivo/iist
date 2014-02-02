@@ -1,10 +1,4 @@
-﻿using System.Collections.Specialized;
-using System.Windows;
-using System.Windows.Controls;
-using AmCharts.Windows.QuickCharts;
-using Microsoft.Windows.Controls;
-using TP.WPF.ViewModels;
-using TP.WPF.ViewModels;
+﻿using System.Windows.Controls;
 
 namespace TP.WPF.Views
 {

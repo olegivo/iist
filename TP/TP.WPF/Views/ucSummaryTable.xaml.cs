@@ -1,9 +1,8 @@
 ﻿using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Windows.Controls;
 using TP.WPF.ViewModels;
-using DataGridAutoGeneratingColumnEventArgs = Microsoft.Windows.Controls.DataGridAutoGeneratingColumnEventArgs;
+
 
 namespace TP.WPF.Views
 {
