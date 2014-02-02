@@ -19,6 +19,7 @@ namespace TP.WPF
 			this.InitializeComponent();
 			this.GenerateLayout();
             this.GenereteDebugPanel();
+		    this.GenerateIndicatorsPanel();
 		}
 
         private Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)
@@ -56,8 +57,8 @@ namespace TP.WPF
             //}
 
             //ТЕСТ
-            var pn = new Views.ucCycloneAndScrubber();
-            //var pn = new Resources.ucIndicatorGroup1();
+            var pn = new Views.subDrumTypeFurnance();
+            //var pn = new Resources.ucIndicatorGroupFurnance();
             DockPane pane = new DockPane();
             pane.Width = 600;
             pane.Height = 400;
@@ -76,6 +77,16 @@ namespace TP.WPF
 	        pane.Header = "Панель отладочной информации";
 	        pane.Content = new Resources.ucDebugPanel();
             WindowsManager.AddAutoHideWindow(pane,Dock.Bottom);
+	    }
+
+	    private void GenerateIndicatorsPanel()
+	    {
+            DockPane pane = new DockPane();
+	        pane.Width = 180;
+	        pane.Header = "Индикаторы";
+	        pane.Content = new Resources.ucIndicatorGroupFurnance();
+            WindowsManager.AddPinnedWindow(pane,Dock.Right);
+
 	    }
 	}
 }
