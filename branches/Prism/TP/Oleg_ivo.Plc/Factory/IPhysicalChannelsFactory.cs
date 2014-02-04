@@ -1,3 +1,4 @@
+using System;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
@@ -16,11 +17,11 @@ namespace Oleg_ivo.Plc.Factory
         ///<returns></returns>
         PhysicalChannelCollection BuildPhysicalChannels(PLC plc);
 
-        ///<summary>
-        /// Загрузить настроенные физические каналы для узла полевой шины
-        ///</summary>
-        ///<param name="fieldBusNode"></param>
-        ///<returns></returns>
+        /// <summary>
+        ///  Загрузить настроенные физические каналы для узла полевой шины
+        /// </summary>
+        /// <param name="fieldBusNode"></param>
+        /// <returns></returns>
         PhysicalChannelCollection LoadPhysicalChannels(FieldBusNode fieldBusNode);
 
         ///<summary>
@@ -28,6 +29,7 @@ namespace Oleg_ivo.Plc.Factory
         ///</summary>
         ///<param name="fieldBusNode"></param>
         ///<returns></returns>
+        [Obsolete("Вместо данного метода следует пользоваться DataContext.SubmitChanges")]
         void SavePhysicalChannels(FieldBusNode fieldBusNode);
     }
 }

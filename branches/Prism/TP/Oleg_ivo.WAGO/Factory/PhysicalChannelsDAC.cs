@@ -13,6 +13,7 @@ namespace Oleg_ivo.WAGO.Factory
     ///<summary>
     ///
     ///</summary>
+    [Obsolete("Подлежит замене на сущности Linq2Sql")]
     public partial class PhysicalChannelsDAC : Component
     {
         ///<summary>
@@ -41,6 +42,7 @@ namespace Oleg_ivo.WAGO.Factory
         ///
         ///</summary>
         ///<returns></returns>
+        [Obsolete("")]
         public PhysicalChannelCollection GetChannels(FieldBusNode fieldBusNode)
         {
             var channels = new PhysicalChannelCollection();
@@ -166,6 +168,7 @@ namespace Oleg_ivo.WAGO.Factory
             row.FieldNodeId = fieldBusNode.Id;
         }
 
+        [Obsolete("")]
         private PhysicalChannel CreateChannelFromData(DtsChannelConfiguration.PhysicalChannelRow row, FieldBusNode fieldBusNode)
         {
             var ioModule = new WagoIOModule(LogicalChannelsFactory)
@@ -175,7 +178,7 @@ namespace Oleg_ivo.WAGO.Factory
                                                             (ushort) row.PhysicalChannelSize, 0, row.AddressShift)
                                };
 
-            var channel = new PhysicalChannel(LogicalChannelsFactory, fieldBusNode, ioModule, (ushort)row.AddressShift, (ushort)row.PhysicalChannelSize)
+            var channel = new PhysicalChannel(null, LogicalChannelsFactory, fieldBusNode, ioModule, (ushort)row.AddressShift, (ushort)row.PhysicalChannelSize)
                               {Id = row.Id, WriteAddress = row.WriteAddress, ReadAddress = row.ReadAddress};
             return channel;
         }

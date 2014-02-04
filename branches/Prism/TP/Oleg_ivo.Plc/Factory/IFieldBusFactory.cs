@@ -34,8 +34,9 @@ namespace Oleg_ivo.Plc.Factory
         /// 
         /// </summary>
         /// <param name="fieldBusAccessor"></param>
+        /// <param name="fieldBus"></param>
         /// <returns></returns>
-        FieldBusManager CreateFieldBusManager(IFieldBusAccessor fieldBusAccessor);
+        FieldBusManager CreateFieldBusManager(IFieldBusAccessor fieldBusAccessor, Entities.FieldBus fieldBus);
 
 
         ///<summary>

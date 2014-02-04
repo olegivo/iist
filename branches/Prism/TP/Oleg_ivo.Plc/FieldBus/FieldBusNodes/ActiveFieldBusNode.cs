@@ -17,8 +17,9 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         /// <param name="fieldBusManager"></param>
         /// <param name="fieldBusAccessor"></param>
         /// <param name="fieldBusNodeAddress"></param>
-        public ActiveFieldBusNode(FieldBusManager fieldBusManager, IFieldBusAccessor fieldBusAccessor, FieldBusNodeAddress fieldBusNodeAddress)
-            : base(fieldBusManager, fieldBusNodeAddress)
+        /// <param name="fieldBusNodeEntity"></param>
+        public ActiveFieldBusNode(FieldBusManager fieldBusManager, IFieldBusAccessor fieldBusAccessor, FieldBusNodeAddress fieldBusNodeAddress, Entities.FieldBusNode fieldBusNodeEntity)
+            : base(fieldBusManager, fieldBusNodeAddress, fieldBusNodeEntity)
         {
             if (fieldBusAccessor == null) throw new ArgumentNullException("fieldBusAccessor");
             if (fieldBusManager is ActiveFieldBusManager) throw new ArgumentNullException("fieldBusManager");

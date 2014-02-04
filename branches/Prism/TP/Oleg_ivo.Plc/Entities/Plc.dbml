@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Plc27" Class="PlcDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=OLEG-A\SQLEXPRESS2005;Initial Catalog=Plc27;Integrated Security=True" SettingsObjectName="Oleg_ivo.Plc.Properties.Settings" SettingsPropertyName="Plc27ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.FieldBus" Member="FieldBus">
+    <Type Name="FieldBus">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FieldBusTypeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FieldBusName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="FieldBusType_FieldBus" Member="FieldBusType" ThisKey="FieldBusTypeId" OtherKey="Id" Type="FieldBusType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FieldBusNode" Member="FieldBusNodes">
+    <Type Name="FieldBusNode">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FieldBusTypeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AddressPart1" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AddressPart2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Enabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="FieldBusNode_PhysicalChannel" Member="PhysicalChannels" ThisKey="Id" OtherKey="FieldNodeId" Type="PhysicalChannel" />
+      <Association Name="FieldBusType_FieldBusNode" Member="FieldBusType" ThisKey="FieldBusTypeId" OtherKey="Id" Type="FieldBusType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FieldBusType" Member="FieldBusTypes">
+    <Type Name="FieldBusType">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FieldBusName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="FieldBusType_FieldBus" Member="FieldBus" ThisKey="Id" OtherKey="FieldBusTypeId" Type="FieldBus" />
+      <Association Name="FieldBusType_FieldBusNode" Member="FieldBusNodes" ThisKey="Id" OtherKey="FieldBusTypeId" Type="FieldBusNode" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PhysicalChannel" Member="PhysicalChannels">
+    <Type Name="PhysicalChannel">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FieldNodeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AddressShift" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="ReadAddress" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WriteAddress" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PhysicalChannelSize" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsInput" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsOutput" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsAnalog" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsDiscrete" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Register" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="PhysicalChannel_LogicalChannel" Member="LogicalChannels" ThisKey="Id" OtherKey="PhysicalChannelId" Type="LogicalChannel" />
+      <Association Name="FieldBusNode_PhysicalChannel" Member="FieldBusNode" ThisKey="FieldNodeId" OtherKey="Id" Type="FieldBusNode" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LogicalChannel" Member="LogicalChannels">
+    <Type Name="LogicalChannel">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ParameterId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PhysicalChannelId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DirectPolynom" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ReversePolynom" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Size" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AddressShift" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PollPeriod" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SensivityDelta" Type="System.Decimal" DbType="Decimal(18,10)" CanBeNull="true" />
+      <Column Name="MinValue" Type="System.Decimal" DbType="Decimal(18,10)" CanBeNull="true" />
+      <Column Name="MaxValue" Type="System.Decimal" DbType="Decimal(18,10)" CanBeNull="true" />
+      <Column Name="MinNormalValue" Type="System.Decimal" DbType="Decimal(18,10)" CanBeNull="true" />
+      <Column Name="MaxNormalValue" Type="System.Decimal" DbType="Decimal(18,10)" CanBeNull="true" />
+      <Association Name="PhysicalChannel_LogicalChannel" Member="PhysicalChannel" ThisKey="PhysicalChannelId" OtherKey="Id" Type="PhysicalChannel" IsForeignKey="true" />
+      <Association Name="Parameter_LogicalChannel" Member="Parameter" ThisKey="ParameterId" OtherKey="Id" Type="Parameter" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Parameter" Member="Parameters">
+    <Type Name="Parameter">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MeasurementUnitId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="Parameter_LogicalChannel" Member="LogicalChannels" ThisKey="Id" OtherKey="ParameterId" Type="LogicalChannel" />
+      <Association Name="MeasurementUnit_Parameter" Member="MeasurementUnit" ThisKey="MeasurementUnitId" OtherKey="Id" Type="MeasurementUnit" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MeasurementUnit" Member="MeasurementUnits">
+    <Type Name="MeasurementUnit">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="MeasurementUnit_Parameter" Member="Parameters" ThisKey="Id" OtherKey="MeasurementUnitId" Type="Parameter" />
+    </Type>
+  </Table>
+</Database>

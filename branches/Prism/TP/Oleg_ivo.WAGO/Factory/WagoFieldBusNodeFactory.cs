@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using NLog;
+using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.Factory;
+using Oleg_ivo.Plc.FieldBus;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
 using Oleg_ivo.WAGO.Devices;
@@ -29,8 +33,79 @@ namespace Oleg_ivo.WAGO.Factory
         /// <returns></returns>
         public override FieldBusNodeCollection LoadFieldBusNodes(FieldBusManager fieldBusManager)
         {
-            FieldBusNodeDAC fieldBusNodeDAC = new FieldBusNodeDAC {FieldBusNodesFactory = this};
-            return fieldBusNodeDAC.GetFieldBusNodes(fieldBusManager);
+            var nodes = new FieldBusNodeCollection();
+            foreach (var row in DataContext.FieldBusNodes.Where(fbn=>fbn.Enabled && fbn.FieldBusTypeId==fieldBusManager.FieldBus.FieldBusTypeId))
+            {
+                FieldBusNode fieldBusNode;
+                if (fieldBusManager is ActiveFieldBusManager)
+                {
+                    fieldBusNode = new FieldBusNode(fieldBusManager, GetFieldBusNodeAddress(row), row) { Id = row.Id };
+                }
+                else//нужно построить активный узел полевой шины
+                {
+                    //по адресу из row получаем FieldBusNodeAddress
+                    FieldBusNodeAddress fieldBusNodeAddress = fieldBusManager.FieldBusAddresses.Find(row.AddressPart1, row.AddressPart2.Value);
+
+                    if (fieldBusNodeAddress == null)
+                    {
+                        throw new Exception("Не найден адрес для активного узла полевой шины");
+                    }
+
+                    fieldBusNode = CreateFieldBusNode(fieldBusManager, fieldBusNodeAddress, row);
+                }
+                nodes.Add(fieldBusNode);
+            }
+            //FieldBusNodeDAC fieldBusNodeDAC = new FieldBusNodeDAC {FieldBusNodesFactory = this};
+            //return fieldBusNodeDAC.GetFieldBusNodes(fieldBusManager);
+            return nodes;
+        }
+
+        private FieldBusNodeAddress GetFieldBusNodeAddress(Plc.Entities.FieldBusNode fieldBusNode)
+        {
+            switch (fieldBusNode.FieldBusType.FieldBusTypeEnum)
+            {
+                case FieldBusType.RS232:
+                case FieldBusType.RS485:
+                    return GetSerialAddresses(fieldBusNode);
+                case FieldBusType.Ethernet:
+                    return GetEthernetAddresses(fieldBusNode);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        internal static FieldBusNodeAddress GetEthernetAddresses(Plc.Entities.FieldBusNode fieldBusNode)
+        {
+            FieldBusNodeIpAddress address = null;
+            //todo: порт должен удовлетворять требованиям IP-Address
+            if (fieldBusNode != null) address = new FieldBusNodeIpAddress(GetIPAddress(fieldBusNode.AddressPart1), fieldBusNode.AddressPart2.Value, fieldBusNode.Id);
+            return address;
+        }
+
+        internal static FieldBusNodeAddress GetSerialAddresses(Plc.Entities.FieldBusNode fieldBusNode)
+        {
+            FieldBusNodeSerialAddress address = null;
+            //todo: порт должен удовлетворять требованиям COMx, адрес на шине - [1..99]
+            if (fieldBusNode != null) address = new FieldBusNodeSerialAddress(fieldBusNode.AddressPart1, (byte)fieldBusNode.AddressPart2, fieldBusNode.Id);
+            return address;
+        }
+
+        private static byte[] GetIPAddress(string address)
+        {
+            string ip = address;
+            var bytes = new List<byte>();
+            while (ip.Length > 0)
+            {
+                //if (ip.StartsWith(".")) ip = ip.Substring(1, ip.Length - 1);
+                int dot = ip.IndexOf(".");
+                string b = dot >= 0 ? ip.Substring(0, dot) : ip;
+                byte parseResult;
+                byte.TryParse(b, out parseResult);
+                bytes.Add(parseResult);
+                ip = dot >= 0 ? ip.Substring(dot + 1, ip.Length - b.Length - 1) : "";
+            }
+
+            return bytes.ToArray();
         }
 
         /// <summary>

@@ -94,16 +94,15 @@ namespace EmulationClient
         {
             foreach (LogicalChannel channel in LogicalChannels)
             {
-                DataMode dataMode;
-                if (channel is OutputLogicalChannel) 
-                    dataMode = DataMode.Write;
-                else if (channel is InputLogicalChannel)
-                    dataMode = DataMode.Read;
-                else if (channel is InputOutputLogicalChannel)
-                    dataMode = DataMode.Read | DataMode.Write;
-                else
+                DataMode dataMode = DataMode.Unknown;
+                if (channel.IsOutput) 
+                    dataMode |= DataMode.Write;
+                if (channel.IsInput)
+                    dataMode |= DataMode.Read;
+                
+                if(dataMode==DataMode.Unknown)
                 {
-                    throw new ArgumentOutOfRangeException("Невозможно определить режим данных для данного типа канала" + channel.GetType());
+                    throw new ArgumentOutOfRangeException("Невозможно определить режим данных для данного канала" + channel);
                 }
 
                 Proxy.ChannelRegisterAsync(

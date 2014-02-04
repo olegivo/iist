@@ -1,12 +1,18 @@
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
+using System.Linq;
 using Autofac;
+using Autofac.Core.Activators.Reflection;
 using Oleg_ivo.Base.Autofac;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.Plc.Channels;
+using Oleg_ivo.Plc.Entities;
 using Oleg_ivo.Plc.Factory;
-using Oleg_ivo.Plc.FieldBus;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 using Oleg_ivo.Plc.Ports;
+using Oleg_ivo.Tools.ConnectionProvider;
+using FieldBusType = Oleg_ivo.Plc.FieldBus.FieldBusType;
 
 namespace Oleg_ivo.Plc
 {
@@ -118,6 +124,7 @@ namespace Oleg_ivo.Plc
         ///<param name="fieldBusType">Тип полевой шины</param>
         public void BuildFieldBuses(bool cleanBeforeBuild, FieldBusType fieldBusType)
         {
+            var dataContext = Context.ResolveUnregistered<PlcDataContext>(new TypedParameter(typeof(IDbConnection), DbConnectionProvider.Instance.GetConnection()));
             object[] ports = FieldBusFactory.FindPorts(fieldBusType);
             
             if (cleanBeforeBuild) FieldBusManagers = new List<FieldBusManager>();
@@ -137,7 +144,8 @@ namespace Oleg_ivo.Plc
                     var fieldBusAccessor = FieldBusFactory.CreateFieldbusAccessor(fieldBusPortParameters.FieldBusType, port);
                     if (fieldBusAccessor!=null)
                     {
-                        var fieldBusManager = FieldBusFactory.CreateFieldBusManager(fieldBusAccessor);
+                        var fieldBus = dataContext.FieldBus.FirstOrDefault(fb => fb.FieldBusTypeId.Value == (int)fieldBusType);//TODO: FirstOrDefault
+                        var fieldBusManager = FieldBusFactory.CreateFieldBusManager(fieldBusAccessor, fieldBus);
                         fieldBusManager.BuildFieldBusNodes(FieldBusNodesFactory);
                         FieldBusManagers.Add(fieldBusManager);
                     }

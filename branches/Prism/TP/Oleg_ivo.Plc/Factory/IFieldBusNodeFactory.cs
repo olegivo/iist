@@ -25,13 +25,14 @@ namespace Oleg_ivo.Plc.Factory
         ///<returns></returns>
         FieldBusNodeCollection FindNodes(FieldBusManager fieldBusManager, ModbusAccessor modbusAccessor);
 
-        ///<summary>
-        ///
-        ///</summary>
-        ///<param name="fieldBusManager"></param>
-        ///<param name="fieldBusNodeAddress"></param>
-        ///<returns></returns>
-        FieldBusNode CreateFieldBusNode(FieldBusManager fieldBusManager, FieldBusNodeAddress fieldBusNodeAddress);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fieldBusManager"></param>
+        /// <param name="fieldBusNodeAddress"></param>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        FieldBusNode CreateFieldBusNode(FieldBusManager fieldBusManager, FieldBusNodeAddress fieldBusNodeAddress, Entities.FieldBusNode row);
 
         /// <summary>
         /// Фабрика ПЛК

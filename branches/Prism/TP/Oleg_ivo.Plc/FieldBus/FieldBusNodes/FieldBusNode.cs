@@ -14,24 +14,27 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
     public class FieldBusNode : IFieldBusNodeAccessor, IIdentified
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-        private readonly FieldBusManager _fieldBusManager;
+        private readonly FieldBusManager fieldBusManager;
 
         #region fields
 
-        private readonly FieldBusNodeAddress _fieldBusNodeAddress;
-        private PLC _plc;
+        private readonly FieldBusNodeAddress fieldBusNodeAddress;
+        private PLC plc;
+        private readonly Entities.FieldBusNode fieldBusNodeEntity;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="fieldBusManager"></param>
         /// <param name="fieldBusNodeAddress"></param>
-        public FieldBusNode(FieldBusManager fieldBusManager, FieldBusNodeAddress fieldBusNodeAddress)
+        /// <param name="fieldBusNodeEntity"></param>
+        public FieldBusNode(FieldBusManager fieldBusManager, FieldBusNodeAddress fieldBusNodeAddress, Entities.FieldBusNode fieldBusNodeEntity)
         {
             if (this is ActiveFieldBusNode && fieldBusManager is ActiveFieldBusManager) 
                 throw new InvalidOperationException("ActiveFieldBusManager не может содержать ActiveFieldBusNode");
-            _fieldBusManager = fieldBusManager;
-            _fieldBusNodeAddress = fieldBusNodeAddress;
+            this.fieldBusManager = fieldBusManager;
+            this.fieldBusNodeAddress = fieldBusNodeAddress;
+            this.fieldBusNodeEntity = fieldBusNodeEntity;
         }
 
         #endregion
@@ -41,11 +44,9 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         /// <summary>
         /// ПЛК
         /// </summary>
-// ReSharper disable MemberCanBePrivate.Global
         public PLC Plc
-// ReSharper restore MemberCanBePrivate.Global
         {
-            get { return _plc; }
+            get { return plc; }
         }
 
         /// <summary>
@@ -53,7 +54,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         /// </summary>
         public FieldBusManager FieldBusManager
         {
-            get { return _fieldBusManager; }
+            get { return fieldBusManager; }
         }
 
         ///<summary>
@@ -89,7 +90,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         ///</summary>
         public FieldBusNodeAddress FieldBusNodeAddress
         {
-            get { return _fieldBusNodeAddress; }
+            get { return fieldBusNodeAddress; }
         }
 
         /// <summary>
@@ -296,7 +297,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         /// <param name="plc"></param>
         internal protected /*virtual*/ void InitPlc(PLC plc)
         {
-            _plc = plc;
+            this.plc = plc;
         }
 
         ///<summary>
@@ -331,6 +332,11 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         {
             get { return FieldBusNodeAddress.Id; }
             set { FieldBusNodeAddress.Id = value; }
+        }
+
+        public Entities.FieldBusNode FieldBusNodeEntity
+        {
+            get { return fieldBusNodeEntity; }
         }
 
         /// <summary>

@@ -7,14 +7,27 @@ namespace Oleg_ivo.Plc.Channels
     /// Логический канал.
     /// Реализует уточнённую адресацию к памяти ПЛК, получение и задание значений
     ///</summary>
-    public abstract class LogicalChannel : IIdentified
+    public class LogicalChannel : IIdentified
     {
+        public Entities.LogicalChannel Entity { get; set; }
+
         public delegate double GetLogicalChannelValueDelegate();
 
         #region fields
 
-        private ushort _channelSize;
-        private double? previousValue;
+        private ushort channelSize;
+        private double? previousValue;//todo:очередь
+        private string description;
+        private ushort addressShift;
+        private int id;
+        private double deltaChangeLimit;
+        private double? minValue;
+        private double? maxValue;
+        private double? minNormalValue;
+        private double? maxNormalValue;
+        private TimeSpan pollPeriod;
+        private Polynom directTransform;
+        private Polynom reverseTransform;
 
         #endregion
 
@@ -28,12 +41,34 @@ namespace Oleg_ivo.Plc.Channels
         ///<summary>
         /// Описание канала
         ///</summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get { return Entity != null ? Entity.Description : description; }
+            set
+            {
+                if(Description == value) return;
+                description = value;
+                if (Entity != null) Entity.Description = value;
+            }
+        }
 
         ///<summary>
         /// Адрес в физическом канале
         ///</summary>
-        public ushort AddressShift { get; set; }
+        public ushort AddressShift
+        {
+            get
+            {
+                return
+                    (ushort)(Entity != null && Entity.AddressShift.HasValue ? Entity.AddressShift.Value : addressShift);
+            }
+            set
+            {
+                if(AddressShift == value) return;
+                addressShift = value;
+                if (Entity != null) Entity.AddressShift = value;
+            }
+        }
 
         ///<summary>
         /// Разрядность физического канала
@@ -44,9 +79,18 @@ namespace Oleg_ivo.Plc.Channels
             {
                 return
                     (ushort)
-                    (_channelSize > 0 ? _channelSize : (PhysicalChannel != null ? PhysicalChannel.ChannelSize : 0));
+                        (Entity != null && Entity.Size.HasValue
+                            ? Entity.Size.Value
+                            : (channelSize > 0
+                                ? channelSize
+                                : (PhysicalChannel != null ? PhysicalChannel.ChannelSize : 0)));
             }
-            set { _channelSize = value; }
+            set
+            {
+                if (ChannelSize == value) return;
+                channelSize = value;
+                if (Entity != null) Entity.Size = value;
+            }
         }
 
         ///<summary>
@@ -54,7 +98,10 @@ namespace Oleg_ivo.Plc.Channels
         ///</summary>
         public int WriteAddress
         {
-            get { return (PhysicalChannel != null ? PhysicalChannel.WriteAddress : 0) + AddressShift; }
+            get
+            {
+                return (PhysicalChannel != null ? PhysicalChannel.WriteAddress : 0) + AddressShift;
+            }
         }
 
         ///<summary>
@@ -65,50 +112,159 @@ namespace Oleg_ivo.Plc.Channels
             get { return PhysicalChannel.ReadAddress + AddressShift; }
         }
 
+        public bool IsInput { get { return PhysicalChannel != null && PhysicalChannel.IOModule.IsInput; } }
+
+        public bool IsOutput { get { return PhysicalChannel != null && PhysicalChannel.IOModule.IsOutput; } }
+
         ///<summary>
         /// Идентификатор
         ///</summary>
-        public int Id { get; set; }
+        public int Id
+        {
+            get { return Entity != null ? Entity.Id : id; }
+            set
+            {
+                if(Id == value) return;
+                id = value;
+                if (Entity != null) Entity.Id = value;
+            }
+        }
 
         /// <summary>
         /// Порог изменения величины
         /// </summary>
-        public double DeltaChangeLimit { get; set; }
+        public double DeltaChangeLimit
+        {
+            get
+            {
+                return Entity != null && Entity.SensivityDelta.HasValue
+                    ? (double) Entity.SensivityDelta.Value
+                    : deltaChangeLimit;
+            }
+            set
+            {
+                if(DeltaChangeLimit == value) return;
+                deltaChangeLimit = value;
+                if (Entity != null) Entity.SensivityDelta = (decimal?) value;
+            }
+        }
 
         /// <summary>
         /// Минимальное допустимое значение для канала
         /// </summary>
-        public double? MinValue { get; set; }
+        public double? MinValue
+        {
+            get { return Entity != null ? (double?)Entity.MinValue : minValue; }
+            set
+            {
+                if(MinValue == value) return;
+                minValue = value;
+                if(Entity!=null) Entity.MinValue = (decimal?) value;
+            }
+        }
 
         /// <summary>
         /// Максимальное допустимое значение для канала
         /// </summary>
-        public double? MaxValue { get; set; }
+        public double? MaxValue
+        {
+            get { return Entity != null ? (double?)Entity.MaxValue : maxValue; }
+            set
+            {
+                if(MaxValue == value) return;
+                maxValue = value;
+                if(Entity!=null) Entity.MaxValue = (decimal?) value;
+            }
+        }
 
         /// <summary>
         /// Минимальное нормальное значение для канала
         /// </summary>
-        public double? MinNormalValue { get; set; }
+        public double? MinNormalValue
+        {
+            get { return Entity != null ? (double?)Entity.MinNormalValue : minNormalValue; }
+            set
+            {
+                if(MinNormalValue == value) return;
+                minNormalValue = value;
+                if(Entity!=null) Entity.MinNormalValue = (decimal?) value;
+            }
+        }
 
         /// <summary>
         /// Максимальное нормальное значение для канала
         /// </summary>
-        public double? MaxNormalValue { get; set; }
+        public double? MaxNormalValue
+        {
+            get { return Entity != null ? (double?) Entity.MaxNormalValue : maxNormalValue; }
+            set
+            {
+                if(MaxNormalValue == value) return;
+                maxNormalValue = value;
+                if(Entity!=null) Entity.MaxNormalValue = (decimal?) value;
+            }
+        }
 
         /// <summary>
         /// Полином прямого преобразования
         /// </summary>
-        public Polynom DirectTransform { get; set; }
+        public Polynom DirectTransform
+        {
+            get
+            {
+                return directTransform ??
+                       (directTransform =
+                           (Entity != null && Entity.DirectPolynom != null
+                               ? Polynom.DeSerializePolynom(Entity.DirectPolynom)
+                               : null));
+            }
+            set
+            {
+                if(DirectTransform == value) return;
+                directTransform = value;
+                if (Entity != null) Entity.DirectPolynom = Polynom.SerializePolynom(value);
+            }
+        }
 
         /// <summary>
         /// Полином обратного преобразования
         /// </summary>
-        public Polynom ReverseTransform { get; set; }
+        public Polynom ReverseTransform
+        {
+            get
+            {
+                return reverseTransform ??
+                       (reverseTransform =
+                           (Entity != null && Entity.ReversePolynom != null
+                               ? Polynom.DeSerializePolynom(Entity.ReversePolynom)
+                               : null));
+            }
+            set
+            {
+                if (ReverseTransform == value) return;
+                reverseTransform = value;
+                if (Entity != null) Entity.ReversePolynom = Polynom.SerializePolynom(value);
+            }
+        }
 
         /// <summary>
         /// Период опроса канала
         /// </summary>
-        public TimeSpan PollPeriod { get; set; }
+        public TimeSpan PollPeriod
+        {
+            get
+            {
+                return pollPeriod == null && Entity != null && Entity.PollPeriod.HasValue
+                    ? pollPeriod = TimeSpan.FromMilliseconds((double) Entity.PollPeriod.Value)
+                    : pollPeriod;
+            }
+            set
+            {
+                if(PollPeriod == value) return;
+                pollPeriod = value;
+                if(Entity!=null) Entity.PollPeriod = (decimal?) value.TotalMilliseconds;
+            }
+        }
 
         /// <summary>
         /// Делегат альтернативного получения данных из канала.
@@ -130,17 +286,20 @@ namespace Oleg_ivo.Plc.Channels
         #endregion
 
         #region constructors
-        ///<summary>
-        ///
-        ///</summary>
-        ///<param name="physicalChannel"></param>
-        ///<param name="addressShift"></param>
-        ///<param name="channelSize"></param>
-        protected LogicalChannel(PhysicalChannel physicalChannel, ushort addressShift, ushort channelSize)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="physicalChannel"></param>
+        /// <param name="entity"></param>
+        /// <param name="addressShift"></param>
+        /// <param name="channelSize"></param>
+        public LogicalChannel(PhysicalChannel physicalChannel, Entities.LogicalChannel entity, ushort addressShift, ushort channelSize)
         {
             PhysicalChannel = physicalChannel;
+            Entity = entity;
             AddressShift = addressShift;
-            _channelSize = channelSize;
+            this.channelSize = channelSize;
         }
 
         #endregion
@@ -167,9 +326,9 @@ namespace Oleg_ivo.Plc.Channels
         public void SetValue(double value)
         {
             if (ReverseTransform != null) value = ReverseTransform.GetValue(value);
-            object v;
-            if (Math.Abs(Math.Round(value) - value) < 0.001) v = Convert.ToInt32(value);
-            else v = value;
+            object v = Math.Abs(Math.Round(value) - value) < 0.001 
+                ? Convert.ToInt32(value) 
+                : value;
             PhysicalChannel.SetValue(AddressShift, ChannelSize, v);
         }
 
@@ -190,7 +349,7 @@ namespace Oleg_ivo.Plc.Channels
         ///<returns></returns>
         public double GetValue()
         {
-            if (IsEmulationMode) 
+            if (IsEmulationMode)
                 return GetValueEmulation();
 
             if (GetValueAltDelegate != null)
@@ -199,30 +358,31 @@ namespace Oleg_ivo.Plc.Channels
             object obj = PhysicalChannel.GetValue(AddressShift, ChannelSize);
             if (obj is Array)
             {
-                Array ar = (Array) obj;
-                if(PhysicalChannel.IOModule.IsDiscrete && ChannelSize==ar.Length)
+                Array ar = (Array)obj;
+                if (PhysicalChannel.IOModule.IsDiscrete && ChannelSize == ar.Length)
                 {
                     Int64 result = 0;
                     for (int i = 0; i < ChannelSize; i++)
                     {
-                        var b = (bool) ar.GetValue(i);
+                        var b = (bool)ar.GetValue(i);
                         if (b) result += Convert.ToInt64(Math.Pow(2, i));
                     }
                     obj = result;
                 }
                 else
                 {
-                    if(ar.Length!=1)
+                    if (ar.Length != 1)
                         throw new ArgumentOutOfRangeException("ChannelSize", ChannelSize, "Для логического канала неправильно задан размер (при попытке прочитать одно значение был прочитан массив значений)");
                     obj = ar.GetValue(0);
                 }
             }
+            
             double value = Convert.ToDouble(obj);
             if (DirectTransform != null)
                 value = DirectTransform.GetValue(value);
 
             CheckValueRange(value);
-            
+
             return value;
         }
 
@@ -258,15 +418,15 @@ namespace Oleg_ivo.Plc.Channels
 
             limitValue = MaxValue ?? value;
             if (value > limitValue)
-                message += 
-                    message.Length > 0 ? Environment.NewLine : "" 
+                message +=
+                    message.Length > 0 ? Environment.NewLine : ""
                     + string.Format("максимальное разрешённое значение ({0})", limitValue);
 
             if (message.Length > 0)
             {
                 throw new ArgumentOutOfRangeException("value", value, message);
             }
-            
+
         }
 
         /// <summary>
@@ -286,15 +446,15 @@ namespace Oleg_ivo.Plc.Channels
             int second = DateTime.Now.Second;
             double value = Math.Sin(second * 6 * (Math.PI / 180));//синус [-1;+1]
             value = ((value + 1) / 2);//сдвиг - синус [0;+1]
-            if (MinValue!=null && MaxValue!=null)
-                value = (double) (MinValue + (MaxValue - MinValue)*value);//масштабирование до диапазона
-            
+            if (MinValue != null && MaxValue != null)
+                value = (double)(MinValue + (MaxValue - MinValue) * value);//масштабирование до диапазона
+
             //NOTE: при эмуляции полином прямого преобразования можно и не использовать, тогда нужно закомментить следующие строки
             if (DirectTransform != null)
                 value = DirectTransform.GetValue(value);
 
             CheckValueRange(value);
-            
+
             return value;
         }
         #endregion
@@ -304,7 +464,7 @@ namespace Oleg_ivo.Plc.Channels
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Func<LogicalChannel,bool> GetFindChannelPredicate(int id)
+        public static Func<LogicalChannel, bool> GetFindChannelPredicate(int id)
         {
             return (channel => channel.Id == id);
         }
@@ -322,9 +482,9 @@ namespace Oleg_ivo.Plc.Channels
             return
                 (channel =>
                  (id == 0 || channel.Id == id)
-                 && (physicalChannelId==0 
-                        || channel.PhysicalChannel == null 
-                        || channel.PhysicalChannel.Id == 0 
+                 && (physicalChannelId == 0
+                        || channel.PhysicalChannel == null
+                        || channel.PhysicalChannel.Id == 0
                         || channel.PhysicalChannel.Id == physicalChannelId)
                  && (channel.AddressShift == addressShift)
                  && (channelSize == 0 || channel.ChannelSize == channelSize)
@@ -340,7 +500,7 @@ namespace Oleg_ivo.Plc.Channels
         public bool IsNewData(double? oldValue, double? value)
         {
             bool result = true;
-            if(DeltaChangeLimit>0 && oldValue!=null && value!=null)
+            if (DeltaChangeLimit > 0 && oldValue != null && value != null)
             {
                 //если хотя бы одна из границ диапазона не задана, принимаем, что DeltaChangeLimit - абсолютное изменение, иначе - относительное (в % от размера диапазона)
                 double delta;

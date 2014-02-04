@@ -16,7 +16,7 @@ namespace Oleg_ivo.WAGO.Factory
     ///<summary>
     /// Фабрика физических каналов для ПЛК WAGO
     ///</summary>
-    public class WagoPhysicalChannelsFactory : IPhysicalChannelsFactory
+    public class WagoPhysicalChannelsFactory : FactoryBase, IPhysicalChannelsFactory
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private readonly ILogicalChannelsFactory logicalChannelsFactory;
@@ -147,7 +147,7 @@ namespace Oleg_ivo.WAGO.Factory
                         WagoIOModule module = moduleMeta.CreateModule(logicalChannelsFactory);//создание модуля на основе метаданных
                         if (module != null)//создание физического канала на основе модуля
                         {
-                            PhysicalChannel physicalChannel = new PhysicalChannel(logicalChannelsFactory, wagoPlc.FieldBusNode, module, 0, 0);
+                            PhysicalChannel physicalChannel = new PhysicalChannel(null, logicalChannelsFactory, wagoPlc.FieldBusNode, module, 0, 0);
                             currentPhysicalChannels.Add(physicalChannel);//добавление ФК к узлу
                         }
                     }
@@ -210,21 +210,48 @@ namespace Oleg_ivo.WAGO.Factory
         ///</summary>
         ///<param name="fieldBusNode"></param>
         ///<returns></returns>
+        [Obsolete("Здесь вызывается код из PhysicalChannelsDAC, там осуществляется перенос данных из ЛК в датасет с последующим сохранением. Нужно пользоваться DataContext.SubmitChanges")]
         public void SavePhysicalChannels(FieldBusNode fieldBusNode)
         {
-            PhysicalChannelsDAC physicalChannelsDAC = new PhysicalChannelsDAC();
+            var physicalChannelsDAC = new PhysicalChannelsDAC();
             physicalChannelsDAC.SaveChannels(fieldBusNode);
         }
 
-        ///<summary>
-        /// Загрузить настроенные физические каналы для узла полевой шины
-        ///</summary>
-        ///<param name="fieldBusNode"></param>
-        ///<returns></returns>
+        /// <summary>
+        ///  Загрузить настроенные физические каналы для узла полевой шины
+        /// </summary>
+        /// <param name="fieldBusNode"></param>
+        /// <returns></returns>
         public PhysicalChannelCollection LoadPhysicalChannels(FieldBusNode fieldBusNode)
         {
-            PhysicalChannelsDAC physicalChannelsDAC = new PhysicalChannelsDAC{LogicalChannelsFactory = logicalChannelsFactory};
-            return physicalChannelsDAC.GetChannels(fieldBusNode);
+            var channels = new PhysicalChannelCollection();
+
+            channels.AddRange(from Plc.Entities.PhysicalChannel entity in DataContext.PhysicalChannels.Where(pc => pc.FieldNodeId == fieldBusNode.Id)
+                              select CreateChannelFromData(entity, fieldBusNode));
+
+            return channels;
+
+            //PhysicalChannelsDAC physicalChannelsDAC = new PhysicalChannelsDAC{LogicalChannelsFactory = logicalChannelsFactory};
+            //return physicalChannelsDAC.GetChannels(fieldBusNode);
         }
+
+        private PhysicalChannel CreateChannelFromData(Plc.Entities.PhysicalChannel entity, FieldBusNode fieldBusNode)
+        {
+            var ioModule = new WagoIOModule(logicalChannelsFactory)
+            {
+                Meta =
+                    new WagoIOModuleMeta(entity.IsAnalog, entity.IsDiscrete, entity.IsInput, entity.IsOutput,
+                                         (ushort)entity.PhysicalChannelSize.Value, 0, entity.AddressShift.Value)
+            };
+
+            var channel = new PhysicalChannel(entity, logicalChannelsFactory, fieldBusNode, ioModule, (ushort) entity.AddressShift, (ushort) entity.PhysicalChannelSize)
+            {
+                Id = entity.Id,
+                WriteAddress = entity.WriteAddress.Value,
+                ReadAddress = entity.ReadAddress.Value
+            };
+            return channel;
+        }
+
     }
 }

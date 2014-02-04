@@ -145,7 +145,7 @@ namespace Oleg_ivo.WAGO.Meta
 
         private LogicalChannel CreateChannelFromData(DtsWago.WagoMetaRow row, PhysicalChannel physicalChannel)
         {
-            LogicalChannel channel = logicalChannelsFactory.BuildLogicalChannel(physicalChannel)[0];
+            LogicalChannel channel = logicalChannelsFactory.CreateLogicalChannelTemplate(physicalChannel);
             channel.Id = row.Id;
             return channel;
         }

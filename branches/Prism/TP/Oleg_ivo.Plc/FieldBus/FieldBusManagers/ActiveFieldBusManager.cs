@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
 
@@ -13,16 +14,18 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
     {
         #region constructors
 
-        ///<summary>
-        ///
-        ///</summary>
-        ///<param name="fieldBusAccessor"></param>
-        public ActiveFieldBusManager(IFieldBusAccessor fieldBusAccessor)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fieldBus"></param>
+        /// <param name="fieldBusAccessor"></param>
+        /// <param name="dmis"></param>
+        public ActiveFieldBusManager(Entities.FieldBus fieldBus, IFieldBusAccessor fieldBusAccessor, IDistributedMeasurementInformationSystem dmis)
+            :base(fieldBus, dmis)
         {
-            if (fieldBusAccessor == null) throw new ArgumentNullException("fieldBusAccessor");
             //if (fieldBusAccessor is ActiveFieldBusManager) throw new InvalidOperationException("fieldBusAccessor");
 
-            _fieldBusAccessor = fieldBusAccessor;
+            _fieldBusAccessor = Enforce.ArgumentNotNull(fieldBusAccessor, "fieldBusAccessor");
         }
 
         #endregion
@@ -69,14 +72,6 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
                     break;
             }
             return plcAddresses.ToArray();
-        }
-
-        ///<summary>
-        ///
-        ///</summary>
-        public override FieldBusType FieldBusType
-        {
-            get { return FieldBusAccessor.FieldBusType; }
         }
 
         ///<summary>

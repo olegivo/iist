@@ -16,11 +16,11 @@ namespace Oleg_ivo.WAGO.Devices
 
         #endregion
 
-        #region properties
-
         public WagoIOModule(ILogicalChannelsFactory logicalChannelsFactory) : base(logicalChannelsFactory)
         {
         }
+
+        #region properties
 
         ///<summary>
         /// Мета-описание
@@ -121,7 +121,7 @@ namespace Oleg_ivo.WAGO.Devices
         /// </summary>
         public override LogicalChannelCollection BuildDefaultLogicalChannels()
         {
-            return LogicalChannelsFactory.BuildLogicalChannel(PhysicalChannel);
+            return LogicalChannelsFactory.BuildDefaultLogicalChannels(PhysicalChannel);
         }
     }
 }

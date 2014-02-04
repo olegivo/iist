@@ -187,23 +187,24 @@ namespace Oleg_ivo.Plc.FieldBus
         /// 
         /// </summary>
         /// <param name="fieldBusAccessor"></param>
+        /// <param name="fieldBus"></param>
         /// <returns></returns>
-        public FieldBusManager CreateFieldBusManager(IFieldBusAccessor fieldBusAccessor)
+        public FieldBusManager CreateFieldBusManager(IFieldBusAccessor fieldBusAccessor, Entities.FieldBus fieldBus)
         {
             FieldBusManager fieldBusManager = null;
-            if (fieldBusAccessor!=null)
+            if (fieldBus!=null)
             {
-                switch (fieldBusAccessor.FieldBusType)
+                switch (fieldBus.FieldBusType.FieldBusTypeEnum)
                 {
                     case FieldBusType.RS232:
                     case FieldBusType.RS485:
-                        fieldBusManager = new ActiveFieldBusManager(fieldBusAccessor);
+                        fieldBusManager = new ActiveFieldBusManager(fieldBus, fieldBusAccessor, dmis);
                         break;
                     case FieldBusType.Ethernet:
-                        fieldBusManager = new FieldBusManager(fieldBusAccessor.FieldBusType, dmis);
+                        fieldBusManager = new FieldBusManager(fieldBus, dmis);
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("fieldBusAccessor", fieldBusAccessor.FieldBusType, "неизвестный тип полевой шины");
+                        throw new ArgumentOutOfRangeException("fieldBusAccessor", fieldBus.FieldBusType.FieldBusTypeEnum, "неизвестный тип полевой шины");
                 }
             }
 

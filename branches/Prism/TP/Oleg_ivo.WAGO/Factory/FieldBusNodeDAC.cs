@@ -31,6 +31,7 @@ namespace Oleg_ivo.WAGO.Factory
         ///
         ///</summary>
         ///<returns></returns>
+        [Obsolete]
         public FieldBusNodeCollection GetFieldBusNodes(FieldBusManager fieldBusManager)
         {
             return GetFieldBusNodes(fieldBusManager, true);
@@ -40,6 +41,7 @@ namespace Oleg_ivo.WAGO.Factory
         ///
         ///</summary>
         ///<returns></returns>
+        [Obsolete]
         private FieldBusNodeCollection GetFieldBusNodes(FieldBusManager fieldBusManager, bool needLoad)
         {
             FieldBusNodeCollection fieldBusNodes = new FieldBusNodeCollection();
@@ -48,7 +50,7 @@ namespace Oleg_ivo.WAGO.Factory
                 FillFieldBusNodesFromDb(fieldBusManager.FieldBusType, 0);
 
             fieldBusNodes.AddRange(Enumerable.Select(dtsChannelConfiguration1.FieldBusNode,
-                                                     row => CreateFieldBusNodeFromData(row, fieldBusManager)));
+                                                     row => CreateFieldBusNodeFromData(row, fieldBusManager, null)));
 
             return fieldBusNodes;
         }
@@ -156,12 +158,13 @@ namespace Oleg_ivo.WAGO.Factory
             row.PhysicalChannelId = physicalChannel.Id;
         }
 
-        private FieldBusNode CreateFieldBusNodeFromData(DtsChannelConfiguration.FieldBusNodeRow row, FieldBusManager fieldBusManager)
+        [Obsolete]
+        private FieldBusNode CreateFieldBusNodeFromData(DtsChannelConfiguration.FieldBusNodeRow row, FieldBusManager fieldBusManager, Plc.Entities.FieldBusNode row1)
         {
             FieldBusNode fieldBusNode;
             if (fieldBusManager is ActiveFieldBusManager)
             {
-                fieldBusNode = new FieldBusNode(fieldBusManager, FieldBusDAC.GetFieldBusNodeAddress(row))
+                fieldBusNode = new FieldBusNode(fieldBusManager, FieldBusDAC.GetFieldBusNodeAddress(row), row1)
                                    {Id = row.Id};
             }
             else//нужно построить активный узел полевой шины
@@ -174,7 +177,7 @@ namespace Oleg_ivo.WAGO.Factory
                     throw new Exception("Не найден адрес для активного узла полевой шины");
                 }
 
-                fieldBusNode = FieldBusNodesFactory.CreateFieldBusNode(fieldBusManager, fieldBusNodeAddress);
+                fieldBusNode = FieldBusNodesFactory.CreateFieldBusNode(fieldBusManager, fieldBusNodeAddress, row1);
             }
 
             return fieldBusNode;

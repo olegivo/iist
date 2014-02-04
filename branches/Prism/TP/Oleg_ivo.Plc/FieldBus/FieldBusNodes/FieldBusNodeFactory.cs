@@ -11,7 +11,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
     ///<summary>
     /// Фабрика узлов полевой шины
     ///</summary>
-    public abstract class FieldBusNodeFactory : IFieldBusNodeFactory
+    public abstract class FieldBusNodeFactory : FactoryBase, IFieldBusNodeFactory
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
@@ -79,7 +79,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
                     currentFieldBusNodes = new FieldBusNodeCollection();
                     currentFieldBusNodes.AddRange((from address in fieldBusManager.GetPLCAddressRange()
                                                    let modbusAccessor = fieldBusFactory.CreateFieldbusAccessor(fieldBusType, address)
-                                                   select new ActiveFieldBusNode(fieldBusManager, modbusAccessor, address)));
+                                                   select new ActiveFieldBusNode(fieldBusManager, modbusAccessor, address, null)));
                 }
 
             }
@@ -180,7 +180,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
                 // если устройство по данному адресу ответило, значит создаём объект-устройство и его адрес
                 foreach (FieldBusNodeAddress fieldBusNodeAddress in fieldBusManager.GetPLCAddressRange())
                 {
-                    FieldBusNode fieldBusNode = CreateFieldBusNode(fieldBusManager, fieldBusNodeAddress);
+                    FieldBusNode fieldBusNode = CreateFieldBusNode(fieldBusManager, fieldBusNodeAddress, null);
 
                     if (TryGetReply(fieldBusNode))
                     {
@@ -210,13 +210,14 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
             return nodes;
         }
 
-        ///<summary>
-        ///
-        ///</summary>
-        ///<param name="fieldBusManager"></param>
-        ///<param name="fieldBusNodeAddress"></param>
-        ///<returns></returns>
-        public FieldBusNode CreateFieldBusNode(FieldBusManager fieldBusManager, FieldBusNodeAddress fieldBusNodeAddress)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fieldBusManager"></param>
+        /// <param name="fieldBusNodeAddress"></param>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        public FieldBusNode CreateFieldBusNode(FieldBusManager fieldBusManager, FieldBusNodeAddress fieldBusNodeAddress, Entities.FieldBusNode row)
         {
             FieldBusNode fieldBusNode;
             bool isNodeActive = false;
@@ -231,12 +232,12 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
             {
                 Log.Debug("создаём активный узел полевой шины...");
                 IFieldBusAccessor fieldBusAccessor = fieldBusFactory.CreateFieldbusAccessor(fieldBusManager.FieldBusType, fieldBusNodeAddress);
-                fieldBusNode = new ActiveFieldBusNode(fieldBusManager, fieldBusAccessor, fieldBusNodeAddress);
+                fieldBusNode = new ActiveFieldBusNode(fieldBusManager, fieldBusAccessor, fieldBusNodeAddress, row);
             }
             else
             {
                 Log.Debug("создаём узел полевой шины...");
-                fieldBusNode = new FieldBusNode(fieldBusManager, fieldBusNodeAddress);
+                fieldBusNode = new FieldBusNode(fieldBusManager, fieldBusNodeAddress, row);
             }
             return fieldBusNode;
         }

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using DMS.Common.Events;
 using Oleg_ivo.Plc.Channels;
+using Oleg_ivo.Plc.Devices.Modules;
+using Oleg_ivo.WAGO.Factory;
 
 namespace EmulationClient.Emulation
 {
@@ -22,7 +24,7 @@ namespace EmulationClient.Emulation
             {
                 _controlManagementUnit = value;
                 InitChannels();
-                ControlManagementUnit.HasWriteChannel += ControlManagementUnit_HasWriteChannel;
+                ControlManagementUnit.HasWriteChannel += ControlManagementUnit_HasWriteChannel;//TODO:отписка от события
             }
         }
 
@@ -121,8 +123,9 @@ namespace EmulationClient.Emulation
             if (ControlManagementUnit != null)
             {
                 var logicalChannels = new List<LogicalChannel>();
-                //контролируемые параметры
-                logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
+                //TODO:контролируемые параметры
+                //throw new NotImplementedException("Для построения каналов необходимо вызвать конструктор, содержащий ФК, указывающий на конкретный режим работы его IoModule (IsInput)");
+                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
                 {
                     Id = 6,//TС6	температура перед рукавным фильтром
                     Description = "Температура перед фильтром",
@@ -132,7 +135,7 @@ namespace EmulationClient.Emulation
                     GetValueEmulationAltDelegate = T6.GetOutputValue
                     
                 });
-                logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
+                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
                 {
                     Id = 7,//TС7	температура перед дымососом
                     Description = "Температура перед дымососом",
@@ -142,7 +145,7 @@ namespace EmulationClient.Emulation
                     GetValueEmulationAltDelegate = T7.GetOutputValue
 
                 });
-                logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
+                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
                 {
                     Id = 20,//Г-О2	концентрация газа О2
                     Description = "Концентрация О2",
@@ -151,7 +154,7 @@ namespace EmulationClient.Emulation
                     MaxValue = 1000,
                     GetValueEmulationAltDelegate = O2Concentration.GetOutputValue
                 });
-                logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
+                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
                 {
                     Id = 21,//Г-СО	концентрация газа СО
                     Description = "Концентрация СО",
@@ -160,7 +163,7 @@ namespace EmulationClient.Emulation
                     MaxValue = 1000,
                     GetValueEmulationAltDelegate = COConcentration.GetOutputValue
                 });
-                logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
+                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
                 {
                     Id = 22,//Г-SО2	концентрация газа SО2
                     Description = "Концентрация SО2",
@@ -169,7 +172,7 @@ namespace EmulationClient.Emulation
                     MaxValue = 1000,
                     GetValueEmulationAltDelegate = SО2Concentration.GetOutputValue
                 });
-                logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
+                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
                 {
                     Id = 23,//Г-NO	концентрация газа NO
                     Description = "Концентрация NO",
@@ -178,7 +181,7 @@ namespace EmulationClient.Emulation
                     MaxValue = 1000,
                     GetValueEmulationAltDelegate = NOConcentration.GetOutputValue
                 });
-                logicalChannels.Add(new InputLogicalChannel(null, 0, 0)
+                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
                 {
                     Id = 24,//Г-NO2	концентрация газа NO2
                     Description = "Концентрация NO2",
@@ -187,8 +190,9 @@ namespace EmulationClient.Emulation
                     MaxValue = 1000,
                     GetValueEmulationAltDelegate = NO2Concentration.GetOutputValue
                 });
-                //управляемые параметры
-                logicalChannels.Add(new OutputLogicalChannel(null, 0, 0)
+                //TODO: управляемые параметры
+                //throw new NotImplementedException("Для построения каналов необходимо вызвать конструктор, содержащий ФК, указывающий на конкретный режим работы его IoModule (IsOutput)");
+                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
                 {
                     Id = 10001,
                     Description = "Горелка",
@@ -196,7 +200,7 @@ namespace EmulationClient.Emulation
                     MinValue = 0,
                     MaxValue = 1000
                 });
-                logicalChannels.Add(new OutputLogicalChannel(null, 0, 0)
+                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
                 {
                     Id = 10002,
                     Description = "Количество оборотов дымососа",
@@ -207,7 +211,6 @@ namespace EmulationClient.Emulation
 
                 foreach (var logicalChannel in logicalChannels) logicalChannel.IsEmulationMode = true;
                 ControlManagementUnit.LogicalChannels = logicalChannels;
-                
             }
         }
 

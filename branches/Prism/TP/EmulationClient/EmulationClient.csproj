@@ -218,6 +218,10 @@
       <Project>{69B7862C-FA74-4ED5-A0F7-BF7216204016}</Project>
       <Name>Oleg_ivo.Plc</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Oleg_ivo.WAGO\Oleg_ivo.WAGO.csproj">
+      <Project>{79953745-7102-46D2-B9D9-5459EDC21ADB}</Project>
+      <Name>Oleg_ivo.WAGO</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

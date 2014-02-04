@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.Factory;
@@ -17,9 +18,9 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
 
         #region fields
 
-        private readonly FieldBusType _fieldBusType;
         private readonly IDistributedMeasurementInformationSystem dmis;
         private FieldBusNodeAddressCollection fieldBusNodeAddresses;
+        private readonly Entities.FieldBus fieldBus;
 
         #endregion
 
@@ -58,9 +59,9 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
         ///<summary>
         ///
         ///</summary>
-        public virtual FieldBusType FieldBusType
+        public FieldBusType FieldBusType
         {
-            get { return _fieldBusType; }
+            get { return FieldBus.FieldBusType.FieldBusTypeEnum; }
         }
 
         ///<summary>
@@ -94,10 +95,10 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
         ///<summary>
         /// Диспетчер полевой шины
         ///</summary>
-        public FieldBusManager(FieldBusType fieldBusType, IDistributedMeasurementInformationSystem dmis):this()
+        public FieldBusManager(Entities.FieldBus fieldBus, IDistributedMeasurementInformationSystem dmis):this()
         {
-            this.dmis = dmis;
-            _fieldBusType = fieldBusType;
+            this.dmis = Enforce.ArgumentNotNull(dmis, "dmis");
+            this.fieldBus = Enforce.ArgumentNotNull(fieldBus,"fieldBus");
         }
 
         /// <summary>
@@ -125,6 +126,11 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
         /// Полевая шина онлайн
         ///</summary>
         public bool IsOnline { get; protected set; }
+
+        public Entities.FieldBus FieldBus
+        {
+            get { return fieldBus; }
+        }
 
         ///<summary>
         /// Построить узлы полевой шины для порта

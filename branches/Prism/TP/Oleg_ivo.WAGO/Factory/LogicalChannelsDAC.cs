@@ -14,6 +14,7 @@ namespace Oleg_ivo.WAGO.Factory
     ///<summary>
     ///
     ///</summary>
+    [Obsolete("Подлежит замене на сущности Linq2Sql")]
     public partial class LogicalChannelsDAC : Component
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
@@ -76,8 +77,8 @@ namespace Oleg_ivo.WAGO.Factory
         ///<param name="physicalChannel"></param>
         public void SaveChannels(PhysicalChannel physicalChannel)
         {
-            LogicalChannelCollection newChannels = new LogicalChannelCollection();
-            newChannels.AddRange(physicalChannel.LogicalChannels.Where(logicalChannel => logicalChannel.Id == 0));
+            //LogicalChannelCollection newChannels = new LogicalChannelCollection();
+            //newChannels.AddRange(physicalChannel.LogicalChannels.Where(logicalChannel => logicalChannel.Id == 0));
 
             ((SqlParameter)dataManager1.DataAdapter.SelectCommand.Parameters["@PhysicalChannelId"]).Value
                 = physicalChannel.Id;
@@ -222,8 +223,8 @@ namespace Oleg_ivo.WAGO.Factory
 
         private LogicalChannel CreateChannelFromData(DtsChannelConfiguration.LogicalChannelRow row, PhysicalChannel physicalChannel)
         {
-            var logicalChannels = LogicalChannelsFactory.BuildLogicalChannel(physicalChannel);
-            LogicalChannel channel = logicalChannels[0];
+            var channel = LogicalChannelsFactory.CreateLogicalChannelTemplate(physicalChannel);
+
             channel.Id = row.Id;
             if(!row.IsDirectPolynomNull()) channel.DirectTransform = Polynom.DeSerializePolynom(row.DirectPolynom);
             if(!row.IsReversePolynomNull()) channel.ReverseTransform = Polynom.DeSerializePolynom(row.ReversePolynom);

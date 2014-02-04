@@ -189,13 +189,13 @@ namespace Oleg_ivo.LowLevelClient
                 return;
             }
 
-            if (channel is InputLogicalChannel || channel is InputOutputLogicalChannel)
+            if (channel.IsInput)
             {
                 Protocol(string.Format("{0} был подписан на получение новых данных", channel));
                 //запустить таймер опроса для зарегистрированного канала после подписки на него
                 Planner.StartPoll(channel);
             }
-            else if (channel is OutputLogicalChannel)
+            else if (channel.IsOutput)
             {
                 //TODO:добавить канал в список подписанных каналов, для которых разрешена запись извне
                 Protocol(string.Format("{0} был подписан на установку новых данных", channel));
@@ -218,12 +218,12 @@ namespace Oleg_ivo.LowLevelClient
                 return;
             }
 
-            if (channel is InputLogicalChannel || channel is InputOutputLogicalChannel)
+            if (channel.IsInput)
             {
                 Protocol(string.Format("{0} был отписан от получения новых данных", channel));
                 Planner.StopPoll(channel);
             }
-            else if (channel is OutputLogicalChannel)
+            else if (channel.IsOutput)
             {
                 //TODO:удалить канал из списка подписанных каналов, для которых разрешена запись извне
                 Protocol(string.Format("{0} был отписан от установки новых данных", channel));

@@ -16,9 +16,11 @@ namespace Oleg_ivo.Plc.Channels
     {
 
         #region fields
-        private IOModule _ioModule;
-        private readonly ushort _channelSize;
         private readonly ILogicalChannelsFactory logicalChannelsFactory;
+        private IOModule ioModule;
+        private ushort channelSize;
+        private ushort addressShift;
+        private int id;
 
         #endregion
 
@@ -34,25 +36,60 @@ namespace Oleg_ivo.Plc.Channels
         ///</summary>
         public IOModule IOModule
         {
-            get { return _ioModule; }
+            get { return ioModule; }
             private set
             {
-                _ioModule = value;
-                if (IOModule != null && IOModule.PhysicalChannel != this) IOModule.PhysicalChannel = this;
+                if(ioModule == value) return;
+                ioModule = value;
+                if (IOModule != null && IOModule.PhysicalChannel != this)
+                {
+                    if (IOModule.PhysicalChannel != null)
+                        throw new InvalidOperationException(
+                            "Нельзя связывать IOModule с данным каналом, т.к. он уже был связан с другим.");
+                    IOModule.PhysicalChannel = this;
+                }
             }
         }
+
+        public Entities.PhysicalChannel Entity { get; private set; }
 
         ///<summary>
         /// Адрес в модуле ввода-вывода
         ///</summary>
-        public ushort AddressShift { get; private set; }
+        public ushort AddressShift
+        {
+            get
+            {
+                return
+                    Entity != null && Entity.AddressShift.HasValue ? (ushort)Entity.AddressShift.Value : addressShift;
+            }
+            private set
+            {
+                if (AddressShift == value) return;
+                addressShift = value;
+                if (Entity != null) Entity.AddressShift = (short?)value;
+            }
+        }
 
         ///<summary>
         /// Разрядность физического канала
         ///</summary>
         public ushort ChannelSize
         {
-            get { return _channelSize > 0 ? _channelSize : IOModule.Size; }
+            get
+            {
+                return
+                    (ushort)
+                        (Entity != null && Entity.PhysicalChannelSize.HasValue
+                            ? Entity.PhysicalChannelSize.Value
+                            : (channelSize > 0 ? channelSize : IOModule.Size));
+            }
+            private set
+            {
+                if (ChannelSize == value) return;
+                channelSize = value;
+                if (Entity != null) Entity.PhysicalChannelSize = value;
+            }
         }
 
         ///<summary>
@@ -81,7 +118,16 @@ namespace Oleg_ivo.Plc.Channels
         ///<summary>
         /// Идентификатор
         ///</summary>
-        public int Id { get; set; }
+        public int Id
+        {
+            get { return Entity != null ? Entity.Id : id; }
+            set
+            {
+                if (Id == value) return;
+                id = value;
+                if (Entity != null) Entity.Id = value;
+            }
+        }
 
         #endregion
 
@@ -103,18 +149,20 @@ namespace Oleg_ivo.Plc.Channels
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="entity"></param>
         /// <param name="logicalChannelsFactory"></param>
         /// <param name="fieldBusNode"></param>
         /// <param name="ioModule"></param>
         /// <param name="addressShift"></param>
         /// <param name="channelSize"></param>
-        public PhysicalChannel(ILogicalChannelsFactory logicalChannelsFactory, FieldBusNode fieldBusNode, IOModule ioModule, ushort addressShift, ushort channelSize)
+        public PhysicalChannel(Entities.PhysicalChannel entity, ILogicalChannelsFactory logicalChannelsFactory, FieldBusNode fieldBusNode, IOModule ioModule, ushort addressShift, ushort channelSize)
         {
             this.logicalChannelsFactory = Enforce.ArgumentNotNull(logicalChannelsFactory, "logicalChannelsFactory");
             IOModule = Enforce.ArgumentNotNull(ioModule, "ioModule");
             FieldBusNode = Enforce.ArgumentNotNull(fieldBusNode, "fieldBusNode");
+            Entity = entity;
             AddressShift = addressShift;
-            _channelSize = channelSize;
+            ChannelSize = channelSize;
         }
 
         #endregion
@@ -145,7 +193,7 @@ namespace Oleg_ivo.Plc.Channels
             //если нет сохранённых, нужно построить по умолчанию
             if (LogicalChannels == null || LogicalChannels.Count == 0)
             {
-                LogicalChannels = logicalChannelsFactory.BuildLogicalChannel(this);
+                LogicalChannels = logicalChannelsFactory.BuildDefaultLogicalChannels(this);
             }
             //LogicalChannels.AddRange(IOModule.BuildDefaultLogicalChannels());
         }

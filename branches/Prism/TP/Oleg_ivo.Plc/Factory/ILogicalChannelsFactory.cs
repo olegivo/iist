@@ -1,3 +1,4 @@
+using System;
 using Oleg_ivo.Plc.Channels;
 
 namespace Oleg_ivo.Plc.Factory
@@ -7,12 +8,12 @@ namespace Oleg_ivo.Plc.Factory
     ///</summary>
     public interface ILogicalChannelsFactory
     {
-        ///<summary>
-        ///
-        ///</summary>
-        ///<param name="physicalChannel"></param>
-        ///<returns></returns>
-        LogicalChannelCollection BuildLogicalChannel(PhysicalChannel physicalChannel);
+        /// <summary>
+        ///  Построить коллекцию логических каналов по умолчанию для данного физического канала (т.е. соответствующих физическому каналу по размерности)
+        /// </summary>
+        /// <param name="physicalChannel"></param>
+        /// <returns></returns>
+        LogicalChannelCollection BuildDefaultLogicalChannels(PhysicalChannel physicalChannel);
 
         ///<summary>
         /// Загрузить настроенные логические каналы для физического канала
@@ -21,9 +22,18 @@ namespace Oleg_ivo.Plc.Factory
         LogicalChannelCollection LoadLogicalChannels(PhysicalChannel physicalChannel);
 
         ///<summary>
-        /// Загрузить настроенные логические каналы для физического канала
+        /// Сохранить настроенные логические каналы для физического канала
         ///</summary>
         ///<returns></returns>
+        [Obsolete("Вместо данного метода следует пользоваться DataContext.SubmitChanges")]
         void SaveLogicalChannels(PhysicalChannel physicalChannel);
+
+        /// <summary>
+        /// Создать шаблон логического канала для физического канала (с нулевым сдвигом адреса внутри физического канала)
+        /// </summary>
+        /// <param name="physicalChannel"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        LogicalChannel CreateLogicalChannelTemplate(PhysicalChannel physicalChannel, Entities.LogicalChannel entity = null);
     }
 }
