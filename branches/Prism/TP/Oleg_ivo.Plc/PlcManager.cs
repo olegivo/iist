@@ -153,6 +153,24 @@ namespace Oleg_ivo.Plc
             }
         }
 
+        private PlcDataContext dataContext;
+
+        protected PlcDataContext DataContext
+        {
+            get
+            {
+                return dataContext ??
+                       (dataContext =
+                           Context.Resolve<PlcDataContext>(new TypedParameter(typeof(string),
+                               Context.Resolve<DbConnectionProvider>().DefaultConnectionString)));
+            }
+        }
+
+        public void Save()
+        {
+            DataContext.SubmitChanges();
+        }
+
         #endregion
 
 

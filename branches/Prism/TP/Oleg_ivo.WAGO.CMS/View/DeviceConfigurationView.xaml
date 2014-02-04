@@ -32,21 +32,21 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="№ логического канала" />
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=Id}" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Id}" />
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Описание" />
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=Description}" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=Description}" />
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Минимальное допустимое значение для канала" />
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=MinValue}" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=MinValue}" />
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Максимальное допустимое значение для канала" />
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=MaxValue}" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=MaxValue}" />
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Минимальное нормальное значение для канала" />
-                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Path=MinNormalValue}" />
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=MinNormalValue}" />
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Максимальное нормальное значение для канала" />
-                    <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Path=MaxNormalValue}" />
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Path=MaxNormalValue}" />
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Период опроса канала" />
-                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Path=PollPeriod}" />
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Path=PollPeriod}" />
                     <TextBlock Grid.Row="7" Grid.Column="0" Text="Порог изменения величины" />
-                    <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding Path=DeltaChangeLimit}" />
+                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Path=DeltaChangeLimit}" />
                 </Grid>
             </StackPanel>
         </DataTemplate>
@@ -64,13 +64,20 @@
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50*"/>
             <ColumnDefinition Width="50*"/>
         </Grid.ColumnDefinitions>
-        <TreeView Name="tree" 
-                  Grid.Column="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
+        <TreeView 
+            Name="tree" 
+            Grid.Row="0" 
+            Grid.Column="0" 
+            HorizontalContentAlignment="Stretch" 
+            VerticalContentAlignment="Stretch" >
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType = "{x:Type src:FieldBusManager}" ItemsSource = "{Binding Path=FieldBusNodes}">
                     <StackPanel Orientation="Horizontal">
@@ -105,9 +112,17 @@
             </i:Interaction.Behaviors>
             <TreeViewItem ItemsSource="{Binding Path=FieldBusManagers}" Header="System"/>
         </TreeView>
-        <ContentControl Grid.Column="1" 
-                        Content="{Binding Path=SelectedItem}"
-                        ContentTemplateSelector="{StaticResource myTemplateSelector}">
+        <ContentControl 
+            Grid.Row="0" 
+            Grid.Column="1" 
+            Content="{Binding Path=SelectedItem}"
+            ContentTemplateSelector="{StaticResource myTemplateSelector}">
         </ContentControl>
+        <StackPanel 
+            Grid.Row="1"
+            Grid.Column="0"
+            Orientation="Horizontal">
+            <Button Command="{Binding SaveCommand}">Save</Button>
+        </StackPanel>
     </Grid>
 </UserControl>

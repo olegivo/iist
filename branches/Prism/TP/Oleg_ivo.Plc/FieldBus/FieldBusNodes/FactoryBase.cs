@@ -1,4 +1,3 @@
-using System.Data;
 using Autofac;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.Plc.Entities;
@@ -8,10 +7,10 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
 {
     public abstract class FactoryBase
     {
-        private PlcDataContext dataContext;
-
         [Dependency]
         public IComponentContext Context { get; set; }
+
+        private PlcDataContext dataContext;
 
         protected PlcDataContext DataContext
         {

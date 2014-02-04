@@ -51,5 +51,7 @@ namespace Oleg_ivo.Plc
 
         void Dispose();
         string ToString();
+        
+        void Save();
     }
 }
