@@ -56,7 +56,7 @@
                         Grid.Row="1" 
                         Grid.Column="1" 
                         Text="{Binding Path=Description}" />
-                    
+
                     <TextBlock 
                         Grid.Row="2" 
                         Grid.Column="0" 
@@ -92,7 +92,7 @@
                         Grid.Row="6" 
                         Grid.Column="0" 
                         Text="Период опроса канала" />
-                    
+
                     <TextBox 
                         Grid.Row="6" 
                         Grid.Column="1" 
@@ -158,7 +158,7 @@
                         Grid.Column="1" 
                         Text="{Binding Path=ReadAddress, Mode=OneWay}"
                         IsEnabled="False"/>
-                    
+
                     <Button 
                         Grid.Row="14" 
                         Grid.Column="0"
@@ -248,10 +248,41 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="FieldBusNodeTemplate">
-            <StackPanel>
-                <TextBlock Text="№ узла полевой шины" />
-                <TextBlock Text="{Binding Path=Id}" />
-            </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock 
+                    Grid.Row="0" 
+                    Grid.Column="0" 
+                    Text="№ узла полевой шины" />
+                <TextBox 
+                    Grid.Row="0" 
+                    Grid.Column="1" 
+                    Text="{Binding Path=Id}" />
+                <TextBlock 
+                    Grid.Row="1" 
+                    Grid.Column="0" 
+                    Text="AddressPart1" />
+                <TextBox 
+                    Grid.Row="1" 
+                    Grid.Column="1" 
+                    Text="{Binding Path=AddressPart1}" />
+                <TextBlock 
+                    Grid.Row="2" 
+                    Grid.Column="0" 
+                    Text="AddressPart2" />
+                <TextBox 
+                    Grid.Row="2" 
+                    Grid.Column="1" 
+                    Text="{Binding Path=AddressPart2}" />
+            </Grid>
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
@@ -282,7 +313,7 @@
                         <TextBlock Text="{Binding}"/>
                         <!--<Button IsEnabled="False">Добавить ФК</Button>
                         <Button IsEnabled="False">Удалить этот узел</Button>-->
-                    </StackPanel> 
+                    </StackPanel>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType = "{x:Type Channels:PhysicalChannel}" ItemsSource = "{Binding Path=LogicalChannels}">
                     <StackPanel Orientation="Horizontal">

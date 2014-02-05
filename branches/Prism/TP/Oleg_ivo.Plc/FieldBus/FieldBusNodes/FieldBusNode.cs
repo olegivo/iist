@@ -16,27 +16,12 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private readonly FieldBusManager fieldBusManager;
 
+
         #region fields
 
         private readonly FieldBusNodeAddress fieldBusNodeAddress;
         private PLC plc;
-        private readonly Entities.FieldBusNode fieldBusNodeEntity;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="fieldBusManager"></param>
-        /// <param name="fieldBusNodeAddress"></param>
-        /// <param name="fieldBusNodeEntity"></param>
-        public FieldBusNode(FieldBusManager fieldBusManager, FieldBusNodeAddress fieldBusNodeAddress, Entities.FieldBusNode fieldBusNodeEntity)
-        {
-            if (this is ActiveFieldBusNode && fieldBusManager is ActiveFieldBusManager) 
-                throw new InvalidOperationException("ActiveFieldBusManager не может содержать ActiveFieldBusNode");
-            this.fieldBusManager = fieldBusManager;
-            this.fieldBusNodeAddress = fieldBusNodeAddress;
-            this.fieldBusNodeEntity = fieldBusNodeEntity;
-        }
-
+        private readonly Entities.FieldBusNode entity;
         #endregion
 
         #region properties
@@ -101,9 +86,49 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
             get { return FieldBusManager; }
         }
 
+        ///<summary>
+        /// Идентификатор
+        ///</summary>
+        public int Id//TODO: 2 entity
+        {
+            get { return FieldBusNodeAddress.Id; }
+            set { FieldBusNodeAddress.Id = value; }
+        }
+
+        public Entities.FieldBusNode Entity
+        {
+            get { return entity; }
+        }
+
+        public string AddressPart1//TODO:пока есть FieldBusAddress, используется только для редактирования базы в CMS
+        {
+            get { return Entity.AddressPart1; }
+            set { Entity.AddressPart1 = value; }
+        }
+
+        public int? AddressPart2//TODO:пока есть FieldBusAddress, используется только для редактирования базы в CMS
+        {
+            get { return Entity.AddressPart2; }
+            set { Entity.AddressPart2 = value; }
+        }
+
         #endregion
 
         #region constructors
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fieldBusManager"></param>
+        /// <param name="fieldBusNodeAddress"></param>
+        /// <param name="entity"></param>
+        public FieldBusNode(FieldBusManager fieldBusManager, FieldBusNodeAddress fieldBusNodeAddress, Entities.FieldBusNode entity)
+        {
+            if (this is ActiveFieldBusNode && fieldBusManager is ActiveFieldBusManager) 
+                throw new InvalidOperationException("ActiveFieldBusManager не может содержать ActiveFieldBusNode");
+            this.fieldBusManager = fieldBusManager;//TODO:Enforce?
+            this.fieldBusNodeAddress = fieldBusNodeAddress;//TODO:заменить на Entity?
+            this.entity = entity;//TODO:Enforce?
+        }
 
         #endregion
 
@@ -323,20 +348,6 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
                     physicalChannel.LoadLogicalChannels();
             else
                 Log.Debug("{0}: физические каналы не найдены. Загрузить логические каналы нельзя.", this);
-        }
-
-        ///<summary>
-        /// Идентификатор
-        ///</summary>
-        public int Id
-        {
-            get { return FieldBusNodeAddress.Id; }
-            set { FieldBusNodeAddress.Id = value; }
-        }
-
-        public Entities.FieldBusNode FieldBusNodeEntity
-        {
-            get { return fieldBusNodeEntity; }
         }
 
         /// <summary>

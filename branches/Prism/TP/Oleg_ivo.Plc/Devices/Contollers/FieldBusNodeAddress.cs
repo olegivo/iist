@@ -6,6 +6,7 @@ namespace Oleg_ivo.Plc.Devices.Contollers
     ///<summary>
     /// Адрес ПЛК на шине
     ///</summary>
+    //TODO: 2 entity?
     public abstract class FieldBusNodeAddress: IIdentified, IEquatable<FieldBusNodeAddress>
     {
         #region fields
