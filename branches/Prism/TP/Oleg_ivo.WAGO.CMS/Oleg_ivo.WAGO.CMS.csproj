@@ -104,6 +104,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ObjectToStringConverter.cs" />
     <Compile Include="Prism\MyBootstrapper.cs" />
     <Compile Include="Prism\MyAutofacModule.cs" />
     <Compile Include="Prism\MyPrismModule.cs" />

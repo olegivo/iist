@@ -63,7 +63,7 @@ namespace Oleg_ivo.Plc.Channels
                 return
                     Entity != null && Entity.AddressShift.HasValue ? (ushort)Entity.AddressShift.Value : addressShift;
             }
-            private set
+            set
             {
                 if (AddressShift == value) return;
                 addressShift = value;
@@ -84,7 +84,7 @@ namespace Oleg_ivo.Plc.Channels
                             ? Entity.PhysicalChannelSize.Value
                             : (channelSize > 0 ? channelSize : IOModule.Size));
             }
-            private set
+            set
             {
                 if (ChannelSize == value) return;
                 channelSize = value;

@@ -103,23 +103,23 @@ namespace Oleg_ivo.WAGO.CMS.View
         */
 
     }
+
     public class CustomDataTemplateSelector : DataTemplateSelector
     {
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            FrameworkElement element = container as FrameworkElement;
+            var element = container as FrameworkElement;
 
             DataTemplate dataTemplate = null;
             if (element != null && item != null)
             {
-                var type = item.GetType();
-                dataTemplate = geTemplate(type, element);
+                dataTemplate = GetTemplate(item.GetType(), element);
             }
 
             return dataTemplate;
         }
 
-        private DataTemplate geTemplate(Type type, FrameworkElement element)
+        private DataTemplate GetTemplate(Type type, FrameworkElement element)
         {
             if (type == null) return null;
             var templateName = string.Format("{0}Template", type.Name);
@@ -129,7 +129,7 @@ namespace Oleg_ivo.WAGO.CMS.View
             else
             {
                 Console.WriteLine("Не найден {0}, продолжаем поиск для базового класса", templateName);
-                dataTemplate = geTemplate(type.BaseType, element);
+                dataTemplate = GetTemplate(type.BaseType, element);
             }
             return dataTemplate;
         }

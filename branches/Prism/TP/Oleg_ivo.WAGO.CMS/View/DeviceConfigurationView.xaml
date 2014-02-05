@@ -8,12 +8,14 @@
              xmlns:Channels="clr-namespace:Oleg_ivo.Plc.Channels;assembly=Oleg_ivo.Plc"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:View="clr-namespace:Oleg_ivo.WAGO.CMS.View"
+             xmlns:Cms="clr-namespace:Oleg_ivo.WAGO.CMS"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="600" 
              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <View:CustomDataTemplateSelector x:Key="myTemplateSelector"/>
+        <Cms:ObjectToStringConverter x:Key="ObjectToStringConverter" />
         <DataTemplate x:Key="LogicalChannelTemplate">
             <StackPanel>
                 <Grid>
@@ -30,31 +32,220 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="№ логического канала" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Id}" />
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Описание" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=Description}" />
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Минимальное допустимое значение для канала" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=MinValue}" />
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Максимальное допустимое значение для канала" />
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=MaxValue}" />
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Минимальное нормальное значение для канала" />
-                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=MinNormalValue}" />
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Максимальное нормальное значение для канала" />
-                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Path=MaxNormalValue}" />
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Период опроса канала" />
-                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Path=PollPeriod}" />
-                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Порог изменения величины" />
-                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Path=DeltaChangeLimit}" />
+                    <TextBlock 
+                        Grid.Row="0" 
+                        Grid.Column="0" 
+                        Text="№ логического канала" />
+                    <TextBox 
+                        Grid.Row="0" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=Id}" />
+                    <TextBlock 
+                        Grid.Row="1" 
+                        Grid.Column="0" 
+                        Text="Описание" />
+                    <TextBox 
+                        Grid.Row="1" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=Description}" />
+                    
+                    <TextBlock 
+                        Grid.Row="2" 
+                        Grid.Column="0" 
+                        Text="Минимальное допустимое значение для канала" />
+                    <TextBox 
+                        Grid.Row="2" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=MinValue}" />
+                    <TextBlock 
+                        Grid.Row="3" 
+                        Grid.Column="0" 
+                        Text="Максимальное допустимое значение для канала" />
+                    <TextBox 
+                        Grid.Row="3" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=MaxValue}" />
+                    <TextBlock 
+                        Grid.Row="4" 
+                        Grid.Column="0" Text="Минимальное нормальное значение для канала" />
+                    <TextBox 
+                        Grid.Row="4" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=MinNormalValue}" />
+                    <TextBlock 
+                        Grid.Row="5" 
+                        Grid.Column="0" 
+                        Text="Максимальное нормальное значение для канала" />
+                    <TextBox 
+                        Grid.Row="5" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=MaxNormalValue}" />
+                    <TextBlock 
+                        Grid.Row="6" 
+                        Grid.Column="0" 
+                        Text="Период опроса канала" />
+                    
+                    <TextBox 
+                        Grid.Row="6" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=PollPeriod}" />
+                    <TextBlock 
+                        Grid.Row="7" 
+                        Grid.Column="0" 
+                        Text="Порог изменения величины" />
+                    <TextBox 
+                        Grid.Row="7" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=DeltaChangeLimit}" />
+                    <TextBlock 
+                        Grid.Row="8" 
+                        Grid.Column="0" 
+                        Text="Полином прямого преобразования" />
+                    <TextBox 
+                        Grid.Row="8" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=DirectTransform, Converter={StaticResource ObjectToStringConverter}}" 
+                        IsEnabled="False"/>
+                    <TextBlock 
+                        Grid.Row="9" 
+                        Grid.Column="0" 
+                        Text="Полином обратного преобразования" />
+                    <TextBox 
+                        Grid.Row="9" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=ReverseTransform, Converter={StaticResource ObjectToStringConverter}}" 
+                        IsEnabled="False" />
+
+                    <TextBlock 
+                        Grid.Row="10" 
+                        Grid.Column="0" 
+                        Text="Адрес в физическом канале" />
+                    <TextBox 
+                        Grid.Row="10" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=AddressShift}" />
+                    <TextBlock 
+                        Grid.Row="11" 
+                        Grid.Column="0" 
+                        Text="Разрядность канала" />
+                    <TextBox 
+                        Grid.Row="11" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=ChannelSize}" />
+                    <TextBlock 
+                        Grid.Row="12" 
+                        Grid.Column="0" 
+                        Text="Адрес на шине для записи" />
+                    <TextBox 
+                        Grid.Row="12" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=WriteAddress, Mode=OneWay}"
+                        IsEnabled="False"/>
+                    <TextBlock 
+                        Grid.Row="13" 
+                        Grid.Column="0" 
+                        Text="Адрес на шине для чтения" />
+                    <TextBox 
+                        Grid.Row="13" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=ReadAddress, Mode=OneWay}"
+                        IsEnabled="False"/>
+                    
+                    <Button 
+                        Grid.Row="14" 
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2" >Удалить этот ЛК</Button>
                 </Grid>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="PhysicalChannelTemplate">
-            <StackPanel>
-                <TextBlock Text="№ физического канала" />
-                <TextBlock Text="{Binding Path=Id}" />
-            </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock 
+                        Grid.Row="0" 
+                        Grid.Column="0" 
+                        Text="№ физического канала" />
+                <TextBox 
+                        Grid.Row="0" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=Id}" />
+                <TextBlock 
+                        Grid.Row="1" 
+                        Grid.Column="0" 
+                        Text="Описание" />
+                <TextBox 
+                        Grid.Row="1" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=Description}" />
+
+                <TextBlock 
+                        Grid.Row="2" 
+                        Grid.Column="0" 
+                        Text="Модуль ввода-вывода" />
+                <TextBox 
+                        Grid.Row="2" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=IOModule, Mode=OneWay, Converter={StaticResource ObjectToStringConverter}}" 
+                        IsEnabled="False" />
+
+                <TextBlock 
+                        Grid.Row="3" 
+                        Grid.Column="0" 
+                        Text="Адрес в модуле ввода-вывода" />
+                <TextBox 
+                        Grid.Row="3" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=AddressShift}" />
+                <TextBlock 
+                        Grid.Row="4" 
+                        Grid.Column="0" 
+                        Text="Разрядность канала" />
+                <TextBox 
+                        Grid.Row="4" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=ChannelSize}" />
+                <TextBlock 
+                        Grid.Row="5" 
+                        Grid.Column="0" 
+                        Text="Адрес на шине для записи" />
+                <TextBox 
+                        Grid.Row="5" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=WriteAddress, Mode=OneWay}"
+                        IsEnabled="False"/>
+                <TextBlock 
+                        Grid.Row="6" 
+                        Grid.Column="0" 
+                        Text="Адрес на шине для чтения" />
+                <TextBox 
+                        Grid.Row="6" 
+                        Grid.Column="1" 
+                        Text="{Binding Path=ReadAddress, Mode=OneWay}"
+                        IsEnabled="False"/>
+            </Grid>
         </DataTemplate>
         <DataTemplate x:Key="FieldBusNodeTemplate">
             <StackPanel>
@@ -103,7 +294,6 @@
                 <DataTemplate DataType="{x:Type Channels:LogicalChannel}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding}"/>
-                        <Button>Удалить этот ЛК</Button>
                     </StackPanel>
                 </DataTemplate>
             </TreeView.Resources>

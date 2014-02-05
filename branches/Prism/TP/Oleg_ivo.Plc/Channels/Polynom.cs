@@ -1,6 +1,8 @@
 using System;
+using System.Data;
 using System.IO;
 using System.Linq;
+using Oleg_ivo.Base.Extensions;
 
 namespace Oleg_ivo.Plc.Channels
 {
@@ -21,7 +23,27 @@ namespace Oleg_ivo.Plc.Channels
         /// <returns></returns>
         public double GetValue(double argument)
         {
-            return PowerCoefficients.PolynomCoefficients.OfType<DtsPolynom.PolynomCoefficientsRow>().Sum(polynomCoefficient => polynomCoefficient.Coefficient * Math.Pow(argument, polynomCoefficient.Power));
+            return
+                PowerCoefficients.PolynomCoefficients.AsEnumerable()
+                    .Sum(
+                        polynomCoefficient =>
+                            polynomCoefficient.Coefficient*Math.Pow(argument, polynomCoefficient.Power));
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        /// A string that represents the current object.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
+        public override string ToString()
+        {
+            return "y = " + PowerCoefficients.PolynomCoefficients.AsEnumerable()
+                .Select(
+                    polynomCoefficient =>
+                        string.Format("{0}*x^{1}", polynomCoefficient.Coefficient, polynomCoefficient.Power))
+                .JoinToString(" + ");
         }
 
         /// <summary>
