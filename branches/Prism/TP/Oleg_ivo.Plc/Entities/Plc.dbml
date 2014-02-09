@@ -5,18 +5,8 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="FieldBusTypeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FieldBusName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="FieldBus_FieldBusNode" Member="FieldBusNodes" ThisKey="Id" OtherKey="FieldBusId" Type="FieldBusNode" />
       <Association Name="FieldBusType_FieldBus" Member="FieldBusType" ThisKey="FieldBusTypeId" OtherKey="Id" Type="FieldBusType" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.FieldBusNode" Member="FieldBusNodes">
-    <Type Name="FieldBusNode">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FieldBusTypeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="AddressPart1" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="AddressPart2" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Enabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="FieldBusNode_PhysicalChannel" Member="PhysicalChannels" ThisKey="Id" OtherKey="FieldNodeId" Type="PhysicalChannel" />
-      <Association Name="FieldBusType_FieldBusNode" Member="FieldBusType" ThisKey="FieldBusTypeId" OtherKey="Id" Type="FieldBusType" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.FieldBusType" Member="FieldBusTypes">
@@ -25,7 +15,6 @@
       <Column Name="FieldBusName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Association Name="FieldBusType_FieldBus" Member="FieldBus" ThisKey="Id" OtherKey="FieldBusTypeId" Type="FieldBus" />
-      <Association Name="FieldBusType_FieldBusNode" Member="FieldBusNodes" ThisKey="Id" OtherKey="FieldBusTypeId" Type="FieldBusNode" />
     </Type>
   </Table>
   <Table Name="dbo.PhysicalChannel" Member="PhysicalChannels">
@@ -81,6 +70,18 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="MeasurementUnit_Parameter" Member="Parameters" ThisKey="Id" OtherKey="MeasurementUnitId" Type="Parameter" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FieldBusNode" Member="FieldBusNodes">
+    <Type Name="FieldBusNode">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FieldBusId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FieldBusTypeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AddressPart1" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AddressPart2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Enabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="FieldBusNode_PhysicalChannel" Member="PhysicalChannels" ThisKey="Id" OtherKey="FieldNodeId" Type="PhysicalChannel" />
+      <Association Name="FieldBus_FieldBusNode" Member="FieldBus" ThisKey="FieldBusId" OtherKey="Id" Type="FieldBus" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

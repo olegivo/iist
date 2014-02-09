@@ -20,7 +20,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
 
         private readonly IDistributedMeasurementInformationSystem dmis;
         private FieldBusNodeAddressCollection fieldBusNodeAddresses;
-        private readonly Entities.FieldBus fieldBus;
+        private readonly Entities.FieldBus entity;
 
         #endregion
 
@@ -31,10 +31,12 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
         ///</summary>
         public FieldBusNodeAddressCollection FieldBusAddresses
         {
-            get 
+            get
             {
                 return fieldBusNodeAddresses ??
-                       (fieldBusNodeAddresses = dmis.PlcManager.FieldBusFactory.GetFieldBusNodesAddresses(FieldBusType));
+                       (fieldBusNodeAddresses = new FieldBusNodeAddressCollection(
+                           Entity.FieldBusNodes.Select(
+                               fbn => dmis.PlcManager.FieldBusNodesFactory.GetFieldBusNodeAddress(fbn))));
             }
         }
 
@@ -48,7 +50,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
             switch (FieldBusType)
             {
                 case FieldBusType.Ethernet:
-                    plcAddresses.AddRange(FieldBusAddresses.Cast<FieldBusNodeIpAddress>());
+                    plcAddresses.AddRange(FieldBusAddresses);
                     break;
             }
             return plcAddresses.ToArray();
@@ -61,7 +63,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
         ///</summary>
         public FieldBusType FieldBusType
         {
-            get { return FieldBus.FieldBusType.FieldBusTypeEnum; }
+            get { return Entity.FieldBusType.FieldBusTypeEnum; }
         }
 
         ///<summary>
@@ -98,7 +100,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
         public FieldBusManager(Entities.FieldBus fieldBus, IDistributedMeasurementInformationSystem dmis):this()
         {
             this.dmis = Enforce.ArgumentNotNull(dmis, "dmis");
-            this.fieldBus = Enforce.ArgumentNotNull(fieldBus,"fieldBus");
+            this.entity = Enforce.ArgumentNotNull(fieldBus,"fieldBus");
         }
 
         /// <summary>
@@ -127,9 +129,9 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
         ///</summary>
         public bool IsOnline { get; protected set; }
 
-        public Entities.FieldBus FieldBus
+        public Entities.FieldBus Entity
         {
-            get { return fieldBus; }
+            get { return entity; }
         }
 
         ///<summary>

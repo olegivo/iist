@@ -65,10 +65,9 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusManagers
                 case FieldBusType.RS485:
                     //throw new NotImplementedException("определение последовательных портов");//todo: определение последовательных портов, которые сохранены
                     plcAddresses.AddRange(
-                        FieldBusAddresses.Cast<FieldBusNodeSerialAddress>().Where(
+                        FieldBusAddresses.Where(
                             slaveAddress =>
-                            String.Equals(slaveAddress.SerialPortName, PortName,
-                                          StringComparison.InvariantCultureIgnoreCase)).Cast<FieldBusNodeAddress>());
+                                slaveAddress.AddressPart1.Equals(PortName, StringComparison.InvariantCultureIgnoreCase)));
                     break;
             }
             return plcAddresses.ToArray();

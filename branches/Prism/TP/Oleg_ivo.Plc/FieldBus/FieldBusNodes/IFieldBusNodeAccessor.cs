@@ -8,11 +8,6 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
     /// </summary>
     public interface IFieldBusNodeAccessor : IDisposable
     {
-        ///<summary>
-        /// јдрес узла в полевой шине
-        ///</summary>
-        FieldBusNodeAddress FieldBusNodeAddress { get; }
-
         /// <summary>
         ///  омпонент доступа к ресурсам полевой шины
         /// </summary>
@@ -83,6 +78,12 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         /// ”зел полевой шины онлайн
         ///</summary>
         bool IsOnline { get; }
+
+        string AddressPart1 //TODO:пока есть FieldBusAddress, используетс€ только дл€ редактировани€ базы в CMS
+        { get; set; }
+
+        int AddressPart2 //TODO:пока есть FieldBusAddress, используетс€ только дл€ редактировани€ базы в CMS
+        { get; set; }
 
         ///<summary>
         /// ѕроверить доступность узла полевой шины

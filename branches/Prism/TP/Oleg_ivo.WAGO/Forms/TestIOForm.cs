@@ -175,11 +175,10 @@ namespace Oleg_ivo.WAGO.Forms
 
         private void Init()
         {
-            statusText.Text = string.Format("{0}. {1}", FieldBusNode.FieldBusAccessor,
-                               FieldBusNode.FieldBusNodeAddress);
+            statusText.Text = string.Format("{0}. {1}", FieldBusNode.FieldBusAccessor, FieldBusNode);
 
             List<ReadTypeData> readList = new List<ReadTypeData>();
-            readList.AddRange(new ReadTypeData[]
+            readList.AddRange(new[]
                                   {
                                       new ReadTypeData(ReadType.ReadCoils, "ячейки"), 
                                       new ReadTypeData(ReadType.ReadHoldingRegister, "–егистры"), 

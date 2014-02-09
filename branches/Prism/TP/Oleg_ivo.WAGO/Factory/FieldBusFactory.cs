@@ -1,3 +1,4 @@
+using System;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.FieldBus;
@@ -14,6 +15,7 @@ namespace Oleg_ivo.WAGO.Factory
         {
         }
 
+        [Obsolete("use property FieldBusAddresses of instance FieldBusManager instead")]
         public override FieldBusNodeAddressCollection GetFieldBusNodesAddresses(FieldBusType fieldBusType)
         {
             var fieldBusDAC = new FieldBusDAC();

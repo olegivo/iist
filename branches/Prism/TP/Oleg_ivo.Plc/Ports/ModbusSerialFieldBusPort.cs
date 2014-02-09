@@ -76,10 +76,9 @@ namespace Oleg_ivo.Plc.Ports
         ///<returns></returns>
         protected override FieldBusNodeAddress[] GetPLCAddressRange()
         {
-            FieldBusNodeAddressCollection plcAddresses = new FieldBusNodeAddressCollection();
-            plcAddresses.AddRange((from Pair slaveAddress in _addressRange
-                                   where String.Equals(slaveAddress.First as string, PortName, StringComparison.InvariantCultureIgnoreCase)
-                                   select new FieldBusNodeSerialAddress(PortName, Convert.ToByte(slaveAddress.Second), 0)).Cast<FieldBusNodeAddress>());
+            var plcAddresses = new FieldBusNodeAddressCollection((from Pair slaveAddress in _addressRange
+                where String.Equals(slaveAddress.First as string, PortName, StringComparison.InvariantCultureIgnoreCase)
+                select new FieldBusNodeAddress(FieldBusType, 0, PortName, Convert.ToByte(slaveAddress.Second))));
 
             return plcAddresses.ToArray();
 

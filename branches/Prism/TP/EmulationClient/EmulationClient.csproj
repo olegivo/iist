@@ -206,6 +206,10 @@
       <Project>{02BA939D-826A-4D6E-8B42-414AF3F6C7CE}</Project>
       <Name>DMS.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\External\Oleg_ivo.Tools\Oleg_ivo.Base\Oleg_ivo.Base.csproj">
+      <Project>{AC7D7F53-A330-45B0-A6B3-498BE85B9739}</Project>
+      <Name>Oleg_ivo.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\External\Oleg_ivo.Tools\Oleg_ivo.Tools\Oleg_ivo.Tools.csproj">
       <Project>{332a1894-922f-49a1-bd6a-e4e981fa2fec}</Project>
       <Name>Oleg_ivo.Tools</Name>

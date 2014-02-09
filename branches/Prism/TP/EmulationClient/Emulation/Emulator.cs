@@ -1,9 +1,19 @@
 using System;
 using System.Collections.Generic;
 using DMS.Common.Events;
-using Oleg_ivo.Plc.Channels;
+using Oleg_ivo.Base.Autofac;
+using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Devices.Modules;
+using Oleg_ivo.Plc.Entities;
+using Oleg_ivo.Plc.Factory;
+using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
+using Oleg_ivo.WAGO;
+using Oleg_ivo.WAGO.Devices;
 using Oleg_ivo.WAGO.Factory;
+using Oleg_ivo.WAGO.Meta;
+using FieldBusNode = Oleg_ivo.Plc.FieldBus.FieldBusNodes.FieldBusNode;
+using LogicalChannel = Oleg_ivo.Plc.Channels.LogicalChannel;
+using PhysicalChannel = Oleg_ivo.Plc.Channels.PhysicalChannel;
 
 namespace EmulationClient.Emulation
 {
@@ -41,12 +51,16 @@ namespace EmulationClient.Emulation
         private readonly GasConcentration SО2Concentration;
         private readonly GasConcentration NOConcentration;
         private readonly GasConcentration NO2Concentration;
+        private ILogicalChannelsFactory logicalChannelFactory;
+        private IDistributedMeasurementInformationSystem dmis;
 
         /// <summary>
         /// 
         /// </summary>
-        public Emulator()
+        public Emulator(ILogicalChannelsFactory logicalChannelFactory, IDistributedMeasurementInformationSystem dmis)
         {
+            this.dmis = Enforce.ArgumentNotNull(dmis,"dmis");
+            this.logicalChannelFactory = Enforce.ArgumentNotNull(logicalChannelFactory, "logicalChannelFactory");
             T6 = new Temperature
                                  {
                                      GetTemperature =
@@ -125,7 +139,19 @@ namespace EmulationClient.Emulation
                 var logicalChannels = new List<LogicalChannel>();
                 //TODO:контролируемые параметры
                 //throw new NotImplementedException("Для построения каналов необходимо вызвать конструктор, содержащий ФК, указывающий на конкретный режим работы его IoModule (IsInput)");
-                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
+                var fieldBusNode = new FieldBusNode(
+                    new FieldBusManager(new FieldBus(), dmis),
+                    new Oleg_ivo.Plc.Entities.FieldBusNode());
+                var inputPhysicalChannel = new PhysicalChannel(null, 
+                    logicalChannelFactory, 
+                    fieldBusNode, 
+                    new WagoIOModule(logicalChannelFactory)
+                    {
+                        Meta = new WagoIOModuleMeta(true, false, true, false, 0, 0, 0)
+                    }, 
+                    0, 
+                    0);
+                logicalChannels.Add(new LogicalChannel(inputPhysicalChannel, null, 0, 0)
                 {
                     Id = 6,//TС6	температура перед рукавным фильтром
                     Description = "Температура перед фильтром",
@@ -135,7 +161,7 @@ namespace EmulationClient.Emulation
                     GetValueEmulationAltDelegate = T6.GetOutputValue
                     
                 });
-                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
+                logicalChannels.Add(new LogicalChannel(inputPhysicalChannel, null, 0, 0)
                 {
                     Id = 7,//TС7	температура перед дымососом
                     Description = "Температура перед дымососом",
@@ -145,7 +171,7 @@ namespace EmulationClient.Emulation
                     GetValueEmulationAltDelegate = T7.GetOutputValue
 
                 });
-                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
+                logicalChannels.Add(new LogicalChannel(inputPhysicalChannel, null, 0, 0)
                 {
                     Id = 20,//Г-О2	концентрация газа О2
                     Description = "Концентрация О2",
@@ -154,7 +180,7 @@ namespace EmulationClient.Emulation
                     MaxValue = 1000,
                     GetValueEmulationAltDelegate = O2Concentration.GetOutputValue
                 });
-                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
+                logicalChannels.Add(new LogicalChannel(inputPhysicalChannel, null, 0, 0)
                 {
                     Id = 21,//Г-СО	концентрация газа СО
                     Description = "Концентрация СО",
@@ -163,7 +189,7 @@ namespace EmulationClient.Emulation
                     MaxValue = 1000,
                     GetValueEmulationAltDelegate = COConcentration.GetOutputValue
                 });
-                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
+                logicalChannels.Add(new LogicalChannel(inputPhysicalChannel, null, 0, 0)
                 {
                     Id = 22,//Г-SО2	концентрация газа SО2
                     Description = "Концентрация SО2",
@@ -172,7 +198,7 @@ namespace EmulationClient.Emulation
                     MaxValue = 1000,
                     GetValueEmulationAltDelegate = SО2Concentration.GetOutputValue
                 });
-                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
+                logicalChannels.Add(new LogicalChannel(inputPhysicalChannel, null, 0, 0)
                 {
                     Id = 23,//Г-NO	концентрация газа NO
                     Description = "Концентрация NO",
@@ -181,7 +207,7 @@ namespace EmulationClient.Emulation
                     MaxValue = 1000,
                     GetValueEmulationAltDelegate = NOConcentration.GetOutputValue
                 });
-                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
+                logicalChannels.Add(new LogicalChannel(inputPhysicalChannel, null, 0, 0)
                 {
                     Id = 24,//Г-NO2	концентрация газа NO2
                     Description = "Концентрация NO2",
@@ -192,7 +218,16 @@ namespace EmulationClient.Emulation
                 });
                 //TODO: управляемые параметры
                 //throw new NotImplementedException("Для построения каналов необходимо вызвать конструктор, содержащий ФК, указывающий на конкретный режим работы его IoModule (IsOutput)");
-                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
+                PhysicalChannel outputPhysicalChannel = new PhysicalChannel(null,
+                    logicalChannelFactory,
+                    fieldBusNode,
+                    new WagoIOModule(logicalChannelFactory)
+                    {
+                        Meta = new WagoIOModuleMeta(true, false, false, true, 0, 0, 0)
+                    },
+                    0,
+                    0);
+                logicalChannels.Add(new LogicalChannel(outputPhysicalChannel, null, 0, 0)
                 {
                     Id = 10001,
                     Description = "Горелка",
@@ -200,7 +235,7 @@ namespace EmulationClient.Emulation
                     MinValue = 0,
                     MaxValue = 1000
                 });
-                logicalChannels.Add(new LogicalChannel(null, null, 0, 0)
+                logicalChannels.Add(new LogicalChannel(outputPhysicalChannel, null, 0, 0)
                 {
                     Id = 10002,
                     Description = "Количество оборотов дымососа",

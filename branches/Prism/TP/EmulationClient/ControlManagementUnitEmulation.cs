@@ -142,8 +142,9 @@ namespace EmulationClient
                 {
                     foreach (var logicalChannel in LogicalChannels)
                     {
-                        TryAddPoll(new MovingEventArgs(DoubleListBoxControl.Direction.LeftToRight, logicalChannel.Id),
-                                   new Control());
+                        var synchronizingObject = new Control();
+                        TryAddPoll(new MovingEventArgs(DoubleListBoxControl.Direction.LeftToRight, logicalChannel),
+                                   synchronizingObject);
                     }
                 }
             }

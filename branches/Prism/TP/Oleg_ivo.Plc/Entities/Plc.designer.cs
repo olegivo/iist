@@ -33,9 +33,6 @@ namespace Oleg_ivo.Plc.Entities
     partial void InsertFieldBus(FieldBus instance);
     partial void UpdateFieldBus(FieldBus instance);
     partial void DeleteFieldBus(FieldBus instance);
-    partial void InsertFieldBusNode(FieldBusNode instance);
-    partial void UpdateFieldBusNode(FieldBusNode instance);
-    partial void DeleteFieldBusNode(FieldBusNode instance);
     partial void InsertFieldBusType(FieldBusType instance);
     partial void UpdateFieldBusType(FieldBusType instance);
     partial void DeleteFieldBusType(FieldBusType instance);
@@ -51,6 +48,9 @@ namespace Oleg_ivo.Plc.Entities
     partial void InsertMeasurementUnit(MeasurementUnit instance);
     partial void UpdateMeasurementUnit(MeasurementUnit instance);
     partial void DeleteMeasurementUnit(MeasurementUnit instance);
+    partial void InsertFieldBusNode(FieldBusNode instance);
+    partial void UpdateFieldBusNode(FieldBusNode instance);
+    partial void DeleteFieldBusNode(FieldBusNode instance);
     #endregion
 		
 		public PlcDataContext() : 
@@ -88,14 +88,6 @@ namespace Oleg_ivo.Plc.Entities
 			get
 			{
 				return this.GetTable<FieldBus>();
-			}
-		}
-		
-		public System.Data.Linq.Table<FieldBusNode> FieldBusNodes
-		{
-			get
-			{
-				return this.GetTable<FieldBusNode>();
 			}
 		}
 		
@@ -138,6 +130,14 @@ namespace Oleg_ivo.Plc.Entities
 				return this.GetTable<MeasurementUnit>();
 			}
 		}
+		
+		public System.Data.Linq.Table<FieldBusNode> FieldBusNodes
+		{
+			get
+			{
+				return this.GetTable<FieldBusNode>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FieldBus")]
@@ -151,6 +151,8 @@ namespace Oleg_ivo.Plc.Entities
 		private System.Nullable<int> _FieldBusTypeId;
 		
 		private string _FieldBusName;
+		
+		private EntitySet<FieldBusNode> _FieldBusNodes;
 		
 		private EntityRef<FieldBusType> _FieldBusType;
 		
@@ -168,6 +170,7 @@ namespace Oleg_ivo.Plc.Entities
 		
 		public FieldBus()
 		{
+			this._FieldBusNodes = new EntitySet<FieldBusNode>(new Action<FieldBusNode>(this.attach_FieldBusNodes), new Action<FieldBusNode>(this.detach_FieldBusNodes));
 			this._FieldBusType = default(EntityRef<FieldBusType>);
 			OnCreated();
 		}
@@ -236,6 +239,19 @@ namespace Oleg_ivo.Plc.Entities
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldBus_FieldBusNode", Storage="_FieldBusNodes", ThisKey="Id", OtherKey="FieldBusId")]
+		public EntitySet<FieldBusNode> FieldBusNodes
+		{
+			get
+			{
+				return this._FieldBusNodes;
+			}
+			set
+			{
+				this._FieldBusNodes.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldBusType_FieldBus", Storage="_FieldBusType", ThisKey="FieldBusTypeId", OtherKey="Id", IsForeignKey=true)]
 		public FieldBusType FieldBusType
 		{
@@ -289,232 +305,17 @@ namespace Oleg_ivo.Plc.Entities
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FieldBusNode")]
-	public partial class FieldBusNode : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private System.Nullable<int> _FieldBusTypeId;
-		
-		private string _AddressPart1;
-		
-		private System.Nullable<int> _AddressPart2;
-		
-		private bool _Enabled;
-		
-		private EntitySet<PhysicalChannel> _PhysicalChannels;
-		
-		private EntityRef<FieldBusType> _FieldBusType;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnFieldBusTypeIdChanging(System.Nullable<int> value);
-    partial void OnFieldBusTypeIdChanged();
-    partial void OnAddressPart1Changing(string value);
-    partial void OnAddressPart1Changed();
-    partial void OnAddressPart2Changing(System.Nullable<int> value);
-    partial void OnAddressPart2Changed();
-    partial void OnEnabledChanging(bool value);
-    partial void OnEnabledChanged();
-    #endregion
-		
-		public FieldBusNode()
-		{
-			this._PhysicalChannels = new EntitySet<PhysicalChannel>(new Action<PhysicalChannel>(this.attach_PhysicalChannels), new Action<PhysicalChannel>(this.detach_PhysicalChannels));
-			this._FieldBusType = default(EntityRef<FieldBusType>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FieldBusTypeId", DbType="Int")]
-		public System.Nullable<int> FieldBusTypeId
-		{
-			get
-			{
-				return this._FieldBusTypeId;
-			}
-			set
-			{
-				if ((this._FieldBusTypeId != value))
-				{
-					if (this._FieldBusType.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFieldBusTypeIdChanging(value);
-					this.SendPropertyChanging();
-					this._FieldBusTypeId = value;
-					this.SendPropertyChanged("FieldBusTypeId");
-					this.OnFieldBusTypeIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressPart1", DbType="NVarChar(255)")]
-		public string AddressPart1
-		{
-			get
-			{
-				return this._AddressPart1;
-			}
-			set
-			{
-				if ((this._AddressPart1 != value))
-				{
-					this.OnAddressPart1Changing(value);
-					this.SendPropertyChanging();
-					this._AddressPart1 = value;
-					this.SendPropertyChanged("AddressPart1");
-					this.OnAddressPart1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressPart2", DbType="Int")]
-		public System.Nullable<int> AddressPart2
-		{
-			get
-			{
-				return this._AddressPart2;
-			}
-			set
-			{
-				if ((this._AddressPart2 != value))
-				{
-					this.OnAddressPart2Changing(value);
-					this.SendPropertyChanging();
-					this._AddressPart2 = value;
-					this.SendPropertyChanged("AddressPart2");
-					this.OnAddressPart2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Enabled", DbType="Bit NOT NULL")]
-		public bool Enabled
-		{
-			get
-			{
-				return this._Enabled;
-			}
-			set
-			{
-				if ((this._Enabled != value))
-				{
-					this.OnEnabledChanging(value);
-					this.SendPropertyChanging();
-					this._Enabled = value;
-					this.SendPropertyChanged("Enabled");
-					this.OnEnabledChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldBusNode_PhysicalChannel", Storage="_PhysicalChannels", ThisKey="Id", OtherKey="FieldNodeId")]
-		public EntitySet<PhysicalChannel> PhysicalChannels
-		{
-			get
-			{
-				return this._PhysicalChannels;
-			}
-			set
-			{
-				this._PhysicalChannels.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldBusType_FieldBusNode", Storage="_FieldBusType", ThisKey="FieldBusTypeId", OtherKey="Id", IsForeignKey=true)]
-		public FieldBusType FieldBusType
-		{
-			get
-			{
-				return this._FieldBusType.Entity;
-			}
-			set
-			{
-				FieldBusType previousValue = this._FieldBusType.Entity;
-				if (((previousValue != value) 
-							|| (this._FieldBusType.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._FieldBusType.Entity = null;
-						previousValue.FieldBusNodes.Remove(this);
-					}
-					this._FieldBusType.Entity = value;
-					if ((value != null))
-					{
-						value.FieldBusNodes.Add(this);
-						this._FieldBusTypeId = value.Id;
-					}
-					else
-					{
-						this._FieldBusTypeId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("FieldBusType");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_PhysicalChannels(PhysicalChannel entity)
+		private void attach_FieldBusNodes(FieldBusNode entity)
 		{
 			this.SendPropertyChanging();
-			entity.FieldBusNode = this;
+			entity.FieldBus = this;
 		}
 		
-		private void detach_PhysicalChannels(PhysicalChannel entity)
+		private void detach_FieldBusNodes(FieldBusNode entity)
 		{
 			this.SendPropertyChanging();
-			entity.FieldBusNode = null;
+			entity.FieldBus = null;
 		}
 	}
 	
@@ -532,8 +333,6 @@ namespace Oleg_ivo.Plc.Entities
 		
 		private EntitySet<FieldBus> _FieldBus;
 		
-		private EntitySet<FieldBusNode> _FieldBusNodes;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -549,7 +348,6 @@ namespace Oleg_ivo.Plc.Entities
 		public FieldBusType()
 		{
 			this._FieldBus = new EntitySet<FieldBus>(new Action<FieldBus>(this.attach_FieldBus), new Action<FieldBus>(this.detach_FieldBus));
-			this._FieldBusNodes = new EntitySet<FieldBusNode>(new Action<FieldBusNode>(this.attach_FieldBusNodes), new Action<FieldBusNode>(this.detach_FieldBusNodes));
 			OnCreated();
 		}
 		
@@ -626,19 +424,6 @@ namespace Oleg_ivo.Plc.Entities
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldBusType_FieldBusNode", Storage="_FieldBusNodes", ThisKey="Id", OtherKey="FieldBusTypeId")]
-		public EntitySet<FieldBusNode> FieldBusNodes
-		{
-			get
-			{
-				return this._FieldBusNodes;
-			}
-			set
-			{
-				this._FieldBusNodes.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -666,18 +451,6 @@ namespace Oleg_ivo.Plc.Entities
 		}
 		
 		private void detach_FieldBus(FieldBus entity)
-		{
-			this.SendPropertyChanging();
-			entity.FieldBusType = null;
-		}
-		
-		private void attach_FieldBusNodes(FieldBusNode entity)
-		{
-			this.SendPropertyChanging();
-			entity.FieldBusType = this;
-		}
-		
-		private void detach_FieldBusNodes(FieldBusNode entity)
 		{
 			this.SendPropertyChanging();
 			entity.FieldBusType = null;
@@ -1849,6 +1622,257 @@ namespace Oleg_ivo.Plc.Entities
 		{
 			this.SendPropertyChanging();
 			entity.MeasurementUnit = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FieldBusNode")]
+	public partial class FieldBusNode : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _FieldBusId;
+		
+		private System.Nullable<int> _FieldBusTypeId;
+		
+		private string _AddressPart1;
+		
+		private System.Nullable<int> _AddressPart2;
+		
+		private bool _Enabled;
+		
+		private EntitySet<PhysicalChannel> _PhysicalChannels;
+		
+		private EntityRef<FieldBus> _FieldBus;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnFieldBusIdChanging(int value);
+    partial void OnFieldBusIdChanged();
+    partial void OnFieldBusTypeIdChanging(System.Nullable<int> value);
+    partial void OnFieldBusTypeIdChanged();
+    partial void OnAddressPart1Changing(string value);
+    partial void OnAddressPart1Changed();
+    partial void OnAddressPart2Changing(System.Nullable<int> value);
+    partial void OnAddressPart2Changed();
+    partial void OnEnabledChanging(bool value);
+    partial void OnEnabledChanged();
+    #endregion
+		
+		public FieldBusNode()
+		{
+			this._PhysicalChannels = new EntitySet<PhysicalChannel>(new Action<PhysicalChannel>(this.attach_PhysicalChannels), new Action<PhysicalChannel>(this.detach_PhysicalChannels));
+			this._FieldBus = default(EntityRef<FieldBus>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FieldBusId", DbType="Int NOT NULL")]
+		public int FieldBusId
+		{
+			get
+			{
+				return this._FieldBusId;
+			}
+			set
+			{
+				if ((this._FieldBusId != value))
+				{
+					if (this._FieldBus.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFieldBusIdChanging(value);
+					this.SendPropertyChanging();
+					this._FieldBusId = value;
+					this.SendPropertyChanged("FieldBusId");
+					this.OnFieldBusIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FieldBusTypeId", DbType="Int")]
+		public System.Nullable<int> FieldBusTypeId
+		{
+			get
+			{
+				return this._FieldBusTypeId;
+			}
+			set
+			{
+				if ((this._FieldBusTypeId != value))
+				{
+					this.OnFieldBusTypeIdChanging(value);
+					this.SendPropertyChanging();
+					this._FieldBusTypeId = value;
+					this.SendPropertyChanged("FieldBusTypeId");
+					this.OnFieldBusTypeIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressPart1", DbType="NVarChar(255)")]
+		public string AddressPart1
+		{
+			get
+			{
+				return this._AddressPart1;
+			}
+			set
+			{
+				if ((this._AddressPart1 != value))
+				{
+					this.OnAddressPart1Changing(value);
+					this.SendPropertyChanging();
+					this._AddressPart1 = value;
+					this.SendPropertyChanged("AddressPart1");
+					this.OnAddressPart1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressPart2", DbType="Int")]
+		public System.Nullable<int> AddressPart2
+		{
+			get
+			{
+				return this._AddressPart2;
+			}
+			set
+			{
+				if ((this._AddressPart2 != value))
+				{
+					this.OnAddressPart2Changing(value);
+					this.SendPropertyChanging();
+					this._AddressPart2 = value;
+					this.SendPropertyChanged("AddressPart2");
+					this.OnAddressPart2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Enabled", DbType="Bit NOT NULL")]
+		public bool Enabled
+		{
+			get
+			{
+				return this._Enabled;
+			}
+			set
+			{
+				if ((this._Enabled != value))
+				{
+					this.OnEnabledChanging(value);
+					this.SendPropertyChanging();
+					this._Enabled = value;
+					this.SendPropertyChanged("Enabled");
+					this.OnEnabledChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldBusNode_PhysicalChannel", Storage="_PhysicalChannels", ThisKey="Id", OtherKey="FieldNodeId")]
+		public EntitySet<PhysicalChannel> PhysicalChannels
+		{
+			get
+			{
+				return this._PhysicalChannels;
+			}
+			set
+			{
+				this._PhysicalChannels.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldBus_FieldBusNode", Storage="_FieldBus", ThisKey="FieldBusId", OtherKey="Id", IsForeignKey=true)]
+		public FieldBus FieldBus
+		{
+			get
+			{
+				return this._FieldBus.Entity;
+			}
+			set
+			{
+				FieldBus previousValue = this._FieldBus.Entity;
+				if (((previousValue != value) 
+							|| (this._FieldBus.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FieldBus.Entity = null;
+						previousValue.FieldBusNodes.Remove(this);
+					}
+					this._FieldBus.Entity = value;
+					if ((value != null))
+					{
+						value.FieldBusNodes.Add(this);
+						this._FieldBusId = value.Id;
+					}
+					else
+					{
+						this._FieldBusId = default(int);
+					}
+					this.SendPropertyChanged("FieldBus");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_PhysicalChannels(PhysicalChannel entity)
+		{
+			this.SendPropertyChanging();
+			entity.FieldBusNode = this;
+		}
+		
+		private void detach_PhysicalChannels(PhysicalChannel entity)
+		{
+			this.SendPropertyChanging();
+			entity.FieldBusNode = null;
 		}
 	}
 }

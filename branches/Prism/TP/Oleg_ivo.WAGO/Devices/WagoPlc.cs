@@ -227,7 +227,7 @@ namespace Oleg_ivo.WAGO.Devices
         public ushort ReadInputRegister(ushort address)
         {
             //ushort[] registers = null;
-            //registers = ModbusAccessor.ReadInputRegisters(plcAddress.SlaveAddress, address, 1);
+            //registers = ModbusAccessor.ReadInputRegisters(plcAddress.AddressPart2, address, 1);
             //return registers[0];
             return 0;
         }

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Windows;
+using Autofac;
 using DMS.Common.Messages;
 using EmulationClient.Emulation;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.Tools.ConnectionProvider;
 using Oleg_ivo.Tools.ExceptionCatcher;
+using Oleg_ivo.WAGO.Autofac;
 
 namespace EmulationClient
 {
@@ -17,11 +20,16 @@ namespace EmulationClient
         /// </summary>
         public App()
         {
-            ControlManagementUnit = new ControlManagementUnitEmulation {GetRegName = GetRegName};
-            Emulator = new Emulator
-                           {
-                               ControlManagementUnit = ControlManagementUnit
-                           };
+            var builder = new ContainerBuilder();
+            //builder.RegisterModule(new CommandLineHelperAutofacModule<WagoCommandLineOptions>(args));
+            builder.RegisterModule<WagoAutofacModule>();
+
+            var container = builder.Build();
+
+            ControlManagementUnit = container.ResolveUnregistered<ControlManagementUnitEmulation>();
+            ControlManagementUnit.GetRegName = GetRegName;
+            Emulator = container.ResolveUnregistered<Emulator>();
+            Emulator.ControlManagementUnit = ControlManagementUnit;
 
             //GasConcentration gasConcentration = new GasConcentration();
             //Temperature temperature = new Temperature();
@@ -60,22 +68,23 @@ namespace EmulationClient
         {
             base.OnStartup(e);
             Init();
+            //TODO:Bootstrapper
             //MyOwnBootStraper bootstrapper = new MyOwnBootStraper();
             //bootstrapper.Run();
             //ControlManagementUnit.Register();
         }
 
-/*
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnExit(ExitEventArgs e)
-        {
-            //ControlManagementUnit.Unregister();
-            base.OnExit(e);
-        }
-*/
+        /*
+                /// <summary>
+                /// 
+                /// </summary>
+                /// <param name="e"></param>
+                protected override void OnExit(ExitEventArgs e)
+                {
+                    //ControlManagementUnit.Unregister();
+                    base.OnExit(e);
+                }
+        */
 
         private void Init()
         {
@@ -84,7 +93,7 @@ namespace EmulationClient
 #pragma warning restore 168
 
             DbConnectionProvider.Instance.SetupConnectionStringFromConfigurationFile();
-            
+
         }
 
         private void LogError(object sender, ExtendedThreadExceptionEventArgs e)

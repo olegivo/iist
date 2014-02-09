@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO.Ports;
+using System.Linq;
 using System.Net;
-using Microsoft.VisualBasic.Devices;
 using NLog;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
+using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
 using Oleg_ivo.Plc.Ports;
 
 namespace Oleg_ivo.Plc.FieldBus
@@ -15,7 +16,7 @@ namespace Oleg_ivo.Plc.FieldBus
     ///<summary>
     /// ‘абрика полевых шин
     ///</summary>
-    public abstract class FieldBusFactoryBase : IFieldBusFactory
+    public abstract class FieldBusFactoryBase : FactoryBase, IFieldBusFactory
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
@@ -33,9 +34,11 @@ namespace Oleg_ivo.Plc.FieldBus
         /// Ќайти порты системы
         ///</summary>
         ///<returns></returns>
+        [Obsolete]
         public object[] FindPorts()
         {
-            return FindPorts(DefaultFieldBusType);
+            throw new NotImplementedException("Obsolete");
+            //return FindPorts(DefaultFieldBusType);
         }
 
         /// <summary>
@@ -46,15 +49,16 @@ namespace Oleg_ivo.Plc.FieldBus
             get { return FieldBusType.RS485;}
         }
 
-        ///<summary>
-        /// Ќайти порты подключени€ к полевым шинам заданного типа
-        ///</summary>
-        ///<param name="fieldBusType"></param>
-        ///<returns></returns>
-        ///<exception cref="ArgumentOutOfRangeException"></exception>
-        public object[] FindPorts(FieldBusType fieldBusType)
+        /// <summary>
+        ///  Ќайти порты подключени€ к полевым шинам заданного типа
+        /// </summary>
+        /// <param name="fieldBusType"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public List<Entities.FieldBus> FindPorts(FieldBusType fieldBusType)
         {
-            switch (fieldBusType)
+            return DataContext.FieldBus.Where(fb => fb.FieldBusTypeId==(int)fieldBusType).ToList();
+            /*switch (fieldBusType)
             {
                 case FieldBusType.RS232:
                 case FieldBusType.RS485:
@@ -66,16 +70,14 @@ namespace Oleg_ivo.Plc.FieldBus
                         {
                             throw new NotImplementedException("определение последовательных портов");
                             //todo: FieldBusFactory.FindPorts - определение последовательных портов, которые сохранены
-                            /* 
-                                foreach (string portName in computer.Ports.SerialPortNames)
-                                {
-                                    //foreach (System.Web.UI.Pair pair in DistributedMeasurementInformationSystemBase.Instance.Settings.PortsRanges[fieldBusType])
-                                    //{
-                                    //    if (String.Equals(pair.First as string, portName, StringComparison.InvariantCultureIgnoreCase))
-                                    //        portNames.Add(portName);
-                                    //}
-                                                        }
-                            */
+                            foreach (string portName in computer.Ports.SerialPortNames)
+                            {
+                                //foreach (System.Web.UI.Pair pair in DistributedMeasurementInformationSystemBase.Instance.Settings.PortsRanges[fieldBusType])
+                                //{
+                                //    if (String.Equals(pair.First as string, portName, StringComparison.InvariantCultureIgnoreCase))
+                                //        portNames.Add(portName);
+                                //}
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -92,7 +94,7 @@ namespace Oleg_ivo.Plc.FieldBus
                     throw new ArgumentOutOfRangeException("fieldBusType");
             }
 
-            return null;
+            return null;*/
         }
 
         private readonly Hashtable _serialPorts = new Hashtable();
@@ -142,6 +144,7 @@ namespace Oleg_ivo.Plc.FieldBus
         /// <param name="onlyCustomized">“олько настроенные (<see langword="false"/> - все, что можно найти на шине)</param>
         /// <param name="skipOffline">ѕропускать отключенные</param>
         /// <returns></returns>
+        [Obsolete("ѕустой метод")]
         public object[] GetAvailableFieldBusAddresses(FieldBusManager fieldBusManager, FieldBusType fieldBusType, bool onlyCustomized, bool skipOffline)
         {
             List<object> objects = new List<object>();
@@ -152,7 +155,7 @@ namespace Oleg_ivo.Plc.FieldBus
                     break;
                 case FieldBusType.RS232:
                 case FieldBusType.RS485:
-                    object[] ports = FindPorts(fieldBusType);
+                    /*object[] ports = FindPorts(fieldBusType);
                     if (ports!=null)
                     {
                         //foreach (object port in ports)
@@ -160,7 +163,7 @@ namespace Oleg_ivo.Plc.FieldBus
                             
                         //}
                         GetAvailableSerialFieldBusAddresses(onlyCustomized, skipOffline);
-                    }
+                    }*/
                     break;
                 case FieldBusType.Ethernet:
                     break;
@@ -175,6 +178,7 @@ namespace Oleg_ivo.Plc.FieldBus
         ///<param name="onlyCustomized"></param>
         ///<param name="skipOffline"></param>
         ///<returns></returns>
+        [Obsolete("ѕустой метод")]
         private object[] GetAvailableSerialFieldBusAddresses(bool onlyCustomized, bool skipOffline)
         {
             var list = new List<object>();
@@ -220,7 +224,7 @@ namespace Oleg_ivo.Plc.FieldBus
         public IFieldBusAccessor CreateFieldbusAccessor(FieldBusType fieldBusType, object port)
         {
             ModbusAccessor modbusAccessor;
-            FieldBusPortParameters portParameters = CreatePortParameters(fieldBusType, port);
+            var portParameters = CreatePortParameters(fieldBusType, port);
             switch (fieldBusType)
             {
                 case FieldBusType.RS232:
@@ -243,26 +247,27 @@ namespace Oleg_ivo.Plc.FieldBus
         ///<param name="port"></param>
         ///<returns></returns>
         ///<exception cref="ArgumentOutOfRangeException"></exception>
-        public FieldBusPortParameters CreatePortParameters(FieldBusType fieldBusType, object port)
+        private FieldBusPortParameters CreatePortParameters(FieldBusType fieldBusType, object port)
         {
+            //TODO:добавить в контекст словарную зависимость (дл€ каждого FieldBusType разные фабрики)
             FieldBusPortParameters retValue;
             switch (fieldBusType)
             {
                 case FieldBusType.RS232:
                 case FieldBusType.RS485:
                     var serialPortParameters = new SerialPortParameters
-                        {
-                            Mode = AsciiRtuMode.RTU,
-                            MaxAddress = 2,
-                            Port = port
-                        };
+                    {
+                        Mode = AsciiRtuMode.RTU,
+                        MaxAddress = 2,
+                        Port = port
+                    };
                     retValue = serialPortParameters;
                     break;
                 case FieldBusType.Ethernet:
                     var tcpFieldBusPortParameters = new TcpFieldBusPortParameters();
-                    var ipAddress = port as FieldBusNodeIpAddress;
+                    var ipAddress = port as FieldBusNodeAddress;
                     if (ipAddress != null)
-                        tcpFieldBusPortParameters.IpAddress = new IPAddress(ipAddress.IpSlaveAddress);
+                        tcpFieldBusPortParameters.IpAddress = IPAddress.Parse(ipAddress.AddressPart1);
                     retValue = tcpFieldBusPortParameters;
                     break;
                 default:
@@ -271,6 +276,7 @@ namespace Oleg_ivo.Plc.FieldBus
             return retValue;
         }
 
+        [Obsolete("use property FieldBusAddresses of instance FieldBusManager instead")]
         public abstract FieldBusNodeAddressCollection GetFieldBusNodesAddresses(FieldBusType fieldBusType);
     }
 }

@@ -17,7 +17,14 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
 
         #region constructors
 
-        #endregion
+        public FieldBusNodeCollection()
+        {
+        }
 
+        public FieldBusNodeCollection(IEnumerable<FieldBusNode> collection) : base(collection)
+        {
+        }
+
+        #endregion
     }
 }

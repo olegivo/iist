@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.Ports;
+using System.Linq;
 using System.Windows.Forms;
 using Modbus.Device;
 using Oleg_ivo.Plc;
@@ -30,7 +31,7 @@ namespace Oleg_ivo.WAGO.Forms
         private void FillConnectionParameters()
         {
             // lbPorts
-            foreach (string portName in dmis.PlcManager.FieldBusFactory.FindPorts(FieldBusType.RS485))
+            foreach (string portName in dmis.PlcManager.FieldBusFactory.FindPorts(FieldBusType.RS485).Select(fb=>fb.FieldBusName))
                 lbPorts.Items.Add(portName);
             lbPorts.SelectedIndex = 0;
 

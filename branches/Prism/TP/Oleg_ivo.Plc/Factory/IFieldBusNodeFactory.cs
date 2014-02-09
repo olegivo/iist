@@ -29,10 +29,9 @@ namespace Oleg_ivo.Plc.Factory
         /// 
         /// </summary>
         /// <param name="fieldBusManager"></param>
-        /// <param name="fieldBusNodeAddress"></param>
-        /// <param name="row"></param>
+        /// <param name="entity"></param>
         /// <returns></returns>
-        FieldBusNode CreateFieldBusNode(FieldBusManager fieldBusManager, FieldBusNodeAddress fieldBusNodeAddress, Entities.FieldBusNode row);
+        FieldBusNode CreateFieldBusNode(FieldBusManager fieldBusManager, Entities.FieldBusNode entity);
 
         /// <summary>
         /// Фабрика ПЛК
@@ -45,5 +44,12 @@ namespace Oleg_ivo.Plc.Factory
         /// <param name="fieldBusManager"></param>
         /// <returns></returns>
         FieldBusNodeCollection LoadFieldBusNodes(FieldBusManager fieldBusManager);
+
+        /// <summary>
+        /// TODO: убрать публичность метода (временно в интерфейсе)
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        FieldBusNodeAddress GetFieldBusNodeAddress(Plc.Entities.FieldBusNode entity);
     }
 }

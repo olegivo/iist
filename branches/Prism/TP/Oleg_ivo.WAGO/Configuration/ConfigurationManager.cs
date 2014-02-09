@@ -101,22 +101,24 @@ namespace Oleg_ivo.WAGO.Configuration
                 section.DMISConfigurations.Add(dmisConfig);
             }
 
-            var fieldBusType = FieldBusType.Ethernet.ToString();
-            var loadOptions = dmisConfig.LoadOptions[fieldBusType];
-            if (loadOptions == null)
+            foreach (var fieldBusType in Enum.GetNames(typeof(FieldBusType)).Where(fbt=>fbt!=FieldBusType.Unknown.ToString()))
             {
-                Log.Debug("ќпции загрузки дл€ полевой шины Ethernet отсутствуют и будут добавлены");
-                loadOptions = new LoadOptionsConfigurationElement
-                    {
-                        FieldBusType = fieldBusType,
-                        FieldNodesLevel =
-                            new LevelLoadOptionsConfigElement { ComputeCurrentConfiguration = false, LoadSavedConfiguration = true },
-                        PhysicalChannelsLevel =
-                            new LevelLoadOptionsConfigElement { ComputeCurrentConfiguration = false, LoadSavedConfiguration = true },
-                        LogicalChannelsLevel =
-                            new LevelLoadOptionsConfigElement { ComputeCurrentConfiguration = false, LoadSavedConfiguration = true }
-                    };
-                dmisConfig.LoadOptions.Add(loadOptions);
+                var loadOptions = dmisConfig.LoadOptions[fieldBusType];
+                if (loadOptions == null)
+                {
+                    Log.Debug("ќпции загрузки дл€ полевой шины {0} отсутствуют и будут добавлены", fieldBusType);
+                    loadOptions = new LoadOptionsConfigurationElement
+                        {
+                            FieldBusType = fieldBusType,
+                            FieldNodesLevel =
+                                new LevelLoadOptionsConfigElement { ComputeCurrentConfiguration = false, LoadSavedConfiguration = true },
+                            PhysicalChannelsLevel =
+                                new LevelLoadOptionsConfigElement { ComputeCurrentConfiguration = false, LoadSavedConfiguration = true },
+                            LogicalChannelsLevel =
+                                new LevelLoadOptionsConfigElement { ComputeCurrentConfiguration = false, LoadSavedConfiguration = true }
+                        };
+                    dmisConfig.LoadOptions.Add(loadOptions);
+                }
             }
 
             Log.Debug("—оздание экземпл€ра IDistributedSystemSettings");
@@ -157,7 +159,7 @@ namespace Oleg_ivo.WAGO.Configuration
     {
         public Dictionary<FieldBusType, FieldBusLoadOptions> CreateFieldBusLoadOptions()
         {
-            return this.OfType<LoadOptionsConfigurationElement>()
+            return this.OfType<LoadOptionsConfigurationElement>().ToList()
                        .Select(lo => lo.CreateLoadOptions())
                        .ToDictionary(lo => lo.FieldBusType, lo => lo);
         }

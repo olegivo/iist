@@ -157,8 +157,6 @@
     </Compile>
     <Compile Include="DateAdapterProcessType.cs" />
     <Compile Include="Devices\Contollers\FieldBusNodeAddress.cs" />
-    <Compile Include="Devices\Contollers\FieldBusNodeIpAddress.cs" />
-    <Compile Include="Devices\Contollers\FieldBusNodeSerialAddress.cs" />
     <Compile Include="Devices\Modules\IIOModule.cs" />
     <Compile Include="Factory\IPlcFactory.cs" />
     <Compile Include="Devices\Contollers\PLC.cs" />

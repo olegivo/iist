@@ -1,5 +1,4 @@
 using System;
-using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 
 namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
@@ -16,10 +15,9 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         /// </summary>
         /// <param name="fieldBusManager"></param>
         /// <param name="fieldBusAccessor"></param>
-        /// <param name="fieldBusNodeAddress"></param>
         /// <param name="entity"></param>
-        public ActiveFieldBusNode(FieldBusManager fieldBusManager, IFieldBusAccessor fieldBusAccessor, FieldBusNodeAddress fieldBusNodeAddress, Entities.FieldBusNode entity)
-            : base(fieldBusManager, fieldBusNodeAddress, entity)
+        public ActiveFieldBusNode(FieldBusManager fieldBusManager, IFieldBusAccessor fieldBusAccessor, Entities.FieldBusNode entity)
+            : base(fieldBusManager, entity)
         {
             if (fieldBusAccessor == null) throw new ArgumentNullException("fieldBusAccessor");
             if (fieldBusManager is ActiveFieldBusManager) throw new ArgumentNullException("fieldBusManager");

@@ -76,10 +76,23 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
                 }
                 else
                 {
-                    currentFieldBusNodes = new FieldBusNodeCollection();
-                    currentFieldBusNodes.AddRange((from address in fieldBusManager.GetPLCAddressRange()
-                                                   let modbusAccessor = fieldBusFactory.CreateFieldbusAccessor(fieldBusType, address)
-                                                   select new ActiveFieldBusNode(fieldBusManager, modbusAccessor, address, null)));
+                    currentFieldBusNodes =
+                        new FieldBusNodeCollection(
+                            fieldBusManager.GetPLCAddressRange()
+                                .Select(
+                                    fieldBusNodeAddress =>
+                                    {
+                                        var modbusAccessor = fieldBusFactory.CreateFieldbusAccessor(fieldBusType, fieldBusNodeAddress);
+                                        var entity = new Entities.FieldBusNode
+                                        {
+                                            AddressPart1 = fieldBusNodeAddress.AddressPart1,
+                                            AddressPart2 = fieldBusNodeAddress.AddressPart2,
+                                            Id = fieldBusNodeAddress.Id,
+                                            FieldBusId = fieldBusManager.Entity.Id,
+                                            FieldBusTypeId = fieldBusManager.Entity.FieldBusTypeId
+                                        };
+                                        return new ActiveFieldBusNode(fieldBusManager, modbusAccessor, entity);
+                                    }));
                 }
 
             }
@@ -180,12 +193,20 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
                 // если устройство по данному адресу ответило, значит создаём объект-устройство и его адрес
                 foreach (FieldBusNodeAddress fieldBusNodeAddress in fieldBusManager.GetPLCAddressRange())
                 {
-                    FieldBusNode fieldBusNode = CreateFieldBusNode(fieldBusManager, fieldBusNodeAddress, null);
+                    var entity = new Entities.FieldBusNode
+                    {
+                        AddressPart1 = fieldBusNodeAddress.AddressPart1,
+                        AddressPart2 = fieldBusNodeAddress.AddressPart2,
+                        Id = fieldBusNodeAddress.Id,
+                        FieldBusId = fieldBusManager.Entity.Id,
+                        FieldBusTypeId = fieldBusManager.Entity.FieldBusTypeId
+                    };
+                    FieldBusNode fieldBusNode = CreateFieldBusNode(fieldBusManager, entity);
 
                     if (TryGetReply(fieldBusNode))
                     {
                         Log.Debug("\nУстройство по адресу {0} ответило на все запросы.\n",
-                                        fieldBusNodeAddress.SlaveAddress);
+                                        fieldBusNodeAddress.AddressPart2);
                         nodes.Add(fieldBusNode);
                         //PLC plc =
                         //    DistributedMeasurementInformationSystemBase.Instance.PLCManager.PlcFactory.CreatePLC(
@@ -197,7 +218,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
                     else
                     {
                         Log.Debug("\nУстройство по адресу {0} не ответило на все запросы.\n",
-                                        fieldBusNodeAddress.SlaveAddress);
+                                        fieldBusNodeAddress.AddressPart2);
                     }
                 }
             }
@@ -214,10 +235,9 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         /// 
         /// </summary>
         /// <param name="fieldBusManager"></param>
-        /// <param name="fieldBusNodeAddress"></param>
-        /// <param name="row"></param>
+        /// <param name="entity"></param>
         /// <returns></returns>
-        public FieldBusNode CreateFieldBusNode(FieldBusManager fieldBusManager, FieldBusNodeAddress fieldBusNodeAddress, Entities.FieldBusNode row)
+        public FieldBusNode CreateFieldBusNode(FieldBusManager fieldBusManager, Entities.FieldBusNode entity)
         {
             FieldBusNode fieldBusNode;
             bool isNodeActive = false;
@@ -231,13 +251,13 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
             if (isNodeActive)
             {
                 Log.Debug("создаём активный узел полевой шины...");
-                IFieldBusAccessor fieldBusAccessor = fieldBusFactory.CreateFieldbusAccessor(fieldBusManager.FieldBusType, fieldBusNodeAddress);
-                fieldBusNode = new ActiveFieldBusNode(fieldBusManager, fieldBusAccessor, fieldBusNodeAddress, row);
+                var fieldBusAccessor = fieldBusFactory.CreateFieldbusAccessor(fieldBusManager.FieldBusType, entity.AddressPart1);
+                fieldBusNode = new ActiveFieldBusNode(fieldBusManager, fieldBusAccessor, entity);
             }
             else
             {
                 Log.Debug("создаём узел полевой шины...");
-                fieldBusNode = new FieldBusNode(fieldBusManager, fieldBusNodeAddress, row);
+                fieldBusNode = new FieldBusNode(fieldBusManager, entity);
             }
             return fieldBusNode;
         }
@@ -254,5 +274,12 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         /// <param name="fieldBusNode"></param>
         /// <returns></returns>
         protected abstract bool TryGetReply(IFieldBusNodeAccessor fieldBusNode);
+
+        /// <summary>
+        /// TODO: убрать публичность метода (временно в интерфейсе)
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public abstract FieldBusNodeAddress GetFieldBusNodeAddress(Entities.FieldBusNode entity);
     }
 }

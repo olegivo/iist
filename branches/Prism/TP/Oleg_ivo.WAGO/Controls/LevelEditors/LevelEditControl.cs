@@ -123,8 +123,8 @@ namespace Oleg_ivo.WAGO.Controls.LevelEditors
         {
             int filter = 0;
 
-            if (fieldBusNode != null && fieldBusNode.FieldBusNodeAddress != null)
-                filter = fieldBusNode.FieldBusNodeAddress.SlaveAddress;
+            if (fieldBusNode != null)
+                filter = fieldBusNode.AddressPart2;
             
             return filter;
         }

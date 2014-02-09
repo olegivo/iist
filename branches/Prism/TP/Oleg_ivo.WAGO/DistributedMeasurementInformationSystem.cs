@@ -44,7 +44,9 @@ namespace Oleg_ivo.WAGO
         {
             base.BuildSystemConfiguration();
 
-            //TODO:PlcManager.BuildFieldBuses(true, FieldBusType.RS485);
+            //TODO:
+            //PlcManager.BuildFieldBuses(true, FieldBusType.RS232);
+            PlcManager.BuildFieldBuses(true, FieldBusType.RS485);
             PlcManager.BuildFieldBuses(false, FieldBusType.Ethernet);
             //WagoPlcManager.BuildPhysicalChannels();
         }

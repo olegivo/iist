@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.FieldBus;
@@ -98,17 +97,17 @@ namespace Oleg_ivo.WAGO.Factory
 
         internal static FieldBusNodeAddress GetEthernetAddresses(DtsChannelConfiguration.FieldBusNodeRow row)
         {
-            FieldBusNodeIpAddress address = null;
+            FieldBusNodeAddress address = null;
             //todo: порт должен удовлетворять требованиям IP-Address
-            if (row != null) address = new FieldBusNodeIpAddress(GetIPAddress(row.AddressPart1), row.AddressPart2, row.Id);
+            if (row != null) address = new FieldBusNodeAddress((FieldBusType) row.FieldBusTypeId, row.Id, row.AddressPart1, row.AddressPart2);
             return address;
         }
 
         internal static FieldBusNodeAddress GetSerialAddresses(DtsChannelConfiguration.FieldBusNodeRow row)
         {
-            FieldBusNodeSerialAddress address = null;
+            FieldBusNodeAddress address = null;
             //todo: порт должен удовлетворять требованиям COMx, адрес на шине - [1..99]
-            if (row != null) address = new FieldBusNodeSerialAddress(row.AddressPart1, (byte) row.AddressPart2, row.Id);
+            if (row != null) address = new FieldBusNodeAddress((FieldBusType)row.FieldBusTypeId, row.Id, row.AddressPart1, (byte)row.AddressPart2);
             return address;
         }
 
@@ -131,6 +130,7 @@ namespace Oleg_ivo.WAGO.Factory
 
         private delegate FieldBusNodeAddress GetNodeAddressDelegate(DtsChannelConfiguration.FieldBusNodeRow row);
 
+/*
         private static byte[] GetIPAddress(string address)
         {
             string ip = address;
@@ -148,5 +148,6 @@ namespace Oleg_ivo.WAGO.Factory
 
             return bytes.ToArray();
         }
+*/
     }
 }

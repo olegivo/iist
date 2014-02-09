@@ -50,7 +50,7 @@ namespace Oleg_ivo.Plc.Devices.Contollers
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-            return string.Format("Контроллер [{0}]", FieldBusNode.FieldBusNodeAddress);
+            return string.Format("Контроллер [адрес ПЛК {0}:{1}]", FieldBusNode.AddressPart1, FieldBusNode.AddressPart2);
         }
     }
 }

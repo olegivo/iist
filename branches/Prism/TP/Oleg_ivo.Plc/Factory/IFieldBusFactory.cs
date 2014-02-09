@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.FieldBus;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
@@ -22,13 +23,13 @@ namespace Oleg_ivo.Plc.Factory
         /// </summary>
         FieldBusType DefaultFieldBusType { get; }
 
-        ///<summary>
-        /// Найти порты подключения к полевым шинам заданного типа
-        ///</summary>
-        ///<param name="fieldBusType"></param>
-        ///<returns></returns>
-        ///<exception cref="ArgumentOutOfRangeException"></exception>
-        object[] FindPorts(FieldBusType fieldBusType);
+        /// <summary>
+        ///  Найти порты подключения к полевым шинам заданного типа
+        /// </summary>
+        /// <param name="fieldBusType"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        List<Entities.FieldBus> FindPorts(FieldBusType fieldBusType);
 
         /// <summary>
         /// 
@@ -47,19 +48,11 @@ namespace Oleg_ivo.Plc.Factory
         ///<returns></returns>
         IFieldBusAccessor CreateFieldbusAccessor(FieldBusType fieldBusType, object port);
 
-        ///<summary>
-        ///
-        ///</summary>
-        ///<param name="fieldBusType"></param>
-        ///<param name="port"></param>
-        ///<returns></returns>
-        ///<exception cref="ArgumentOutOfRangeException"></exception>
-        FieldBusPortParameters CreatePortParameters(FieldBusType fieldBusType, object port);
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="fieldBusType"></param>
+        [Obsolete("use property FieldBusAddresses of instance FieldBusManager instead")]
         FieldBusNodeAddressCollection GetFieldBusNodesAddresses(FieldBusType fieldBusType);
     }
 }

@@ -124,27 +124,18 @@ namespace Oleg_ivo.Plc
         ///<param name="fieldBusType">Тип полевой шины</param>
         public void BuildFieldBuses(bool cleanBeforeBuild, FieldBusType fieldBusType)
         {
-            var dataContext = Context.ResolveUnregistered<PlcDataContext>(new TypedParameter(typeof(IDbConnection), DbConnectionProvider.Instance.GetConnection()));
-            object[] ports = FieldBusFactory.FindPorts(fieldBusType);
+            List<Entities.FieldBus> ports = FieldBusFactory.FindPorts(fieldBusType);
             
             if (cleanBeforeBuild) FieldBusManagers = new List<FieldBusManager>();
 
             if (ports!=null)
             {
                 // добавление диспетчеров полевых шин:
-                foreach (object port in ports)
+                foreach (var fieldBus in ports)
                 {
-                    FieldBusPortParameters fieldBusPortParameters = FieldBusFactory.CreatePortParameters(fieldBusType, port);
-                    var serialPortParameters = fieldBusPortParameters as SerialPortParameters;
-                    if (serialPortParameters != null)
-                    {
-                        serialPortParameters.Port = port;
-                    }
-
-                    var fieldBusAccessor = FieldBusFactory.CreateFieldbusAccessor(fieldBusPortParameters.FieldBusType, port);
+                    var fieldBusAccessor = FieldBusFactory.CreateFieldbusAccessor(fieldBusType, fieldBus.FieldBusName);
                     if (fieldBusAccessor!=null)
                     {
-                        var fieldBus = dataContext.FieldBus.FirstOrDefault(fb => fb.FieldBusTypeId.Value == (int)fieldBusType);//TODO: FirstOrDefault
                         var fieldBusManager = FieldBusFactory.CreateFieldBusManager(fieldBusAccessor, fieldBus);
                         fieldBusManager.BuildFieldBusNodes(FieldBusNodesFactory);
                         FieldBusManagers.Add(fieldBusManager);

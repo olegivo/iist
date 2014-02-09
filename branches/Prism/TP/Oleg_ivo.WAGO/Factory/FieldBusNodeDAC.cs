@@ -1,8 +1,8 @@
 using System;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
 using Oleg_ivo.Plc.Channels;
-using Oleg_ivo.Plc.Devices.Contollers;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
@@ -50,7 +50,7 @@ namespace Oleg_ivo.WAGO.Factory
                 FillFieldBusNodesFromDb(fieldBusManager.FieldBusType, 0);
 
             fieldBusNodes.AddRange(Enumerable.Select(dtsChannelConfiguration1.FieldBusNode,
-                                                     row => CreateFieldBusNodeFromData(row, fieldBusManager, null)));
+                                                     row => CreateFieldBusNodeFromData(row, fieldBusManager)));
 
             return fieldBusNodes;
         }
@@ -159,25 +159,45 @@ namespace Oleg_ivo.WAGO.Factory
         }
 
         [Obsolete]
-        private FieldBusNode CreateFieldBusNodeFromData(DtsChannelConfiguration.FieldBusNodeRow row, FieldBusManager fieldBusManager, Plc.Entities.FieldBusNode row1)
+        private FieldBusNode CreateFieldBusNodeFromData(DtsChannelConfiguration.FieldBusNodeRow row, FieldBusManager fieldBusManager)
         {
             FieldBusNode fieldBusNode;
             if (fieldBusManager is ActiveFieldBusManager)
             {
-                fieldBusNode = new FieldBusNode(fieldBusManager, FieldBusDAC.GetFieldBusNodeAddress(row), row1)
-                                   {Id = row.Id};
+                var fieldBusNodeAddress = FieldBusDAC.GetFieldBusNodeAddress(row);
+                var entity = new Plc.Entities.FieldBusNode
+                {
+                    AddressPart1 = fieldBusNodeAddress.AddressPart1,
+                    AddressPart2 = fieldBusNodeAddress.AddressPart2,
+                    Id = fieldBusNodeAddress.Id,
+                    FieldBusId = fieldBusManager.Entity.Id,
+                    FieldBusTypeId = fieldBusManager.Entity.FieldBusTypeId
+                };
+                fieldBusNode = new FieldBusNode(fieldBusManager, entity);
             }
             else//нужно построить активный узел полевой шины
             {
                 //по адресу из row получаем FieldBusNodeAddress
-                FieldBusNodeAddress fieldBusNodeAddress = fieldBusManager.FieldBusAddresses.Find(row.AddressPart1, row.AddressPart2);
+                string addressPart1 = row.AddressPart1;
+                int addressPart2 = row.AddressPart2;
+                var fieldBusNodeAddress =
+                    fieldBusManager.FieldBusAddresses.SingleOrDefault(
+                        address => address.AddressPart1 == addressPart1 && address.AddressPart2 == addressPart2);
 
                 if (fieldBusNodeAddress==null)
                 {
                     throw new Exception("Не найден адрес для активного узла полевой шины");
                 }
 
-                fieldBusNode = FieldBusNodesFactory.CreateFieldBusNode(fieldBusManager, fieldBusNodeAddress, row1);
+                var entity = new Plc.Entities.FieldBusNode
+                {
+                    AddressPart1 = fieldBusNodeAddress.AddressPart1,
+                    AddressPart2 = fieldBusNodeAddress.AddressPart2,
+                    Id = fieldBusNodeAddress.Id,
+                    FieldBusId = fieldBusManager.Entity.Id,
+                    FieldBusTypeId = fieldBusManager.Entity.FieldBusTypeId
+                };
+                fieldBusNode = FieldBusNodesFactory.CreateFieldBusNode(fieldBusManager, entity);
             }
 
             return fieldBusNode;

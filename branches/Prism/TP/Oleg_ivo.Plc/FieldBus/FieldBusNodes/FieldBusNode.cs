@@ -1,5 +1,6 @@
 using System;
 using NLog;
+using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Common;
 using Oleg_ivo.Plc.Devices.Contollers;
@@ -19,7 +20,6 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
 
         #region fields
 
-        private readonly FieldBusNodeAddress fieldBusNodeAddress;
         private PLC plc;
         private readonly Entities.FieldBusNode entity;
         #endregion
@@ -70,14 +70,6 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
             }
         }
 
-        ///<summary>
-        /// јдрес узла в полевой шине
-        ///</summary>
-        public FieldBusNodeAddress FieldBusNodeAddress
-        {
-            get { return fieldBusNodeAddress; }
-        }
-
         /// <summary>
         ///  омпонент доступа к ресурсам полевой шины
         /// </summary>
@@ -89,10 +81,10 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         ///<summary>
         /// »дентификатор
         ///</summary>
-        public int Id//TODO: 2 entity
+        public int Id
         {
-            get { return FieldBusNodeAddress.Id; }
-            set { FieldBusNodeAddress.Id = value; }
+            get { return Entity.Id; }
+            set { Entity.Id = value; }
         }
 
         public Entities.FieldBusNode Entity
@@ -106,28 +98,27 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
             set { Entity.AddressPart1 = value; }
         }
 
-        public int? AddressPart2//TODO:пока есть FieldBusAddress, используетс€ только дл€ редактировани€ базы в CMS
+        public int AddressPart2//TODO:пока есть FieldBusAddress, используетс€ только дл€ редактировани€ базы в CMS
         {
-            get { return Entity.AddressPart2; }
+            get { return Entity.AddressPart2.Value; }
             set { Entity.AddressPart2 = value; }
         }
 
         #endregion
 
         #region constructors
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="fieldBusManager"></param>
-        /// <param name="fieldBusNodeAddress"></param>
         /// <param name="entity"></param>
-        public FieldBusNode(FieldBusManager fieldBusManager, FieldBusNodeAddress fieldBusNodeAddress, Entities.FieldBusNode entity)
+        public FieldBusNode(FieldBusManager fieldBusManager, Entities.FieldBusNode entity)
         {
             if (this is ActiveFieldBusNode && fieldBusManager is ActiveFieldBusManager) 
                 throw new InvalidOperationException("ActiveFieldBusManager не может содержать ActiveFieldBusNode");
-            this.fieldBusManager = fieldBusManager;//TODO:Enforce?
-            this.fieldBusNodeAddress = fieldBusNodeAddress;//TODO:заменить на Entity?
-            this.entity = entity;//TODO:Enforce?
+            this.fieldBusManager = Enforce.ArgumentNotNull(fieldBusManager,"fieldBusManager");
+            this.entity = Enforce.ArgumentNotNull(entity,"entity");
         }
 
         #endregion
@@ -357,7 +348,7 @@ namespace Oleg_ivo.Plc.FieldBus.FieldBusNodes
         /// <returns></returns>
         public bool EqualsPredicate(FieldBusNode fieldBusNode)
         {
-            return FieldBusNodeAddress == fieldBusNode.FieldBusNodeAddress;
+            return AddressPart1 == fieldBusNode.AddressPart1 && AddressPart2 == fieldBusNode.AddressPart2;
         }
     }
 }

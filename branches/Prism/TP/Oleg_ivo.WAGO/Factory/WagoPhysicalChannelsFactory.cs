@@ -118,7 +118,8 @@ namespace Oleg_ivo.WAGO.Factory
                                                Aggregate((s, s2) => s + Environment.NewLine + s2)
                                          : "нет элементов";
 
-            using (StreamWriter stream = new StreamWriter(string.Format(@"d:\{0}.txt", plc), false, Encoding.UTF8))
+            var path = string.Format(@"{0}.txt", plc.ToString().Replace(":","_"));
+            using (var stream = new StreamWriter(path, false, Encoding.UTF8))
             {
                 stream.WriteLine("currentPhysicalChannels:");
                 stream.WriteLine(aggregate);
