@@ -5,7 +5,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
 	x:Class="TP.WPF.ucFan"
-	x:Name="UserControl"
+	x:Name="ucFun1"
 	d:DesignWidth="46" d:DesignHeight="37">
 
 	<Grid x:Name="LayoutRoot">
