@@ -33,6 +33,11 @@ namespace TP.WPF.ViewModels
             }
         }
 
+        public bool IsOn
+        {
+            get { return currentValue != null ? true : false; }
+        }
+
         public double? MinValue
         {
             get { return minValue; }
@@ -90,7 +95,8 @@ namespace TP.WPF.ViewModels
                         "IsValueHigherCritycal",
                         "IsValueLowerCritycal",
                         "ShortCurrentValue",
-                        "DiscreteOnState"
+                        "DiscreteOnState",
+                        "IsOn"
                     };
                 foreach (var propertyName in propertyNames)
                     OnPropertyChanged(propertyName);
@@ -98,7 +104,10 @@ namespace TP.WPF.ViewModels
         }
 
         public Decimal ShortCurrentValue {
-            get { return Decimal.Round((Decimal) CurrentValue, 2); }
+            get
+            {
+                return currentValue==null?0:Decimal.Round((Decimal) CurrentValue, 2);
+            }
         }
 
         /// <summary>

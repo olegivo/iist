@@ -3,82 +3,67 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:local="clr-namespace:UICommon.WPF.Converters" x:Name="userControl"
+	xmlns:local="clr-namespace:UICommon.WPF.Converters" xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="userControl"
 	mc:Ignorable="d"
 	x:Class="UICommon.WPF.ucLevelIndicator">
     <UserControl.Resources>
         <!-- конвертер для преобразования входного значения в высоту столбика уровня -->
         <local:ValueHeightConverter x:Key="valueHeightConverter" />
         <!-- триггер для переключения индикатора в аварийное состояние-->
-        <Style TargetType="Rectangle" x:Key="IndicatorAlarmStyle">
+        <Style TargetType="{x:Type Rectangle}" x:Key="IndicatorAlarmStyle">
             <!-- Стандартный фон индикатора-->
             <Setter Property="Fill">
                 <Setter.Value>
                     <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                        <GradientStop Color="#FFD8D8D8" Offset="1"/>
-						<GradientStop Color="#FF1CB40F" Offset="0"/>
+                        <GradientStop Color="#FFD8D8D8" Offset="0"/>
+                        <GradientStop Color="#FF1CB40F" Offset="1"/>
                     </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=IsValueHigherNormal}" Value="True">
+                <DataTrigger Binding="{Binding IsValueHigherNormal}" Value="True">
                     <!-- Аварийный фон индикатора-->
                     <Setter Property="Fill">
-					    <Setter.Value>
-					        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-						        <GradientStop Color="#FFEDBC50" Offset="1"/>
-						        <GradientStop Color="#FFB81B0B" Offset="0"/>
-					        </LinearGradientBrush>
-        				</Setter.Value>
-					</Setter>
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FFEDBC50" Offset="1"/>
+                                <GradientStop Color="#FFB81B0B" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-
+        <Style TargetType="{x:Type Grid}" x:Key="NoSignalStyle">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsOn}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
-	<Viewbox x:Name="LayoutRoot" Stretch="Uniform">
-		<Canvas Margin="0" Height="250" Width="300">
-			<Border BorderBrush="Black" BorderThickness="1" Height="180" Canvas.Left="40" Canvas.Top="40" Width="40" CornerRadius="10" d:IsLocked="True">
-				<Rectangle x:Name="IndicatorHeight" RenderTransformOrigin="0.5,1" Style="{StaticResource IndicatorAlarmStyle}" Margin="-1" RadiusX="10" RadiusY="10" Stroke="{DynamicResource BrushBlack}">
-					<Rectangle.RenderTransform>
-						<TransformGroup>
-							<ScaleTransform/>
-							<SkewTransform/>
-							<RotateTransform Angle="180"/>
-							<TranslateTransform Y="-180"/>
-						</TransformGroup>
-					</Rectangle.RenderTransform>
-					<!--<Rectangle.Fill>
-						<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-							<GradientStop Color="#FFD8D8D8" Offset="1"/>
-							<GradientStop Color="#FF1CB40F" Offset="0"/>
-						</LinearGradientBrush>
-					</Rectangle.Fill>-->
-					<Rectangle.Height>
-					<MultiBinding Converter="{StaticResource valueHeightConverter}">
-						<Binding Path="CurrentValue"/>
-						<Binding Path="MinValue"/>
-						<Binding Path="MaxValue"/>
-					</MultiBinding>
-				</Rectangle.Height>
-				</Rectangle>
-			</Border>
-			<TextBlock x:Name="MinNormalValue" Height="15" Canvas.Left="10" TextWrapping="Wrap" Text="{Binding MinNormalValue}" Canvas.Top="195" Width="30" RenderTransformOrigin="0.427,0.606" Foreground="Black" TextAlignment="Right"/>
-			<TextBlock x:Name="MaxNormalValue" Height="15" Canvas.Left="10" TextWrapping="Wrap" Text="{Binding MaxNormalValue}" Canvas.Top="65.5" Width="30" RenderTransformOrigin="0.427,0.606" Foreground="Black" TextAlignment="Right"/>
-			<TextBlock x:Name="IndicatorValue" TextWrapping="Wrap" Text="{Binding ShortCurrentValue}" FontFamily="Tahoma" TextAlignment="Center" Width="140" Height="60" Canvas.Left="110" Canvas.Top="160" RenderTransformOrigin="0.5,0.5" FontSize="48" FontWeight="ExtraBold" Foreground="{DynamicResource BrushBlack}" />
-			<TextBlock x:Name="IndicatorCaption" TextWrapping="Wrap" Text="{Binding Caption}" FontFamily="Tahoma" TextAlignment="Right" Width="40" Height="125" Canvas.Left="155" Canvas.Top="15" RenderTransformOrigin="0.5,0.5" FontSize="9.333">
-				<TextBlock.RenderTransform>
-					<TransformGroup>
-						<ScaleTransform/>
-						<SkewTransform/>
-						<RotateTransform Angle="-90"/>
-						<TranslateTransform/>
-					</TransformGroup>
-				</TextBlock.RenderTransform>
-			</TextBlock>
-			<Path Data="M14.486111,189.5 L48.513889,189.5" Height="1" Canvas.Left="14.5" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="194.5" Width="36"/>
-			<Path Data="M19.347223,59.5 L48.51389,59.5" Height="1" Canvas.Left="19.5" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="64.5" Width="31"/>
-			<Grid x:Name="NoSignal" Height="250" Width="300">
+    <Viewbox x:Name="LayoutRoot" Stretch="Uniform">
+        <Canvas Margin="0" Height="250" Width="300">
+            <Border BorderBrush="Black" BorderThickness="2" Height="180" Canvas.Left="40" Canvas.Top="40" Width="40">
+                <Rectangle x:Name="IndicatorHeight" RenderTransformOrigin="0.5,1" Style="{StaticResource IndicatorAlarmStyle}" Margin="-1" Stroke="{DynamicResource BrushBlack}" VerticalAlignment="Bottom" Cursor="None">
+                    <Rectangle.Height>
+                        <MultiBinding Converter="{StaticResource valueHeightConverter}">
+                            <Binding Path="CurrentValue"/>
+                            <Binding Path="MinValue"/>
+                            <Binding Path="MaxValue"/>
+                        </MultiBinding>
+                    </Rectangle.Height>
+                </Rectangle>
+            </Border>
+            <TextBlock x:Name="MinNormalValue" Height="20" TextWrapping="Wrap" Text="{Binding MinNormalValue}" Canvas.Top="220" Width="64" RenderTransformOrigin="0.427,0.606" Foreground="Black" TextAlignment="Right" FontSize="18.667" Canvas.Left="8"/>
+            <TextBlock x:Name="MaxNormalValue" Height="24" Canvas.Left="8" TextWrapping="Wrap" Text="{Binding MaxNormalValue}" Canvas.Top="16" Width="64" RenderTransformOrigin="0.427,0.606" Foreground="Black" TextAlignment="Right" FontSize="18.667"/>
+            <TextBlock x:Name="IndicatorValue" TextWrapping="Wrap" Text="{Binding ShortCurrentValue}" FontFamily="Tahoma" TextAlignment="Center" Width="176" Height="60" Canvas.Left="96" Canvas.Top="120" RenderTransformOrigin="0.5,0.5" FontSize="32" FontWeight="ExtraBold" Foreground="{DynamicResource BrushBlack}" />
+            <TextBlock x:Name="IndicatorCaption" TextWrapping="Wrap" Text="{Binding Caption}" FontFamily="Tahoma" TextAlignment="Right" Width="184" Height="80" Canvas.Left="96" Canvas.Top="16" RenderTransformOrigin="0.5,0.5" FontSize="21.333" FontWeight="Bold"/>
+            <Path Data="M38.791667,189.5 L48.513889,189.5" Height="1" Canvas.Left="39.5" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="194.5" Width="11"/>
+            <Path Data="M38.791667,59.5 L48.51389,59.5" Height="1" Canvas.Left="39.5" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="64.5" Width="11"/>
+            <Path Data="M38.791667,189.5 L48.513889,189.5" Height="1" Canvas.Left="39.5" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="194.5" Width="11"/>
+            <Path Data="M38.791667,128.33333 L48.513889,128.33333" Height="1" Canvas.Left="39.5" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="133.333" Width="11"/>
+            <Grid x:Name="NoSignal" Height="250" Width="300" Style="{StaticResource NoSignalStyle}">
 				<Rectangle Stroke="Black">
 					<Rectangle.Fill>
 						<SolidColorBrush Color="Black" Opacity="0.8"/>
@@ -86,6 +71,6 @@
 				</Rectangle>
 				<Label Content="Нет сигнала" Foreground="{DynamicResource BrushRed}" FontSize="32" Margin="55,90,60,110"/>
 			</Grid>
-		</Canvas>
-	</Viewbox>
+        </Canvas>
+    </Viewbox>
 </UserControl>
