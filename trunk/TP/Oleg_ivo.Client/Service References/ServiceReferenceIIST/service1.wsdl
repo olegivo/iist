@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:tns="http://tempuri.org/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="HighLevelMessageExchangeSystem" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="HighLevelMessageExchangeSystem_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
+        </msb:BinaryEncoding>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256>
+                </sp:Basic256>
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict>
+                </sp:Strict>
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing>
+        </wsaw:UsingAddressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_SendMessage_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendMessage" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_SendMessage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_SendError_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendError" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_SendError_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendErrorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_SendError_RegistrationExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" name="detail" element="q1:RegistrationException" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_SendError_TestExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" name="detail" element="q2:TestException" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_SendMessageToClient_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SendMessageToClient" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_SendMessageToClient_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SendMessageToClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_SendMessageToClient_InternalExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" name="detail" element="q3:InternalException" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_Register_InputMessage">
+    <wsdl:part name="parameters" element="tns:Register" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_Register_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_Register_RegistrationExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" name="detail" element="q4:RegistrationException" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_Unregister_InputMessage">
+    <wsdl:part name="parameters" element="tns:Unregister" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_Unregister_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnregisterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_Unregister_RegistrationExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" name="detail" element="q5:RegistrationException" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_GetRegisteredChannels_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRegisteredChannels" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_GetRegisteredChannels_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRegisteredChannelsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_ChannelSubscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChannelSubscribe" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_ChannelSubscribe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChannelSubscribeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_ChannelUnSubscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChannelUnSubscribe" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_ChannelUnSubscribe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChannelUnSubscribeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_ChannelRegister_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ChannelRegister" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_ChannelUnRegister_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ChannelUnRegister" />
+  </wsdl:message>
+  <wsdl:message name="IHighLevelMessageExchangeSystem_SendReadToClient_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SendReadToClient" />
+  </wsdl:message>
+  <wsdl:portType name="IHighLevelMessageExchangeSystem">
+    <wsdl:operation name="SendMessage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMessageReceiver/SendMessage" message="tns:IHighLevelMessageExchangeSystem_SendMessage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMessageReceiver/SendMessageResponse" message="tns:IHighLevelMessageExchangeSystem_SendMessage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendError">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMessageReceiver/SendError" message="tns:IHighLevelMessageExchangeSystem_SendError_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMessageReceiver/SendErrorResponse" message="tns:IHighLevelMessageExchangeSystem_SendError_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMessageReceiver/SendErrorRegistrationExceptionFault" name="RegistrationExceptionFault" message="tns:IHighLevelMessageExchangeSystem_SendError_RegistrationExceptionFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMessageReceiver/SendErrorTestExceptionFault" name="TestExceptionFault" message="tns:IHighLevelMessageExchangeSystem_SendError_TestExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMessageToClient">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMessageReceiver/SendMessageToClient" message="tns:IHighLevelMessageExchangeSystem_SendMessageToClient_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IMessageReceiver/SendMessageToClientResponse" message="tns:IHighLevelMessageExchangeSystem_SendMessageToClient_InputCallbackMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMessageReceiver/SendMessageToClientInternalExceptionFault" name="InternalExceptionFault" message="tns:IHighLevelMessageExchangeSystem_SendMessageToClient_InternalExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Register">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMessageExchangeSystem/Register" message="tns:IHighLevelMessageExchangeSystem_Register_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMessageExchangeSystem/RegisterResponse" message="tns:IHighLevelMessageExchangeSystem_Register_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMessageExchangeSystem/RegisterRegistrationExceptionFault" name="RegistrationExceptionFault" message="tns:IHighLevelMessageExchangeSystem_Register_RegistrationExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Unregister">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMessageExchangeSystem/Unregister" message="tns:IHighLevelMessageExchangeSystem_Unregister_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMessageExchangeSystem/UnregisterResponse" message="tns:IHighLevelMessageExchangeSystem_Unregister_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMessageExchangeSystem/UnregisterRegistrationExceptionFault" name="RegistrationExceptionFault" message="tns:IHighLevelMessageExchangeSystem_Unregister_RegistrationExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRegisteredChannels">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHighLevelMessageExchangeSystem/GetRegisteredChannels" message="tns:IHighLevelMessageExchangeSystem_GetRegisteredChannels_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHighLevelMessageExchangeSystem/GetRegisteredChannelsResponse" message="tns:IHighLevelMessageExchangeSystem_GetRegisteredChannels_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChannelSubscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHighLevelMessageExchangeSystem/ChannelSubscribe" message="tns:IHighLevelMessageExchangeSystem_ChannelSubscribe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHighLevelMessageExchangeSystem/ChannelSubscribeResponse" message="tns:IHighLevelMessageExchangeSystem_ChannelSubscribe_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChannelUnSubscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHighLevelMessageExchangeSystem/ChannelUnSubscribe" message="tns:IHighLevelMessageExchangeSystem_ChannelUnSubscribe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHighLevelMessageExchangeSystem/ChannelUnSubscribeResponse" message="tns:IHighLevelMessageExchangeSystem_ChannelUnSubscribe_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChannelRegister">
+      <wsdl:output wsaw:Action="http://tempuri.org/IHighLevelMessageExchangeSystem/ChannelRegister" message="tns:IHighLevelMessageExchangeSystem_ChannelRegister_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChannelUnRegister">
+      <wsdl:output wsaw:Action="http://tempuri.org/IHighLevelMessageExchangeSystem/ChannelUnRegister" message="tns:IHighLevelMessageExchangeSystem_ChannelUnRegister_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendReadToClient">
+      <wsdl:output wsaw:Action="http://tempuri.org/IHighLevelMessageExchangeSystem/SendReadToClient" message="tns:IHighLevelMessageExchangeSystem_SendReadToClient_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HighLevelMessageExchangeSystem" type="tns:IHighLevelMessageExchangeSystem">
+    <wsp:PolicyReference URI="#HighLevelMessageExchangeSystem_policy">
+    </wsp:PolicyReference>
+    <soap12:binding transport="http://schemas.microsoft.com/soap/named-pipe" />
+    <wsdl:operation name="SendMessage">
+      <soap12:operation soapAction="http://tempuri.org/IMessageReceiver/SendMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendError">
+      <soap12:operation soapAction="http://tempuri.org/IMessageReceiver/SendError" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="RegistrationExceptionFault">
+        <soap12:fault use="literal" name="RegistrationExceptionFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="TestExceptionFault">
+        <soap12:fault use="literal" name="TestExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SendMessageToClient">
+      <soap12:operation soapAction="http://tempuri.org/IMessageReceiver/SendMessageToClient" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="InternalExceptionFault">
+        <soap12:fault use="literal" name="InternalExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Register">
+      <soap12:operation soapAction="http://tempuri.org/IMessageExchangeSystem/Register" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="RegistrationExceptionFault">
+        <soap12:fault use="literal" name="RegistrationExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Unregister">
+      <soap12:operation soapAction="http://tempuri.org/IMessageExchangeSystem/Unregister" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="RegistrationExceptionFault">
+        <soap12:fault use="literal" name="RegistrationExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRegisteredChannels">
+      <soap12:operation soapAction="http://tempuri.org/IHighLevelMessageExchangeSystem/GetRegisteredChannels" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChannelSubscribe">
+      <soap12:operation soapAction="http://tempuri.org/IHighLevelMessageExchangeSystem/ChannelSubscribe" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChannelUnSubscribe">
+      <soap12:operation soapAction="http://tempuri.org/IHighLevelMessageExchangeSystem/ChannelUnSubscribe" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChannelRegister">
+      <soap12:operation soapAction="http://tempuri.org/IHighLevelMessageExchangeSystem/ChannelRegister" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChannelUnRegister">
+      <soap12:operation soapAction="http://tempuri.org/IHighLevelMessageExchangeSystem/ChannelUnRegister" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendReadToClient">
+      <soap12:operation soapAction="http://tempuri.org/IHighLevelMessageExchangeSystem/SendReadToClient" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HighLevelMessageExchangeSystem">
+    <wsdl:port name="HighLevelMessageExchangeSystem" binding="tns:HighLevelMessageExchangeSystem">
+      <soap12:address location="net.pipe://localhost/Oleg_ivo.MES/High/high" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.pipe://localhost/Oleg_ivo.MES/High/high</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>Oleg@iist.eltech.ru</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

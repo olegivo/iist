@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[IoModule] ADD CONSTRAINT [PK_IoModule] PRIMARY KEY CLUSTERED  ([Id]) ON [PRIMARY]
+
+

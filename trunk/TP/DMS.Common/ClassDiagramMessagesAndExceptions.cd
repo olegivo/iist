@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DMS.Common.Messages.InternalMessage">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAACAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\InternalMessage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DMS.Common.Messages.InternalLogicalChannelDataMessage">
+    <Position X="7" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\InternalLogicalChannelDataMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DMS.Common.Messages.InternalDataMessage">
+    <Position X="3.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Messages\InternalDataMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DMS.Common.Messages.InternalErrorMessage">
+    <Position X="7.25" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\InternalErrorMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DMS.Common.Messages.InternalServiceMessage">
+    <Position X="3" Y="2.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\InternalServiceMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DMS.Common.Messages.RegistrationMessage">
+    <Position X="4.5" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\RegistrationMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DMS.Common.Exceptions.InternalException">
+    <Position X="0.75" Y="6.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\InternalException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DMS.Common.Messages.ChannelSubscribeMessage">
+    <Position X="9.75" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\ChannelSubscribeMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DMS.Common.Exceptions.InternalServiceException">
+    <Position X="3.5" Y="8" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\InternalServiceException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DMS.Common.Exceptions.ChannelSubscribeException">
+    <Position X="10" Y="9.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\ChannelSubscribeException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DMS.Common.Exceptions.RegistrationException">
+    <Position X="5" Y="9.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\RegistrationException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DMS.Common.Messages.ChannelRegistrationMessage">
+    <Position X="4.25" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Messages\ChannelRegistrationMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

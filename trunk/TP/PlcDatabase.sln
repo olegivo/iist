@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{A9ACE9BB-CECE-4E62-9AA4-C7E7C5BD2124}") = "PlcDatabase", "PlcDatabase\PlcDatabase.dbproj", "{15A5AB78-CE14-4479-A4F9-95B4A44F82CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Default|Any CPU = Default|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15A5AB78-CE14-4479-A4F9-95B4A44F82CD}.Default|Any CPU.ActiveCfg = Default|Any CPU
+		{15A5AB78-CE14-4479-A4F9-95B4A44F82CD}.Default|Any CPU.Build.0 = Default|Any CPU
+		{15A5AB78-CE14-4479-A4F9-95B4A44F82CD}.Default|Any CPU.Deploy.0 = Default|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = .
+	EndGlobalSection
+EndGlobal
