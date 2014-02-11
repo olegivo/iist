@@ -365,8 +365,8 @@ namespace Oleg_ivo.HighLevelClient.UI
 
         private void btnSendError_Click(object sender, EventArgs e)
         {
-            var channelId = doubleListBoxControl1.SelectionRight.Count == 1 ? (int)doubleListBoxControl1.SelectionRight[0] : 0;
-            var message = new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Write, channelId) { Value = GetValueToWrite() };
+            var channel = doubleListBoxControl1.SelectionRight.Count == 1 ? doubleListBoxControl1.SelectionRight.Cast<RegisteredLogicalChannel>().Single() : null;
+            var message = new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Write, channel.Id) { Value = GetValueToWrite() };
             Provider.WriteChannel(message);
             //var exception = new TestException("Произошла тестовая ошибка :(");
             //throw exception;

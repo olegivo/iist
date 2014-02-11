@@ -17,7 +17,7 @@ namespace Oleg_ivo.LowLevelClient
         ///<summary>
         /// Единственный экземпляр
         ///</summary>
-        public static Planner Instance
+        public static Planner Instance//TODO: 2 context
         {
             get
             {

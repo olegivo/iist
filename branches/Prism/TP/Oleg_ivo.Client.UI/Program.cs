@@ -1,13 +1,18 @@
 using System;
 using System.Windows.Forms;
+using Autofac;
 using DMS.Common.Exceptions;
 using DMS.Common.Messages;
+using NLog;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
+using Oleg_ivo.Base.Autofac.Modules;
 using Oleg_ivo.Tools.ExceptionCatcher;
 
 namespace Oleg_ivo.HighLevelClient.UI
 {
     static class Program
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private static GetRegNameDelegate GetRegName;
         private delegate string GetRegNameDelegate();
 
@@ -24,7 +29,13 @@ namespace Oleg_ivo.HighLevelClient.UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var form = new HighLevelClientForm();
+            Log.Info("Регистрация компонентов");
+            var builder = new ContainerBuilder();
+            //builder.RegisterModule(new CommandLineHelperAutofacModule<WagoCommandLineOptions>(args));
+            builder.RegisterModule<BaseAutofacModule>();
+            //builder.RegisterModule<WagoAutofacModule>();
+            var container = builder.Build();
+            var form = container.ResolveUnregistered<HighLevelClientForm>();
             GetRegName = form.GetRegName;
             Application.Run(form);
         }

@@ -5,6 +5,7 @@ using System.ServiceModel;
 using DMS.Common.MessageExchangeSystem.HighLevel;
 using DMS.Common.Messages;
 using NLog;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.MES.Low;
 using Oleg_ivo.MES.Registered;
 
@@ -25,28 +26,12 @@ namespace Oleg_ivo.MES.High
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-        #region Singleton
-
-        private static HighLevelMessageExchangeSystem _instance;
         /// <summary>
         /// Если клиента нет в списке заинтересованных клиентов, то он ни разу не запрашивал информацию о зарегистрированных каналах.
         /// </summary>
         private readonly List<RegisteredHighLevelClient> InterestedRegisteredClients = new List<RegisteredHighLevelClient>();
 
-        ///<summary>
-        /// Единственный экземпляр
-        ///</summary>
-        public static HighLevelMessageExchangeSystem Instance
-        {
-            get { return _instance ?? (_instance = new HighLevelMessageExchangeSystem()); }
-        }
-
-        /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="HighLevelMessageExchangeSystem" />.
-        /// </summary>
-        private HighLevelMessageExchangeSystem()
-        {
-        }
+        #region Constructors
 
         #endregion
 
@@ -87,6 +72,14 @@ namespace Oleg_ivo.MES.High
 
         #endregion
 
+        [Dependency(Required = true)]
+        public Func<LowLevelMessageExchangeSystem> LowLevelMessageExchangeSystemProvider { get; set; }
+
+        public LowLevelMessageExchangeSystem LowLevelMessageExchangeSystem
+        {
+            get { return LowLevelMessageExchangeSystemProvider.Invoke(); }
+        }
+
         /// <summary>
         /// Получить зарегистрированные в системе каналы
         /// </summary>
@@ -108,7 +101,7 @@ namespace Oleg_ivo.MES.High
             try
             {
                 var channels =
-                    LowLevelMessageExchangeSystem.Instance
+                    LowLevelMessageExchangeSystem
                         .GetAllRegisteredChannels()
                         .Cast<RegisteredLogicalChannel>()
                         .ToArray();
@@ -293,7 +286,7 @@ namespace Oleg_ivo.MES.High
             if (message.DataMode == DataMode.Write)
             {
                 //пришли новые данные по каналу. будем передавать вниз
-                LowLevelMessageExchangeSystem.Instance.WriteChannel(message);
+                LowLevelMessageExchangeSystem.WriteChannel(message);
             }
             else
                 log.Warn(
@@ -353,7 +346,7 @@ namespace Oleg_ivo.MES.High
             {
                 if (registeredHighLevelClient == null)
                 {
-                    registeredHighLevelClient = new RegisteredHighLevelClient(message.DataMode) { Ticker = message.RegNameFrom };
+                    registeredHighLevelClient = new RegisteredHighLevelClient(this, message.DataMode) { Ticker = message.RegNameFrom };
                     AddClient(message.RegNameFrom, registeredHighLevelClient);
                 }
                 //                registeredHighLevelClient = (RegisteredHighLevelClient)_registeredClients[message.RegNameFrom];
@@ -452,7 +445,7 @@ namespace Oleg_ivo.MES.High
         {
             //ищем в верхней службе, если не находим - ищем в нижней службе
             RegisteredLogicalChannelExtended channel = FindSubscribedChannel(predicate) ??
-                                               LowLevelMessageExchangeSystem.Instance.GetRegisteredLogicalChannel(predicate);
+                                               LowLevelMessageExchangeSystem.GetRegisteredLogicalChannel(predicate);
             return channel;
         }
 

@@ -1,6 +1,7 @@
 using System;
 using DMS.Common.MessageExchangeSystem.HighLevel;
 using DMS.Common.Messages;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.MES.Logging;
 
 namespace Oleg_ivo.MES.Registered
@@ -23,16 +24,19 @@ namespace Oleg_ivo.MES.Registered
             Write += RegisteredLogicalChannel_Write;
         }
 
+        [Dependency(Required = true)]
+        public InternalMessageLogger InternalMessageLogger { get; set; }
+
         void RegisteredLogicalChannel_Write(object sender, InternalLogicalChannelDataMessageEventArgs e)
         {
             //протоколировать прочтённые из канала данные
-            InternalMessageLogger.Instance.ProtocolMessage(e.Message);
+            InternalMessageLogger.ProtocolMessage(e.Message);
         }
 
         private void RegisteredLogicalChannel_Read(object sender, InternalLogicalChannelDataMessageEventArgs e)
         {
             //протоколировать прочтённые из канала данные
-            InternalMessageLogger.Instance.ProtocolMessage(e.Message);
+            InternalMessageLogger.ProtocolMessage(e.Message);
         }
 
         /// <summary>

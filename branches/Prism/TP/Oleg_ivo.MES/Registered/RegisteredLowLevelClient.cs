@@ -1,7 +1,10 @@
 ﻿using System;
+using Autofac;
 using DMS.Common.MessageExchangeSystem.LowLevel;
 using DMS.Common.Messages;
 using NLog;
+using Oleg_ivo.Base.Autofac;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 
 namespace Oleg_ivo.MES.Registered
 {
@@ -10,7 +13,13 @@ namespace Oleg_ivo.MES.Registered
     /// </summary>
     public class RegisteredLowLevelClient : RegisteredClient<ILowLevelClientCallback>
     {
+        private readonly IComponentContext context;
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
+        public RegisteredLowLevelClient(IComponentContext context)
+        {
+            this.context = Enforce.ArgumentNotNull(context, "context");
+        }
 
         /// <summary>
         /// Зарегистрировать канал
@@ -18,7 +27,11 @@ namespace Oleg_ivo.MES.Registered
         /// <param name="message"></param>
         public void ChannelRegister(ChannelRegistrationMessage message)
         {
-            var registeredLogicalChannel = new RegisteredLogicalChannelExtended(message.LogicalChannelId, message.DataMode)
+            var registeredLogicalChannel = new RegisteredLogicalChannelExtended
+                (
+                    message.LogicalChannelId, 
+                    message.DataMode
+                )
                 {
                     MinValue = message.MinValue,
                     MaxValue = message.MaxValue,
@@ -26,6 +39,7 @@ namespace Oleg_ivo.MES.Registered
                     MaxNormalValue = message.MaxNormalValue,
                     Description = message.Description
                 };
+            context.InjectAttributedProperties(registeredLogicalChannel);
             AddRegisteredChannel(registeredLogicalChannel);
 
             registeredLogicalChannel.Subscribed += registeredLogicalChannel_Subscribed;

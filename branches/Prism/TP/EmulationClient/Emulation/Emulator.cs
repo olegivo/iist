@@ -2,18 +2,14 @@ using System;
 using System.Collections.Generic;
 using DMS.Common.Events;
 using Oleg_ivo.Base.Autofac;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.Plc;
-using Oleg_ivo.Plc.Devices.Modules;
-using Oleg_ivo.Plc.Entities;
+using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
-using Oleg_ivo.WAGO;
+using Oleg_ivo.Plc.FieldBus.FieldBusNodes;
 using Oleg_ivo.WAGO.Devices;
-using Oleg_ivo.WAGO.Factory;
 using Oleg_ivo.WAGO.Meta;
-using FieldBusNode = Oleg_ivo.Plc.FieldBus.FieldBusNodes.FieldBusNode;
-using LogicalChannel = Oleg_ivo.Plc.Channels.LogicalChannel;
-using PhysicalChannel = Oleg_ivo.Plc.Channels.PhysicalChannel;
 
 namespace EmulationClient.Emulation
 {
@@ -27,6 +23,7 @@ namespace EmulationClient.Emulation
         /// <summary>
         /// Модуль контроля и управления
         /// </summary>
+        [Dependency]
         public ControlManagementUnitEmulation ControlManagementUnit
         {
             get { return _controlManagementUnit; }
@@ -51,8 +48,8 @@ namespace EmulationClient.Emulation
         private readonly GasConcentration SО2Concentration;
         private readonly GasConcentration NOConcentration;
         private readonly GasConcentration NO2Concentration;
-        private ILogicalChannelsFactory logicalChannelFactory;
-        private IDistributedMeasurementInformationSystem dmis;
+        private readonly ILogicalChannelsFactory logicalChannelFactory;
+        private readonly IDistributedMeasurementInformationSystem dmis;
 
         /// <summary>
         /// 
@@ -134,119 +131,132 @@ namespace EmulationClient.Emulation
 
         private void InitChannels()
         {
-            if (ControlManagementUnit != null)
-            {
-                var logicalChannels = new List<LogicalChannel>();
-                //TODO:контролируемые параметры
-                //throw new NotImplementedException("Для построения каналов необходимо вызвать конструктор, содержащий ФК, указывающий на конкретный режим работы его IoModule (IsInput)");
-                var fieldBusNode = new FieldBusNode(
-                    new FieldBusManager(new FieldBus(), dmis),
-                    new Oleg_ivo.Plc.Entities.FieldBusNode());
-                var inputPhysicalChannel = new PhysicalChannel(null, 
-                    logicalChannelFactory, 
-                    fieldBusNode, 
-                    new WagoIOModule(logicalChannelFactory)
-                    {
-                        Meta = new WagoIOModuleMeta(true, false, true, false, 0, 0, 0)
-                    }, 
-                    0, 
-                    0);
-                logicalChannels.Add(new LogicalChannel(inputPhysicalChannel, null, 0, 0)
-                {
-                    Id = 6,//TС6	температура перед рукавным фильтром
-                    Description = "Температура перед фильтром",
-                    PollPeriod = TimeSpan.FromMilliseconds(500),
-                    MinValue = 0,
-                    MaxValue = 1000,
-                    GetValueEmulationAltDelegate = T6.GetOutputValue
-                    
-                });
-                logicalChannels.Add(new LogicalChannel(inputPhysicalChannel, null, 0, 0)
-                {
-                    Id = 7,//TС7	температура перед дымососом
-                    Description = "Температура перед дымососом",
-                    PollPeriod = TimeSpan.FromMilliseconds(500),
-                    MinValue = 0,
-                    MaxValue = 1000,
-                    GetValueEmulationAltDelegate = T7.GetOutputValue
+            if (ControlManagementUnit == null) return;
 
-                });
-                logicalChannels.Add(new LogicalChannel(inputPhysicalChannel, null, 0, 0)
+            var fieldBusNode = new FieldBusNode(
+                new FieldBusManager(new Oleg_ivo.Plc.Entities.FieldBus(), dmis),
+                new Oleg_ivo.Plc.Entities.FieldBusNode());
+            var pollPeriod = TimeSpan.FromMilliseconds(2000);
+
+            var logicalChannels = new List<LogicalChannel>();
+            logicalChannels.AddRange(CreateInputChannels(fieldBusNode, pollPeriod));
+            logicalChannels.AddRange(CreateOutputChannels(fieldBusNode, pollPeriod));
+
+            foreach (var logicalChannel in logicalChannels) logicalChannel.IsEmulationMode = true;
+            ControlManagementUnit.LogicalChannels = logicalChannels;
+        }
+
+        private IEnumerable<LogicalChannel> CreateOutputChannels(FieldBusNode fieldBusNode, TimeSpan pollPeriod)
+        {
+            var outputPhysicalChannel = new PhysicalChannel(null,
+                logicalChannelFactory,
+                fieldBusNode,
+                new WagoIOModule(logicalChannelFactory)
                 {
-                    Id = 20,//Г-О2	концентрация газа О2
-                    Description = "Концентрация О2",
-                    PollPeriod = TimeSpan.FromMilliseconds(500),
-                    MinValue = 0,
-                    MaxValue = 1000,
-                    GetValueEmulationAltDelegate = O2Concentration.GetOutputValue
-                });
-                logicalChannels.Add(new LogicalChannel(inputPhysicalChannel, null, 0, 0)
-                {
-                    Id = 21,//Г-СО	концентрация газа СО
-                    Description = "Концентрация СО",
-                    PollPeriod = TimeSpan.FromMilliseconds(500),
-                    MinValue = 0,
-                    MaxValue = 1000,
-                    GetValueEmulationAltDelegate = COConcentration.GetOutputValue
-                });
-                logicalChannels.Add(new LogicalChannel(inputPhysicalChannel, null, 0, 0)
-                {
-                    Id = 22,//Г-SО2	концентрация газа SО2
-                    Description = "Концентрация SО2",
-                    PollPeriod = TimeSpan.FromMilliseconds(500),
-                    MinValue = 0,
-                    MaxValue = 1000,
-                    GetValueEmulationAltDelegate = SО2Concentration.GetOutputValue
-                });
-                logicalChannels.Add(new LogicalChannel(inputPhysicalChannel, null, 0, 0)
-                {
-                    Id = 23,//Г-NO	концентрация газа NO
-                    Description = "Концентрация NO",
-                    PollPeriod = TimeSpan.FromMilliseconds(500),
-                    MinValue = 0,
-                    MaxValue = 1000,
-                    GetValueEmulationAltDelegate = NOConcentration.GetOutputValue
-                });
-                logicalChannels.Add(new LogicalChannel(inputPhysicalChannel, null, 0, 0)
-                {
-                    Id = 24,//Г-NO2	концентрация газа NO2
-                    Description = "Концентрация NO2",
-                    PollPeriod = TimeSpan.FromMilliseconds(500),
-                    MinValue = 0,
-                    MaxValue = 1000,
-                    GetValueEmulationAltDelegate = NO2Concentration.GetOutputValue
-                });
-                //TODO: управляемые параметры
-                //throw new NotImplementedException("Для построения каналов необходимо вызвать конструктор, содержащий ФК, указывающий на конкретный режим работы его IoModule (IsOutput)");
-                PhysicalChannel outputPhysicalChannel = new PhysicalChannel(null,
-                    logicalChannelFactory,
-                    fieldBusNode,
-                    new WagoIOModule(logicalChannelFactory)
-                    {
-                        Meta = new WagoIOModuleMeta(true, false, false, true, 0, 0, 0)
-                    },
-                    0,
-                    0);
-                logicalChannels.Add(new LogicalChannel(outputPhysicalChannel, null, 0, 0)
+                    Meta = new WagoIOModuleMeta(true, false, false, true, 0, 0, 0)
+                },
+                0,
+                0);
+
+            return new List<LogicalChannel>
+            {
+                new LogicalChannel(outputPhysicalChannel, null, 0, 0)
                 {
                     Id = 10001,
                     Description = "Горелка",
-                    PollPeriod = TimeSpan.FromMilliseconds(500),
+                    PollPeriod = pollPeriod,
                     MinValue = 0,
                     MaxValue = 1000
-                });
-                logicalChannels.Add(new LogicalChannel(outputPhysicalChannel, null, 0, 0)
+                },
+                new LogicalChannel(outputPhysicalChannel, null, 0, 0)
                 {
                     Id = 10002,
                     Description = "Количество оборотов дымососа",
-                    PollPeriod = TimeSpan.FromMilliseconds(500),
+                    PollPeriod = pollPeriod,
                     MinValue = 0,
                     MaxValue = 1000
-                });
+                }
+            };
+        }
 
-                foreach (var logicalChannel in logicalChannels) logicalChannel.IsEmulationMode = true;
-                ControlManagementUnit.LogicalChannels = logicalChannels;
-            }
+        private IEnumerable<LogicalChannel> CreateInputChannels(FieldBusNode fieldBusNode, TimeSpan pollPeriod)
+        {
+            var inputPhysicalChannel = new PhysicalChannel(null,
+                logicalChannelFactory,
+                fieldBusNode,
+                new WagoIOModule(logicalChannelFactory)
+                {
+                    Meta = new WagoIOModuleMeta(true, false, true, false, 0, 0, 0)
+                },
+                0,
+                0);
+
+            return new List<LogicalChannel>
+            {
+                new LogicalChannel(inputPhysicalChannel, null, 0, 0)
+                {
+                    Id = 6, //TС6	температура перед рукавным фильтром
+                    Description = "Температура перед фильтром",
+                    PollPeriod = pollPeriod,
+                    MinValue = 0,
+                    MaxValue = 1000,
+                    GetValueEmulationAltDelegate = T6.GetOutputValue
+                },
+                new LogicalChannel(inputPhysicalChannel, null, 0, 0)
+                {
+                    Id = 7, //TС7	температура перед дымососом
+                    Description = "Температура перед дымососом",
+                    PollPeriod = pollPeriod,
+                    MinValue = 0,
+                    MaxValue = 1000,
+                    GetValueEmulationAltDelegate = T7.GetOutputValue
+                },
+                new LogicalChannel(inputPhysicalChannel, null, 0, 0)
+                {
+                    Id = 20, //Г-О2	концентрация газа О2
+                    Description = "Концентрация О2",
+                    PollPeriod = pollPeriod,
+                    MinValue = 0,
+                    MaxValue = 1000,
+                    GetValueEmulationAltDelegate = O2Concentration.GetOutputValue
+                },
+                new LogicalChannel(inputPhysicalChannel, null, 0, 0)
+                {
+                    Id = 21, //Г-СО	концентрация газа СО
+                    Description = "Концентрация СО",
+                    PollPeriod = pollPeriod,
+                    MinValue = 0,
+                    MaxValue = 1000,
+                    GetValueEmulationAltDelegate = COConcentration.GetOutputValue
+                },
+                new LogicalChannel(inputPhysicalChannel, null, 0, 0)
+                {
+                    Id = 22, //Г-SО2	концентрация газа SО2
+                    Description = "Концентрация SО2",
+                    PollPeriod = pollPeriod,
+                    MinValue = 0,
+                    MaxValue = 1000,
+                    GetValueEmulationAltDelegate = SО2Concentration.GetOutputValue
+                },
+                new LogicalChannel(inputPhysicalChannel, null, 0, 0)
+                {
+                    Id = 23, //Г-NO	концентрация газа NO
+                    Description = "Концентрация NO",
+                    PollPeriod = pollPeriod,
+                    MinValue = 0,
+                    MaxValue = 1000,
+                    GetValueEmulationAltDelegate = NOConcentration.GetOutputValue
+                },
+                new LogicalChannel(inputPhysicalChannel, null, 0, 0)
+                {
+                    Id = 24, //Г-NO2	концентрация газа NO2
+                    Description = "Концентрация NO2",
+                    PollPeriod = pollPeriod,
+                    MinValue = 0,
+                    MaxValue = 1000,
+                    GetValueEmulationAltDelegate = NO2Concentration.GetOutputValue
+                }
+            };
         }
 
 

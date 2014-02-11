@@ -1,8 +1,8 @@
 using System;
-using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using DMS.Common.Messages;
+using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.MES.High;
 using Oleg_ivo.MES.Low;
 using Oleg_ivo.MES.Registered;
@@ -15,35 +15,50 @@ namespace Oleg_ivo.MES
     /// </summary>
     public partial class MesForm : Form
     {
+        private readonly DbConnectionProvider connectionProvider;
+        private readonly HighLevelMessageExchangeSystem highLevelMessageExchangeSystem;
+        private readonly LowLevelMessageExchangeSystem lowLevelMessageExchangeSystem;
+
         /// <summary>
         /// 
         /// </summary>
-        public MesForm()
+        protected MesForm()
         {
             InitializeComponent();
 
-/*
-            HighLevelMessageExchangeSystem.Instance.BeforeUpdate += High_BeforeUpdate;
-            LowLevelMessageExchangeSystem.Instance.BeforeUpdate += High_BeforeUpdate;
-*/
+        }
 
-            HighLevelMessageExchangeSystem.Instance.ClientRegistered += High_ClientRegistered;
-            LowLevelMessageExchangeSystem.Instance.ClientRegistered += Low_ClientRegistered;
+        public MesForm(DbConnectionProvider connectionProvider, HighLevelMessageExchangeSystem highLevelMessageExchangeSystem, LowLevelMessageExchangeSystem lowLevelMessageExchangeSystem)
+            : this()
+        {
+            this.connectionProvider = Enforce.ArgumentNotNull(connectionProvider, "connectionProvider");
+            this.highLevelMessageExchangeSystem = Enforce.ArgumentNotNull(highLevelMessageExchangeSystem,
+                "highLevelMessageExchangeSystem");
+            this.lowLevelMessageExchangeSystem = Enforce.ArgumentNotNull(lowLevelMessageExchangeSystem,
+                "lowLevelMessageExchangeSystem");
 
-            HighLevelMessageExchangeSystem.Instance.ClientUnregistered += High_ClientUnregistered;
-            LowLevelMessageExchangeSystem.Instance.ClientUnregistered += Low_ClientUnregistered;
+            /*
+            highLevelMessageExchangeSystem.BeforeUpdate += High_BeforeUpdate;
+            lowLevelMessageExchangeSystem.BeforeUpdate += High_BeforeUpdate;
+            */
 
-            HighLevelMessageExchangeSystem.Instance.MessageReceived += Instance_MessageReceived;
-            LowLevelMessageExchangeSystem.Instance.MessageReceived += Instance_MessageReceived;
+            this.highLevelMessageExchangeSystem.ClientRegistered += High_ClientRegistered;
+            this.lowLevelMessageExchangeSystem.ClientRegistered += Low_ClientRegistered;
 
-            HighLevelMessageExchangeSystem.Instance.ErrorReceived += Instance_ErrorReceived;
-            LowLevelMessageExchangeSystem.Instance.ErrorReceived += Instance_ErrorReceived;
+            this.highLevelMessageExchangeSystem.ClientUnregistered += High_ClientUnregistered;
+            this.lowLevelMessageExchangeSystem.ClientUnregistered += Low_ClientUnregistered;
 
-            LowLevelMessageExchangeSystem.Instance.ChannelRegistered += Low_ChannelRegistered;
-            LowLevelMessageExchangeSystem.Instance.ChannelUnregistered += Low_ChannelUnregistered;
+            this.highLevelMessageExchangeSystem.MessageReceived += Instance_MessageReceived;
+            this.lowLevelMessageExchangeSystem.MessageReceived += Instance_MessageReceived;
 
-            HighLevelMessageExchangeSystem.Instance.ChannelSubscribed += High_ChannelSubscribed;
-            HighLevelMessageExchangeSystem.Instance.ChannelUnSubscribed += High_UnSubscribed;
+            this.highLevelMessageExchangeSystem.ErrorReceived += Instance_ErrorReceived;
+            this.lowLevelMessageExchangeSystem.ErrorReceived += Instance_ErrorReceived;
+
+            this.lowLevelMessageExchangeSystem.ChannelRegistered += Low_ChannelRegistered;
+            this.lowLevelMessageExchangeSystem.ChannelUnregistered += Low_ChannelUnregistered;
+
+            this.highLevelMessageExchangeSystem.ChannelSubscribed += High_ChannelSubscribed;
+            this.highLevelMessageExchangeSystem.ChannelUnSubscribed += High_UnSubscribed;
         }
 
         void Instance_ErrorReceived(object sender, ErrorReceivedEventArgs e)
@@ -53,7 +68,7 @@ namespace Oleg_ivo.MES
                                      internalErrorMessage.RegNameFrom,
                                      Environment.NewLine, internalErrorMessage.Error);
             Protocol(s);
-            
+
         }
 
         private void Protocol(string s)
@@ -105,7 +120,7 @@ namespace Oleg_ivo.MES
                 RegistrationMessage registrationMessage = e.Message as RegistrationMessage;
                 if (registrationMessage != null)
                 {
-                    var client = new {Name = registrationMessage.RegNameFrom, Value = e.RegisteredLowLevelClient};
+                    var client = new { Name = registrationMessage.RegNameFrom, Value = e.RegisteredLowLevelClient };
                     AddItem(lbRegisteredLow, client);
                     Protocol(String.Format("{0}\tКлиент нижнего уровня [{1}] зарегистрировался на сервере{2}",
                                            DateTime.Now, registrationMessage.RegNameFrom, Environment.NewLine));
@@ -120,7 +135,7 @@ namespace Oleg_ivo.MES
                 RegistrationMessage registrationMessage = e.Message as RegistrationMessage;
                 if (registrationMessage != null)
                 {
-                    var client = new {Name = registrationMessage.RegNameFrom, Value = e.RegisteredHighLevelClient};
+                    var client = new { Name = registrationMessage.RegNameFrom, Value = e.RegisteredHighLevelClient };
                     AddItem(lbRegisteredHigh, client);
                     Protocol(String.Format("{0}\tКлиент верхнего уровня [{1}] зарегистрировался на сервере{2}",
                                            DateTime.Now, registrationMessage.RegNameFrom, Environment.NewLine));
@@ -133,7 +148,7 @@ namespace Oleg_ivo.MES
             if (e.RegisteredLowLevelClient != null && e.ChannelRegistrationMessage != null)
             {
                 string s = String.Format("{0}\tКлиент нижнего уровня [{1}] зарегистрировал на сервере канал [{2}]{3}",
-                                              DateTime.Now, 
+                                              DateTime.Now,
                                               e.ChannelRegistrationMessage.RegNameFrom,
                                               e.ChannelRegistrationMessage.LogicalChannelId,
                                               Environment.NewLine);
@@ -146,7 +161,7 @@ namespace Oleg_ivo.MES
             if (e.RegisteredLowLevelClient != null && e.ChannelRegistrationMessage != null)
             {
                 string s = String.Format("{0}\tКлиент нижнего уровня [{1}] отменил регистрацию на сервере канала [{2}]{3}",
-                                              DateTime.Now, 
+                                              DateTime.Now,
                                               e.ChannelRegistrationMessage.RegNameFrom,
                                               e.ChannelRegistrationMessage.LogicalChannelId,
                                               Environment.NewLine);
@@ -224,36 +239,6 @@ namespace Oleg_ivo.MES
             }
         }
 
-
-        /// <summary>
-        /// Вызывает событие <see cref="E:System.Windows.Forms.Form.Closing"/>.
-        /// </summary>
-        /// <param name="e">Объект <see cref="T:System.ComponentModel.CancelEventArgs"/>, содержащий данные события. </param>
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-
-/*
-            HighLevelMessageExchangeSystem.Instance.BeforeUpdate -= High_BeforeUpdate;
-            LowLevelMessageExchangeSystem.Instance.BeforeUpdate -= High_BeforeUpdate;
-*/
-
-            HighLevelMessageExchangeSystem.Instance.ClientRegistered -= High_ClientRegistered;
-            LowLevelMessageExchangeSystem.Instance.ClientRegistered -= Low_ClientRegistered;
-
-            HighLevelMessageExchangeSystem.Instance.ClientUnregistered -= High_ClientUnregistered;
-            LowLevelMessageExchangeSystem.Instance.ClientUnregistered -= Low_ClientUnregistered;
-
-            HighLevelMessageExchangeSystem.Instance.MessageReceived -= Instance_MessageReceived;
-            LowLevelMessageExchangeSystem.Instance.MessageReceived -= Instance_MessageReceived;
-
-            LowLevelMessageExchangeSystem.Instance.ChannelRegistered -= Low_ChannelRegistered;
-            LowLevelMessageExchangeSystem.Instance.ChannelUnregistered -= Low_ChannelUnregistered;
-
-            HighLevelMessageExchangeSystem.Instance.ChannelSubscribed -= High_ChannelSubscribed;
-            HighLevelMessageExchangeSystem.Instance.ChannelUnSubscribed -= High_UnSubscribed;
-        }
-
         private void btnSendMessageHigh_Click(object sender, EventArgs e)
         {
             foreach (var selectedItem in lbRegisteredHigh.SelectedItems)
@@ -263,7 +248,7 @@ namespace Oleg_ivo.MES
                 string clientRegName =
                     GetClientRegName(selectedItem, lbRegisteredLow.DisplayMember);
                 if (registeredHighLevelClient != null)
-                    registeredHighLevelClient.SendMessageToClient(new InternalMessage(HighLevelMessageExchangeSystem.Instance.RegName, clientRegName));
+                    registeredHighLevelClient.SendMessageToClient(new InternalMessage(highLevelMessageExchangeSystem.RegName, clientRegName));
             }
         }
 
@@ -288,7 +273,7 @@ namespace Oleg_ivo.MES
                 string clientRegName =
                     GetClientRegName(selectedItem, lbRegisteredHigh.DisplayMember);
                 if (registeredHighLevelClient != null)
-                    registeredHighLevelClient.SendMessageToClient(new InternalMessage(LowLevelMessageExchangeSystem.Instance.RegName, clientRegName));
+                    registeredHighLevelClient.SendMessageToClient(new InternalMessage(lowLevelMessageExchangeSystem.RegName, clientRegName));
             }
         }
 
@@ -311,22 +296,55 @@ namespace Oleg_ivo.MES
 
         private void MesForm_Load(object sender, EventArgs e)
         {
-            TestConnection(DbConnectionProvider.Instance);
+            TestConnection();
         }
 
 
-        private void TestConnection(DbConnectionProvider dbConnectionProvider)
+        private void TestConnection()
         {
             var command = new SqlCommand("select 1");
-            dbConnectionProvider.OpenConnection(command);
+            connectionProvider.OpenConnection(command);
             try
             {
                 var result = command.ExecuteScalar();
             }
             finally
             {
-                dbConnectionProvider.CloseConnection(command);
+                connectionProvider.CloseConnection(command);
             }
+        }
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                /*
+                highLevelMessageExchangeSystem.BeforeUpdate -= High_BeforeUpdate;
+                lowLevelMessageExchangeSystem.BeforeUpdate -= High_BeforeUpdate;
+                */
+
+                highLevelMessageExchangeSystem.ClientRegistered -= High_ClientRegistered;
+                lowLevelMessageExchangeSystem.ClientRegistered -= Low_ClientRegistered;
+
+                highLevelMessageExchangeSystem.ClientUnregistered -= High_ClientUnregistered;
+                lowLevelMessageExchangeSystem.ClientUnregistered -= Low_ClientUnregistered;
+
+                highLevelMessageExchangeSystem.MessageReceived -= Instance_MessageReceived;
+                lowLevelMessageExchangeSystem.MessageReceived -= Instance_MessageReceived;
+
+                lowLevelMessageExchangeSystem.ChannelRegistered -= Low_ChannelRegistered;
+                lowLevelMessageExchangeSystem.ChannelUnregistered -= Low_ChannelUnregistered;
+
+                highLevelMessageExchangeSystem.ChannelSubscribed -= High_ChannelSubscribed;
+                highLevelMessageExchangeSystem.ChannelUnSubscribed -= High_UnSubscribed;
+
+                components.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

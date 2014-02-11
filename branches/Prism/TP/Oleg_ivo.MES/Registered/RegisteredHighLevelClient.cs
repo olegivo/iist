@@ -2,6 +2,7 @@
 using DMS.Common.MessageExchangeSystem.HighLevel;
 using DMS.Common.Messages;
 using NLog;
+using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.MES.High;
 
 namespace Oleg_ivo.MES.Registered
@@ -11,10 +12,13 @@ namespace Oleg_ivo.MES.Registered
     /// </summary>
     public class RegisteredHighLevelClient : RegisteredClient<IHighLevelClientCallback>
     {
+        private readonly HighLevelMessageExchangeSystem highLevelMessageExchangeSystem;
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-        public RegisteredHighLevelClient(DataMode dataMode)
+        public RegisteredHighLevelClient(HighLevelMessageExchangeSystem highLevelMessageExchangeSystem, DataMode dataMode)
         {
+            this.highLevelMessageExchangeSystem = Enforce.ArgumentNotNull(highLevelMessageExchangeSystem,
+                "highLevelMessageExchangeSystem");
             DataMode = dataMode;
         }
 
@@ -78,12 +82,11 @@ namespace Oleg_ivo.MES.Registered
             Func<RegisteredLogicalChannelExtended, bool> predicate =
                 RegisteredLogicalChannelExtended.GetFindChannelPredicate(message.LogicalChannelId, DataMode.Unknown);
 
-            RegisteredLogicalChannelExtended logicalChannel = GetRegisteredLogicalChannel(predicate);
+            var logicalChannel = GetRegisteredLogicalChannel(predicate);
             if (logicalChannel != null)
                 throw new ArgumentException("Клиент уже подписан на данный канал");
 
-            RegisteredLogicalChannelExtended registeredLogicalChannel =
-                HighLevelMessageExchangeSystem.Instance.GetRegisteredChannel(predicate);
+            var registeredLogicalChannel = highLevelMessageExchangeSystem.GetRegisteredChannel(predicate);
 
             if (registeredLogicalChannel == null) 
                 throw new ArgumentException("Искомый канал недоступен для подписки");

@@ -4,9 +4,11 @@ using Autofac;
 using DMS.Common.Messages;
 using EmulationClient.Emulation;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
+using Oleg_ivo.Base.Autofac.Modules;
 using Oleg_ivo.Tools.ConnectionProvider;
 using Oleg_ivo.Tools.ExceptionCatcher;
 using Oleg_ivo.WAGO.Autofac;
+using Oleg_ivo.WAGO.Configuration;
 
 namespace EmulationClient
 {
@@ -15,22 +17,8 @@ namespace EmulationClient
     /// </summary>
     public partial class App : Application
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public App()
+        private void Test()
         {
-            var builder = new ContainerBuilder();
-            //builder.RegisterModule(new CommandLineHelperAutofacModule<WagoCommandLineOptions>(args));
-            builder.RegisterModule<WagoAutofacModule>();
-
-            var container = builder.Build();
-
-            ControlManagementUnit = container.ResolveUnregistered<ControlManagementUnitEmulation>();
-            ControlManagementUnit.GetRegName = GetRegName;
-            Emulator = container.ResolveUnregistered<Emulator>();
-            Emulator.ControlManagementUnit = ControlManagementUnit;
-
             //GasConcentration gasConcentration = new GasConcentration();
             //Temperature temperature = new Temperature();
             //double concentrationValue;
@@ -67,11 +55,30 @@ namespace EmulationClient
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            Init();
-            //TODO:Bootstrapper
+
+            var builder = new ContainerBuilder();
+            builder.RegisterModule(new CommandLineHelperAutofacModule<WagoCommandLineOptions>(e.Args));
+            builder.RegisterType<ControlManagementUnitEmulation>().SingleInstance();
+            builder.RegisterModule<WagoAutofacModule>();
+
+            var container = builder.Build();
+
+            Emulator = container.ResolveUnregistered<Emulator>();
+            //ControlManagementUnit = container.ResolveUnregistered<ControlManagementUnitEmulation>();
+            ControlManagementUnit.GetRegName = GetRegName;
+
+
+#pragma warning disable 168
+            var exceptionHandler = new ExceptionHandler(LogError);
+#pragma warning restore 168
+
+            //container.Resolve<DbConnectionProvider>().SetupConnectionStringFromConfigurationFile();
+            //TODO:Bootstrapper instead of StartupUri="Window1.xaml"
             //MyOwnBootStraper bootstrapper = new MyOwnBootStraper();
             //bootstrapper.Run();
             //ControlManagementUnit.Register();
+
+            Test();
         }
 
         /*
@@ -85,16 +92,6 @@ namespace EmulationClient
                     base.OnExit(e);
                 }
         */
-
-        private void Init()
-        {
-#pragma warning disable 168
-            ExceptionHandler exceptionHandler = new ExceptionHandler(LogError);
-#pragma warning restore 168
-
-            DbConnectionProvider.Instance.SetupConnectionStringFromConfigurationFile();
-
-        }
 
         private void LogError(object sender, ExtendedThreadExceptionEventArgs e)
         {
@@ -124,7 +121,10 @@ namespace EmulationClient
             */
         }
 
-        internal ControlManagementUnitEmulation ControlManagementUnit { get; private set; }
+        internal ControlManagementUnitEmulation ControlManagementUnit
+        {
+            get { return Emulator.ControlManagementUnit; }
+        }
 
         internal Emulator Emulator { get; private set; }
     }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using DMS.Common.Messages;
 using NLog;
+using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Tools.ConnectionProvider;
 
 namespace Oleg_ivo.MES.Logging
@@ -17,31 +18,16 @@ namespace Oleg_ivo.MES.Logging
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
-        #region Singleton
-
-        private static InternalMessageLogger _instance;
-
-        ///<summary>
-        /// Единственный экземпляр
-        ///</summary>
-        public static InternalMessageLogger Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new InternalMessageLogger();
-                }
-                return _instance;
-            }
-        }
+        #region Constructors
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="InternalMessageLogger" />.
         /// </summary>
-        private InternalMessageLogger()
+        /// <param name="connectionProvider"></param>
+        public InternalMessageLogger(DbConnectionProvider connectionProvider)
         {
             _stopped = true;
+            this.connectionProvider = Enforce.ArgumentNotNull(connectionProvider, "connectionProvider");
         }
 
         #endregion
@@ -126,6 +112,8 @@ namespace Oleg_ivo.MES.Logging
         /// </summary>
         private bool _stopped;
 
+        private DbConnectionProvider connectionProvider;
+
         private void CheckNewData()
         {
             //ClearExcessQueueElements();
@@ -166,9 +154,10 @@ namespace Oleg_ivo.MES.Logging
             var command = PrepareDataMessageCommand(dataMessage, incomeTimeStamp);
 
             if(command!=null)
+            {
                 try
                 {
-                    DbConnectionProvider.Instance.OpenConnection(command);
+                    connectionProvider.OpenConnection(command);
                     command.ExecuteNonQuery();
                 }
                 catch (Exception ex)
@@ -178,9 +167,9 @@ namespace Oleg_ivo.MES.Logging
                 finally
                 {
                     if(command.Connection.State != ConnectionState.Closed)
-                        DbConnectionProvider.Instance.CloseConnection(command);
+                        connectionProvider.CloseConnection(command);
                 }
-            
+            }
         }
 
         /// <summary>

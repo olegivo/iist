@@ -4,17 +4,21 @@
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using Autofac;
+using NLog;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
+using Oleg_ivo.Base.Autofac.Modules;
 using Oleg_ivo.MES.High;
 using Oleg_ivo.MES.Logging;
 using Oleg_ivo.MES.Low;
-using Oleg_ivo.Tools;
-using Oleg_ivo.Tools.ConnectionProvider;
 using Oleg_ivo.Tools.ExceptionCatcher;
+using Logger = Oleg_ivo.Tools.Logger;
 
 namespace Oleg_ivo.MES
 {
     static class Program
     {
+        private static readonly NLog.Logger Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// The main entry point for the application.
@@ -22,6 +26,7 @@ namespace Oleg_ivo.MES
         [STAThread]
         static void Main()
         {
+
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 #pragma warning disable 168
             ExceptionHandler exceptionHandler = new ExceptionHandler();
@@ -29,10 +34,20 @@ namespace Oleg_ivo.MES
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            Log.Info("Регистрация компонентов");
+            var builder = new ContainerBuilder();
+            //builder.RegisterModule(new CommandLineHelperAutofacModule<WagoCommandLineOptions>(args));
+            builder.RegisterModule<BaseAutofacModule>();
+            //builder.RegisterModule<WagoAutofacModule>();
+            builder.RegisterType<InternalMessageLogger>().SingleInstance();
+            builder.RegisterType<LowLevelMessageExchangeSystem>().SingleInstance();
+            builder.RegisterType<HighLevelMessageExchangeSystem>().SingleInstance();
+            var container = builder.Build();
+
             Logger logger;
 
-            var lowLevelMessageExchangeSystem = LowLevelMessageExchangeSystem.Instance;
-            var highLevelMessageExchangeSystem = HighLevelMessageExchangeSystem.Instance;
+            var lowLevelMessageExchangeSystem = container.Resolve<LowLevelMessageExchangeSystem>();
+            var highLevelMessageExchangeSystem = container.Resolve<HighLevelMessageExchangeSystem>();
             //взаимная подписка событий:
             lowLevelMessageExchangeSystem.NotifySubscribeEvents(highLevelMessageExchangeSystem);
             highLevelMessageExchangeSystem.NotifySubscribeEvents(lowLevelMessageExchangeSystem);
@@ -51,15 +66,16 @@ namespace Oleg_ivo.MES
             logger.End(2);
 #endif
 
-            logger = new Logger("Установка строки соединения с базой данных");
+            /*logger = new Logger("Установка строки соединения с базой данных");
             DbConnectionProvider.Instance.SetupConnectionStringFromConfigurationFile();
-            logger.End(2);
+            logger.End(2);*/
 
             logger = new Logger("Запуск протоколирования сообщений");
-            InternalMessageLogger.Instance.Start();
+            var internalMessageLogger = container.Resolve<InternalMessageLogger>();
+            internalMessageLogger.Start();
             logger.End(2);
 
-            Application.Run(new MesForm());
+            Application.Run(container.ResolveUnregistered<MesForm>());
 
 #if LOW_LEVEL
 		    logger = new Logger("Остановка сервиса нижнего уровня");
@@ -74,7 +90,7 @@ namespace Oleg_ivo.MES
 #endif
 
             logger = new Logger("Остановка протоколирования сообщений");
-            InternalMessageLogger.Instance.Stop(false);
+            internalMessageLogger.Stop(false);
             logger.End(2);
         }
     }

@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using Autofac;
 using DMS.Common.MessageExchangeSystem.LowLevel;
 using DMS.Common.Messages;
 using NLog;
+using Oleg_ivo.Base.Autofac;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.MES.High;
 using Oleg_ivo.MES.Registered;
 
@@ -20,32 +23,17 @@ namespace Oleg_ivo.MES.Low
         IncludeExceptionDetailInFaults = true)]
     public class LowLevelMessageExchangeSystem : AbstractLevelMessageExchangeSystem<RegisteredLowLevelClient>, ILowLevelMessageExchangeSystem
     {
+        private readonly IComponentContext context;
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
         
-        #region Singleton
-
-        private static LowLevelMessageExchangeSystem _instance;
-
-        ///<summary>
-        /// ≈динственный экземпл€р
-        ///</summary>
-        public static LowLevelMessageExchangeSystem Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new LowLevelMessageExchangeSystem();
-                }
-                return _instance;
-            }
-        }
+        #region Constructors
 
         /// <summary>
         /// »нициализирует новый экземпл€р класса <see cref="LowLevelMessageExchangeSystem" />.
         /// </summary>
-        private LowLevelMessageExchangeSystem()
+        public LowLevelMessageExchangeSystem(IComponentContext context)
         {
+            this.context = Enforce.ArgumentNotNull(context,"context");
         }
 
         private bool subscribed;
@@ -117,7 +105,8 @@ namespace Oleg_ivo.MES.Low
             if (registeredLowLevelClient != null)
                 throw new Exception(" лиент уже зарегистрирован");
 
-            registeredLowLevelClient = new RegisteredLowLevelClient { Ticker = message.RegNameFrom };
+            registeredLowLevelClient = context.ResolveUnregistered<RegisteredLowLevelClient>();
+            registeredLowLevelClient.Ticker = message.RegNameFrom;
             AddClient(message.RegNameFrom, registeredLowLevelClient);
 
             //                registeredLowLevelClient = (RegisteredLowLevelClient)_registeredClients[message.RegNameFrom];
@@ -163,6 +152,14 @@ namespace Oleg_ivo.MES.Low
 
         #region Implementation of ILowLevelMessageExchangeSystem
 
+        [Dependency(Required = true)]
+        public Func<HighLevelMessageExchangeSystem> HighLevelMessageExchangeSystemProvider { get; set; }
+
+        public HighLevelMessageExchangeSystem HighLevelMessageExchangeSystem
+        {
+            get { return HighLevelMessageExchangeSystemProvider.Invoke(); }
+        }
+
         /// <summary>
         /// „тение данных из контролируемого канала
         /// </summary>
@@ -172,7 +169,7 @@ namespace Oleg_ivo.MES.Low
             if (message.DataMode == DataMode.Read)
             {
                 //пришли новые данные по каналу. будем передавать наверх
-                HighLevelMessageExchangeSystem.Instance.ReadChannel(message);
+                HighLevelMessageExchangeSystem.ReadChannel(message);
             }
             else
             {
@@ -332,8 +329,8 @@ namespace Oleg_ivo.MES.Low
         private RegisteredLogicalChannelExtended FindSubscribedChannel(Func<RegisteredLogicalChannelExtended, bool> predicate)
         {
             //HACK: почему-то в некоторых случа€х без указани€ Instance. в _registeredClients нет ни одного элемента  !!!
-            RegisteredLogicalChannelExtended registeredLogicalChannel =
-                Instance.RegisteredClients
+            var registeredLogicalChannel =
+                RegisteredClients
                     .SelectMany(client => client.RegisteredLogicalChannels.Values)//выбираем все каналы всех клиентов
                     .Where(predicate).FirstOrDefault();//где Id - заданный
             return registeredLogicalChannel;
