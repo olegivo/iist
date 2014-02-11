@@ -234,5 +234,8 @@
     <NotInBuild Include="Schema Comparisons\compare Plc27 2 Project.scmp">
       <SubType>NotInBuild</SubType>
     </NotInBuild>
+    <NotInBuild Include="Schema Comparisons\compare PlcTP 2 Project.scmp">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
   </ItemGroup>
 </Project>
