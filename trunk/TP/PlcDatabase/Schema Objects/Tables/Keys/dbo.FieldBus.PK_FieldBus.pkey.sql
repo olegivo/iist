@@ -1,3 +1,0 @@
-﻿ALTER TABLE [dbo].[FieldBus] ADD CONSTRAINT [PK_FieldBus] PRIMARY KEY CLUSTERED  ([Id]) ON [PRIMARY]
-
-
