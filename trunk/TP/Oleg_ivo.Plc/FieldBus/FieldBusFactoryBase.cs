@@ -266,8 +266,12 @@ namespace Oleg_ivo.Plc.FieldBus
                 case FieldBusType.Ethernet:
                     var tcpFieldBusPortParameters = new TcpFieldBusPortParameters();
                     var ipAddress = port as FieldBusNodeAddress;
-                    if (ipAddress != null)
-                        tcpFieldBusPortParameters.IpAddress = IPAddress.Parse(ipAddress.AddressPart1);
+                    string adr = port as string;
+                    if (adr==null && ipAddress != null)
+                        adr = ipAddress.AddressPart1;
+                    if(adr!=null && adr!="Ethernet")//TODO:убрать всякую подобную фигню
+                        tcpFieldBusPortParameters.IpAddress = IPAddress.Parse(adr);
+
                     retValue = tcpFieldBusPortParameters;
                     break;
                 default:
