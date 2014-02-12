@@ -91,7 +91,16 @@ namespace TP.WPF.ViewModels
         {
             get
             {
-                return Dictionary[key];
+                if (Dictionary.Count>0)
+                {
+                    return Dictionary[key];
+                    
+                }
+                else
+                {
+                    return new KeyValuePair<TKey, TValue>() {}.Value;
+                }
+                
             }
             set
             {

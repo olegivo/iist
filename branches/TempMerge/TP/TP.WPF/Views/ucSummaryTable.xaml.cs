@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using TP.WPF.ViewModels;
 using DataGridAutoGeneratingColumnEventArgs = Microsoft.Windows.Controls.DataGridAutoGeneratingColumnEventArgs;
 
+
 namespace TP.WPF.Views
 {
     /// <summary>
