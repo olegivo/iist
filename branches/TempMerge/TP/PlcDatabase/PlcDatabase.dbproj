@@ -1,268 +1,241 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Default</Configuration>
-    <Name>"DatabaseProject"</Name>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>PlcDatabase</Name>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{15a5ab78-ce14-4479-a4f9-95b4a44f82cd}</ProjectGuid>
+    <ProjectVersion>4.0</ProjectVersion>
+    <ProjectGuid>{67cbc824-a49e-4e9b-a947-360f3dfe65c3}</ProjectGuid>
+    <DSP>Microsoft.Data.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
     <ShowWizard>False</ShowWizard>
     <OutputType>Database</OutputType>
-    <DBProduct>SQL Server 2005</DBProduct>
     <RootPath>
     </RootPath>
-    <ArithAbort>True</ArithAbort>
-    <NumericRoundAbort>False</NumericRoundAbort>
-    <AnsiNulls>True</AnsiNulls>
-    <ConcatNullYieldsNull>True</ConcatNullYieldsNull>
-    <AnsiPadding>True</AnsiPadding>
-    <AnsiWarnings>True</AnsiWarnings>
-    <QuotedIdentifier>True</QuotedIdentifier>
-    <DefaultSchemaForUnqualifiedObjects>dbo</DefaultSchemaForUnqualifiedObjects>
-    <EnableFullTextSearch>False</EnableFullTextSearch>
-    <EnableCLRIntegration>False</EnableCLRIntegration>
-    <AutoUpdateStatisticsAsynchronously>True</AutoUpdateStatisticsAsynchronously>
-    <AutoUpdateStatistics>True</AutoUpdateStatistics>
-    <AutoShrink>False</AutoShrink>
-    <AutoCreateStatistics>True</AutoCreateStatistics>
-    <AutoClose>False</AutoClose>
-    <DefaultCursor>LOCAL</DefaultCursor>
-    <CloseCursorOnCommitEnabled>False</CloseCursorOnCommitEnabled>
-    <DatabaseState>ONLINE</DatabaseState>
-    <DatabaseAccess>MULTI_USER</DatabaseAccess>
-    <UpdateOptions>READ_WRITE</UpdateOptions>
-    <Parameterization>SIMPLE</Parameterization>
-    <Recovery>FULL</Recovery>
-    <PageVerify>NONE</PageVerify>
-    <TornPageDetection>False</TornPageDetection>
-    <AllowSnapshotIsolation>False</AllowSnapshotIsolation>
-    <ReadCommittedSnapshot>False</ReadCommittedSnapshot>
-    <AnsiNullDefault>True</AnsiNullDefault>
-    <DefaultCollation>SQL_Latin1_General_CP1_CS_AS</DefaultCollation>
-    <DefaultFileStructure>BySchemaType</DefaultFileStructure>
-    <DatabaseChaining>False</DatabaseChaining>
-    <EnableServiceBroker>False</EnableServiceBroker>
-    <RecursiveTriggersEnabled>False</RecursiveTriggersEnabled>
-    <Trustworthy>False</Trustworthy>
-    <IncludeSchemaNameInFilename>True</IncludeSchemaNameInFilename>
-    <DoNotUseAlterAssemblyStatementsToUpdateCLRTypes>False</DoNotUseAlterAssemblyStatementsToUpdateCLRTypes>
-    <ProjectVersion>2.0</ProjectVersion>
-    <DefaultDataPath>Undefined</DefaultDataPath>
-    <DefaultSchema>dbo</DefaultSchema>
-    <BuildVersion>9.0.30729.1</BuildVersion>
+    <IncludeSchemaNameInFileName>False</IncludeSchemaNameInFileName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchema</DefaultFileStructure>
+    <DeployToDatabaseAddToServerExplorer>True</DeployToDatabaseAddToServerExplorer>
+    <DeployToScript>True</DeployToScript>
+    <CatalogPropertiesFile>Properties\Database.sqlsettings</CatalogPropertiesFile>
+    <LoadSqlClrTypes>True</LoadSqlClrTypes>
     <RootNamespace>PlcDatabase</RootNamespace>
-    <FileGroups>
-      <FileGroupDefinitionCollection Version="1" xmlns="">
-        <FileGroups>
-          <FileGroupDefinition Name="PRIMARY" UpdatabilityOption="ReadWrite" IsDefault="True" CreationSucceed="False">
-            <Files>
-              <DatabaseFileDefinition LogicalName="PrimaryFileName" FileType="Primary">
-                <PhysicalName>%24(PrimaryFilePhysicalName)</PhysicalName>
-                <Size Number="3" SizeType="MB" />
-                <MaxSize Number="3" SizeType="MB" />
-                <FileGrowth Number="1" SizeType="MB" />
-                <EnableAutoGrowth>True</EnableAutoGrowth>
-                <UseDefaultMinSizeOnServer>True</UseDefaultMinSizeOnServer>
-                <UseDefaultAutoGrowthOnServer>True</UseDefaultAutoGrowthOnServer>
-                <Offline>False</Offline>
-              </DatabaseFileDefinition>
-            </Files>
-          </FileGroupDefinition>
-        </FileGroups>
-        <LogFiles>
-          <DatabaseFileDefinition LogicalName="PrimaryLogFileName" FileType="PrimaryLog">
-            <PhysicalName>%24(PrimaryLogFilePhysicalName)</PhysicalName>
-            <Size Number="3" SizeType="MB" />
-            <MaxSize Number="3" SizeType="MB" />
-            <FileGrowth Number="1" SizeType="MB" />
-            <EnableAutoGrowth>True</EnableAutoGrowth>
-            <UseDefaultMinSizeOnServer>True</UseDefaultMinSizeOnServer>
-            <UseDefaultAutoGrowthOnServer>True</UseDefaultAutoGrowthOnServer>
-            <Offline>False</Offline>
-          </DatabaseFileDefinition>
-        </LogFiles>
-      </FileGroupDefinitionCollection>
-    </FileGroups>
-    <PreviousProjectVersion>2</PreviousProjectVersion>
+    <DefaultSchema>dbo</DefaultSchema>
+    <PreviousProjectVersion>4.0</PreviousProjectVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Default' ">
-    <OutputPath>.\sql\</OutputPath>
-    <AutoGenerateBuildScriptName>False</AutoGenerateBuildScriptName>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>.\sql\release\</OutputPath>
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
     <TargetConnectionString>
     </TargetConnectionString>
     <TargetDatabase>
     </TargetDatabase>
-    <DeploymentCollationPreference>ChangeTargetDBCollation</DeploymentCollationPreference>
-    <AlwaysCreateNewDatabase>false</AlwaysCreateNewDatabase>
-    <GenerateDropsIfNotInProject>False</GenerateDropsIfNotInProject>
-    <BlockIncrementalDeploymentIfDataLoss>True</BlockIncrementalDeploymentIfDataLoss>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
-    <PerformDatabaseBackup>False</PerformDatabaseBackup>
-    <SingleUserMode>False</SingleUserMode>
-    <UseFuzzyMatchForColumns>False</UseFuzzyMatchForColumns>
     <SuppressWarnings>
     </SuppressWarnings>
+    <DeploymentConfigFile>Properties\Database.sqldeployment</DeploymentConfigFile>
+    <SqlCommandVariablesFile>Properties\Database.sqlcmdvars</SqlCommandVariablesFile>
+    <DeployToDatabase>False</DeployToDatabase>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>.\sql\debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TargetConnectionString>
+    </TargetConnectionString>
+    <TargetDatabase>
+    </TargetDatabase>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <SuppressWarnings>
+    </SuppressWarnings>
+    <DeploymentConfigFile>Properties\Database.sqldeployment</DeploymentConfigFile>
+    <SqlCommandVariablesFile>Properties\Database.sqlcmdvars</SqlCommandVariablesFile>
+    <DeployToDatabase>False</DeployToDatabase>
   </PropertyGroup>
   <!--Import the settings-->
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\TeamData\Microsoft.VisualStudio.TeamSystem.Data.Tasks.targets" />
-  <PropertyGroup>
-    <FilegroupSetVariables>
-      <Variable Name="PrimaryFileName" Value="$(TargetDatabase)_mdf" />
-      <Variable Name="PrimaryLogFileName" Value="$(TargetDatabase)_ldf" />
-      <Variable Name="PrimaryFilePhysicalName" Value="$(DefaultDataPath)$(TargetDatabase).mdf" />
-      <Variable Name="PrimaryLogFilePhysicalName" Value="$(DefaultDataPath)$(TargetDatabase)_log.ldf" />
-    </FilegroupSetVariables>
-  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\TeamData\Microsoft.Data.Schema.SqlTasks.targets" />
   <ItemGroup>
-    <Folder Include="Schema Objects" />
-    <Folder Include="Schema Objects\Assemblies" />
-    <Folder Include="Schema Objects\Database Triggers" />
-    <Folder Include="Schema Objects\Functions" />
-    <Folder Include="Schema Objects\Security" />
-    <Folder Include="Schema Objects\Security\Roles" />
-    <Folder Include="Schema Objects\Security\Roles\Application Roles" />
-    <Folder Include="Schema Objects\Security\Roles\Database Roles" />
-    <Folder Include="Schema Objects\Security\Schemas" />
-    <Folder Include="Schema Objects\Security\Users" />
-    <Folder Include="Schema Objects\Service Broker" />
-    <Folder Include="Schema Objects\Service Broker\Contracts" />
-    <Folder Include="Schema Objects\Service Broker\Event Notifications" />
-    <Folder Include="Schema Objects\Service Broker\Message Types" />
-    <Folder Include="Schema Objects\Service Broker\Queues" />
-    <Folder Include="Schema Objects\Service Broker\Remote Service Binding" />
-    <Folder Include="Schema Objects\Service Broker\Routes" />
-    <Folder Include="Schema Objects\Service Broker\Services" />
-    <Folder Include="Schema Objects\Storage" />
-    <Folder Include="Schema Objects\Storage\Full Text Catalogs" />
-    <Folder Include="Schema Objects\Storage\Partition Functions" />
-    <Folder Include="Schema Objects\Storage\Partition Schemes" />
-    <Folder Include="Schema Objects\Stored Procedures" />
-    <Folder Include="Schema Objects\Synonyms" />
-    <Folder Include="Schema Objects\Tables" />
-    <Folder Include="Schema Objects\Tables\Constraints" />
-    <Folder Include="Schema Objects\Tables\Indexes" />
-    <Folder Include="Schema Objects\Tables\Keys" />
-    <Folder Include="Schema Objects\Tables\Statistics" />
-    <Folder Include="Schema Objects\Tables\Triggers" />
-    <Folder Include="Schema Objects\Types" />
-    <Folder Include="Schema Objects\Types\User defined Data Types" />
-    <Folder Include="Schema Objects\Types\User defined Types CLR" />
-    <Folder Include="Schema Objects\Types\XML Schema Collections" />
-    <Folder Include="Schema Objects\Views" />
-    <Folder Include="Schema Objects\Views\Indexes" />
-    <Folder Include="Schema Objects\Views\Statistics" />
-    <Folder Include="Schema Objects\Views\Triggers" />
     <Folder Include="Scripts" />
     <Folder Include="Scripts\Pre-Deployment" />
     <Folder Include="Scripts\Post-Deployment" />
     <Folder Include="Data Generation Plans" />
+    <Folder Include="Schema Comparisons" />
+    <Folder Include="Properties\" />
+    <Folder Include="Schema Objects\" />
+    <Folder Include="Schema Objects\Schemas\" />
+    <Folder Include="Schema Objects\Schemas\dbo\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Defaults\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Functions\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Rules\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Types\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Types\User Defined Data Types\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Types\User Defined Types CLR\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Types\User Defined Table Types\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Types\XML Schema Collections\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Service Broker\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Service Broker\Queues\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Synonyms\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Tables\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Tables\Constraints\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Tables\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Tables\Keys\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Tables\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Tables\Statistics\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Views\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Views\Indexes\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Views\Triggers\" />
+    <Folder Include="Schema Objects\Schemas\dbo\Views\Statistics\" />
+    <Folder Include="Schema Objects\Database Level Objects\" />
+    <Folder Include="Schema Objects\Database Level Objects\Assemblies\" />
+    <Folder Include="Schema Objects\Database Level Objects\Database Triggers\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Schemas\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Users\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Certificates\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Asymmetric Keys\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Master Keys\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Signatures\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Symmetric Keys\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Database Encryption Keys\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Database Audit Specification\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Roles\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Roles\Application Roles\" />
+    <Folder Include="Schema Objects\Database Level Objects\Security\Roles\Database Roles\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\Broker Priorities\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\Contracts\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\Event Notifications\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\Message Types\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\Remote Service Binding\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\Routes\" />
+    <Folder Include="Schema Objects\Database Level Objects\Service Broker\Services\" />
+    <Folder Include="Schema Objects\Database Level Objects\Storage\" />
+    <Folder Include="Schema Objects\Database Level Objects\Storage\Full Text Stoplists\" />
+    <Folder Include="Schema Objects\Database Level Objects\Storage\Filegroups\" />
+    <Folder Include="Schema Objects\Database Level Objects\Storage\Files\" />
+    <Folder Include="Schema Objects\Database Level Objects\Storage\Full Text Catalogs\" />
+    <Folder Include="Schema Objects\Database Level Objects\Storage\Partition Functions\" />
+    <Folder Include="Schema Objects\Database Level Objects\Storage\Partition Schemes\" />
   </ItemGroup>
   <ItemGroup>
+    <PropertiesFile Include="Properties\Database.sqlsettings">
+    </PropertiesFile>
+    <PropertiesFile Include="Properties\Database.sqldeployment">
+    </PropertiesFile>
+    <PropertiesFile Include="Properties\Database.sqlcmdvars">
+    </PropertiesFile>
+    <Build Include="Properties\Database.sqlpermissions">
+      <ModelBuilderType>Permissions</ModelBuilderType>
+    </Build>
     <PreDeploy Include="Scripts\Pre-Deployment\Script.PreDeployment.sql">
       <SubType>Code</SubType>
     </PreDeploy>
     <PostDeploy Include="Scripts\Post-Deployment\Script.PostDeployment.sql">
       <SubType>Code</SubType>
     </PostDeploy>
-    <NotInBuild Include="Scripts\Post-Deployment\DatabaseObjectOptions.sql">
-      <SubType>NotInBuild</SubType>
-    </NotInBuild>
-    <NotInBuild Include="Scripts\Post-Deployment\Permissions.sql">
-      <SubType>NotInBuild</SubType>
-    </NotInBuild>
-    <NotInBuild Include="Scripts\Post-Deployment\RoleMemberships.sql">
-      <SubType>NotInBuild</SubType>
-    </NotInBuild>
-    <NotInBuild Include="Scripts\Post-Deployment\RulesAndDefaults.sql">
-      <SubType>NotInBuild</SubType>
-    </NotInBuild>
-    <NotInBuild Include="Scripts\Post-Deployment\Signatures.sql">
-      <SubType>NotInBuild</SubType>
-    </NotInBuild>
-    <NotInBuild Include="Scripts\Pre-Deployment\CustomErrors.sql">
-      <SubType>NotInBuild</SubType>
-    </NotInBuild>
-    <NotInBuild Include="Scripts\Pre-Deployment\EncryptionKeysAndCertificates.sql">
-      <SubType>NotInBuild</SubType>
-    </NotInBuild>
-    <NotInBuild Include="Scripts\Pre-Deployment\LinkedServers.sql">
-      <SubType>NotInBuild</SubType>
-    </NotInBuild>
-    <NotInBuild Include="Scripts\Pre-Deployment\Logins.sql">
-      <SubType>NotInBuild</SubType>
-    </NotInBuild>
-    <NotInBuild Include="Scripts\ScriptsIgnoredOnImport.sql">
-      <SubType>NotInBuild</SubType>
-    </NotInBuild>
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Schema Objects\Tables\Constraints\dbo.LogicalChannel.DF_LogicalChannel_Address.defconst.sql">
+    <BuildContributorArgument Include="OutDir=$(OutDir)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\DF_FieldBusNode_Enabled.defconst.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\dbo.FieldBus.table.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Constraints\DF_LogicalChannel_Address.defconst.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\dbo.FieldBusNode.table.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_WagoMeta_FieldBusType.fkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\dbo.FieldBusType.table.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_IoModule_PhysicalChannel.fkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\dbo.IoModule.table.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_FieldBus_FieldBusType.fkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\dbo.LogicalChannel.table.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_FieldBusNode_FieldBus.fkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\dbo.PhysicalChannel.table.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_Parameter_MeasurementUnit.fkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\dbo.ProtocolData.table.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_LogicalChannel_Parameter.fkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\dbo.WagoMeta.table.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_LogicalChannel_PhysicalChannel.fkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.FieldBus.FK_FieldBus_FieldBusType.fkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_PhysicalChannel_FieldBusNode.fkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.FieldBus.PK_FieldBus.pkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_WagoMeta.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.FieldBusNode.FK_FieldBusNode_FieldBusType.fkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_IoModule.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.FieldBusNode.PK_FieldBusNode.pkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_FieldBusType.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.FieldBusType.PK_FieldBusType.pkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_FieldBus.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.IoModule.FK_IoModule_PhysicalChannel.fkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_FieldBusNode.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.IoModule.PK_IoModule.pkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_Parameter.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.LogicalChannel.FK_LogicalChannel_PhysicalChannel.fkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_MeasurementUnit.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.LogicalChannel.PK_LogicalChannel.pkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_LogicalChannel.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.PhysicalChannel.FK_PhysicalChannel_FieldBusNode.fkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_ProtocolData.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.PhysicalChannel.PK_PhysicalChannel.pkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PK_PhysicalChannel.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.ProtocolData.PK_ProtocolData.pkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\WagoMeta.table.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.WagoMeta.FK_WagoMeta_FieldBusType.fkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\IoModule.table.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Tables\Keys\dbo.WagoMeta.PK_WagoMeta.pkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\FieldBusType.table.sql">
       <SubType>Code</SubType>
     </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\FieldBus.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\FieldBusNode.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Parameter.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\MeasurementUnit.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\LogicalChannel.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\ProtocolData.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\PhysicalChannel.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+  </ItemGroup>
+  <ItemGroup>
+    <NotInBuild Include="Schema Comparisons\compare Plc27 2 Project.scmp">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Schema Comparisons\compare PlcTP 2 Project.scmp">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
   </ItemGroup>
 </Project>
