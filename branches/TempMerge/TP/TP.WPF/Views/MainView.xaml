@@ -1,0 +1,132 @@
+﻿<!--*****************************
+*powered by TrinitroN			*
+*icq: 251-939-070				*
+*Copyright 08.08.2011 < LETI >	*
+*********************************
+*.........../\_____/\...........*
+*...../\.../.|[]|[]|.\.../\.....*
+*....|{}|\/.^../^\..^.\/|{}|....*
+*....|..|..__/..O..\__..|..|....*
+*....|[]|......___......|[]|....*
+*....|......./#####\.......|....*
+*.....\o....|#######|....o/.....*
+*......|....|#######|....|......*
+*......|....@@@@@@@@@....|......*
+*.....^......^......^......^....*
+*....|L|....|E|....|T|....|I|...*
+*******************************-->
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Views="clr-namespace:TP.WPF.Views" 
+        xmlns:ViewModels="clr-namespace:TP.WPF.ViewModels"
+        xmlns:julmar="http://www.julmar.com/wpfhelpers"
+        xmlns:cal="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
+        mc:Ignorable="d"
+	    x:Class="TP.WPF.Views.MainView"
+        x:Name="TechnologicalProcess" 
+        Title="Технологический процесс термического уничтожения отходов" 
+        Height="768" Width="1024" 
+        Icon="factory_yellow_256.png" 
+        Foreground="Black" 
+        WindowStartupLocation="CenterOwner" 
+        Visibility="Visible" 
+        AllowsTransparency="True" 
+        WindowStyle="None" 
+        Background="{x:Null}"
+        DataContext="{julmar:ViewModelCreator {x:Type ViewModels:MainViewModel}}">
+
+    <Window.Resources>
+        <!-- Bindable commands sit in resources and allow keyboard input to target ViewModel commands -->
+        <julmar:BindableCommand x:Key="CloseCommand" Command="{Binding CloseAppCommand}" />
+        <julmar:BindableCommand x:Key="TestCommand" Command="{Binding TestCommand}" />
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="X" Modifiers="ALT" Command="{StaticResource CloseCommand}" />
+        <KeyBinding Key="D" Modifiers="Control" Command="{StaticResource TestCommand}" />
+    </Window.InputBindings>
+
+    <!--Рабочая поверхность-->
+    <Grid>
+        <Path Data="M-6.2172489E-15,40 L0,8 C0,8 0,0 8,0 16,0 1016,0 1016,0 1016,0 1024,0 1024,8 1024,16 1024,40 1024,40 z" Fill="{DynamicResource BrushBrown}" Stretch="Fill" Stroke="{DynamicResource BrushBrown}" StrokeThickness="2" Height="25" VerticalAlignment="Top" MouseDown="Path_MouseDown"/>
+        <DockPanel LastChildFill="True">
+            <Expander x:Name="expander" Header="Системная информация" VerticalAlignment="Bottom" ExpandDirection="Up" Opacity="0.5" DockPanel.Dock="Bottom">
+                <Grid Background="#FFE5E5E5" Height="167">
+                    <TextBox x:Name="textBox1" Text="{Binding Messages}" TextChanged="textBox1_TextChanged" />
+                </Grid>
+            </Expander>
+            <TabControl x:Name="tabControl" Background="{x:Null}" Style="{DynamicResource TabControlStyle1}">
+                <TabItem Header="Общий вид" Style="{DynamicResource TabItemStyle1}">
+                    <UniformGrid Rows="2" Columns="3">
+                        <Views:ucFinishCleaning Height="Auto" Width="Auto" />
+                        <Views:ucCycloneAndScrubber Height="Auto" Width="Auto"/>
+                        <Views:ucHeatExchanger Width="Auto" Height="Auto"/>
+                        <Views:ucDrumTypeFurnace Height="Auto" Width="Auto"/>
+                        <Views:ucReheatChamber Height="Auto" Width="Auto"/>
+
+                    </UniformGrid>
+                </TabItem>
+                <TabItem x:Name="tabItem" Header="Барабанная печь" Style="{DynamicResource TabItemStyle1}">
+                    <ItemsControl Name="DrumTypeFurnaceRegion" 
+                                  cal:RegionManager.RegionName="DrumTypeFurnaceRegion"
+                                  DataContext="{Binding DrumTypeFurnace}"/>
+                </TabItem>
+                <TabItem Header="Камера дожигания" Style="{DynamicResource TabItemStyle1}">
+                    <ItemsControl Name="ReheatChamberRegion" 
+                                  cal:RegionManager.RegionName="ReheatChamberRegion"
+                                  DataContext="{Binding ReheatChamber}"/>
+                </TabItem>
+                <TabItem Header="Теплообменник" Style="{DynamicResource TabItemStyle1}">
+                    <ItemsControl cal:RegionManager.RegionName="HeatExchangerRegion"
+                                  DataContext="{Binding HeatExchanger}"/>
+                </TabItem>
+                <TabItem Header="Циклон и скруббер" Style="{DynamicResource TabItemStyle1}">
+                    <ItemsControl cal:RegionManager.RegionName="CycloneAndScrubberRegion"
+                                  DataContext="{Binding CycloneAndScrubber}"/>
+                </TabItem>
+                <TabItem Header="Финишная очистка" Style="{DynamicResource TabItemStyle1}">
+                    <ItemsControl cal:RegionManager.RegionName="FinishCleaningRegion"
+                                  DataContext="{Binding FinishCleaning}"/>
+                </TabItem>
+                <TabItem Header="Сводная таблица" Style="{DynamicResource TabItemStyle1}">
+                    <ItemsControl cal:RegionManager.RegionName="SummaryTableRegion"
+                                  DataContext="{Binding SummaryTable}"/>
+                </TabItem>
+            </TabControl>
+
+        </DockPanel>
+        <Rectangle x:Name="WindowBackGround" RadiusY="5" RadiusX="5" Stroke="{DynamicResource BrushBrown}" StrokeThickness="2" Width="Auto" Panel.ZIndex="-1" Fill="{DynamicResource BrushWindowBackGround}"/>
+        <Grid x:Name="WindowControlButtons" HorizontalAlignment="Right" Grid.Row="0" VerticalAlignment="Top" Width="60" Height="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.333*"/>
+                <ColumnDefinition Width="0.333*"/>
+                <ColumnDefinition Width="0.333*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="CloseButton" Content="Button" Style="{DynamicResource CloseButtonStyle}" Grid.ColumnSpan="1" Grid.Column="2" Command="{Binding CloseAppCommand}"/>
+            <Button x:Name="MaximizeButton" Content="Button" Style="{DynamicResource MaximizeButtonStyle}" Grid.ColumnSpan="1" Grid.Column="1" Click="MaximizeButton_Click"/>
+            <Button x:Name="MinimizeButton" Content="Button" Style="{DynamicResource MinimizeButtonStyle}" Grid.ColumnSpan="1" Grid.Column="0" Click="MinimizeButton_Click"/>
+        </Grid>
+        <Button Content="Button" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="25" Style="{DynamicResource MenuButtonStyle}"/>
+        <Menu Margin="0" HorizontalAlignment="Left" Background="{x:Null}" Height="25" VerticalAlignment="Top" Width="30">
+            <MenuItem Width="25" Height="25" d:IsHidden="True">
+                <MenuItem Header="Подключится к серверу" Command="{Binding RegisterCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="Images/connect.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Отключится от сервера" Command="{Binding UnregisterCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="Images/disconnect.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Выход" Command="{Binding CloseAppCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="Images/cross.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+    </Grid>
+</Window>

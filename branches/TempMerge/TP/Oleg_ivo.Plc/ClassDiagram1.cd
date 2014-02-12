@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Oleg_ivo.Plc.Ports.ModbusIpFieldBusPort" Collapsed="true">
+    <Position X="16.25" Y="11.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAACAAAAAAAAAAAFAACAAA=</HashCode>
+      <FileName>Ports\ModbusIpFieldBusPort.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Oleg_ivo.Plc.Ports.ModbusFieldBusPort">
+    <Position X="14.5" Y="8.75" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAEAQEAAAAAAAAAAAEAAAAAAAABAEAAgA=</HashCode>
+      <FileName>Ports\ModbusFieldBusPort.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ModbusAccessor" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Oleg_ivo.Plc.Ports.ModbusSerialFieldBusPort" Collapsed="true">
+    <Position X="13" Y="11.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAKAAEAAAAAAAAAAAAAAAAAAAAAEABAAAAAA=</HashCode>
+      <FileName>Ports\ModbusSerialFieldBusPort.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Oleg_ivo.Plc.FieldBus.FieldBusManagers.FieldBusManager" Collapsed="true">
+    <Position X="0.75" Y="5.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EAEAAgAAICAAEBAEIAAKAAAAgQCAAAACAAAAhCAAAIg=</HashCode>
+      <FileName>FieldBus\FieldBusManagers\FieldBusManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="FieldBusNodes" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Oleg_ivo.Plc.DistributedMeasurementInformationSystemBase">
+    <Position X="0.75" Y="0.5" Width="3.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AACMAAEAAAAAAAAAgACAAAAAAAAAAAAAwABgAAAAAAA=</HashCode>
+      <FileName>DistributedMeasurementInformationSystemBase.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PlcManagerBase" />
+      <Property Name="Instance" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Oleg_ivo.Plc.PlcManagerBase">
+    <Position X="2.25" Y="2.75" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="PlcFactory" Type="Oleg_ivo.Plc.Factory.IPlcFactory" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="3" />
+        <Point X="6" Y="3" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>KgAABAAAJEIIIAAAAAAAAAIAAYREAAAACAAAAAQAAAA=</HashCode>
+      <FileName>PlcManagerBase.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FieldBusNodesFactory" />
+      <Property Name="PlcFactory" />
+      <Property Name="FieldBusFactory" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="FieldBusManagers" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Oleg_ivo.Plc.FieldBus.FieldBusNodes.FieldBusNodeFactory" Collapsed="true">
+    <Position X="8.75" Y="3.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="PlcFactory" Type="Oleg_ivo.Plc.Factory.IPlcFactory" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.75" Y="3.755" />
+        <Point X="8.375" Y="3.755" />
+        <Point X="8.375" Y="3" />
+        <Point X="7.5" Y="3" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ABAEAAAABAAAgABAAAAAIAIAgAAEAAAAQAAAAAAAAgA=</HashCode>
+      <FileName>FieldBus\FieldBusNodes\FieldBusNodeFactory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PlcFactory" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Oleg_ivo.Plc.FieldBus.FieldBusNodes.FieldBusNode">
+    <Position X="4.75" Y="5.75" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="PhysicalChannels" Type="Oleg_ivo.Plc.Channels.PhysicalChannel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.875" Y="7.495" />
+        <Point X="5.875" Y="8.755" />
+        <Point X="7.25" Y="8.755" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.173" Y="0.029" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="FieldBusAccessor" Type="Oleg_ivo.Plc.FieldBus.IFieldBusAccessor" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.75" Y="7" />
+        <Point X="3.188" Y="7" />
+        <Point X="3.188" Y="8.25" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>EEECAACAICAAABAEBAAKAAAAAQCAEABAAIIAgiAAYEg=</HashCode>
+      <FileName>FieldBus\FieldBusNodes\FieldBusNode.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Plc" />
+      <Property Name="FieldBusManager" />
+      <Property Name="FieldBusNodeAddress" />
+      <Property Name="FieldBusAccessor" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="PhysicalChannels" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Oleg_ivo.Plc.Devices.Contollers.PlcFactory" Collapsed="true">
+    <Position X="8.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Devices\Contollers\PLCFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Oleg_ivo.Plc.Devices.Contollers.PLC" Collapsed="true">
+    <Position X="9" Y="5.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAIgAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Devices\Contollers\PLC.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FieldBusNode" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Oleg_ivo.Plc.Devices.Modules.IOModule" Collapsed="true">
+    <Position X="10.75" Y="8.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="PhysicalChannel" Type="Oleg_ivo.Plc.Channels.PhysicalChannel">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.119" Y="0.062" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAIAQAgAAAGAAAAAAAAAAAAAAACEAAAgAAEAA=</HashCode>
+      <FileName>Devices\Modules\IOModule.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PhysicalChannel" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Oleg_ivo.Plc.Devices.Contollers.FieldBusNodeAddress" Collapsed="true">
+    <Position X="8.5" Y="7.25" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAEgAAAAAEAAAAAAIAAAgAAAAABAiA=</HashCode>
+      <FileName>Devices\Contollers\FieldBusNodeAddress.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Oleg_ivo.Plc.FieldBus.ModbusAccessor">
+    <Position X="18.25" Y="8.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>OIEQEBAAJAAhEBgAAQACAAIAAwCEBAACQACghCEAEgg=</HashCode>
+      <FileName>FieldBus\ModbusAccessor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Oleg_ivo.Plc.FieldBus.FieldBusManagers.ActiveFieldBusManager" Collapsed="true">
+    <Position X="0.5" Y="10.25" Width="2" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="FieldBusAccessor" Type="Oleg_ivo.Plc.FieldBus.IFieldBusAccessor" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.5" Y="10.688" />
+        <Point X="3.188" Y="10.688" />
+        <Point X="3.188" Y="8.88" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>EIEAAACAIAAAEBAAAAACAAAAAQCAAAAAAAAABCBAAAg=</HashCode>
+      <FileName>FieldBus\FieldBusManagers\ActiveFieldBusManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FieldBusAccessor" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Oleg_ivo.Plc.FieldBus.FieldBusNodes.ActiveFieldBusNode" Collapsed="true">
+    <Position X="3.5" Y="9.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="Oleg_ivo.Plc.FieldBus.FieldBusNodes.FieldBusNode" FixedFromPoint="true">
+      <Path>
+        <Point X="4.75" Y="7.188" />
+        <Point X="4.406" Y="7.188" />
+        <Point X="4.406" Y="9.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>EAEAAAAAICAAABAAAAACAAAAAQCAAAAAAAAAACBAAAg=</HashCode>
+      <FileName>FieldBus\FieldBusNodes\ActiveFieldBusNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Oleg_ivo.Plc.FieldBus.FieldBusFactory" Collapsed="true">
+    <Position X="8.75" Y="4.25" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>CAAEAAAAAgAAAAAAAAAAIAAAAAIAgQCIQAAAAAAQEAA=</HashCode>
+      <FileName>FieldBus\FieldBusFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Oleg_ivo.Plc.Channels.PhysicalChannel" Collapsed="true">
+    <Position X="7.25" Y="8.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="IOModule" Type="Oleg_ivo.Plc.Devices.Modules.IOModule">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.082" Y="-0.203" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="LogicalChannels" Type="Oleg_ivo.Plc.Channels.LogicalChannel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.5" Y="9.009" />
+        <Point X="8.5" Y="10.312" />
+        <Point X="7.25" Y="10.312" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="FieldBusNode" Type="Oleg_ivo.Plc.FieldBus.FieldBusNodes.FieldBusNode" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.25" Y="8.562" />
+        <Point X="6.188" Y="8.562" />
+        <Point X="6.188" Y="7.495" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.005" Y="0.07" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AQACAAIAIABAAgAEEAAAAAABCQAAIAAAAAABgoAAAAA=</HashCode>
+      <FileName>Channels\PhysicalChannel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IOModule" />
+      <Property Name="FieldBusNode" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="LogicalChannels" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Oleg_ivo.Plc.Channels.LogicalChannel">
+    <Position X="5.75" Y="9.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="PhysicalChannel" Type="Oleg_ivo.Plc.Channels.PhysicalChannel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.25" Y="10.625" />
+        <Point X="8.812" Y="10.625" />
+        <Point X="8.812" Y="9.009" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.169" Y="0.079" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AQACAIIAICAgAggEEAQKAAFAAAAAIJACDAAgAIAAAAA=</HashCode>
+      <FileName>Channels\LogicalChannel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PhysicalChannel" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Oleg_ivo.Plc.FieldBus.IFieldBusAccessor" Collapsed="true">
+    <Position X="2.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAEAAAAAIAAAABAAAAACAAAAAQCAAAAAAAAABCAAAAg=</HashCode>
+      <FileName>FieldBus\IFieldBusAccessor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Oleg_ivo.Plc.Factory.IPlcFactory" Collapsed="true">
+    <Position X="6" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factory\IPlcFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Oleg_ivo.Plc.Factory.IFieldBusFactory" Collapsed="true">
+    <Position X="6" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAAQCIAAAAAAAAEAA=</HashCode>
+      <FileName>Factory\IFieldBusFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Oleg_ivo.Plc.Factory.IFieldBusNodeFactory" Collapsed="true">
+    <Position X="6" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ABAEAAAAAAAAAAAAAAAAAAIAgAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Factory\IFieldBusNodeFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
