@@ -3,15 +3,18 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:uiElements="clr-namespace:UICommon.WPF.UIElements"
 	mc:Ignorable="d"
-	x:Class="TP.WPF.ucFan"
+	x:Class="UICommon.WPF.ucFan"
+    uiElements:VisualStates.CurrentState="{Binding CurrentState}"
 	x:Name="ucFun1"
 	d:DesignWidth="46" d:DesignHeight="37">
 
 	<Grid x:Name="LayoutRoot">
 		<VisualStateManager.VisualStateGroups>
-			<VisualStateGroup>
-				<VisualState x:Name="Default"/>
+            <VisualStateGroup x:Name="States">
+                <VisualState x:Name="NoSignal"/>
+                <VisualState x:Name="WorkingState"/>
 				<VisualState x:Name="AlarmState">
 						<Storyboard RepeatBehavior="Forever">
 							<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="path">
@@ -31,7 +34,7 @@
 			</Path.Fill>
 		</Path>
 		<Path Data="M507,189L480,189L480,171L507,171z" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF231F20" StrokeThickness="1" StrokeMiterLimit="10" StrokeLineJoin="Miter" Margin="0,0,18,18"/>
-		<Path x:Name="path" Data="F1M489,189C489,198.942,497.058,207,507,207L507,207C516.941,207,525,198.942,525,189L525,189C525,179.059,516.941,171,507,171L507,171C497.058,171,489,179.059,489,189" Stretch="Fill" Margin="9.5,0.5,0.5,0.5">
+        <Path x:Name="path"  Data="F1M489,189C489,198.942,497.058,207,507,207L507,207C516.941,207,525,198.942,525,189L525,189C525,179.059,516.941,171,507,171L507,171C497.058,171,489,179.059,489,189" Stretch="Fill" Margin="9.5,0.5,0.5,0.5">
 			<Path.Fill>
 				<RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5" RadiusY="0.5" RadiusX="0.5">
 					<GradientStop Color="#FFF5FBFE" Offset="0"/>

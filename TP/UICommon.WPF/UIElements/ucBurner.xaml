@@ -3,54 +3,45 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:uiElements="clr-namespace:UICommon.WPF.UIElements"
 	mc:Ignorable="d"
 	x:Class="UICommon.WPF.ucBurner"
+	uiElements:VisualStates.CurrentState="{Binding CurrentState}"
 	x:Name="ucBurner1"
 	d:DesignWidth="65" d:DesignHeight="41">
-	 <UserControl.Resources>
-		<Style x:Key="ShapeBurner2" TargetType="{x:Type Control}">
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type Control}">
-						<Grid Height="41" Width="65">
-							<Path Data="M119.5,439.5 L119.5,479.5 159.5,479.5 159.5,439.5 z" Fill="{DynamicResource BrushGray}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" StrokeThickness="2" Margin="0,0,24,0"/>
-							<Path Data="M159.5,463.5 L183.5,463.5 183.5,455.5 159.5,455.5 z" Fill="{DynamicResource BrushGray}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Width="25" HorizontalAlignment="Right" Margin="0,16"/>
-							<Path x:Name="path" Data="M25,-23 C25,-23 25,-15 33,-15 41,-15 49,-23 49,-23 49,-23 41,-31 33,-31 25,-31 25,-23 25,-23 z" Height="Auto" Margin="0,8,-15,8" Stretch="Fill" StrokeThickness="2" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="40">
-								<Path.Fill>
-									<RadialGradientBrush GradientOrigin="-0.016,0.481" RadiusY="0.606" RadiusX="0.582">
-										<GradientStop Color="#FFC0D410"/>
-										<GradientStop Color="#FFFF0202" Offset="0.241"/>
-									</RadialGradientBrush>
-								</Path.Fill>
-							</Path>
-						</Grid>
-					</ControlTemplate>
-				</Setter.Value>			
-			</Setter>
-			<Style.Triggers>
-                <DataTrigger Binding="{Binding Path=IsValueHigherNormal}" Value="True">
-					<DataTrigger.EnterActions>
-									<BeginStoryboard>
-										<Storyboard RepeatBehavior="Forever">
-                                <!--(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Offset)-->
-                                <!--<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill)[2].(GradientBrush.GradientStops)[1].(GradientStop.Offset)">
-											<SplineDoubleKeyFrame KeyTime="0" Value="0.241"/>
-											<SplineDoubleKeyFrame KeyTime="0:0:1" Value="0.934"/>
-											<SplineDoubleKeyFrame KeyTime="0:0:2" Value="0.241"/>
-										</DoubleAnimationUsingKeyFrames>-->
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" >
-											<SplineDoubleKeyFrame KeyTime="0" Value="0.3"/>
-											<SplineDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
-											<SplineDoubleKeyFrame KeyTime="0:0:2" Value="0.3"/>
-										</DoubleAnimationUsingKeyFrames>
-		              					</Storyboard>
-									</BeginStoryboard>
-					</DataTrigger.EnterActions>
-                </DataTrigger>
-            </Style.Triggers>
-		</Style>
-</UserControl.Resources>
-	<Grid x:Name="LayoutRoot">
-		<Control Style="{DynamicResource ShapeBurner2}"/>
-	</Grid>
+	<Viewbox Stretch="Fill">
+		<!--<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="States">
+                <VisualState x:Name="NoSignal"/>
+				<VisualState x:Name="WorkingState">
+					<Storyboard RepeatBehavior="Forever">
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Offset)" Storyboard.TargetName="path">
+							<EasingDoubleKeyFrame KeyTime="0:0:2" Value="0.88"/>
+							<EasingDoubleKeyFrame KeyTime="0:0:4" Value="0.24"/>
+						</DoubleAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>-->
+		<Grid x:Name="LayoutRoot" Height="41" Width="65">
+			<Path Data="M159.5,463.5 L183.5,463.5 183.5,455.5 159.5,455.5 z" Fill="{DynamicResource BrushGray}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Width="25" HorizontalAlignment="Right" Margin="0,16"/>
+			<Path x:Name="path" Data="M25,-23 C25,-23 25,-15 33,-15 41,-15 49,-23 49,-23 49,-23 41,-31 33,-31 25,-31 25,-23 25,-23 z" Height="Auto" Margin="0,8,-15,8" Stretch="Fill" StrokeThickness="2" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="40">
+				<Path.Fill>
+					<RadialGradientBrush GradientOrigin="-0.016,0.481" RadiusY="0.606" RadiusX="0.582">
+						<GradientStop Color="#FFC0D410"/>
+						<GradientStop Color="#FFFF0202" Offset="0.24"/>
+					</RadialGradientBrush>
+				</Path.Fill>
+			</Path>
+			<Path Data="M120,207L138,207L138,189L120,189z" Stretch="Fill" Width="41" HorizontalAlignment="Left" Height="41" Stroke="{DynamicResource BrushBlack}">
+				<Path.Fill>
+					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+						<GradientStop Color="#FFCBD1D6" Offset="0"/>
+						<GradientStop Color="#FFAAB1B5" Offset="0.43258699774742126"/>
+						<GradientStop Color="#FFF5FBFE" Offset="1"/>
+					</LinearGradientBrush>
+				</Path.Fill>
+			</Path>
+		</Grid>
+	</Viewbox>
 </UserControl>
