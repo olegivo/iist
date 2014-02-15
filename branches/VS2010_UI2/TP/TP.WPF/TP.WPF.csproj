@@ -148,9 +148,6 @@
     <Compile Include="Views\MainShell.xaml.cs">
       <DependentUpon>MainShell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ucFan.xaml.cs">
-      <DependentUpon>ucFan.xaml</DependentUpon>
-    </Compile>
     <Page Include="Resources\MainWindowMenus.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -184,10 +181,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ucDrumTypeFurnaceNew.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ucFan.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

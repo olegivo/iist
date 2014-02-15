@@ -96,7 +96,8 @@ namespace TP.WPF.ViewModels
                         "IsValueLowerCritycal",
                         "ShortCurrentValue",
                         "DiscreteOnState",
-                        "IsOn"
+                        "IsOn",
+                        "CurrentState"
                     };
                 foreach (var propertyName in propertyNames)
                     OnPropertyChanged(propertyName);
@@ -182,6 +183,19 @@ namespace TP.WPF.ViewModels
         }
 
 
+        public string CurrentState
+        {
+            get
+            {
+                if (IsValueHigherNormal || IsValueLowerNormal)
+                    return "WarningState";
+                if (IsValueLowerCritycal || IsValueHigherCritycal)
+                    return "AlarmState";
+                if (CurrentValue == 0)
+                    return "OffState";
+                if (CurrentValue != null)
+                    return "WorkingState";
+                return "NoSignal";
 
 
     }
