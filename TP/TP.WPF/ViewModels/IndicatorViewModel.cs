@@ -188,8 +188,6 @@ namespace TP.WPF.ViewModels
             get
             {
                 if (IsValueHigherNormal || IsValueLowerNormal)
-                    return "WarningState";
-                if (IsValueLowerCritycal || IsValueHigherCritycal)
                     return "AlarmState";
                 if (CurrentValue == 0)
                     return "OffState";

@@ -106,6 +106,9 @@
   <ItemGroup>
     <Compile Include="Converters\ValueHeightConverter.cs" />
     <Compile Include="Converters\ValueAngleConverter.cs" />
+    <Compile Include="UIElements\ucFurnanceLoad.xaml.cs">
+      <DependentUpon>ucFurnanceLoad.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIElements\VisualStates .cs" />
     <Compile Include="UIElements\ucBurner.xaml.cs">
       <DependentUpon>ucBurner.xaml</DependentUpon>
@@ -162,6 +165,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIElements\ucFan.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIElements\ucFurnanceLoad.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

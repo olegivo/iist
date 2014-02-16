@@ -22,14 +22,6 @@ namespace UICommon.WPF
 		public ucLevelIndicator()
 		{
 			this.InitializeComponent();
-            this.DataContextChanged += OnDataContextChanged;
 		}
-
-	    private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-	    {
-			//TODO:http://www.wiredprairie.us/blog/index.php/archives/1111
-            //var v = sender as IndicatorViewModel;
-	        throw new NotImplementedException();
-	    }
 	}
 }
