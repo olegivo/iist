@@ -10,7 +10,7 @@
 	x:Name="ucBurner1"
 	d:DesignWidth="65" d:DesignHeight="41">
 	<Viewbox Stretch="Fill">
-		<!--<VisualStateManager.VisualStateGroups>
+		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="States">
                 <VisualState x:Name="NoSignal"/>
 				<VisualState x:Name="WorkingState">
@@ -22,7 +22,7 @@
 					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>
-		</VisualStateManager.VisualStateGroups>-->
+		</VisualStateManager.VisualStateGroups>
 		<Grid x:Name="LayoutRoot" Height="41" Width="65">
 			<Path Data="M159.5,463.5 L183.5,463.5 183.5,455.5 159.5,455.5 z" Fill="{DynamicResource BrushGray}" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Width="25" HorizontalAlignment="Right" Margin="0,16"/>
 			<Path x:Name="path" Data="M25,-23 C25,-23 25,-15 33,-15 41,-15 49,-23 49,-23 49,-23 41,-31 33,-31 25,-31 25,-23 25,-23 z" Height="Auto" Margin="0,8,-15,8" Stretch="Fill" StrokeThickness="2" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="40">
