@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
 using System.Windows.Data;
 
 namespace UICommon.WPF.Converters
@@ -14,9 +18,9 @@ namespace UICommon.WPF.Converters
             double? minValue = values[1] as double?;
             double? maxValue = values[2] as double?;
 
-            if (values[0] != null)
+            if (values[0] != null && currentValue!=0)
             {
-                total = (maxValue - minValue)/currentValue*185;
+                total = 185/(maxValue - minValue)*currentValue;
             }
 
             return total;

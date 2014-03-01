@@ -28,7 +28,8 @@
 			<Style.Triggers>
 				<DataTrigger Binding="{Binding Path=IsValueHigherNormal}" Value="true">
 					<DataTrigger.EnterActions>
-						<BeginStoryboard Storyboard="{StaticResource IndicatorBackgroundAnimation}"/>
+						<!--BUG: неадыкватная реакция на срабатывание триггера, аварийный режим отключен --> 
+						<!--<BeginStoryboard Storyboard="{StaticResource IndicatorBackgroundAnimation}"/>-->
 					</DataTrigger.EnterActions>
 				</DataTrigger>
 			</Style.Triggers>
@@ -40,9 +41,9 @@
 			<Path x:Name="WhiteBackground" Data="M0.5,79.7 C0.5,79.7 0.5,0.49999999 72.5,0.49999999 C144.5,0.49999999 144.5,79.700003 144.5,79.700003 z" Height="80.7" Canvas.Left="7.5" Canvas.Top="8.3" Width="145">
 				<Path.Fill>
 					<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-						<GradientStop Color="White" Offset="0"/>
-						<GradientStop Color="White" Offset="1"/>
-						<GradientStop Color="White" Offset="0.75"/>
+						<GradientStop Color="#FFEDBC50" Offset="0.95"/>
+                        <GradientStop Color="#FFEDDEB5" Offset="0.3"/>
+                        <GradientStop Color="#FFEDDEB5" Offset="1"/>
 					</LinearGradientBrush>
 				</Path.Fill>
 			</Path>
@@ -70,11 +71,14 @@
                     </RotateTransform>
 				</Path.RenderTransform>
 			</Path>
-            <TextBlock x:Name="IndicatorCapture" Height="17.6" Canvas.Left="56" TextWrapping="Wrap" Text="{Binding Path=Caption}" Canvas.Top="35.2" Width="48" FontSize="9.333" TextAlignment="Center" Foreground="#FF817979"/>
+            <TextBlock x:Name="IndicatorCapture" Height="17.6" Canvas.Left="56" TextWrapping="Wrap" Text="{Binding Path=Caption}" Canvas.Top="35.2" Width="48" TextAlignment="Center" Foreground="#FF817979"/>
             <Path Data="M55.500203,87.5 C55.500203,87.5 55.5,61.1 79.5,61.1 103.5,61.1 103.4998,87.5 103.4998,87.5 z" Fill="#FFF4F4F5" Height="27.4" Canvas.Left="55.5" Stretch="Fill" Stroke="Black" Canvas.Top="61.1" Width="49"/>
-			<Border BorderBrush="Black" BorderThickness="0,0,0,1" Height="14.117" Canvas.Left="64" Canvas.Top="70.083" Width="32">
-				<TextBlock x:Name="IndicatorValue" TextWrapping="Wrap" Text="{Binding CurrentValue}" FontFamily="Tahoma" TextAlignment="Center"/>
+			<Border BorderBrush="Black" BorderThickness="0" Height="14.117" Canvas.Left="64" Canvas.Top="70.083" Width="32">
+				<TextBlock x:Name="IndicatorValue" TextWrapping="Wrap" Text="{Binding CurrentValue}" FontFamily="Tahoma" TextAlignment="Center" FontWeight="ExtraBold" FontSize="10.667"/>
 			</Border>
+			<TextBlock Text="{Binding MaxValue}" FontFamily="Tahoma" TextAlignment="Center" FontSize="6" Width="16" Canvas.Left="142.626" Canvas.Top="70.4"/>
+			<TextBlock Text="{Binding MinValue}" FontFamily="Tahoma" TextAlignment="Center" FontSize="6" Width="16" Canvas.Top="70.4" Canvas.Left="1.625"/>
+			<TextBlock Text="{Binding MaxNormalValue}" FontFamily="Tahoma" TextAlignment="Center" FontSize="6" Width="16" Canvas.Top="19.156" Canvas.Left="114.5"/>
 			<!-- стрелка, указывающая нижнюю границу безаварийной работы
 			<Path x:Name="MinNormalArrow" Data="M11.7368,-16.19858 L11.7368,22.677574 45.870133,2.4623134 z" Fill="#FFF4F4F5" Height="5" Stretch="Fill" Stroke="Black" Canvas.Top="78.575" Width="5" RenderTransformOrigin="16,0.205">
 				<Path.RenderTransform>

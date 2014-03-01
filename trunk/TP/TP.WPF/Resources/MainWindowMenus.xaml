@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Resources="http://synergy.mixmodes.com/resources">
+    <Menu x:Key="MainWindowMenus"
+          Background="Transparent"
+          VerticalAlignment="Center"
+          DockPanel.Dock="Left"
+          HorizontalAlignment="Left"
+          Margin="8,0,0,0">
+          <!--<MenuItem Header="{x:Static Resources:Language.FileMenu}">
+            <MenuItem Header="{x:Static Resources:Language.FileNewMenu}">
+                <MenuItem Header="{x:Static Resources:Language.ProjectMenu}" Command="{Binding NewProject}"/>
+                <MenuItem Header="{x:Static Resources:Language.IterationMenu}" Command="{Binding Iteration}"/>
+            </MenuItem>
+            <Separator />
+            <MenuItem Header="{x:Static Resources:Language.ExitMenu}" Command="{Binding ExitCommand}"/>
+        </MenuItem>-->
+        <MenuItem Header="Подключение">
+            <MenuItem Header="Подключиться к серверу" Command="{Binding RegisterCommand}">
+                <MenuItem.Icon>
+                    <Image Source="../Views/Images/connect.png"></Image>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Отключится от сервера" Command="{Binding UnregisterCommand}">
+                <MenuItem.Icon>
+                    <Image Source="../Views/Images/cross.png"></Image>
+                </MenuItem.Icon>
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="Окна и панели">
+            <MenuItem Header="Показать панель индикаторов"></MenuItem>
+            <MenuItem Header="Показать отладочную панель"></MenuItem>
+        </MenuItem>
+        <MenuItem Header="Справка">
+            <MenuItem Header="Инструкция по пользованию ТП"></MenuItem>
+            <MenuItem Header="Сайт проекта"></MenuItem>
+        </MenuItem>
+    </Menu>
+</ResourceDictionary>

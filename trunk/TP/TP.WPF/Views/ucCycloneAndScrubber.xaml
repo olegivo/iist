@@ -3,8 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:Wpf="clr-namespace:UICommon.WPF;assembly=UICommon.WPF"
 	x:Class="TP.WPF.Views.ucCycloneAndScrubber"
-	x:Name="UserControl"
-	Width="1024" Height="768">
+	x:Name="UserControl">
 
 
 <!--Область для рисования-->
@@ -215,6 +214,7 @@
             <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_L10" Width="192" DataContext="{Binding IndicatorViewModels[10]}" Canvas.Left="8"/>
             <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_L11" Width="192" DataContext="{Binding IndicatorViewModels[11]}" Canvas.Left="208"/>
             <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_L17" Width="192" DataContext="{Binding IndicatorViewModels[17]}" Canvas.Left="408"/>
+            <Wpf:ucBurner Canvas.Top="354" Height="96" x:Name="indicator_B1" Width="192" DataContext="{Binding IndicatorViewModels[1]}" Canvas.Left="190"/>
         </Canvas>
 	</Viewbox>
 </UserControl>
