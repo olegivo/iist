@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using TP.WPF.ViewModels;
-using DataGridAutoGeneratingColumnEventArgs = Microsoft.Windows.Controls.DataGridAutoGeneratingColumnEventArgs;
+
 
 namespace TP.WPF.Views
 {
@@ -18,6 +18,7 @@ namespace TP.WPF.Views
             InitializeComponent();
             visibleColumnNames = new StringCollection { "Id", "Description", "CurrentValue", "IsActive" };
             grid.AutoGeneratingColumn += grid_AutoGeneratingColumn;
+            
         }
 
         void grid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)

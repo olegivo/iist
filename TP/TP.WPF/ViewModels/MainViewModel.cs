@@ -10,6 +10,14 @@ namespace TP.WPF.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        public FinishCleaningViewModel FinishCleaning { get; private set; }
+        public DrumTypeFurnaceViewModel DrumTypeFurnace { get; private set; }
+        public CycloneAndScrubberViewModel CycloneAndScrubber { get; private set; }
+        public AllHeatExchangerViewModel HeatExchanger { get; private set; }
+        public ReheatChamberViewModel ReheatChamber { get; private set; }
+        public SummaryTableViewModel SummaryTable { get; private set; }
+        public ChartTabViewModel ChartTab { get; private set; }
+
         public MainViewModel()
         {
             TestCommand = new DelegatingCommand(OnTest);
@@ -27,6 +35,7 @@ namespace TP.WPF.ViewModels
             ReheatChamber = new ReheatChamberViewModel();
             HeatExchanger = new AllHeatExchangerViewModel();
             SummaryTable = new SummaryTableViewModel();
+            ChartTab = new ChartTabViewModel();
 
             channelController1.AutoSubscribeChannels = true;
             channelController1.InitProvider("HighLevelClient");
@@ -66,7 +75,9 @@ namespace TP.WPF.ViewModels
                     CycloneAndScrubber,
                     ReheatChamber,
                     HeatExchanger,
-                    SummaryTable
+					//BUG: В методе findByChannelId вылетаеш ошибка при регистрации каналов
+                    //SummaryTable,
+                    ChartTab
                 };
 
             var models = new ObservableDictionary<int, IndicatorViewModel>();
@@ -122,13 +133,6 @@ namespace TP.WPF.ViewModels
 
         public ChannelController channelController1 = new ChannelController();
         private string messages;
-
-        public FinishCleaningViewModel FinishCleaning { get; private set; }
-        public DrumTypeFurnaceViewModel DrumTypeFurnace { get; private set; }
-        public CycloneAndScrubberViewModel CycloneAndScrubber { get; private set; }
-        public AllHeatExchangerViewModel HeatExchanger { get; private set; }
-        public ReheatChamberViewModel ReheatChamber { get; private set; }
-        public SummaryTableViewModel SummaryTable { get; private set; }
 
 
         void channelController1_NeedProtocol(object sender, EventArgs e)

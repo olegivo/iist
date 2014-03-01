@@ -69,7 +69,8 @@ namespace TP.WPF.ViewModels
         /// <param name="message"></param>
         public virtual void OnChannelUnRegistered(ChannelRegistrationMessage message)
         {
-            
+            indicatorViewModels[message.LogicalChannelId].CurrentValue = null;
+
         }
 
         /// <summary>
@@ -79,6 +80,10 @@ namespace TP.WPF.ViewModels
         /// </summary>
         public virtual void OnUnregistered()
         {
+            foreach (var indicatorViewModel in IndicatorViewModels)
+            {
+                indicatorViewModel.Value.CurrentValue = null;
+            }
             
         }
 

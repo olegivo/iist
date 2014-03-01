@@ -10,7 +10,7 @@
     <DefaultClrNameSpace>UICommon.WPF</DefaultClrNameSpace>
     <RootNamespace>UICommon.WPF</RootNamespace>
     <AssemblyName>UICommon.WPF</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -37,6 +37,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -80,14 +81,6 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="JulMar.Wpf.Helpers, Version=1.0.0.5, Culture=neutral, PublicKeyToken=ff1c121d8ddc1581, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\TP.WPF\bin\x86\Debug\JulMar.Wpf.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NLog.2.1.0\lib\net35\NLog.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -97,6 +90,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Controls.DataVisualization.Toolkit" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -108,13 +102,25 @@
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="WPFToolkit" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ValueHeightConverter.cs" />
     <Compile Include="Converters\ValueAngleConverter.cs" />
+    <Compile Include="UIElements\VisualStates .cs" />
+    <Compile Include="UIElements\ucBurner.xaml.cs">
+      <DependentUpon>ucBurner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIElements\ucFan.xaml.cs">
+      <DependentUpon>ucFan.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIIndicators\Clock.xaml.cs">
       <DependentUpon>Clock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIIndicators\UcDiscreteIndicator.xaml.cs">
+      <DependentUpon>UcDiscreteIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIIndicators\UcLevelIndicator.xaml.cs">
+      <DependentUpon>UcLevelIndicator.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIIndicators\ucSimpleIndicator.xaml.cs">
       <DependentUpon>ucSimpleIndicator.xaml</DependentUpon>
@@ -151,7 +157,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UIElements\ucBurner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIElements\ucFan.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UIIndicators\Clock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIIndicators\UcDiscreteIndicator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIIndicators\UcLevelIndicator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -185,7 +207,6 @@
     <None Include="Application.ico">
       <Visible>false</Visible>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="dickiedadevil128x128.ico" />

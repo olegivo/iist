@@ -132,7 +132,7 @@ namespace Oleg_ivo.WAGO.Factory
             ushort logicalChannelSize;
             GetIOModuleDimention(ioModule, out logicalChannelSize, out count);
 
-            return BuildLogicalChannel(physicalChannel, 0, logicalChannelSize, entity);
+            return BuildLogicalChannel(physicalChannel, (ushort)(entity!=null ? entity.AddressShift.Value : 0), logicalChannelSize, entity);
         }
 
 
