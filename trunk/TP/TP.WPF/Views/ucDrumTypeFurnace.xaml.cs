@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using Microsoft.Practices.Unity;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 
 namespace TP.WPF.Views
 {

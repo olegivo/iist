@@ -1,10 +1,9 @@
 using System;
 using DMS.Common.Messages;
-using JulMar.Windows.Mvvm;
 
 namespace TP.WPF.ViewModels
 {
-    public abstract class ViewModelBase : ViewModel
+    public abstract class ViewModelBase : GalaSoft.MvvmLight.ViewModelBase
     {
         private ObservableDictionary<int, IndicatorViewModel> indicatorViewModels;
         public ObservableDictionary<int, IndicatorViewModel> IndicatorViewModels
@@ -13,9 +12,9 @@ namespace TP.WPF.ViewModels
             set
             {
                 indicatorViewModels = value;
-                OnPropertyChanged("IndicatorViewModels");
+                RaisePropertyChanged("IndicatorViewModels");
                 if (indicatorViewModels != null)
-                    indicatorViewModels.CollectionChanged += (sender, e) => OnPropertyChanged("IndicatorViewModels");
+                    indicatorViewModels.CollectionChanged += (sender, e) => RaisePropertyChanged("IndicatorViewModels");
             }
         }
 

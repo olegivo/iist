@@ -3,6 +3,8 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
 using MixModes.Synergy.VisualFramework.Windows;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
+using TP.WPF.ViewModels;
 
 namespace TP.WPF.Views
 {
@@ -20,7 +22,14 @@ namespace TP.WPF.Views
 		    this.GenerateIndicatorsPanel();
 		}
 
-        private Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)
+        [Dependency(Required = true)]
+	    public MainViewModel ViewModel
+	    {
+	        get { return (MainViewModel) DataContext; }
+	        set { DataContext = value; }
+	    }
+
+	    private Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)
         {
             return assembly.GetTypes().Where(t => String.Equals(t.Namespace, nameSpace, StringComparison.Ordinal)).ToArray();
         }

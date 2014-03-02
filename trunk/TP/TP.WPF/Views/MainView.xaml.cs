@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
+using TP.WPF.ViewModels;
 
 namespace TP.WPF.Views
 {
@@ -6,11 +8,18 @@ namespace TP.WPF.Views
     /// Interaction logic for MainView.xaml
     /// </summary>
 
-	public partial class MainView: Window
+	public partial class MainView
     {
         public MainView()
         {
             InitializeComponent(); 
+        }
+
+        [Dependency(Required = true)]
+        public MainViewModel ViewModel
+        {
+            get { return (MainViewModel)DataContext; }
+            set { DataContext = value; }
         }
 
         /*

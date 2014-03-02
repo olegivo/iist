@@ -1,10 +1,9 @@
 ﻿using System;
 using DMS.Common.Messages;
-using JulMar.Windows.Mvvm;
 
 namespace TP.WPF.ViewModels
 {
-    public class IndicatorViewModel : ViewModel
+    public class IndicatorViewModel : GalaSoft.MvvmLight.ViewModelBase
     {
         private double? minValue;
         private double? maxValue;
@@ -29,7 +28,7 @@ namespace TP.WPF.ViewModels
             set
             {
                 caption = value;
-                OnPropertyChanged("Caption");
+                RaisePropertyChanged("Caption");
             }
         }
 
@@ -44,7 +43,7 @@ namespace TP.WPF.ViewModels
             set
             {
                 minValue = value;
-                OnPropertyChanged("MinValue");
+                RaisePropertyChanged("MinValue");
             }
         }
 
@@ -54,7 +53,7 @@ namespace TP.WPF.ViewModels
             set
             {
                 maxValue = value;
-                OnPropertyChanged("MaxValue");
+                RaisePropertyChanged("MaxValue");
             }
         }
 
@@ -64,7 +63,7 @@ namespace TP.WPF.ViewModels
             set
             {
                 minNormalValue = value;
-                OnPropertyChanged("MinNormalValue");
+                RaisePropertyChanged("MinNormalValue");
             }
         }
 
@@ -74,7 +73,7 @@ namespace TP.WPF.ViewModels
             set
             {
                 maxNormalValue = value;
-                OnPropertyChanged("MaxNormalValue");
+                RaisePropertyChanged("MaxNormalValue");
             }
         }
 
@@ -87,7 +86,7 @@ namespace TP.WPF.ViewModels
             set
             {
                 currentValue = value;
-                OnPropertyChanged("CurrentValue");
+                RaisePropertyChanged("CurrentValue");
                 var propertyNames = new[]
                 {
                     "IsValueHigherNormal",
@@ -100,7 +99,7 @@ namespace TP.WPF.ViewModels
                     "CurrentState"
                 };
                 foreach (var propertyName in propertyNames)
-                    OnPropertyChanged(propertyName);
+                    RaisePropertyChanged(propertyName);
             }
         }
 
@@ -163,7 +162,7 @@ namespace TP.WPF.ViewModels
                     discreteOnState = true; //Convert.ToBoolean(value);
                 else
                     discreteOnState = false;
-                OnPropertyChanged("DiscreteOnState");
+                RaisePropertyChanged("DiscreteOnState");
 
             }
         }

@@ -17,7 +17,7 @@ namespace TP.WPF.ViewModels
         //        if (phLevel1 != value)
         //        {
         //            phLevel1 = value;
-        //            OnPropertyChanged("PhLevel_CF1");
+        //            RaisePropertyChanged("PhLevel_CF1");
         //        }
         //    }
         //}
@@ -34,7 +34,7 @@ namespace TP.WPF.ViewModels
         //        if (phLevel2 != value)
         //        {
         //            phLevel2 = value;
-        //            OnPropertyChanged("PhLevel_CF2");
+        //            RaisePropertyChanged("PhLevel_CF2");
         //        }
         //    }
         //}
@@ -50,7 +50,7 @@ namespace TP.WPF.ViewModels
         //        if (level10 != value)
         //        {
         //            level10 = value;
-        //            OnPropertyChanged("Level_DU10");
+        //            RaisePropertyChanged("Level_DU10");
         //        }
         //    }
         //}

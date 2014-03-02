@@ -17,7 +17,7 @@ namespace TP.WPF.ViewModels
                 if (temperature3 != value)
                 {
                     temperature3 = value;
-                    OnPropertyChanged("Temperature_TP3");
+                    RaisePropertyChanged("Temperature_TP3");
                 }
             }
         }
@@ -33,7 +33,7 @@ namespace TP.WPF.ViewModels
                 if (temperature4 != value)
                 {
                     temperature4 = value;
-                    OnPropertyChanged("Temperature_TR4");
+                    RaisePropertyChanged("Temperature_TR4");
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace TP.WPF.ViewModels
                 if (temperature5 != value)
                 {
                     temperature5 = value;
-                    OnPropertyChanged("Temperature_TR5");
+                    RaisePropertyChanged("Temperature_TR5");
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace TP.WPF.ViewModels
                 if (concentration_O2 != value)
                 {
                     concentration_O2 = value;
-                    OnPropertyChanged("GasConcentration_O2");
+                    RaisePropertyChanged("GasConcentration_O2");
                 }
             }
         }
@@ -81,7 +81,7 @@ namespace TP.WPF.ViewModels
                 if (concentration_CO != value)
                 {
                     concentration_CO = value;
-                    OnPropertyChanged("GasConcentration_CO");
+                    RaisePropertyChanged("GasConcentration_CO");
                 }
             }
         }

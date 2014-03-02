@@ -17,7 +17,7 @@ namespace TP.WPF.ViewModels
                 if (temperature1 != value)
                 {
                     temperature1 = value;
-                    OnPropertyChanged("Temperature_TC1");
+                    RaisePropertyChanged("Temperature_TC1");
                 }
             }
         }
@@ -33,7 +33,7 @@ namespace TP.WPF.ViewModels
                 if (temperature2 != value)
                 {
                     temperature2 = value;
-                    OnPropertyChanged("Temperature_TC2");
+                    RaisePropertyChanged("Temperature_TC2");
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace TP.WPF.ViewModels
                 if (speed != value)
                 {
                     speed = value;
-                    OnPropertyChanged("Speed_S");
+                    RaisePropertyChanged("Speed_S");
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace TP.WPF.ViewModels
                 if (temperature8 != value)
                 {
                     temperature8 = value;
-                    OnPropertyChanged("Temperature_TC8");
+                    RaisePropertyChanged("Temperature_TC8");
                 }
             }
         }
@@ -81,7 +81,7 @@ namespace TP.WPF.ViewModels
                 if (level9 != value)
                 {
                     level9 = value;
-                    OnPropertyChanged("Level_DU9");
+                    RaisePropertyChanged("Level_DU9");
                 }
             }
         }

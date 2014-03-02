@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using DMS.Common.Messages;
-using JulMar.Windows.Mvvm;
+using GalaSoft.MvvmLight.Command;
 using TP.WPF.ViewModels.AutoControl;
 
 namespace TP.WPF.ViewModels
@@ -14,7 +14,7 @@ namespace TP.WPF.ViewModels
         {
             autoControl = new FinishCleaningAutoControl(this);
             //TEST: для тестового изменения значения
-            IncreaseCommand = new DelegatingCommand(OnIncrease);
+            IncreaseCommand = new RelayCommand(OnIncrease);
         }
 
         //TEST: метод для тестового изменения значения
@@ -54,7 +54,7 @@ namespace TP.WPF.ViewModels
                 if (temperature6 != value)
                 {
                     temperature6 = value;
-                    OnPropertyChanged("Temperature_TC6");
+                    RaisePropertyChanged("Temperature_TC6");
                 }
             }
         }
@@ -67,7 +67,7 @@ namespace TP.WPF.ViewModels
                 if (temperature7 != value)
                 {
                     temperature7 = value;
-                    OnPropertyChanged("Temperature_TC7");
+                    RaisePropertyChanged("Temperature_TC7");
                 }
             }
         }
@@ -80,8 +80,8 @@ namespace TP.WPF.ViewModels
                 if (concentration_CO != value)
                 {
                     concentration_CO = value;
-                    OnPropertyChanged("GasConcentration_CO");
-                    OnPropertyChanged("Massa_CO");
+                    RaisePropertyChanged("GasConcentration_CO");
+                    RaisePropertyChanged("Massa_CO");
                 }
             }
         }
@@ -94,7 +94,7 @@ namespace TP.WPF.ViewModels
                 if (concentration_O2 != value)
                 {
                     concentration_O2 = value;
-                    OnPropertyChanged("GasConcentration_O2");
+                    RaisePropertyChanged("GasConcentration_O2");
                 }
             }
         }
@@ -107,8 +107,8 @@ namespace TP.WPF.ViewModels
                 if (concentration_SO2 != value)
                 {
                     concentration_SO2 = value;
-                    OnPropertyChanged("GasConcentration_SO2");
-                    OnPropertyChanged("Massa_SO2");
+                    RaisePropertyChanged("GasConcentration_SO2");
+                    RaisePropertyChanged("Massa_SO2");
                 }
             }
         }
@@ -121,8 +121,8 @@ namespace TP.WPF.ViewModels
                 if (concentration_NO2 != value)
                 {
                     concentration_NO2 = value;
-                    OnPropertyChanged("GasConcentration_NO2");
-                    OnPropertyChanged("Massa_NO2");
+                    RaisePropertyChanged("GasConcentration_NO2");
+                    RaisePropertyChanged("Massa_NO2");
                 }
             }
         }
@@ -135,8 +135,8 @@ namespace TP.WPF.ViewModels
                 if (concentration_NO != value)
                 {
                     concentration_NO = value;
-                    OnPropertyChanged("GasConcentration_NO");
-                    OnPropertyChanged("Massa_NO");
+                    RaisePropertyChanged("GasConcentration_NO");
+                    RaisePropertyChanged("Massa_NO");
                 }
             }
         }
@@ -180,7 +180,7 @@ namespace TP.WPF.ViewModels
                 if (burnerStatus != value)
                 {
                     burnerStatus = value;
-                    OnPropertyChanged("BurnerStatus");
+                    RaisePropertyChanged("BurnerStatus");
                     RaiseSendMessage(10001, BurnerStatus);
                 }
             }
@@ -198,7 +198,7 @@ namespace TP.WPF.ViewModels
                 {
                     v = value;
                     RaiseSendMessage(10002, V);
-                    OnPropertyChanged("V");
+                    RaisePropertyChanged("V");
                 }
             }
         }
@@ -213,7 +213,7 @@ namespace TP.WPF.ViewModels
                 if (autoControl.IsAutomaticControl != value)
                 {
                     autoControl.IsAutomaticControl = value;
-                    OnPropertyChanged("IsAutomaticControl");
+                    RaisePropertyChanged("IsAutomaticControl");
                 }
             }
         }
