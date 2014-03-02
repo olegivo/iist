@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using TP.WPF.IoC;
 
 namespace TP.WPF
 {
@@ -18,7 +19,7 @@ namespace TP.WPF
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            MyOwnBootStraper bootstrapper = new MyOwnBootStraper();
+            var bootstrapper = new TpBootStraper(e.Args);
             bootstrapper.Run();
         }
     }

@@ -19,9 +19,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Views="clr-namespace:TP.WPF.Views" 
-        xmlns:ViewModels="clr-namespace:TP.WPF.ViewModels"
-        xmlns:julmar="http://www.julmar.com/wpfhelpers"
+        xmlns:Views="clr-namespace:TP.WPF.Views"
         xmlns:cal="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
         mc:Ignorable="d"
 	    x:Class="TP.WPF.Views.MainView"
@@ -34,18 +32,11 @@
         Visibility="Visible" 
         AllowsTransparency="True" 
         WindowStyle="None" 
-        Background="{x:Null}"
-        DataContext="{julmar:ViewModelCreator {x:Type ViewModels:MainViewModel}}">
-
-    <Window.Resources>
-        <!-- Bindable commands sit in resources and allow keyboard input to target ViewModel commands -->
-        <julmar:BindableCommand x:Key="CloseCommand" Command="{Binding CloseAppCommand}" />
-        <julmar:BindableCommand x:Key="TestCommand" Command="{Binding TestCommand}" />
-    </Window.Resources>
+        Background="{x:Null}">
 
     <Window.InputBindings>
-        <KeyBinding Key="X" Modifiers="ALT" Command="{StaticResource CloseCommand}" />
-        <KeyBinding Key="D" Modifiers="Control" Command="{StaticResource TestCommand}" />
+        <KeyBinding Key="X" Modifiers="ALT" Command="{Binding CloseCommand}" />
+        <KeyBinding Key="D" Modifiers="Control" Command="{Binding TestCommand}" />
     </Window.InputBindings>
 
     <!--Рабочая поверхность-->
@@ -104,9 +95,9 @@
                 <ColumnDefinition Width="0.333*"/>
                 <ColumnDefinition Width="0.333*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="CloseButton" Content="Button" Style="{DynamicResource CloseButtonStyle}" Grid.ColumnSpan="1" Grid.Column="2" Command="{Binding CloseAppCommand}"/>
-            <Button x:Name="MaximizeButton" Content="Button" Style="{DynamicResource MaximizeButtonStyle}" Grid.ColumnSpan="1" Grid.Column="1" Click="MaximizeButton_Click"/>
-            <Button x:Name="MinimizeButton" Content="Button" Style="{DynamicResource MinimizeButtonStyle}" Grid.ColumnSpan="1" Grid.Column="0" Click="MinimizeButton_Click"/>
+            <Button x:Name="CloseButton" Content="Button" Style="{DynamicResource CloseButtonStyle}" Grid.Column="2" Command="{Binding CloseAppCommand}"/>
+            <Button x:Name="MaximizeButton" Content="Button" Style="{DynamicResource MaximizeButtonStyle}" Grid.Column="1" Click="MaximizeButton_Click"/>
+            <Button x:Name="MinimizeButton" Content="Button" Style="{DynamicResource MinimizeButtonStyle}" Grid.Column="0" Click="MinimizeButton_Click"/>
         </Grid>
         <Button Content="Button" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="25" Style="{DynamicResource MenuButtonStyle}"/>
         <Menu Margin="0" HorizontalAlignment="Left" Background="{x:Null}" Height="25" VerticalAlignment="Top" Width="30">

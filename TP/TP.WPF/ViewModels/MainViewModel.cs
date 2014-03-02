@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using DMS.Common.Messages;
-using JulMar.Windows.Interfaces;
-using JulMar.Windows.Mvvm;
-
+using GalaSoft.MvvmLight.Command;
 
 
 namespace TP.WPF.ViewModels
@@ -20,12 +18,12 @@ namespace TP.WPF.ViewModels
 
         public MainViewModel()
         {
-            TestCommand = new DelegatingCommand(OnTest);
-            CloseAppCommand = new DelegatingCommand(OnCloseApp);
-            DisplayAboutCommand = new DelegatingCommand(OnShowAbout);
+            TestCommand = new RelayCommand(OnTest);
+            CloseAppCommand = new RelayCommand(OnCloseApp);
+            DisplayAboutCommand = new RelayCommand(OnShowAbout);
 
-            RegisterCommand = new DelegatingCommand(OnRegister);
-            UnregisterCommand = new DelegatingCommand(OnUnregister);
+            RegisterCommand = new RelayCommand(OnRegister);
+            UnregisterCommand = new RelayCommand(OnUnregister);
 
             FinishCleaning = new FinishCleaningViewModel();
             FinishCleaning.SendControlMessage += FinishCleaning_SendControlMessage;
@@ -112,7 +110,7 @@ namespace TP.WPF.ViewModels
             if (!channelController1.CanRegister)
                 channelController1.Unregister();
             // Ask the view to close.
-            RaiseCloseRequest();
+            //TODO:RaiseCloseRequest();
         }
 
         /// <summary>
@@ -123,12 +121,12 @@ namespace TP.WPF.ViewModels
             // Get the message visualizer service from the service resolver.
             // All services can be replaced, so make sure to check if we have something
             // registered.
-            IMessageVisualizer messageVisualizer = Resolve<IMessageVisualizer>();
+            /*IMessageVisualizer messageVisualizer = Resolve<IMessageVisualizer>();
             if (messageVisualizer != null)
             {
                 // Show a message box.
                 messageVisualizer.Show("Технологический процесс", "Две вещи действительно бесконечны: вселенная и  человеческая глупость.", MessageButtons.OK);
-            }
+            }*/
         }
 
         public ChannelController channelController1 = new ChannelController();
@@ -156,7 +154,7 @@ namespace TP.WPF.ViewModels
             set
             {
                 messages = value;
-                OnPropertyChanged("Messages");
+                RaisePropertyChanged("Messages");
             }
         }
 

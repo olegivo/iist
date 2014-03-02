@@ -65,7 +65,7 @@ namespace TP.WPF.ViewModels
             if (row != null)
                 row.CurrentValue = chanelValue;
 
-            OnPropertyChanged("SummaryTable");
+            RaisePropertyChanged("SummaryTable");
         }
 
         /// <summary>

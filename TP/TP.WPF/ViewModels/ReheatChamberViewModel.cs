@@ -17,7 +17,7 @@ namespace TP.WPF.ViewModels
                 if (level1 != value)
                 {
                     level1 = value;
-                    OnPropertyChanged("Level_DU1");
+                    RaisePropertyChanged("Level_DU1");
                 }
             }
         }
@@ -33,7 +33,7 @@ namespace TP.WPF.ViewModels
                 if (level4 != value)
                 {
                     level4 = value;
-                    OnPropertyChanged("Level_DU4");
+                    RaisePropertyChanged("Level_DU4");
                 }
             }
         }
@@ -50,7 +50,7 @@ namespace TP.WPF.ViewModels
                 if (level11 != value)
                 {
                     level11 = value;
-                    OnPropertyChanged("Level_DU11");
+                    RaisePropertyChanged("Level_DU11");
                 }
             }
         }

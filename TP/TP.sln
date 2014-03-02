@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixModes.Synergy.Themes", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixModes.Synergy.VisualFramework", "MixModes.Synergy.VisualFramework\MixModes.Synergy.VisualFramework.csproj", "{91827FBF-B7E1-4A00-9F06-D6F170855AC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickChartsWPF", "QuickChartsWPF\QuickChartsWPF.csproj", "{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -220,12 +222,21 @@ Global
 		{91827FBF-B7E1-4A00-9F06-D6F170855AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91827FBF-B7E1-4A00-9F06-D6F170855AC6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{91827FBF-B7E1-4A00-9F06-D6F170855AC6}.Release|x86.ActiveCfg = Release|Any CPU
+		{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}.Default|x86.ActiveCfg = Debug|Any CPU
+		{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A7C16D6-B63C-4006-9F20-E9D6D4EBA09C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 		VisualSVNWorkingCopyRoot = .
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 	EndGlobalSection
 EndGlobal

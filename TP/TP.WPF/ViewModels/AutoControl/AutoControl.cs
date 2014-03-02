@@ -1,5 +1,4 @@
 ﻿using System.Timers;
-using JulMar.Windows.Mvvm;
 
 namespace TP.WPF.ViewModels.AutoControl
 {
@@ -7,7 +6,7 @@ namespace TP.WPF.ViewModels.AutoControl
     /// Класс для автоматического управления свойствами модели представления
     /// </summary>
     /// <typeparam name="VM"></typeparam>
-    public abstract class AutoControl<VM> where VM : ViewModel
+    public abstract class AutoControl<VM> where VM : ViewModelBase
     {
         protected VM ControlledViewModel { get; set; }
         private readonly Timer tmrAutoControlMode;
