@@ -2,11 +2,9 @@
 using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
-using System.Windows.Markup;
 using MixModes.Synergy.VisualFramework.Windows;
-using TP.WPF.Views;
 
-namespace TP.WPF
+namespace TP.WPF.Views
 {
 	/// <summary>
 	/// Interaction logic for MainShell.xaml
@@ -57,15 +55,15 @@ namespace TP.WPF
             //}
 
             //ТЕСТ
-            //TODO:var pn = new Views.subDrumTypeFurnance();
+            var pn = new subDrumTypeFurnance();
             //var pn = new Resources.ucIndicatorGroupFurnance();
-            DockPane pane = new DockPane
+            var pane = new DockPane
             {
                 Width = 600,
                 Height = 400,
                 DockPaneState = DockPaneState.Content,
-                /*TODO:Header = GetPropValue(pn, "Name"),
-                Content = pn*/
+                Header = GetPropValue(pn, "Name"),
+                Content = pn
             };
 	        pane.DockPaneState = DockPaneState.Content;
             WindowsManager.AddFloatingWindow(pane);
@@ -74,20 +72,24 @@ namespace TP.WPF
 
 	    private void GenereteDebugPanel()
 	    {
-            DockPane pane = new DockPane();
-	        pane.Height = 80;
-	        pane.Header = "Панель отладочной информации";
-	        pane.Content = new Resources.ucDebugPanel();
-            WindowsManager.AddAutoHideWindow(pane,Dock.Bottom);
+            var pane = new DockPane
+            {
+                Height = 80,
+                Header = "Панель отладочной информации",
+                Content = new Resources.ucDebugPanel()
+            };
+	        WindowsManager.AddAutoHideWindow(pane,Dock.Bottom);
 	    }
 
 	    private void GenerateIndicatorsPanel()
 	    {
-            DockPane pane = new DockPane();
-	        pane.Width = 180;
-	        pane.Header = "Индикаторы";
-	        pane.Content = new Resources.ucIndicatorGroupFurnance();
-            WindowsManager.AddPinnedWindow(pane,Dock.Right);
+            var pane = new DockPane
+            {
+                Width = 180,
+                Header = "Индикаторы",
+                Content = new Resources.ucIndicatorGroupFurnance()
+            };
+	        WindowsManager.AddPinnedWindow(pane,Dock.Right);
 
 	    }
 	}

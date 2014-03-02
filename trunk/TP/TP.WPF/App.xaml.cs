@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace TP
+namespace TP.WPF
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -13,6 +13,13 @@ namespace TP
         public App()
         {
 
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            MyOwnBootStraper bootstrapper = new MyOwnBootStraper();
+            bootstrapper.Run();
         }
     }
 }

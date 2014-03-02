@@ -2,12 +2,14 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:amq="http://schemas.amcharts.com/quick/wpf/2010/xaml"
+	mc:Ignorable="d"
 	x:Class="TP.WPF.Views.ucChartTab"
 	x:Name="UserControl"
 	d:DesignWidth="640" d:DesignHeight="480" Width="1024" Height="768">
     <Grid>
-        <!--TODO:<amq:InheritedLineGraph x:Name="Chart1"
+        <amq:InheritedLineGraph x:Name="Chart1"
                          Graphs="{Binding ChartCollection}"
                          DataSource="{Binding ChartBindingData}" 
                          CategoryValueMemberPath="ChannelTime" 
@@ -17,7 +19,7 @@
                          AxisForeground="Chocolate"
                          ValueFormatString="0.00" 
                          >
-        </amq:InheritedLineGraph>-->
+        </amq:InheritedLineGraph>
 
 
     </Grid>

@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using Microsoft.Practices.Unity;
 
 namespace TP.WPF.Views
 {
@@ -11,5 +12,11 @@ namespace TP.WPF.Views
 		{
 			this.InitializeComponent();
 		}
+
+        [Dependency]
+        public ViewModels.DrumTypeFurnaceViewModel ViewModel
+        {
+            set { this.DataContext = value; }
+        }
 	}
 }

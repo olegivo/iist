@@ -81,6 +81,10 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.2.1.0\lib\net35\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -207,6 +211,7 @@
     <None Include="Application.ico">
       <Visible>false</Visible>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="dickiedadevil128x128.ico" />
