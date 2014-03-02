@@ -565,7 +565,8 @@
             <Path Data="M601.3184,206.6367L633.0004,269.9997" Height="67.363" Canvas.Left="596.355" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" StrokeDashCap="Flat" Stroke="#FF939598" StrokeThickness="4" StrokeMiterLimit="10" StrokeLineJoin="Miter" StrokeDashArray="1 1" Canvas.Top="193.496" Width="35.682"/>
             <Path Data="F1M597,198C597.524,202.818,597.473,209.147,596.31,213.635L601.885,207.77L609.921,206.83C605.633,205.067,600.539,201.311,597,198" Fill="#FF939598" Height="15.635" Canvas.Left="593.347" Stretch="Fill" Canvas.Top="186.859" Width="13.611"/>
             <Path Data="M111,432L147,414" Height="22" Canvas.Left="106.037" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF1475BC" StrokeThickness="4" StrokeMiterLimit="10" StrokeLineJoin="Miter" Canvas.Top="400.859" Width="40"/>
-            <!--TODO:<wpf:ucFurnanceLoad Height="28" Canvas.Left="568" Canvas.Top="159.359" Width="46" DataContext="{Binding IndicatorViewModels[193]}"/>-->
+            <!--TODO: был указан в проекте, но, видимо, не закоммичен (его файлы отсутствуют)
+            <wpf:ucFurnanceLoad Height="28" Canvas.Left="568" Canvas.Top="159.359" Width="46" DataContext="{Binding IndicatorViewModels[193]}"/>-->
         </Canvas>
     </Viewbox>
 </UserControl>

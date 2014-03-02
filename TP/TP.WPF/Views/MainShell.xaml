@@ -1,19 +1,20 @@
-﻿<visualFx:CustomWindow x:Class="TP.WPF.MainShell"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:visualFx="http://mixmodes.com/visualFx"
-        xmlns:Resources="http://synergy.mixmodes.com/resources"
-        xmlns:Views="clr-namespace:TP.WPF.Views" 
-        xmlns:ViewModels="clr-namespace:TP.WPF.ViewModels"
-        xmlns:julmar="http://www.julmar.com/wpfhelpers"
-        Icon="factory_yellow_256.png"
-        Title="{x:Static Resources:Language.ProductName}"
-        MinHeight="600"
-        MinWidth="800"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        DataContext="{julmar:ViewModelCreator {x:Type ViewModels:MainViewModel}}"
-        Style="{DynamicResource MainWindow}">
+﻿<visualFx:CustomWindow 
+    x:Class="TP.WPF.Views.MainShell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:visualFx="http://mixmodes.com/visualFx"
+    xmlns:Resources="http://synergy.mixmodes.com/resources"
+    xmlns:ViewModels="clr-namespace:TP.WPF.ViewModels"
+    xmlns:julmar="http://www.julmar.com/wpfhelpers"
+    Icon="factory_yellow_256.png"
+    Title="{x:Static Resources:Language.ProductName}"
+    MinHeight="600"
+    MinWidth="800"
+    WindowStyle="None"
+    AllowsTransparency="True"
+    DataContext="{julmar:ViewModelCreator {x:Type ViewModels:MainViewModel}}"
+    Style="{DynamicResource MainWindow}"
+    WindowState="Maximized">
     <visualFx:CustomWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
