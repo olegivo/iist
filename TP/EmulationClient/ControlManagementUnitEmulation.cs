@@ -6,6 +6,7 @@ using DMS.Common.Messages;
 using NLog;
 using Oleg_ivo.LowLevelClient;
 using Oleg_ivo.Plc.Channels;
+using Oleg_ivo.Tools.ExceptionCatcher;
 using Oleg_ivo.Tools.UI;
 
 namespace EmulationClient
@@ -25,10 +26,27 @@ namespace EmulationClient
             CanRegister = true;
             IsModulationMode = true; 
             NeedProtocol += ControlManagementUnitEmulation_NeedProtocol;
-            Proxy.RegisterCompleted += Proxy_RegisterCompleted;
-            Proxy.UnregisterCompleted += Proxy_UnregisterCompleted;
-            Proxy.ChannelRegisterCompleted += Proxy_ChannelRegisterCompleted;
-            Proxy.ChannelUnRegisterCompleted += Proxy_ChannelUnRegisterCompleted;
+        }
+
+        protected override void SubscribeProxy()
+        {
+            base.SubscribeProxy();
+            LowLevelMessageExchangeSystemClient.RegisterCompleted += Proxy_RegisterCompleted;
+            LowLevelMessageExchangeSystemClient.UnregisterCompleted += Proxy_UnregisterCompleted;
+            LowLevelMessageExchangeSystemClient.ChannelRegisterCompleted += Proxy_ChannelRegisterCompleted;
+            LowLevelMessageExchangeSystemClient.ChannelUnRegisterCompleted += Proxy_ChannelUnRegisterCompleted;
+        }
+
+        protected override void UnsubscribeProxy()
+        {
+            base.UnsubscribeProxy();
+
+            if (LowLevelMessageExchangeSystemClient == null) return;
+             
+            LowLevelMessageExchangeSystemClient.RegisterCompleted -= Proxy_RegisterCompleted;
+            LowLevelMessageExchangeSystemClient.UnregisterCompleted -= Proxy_UnregisterCompleted;
+            LowLevelMessageExchangeSystemClient.ChannelRegisterCompleted -= Proxy_ChannelRegisterCompleted;
+            LowLevelMessageExchangeSystemClient.ChannelUnRegisterCompleted -= Proxy_ChannelUnRegisterCompleted;
         }
 
         void Proxy_ChannelUnRegisterCompleted(object sender, AsyncCompletedEventArgs e)
@@ -105,7 +123,7 @@ namespace EmulationClient
                     throw new ArgumentOutOfRangeException("Невозможно определить режим данных для данного канала" + channel);
                 }
 
-                Proxy.ChannelRegisterAsync(
+                LowLevelMessageExchangeSystemClient.ChannelRegisterAsync(
                     new ChannelRegistrationMessage(RegName, null, RegistrationMode.Register,
                                                    dataMode, channel.Id),
                     channel.Id);
@@ -119,7 +137,7 @@ namespace EmulationClient
         {
             foreach (LogicalChannel channel in LogicalChannels)
             {
-                Proxy.ChannelUnRegisterAsync(new ChannelRegistrationMessage(RegName, null, RegistrationMode.Unregister,
+                LowLevelMessageExchangeSystemClient.ChannelUnRegisterAsync(new ChannelRegistrationMessage(RegName, null, RegistrationMode.Unregister,
                                                                             DataMode.Unknown, channel.Id));
             }
         }
@@ -334,5 +352,6 @@ namespace EmulationClient
         }
 
         #endregion
+
     }
 }

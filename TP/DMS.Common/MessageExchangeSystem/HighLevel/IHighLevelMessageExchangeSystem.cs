@@ -9,7 +9,7 @@ namespace DMS.Common.MessageExchangeSystem.HighLevel
     /// Представляет операции, доступные для клиентов верхнего уровня.
     /// Контракт обратного вызова от службы к клиенту верхнего уровня - <c>см.</c> <see cref="IHighLevelClientCallback"/>.
     /// </summary>
-    [ServiceContract(CallbackContract = typeof(IHighLevelClientCallback))]
+    [ServiceContract(CallbackContract = typeof(IHighLevelClientCallback), SessionMode = SessionMode.Required)]
     public interface IHighLevelMessageExchangeSystem : IMessageExchangeSystem
     {
         /// <summary>
@@ -17,7 +17,7 @@ namespace DMS.Common.MessageExchangeSystem.HighLevel
         /// </summary>
         /// <param name="message">Сообщение с идентификацией запрашивающего</param>
         /// <returns></returns>
-        [OperationContract()]
+        [OperationContract(IsInitiating = false, IsTerminating = false)]
         RegisteredLogicalChannel[] GetRegisteredChannels(InternalMessage message);
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace DMS.Common.MessageExchangeSystem.HighLevel
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        [OperationContract(AsyncPattern = true)]
+        [OperationContract(AsyncPattern = true, IsInitiating = false, IsTerminating = false)]
         IAsyncResult BeginChannelSubscribe(ChannelSubscribeMessage message, AsyncCallback callback, object state);
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace DMS.Common.MessageExchangeSystem.HighLevel
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        [OperationContract(AsyncPattern = true)]
+        [OperationContract(AsyncPattern = true, IsInitiating = false, IsTerminating = false)]
         IAsyncResult BeginChannelUnSubscribe(ChannelSubscribeMessage message, AsyncCallback callback, object state);
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace DMS.Common.MessageExchangeSystem.HighLevel
         /// <param name="callback"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        [OperationContract(AsyncPattern = true)]
+        [OperationContract(AsyncPattern = true, IsInitiating = false, IsTerminating = false)]
         IAsyncResult BeginWriteChannel(InternalLogicalChannelDataMessage message, AsyncCallback callback, object state);
 
 

@@ -13,21 +13,21 @@ namespace DMS.Common.MessageExchangeSystem.HighLevel
         /// Регистрация канала в системе обмена сообщениями
         /// </summary>
         /// <param name="message"></param>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true, IsInitiating = false, IsTerminating = false)]
         void ChannelRegister(ChannelRegistrationMessage message);
 
         /// <summary>
         /// Отмена регистрации канала в системе обмена сообщениями
         /// </summary>
         /// <param name="message"></param>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true, IsInitiating = false, IsTerminating = false)]
         void ChannelUnRegister(ChannelRegistrationMessage message);
 
         /// <summary>
         /// Операция для чтения канала от сервера клиенту (инициатор - сервер)
         /// </summary>
         /// <param name="message"></param>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true, IsInitiating = false, IsTerminating = false)]
         void SendReadToClient(InternalLogicalChannelDataMessage message);
 
     }
