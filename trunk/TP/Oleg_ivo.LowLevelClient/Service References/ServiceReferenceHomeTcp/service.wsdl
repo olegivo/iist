@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:tns="http://tempuri.org/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="LowLevelMessageExchangeSystem" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="LowLevelMessageExchangeSystem" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsp:Policy wsu:Id="LowLevelMessageExchangeSystem_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -114,51 +114,51 @@
   <wsdl:message name="ILowLevelMessageExchangeSystem_SendWriteToClient_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendWriteToClient" />
   </wsdl:message>
-  <wsdl:portType name="ILowLevelMessageExchangeSystem">
-    <wsdl:operation name="SendMessage">
+  <wsdl:portType msc:usingSession="true" name="ILowLevelMessageExchangeSystem">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SendMessage">
       <wsdl:input wsaw:Action="http://tempuri.org/IMessageReceiver/SendMessage" message="tns:ILowLevelMessageExchangeSystem_SendMessage_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMessageReceiver/SendMessageResponse" message="tns:ILowLevelMessageExchangeSystem_SendMessage_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SendError">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SendError">
       <wsdl:input wsaw:Action="http://tempuri.org/IMessageReceiver/SendError" message="tns:ILowLevelMessageExchangeSystem_SendError_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMessageReceiver/SendErrorResponse" message="tns:ILowLevelMessageExchangeSystem_SendError_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IMessageReceiver/SendErrorRegistrationExceptionFault" name="RegistrationExceptionFault" message="tns:ILowLevelMessageExchangeSystem_SendError_RegistrationExceptionFault_FaultMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IMessageReceiver/SendErrorTestExceptionFault" name="TestExceptionFault" message="tns:ILowLevelMessageExchangeSystem_SendError_TestExceptionFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SendMessageToClient">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SendMessageToClient">
       <wsdl:output wsaw:Action="http://tempuri.org/IMessageReceiver/SendMessageToClient" message="tns:ILowLevelMessageExchangeSystem_SendMessageToClient_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IMessageReceiver/SendMessageToClientResponse" message="tns:ILowLevelMessageExchangeSystem_SendMessageToClient_InputCallbackMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IMessageReceiver/SendMessageToClientInternalExceptionFault" name="InternalExceptionFault" message="tns:ILowLevelMessageExchangeSystem_SendMessageToClient_InternalExceptionFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Register">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Register">
       <wsdl:input wsaw:Action="http://tempuri.org/IMessageExchangeSystem/Register" message="tns:ILowLevelMessageExchangeSystem_Register_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMessageExchangeSystem/RegisterResponse" message="tns:ILowLevelMessageExchangeSystem_Register_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IMessageExchangeSystem/RegisterRegistrationExceptionFault" name="RegistrationExceptionFault" message="tns:ILowLevelMessageExchangeSystem_Register_RegistrationExceptionFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Unregister">
+    <wsdl:operation msc:isInitiating="false" msc:isTerminating="false" name="Unregister">
       <wsdl:input wsaw:Action="http://tempuri.org/IMessageExchangeSystem/Unregister" message="tns:ILowLevelMessageExchangeSystem_Unregister_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMessageExchangeSystem/UnregisterResponse" message="tns:ILowLevelMessageExchangeSystem_Unregister_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IMessageExchangeSystem/UnregisterRegistrationExceptionFault" name="RegistrationExceptionFault" message="tns:ILowLevelMessageExchangeSystem_Unregister_RegistrationExceptionFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ChannelRegister">
+    <wsdl:operation msc:isInitiating="false" msc:isTerminating="false" name="ChannelRegister">
       <wsdl:input wsaw:Action="http://tempuri.org/ILowLevelMessageExchangeSystem/ChannelRegister" message="tns:ILowLevelMessageExchangeSystem_ChannelRegister_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ILowLevelMessageExchangeSystem/ChannelRegisterResponse" message="tns:ILowLevelMessageExchangeSystem_ChannelRegister_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ChannelUnRegister">
+    <wsdl:operation msc:isInitiating="false" msc:isTerminating="false" name="ChannelUnRegister">
       <wsdl:input wsaw:Action="http://tempuri.org/ILowLevelMessageExchangeSystem/ChannelUnRegister" message="tns:ILowLevelMessageExchangeSystem_ChannelUnRegister_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ILowLevelMessageExchangeSystem/ChannelUnRegisterResponse" message="tns:ILowLevelMessageExchangeSystem_ChannelUnRegister_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ReadChannel">
+    <wsdl:operation msc:isInitiating="false" msc:isTerminating="false" name="ReadChannel">
       <wsdl:input wsaw:Action="http://tempuri.org/ILowLevelMessageExchangeSystem/ReadChannel" message="tns:ILowLevelMessageExchangeSystem_ReadChannel_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ILowLevelMessageExchangeSystem/ReadChannelResponse" message="tns:ILowLevelMessageExchangeSystem_ReadChannel_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ChannelSubscribe">
+    <wsdl:operation msc:isInitiating="false" msc:isTerminating="false" name="ChannelSubscribe">
       <wsdl:output wsaw:Action="http://tempuri.org/ILowLevelMessageExchangeSystem/ChannelSubscribe" message="tns:ILowLevelMessageExchangeSystem_ChannelSubscribe_OutputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ChannelUnSubscribe">
+    <wsdl:operation msc:isInitiating="false" msc:isTerminating="false" name="ChannelUnSubscribe">
       <wsdl:output wsaw:Action="http://tempuri.org/ILowLevelMessageExchangeSystem/ChannelUnSubscribe" message="tns:ILowLevelMessageExchangeSystem_ChannelUnSubscribe_OutputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SendWriteToClient">
+    <wsdl:operation msc:isInitiating="false" msc:isTerminating="false" name="SendWriteToClient">
       <wsdl:output wsaw:Action="http://tempuri.org/ILowLevelMessageExchangeSystem/SendWriteToClient" message="tns:ILowLevelMessageExchangeSystem_SendWriteToClient_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>

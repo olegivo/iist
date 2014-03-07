@@ -134,26 +134,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Service References\ServiceReferenceHomeWsDualHttp\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\ServiceReferenceHome\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\ServiceReferenceIISTwsDualHttp\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\ServiceReferenceIIST\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DMS.Common\DMS.Common.csproj">
@@ -166,55 +146,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ServiceReferenceHomeTcp\" />
-    <WCFMetadataStorage Include="Service References\ServiceReferenceHomeWsDualHttp\" />
-    <WCFMetadataStorage Include="Service References\ServiceReferenceHome\" />
-    <WCFMetadataStorage Include="Service References\ServiceReferenceIISTwsDualHttp\" />
-    <WCFMetadataStorage Include="Service References\ServiceReferenceIIST\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceIIST\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceIIST\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceHome\Arrays.xsd" />
-    <None Include="Service References\ServiceReferenceHome\DMS.Common.Exceptions.xsd" />
-    <None Include="Service References\ServiceReferenceHome\DMS.Common.Messages.xsd" />
-    <None Include="Service References\ServiceReferenceHome\service.wsdl" />
-    <None Include="Service References\ServiceReferenceHome\service.xsd" />
-    <None Include="Service References\ServiceReferenceHome\service1.xsd" />
-    <None Include="Service References\ServiceReferenceHome\System.xsd" />
-    <None Include="Service References\ServiceReferenceIIST\Arrays.xsd" />
-    <None Include="Service References\ServiceReferenceIIST\DMS.Common.Exceptions.xsd" />
-    <None Include="Service References\ServiceReferenceIIST\DMS.Common.Messages1.xsd" />
-    <None Include="Service References\ServiceReferenceIIST\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\ServiceReferenceIIST\service1.wsdl" />
-    <None Include="Service References\ServiceReferenceIIST\service2.xsd" />
-    <None Include="Service References\ServiceReferenceIIST\service21.xsd" />
-    <None Include="Service References\ServiceReferenceIIST\System.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceHome\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceHome\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceHome\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\ServiceReferenceIISTwsDualHttp\Arrays.xsd" />
-    <None Include="Service References\ServiceReferenceIISTwsDualHttp\DMS.Common.Exceptions.xsd" />
-    <None Include="Service References\ServiceReferenceIISTwsDualHttp\DMS.Common.Messages.xsd" />
-    <None Include="Service References\ServiceReferenceIISTwsDualHttp\service.wsdl" />
-    <None Include="Service References\ServiceReferenceIISTwsDualHttp\service.xsd" />
-    <None Include="Service References\ServiceReferenceIISTwsDualHttp\service1.xsd" />
-    <None Include="Service References\ServiceReferenceIISTwsDualHttp\System.xsd" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -249,41 +180,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\ServiceReferenceIISTwsDualHttp\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceIISTwsDualHttp\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceHomeWsDualHttp\Arrays.xsd" />
-    <None Include="Service References\ServiceReferenceHomeWsDualHttp\DMS.Common.Exceptions.xsd" />
-    <None Include="Service References\ServiceReferenceHomeWsDualHttp\DMS.Common.Messages.xsd" />
-    <None Include="Service References\ServiceReferenceHomeWsDualHttp\service.wsdl" />
-    <None Include="Service References\ServiceReferenceHomeWsDualHttp\service.xsd" />
-    <None Include="Service References\ServiceReferenceHomeWsDualHttp\service1.xsd" />
-    <None Include="Service References\ServiceReferenceHomeWsDualHttp\System.xsd" />
-    <None Include="Service References\ServiceReferenceIISTwsDualHttp\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceHomeWsDualHttp\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReferenceHomeWsDualHttp\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\ServiceReferenceHomeTcp\DMS.Common.Exceptions.xsd" />
     <None Include="Service References\ServiceReferenceHomeTcp\DMS.Common.Messages.xsd" />
     <None Include="Service References\ServiceReferenceHomeTcp\service.wsdl" />
     <None Include="Service References\ServiceReferenceHomeTcp\service.xsd" />
     <None Include="Service References\ServiceReferenceHomeTcp\service1.xsd" />
     <None Include="Service References\ServiceReferenceHomeTcp\System.xsd" />
-    <None Include="Service References\ServiceReferenceHomeWsDualHttp\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ServiceReferenceHomeTcp\configuration91.svcinfo" />

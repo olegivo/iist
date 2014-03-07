@@ -7,7 +7,7 @@ namespace DMS.Common.MessageExchangeSystem.LowLevel
     /// <summary>
     /// Контракт системы обмена сообщениями с клиентами нижнего уровня
     /// </summary>
-    [ServiceContract(CallbackContract = typeof(ILowLevelClientCallback))]
+    [ServiceContract(CallbackContract = typeof(ILowLevelClientCallback), SessionMode = SessionMode.Required)]
     public interface ILowLevelMessageExchangeSystem : IMessageExchangeSystem
     {
         /// <summary>
@@ -16,7 +16,7 @@ namespace DMS.Common.MessageExchangeSystem.LowLevel
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        [OperationContract(AsyncPattern = true)]
+        [OperationContract(AsyncPattern = true, IsInitiating = false, IsTerminating = false)]
         IAsyncResult BeginChannelRegister(ChannelRegistrationMessage message, AsyncCallback callback, object state);
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace DMS.Common.MessageExchangeSystem.LowLevel
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        [OperationContract(AsyncPattern = true)]
+        [OperationContract(AsyncPattern = true, IsInitiating = false, IsTerminating = false)]
         IAsyncResult BeginChannelUnRegister(ChannelRegistrationMessage message, AsyncCallback callback, object state);
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace DMS.Common.MessageExchangeSystem.LowLevel
         /// <param name="callback"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        [OperationContract(AsyncPattern = true)]
+        [OperationContract(AsyncPattern = true, IsInitiating = false, IsTerminating = false)]
         IAsyncResult BeginReadChannel(InternalLogicalChannelDataMessage message, AsyncCallback callback, object state);
 
 

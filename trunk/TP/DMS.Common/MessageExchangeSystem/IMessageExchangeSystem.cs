@@ -8,7 +8,7 @@ namespace DMS.Common.MessageExchangeSystem
     /// <summary>
     /// Контракт системы обмена сообщениями
     /// </summary>
-    [ServiceContract(CallbackContract = typeof (IClientCallback))]
+    [ServiceContract(CallbackContract = typeof(IClientCallback), SessionMode = SessionMode.Required)]
     public interface IMessageExchangeSystem : IMessageReceiver
     {
         /// <summary>
@@ -17,7 +17,7 @@ namespace DMS.Common.MessageExchangeSystem
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        [OperationContract(AsyncPattern = true)]
+        [OperationContract(AsyncPattern = true, IsInitiating = true, IsTerminating = false)]
         [FaultContract(typeof (RegistrationException))]
         IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state);
 
@@ -34,7 +34,7 @@ namespace DMS.Common.MessageExchangeSystem
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        [OperationContract(AsyncPattern = true)]
+        [OperationContract(AsyncPattern = true, IsInitiating = false, IsTerminating = false/*TODO:BeginUnregister must be IsTerminating=true*/)]
         [FaultContract(typeof (RegistrationException))]
         IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state);
 

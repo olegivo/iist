@@ -59,25 +59,25 @@ namespace Oleg_ivo.CMU
 
         internal void LogError(object sender, ExtendedThreadExceptionEventArgs e)
         {
-            ControlManagementUnit.Proxy.SendErrorCompleted += Proxy_SendErrorCompleted;
+            ControlManagementUnit.SendErrorCompleted += ControlManagementUnit_SendErrorCompleted;
             try
             {
                 //TODO: заполнить RegNameFrom
-                ControlManagementUnit.Proxy.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
+                ControlManagementUnit.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
                 if (e.Exception is ArgumentOutOfRangeException)
                     e.ShowError = false;
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 
-        void Proxy_SendErrorCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        void ControlManagementUnit_SendErrorCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             /*
              * TODO: если не удалось передать ошибку службе обмена сообщениями, выбрасывать ошибку здесь?
-                        Proxy.SendErrorCompleted -= Proxy_SendErrorCompleted;
+                        ControlManagementUnit.SendErrorCompleted -= ControlManagementUnit_SendErrorCompleted;
                         if(e.Error!=null)
                         {
                             ExtendedThreadExceptionEventArgs args = e.UserState as ExtendedThreadExceptionEventArgs;

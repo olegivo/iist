@@ -8,6 +8,7 @@ using Autofac;
 using NLog;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.Base.Autofac.Modules;
+using Oleg_ivo.Base.Communication;
 using Oleg_ivo.MES.High;
 using Oleg_ivo.MES.Logging;
 using Oleg_ivo.MES.Low;
@@ -79,13 +80,13 @@ namespace Oleg_ivo.MES
 
 #if LOW_LEVEL
 		    logger = new Logger("Остановка сервиса нижнего уровня");
-            serviceHostLowLevel.Close();
+            serviceHostLowLevel.SafeClose();
             logger.End(2);
 #endif
 
 #if HIGH_LEVEL
             logger = new Logger("Остановка сервиса верхнего уровня");
-            serviceHostHighLevel.Close();
+            serviceHostHighLevel.SafeClose();
             logger.End(2);
 #endif
 

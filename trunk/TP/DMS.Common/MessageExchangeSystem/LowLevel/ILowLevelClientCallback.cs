@@ -13,21 +13,21 @@ namespace DMS.Common.MessageExchangeSystem.LowLevel
         /// Подписка на чтение контролируемого канала
         /// </summary>
         /// <param name="message"></param>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true, IsInitiating = false, IsTerminating = false)]
         void ChannelSubscribe(ChannelSubscribeMessage message);
 
         /// <summary>
         /// Отписка от чтения контролируемого канала
         /// </summary>
         /// <param name="message"></param>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true, IsInitiating = false, IsTerminating = false)]
         void ChannelUnSubscribe(ChannelSubscribeMessage message);
 
         /// <summary>
         /// Операция для записи канала от сервера клиенту (инициатор - сервер)
         /// </summary>
         /// <param name="message"></param>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true, IsInitiating = false, IsTerminating = false)]
         void SendWriteToClient(InternalLogicalChannelDataMessage message);
     }
 }

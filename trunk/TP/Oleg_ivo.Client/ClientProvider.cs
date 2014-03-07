@@ -374,7 +374,7 @@ namespace Oleg_ivo.HighLevelClient
             log.Debug("Proxy_UnregisterCompleted");
 
             Proxy.UnregisterCompleted -= Proxy_UnregisterCompleted;
-            RegisteredChannels.Clear();
+            if(RegisteredChannels!=null) RegisteredChannels.Clear();
         }
 
         public event EventHandler<AsyncCompletedEventArgs> UnregisterCompleted

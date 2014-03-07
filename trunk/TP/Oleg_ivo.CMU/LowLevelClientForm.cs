@@ -104,6 +104,7 @@ namespace Oleg_ivo.CMU
         {
             try
             {
+                ControlManagementUnit.Init();
                 ControlManagementUnit.Register();
                 CanRegister = false;
             }

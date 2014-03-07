@@ -7,7 +7,7 @@ namespace DMS.Common.Messages
     /// <summary>
     /// Приёмник сообщений
     /// </summary>
-    [ServiceContract(CallbackContract = typeof (IMessageReceiverCallback))]
+    [ServiceContract(CallbackContract = typeof (IMessageReceiverCallback), SessionMode = SessionMode.Required)]
     public interface IMessageReceiver
     {
         /// <summary>
