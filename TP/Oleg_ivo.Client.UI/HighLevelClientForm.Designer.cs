@@ -7,19 +7,6 @@ namespace Oleg_ivo.HighLevelClient.UI
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -94,7 +81,6 @@ namespace Oleg_ivo.HighLevelClient.UI
             this.textBox2.Size = new System.Drawing.Size(627, 20);
             this.textBox2.TabIndex = 5;
             this.textBox2.Text = "HighLevelClient1";
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // groupBox1
             // 

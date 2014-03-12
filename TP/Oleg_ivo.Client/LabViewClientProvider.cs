@@ -62,7 +62,7 @@ namespace Oleg_ivo.HighLevelClient
         #endregion
 
         /// <summary>
-        /// Создать Proxy
+        /// Создать HighLevelMessageExchangeSystemClient
         /// </summary>
         /// <remarks>
         /// По умолчанию параметры для инициализации канала берутся из App.Config. 

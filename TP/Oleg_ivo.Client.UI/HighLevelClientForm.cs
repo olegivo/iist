@@ -21,19 +21,14 @@ namespace Oleg_ivo.HighLevelClient.UI
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
+        private ClientProvider provider;
+
         /// <summary>
         /// 
         /// </summary>
         public ClientProvider Provider
         {
-            get
-            {
-#if LABVIEW
-                return LabViewClientProvider.Instance;
-#else
-                return ClientProvider.Instance;
-#endif
-            }
+            get { return provider ?? (provider = new ClientProvider()); }
         }
 
         /// <summary>
@@ -88,7 +83,8 @@ namespace Oleg_ivo.HighLevelClient.UI
 #endif
             //режим клиента для LabView END
 
-            Provider.Init(GetRegName());
+            Provider.Init();
+            Provider.GetRegName = GetRegName;
 
             Provider.NeedProtocol += Provider_NeedProtocol;
             Provider.ChannelUnRegistered += Provider_ChannelUnRegistered;
@@ -199,7 +195,7 @@ namespace Oleg_ivo.HighLevelClient.UI
                                           channelSubscribeMessage.LogicalChannelId);
             Protocol(s);
             //            MessageBox.Show(s);
-            //            Program.Proxy.ChannelUnSubscribe(channelSubscribeMessage);
+            //            Program.HighLevelMessageExchangeSystemClient.ChannelUnSubscribe(channelSubscribeMessage);
         }
 
         void Provider_NeedProtocol(object sender, EventArgs e)
@@ -370,7 +366,7 @@ namespace Oleg_ivo.HighLevelClient.UI
             Provider.WriteChannel(message);
             //var exception = new TestException("Произошла тестовая ошибка :(");
             //throw exception;
-            //Provider.Proxy.SendErrorAsync(new InternalErrorMessage(exception));
+            //Provider.SendErrorAsync(new InternalErrorMessage(exception));
         }
 
         private object GetValueToWrite()
@@ -380,9 +376,20 @@ namespace Oleg_ivo.HighLevelClient.UI
             return result == DialogResult.OK ? Convert.ToUInt16(form.Value) : 0;
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
         {
-            Provider.Init(GetRegName());
+            if (disposing)
+            {
+                if (components != null)
+                    components.Dispose();
+                if (Provider!=null)
+                    Provider.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

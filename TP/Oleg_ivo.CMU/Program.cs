@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using Autofac;
+using DMS.Common;
 using DMS.Common.Messages;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.Base.Autofac.Modules;
@@ -29,60 +30,9 @@ namespace Oleg_ivo.CMU
             var container = builder.Build();
             var form = container.ResolveUnregistered<LowLevelClientForm>();
 
-            var errors = new Errors(form.ControlManagementUnit);
-            container.Resolve<ExceptionHandler>().AdditionalErrorHandler = errors.LogError;
+            var errorSenderWrapper = new ErrorSenderWrapper<ControlManagementUnit>(form.ControlManagementUnit);
+            container.Resolve<ExceptionHandler>().AdditionalErrorHandler = errorSenderWrapper.LogError;
             Application.Run(form);
-        }
-    }
-
-    internal class Errors
-    {
-        private readonly Func<ControlManagementUnit> controlManagementUnitProvider;
-        private ControlManagementUnit controlManagementUnit;
-
-        private ControlManagementUnit ControlManagementUnit
-        {
-            get
-            {
-                return controlManagementUnit ?? (controlManagementUnit = controlManagementUnitProvider());
-            }
-        }
-        public Errors(ControlManagementUnit controlManagementUnit)
-        {
-            this.controlManagementUnit = controlManagementUnit;
-        }
-
-        public Errors(Func<ControlManagementUnit> controlManagementUnitProvider)
-        {
-            this.controlManagementUnitProvider = controlManagementUnitProvider;
-        }
-
-        internal void LogError(object sender, ExtendedThreadExceptionEventArgs e)
-        {
-            ControlManagementUnit.SendErrorCompleted += ControlManagementUnit_SendErrorCompleted;
-            try
-            {
-                //TODO: заполнить RegNameFrom
-                ControlManagementUnit.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
-                if (e.Exception is ArgumentOutOfRangeException)
-                    e.ShowError = false;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
-
-        void ControlManagementUnit_SendErrorCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-            /*
-             * TODO: если не удалось передать ошибку службе обмена сообщениями, выбрасывать ошибку здесь?
-                        ControlManagementUnit.SendErrorCompleted -= ControlManagementUnit_SendErrorCompleted;
-                        if(e.Error!=null)
-                        {
-                            ExtendedThreadExceptionEventArgs args = e.UserState as ExtendedThreadExceptionEventArgs;
-                        }
-            */
         }
     }
 }

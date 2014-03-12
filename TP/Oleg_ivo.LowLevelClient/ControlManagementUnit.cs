@@ -1,4 +1,5 @@
 using System.ServiceModel.Channels;
+using DMS.Common;
 using NLog;
 using Oleg_ivo.Base.Communication;
 using Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp;
@@ -21,7 +22,7 @@ namespace Oleg_ivo.LowLevelClient
     ///<summary>
     /// Модуль контроля и управления
     ///</summary>
-    public class ControlManagementUnit : IDisposable
+    public class ControlManagementUnit : IClientBase
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
@@ -33,7 +34,7 @@ namespace Oleg_ivo.LowLevelClient
         public ControlManagementUnit()
         {
             reconnectTimer = new Timer(5000);
-            reconnectTimer.Elapsed += _reconnectTimer_Elapsed;
+            reconnectTimer.Elapsed += reconnectTimer_Elapsed;
 
             CallbackHandler.NeedProtocol += CallbackHandler_NeedProtocol;
             CallbackHandler.ChannelSubscribed += CallbackHandler_ChannelSubscribed;
@@ -199,7 +200,7 @@ namespace Oleg_ivo.LowLevelClient
             }
         }
 
-        private void _reconnectTimer_Elapsed(object sender, System.EventArgs e)
+        private void reconnectTimer_Elapsed(object sender, EventArgs e)
         {
             if (proxy == null)
                 CreateProxy();
@@ -231,13 +232,13 @@ namespace Oleg_ivo.LowLevelClient
             }
         }
 
-        private CallbackHandler callbackHandler;
-        private readonly Timer reconnectTimer;
-
         /// <summary>
         /// 
         /// </summary>
-        public virtual GetRegNameDelegate GetRegName { protected get; set; }
+        public Func<string> GetRegName { get; set; }
+
+        private CallbackHandler callbackHandler;
+        private readonly Timer reconnectTimer;
 
         void CallbackHandler_ChannelSubscribed(object sender, ChannelSubscribeEventArgs e)
         {
@@ -367,13 +368,13 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public event EventHandler<AsyncCompletedEventArgs> UnregisterCompleted;
 
-        public event EventHandler<AsyncCompletedEventArgs> SendErrorCompleted;
-
         private void proxy_UnregisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
             if (UnregisterCompleted != null) 
                 UnregisterCompleted(this, e);
         }
+
+        public event EventHandler<AsyncCompletedEventArgs> SendErrorCompleted;
 
         private void proxy_SendErrorCompleted(object sender, AsyncCompletedEventArgs e)
         {
@@ -495,9 +496,10 @@ namespace Oleg_ivo.LowLevelClient
                 CreateProxy();
         }
 
-        public void SendErrorAsync(InternalErrorMessage message, ExtendedThreadExceptionEventArgs e)
+        public void SendErrorAsync(ExtendedThreadExceptionEventArgs e)
         {
-            LowLevelMessageExchangeSystemClient.SendErrorAsync(message,e);
+            LowLevelMessageExchangeSystemClient.SendErrorAsync(
+                new InternalErrorMessage(GetRegName(), null, e.Exception), e);
         }
 
         public void Dispose()
@@ -507,8 +509,4 @@ namespace Oleg_ivo.LowLevelClient
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public delegate string GetRegNameDelegate();
 }
