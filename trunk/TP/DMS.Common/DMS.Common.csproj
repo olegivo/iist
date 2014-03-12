@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DMS.Common</RootNamespace>
     <AssemblyName>DMS.Common</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -31,6 +31,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -97,9 +98,11 @@
     <Compile Include="Buffers\IBuffer.cs" />
     <Compile Include="Buffers\IHighLevelBuffer.cs" />
     <Compile Include="Buffers\ILowLevelBuffer.cs" />
+    <Compile Include="IClientBase.cs" />
     <Compile Include="Clients\IHighLevelMesClient.cs" />
     <Compile Include="Clients\ILowLevelMesClient.cs" />
     <Compile Include="Clients\IMesClient.cs" />
+    <Compile Include="ErrorSenderWrapper.cs" />
     <Compile Include="Events\ChannelRegisterEventArgs.cs" />
     <Compile Include="Events\ChannelSubscribeEventArgs.cs" />
     <Compile Include="Events\DataEventArgs.cs" />
@@ -108,6 +111,7 @@
     <Compile Include="Exceptions\InternalServiceException.cs" />
     <Compile Include="Exceptions\RegistrationException.cs" />
     <Compile Include="Exceptions\TestException.cs" />
+    <Compile Include="IErrorSender.cs" />
     <Compile Include="MessageExchangeSystem\HighLevel\IRegisteredChannel.cs" />
     <Compile Include="MessageExchangeSystem\HighLevel\RegisteredLogicalChannel.cs" />
     <Compile Include="Messages\ChannelRegistrationMessage.cs" />
@@ -154,6 +158,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\External\Oleg_ivo.Tools\Oleg_ivo.Tools\Oleg_ivo.Tools.csproj">
+      <Project>{332A1894-922F-49A1-BD6A-E4E981FA2FEC}</Project>
+      <Name>Oleg_ivo.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -43,19 +43,14 @@ namespace TP.WPF
         [Description("Автоматически подписываться на вновь зарегистрированные каналы"), DefaultValue(false)]
         public bool AutoSubscribeChannels { get; set; }
 
+        private ClientProvider provider;
+
         /// <summary>
         /// 
         /// </summary>
         protected ClientProvider Provider
         {
-            get
-            {
-#if LABVIEW
-                return LabViewClientProvider.Instance;
-#else
-                return ClientProvider.Instance;
-#endif
-            }
+            get { return provider ?? (provider = new ClientProvider()); }
         }
 
         /// <summary>
@@ -151,7 +146,7 @@ namespace TP.WPF
                 {
                     if (AutoSubscribeChannels)
                     {
-                        SubscribeChannel(new ChannelSubscribeMessage(RegName,
+                        SubscribeChannel(new ChannelSubscribeMessage(GetRegName(),
                                                                      null,
                                                                      SubscribeMode.Subscribe,
                                                                      logicalChannelId)
@@ -173,7 +168,7 @@ namespace TP.WPF
                 //убираем все зарегистрированные и подписанные каналы:
                 foreach (var channelId in subscribedChannelsList.ToArray())
                 {
-                    UnSubscribeChannel(new ChannelSubscribeMessage(RegName,
+                    UnSubscribeChannel(new ChannelSubscribeMessage(GetRegName(),
                                                                    null,
                                                                    SubscribeMode.Unsubscribe,
                                                                    channelId)
@@ -182,7 +177,7 @@ namespace TP.WPF
                 //subscribedChannelsList.Clear();
                 foreach (var channelId in registeredChannelsList.ToArray())
                 {
-                    RemoveRegisteredChannel(new ChannelRegistrationMessage(RegName,
+                    RemoveRegisteredChannel(new ChannelRegistrationMessage(GetRegName(),
                                                                    null,
                                                                    RegistrationMode.Unregister, 
                                                                    DataMode.Unknown,                                                                    
@@ -210,7 +205,7 @@ namespace TP.WPF
         {
             log.Debug("WriteChannel");
 
-            Provider.WriteChannel(new InternalLogicalChannelDataMessage(RegName, null, DataMode.Write, channelId)
+            Provider.WriteChannel(new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Write, channelId)
             {
                 Value = value
             });
@@ -222,23 +217,20 @@ namespace TP.WPF
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="regName"></param>
-        public void InitProvider(string regName)
+        public void InitProvider()
         {
             //инициализация проводится только 1 раз
-            if (!isitialized)
-            {
-                RegName = regName;
-                Provider.Init(regName);
+            if (isitialized) return;
+            
+            Provider.Init();
 
-                Provider.NeedProtocol += Provider_NeedProtocol;
-                Provider.ChannelUnRegistered += Provider_ChannelUnRegistered;
-                Provider.ChannelRegistered += Provider_ChannelRegistered;
-                Provider.ChannelSubscribeCompleted += Provider_ChannelSubscribeCompleted;
-                Provider.ChannelUnSubscribeCompleted += Provider_ChannelUnSubscribeCompleted;
+            Provider.NeedProtocol += Provider_NeedProtocol;
+            Provider.ChannelUnRegistered += Provider_ChannelUnRegistered;
+            Provider.ChannelRegistered += Provider_ChannelRegistered;
+            Provider.ChannelSubscribeCompleted += Provider_ChannelSubscribeCompleted;
+            Provider.ChannelUnSubscribeCompleted += Provider_ChannelUnSubscribeCompleted;
 
-                isitialized = true;
-            }
+            isitialized = true;
         }
 
         /// <summary>
@@ -327,7 +319,7 @@ namespace TP.WPF
             var channelId = message.LogicalChannelId;
             if (subscribedChannelsList.Contains(channelId))
             {
-                ChannelSubscribeMessage unSubscribeMessage = new ChannelSubscribeMessage(RegName, null,
+                ChannelSubscribeMessage unSubscribeMessage = new ChannelSubscribeMessage(GetRegName(), null,
                                                                                          SubscribeMode.Unsubscribe,
                                                                                          channelId);
 
@@ -356,7 +348,11 @@ namespace TP.WPF
         /// <summary>
         /// 
         /// </summary>
-        protected string RegName { get; set; }
+        public virtual Func<string> GetRegName
+        {
+            protected get { return Provider.GetRegName; }
+            set { Provider.GetRegName = value; }
+        }
 
         private void Provider_ChannelRegistered(object sender, ChannelRegisterEventArgs e)
         {
@@ -403,6 +399,8 @@ namespace TP.WPF
                     Provider.ChannelRegistered -= Provider_ChannelRegistered;
                     Provider.ChannelSubscribeCompleted -= Provider_ChannelSubscribeCompleted;
                     Provider.ChannelUnSubscribeCompleted -= Provider_ChannelUnSubscribeCompleted;
+
+                    Provider.Dispose();
 
                     isitialized = false;
                 }

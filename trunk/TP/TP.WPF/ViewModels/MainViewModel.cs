@@ -36,11 +36,17 @@ namespace TP.WPF.ViewModels
             ChartTab = new ChartTabViewModel();
 
             channelController1.AutoSubscribeChannels = true;
-            channelController1.InitProvider("HighLevelClient");
+            channelController1.InitProvider();
+            channelController1.GetRegName = GetRegName;
             channelController1.NeedProtocol += channelController1_NeedProtocol;
             channelController1.CanRegister = true;
 
             SubscribeAndInitViewModels();
+        }
+
+        private string GetRegName()
+        {
+            return "HighLevelClient";//TODO: 2 viewmodel & view
         }
 
         private void OnTest()
@@ -108,7 +114,10 @@ namespace TP.WPF.ViewModels
         private void OnCloseApp()
         {
             if (!channelController1.CanRegister)
+            {
                 channelController1.Unregister();
+                channelController1.Dispose();
+            }
             // Ask the view to close.
             //TODO:RaiseCloseRequest();
         }

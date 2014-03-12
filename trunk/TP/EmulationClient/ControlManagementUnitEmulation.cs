@@ -6,7 +6,6 @@ using DMS.Common.Messages;
 using NLog;
 using Oleg_ivo.LowLevelClient;
 using Oleg_ivo.Plc.Channels;
-using Oleg_ivo.Tools.ExceptionCatcher;
 using Oleg_ivo.Tools.UI;
 
 namespace EmulationClient

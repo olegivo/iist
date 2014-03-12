@@ -97,7 +97,7 @@ namespace EmulationClient
             try
             {
                 //TODO: заполнить RegNameFrom
-                ControlManagementUnit.SendErrorAsync(new InternalErrorMessage(null, null, e.Exception), e);
+                ControlManagementUnit.SendErrorAsync(e);
                 if (e.Exception is ArgumentOutOfRangeException)
                     e.ShowError = false;
             }
