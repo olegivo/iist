@@ -123,5 +123,16 @@ namespace Oleg_ivo.LowLevelClient
             measurementPoll.Elapsed -= measurementPoll_Elapsed;
             measurementPoll.StopPoll();
         }
+
+        /// <summary>
+        /// Остановить все таймеры опроса каналов
+        /// </summary>
+        public void StopAllPolls()
+        {
+            foreach (var measurementPoll in MeasurementPolls)
+            {
+                measurementPoll.Value.StopPoll();
+            }
+        }
     }
 }

@@ -17,10 +17,10 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageReceiver/SendMessage", ReplyAction="http://tempuri.org/IMessageReceiver/SendMessageResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalServiceMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalErrorMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelSubscribeMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.RegistrationMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelSubscribeMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalErrorMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalDataMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalLogicalChannelDataMessage))]
         void SendMessage(DMS.Common.Messages.InternalMessage message);
@@ -31,16 +31,16 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         void EndSendMessage(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageReceiver/SendError", ReplyAction="http://tempuri.org/IMessageReceiver/SendErrorResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.RegistrationException), Action="http://tempuri.org/IMessageReceiver/SendErrorRegistrationExceptionFault", Name="RegistrationException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.TestException), Action="http://tempuri.org/IMessageReceiver/SendErrorTestExceptionFault", Name="TestException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.RegistrationException), Action="http://tempuri.org/IMessageReceiver/SendErrorRegistrationExceptionFault", Name="RegistrationException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.SystemException))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.ArgumentException))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.ArgumentOutOfRangeException))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.ApplicationException))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Exceptions.InternalException))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Exceptions.TestException))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Exceptions.InternalServiceException))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Exceptions.RegistrationException))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.SystemException))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.ArgumentException))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.ArgumentOutOfRangeException))]
         void SendError(DMS.Common.Messages.InternalErrorMessage message);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IMessageReceiver/SendError", ReplyAction="http://tempuri.org/IMessageReceiver/SendErrorResponse")]
@@ -58,12 +58,12 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         
         void EndRegister(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(IsInitiating=false, Action="http://tempuri.org/IMessageExchangeSystem/Unregister", ReplyAction="http://tempuri.org/IMessageExchangeSystem/UnregisterResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsTerminating=true, IsInitiating=false, Action="http://tempuri.org/IMessageExchangeSystem/Unregister", ReplyAction="http://tempuri.org/IMessageExchangeSystem/UnregisterResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.RegistrationException), Action="http://tempuri.org/IMessageExchangeSystem/UnregisterRegistrationExceptionFault", Name="RegistrationException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
         void Unregister(DMS.Common.Messages.RegistrationMessage message);
         
-        [System.ServiceModel.OperationContractAttribute(IsInitiating=false, AsyncPattern=true, Action="http://tempuri.org/IMessageExchangeSystem/Unregister", ReplyAction="http://tempuri.org/IMessageExchangeSystem/UnregisterResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsTerminating=true, IsInitiating=false, AsyncPattern=true, Action="http://tempuri.org/IMessageExchangeSystem/Unregister", ReplyAction="http://tempuri.org/IMessageExchangeSystem/UnregisterResponse")]
         System.IAsyncResult BeginUnregister(DMS.Common.Messages.RegistrationMessage message, System.AsyncCallback callback, object asyncState);
         
         void EndUnregister(System.IAsyncResult result);
@@ -99,10 +99,10 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageReceiver/SendMessageToClient", ReplyAction="http://tempuri.org/IMessageReceiver/SendMessageToClientResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.InternalException), Action="http://tempuri.org/IMessageReceiver/SendMessageToClientInternalExceptionFault", Name="InternalException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalServiceMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalErrorMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelSubscribeMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.RegistrationMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelSubscribeMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalErrorMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalDataMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalLogicalChannelDataMessage))]
         void SendMessageToClient(DMS.Common.Messages.InternalMessage message);

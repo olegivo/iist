@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ServiceModel;
 using System.Windows.Forms;
 using DMS.Common.Messages;
 using NLog;
@@ -134,6 +135,11 @@ namespace EmulationClient
         /// </summary>
         public void UnregisterAllChannels()
         {
+            if (LowLevelMessageExchangeSystemClient.State != CommunicationState.Opened)
+            {
+                RegisteredChannelsCount = 0;
+                return;
+            }
             foreach (LogicalChannel channel in LogicalChannels)
             {
                 LowLevelMessageExchangeSystemClient.ChannelUnRegisterAsync(new ChannelRegistrationMessage(RegName, null, RegistrationMode.Unregister,

@@ -147,6 +147,8 @@ namespace Oleg_ivo.LowLevelClient
             UnsubscribeProxy();
 
             site = new InstanceContext(CallbackHandler);
+            if (proxy != null) 
+                proxy.SafeClose();
             proxy = new LowLevelMessageExchangeSystemClient(site);
             
             SubscribeProxy();
@@ -342,6 +344,7 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public void Register()
         {
+            CreateProxy();
             RegistrationMessage message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
             LowLevelMessageExchangeSystemClient.Register(message);
         }
@@ -351,6 +354,7 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public void RegisterAsync()
         {
+            CreateProxy();
             RegistrationMessage message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
             LowLevelMessageExchangeSystemClient.RegisterAsync(message);
         }
@@ -360,6 +364,8 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public void Unregister()
         {
+            //перед тем, как совершить последнюю операцию сессии останавливаем все попытки посыла сообщений
+            Planner.StopAllPolls();
             LowLevelMessageExchangeSystemClient.UnregisterAsync(new RegistrationMessage(GetRegName(), null, RegistrationMode.Unregister, DataMode.Unknown));
         }
 
@@ -485,15 +491,6 @@ namespace Oleg_ivo.LowLevelClient
                     LogicalChannel.GetFindChannelPredicate(channelRegistrationMessage.LogicalChannelId));
 
             Protocol(string.Format("{0} отмена регистрации в системе обмена сообщениями", channel));
-        }
-
-        /// <summary>
-        /// Метод должен быть вызван перед первым использованием
-        /// </summary>
-        public void Init()
-        {
-            if(proxy==null)
-                CreateProxy();
         }
 
         public void SendErrorAsync(ExtendedThreadExceptionEventArgs e)

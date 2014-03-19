@@ -83,7 +83,6 @@ namespace Oleg_ivo.HighLevelClient.UI
 #endif
             //режим клиента для LabView END
 
-            Provider.Init();
             Provider.GetRegName = GetRegName;
 
             Provider.NeedProtocol += Provider_NeedProtocol;
