@@ -95,16 +95,6 @@
     </xs:list>
   </xs:simpleType>
   <xs:element name="DataMode" nillable="true" type="tns:DataMode" />
-  <xs:complexType name="InternalErrorMessage">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:InternalServiceMessage">
-        <xs:sequence>
-          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="Error" nillable="true" type="q1:Exception" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="InternalErrorMessage" nillable="true" type="tns:InternalErrorMessage" />
   <xs:complexType name="ChannelSubscribeMessage">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:InternalServiceMessage">
@@ -135,6 +125,16 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="SubscribeMode" nillable="true" type="tns:SubscribeMode" />
+  <xs:complexType name="InternalErrorMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:InternalServiceMessage">
+        <xs:sequence>
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="Error" nillable="true" type="q1:Exception" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="InternalErrorMessage" nillable="true" type="tns:InternalErrorMessage" />
   <xs:simpleType name="RegistrationMode">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Register">

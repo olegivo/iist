@@ -30,7 +30,6 @@ namespace EmulationClient
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
-            ControlManagementUnitEmulation.Init();
             ControlManagementUnitEmulation.RegisterAsync();
         }
 

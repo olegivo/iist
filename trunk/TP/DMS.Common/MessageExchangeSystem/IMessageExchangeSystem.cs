@@ -34,7 +34,7 @@ namespace DMS.Common.MessageExchangeSystem
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        [OperationContract(AsyncPattern = true, IsInitiating = false, IsTerminating = false/*TODO:BeginUnregister must be IsTerminating=true*/)]
+        [OperationContract(AsyncPattern = true, IsInitiating = false, IsTerminating = true)]
         [FaultContract(typeof (RegistrationException))]
         IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state);
 

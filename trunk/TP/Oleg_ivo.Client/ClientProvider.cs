@@ -141,6 +141,8 @@ namespace Oleg_ivo.HighLevelClient
             UnsubscribeProxy();
 
             site = new InstanceContext(CallbackHandler);
+            if(highLevelMessageExchangeSystemClient!=null)
+                highLevelMessageExchangeSystemClient.SafeClose();
             highLevelMessageExchangeSystemClient = new HighLevelMessageExchangeSystemClient(site);
 
             SubscribeProxy();
@@ -332,6 +334,8 @@ namespace Oleg_ivo.HighLevelClient
         /// <param name="proxyRegisterCompleted"></param>
         public void Register(bool async, EventHandler<AsyncCompletedEventArgs> proxyRegisterCompleted)
         {
+            CreateProxy();
+
             _proxyRegisterCompleted = proxyRegisterCompleted;
             highLevelMessageExchangeSystemClient.RegisterCompleted += Proxy_RegisterCompleted;
             var registrationMessage = new RegistrationMessage(GetRegName(), null, RegistrationMode.Register, AllowedDataMode);
