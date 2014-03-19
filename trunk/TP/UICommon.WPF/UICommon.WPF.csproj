@@ -81,6 +81,12 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.0.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration">
+      <HintPath>..\packages\Autofac.3.0.2\lib\net40\Autofac.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras.WPF4, Version=4.1.27.22692, Culture=neutral, PublicKeyToken=1673db7d5906b0ad, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\net40\GalaSoft.MvvmLight.Extras.WPF4.dll</HintPath>
@@ -125,6 +131,9 @@
   <ItemGroup>
     <Compile Include="Converters\ValueHeightConverter.cs" />
     <Compile Include="Converters\ValueAngleConverter.cs" />
+    <Compile Include="Dialogs\IModalDialogService.cs" />
+    <Compile Include="Dialogs\IModalWindow.cs" />
+    <Compile Include="Dialogs\ModalDialogService.cs" />
     <Compile Include="UIElements\VisualStates .cs" />
     <Compile Include="UIElements\ucBurner.xaml.cs">
       <DependentUpon>ucBurner.xaml</DependentUpon>
@@ -237,6 +246,10 @@
     <ProjectReference Include="..\DMS.Common\DMS.Common.csproj">
       <Project>{02BA939D-826A-4D6E-8B42-414AF3F6C7CE}</Project>
       <Name>DMS.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\External\Oleg_ivo.Tools\Oleg_ivo.Base\Oleg_ivo.Base.csproj">
+      <Project>{AC7D7F53-A330-45B0-A6B3-498BE85B9739}</Project>
+      <Name>Oleg_ivo.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
