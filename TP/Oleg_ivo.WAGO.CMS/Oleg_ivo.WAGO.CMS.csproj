@@ -77,6 +77,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.2.1.0\lib\net40\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="Prism.AutofacExtension">
       <HintPath>..\packages\Prism.AutofacExtension.1.0.40.0\lib\net40\Prism.AutofacExtension.dll</HintPath>
     </Reference>
@@ -102,6 +106,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dialogs\PolynomDialogViewModel.cs" />
+    <Compile Include="Dialogs\PolynomDialog.xaml.cs">
+      <DependentUpon>PolynomDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ObjectToStringConverter.cs" />
     <Compile Include="Prism\MyBootstrapper.cs" />
     <Compile Include="Prism\MyAutofacModule.cs" />
@@ -115,6 +123,10 @@
     <Compile Include="View\DeviceConfigurationView.xaml.cs">
       <DependentUpon>DeviceConfigurationView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Dialogs\PolynomDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -184,6 +196,10 @@
     <ProjectReference Include="..\Oleg_ivo.WAGO\Oleg_ivo.WAGO.csproj">
       <Project>{79953745-7102-46d2-b9d9-5459edc21adb}</Project>
       <Name>Oleg_ivo.WAGO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UICommon.WPF\UICommon.WPF.csproj">
+      <Project>{46D87FCA-8216-4BA1-81C6-8288641B573E}</Project>
+      <Name>UICommon.WPF</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
