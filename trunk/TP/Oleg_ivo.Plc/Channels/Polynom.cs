@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 using Oleg_ivo.Base.Extensions;
 
 namespace Oleg_ivo.Plc.Channels
@@ -16,6 +19,8 @@ namespace Oleg_ivo.Plc.Channels
         /// </summary>
         public readonly DtsPolynom PowerCoefficients = new DtsPolynom();
 
+        public Dictionary<short, double> Dictionary { get; set; }
+
         /// <summary>
         /// Получить значение полинома от аргумента
         /// </summary>
@@ -23,11 +28,17 @@ namespace Oleg_ivo.Plc.Channels
         /// <returns></returns>
         public double GetValue(double argument)
         {
+            if (Dictionary != null)
+                return
+                    Dictionary
+                        .Sum(
+                            polynomCoefficient =>
+                                polynomCoefficient.Value*Math.Pow(argument, polynomCoefficient.Key));
             return
                 PowerCoefficients.PolynomCoefficients.AsEnumerable()
                     .Sum(
                         polynomCoefficient =>
-                            polynomCoefficient.Coefficient*Math.Pow(argument, polynomCoefficient.Power));
+                            polynomCoefficient.Coefficient * Math.Pow(argument, polynomCoefficient.Power));
         }
 
         /// <summary>
@@ -39,6 +50,12 @@ namespace Oleg_ivo.Plc.Channels
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
+            if (Dictionary != null)
+                return "y = " + Dictionary.OrderBy(item => item.Key)
+                    .Select(
+                        polynomCoefficient =>
+                            string.Format("{0}*x^{1}", polynomCoefficient.Value, polynomCoefficient.Key))
+                    .JoinToString(" + ");
             return "y = " + PowerCoefficients.PolynomCoefficients.AsEnumerable()
                 .Select(
                     polynomCoefficient =>
@@ -53,7 +70,7 @@ namespace Oleg_ivo.Plc.Channels
         /// <returns></returns>
         public static string SerializePolynom(Polynom polynom)
         {
-/*
+            /*
             // создаем сериалайзер
             XmlSerializer sr = new XmlSerializer(typeof(Polynom));
 
@@ -63,14 +80,29 @@ namespace Oleg_ivo.Plc.Channels
 
             // сериализуем
             sr.Serialize(w, polynom);
-*/
+            */
 
             // получаем строку Xml
             string xml;
-//            xml = sb.ToString();
-            xml = polynom.PowerCoefficients.GetXml();
+            if (polynom.Dictionary != null)
+            {
+                var x =
+                    new XDocument(new XElement("DtsPolynom",
+                        polynom.Dictionary.OrderBy(item => item.Key)
+                            .Select(
+                                polynomCoefficient =>
+                                    new XElement("PolynomCoefficients", new XElement("Power", polynomCoefficient.Key),
+                                        new XElement("Coefficient", polynomCoefficient.Value.ToString(CultureInfo.GetCultureInfo("en")))))));
+                xml = x.ToString();
+            }
+            else
+            {
+                xml = polynom.PowerCoefficients.GetXml();
+            }
+
+            //            xml = sb.ToString();
             //Log.Debug(xml);
-            
+
             byte[] bytes = xml.Select(c => (byte)c).ToArray();
             //TODO: System.Compression?
             return Convert.ToBase64String(bytes);
@@ -88,11 +120,21 @@ namespace Oleg_ivo.Plc.Channels
             string s = new string(chars);
             //Log.Debug(s);
 
-            StringReader reader = new StringReader(s);
-
             // десериализуем 
-            Polynom clone = new Polynom();
-            clone.PowerCoefficients.ReadXml(reader);
+            var clone = new Polynom();
+            using (var reader = new StringReader(s))
+            {
+                clone.PowerCoefficients.ReadXml(reader);
+            }
+            
+            //var xDocument = XDocument.Parse(s);
+            //clone.Dictionary =
+            //    xDocument.Root.Elements()
+            //        .ToDictionary(element => short.Parse(element.Element("Power").Value),
+            //            element => double.Parse(element.Element("Coefficient").Value, CultureInfo.InvariantCulture));
+
+            clone.Dictionary = clone.PowerCoefficients.PolynomCoefficients.AsEnumerable()
+                .ToDictionary(item => item.Power, item => item.Coefficient);
 
             return clone;
         }
