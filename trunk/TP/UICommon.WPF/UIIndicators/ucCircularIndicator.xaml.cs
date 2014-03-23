@@ -2,7 +2,7 @@
 
 
 
-namespace UICommon.WPF
+namespace UICommon.WPF.UIIndicators
 {
     /// <summary>
     /// Interaction logic for ucIndicator.xaml

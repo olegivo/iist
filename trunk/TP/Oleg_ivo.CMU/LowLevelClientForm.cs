@@ -233,21 +233,28 @@ namespace Oleg_ivo.CMU
 
         private void LowLevelClientForm_Load(object sender, EventArgs e)
         {
-            ControlManagementUnit controlManagementUnit = ControlManagementUnit;
-            controlManagementUnit.BuildSystemConfiguration();
-            controlManagementUnit.GetRegName = GetRegName;
-            controlManagementUnit.NeedProtocol += ControlManagementUnit_NeedProtocol;
+            try
+            {
+                ControlManagementUnit controlManagementUnit = ControlManagementUnit;
+                controlManagementUnit.BuildSystemConfiguration();
+                controlManagementUnit.GetRegName = GetRegName;
+                controlManagementUnit.NeedProtocol += ControlManagementUnit_NeedProtocol;
 
-            List<LogicalChannel> left = new List<LogicalChannel>();
-            List<LogicalChannel> right = new List<LogicalChannel>();
+                List<LogicalChannel> left = new List<LogicalChannel>();
+                List<LogicalChannel> right = new List<LogicalChannel>();
 
-            //добавляем только проидентифицированные каналы (Id > 0):
-            left.AddRange(controlManagementUnit.GetAvailableLogicalChannels());
-            //_right.AddRange(Enumerable.Range(11, 10));
+                //добавляем только проидентифицированные каналы (Id > 0):
+                left.AddRange(controlManagementUnit.GetAvailableLogicalChannels());
+                //_right.AddRange(Enumerable.Range(11, 10));
 
-            doubleListBoxControl1.InitDisplayMember("Id");
-            doubleListBoxControl1.InitSources(left, right);
-            CanRegister = true;
+                doubleListBoxControl1.InitDisplayMember("Id");
+                doubleListBoxControl1.InitSources(left, right);
+                CanRegister = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         private void btnChannelRead_Click(object sender, EventArgs e)

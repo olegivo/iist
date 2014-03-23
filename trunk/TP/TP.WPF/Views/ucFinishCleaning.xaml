@@ -3,8 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:UiIndicators="clr-namespace:UICommon.WPF.UIIndicators;assembly=UICommon.WPF"
-	xmlns:Wpf="clr-namespace:UICommon.WPF;assembly=UICommon.WPF" mc:Ignorable="d"
+	xmlns:uiIndicators="clr-namespace:UICommon.WPF.UIIndicators;assembly=UICommon.WPF"
 	x:Class="TP.WPF.Views.ucFinishCleaning"
 	x:Name="UserControl">
     <Viewbox>
@@ -98,42 +97,42 @@
             			<SolidColorBrush Color="#FFFBFBFB" Opacity="0.4"/>
             		</Grid.Background>
             		<StackPanel Height="144.02" Width="254" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Right">
-            			<UiIndicators:ucSimpleIndicator
+                        <uiIndicators:ucSimpleIndicator
             				x:Name="indicatorT7"
             				Width="Auto"
             				DataContext="{Binding IndicatorViewModels[7]}" />
-            			<UiIndicators:ucSimpleIndicator
+                        <uiIndicators:ucSimpleIndicator
             				x:Name="indicatorNO2"
             				Width="Auto"
             				DataContext="{Binding IndicatorViewModels[24]}" />
-            			<UiIndicators:ucSimpleIndicator
+                        <uiIndicators:ucSimpleIndicator
             				x:Name="indicatorNO"
             				Width="Auto"
             				DataContext="{Binding IndicatorViewModels[23]}" />
-            			<UiIndicators:ucSimpleIndicator
+                        <uiIndicators:ucSimpleIndicator
             				x:Name="indicatorSO2"
             				Width="Auto"
             				DataContext="{Binding IndicatorViewModels[22]}" />
-            			<UiIndicators:ucSimpleIndicator
+                        <uiIndicators:ucSimpleIndicator
             				x:Name="indicatorО2"
             				Width="Auto"
             				DataContext="{Binding IndicatorViewModels[20]}" />
-            			<UiIndicators:ucSimpleIndicator
+                        <uiIndicators:ucSimpleIndicator
             				x:Name="indicatorCO"
             				Width="Auto"
             				DataContext="{Binding IndicatorViewModels[21]}" />
-            			<UiIndicators:ucSimpleIndicator
+                        <uiIndicators:ucSimpleIndicator
             				x:Name="indicatorT6"
             				Width="Auto"
             				DataContext="{Binding IndicatorViewModels[6]}" />
             		</StackPanel>
             	</Grid>
             </Expander>
-            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G20" Width="192" DataContext="{Binding IndicatorViewModels[20]}" Canvas.Left="8"/>
-            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G21" Width="192" DataContext="{Binding IndicatorViewModels[21]}" Canvas.Left="208"/>
-            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G22" Width="192" DataContext="{Binding IndicatorViewModels[22]}" Canvas.Left="412"/>
-            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G23" Width="192" DataContext="{Binding IndicatorViewModels[23]}" Canvas.Left="621"/>
-            <Wpf:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G24" Width="192" DataContext="{Binding IndicatorViewModels[24]}" Canvas.Left="824"/>
+            <uiIndicators:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G20" Width="192" DataContext="{Binding IndicatorViewModels[20]}" Canvas.Left="8"/>
+            <uiIndicators:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G21" Width="192" DataContext="{Binding IndicatorViewModels[21]}" Canvas.Left="208"/>
+            <uiIndicators:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G22" Width="192" DataContext="{Binding IndicatorViewModels[22]}" Canvas.Left="412"/>
+            <uiIndicators:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G23" Width="192" DataContext="{Binding IndicatorViewModels[23]}" Canvas.Left="621"/>
+            <uiIndicators:ucCircularIndicator Canvas.Top="664" Height="96" x:Name="indicator_G24" Width="192" DataContext="{Binding IndicatorViewModels[24]}" Canvas.Left="824"/>
             <!--<Wpf:ucTemperatureIndicator Canvas.Left="240" Height="155" x:Name="indicator_T6" Width="80" DataContext="{Binding IndicatorViewModels[6]}" Canvas.Top="162"/>
             <Wpf:ucTemperatureIndicator Canvas.Left="640" Height="155" x:Name="indicator_T7" Width="80" DataContext="{Binding IndicatorViewModels[7]}" Canvas.Top="320"/>-->
             <!--<UIComponents:ucIndicator

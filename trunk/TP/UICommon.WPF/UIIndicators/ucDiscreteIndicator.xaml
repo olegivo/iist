@@ -5,7 +5,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="clr-namespace:UICommon.WPF.Converters" x:Name="userControl"
 	mc:Ignorable="d"
-	x:Class="UICommon.WPF.ucDiscreteIndicator"
+	x:Class="UICommon.WPF.UIIndicators.ucDiscreteIndicator"
     Width="80" Height="80">
 	<UserControl.Resources>
         <local:ValueAngleConverter x:Key="valueAngleConverter" />

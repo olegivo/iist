@@ -38,6 +38,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -129,26 +131,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\ValueHeightConverter.cs" />
+    <Compile Include="Converters\StringToNullableDoubleConverter.cs" />
+    <Compile Include="Converters\ValueAngelConverter260.cs" />
     <Compile Include="Converters\ValueAngleConverter.cs" />
-    <Compile Include="Dialogs\IModalDialogService.cs" />
-    <Compile Include="Dialogs\IModalWindow.cs" />
-    <Compile Include="Dialogs\ModalDialogService.cs" />
-    <Compile Include="UIElements\VisualStates .cs" />
+    <Compile Include="Converters\ValueHeightConverter.cs" />
+    <Compile Include="UIElements\ucFurnanceLoad.xaml.cs">
+      <DependentUpon>ucFurnanceLoad.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIElements\ucBurner.xaml.cs">
       <DependentUpon>ucBurner.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\IModalDialogService.cs" />
+    <Compile Include="Dialogs\IModalWindow.cs" />
+    <Compile Include="Dialogs\ModalDialogService.cs" />
     <Compile Include="UIElements\ucFan.xaml.cs">
       <DependentUpon>ucFan.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIIndicators\Clock.xaml.cs">
-      <DependentUpon>Clock.xaml</DependentUpon>
+    <Compile Include="UIElements\VisualStates .cs" />
+    <Compile Include="UIIndicators\ucDiscreteIndicator.xaml.cs">
+      <DependentUpon>ucDiscreteIndicator.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIIndicators\UcDiscreteIndicator.xaml.cs">
-      <DependentUpon>UcDiscreteIndicator.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UIIndicators\UcLevelIndicator.xaml.cs">
-      <DependentUpon>UcLevelIndicator.xaml</DependentUpon>
+    <Compile Include="UIIndicators\ucLevelIndicator.xaml.cs">
+      <DependentUpon>ucLevelIndicator.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIIndicators\ucSimpleIndicator.xaml.cs">
       <DependentUpon>ucSimpleIndicator.xaml</DependentUpon>
@@ -165,8 +169,6 @@
     <Compile Include="UIIndicators\DarkStyleIndicators\ucTemperatureIndicator3.xaml.cs">
       <DependentUpon>ucTemperatureIndicator3.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -195,15 +197,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UIIndicators\Clock.xaml">
+    <Page Include="UIElements\ucFurnanceLoad.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UIIndicators\UcDiscreteIndicator.xaml">
+    <Page Include="UIIndicators\ucDiscreteIndicator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UIIndicators\UcLevelIndicator.xaml">
+    <Page Include="UIIndicators\ucLevelIndicator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -232,7 +234,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Converters\StringToNullableDoubleConverter.cs" />
     <AppDesigner Include="Properties\" />
     <None Include="Application.ico">
       <Visible>false</Visible>
@@ -272,11 +273,9 @@
   <ItemGroup>
     <Folder Include="Fonts\" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="MVVMLight.Nuget.Readme.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.0\Microsoft.Expression.Blend.WPF.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	     Other similar extension points exist, see Microsoft.Common.targets.
 	<Target Name="BeforeBuild">

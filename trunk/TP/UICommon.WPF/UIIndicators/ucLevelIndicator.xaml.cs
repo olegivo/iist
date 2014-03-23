@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UICommon.WPF
+namespace UICommon.WPF.UIIndicators
 {
 	/// <summary>
 	/// Interaction logic for ucLevelIndicator.xaml

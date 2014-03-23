@@ -79,8 +79,7 @@ namespace TP.WPF.ViewModels
                     CycloneAndScrubber,
                     ReheatChamber,
                     HeatExchanger,
-					//BUG: В методе findByChannelId вылетаеш ошибка при регистрации каналов
-                    //SummaryTable,
+                    SummaryTable,
                     ChartTab
                 };
 
