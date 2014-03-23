@@ -89,26 +89,24 @@ namespace TP.WPF.ViewModels
                 currentValue = value;
                 OnPropertyChanged("CurrentValue");
                 var propertyNames = new[]
-                    {
-                        "IsValueHigherNormal",
-                        "IsValueLowerNormal",
-                        "IsValueHigherCritycal",
-                        "IsValueLowerCritycal",
-                        "ShortCurrentValue",
-                        "DiscreteOnState",
-                        "IsOn",
-                        "CurrentState"
-                    };
+                {
+                    "IsValueHigherNormal",
+                    "IsValueLowerNormal",
+                    "IsValueHigherCritycal",
+                    "IsValueLowerCritycal",
+                    "ShortCurrentValue",
+                    "DiscreteOnState",
+                    "IsOn",
+                    "CurrentState"
+                };
                 foreach (var propertyName in propertyNames)
                     OnPropertyChanged(propertyName);
             }
         }
 
-        public Decimal ShortCurrentValue {
-            get
-            {
-                return currentValue==null?0:Decimal.Round((Decimal) CurrentValue, 2);
-            }
+        public Decimal ShortCurrentValue
+        {
+            get { return currentValue == null ? 0 : Decimal.Round((Decimal) CurrentValue, 2); }
         }
 
         /// <summary>
@@ -116,10 +114,7 @@ namespace TP.WPF.ViewModels
         /// </summary>
         public bool IsValueHigherNormal
         {
-            get
-            {
-                return CompareCurrentValueWith(MaxNormalValue) > 0;
-            }
+            get { return CompareCurrentValueWith(MaxNormalValue) > 0; }
         }
 
         /// <summary>
@@ -127,10 +122,7 @@ namespace TP.WPF.ViewModels
         /// </summary>
         public bool IsValueHigherCritycal
         {
-            get
-            {
-                return CompareCurrentValueWith(MaxValue) > 0;
-            }
+            get { return CompareCurrentValueWith(MaxValue) > 0; }
         }
 
         /// <summary>
@@ -138,10 +130,7 @@ namespace TP.WPF.ViewModels
         /// </summary>
         public bool IsValueLowerNormal
         {
-            get
-            {
-                return CompareCurrentValueWith(MinNormalValue) < 0;
-            }
+            get { return CompareCurrentValueWith(MinNormalValue) < 0; }
         }
 
         /// <summary>
@@ -149,17 +138,14 @@ namespace TP.WPF.ViewModels
         /// </summary>
         public bool IsValueLowerCritycal
         {
-            get
-            {
-                return CompareCurrentValueWith(MinValue) < 0;
-            }
+            get { return CompareCurrentValueWith(MinValue) < 0; }
         }
 
         private int CompareCurrentValueWith(double? compareValue)
         {
             return CurrentValue.HasValue && compareValue.HasValue
-                       ? CurrentValue.Value.CompareTo(compareValue.Value)
-                       : 0;
+                ? CurrentValue.Value.CompareTo(compareValue.Value)
+                : 0;
         }
 
 
@@ -174,7 +160,7 @@ namespace TP.WPF.ViewModels
             set
             {
                 if (CurrentValue != null && CurrentValue > 0.9)
-                    discreteOnState = true;//Convert.ToBoolean(value);
+                    discreteOnState = true; //Convert.ToBoolean(value);
                 else
                     discreteOnState = false;
                 OnPropertyChanged("DiscreteOnState");
@@ -194,7 +180,8 @@ namespace TP.WPF.ViewModels
                 if (CurrentValue != null)
                     return "WorkingState";
                 return "NoSignal";
+            }
 
-
+        }
     }
 }
