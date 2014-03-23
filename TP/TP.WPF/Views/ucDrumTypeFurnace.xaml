@@ -3,9 +3,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:Wpf="clr-namespace:UICommon.WPF;assembly=UICommon.WPF"
 	xmlns:System="clr-namespace:System;assembly=mscorlib"
-	xmlns:UICommon_WPF_UIIndicators="clr-namespace:UICommon.WPF.UIIndicators;assembly=UICommon.WPF"
+    xmlns:uiIndicators="clr-namespace:UICommon.WPF.UIIndicators;assembly=UICommon.WPF"
 	mc:Ignorable="d"
 	x:Class="TP.WPF.Views.ucDrumTypeFurnace"
 	x:Name="UserControl"
@@ -697,14 +696,14 @@
 			</Rectangle>
 			<TextBlock x:Name="textBlock4_Copy12" Canvas.Left="742.957" TextWrapping="Wrap" Canvas.Top="438.509" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}"><Run Language="ru-ru" Text="ЗК"/></TextBlock>
 			<TextBlock x:Name="textBlock4_Copy13" Canvas.Left="487.684" TextWrapping="Wrap" Canvas.Top="568.067" FontWeight="{DynamicResource FontWeightLablel}" FontSize="{DynamicResource FontSizeLabel}"><Run Text="П"/><Run Language="ru-ru" Text="Л"/></TextBlock>
-			<Wpf:ucLevelIndicator x:Name="indicator_T8" Height="160.083" Canvas.Left="720" DataContext="{Binding IndicatorViewModels[283]}" Width="80"/>
-			<Wpf:ucLevelIndicator x:Name="indicator_T2" Height="160.083" Canvas.Left="840" DataContext="{Binding IndicatorViewModels[284]}" Width="80"/>
-			<Wpf:ucLevelIndicator x:Name="indicator_T1" Height="160.083" Canvas.Left="600" DataContext="{Binding IndicatorViewModels[282]}" Width="80"/>
-			<Wpf:ucLevelIndicator x:Name="indicator_L13" Height="160.083" Canvas.Left="480" DataContext="{Binding IndicatorViewModels[281]}" Width="80"/>
-			<Wpf:ucDiscreteIndicator x:Name="indicator_56_DI_0" Height="48"  Width="51.75" DataContext="{Binding IndicatorViewModels[181]}" Canvas.Left="23.75" Canvas.Top="8"/>
-			<Wpf:ucDiscreteIndicator x:Name="indicator_56_DI_1" Height="48"  Width="51.75" DataContext="{Binding IndicatorViewModels[182]}" Canvas.Left="81.75" Canvas.Top="8"/>
-			<Wpf:ucDiscreteIndicator x:Name="indicator_56_DI_2" Height="48"  Width="51.75" DataContext="{Binding IndicatorViewModels[183]}" Canvas.Left="137.5" Canvas.Top="8"/>
-			<Wpf:ucDiscreteIndicator x:Name="indicator_56_DI_3" Height="48"  Width="51.75" DataContext="{Binding IndicatorViewModels[184]}" Canvas.Left="189.25" Canvas.Top="8"/>
+			<uiIndicators:ucLevelIndicator x:Name="indicator_T8" Height="160.083" Canvas.Left="720" DataContext="{Binding IndicatorViewModels[283]}" Width="80"/>
+            <uiIndicators:ucLevelIndicator x:Name="indicator_T2" Height="160.083" Canvas.Left="840" DataContext="{Binding IndicatorViewModels[284]}" Width="80"/>
+            <uiIndicators:ucLevelIndicator x:Name="indicator_T1" Height="160.083" Canvas.Left="600" DataContext="{Binding IndicatorViewModels[282]}" Width="80"/>
+            <uiIndicators:ucLevelIndicator x:Name="indicator_L13" Height="160.083" Canvas.Left="480" DataContext="{Binding IndicatorViewModels[281]}" Width="80"/>
+            <uiIndicators:ucDiscreteIndicator x:Name="indicator_56_DI_0" Height="48"  Width="51.75" DataContext="{Binding IndicatorViewModels[181]}" Canvas.Left="23.75" Canvas.Top="8"/>
+            <uiIndicators:ucDiscreteIndicator x:Name="indicator_56_DI_1" Height="48"  Width="51.75" DataContext="{Binding IndicatorViewModels[182]}" Canvas.Left="81.75" Canvas.Top="8"/>
+            <uiIndicators:ucDiscreteIndicator x:Name="indicator_56_DI_2" Height="48"  Width="51.75" DataContext="{Binding IndicatorViewModels[183]}" Canvas.Left="137.5" Canvas.Top="8"/>
+            <uiIndicators:ucDiscreteIndicator x:Name="indicator_56_DI_3" Height="48"  Width="51.75" DataContext="{Binding IndicatorViewModels[184]}" Canvas.Left="189.25" Canvas.Top="8"/>
 		</Canvas>
 	</Viewbox>
 </UserControl>

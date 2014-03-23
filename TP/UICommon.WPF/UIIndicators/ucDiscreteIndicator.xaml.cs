@@ -12,14 +12,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UICommon.WPF.UIElements
+namespace UICommon.WPF.UIIndicators
 {
 	/// <summary>
-	/// Interaction logic for ucBurner.xaml
+	/// Interaction logic for ucDiscreteIndicator.xaml
 	/// </summary>
-	public partial class ucBurner : UserControl
+	public partial class ucDiscreteIndicator : UserControl
 	{
-		public ucBurner()
+		public ucDiscreteIndicator()
 		{
 			this.InitializeComponent();
 		}

@@ -91,7 +91,7 @@ namespace TP.WPF.ViewModels
         {
             get
             {
-                if (Dictionary.Count>0)
+                if (Dictionary.ContainsKey(key))
                 {
                     return Dictionary[key];
                     

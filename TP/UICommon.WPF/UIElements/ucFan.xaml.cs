@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-namespace UICommon.WPF
+namespace UICommon.WPF.UIElements
 {
 	/// <summary>
 	/// Interaction logic for ucFan.xaml

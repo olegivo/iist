@@ -148,26 +148,6 @@ namespace TP.WPF.ViewModels
         }
 
 
-        //TODO: создать отдельную модель представления для дискретных индикаторов
-        public bool DiscreteOnState
-        {
-            get
-            {
-                return (CurrentValue != null && CurrentValue > 0.9) ? true : false;
-                //discreteOnState;
-            }
-            set
-            {
-                if (CurrentValue != null && CurrentValue > 0.9)
-                    discreteOnState = true; //Convert.ToBoolean(value);
-                else
-                    discreteOnState = false;
-                RaisePropertyChanged("DiscreteOnState");
-
-            }
-        }
-
-
         public string CurrentState
         {
             get
@@ -182,5 +162,28 @@ namespace TP.WPF.ViewModels
 
             }
         }
+
+        //TODO: создать отдельную модель представления для дискретных индикаторов
+        public bool DiscreteOnState
+        {
+            get
+            {
+                return (CurrentValue != null && CurrentValue > 0.9) ? true : false;
+                //discreteOnState;
+            }
+            set
+            {
+                if (CurrentValue != null && CurrentValue > 0.9)
+                    discreteOnState = true;//Convert.ToBoolean(value);
+                else
+                    discreteOnState = false;
+                RaisePropertyChanged("DiscreteOnState");
+
+            }
+        }
+
+
+
+
     }
 }

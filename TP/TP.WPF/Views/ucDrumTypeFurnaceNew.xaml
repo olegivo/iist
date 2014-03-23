@@ -3,9 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:UICommon_WPF="clr-namespace:UICommon.WPF;assembly=UICommon.WPF"
-    xmlns:Wpf="clr-namespace:UICommon.WPF;assembly=UICommon.WPF"
-    xmlns:UICommon_WPF_UIIndicators="clr-namespace:UICommon.WPF.UIIndicators;assembly=UICommon.WPF"
+    xmlns:uiIndicators="clr-namespace:UICommon.WPF.UIIndicators;assembly=UICommon.WPF"
 	mc:Ignorable="d"
 	x:Class="TP.WPF.Views.ucDrumTypeFurnaceNew"
 	x:Name="UserControl"
@@ -956,19 +954,19 @@
 					</TransformGroup>
 				</Path.RenderTransform>
 			</Path>
-			<UICommon_WPF:ucLevelIndicator HorizontalAlignment="Left" DataContext="{Binding IndicatorViewModels[281]}" Height="80" Margin="365,16,0,0" VerticalAlignment="Top" Width="40"/>
-			<UICommon_WPF:ucLevelIndicator HorizontalAlignment="Left" DataContext="{Binding IndicatorViewModels[283]}" Height="80" Margin="437.083,16,0,0" VerticalAlignment="Top" Width="40"/>
-			<UICommon_WPF:ucLevelIndicator HorizontalAlignment="Right" DataContext="{Binding IndicatorViewModels[291]}" Height="80" Margin="0,16,173,0" VerticalAlignment="Top" Width="40"/>
-			<UICommon_WPF:ucLevelIndicator HorizontalAlignment="Right" DataContext="{Binding IndicatorViewModels[292]}" Height="80" Margin="0,16,240,0" VerticalAlignment="Top" Width="40"/>
-			<UICommon_WPF:ucLevelIndicator HorizontalAlignment="Right" DataContext="{Binding IndicatorViewModels[281]}" Margin="0,376.5,240,311.5" Width="40"/>
-			<UICommon_WPF:ucDiscreteIndicator HorizontalAlignment="Left" DataContext="{Binding IndicatorViewModels[181]}" Height="50" Margin="77.94,0,0,46.004" VerticalAlignment="Bottom" Width="50"/>
-			<UICommon_WPF:ucDiscreteIndicator HorizontalAlignment="Left" DataContext="{Binding IndicatorViewModels[182]}" Height="50" Margin="152.086,0,0,46" VerticalAlignment="Bottom" Width="50"/>
-			<UICommon_WPF:ucDiscreteIndicator HorizontalAlignment="Left" DataContext="{Binding IndicatorViewModels[183]}" Height="50" Margin="226.533,0,0,45.918" VerticalAlignment="Bottom" Width="50"/>
-			<UICommon_WPF:ucDiscreteIndicator HorizontalAlignment="Left" DataContext="{Binding IndicatorViewModels[184]}" Height="50" Margin="299.667,0,0,45.75" VerticalAlignment="Bottom" Width="50"/>
-			<UICommon_WPF:ucDiscreteIndicator HorizontalAlignment="Left" DataContext="{Binding IndicatorViewModels[185]}" Height="50" Margin="374.042,0,0,45.75" VerticalAlignment="Bottom" Width="50"/>
-			<UICommon_WPF:ucDiscreteIndicator DataContext="{Binding IndicatorViewModels[186]}" Height="50" Margin="448.208,0,0,45.875" VerticalAlignment="Bottom" Width="50" HorizontalAlignment="Left"/>
-			<UICommon_WPF:ucDiscreteIndicator DataContext="{Binding IndicatorViewModels[187]}" HorizontalAlignment="Right" Height="50" Margin="0,0,451.073,45.499" VerticalAlignment="Bottom" Width="50"/>
-			<UICommon_WPF:ucDiscreteIndicator DataContext="{Binding IndicatorViewModels[188]}" HorizontalAlignment="Right" Height="50" Margin="0,0,376.25,45.5" VerticalAlignment="Bottom" Width="50"/>
+            <uiIndicators:ucLevelIndicator HorizontalAlignment="Left" DataContext="{Binding IndicatorViewModels[281]}" Height="80" Margin="365,16,0,0" VerticalAlignment="Top" Width="40"/>
+            <uiIndicators:ucLevelIndicator HorizontalAlignment="Left" DataContext="{Binding IndicatorViewModels[283]}" Height="80" Margin="437.083,16,0,0" VerticalAlignment="Top" Width="40"/>
+            <uiIndicators:ucLevelIndicator HorizontalAlignment="Right" DataContext="{Binding IndicatorViewModels[291]}" Height="80" Margin="0,16,173,0" VerticalAlignment="Top" Width="40"/>
+            <uiIndicators:ucLevelIndicator HorizontalAlignment="Right" DataContext="{Binding IndicatorViewModels[292]}" Height="80" Margin="0,16,240,0" VerticalAlignment="Top" Width="40"/>
+            <uiIndicators:ucLevelIndicator HorizontalAlignment="Right" DataContext="{Binding IndicatorViewModels[281]}" Margin="0,376.5,240,311.5" Width="40"/>
+            <uiIndicators:ucDiscreteIndicator HorizontalAlignment="Left" DataContext="{Binding IndicatorViewModels[181]}" Height="50" Margin="77.94,0,0,46.004" VerticalAlignment="Bottom" Width="50"/>
+            <uiIndicators:ucDiscreteIndicator HorizontalAlignment="Left" DataContext="{Binding IndicatorViewModels[182]}" Height="50" Margin="152.086,0,0,46" VerticalAlignment="Bottom" Width="50"/>
+            <uiIndicators:ucDiscreteIndicator HorizontalAlignment="Left" DataContext="{Binding IndicatorViewModels[183]}" Height="50" Margin="226.533,0,0,45.918" VerticalAlignment="Bottom" Width="50"/>
+            <uiIndicators:ucDiscreteIndicator HorizontalAlignment="Left" DataContext="{Binding IndicatorViewModels[184]}" Height="50" Margin="299.667,0,0,45.75" VerticalAlignment="Bottom" Width="50"/>
+            <uiIndicators:ucDiscreteIndicator HorizontalAlignment="Left" DataContext="{Binding IndicatorViewModels[185]}" Height="50" Margin="374.042,0,0,45.75" VerticalAlignment="Bottom" Width="50"/>
+            <uiIndicators:ucDiscreteIndicator DataContext="{Binding IndicatorViewModels[186]}" Height="50" Margin="448.208,0,0,45.875" VerticalAlignment="Bottom" Width="50" HorizontalAlignment="Left"/>
+            <uiIndicators:ucDiscreteIndicator DataContext="{Binding IndicatorViewModels[187]}" HorizontalAlignment="Right" Height="50" Margin="0,0,451.073,45.499" VerticalAlignment="Bottom" Width="50"/>
+            <uiIndicators:ucDiscreteIndicator DataContext="{Binding IndicatorViewModels[188]}" HorizontalAlignment="Right" Height="50" Margin="0,0,376.25,45.5" VerticalAlignment="Bottom" Width="50"/>
 			<Path Data="M80,64 L384.083,64" HorizontalAlignment="Right" Height="3" Margin="0,157.501,198.547,0" Stretch="Fill" VerticalAlignment="Top" Width="83.118" StrokeThickness="3" Fill="#FFFF7704" Stroke="#FFFF7704"/>
 			<Path Data="M80,64 L384.083,64" Height="3" Margin="0,182.618,252.892,0" Stretch="Fill" VerticalAlignment="Top" StrokeThickness="3" Fill="#FFFF7704" RenderTransformOrigin="0.5,0.5" Stroke="#FFFF7704" HorizontalAlignment="Right" Width="51.307">
 				<Path.RenderTransform>

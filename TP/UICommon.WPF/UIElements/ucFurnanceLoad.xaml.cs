@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UICommon.WPF
+namespace UICommon.WPF.UIElements
 {
 	/// <summary>
-	/// Interaction logic for ucDiscreteIndicator.xaml
+	/// Interaction logic for ucFurnanceLoad.xaml
 	/// </summary>
-	public partial class ucDiscreteIndicator : UserControl
+	public partial class ucFurnanceLoad : UserControl
 	{
-		public ucDiscreteIndicator()
+		public ucFurnanceLoad()
 		{
 			this.InitializeComponent();
 		}

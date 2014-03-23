@@ -5,9 +5,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:uiElements="clr-namespace:UICommon.WPF.UIElements"
 	mc:Ignorable="d"
-	x:Class="UICommon.WPF.ucBurner"
+	x:Class="UICommon.WPF.UIElements.ucBurner"
 	uiElements:VisualStates.CurrentState="{Binding CurrentState}"
-	x:Name="ucBurner1"
 	d:DesignWidth="65" d:DesignHeight="41">
 	<Viewbox Stretch="Fill">
 		<VisualStateManager.VisualStateGroups>

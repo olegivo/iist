@@ -3,9 +3,9 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:local="clr-namespace:UICommon.WPF.Converters" xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="userControl"
+	xmlns:local="clr-namespace:UICommon.WPF.Converters" 
 	mc:Ignorable="d"
-	x:Class="UICommon.WPF.ucLevelIndicator">
+	x:Class="UICommon.WPF.UIIndicators.ucLevelIndicator">
     <UserControl.Resources>
         <!-- конвертер для преобразования входного значения в высоту столбика уровня -->
         <local:ValueHeightConverter x:Key="valueHeightConverter" />
