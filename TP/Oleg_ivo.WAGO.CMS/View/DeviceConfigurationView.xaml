@@ -17,7 +17,7 @@
     <UserControl.Resources>
         <View:CustomDataTemplateSelector x:Key="myTemplateSelector"/>
         <Cms:ObjectToStringConverter x:Key="ObjectToStringConverter" />
-        <DataTemplate x:Key="LogicalChannelTemplate">
+        <DataTemplate x:Key="LogicalChannelTemplate" DataType="Channels:LogicalChannel">
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -40,6 +40,7 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <TextBlock 
@@ -64,37 +65,41 @@
                     <TextBlock 
                         Grid.Row="2" 
                         Grid.Column="0" 
-                        Text="Минимальное допустимое значение для канала" />
+                        Text="Минимальное допустимое значение" />
                     <TextBox 
                         Grid.Row="2" 
                         Grid.Column="1" 
                         Grid.ColumnSpan="2"
+                        IsEnabled="False"
                         Text="{Binding Path=MinValue}" />
                     <TextBlock 
                         Grid.Row="3" 
                         Grid.Column="0" 
-                        Text="Максимальное допустимое значение для канала" />
+                        Text="Максимальное допустимое значение" />
                     <TextBox 
                         Grid.Row="3" 
                         Grid.Column="1" 
                         Grid.ColumnSpan="2"
+                        IsEnabled="False"
                         Text="{Binding Path=MaxValue}" />
                     <TextBlock 
                         Grid.Row="4" 
-                        Grid.Column="0" Text="Минимальное нормальное значение для канала" />
+                        Grid.Column="0" Text="Минимальное нормальное значение" />
                     <TextBox 
                         Grid.Row="4" 
                         Grid.Column="1" 
                         Grid.ColumnSpan="2"
+                        IsEnabled="False"
                         Text="{Binding Path=MinNormalValue}" />
                     <TextBlock 
                         Grid.Row="5" 
                         Grid.Column="0" 
-                        Text="Максимальное нормальное значение для канала" />
+                        Text="Максимальное нормальное значение" />
                     <TextBox 
                         Grid.Row="5" 
                         Grid.Column="1" 
                         Grid.ColumnSpan="2"
+                        IsEnabled="False"
                         Text="{Binding Path=MaxNormalValue}" />
                     <TextBlock 
                         Grid.Row="6" 
@@ -186,8 +191,21 @@
                         Text="{Binding Path=ReadAddress, Mode=OneWay}"
                         IsEnabled="False"/>
 
-                    <Button 
+                    <TextBlock 
                         Grid.Row="14" 
+                        Grid.Column="0" 
+                        Text="Параметр" />
+                    <ComboBox 
+                        Grid.Row="14" 
+                        Grid.Column="1" 
+                        Grid.ColumnSpan="2"
+                        SelectedItem="{Binding Path=Entity.Parameter, Mode=TwoWay}"
+                        DisplayMemberPath="Name"
+                        ItemsSource="{Binding ElementName=deviceConfigurationView, Path=DataContext.Parameters}">
+                    </ComboBox>
+
+                    <Button 
+                        Grid.Row="15" 
                         Grid.Column="0"
                         Grid.ColumnSpan="3" >Удалить этот ЛК</Button>
                 </Grid>
@@ -371,6 +389,7 @@
             Grid.Column="0"
             Orientation="Horizontal">
             <Button Command="{Binding SaveCommand}">Save</Button>
+            <Button Command="{Binding EditParametersCommand}">Редактирование параметров</Button>
         </StackPanel>
     </Grid>
 </UserControl>

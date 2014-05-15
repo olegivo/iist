@@ -1,0 +1,109 @@
+﻿<Window x:Class="Oleg_ivo.WAGO.CMS.Dialogs.ParametersEditDialog"
+        x:Name="parametersEditDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Entities="clr-namespace:Oleg_ivo.Plc.Entities;assembly=Oleg_ivo.Plc"
+        Title="Редактирование параметров"
+        WindowStartupLocation="CenterScreen"
+        Height="300" Width="1024">
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <DataGrid 
+            Grid.Row="0" 
+            Margin="5" 
+            ItemsSource="{Binding Parameters, Mode=TwoWay}" 
+            AutoGenerateColumns="False" 
+            CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Header="#" 
+                    Binding="{Binding Path=Id, Mode=TwoWay}"/>
+                <DataGridTextColumn 
+                    Header="Название" 
+                    Width="200" 
+                    Binding="{Binding Path=Name, Mode=TwoWay}"/>
+                <DataGridTextColumn 
+                    Header="Описание" 
+                    Width="200" 
+                    Binding="{Binding Path=Description, Mode=TwoWay}"/>
+                <DataGridTemplateColumn
+                    Header="Ед. изм." 
+                    Width="200" >
+                    <!--SelectedItemBinding="{Binding Path=MeasurementUnit, Mode=TwoWay}"
+                    DisplayMemberPath="Name"
+                    ItemsSource="{Binding ElementName=LayoutRoot, Path=DataContext.MeasurementUnits}"-->
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate DataType="Entities:Parameter">
+                            <ComboBox 
+                                SelectedItem="{Binding Path=MeasurementUnit, Mode=TwoWay}"
+                                DisplayMemberPath="Name"
+                                ItemsSource="{Binding ElementName=parametersEditDialog, Path=DataContext.MeasurementUnits}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="Entities:Parameter">
+                            <TextBlock Text="{Binding MeasurementUnit.Name}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn 
+                    Header="Мин." 
+                    Width="100" 
+                    Binding="{Binding Path=MinValue, Mode=TwoWay}"/>
+                <DataGridTextColumn 
+                    Header="Макс." 
+                    Width="100" 
+                    Binding="{Binding Path=MaxValue, Mode=TwoWay}"/>
+                <DataGridTextColumn 
+                    Header="Мин. норма" 
+                    Width="100" 
+                    Binding="{Binding Path=MinNormalValue, Mode=TwoWay}"/>
+                <DataGridTextColumn 
+                    Header="Макс. норма" 
+                    Width="100" 
+                    Binding="{Binding Path=MaxNormalValue, Mode=TwoWay}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button 
+                                Content="-"
+                                Command="{Binding Path=DataContext.DeleteParameterCommand, ElementName=parametersEditDialog}"
+                                CommandParameter="{Binding}"
+                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button
+            Grid.Row="1" Content="+"
+            Command="{Binding Path=AddParameterCommand}"
+            VerticalAlignment="Top" HorizontalAlignment="Left"
+            Height="30" Width="50"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Button 
+                x:Name="OKButton" 
+                Content="OK" 
+                Click="OKButton_Click" 
+                Width="75" 
+                Height="23" 
+                HorizontalAlignment="Right" 
+                Margin="0,5,20,5"  />
+            <Button 
+                x:Name="CancelButton" 
+                Content="Cancel" 
+                Click="CancelButton_Click" 
+                Width="75" 
+                Height="23" 
+                HorizontalAlignment="Right" 
+                Margin="0,5,20,5"  />
+        </StackPanel>
+
+    </Grid>
+</Window>

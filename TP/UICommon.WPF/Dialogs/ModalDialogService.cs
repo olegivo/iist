@@ -1,6 +1,7 @@
 using System;
 using Autofac;
 using Oleg_ivo.Base.Autofac;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 
 namespace UICommon.WPF.Dialogs
 {

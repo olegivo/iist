@@ -46,7 +46,7 @@ namespace Oleg_ivo.Plc.Channels
             get { return Entity != null ? Entity.Description : description; }
             set
             {
-                if(Description == value) return;
+                if (Description == value) return;
                 description = value;
                 if (Entity != null) Entity.Description = value;
             }
@@ -64,7 +64,7 @@ namespace Oleg_ivo.Plc.Channels
             }
             set
             {
-                if(AddressShift == value) return;
+                if (AddressShift == value) return;
                 addressShift = value;
                 if (Entity != null) Entity.AddressShift = value;
             }
@@ -124,7 +124,7 @@ namespace Oleg_ivo.Plc.Channels
             get { return Entity != null ? Entity.Id : id; }
             set
             {
-                if(Id == value) return;
+                if (Id == value) return;
                 id = value;
                 if (Entity != null) Entity.Id = value;
             }
@@ -137,15 +137,16 @@ namespace Oleg_ivo.Plc.Channels
         {
             get
             {
-                return Entity != null && Entity.SensivityDelta.HasValue
-                    ? (double) Entity.SensivityDelta.Value
+                return Entity != null && Entity.Parameter != null && Entity.Parameter.SensivityDelta.HasValue
+                    ? (double)Entity.Parameter.SensivityDelta.Value
                     : deltaChangeLimit;
             }
             set
             {
-                if(DeltaChangeLimit == value) return;
+                if (DeltaChangeLimit == value) return;
                 deltaChangeLimit = value;
-                if (Entity != null) Entity.SensivityDelta = (decimal?) value;
+                if (Entity != null && Entity.Parameter != null)
+                    Entity.Parameter.SensivityDelta = (decimal?)value;
             }
         }
 
@@ -154,12 +155,12 @@ namespace Oleg_ivo.Plc.Channels
         /// </summary>
         public double? MinValue
         {
-            get { return Entity != null ? (double?)Entity.MinValue : minValue; }
+            get { return Entity != null && Entity.Parameter != null ? (double?)Entity.Parameter.MinValue : minValue; }
             set
             {
-                if(MinValue == value) return;
+                if (MinValue == value) return;
                 minValue = value;
-                if(Entity!=null) Entity.MinValue = (decimal?) value;
+                if (Entity != null && Entity.Parameter != null) Entity.Parameter.MinValue = (decimal?)value;
             }
         }
 
@@ -168,12 +169,12 @@ namespace Oleg_ivo.Plc.Channels
         /// </summary>
         public double? MaxValue
         {
-            get { return Entity != null ? (double?)Entity.MaxValue : maxValue; }
+            get { return Entity != null && Entity.Parameter != null ? (double?)Entity.Parameter.MaxValue : maxValue; }
             set
             {
-                if(MaxValue == value) return;
+                if (MaxValue == value) return;
                 maxValue = value;
-                if(Entity!=null) Entity.MaxValue = (decimal?) value;
+                if (Entity != null && Entity.Parameter != null) Entity.Parameter.MaxValue = (decimal?)value;
             }
         }
 
@@ -182,12 +183,12 @@ namespace Oleg_ivo.Plc.Channels
         /// </summary>
         public double? MinNormalValue
         {
-            get { return Entity != null ? (double?)Entity.MinNormalValue : minNormalValue; }
+            get { return Entity != null && Entity.Parameter != null ? (double?)Entity.Parameter.MinNormalValue : maxValue; }
             set
             {
-                if(MinNormalValue == value) return;
-                minNormalValue = value;
-                if(Entity!=null) Entity.MinNormalValue = (decimal?) value;
+                if (MinNormalValue == value) return;
+                maxValue = value;
+                if (Entity != null && Entity.Parameter != null) Entity.Parameter.MinNormalValue = (decimal?)value;
             }
         }
 
@@ -196,12 +197,12 @@ namespace Oleg_ivo.Plc.Channels
         /// </summary>
         public double? MaxNormalValue
         {
-            get { return Entity != null ? (double?) Entity.MaxNormalValue : maxNormalValue; }
+            get { return Entity != null && Entity.Parameter != null ? (double?)Entity.Parameter.MinNormalValue : maxValue; }
             set
             {
-                if(MaxNormalValue == value) return;
-                maxNormalValue = value;
-                if(Entity!=null) Entity.MaxNormalValue = (decimal?) value;
+                if (MinNormalValue == value) return;
+                maxValue = value;
+                if (Entity != null && Entity.Parameter != null) Entity.Parameter.MinNormalValue = (decimal?)value;
             }
         }
 
@@ -214,15 +215,15 @@ namespace Oleg_ivo.Plc.Channels
             {
                 return directTransform ??
                        (directTransform =
-                           (Entity != null && Entity.DirectPolynom != null
-                               ? Polynom.DeSerializePolynom(Entity.DirectPolynom)
+                           (Entity != null && Entity.Parameter != null && Entity.Parameter.DirectPolynom != null
+                               ? Polynom.DeSerializePolynom(Entity.Parameter.DirectPolynom)
                                : null));
             }
             set
             {
-                if(DirectTransform == value) return;
+                if (DirectTransform == value) return;
                 directTransform = value;
-                if (Entity != null) Entity.DirectPolynom = Polynom.SerializePolynom(value);
+                if (Entity != null && Entity.Parameter != null) Entity.Parameter.DirectPolynom = Polynom.SerializePolynom(value);
             }
         }
 
@@ -235,15 +236,15 @@ namespace Oleg_ivo.Plc.Channels
             {
                 return reverseTransform ??
                        (reverseTransform =
-                           (Entity != null && Entity.ReversePolynom != null
-                               ? Polynom.DeSerializePolynom(Entity.ReversePolynom)
+                           (Entity != null && Entity.Parameter != null && Entity.Parameter.ReversePolynom != null
+                               ? Polynom.DeSerializePolynom(Entity.Parameter.ReversePolynom)
                                : null));
             }
             set
             {
                 if (ReverseTransform == value) return;
                 reverseTransform = value;
-                if (Entity != null) Entity.ReversePolynom = Polynom.SerializePolynom(value);
+                if (Entity != null && Entity.Parameter != null) Entity.Parameter.ReversePolynom = Polynom.SerializePolynom(value);
             }
         }
 
@@ -255,14 +256,14 @@ namespace Oleg_ivo.Plc.Channels
             get
             {
                 return pollPeriod == null && Entity != null && Entity.PollPeriod.HasValue
-                    ? pollPeriod = TimeSpan.FromMilliseconds((double) Entity.PollPeriod.Value)
+                    ? pollPeriod = TimeSpan.FromMilliseconds((double)Entity.PollPeriod.Value)
                     : pollPeriod;
             }
             set
             {
-                if(PollPeriod == value) return;
+                if (PollPeriod == value) return;
                 pollPeriod = value;
-                if(Entity!=null) Entity.PollPeriod = (decimal?) value.TotalMilliseconds;
+                if (Entity != null) Entity.PollPeriod = (decimal?)value.TotalMilliseconds;
             }
         }
 
@@ -326,8 +327,8 @@ namespace Oleg_ivo.Plc.Channels
         public void SetValue(double value)
         {
             if (ReverseTransform != null) value = ReverseTransform.GetValue(value);
-            object v = Math.Abs(Math.Round(value) - value) < 0.001 
-                ? Convert.ToInt32(value) 
+            object v = Math.Abs(Math.Round(value) - value) < 0.001
+                ? Convert.ToInt32(value)
                 : value;
             PhysicalChannel.SetValue(AddressShift, ChannelSize, v);
         }
@@ -376,7 +377,7 @@ namespace Oleg_ivo.Plc.Channels
                     obj = ar.GetValue(0);
                 }
             }
-            
+
             double value = Convert.ToDouble(obj);
             if (DirectTransform != null)
                 value = DirectTransform.GetValue(value);

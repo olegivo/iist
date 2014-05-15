@@ -1,4 +1,5 @@
 using Autofac;
+using Oleg_ivo.WAGO.Autofac;
 using Oleg_ivo.WAGO.CMS.Dialogs;
 using Oleg_ivo.WAGO.CMS.View;
 using Oleg_ivo.WAGO.CMS.ViewModel;
@@ -6,7 +7,7 @@ using UICommon.WPF.Dialogs;
 
 namespace Oleg_ivo.WAGO.CMS.Prism
 {
-    public class MyAutofacModule : Module
+    public class MyAutofacModule : WagoAutofacModule
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -26,6 +27,9 @@ namespace Oleg_ivo.WAGO.CMS.Prism
 
             builder.RegisterType<PolynomDialogViewModel>();
             builder.RegisterType<PolynomDialog>().AsImplementedInterfaces();
+
+            builder.RegisterType<ParametersEditDialogViewModel>();
+            builder.RegisterType<ParametersEditDialog>().AsImplementedInterfaces();
         }
     }
 }
