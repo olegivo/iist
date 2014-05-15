@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using Autofac;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using NLog;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.Plc;
-using Oleg_ivo.Plc.Channels;
+using Oleg_ivo.Plc.Entities;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
+using Oleg_ivo.Tools.ConnectionProvider;
 using Oleg_ivo.WAGO.CMS.Dialogs;
 using UICommon.WPF.Dialogs;
+using LogicalChannel = Oleg_ivo.Plc.Channels.LogicalChannel;
 
 namespace Oleg_ivo.WAGO.CMS.ViewModel
 {
@@ -23,6 +26,7 @@ namespace Oleg_ivo.WAGO.CMS.ViewModel
             SaveCommand = new RelayCommand(Save);
             EditDirectPolynomCommand = new RelayCommand<LogicalChannel>(EditDirectPolynom);
             EditReversePolynomCommand = new RelayCommand<LogicalChannel>(EditReversePolynom);
+            EditParametersCommand = new RelayCommand(EditParameters);
         }
 
 
@@ -35,6 +39,24 @@ namespace Oleg_ivo.WAGO.CMS.ViewModel
         [Dependency]
         public IComponentContext Context { get; set; }
 
+        private PlcDataContext dataContext;
+
+        protected PlcDataContext DataContext
+        {
+            get
+            {
+                return dataContext ??
+                       (dataContext =
+                           Context.Resolve<PlcDataContext>(new TypedParameter(typeof(string),
+                               Context.Resolve<DbConnectionProvider>().DefaultConnectionString)));
+            }
+        }
+
+        public Table<Parameter> Parameters
+        {
+            get { return DataContext.Parameters; }
+        }
+        
         public List<FieldBusManager> FieldBusManagers
         {
             get
@@ -66,6 +88,20 @@ namespace Oleg_ivo.WAGO.CMS.ViewModel
             catch (Exception ex)
             {
                 throw;
+            }
+        }
+
+        public RelayCommand EditParametersCommand { get; private set; }
+        public void EditParameters()
+        {
+            try
+            {
+                ModalDialogService.CreateAndShowDialog<ParametersEditDialogViewModel>(
+                    modalWindow => modalWindow.ViewModel.SetSource(DataContext));
+            }
+            catch (Exception ex)
+            {
+                log.ErrorException("Ошибка при редактировании параметров", ex);
             }
         }
 

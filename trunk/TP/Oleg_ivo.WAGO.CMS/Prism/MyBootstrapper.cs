@@ -2,7 +2,6 @@ using System.Windows;
 using Autofac;
 using Microsoft.Practices.Prism.Modularity;
 using Oleg_ivo.Base.Autofac.Modules;
-using Oleg_ivo.WAGO.Autofac;
 using Oleg_ivo.WAGO.Configuration;
 using Prism.AutofacExtension;
 
@@ -22,7 +21,6 @@ namespace Oleg_ivo.WAGO.CMS.Prism
             base.ConfigureContainer(builder);
 
             builder.RegisterModule(new CommandLineHelperAutofacModule<WagoCommandLineOptions>(args));
-            builder.RegisterModule<WagoAutofacModule>();
 
             builder.RegisterType<MainWindow>();
 
