@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Input;
 using DMS.Common.Messages;
 using GalaSoft.MvvmLight.Command;
+using TP.WPF.Views;
 
 
 namespace TP.WPF.ViewModels
@@ -21,6 +23,8 @@ namespace TP.WPF.ViewModels
             TestCommand = new RelayCommand(OnTest);
             CloseAppCommand = new RelayCommand(OnCloseApp);
             DisplayAboutCommand = new RelayCommand(OnShowAbout);
+
+            GoForUpdatesCommand = new RelayCommand(OnGetUpdates);
 
             RegisterCommand = new RelayCommand(OnRegister);
             UnregisterCommand = new RelayCommand(OnUnregister);
@@ -47,6 +51,11 @@ namespace TP.WPF.ViewModels
         private string GetRegName()
         {
             return "HighLevelClient";//TODO: 2 viewmodel & view
+        }
+
+        private void OnGetUpdates()
+        {
+            Process.Start("https://code.google.com/p/iist/source/checkout");
         }
 
         private void OnTest()
@@ -135,6 +144,8 @@ namespace TP.WPF.ViewModels
                 // Show a message box.
                 messageVisualizer.Show("Технологический процесс", "Две вещи действительно бесконечны: вселенная и  человеческая глупость.", MessageButtons.OK);
             }*/
+            new TPAboutBox().ShowDialog();
+
         }
 
         public ChannelController channelController1 = new ChannelController();
@@ -237,5 +248,8 @@ namespace TP.WPF.ViewModels
         public ICommand RegisterCommand { get; private set; }
         public ICommand UnregisterCommand { get; private set; }
         public ICommand TestCommand { get; private set; }
+        public ICommand GoForUpdatesCommand { get; private set; }
+
+        
     }
 }

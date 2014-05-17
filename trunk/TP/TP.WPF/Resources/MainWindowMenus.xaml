@@ -32,8 +32,8 @@
             <MenuItem Header="Показать отладочную панель"></MenuItem>
         </MenuItem>
         <MenuItem Header="Справка">
-            <MenuItem Header="Инструкция по пользованию ТП"></MenuItem>
-            <MenuItem Header="Сайт проекта"></MenuItem>
+            <MenuItem Header="Репозиторий и обновления" Command="{Binding GoForUpdatesCommand}"></MenuItem>
+            <MenuItem Header="О проекте" Command="{Binding DisplayAboutCommand}"></MenuItem>
         </MenuItem>
     </Menu>
 </ResourceDictionary>

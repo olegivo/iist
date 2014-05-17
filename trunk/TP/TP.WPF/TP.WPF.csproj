@@ -123,6 +123,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Controls.DataVisualization.Toolkit" />
     <Reference Include="System.Windows.Controls.Layout.Toolkit" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -167,6 +168,12 @@
     </Compile>
     <Compile Include="Resources\ucIndicatorGroupFurnance.xaml.cs">
       <DependentUpon>ucIndicatorGroupFurnance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TPAboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\TPAboutBox.Designer.cs">
+      <DependentUpon>TPAboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\MainShell.xaml.cs">
       <DependentUpon>MainShell.xaml</DependentUpon>
@@ -231,12 +238,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\ucConnectionWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -272,9 +273,6 @@
     </Compile>
     <Compile Include="Views\ucReheatChamber.xaml.cs">
       <DependentUpon>ucReheatChamber.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\ucConnectionWindow.xaml.cs">
-      <DependentUpon>ucConnectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -344,6 +342,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TPAboutBox.resx">
+      <DependentUpon>TPAboutBox.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="NLog.config">

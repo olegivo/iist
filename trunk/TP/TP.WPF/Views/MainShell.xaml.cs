@@ -10,6 +10,7 @@ namespace TP.WPF.Views
 {
 	/// <summary>
 	/// Interaction logic for MainShell.xaml
+    /// Документация и примеры по графической библиотеки http://www.codeproject.com/Articles/275814/Introducing-MixModes-Synergy
 	/// </summary>
 	public partial class MainShell
 	{
@@ -63,19 +64,25 @@ namespace TP.WPF.Views
             //    }
             //}
 
-            //ТЕСТ
+            //
+            
+            
             var pn = new subDrumTypeFurnance();
-            //var pn = new Resources.ucIndicatorGroupFurnance();
             var pane = new DockPane
             {
+
                 Width = 600,
                 Height = 400,
                 DockPaneState = DockPaneState.Content,
-                Header = GetPropValue(pn, "Name"),
+                //Header = GetPropValue(pn, "Name"),
+                Header = "Барабанная печь",
                 Content = pn
             };
-	        pane.DockPaneState = DockPaneState.Content;
             WindowsManager.AddFloatingWindow(pane);
+
+            //TODO: Разобраться с причиной "обрыва" связи между данными и представлением в развернумо режиме.
+	        //WindowsManager.DocumentContainer.AddDocument(pane);
+
 
 	    }
 
