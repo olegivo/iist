@@ -11,7 +11,7 @@
     WindowStyle="None"
     AllowsTransparency="True"
     Style="{DynamicResource MainWindow}"
-    WindowState="Maximized">
+    >
     <visualFx:CustomWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
