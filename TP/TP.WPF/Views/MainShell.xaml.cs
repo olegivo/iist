@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Windows.Controls;
 using MixModes.Synergy.VisualFramework.Windows;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
+using TP.WPF.Properties;
 using TP.WPF.ViewModels;
 
 namespace TP.WPF.Views
@@ -21,6 +22,7 @@ namespace TP.WPF.Views
 			this.GenerateLayout();
             this.GenereteDebugPanel();
 		    this.GenerateIndicatorsPanel();
+		    Title += string.Format(" [{0}]", Settings.Default.MainFormTitle);
 		}
 
         [Dependency(Required = true)]
