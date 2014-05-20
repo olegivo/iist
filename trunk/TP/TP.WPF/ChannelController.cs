@@ -43,6 +43,8 @@ namespace TP.WPF
         [Description("Автоматически подписываться на вновь зарегистрированные каналы"), DefaultValue(false)]
         public bool AutoSubscribeChannels { get; set; }
 
+        public List<int> AllowedChannels { get; set; }
+
         private ClientProvider provider;
 
         /// <summary>
@@ -144,12 +146,12 @@ namespace TP.WPF
                 
                 if (!subscribedChannelsList.Contains(logicalChannelId))//TODO:проверить, можно ли без этого условия (не остаются ли каналы после отмены подписки или отмены регистрации)
                 {
-                    if (AutoSubscribeChannels)
+                    if (AutoSubscribeChannels && (AllowedChannels == null || AllowedChannels.Contains(logicalChannelId)))
                     {
                         SubscribeChannel(new ChannelSubscribeMessage(GetRegName(),
-                                                                     null,
-                                                                     SubscribeMode.Subscribe,
-                                                                     logicalChannelId)
+                            null,
+                            SubscribeMode.Subscribe,
+                            logicalChannelId)
                             );
                     }
                 }

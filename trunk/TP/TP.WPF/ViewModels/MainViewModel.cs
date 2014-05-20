@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows.Input;
 using DMS.Common.Messages;
 using GalaSoft.MvvmLight.Command;
+using TP.WPF.Properties;
 using TP.WPF.Views;
 
 
@@ -40,6 +41,7 @@ namespace TP.WPF.ViewModels
             ChartTab = new ChartTabViewModel();
 
             channelController1.AutoSubscribeChannels = true;
+            channelController1.AllowedChannels = Settings.Default.AllowedChannelsIds;
             channelController1.InitProvider();
             channelController1.GetRegName = GetRegName;
             channelController1.NeedProtocol += channelController1_NeedProtocol;
@@ -50,7 +52,7 @@ namespace TP.WPF.ViewModels
 
         private string GetRegName()
         {
-            return "HighLevelClient";//TODO: 2 viewmodel & view
+            return Settings.Default.DefaultRegName;//TODO: 2 view?
         }
 
         private void OnGetUpdates()
