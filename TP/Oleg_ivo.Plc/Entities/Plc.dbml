@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Plc27" Class="PlcDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=OLEG-A\SQLEXPRESS2005;Initial Catalog=Plc27;Integrated Security=True" SettingsObjectName="Oleg_ivo.Plc.Properties.Settings" SettingsPropertyName="Plc27ConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="plc_test" Class="PlcDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=OLEG-A\SQLEXPRESS2005;Initial Catalog=plc_test;Integrated Security=True" SettingsObjectName="Oleg_ivo.Plc.Properties.Settings" SettingsPropertyName="plc_testConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.FieldBus" Member="FieldBus">
     <Type Name="FieldBus">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -33,20 +33,6 @@
       <Column Name="Register" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="PhysicalChannel_LogicalChannel" Member="LogicalChannels" ThisKey="Id" OtherKey="PhysicalChannelId" Type="LogicalChannel" />
       <Association Name="FieldBusNode_PhysicalChannel" Member="FieldBusNode" ThisKey="FieldNodeId" OtherKey="Id" Type="FieldBusNode" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.LogicalChannel" Member="LogicalChannels">
-    <Type Name="LogicalChannel">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="ParameterId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PhysicalChannelId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Size" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="AddressShift" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PollPeriod" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="SensivityDelta" Type="System.Decimal" DbType="Decimal(18,10)" CanBeNull="true" />
-      <Association Name="PhysicalChannel_LogicalChannel" Member="PhysicalChannel" ThisKey="PhysicalChannelId" OtherKey="Id" Type="PhysicalChannel" IsForeignKey="true" />
-      <Association Name="Parameter_LogicalChannel" Member="Parameter" ThisKey="ParameterId" OtherKey="Id" Type="Parameter" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Parameter" Member="Parameters">
@@ -84,6 +70,41 @@
       <Column Name="Enabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="FieldBusNode_PhysicalChannel" Member="PhysicalChannels" ThisKey="Id" OtherKey="FieldNodeId" Type="PhysicalChannel" />
       <Association Name="FieldBus_FieldBusNode" Member="FieldBus" ThisKey="FieldBusId" OtherKey="Id" Type="FieldBus" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LogicalChannel" Member="LogicalChannels">
+    <Type Name="LogicalChannel">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ParameterId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PhysicalChannelId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Size" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AddressShift" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="StateLogicalChannelId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="LogicalChannel_LogicalChannel" Member="LogicalChannelStateHolders" ThisKey="Id" OtherKey="StateLogicalChannelId" Type="LogicalChannel" />
+      <Association Name="LogicalChannel_ProtocolData" Member="ProtocolDatas" ThisKey="Id" OtherKey="LogicalChannelId" Type="ProtocolData" />
+      <Association Name="LogicalChannel_LogicalChannel" Member="LogicalChannelState" ThisKey="StateLogicalChannelId" OtherKey="Id" Type="LogicalChannel" IsForeignKey="true" />
+      <Association Name="Parameter_LogicalChannel" Member="Parameter" ThisKey="ParameterId" OtherKey="Id" Type="Parameter" IsForeignKey="true" />
+      <Association Name="PhysicalChannel_LogicalChannel" Member="PhysicalChannel" ThisKey="PhysicalChannelId" OtherKey="Id" Type="PhysicalChannel" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Client" Member="Clients">
+    <Type Name="Client">
+      <Column Name="ClientId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ClientName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Client_ProtocolData" Member="ProtocolDatas" ThisKey="ClientId" OtherKey="ClientId" Type="ProtocolData" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProtocolData" Member="ProtocolDatas">
+    <Type Name="ProtocolData">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ClientId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LogicalChannelId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TimeStamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="QueueTimeStamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DataValue" Type="System.Decimal" DbType="Decimal(18,10) NOT NULL" CanBeNull="false" />
+      <Association Name="Client_ProtocolData" Member="Client" ThisKey="ClientId" OtherKey="ClientId" Type="Client" IsForeignKey="true" />
+      <Association Name="LogicalChannel_ProtocolData" Member="LogicalChannel" ThisKey="LogicalChannelId" OtherKey="Id" Type="LogicalChannel" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

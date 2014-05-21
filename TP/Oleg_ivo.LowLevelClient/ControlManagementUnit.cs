@@ -424,7 +424,7 @@ namespace Oleg_ivo.LowLevelClient
             if (channel.PollPeriod == TimeSpan.Zero)
                 channel.PollPeriod = TimeSpan.FromMilliseconds(1000);
 
-            string s = channel.PollPeriod.TotalMilliseconds.ToString();
+            string s = (channel.PollPeriod ?? TimeSpan.FromSeconds(5)).TotalMilliseconds.ToString();
 
             /*
                         s = InputBox.Show("”кажите интервал опроса канала (в миллисекундах)",
