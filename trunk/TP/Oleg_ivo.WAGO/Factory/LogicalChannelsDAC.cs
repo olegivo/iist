@@ -216,7 +216,7 @@ namespace Oleg_ivo.WAGO.Factory
             row.AddressShift = logicalChannel.AddressShift;
             row.Size = logicalChannel.ChannelSize;
             row.Description = logicalChannel.Description;
-            if (logicalChannel.PollPeriod.TotalMilliseconds > 0) row.PollPeriod = logicalChannel.PollPeriod.TotalMilliseconds;
+            //if (logicalChannel.PollPeriod.TotalMilliseconds > 0) row.PollPeriod = logicalChannel.PollPeriod.TotalMilliseconds;
             if (logicalChannel.DeltaChangeLimit > 0) row.SensivityDelta = (decimal)logicalChannel.DeltaChangeLimit;
             //TODO: не все поля проинициализированы при копировании из logicalChannel в row
         }

@@ -22,7 +22,7 @@ namespace Oleg_ivo.Plc.Entities
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Plc27")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="plc_test")]
 	public partial class PlcDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -39,9 +39,6 @@ namespace Oleg_ivo.Plc.Entities
     partial void InsertPhysicalChannel(PhysicalChannel instance);
     partial void UpdatePhysicalChannel(PhysicalChannel instance);
     partial void DeletePhysicalChannel(PhysicalChannel instance);
-    partial void InsertLogicalChannel(LogicalChannel instance);
-    partial void UpdateLogicalChannel(LogicalChannel instance);
-    partial void DeleteLogicalChannel(LogicalChannel instance);
     partial void InsertParameter(Parameter instance);
     partial void UpdateParameter(Parameter instance);
     partial void DeleteParameter(Parameter instance);
@@ -51,10 +48,19 @@ namespace Oleg_ivo.Plc.Entities
     partial void InsertFieldBusNode(FieldBusNode instance);
     partial void UpdateFieldBusNode(FieldBusNode instance);
     partial void DeleteFieldBusNode(FieldBusNode instance);
+    partial void InsertLogicalChannel(LogicalChannel instance);
+    partial void UpdateLogicalChannel(LogicalChannel instance);
+    partial void DeleteLogicalChannel(LogicalChannel instance);
+    partial void InsertClient(Client instance);
+    partial void UpdateClient(Client instance);
+    partial void DeleteClient(Client instance);
+    partial void InsertProtocolData(ProtocolData instance);
+    partial void UpdateProtocolData(ProtocolData instance);
+    partial void DeleteProtocolData(ProtocolData instance);
     #endregion
 		
 		public PlcDataContext() : 
-				base(global::Oleg_ivo.Plc.Properties.Settings.Default.Plc27ConnectionString, mappingSource)
+				base(global::Oleg_ivo.Plc.Properties.Settings.Default.plc_testConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -107,14 +113,6 @@ namespace Oleg_ivo.Plc.Entities
 			}
 		}
 		
-		public System.Data.Linq.Table<LogicalChannel> LogicalChannels
-		{
-			get
-			{
-				return this.GetTable<LogicalChannel>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Parameter> Parameters
 		{
 			get
@@ -136,6 +134,30 @@ namespace Oleg_ivo.Plc.Entities
 			get
 			{
 				return this.GetTable<FieldBusNode>();
+			}
+		}
+		
+		public System.Data.Linq.Table<LogicalChannel> LogicalChannels
+		{
+			get
+			{
+				return this.GetTable<LogicalChannel>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Client> Clients
+		{
+			get
+			{
+				return this.GetTable<Client>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ProtocolData> ProtocolDatas
+		{
+			get
+			{
+				return this.GetTable<ProtocolData>();
 			}
 		}
 	}
@@ -849,318 +871,6 @@ namespace Oleg_ivo.Plc.Entities
 		{
 			this.SendPropertyChanging();
 			entity.PhysicalChannel = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.LogicalChannel")]
-	public partial class LogicalChannel : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private System.Nullable<int> _ParameterId;
-		
-		private System.Nullable<int> _PhysicalChannelId;
-		
-		private System.Nullable<int> _Size;
-		
-		private System.Nullable<int> _AddressShift;
-		
-		private System.Nullable<decimal> _PollPeriod;
-		
-		private string _Description;
-		
-		private System.Nullable<decimal> _SensivityDelta;
-		
-		private EntityRef<PhysicalChannel> _PhysicalChannel;
-		
-		private EntityRef<Parameter> _Parameter;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnParameterIdChanging(System.Nullable<int> value);
-    partial void OnParameterIdChanged();
-    partial void OnPhysicalChannelIdChanging(System.Nullable<int> value);
-    partial void OnPhysicalChannelIdChanged();
-    partial void OnSizeChanging(System.Nullable<int> value);
-    partial void OnSizeChanged();
-    partial void OnAddressShiftChanging(System.Nullable<int> value);
-    partial void OnAddressShiftChanged();
-    partial void OnPollPeriodChanging(System.Nullable<decimal> value);
-    partial void OnPollPeriodChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnSensivityDeltaChanging(System.Nullable<decimal> value);
-    partial void OnSensivityDeltaChanged();
-    #endregion
-		
-		public LogicalChannel()
-		{
-			this._PhysicalChannel = default(EntityRef<PhysicalChannel>);
-			this._Parameter = default(EntityRef<Parameter>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParameterId", DbType="Int")]
-		public System.Nullable<int> ParameterId
-		{
-			get
-			{
-				return this._ParameterId;
-			}
-			set
-			{
-				if ((this._ParameterId != value))
-				{
-					if (this._Parameter.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnParameterIdChanging(value);
-					this.SendPropertyChanging();
-					this._ParameterId = value;
-					this.SendPropertyChanged("ParameterId");
-					this.OnParameterIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhysicalChannelId", DbType="Int")]
-		public System.Nullable<int> PhysicalChannelId
-		{
-			get
-			{
-				return this._PhysicalChannelId;
-			}
-			set
-			{
-				if ((this._PhysicalChannelId != value))
-				{
-					if (this._PhysicalChannel.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPhysicalChannelIdChanging(value);
-					this.SendPropertyChanging();
-					this._PhysicalChannelId = value;
-					this.SendPropertyChanged("PhysicalChannelId");
-					this.OnPhysicalChannelIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Size", DbType="Int")]
-		public System.Nullable<int> Size
-		{
-			get
-			{
-				return this._Size;
-			}
-			set
-			{
-				if ((this._Size != value))
-				{
-					this.OnSizeChanging(value);
-					this.SendPropertyChanging();
-					this._Size = value;
-					this.SendPropertyChanged("Size");
-					this.OnSizeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressShift", DbType="Int")]
-		public System.Nullable<int> AddressShift
-		{
-			get
-			{
-				return this._AddressShift;
-			}
-			set
-			{
-				if ((this._AddressShift != value))
-				{
-					this.OnAddressShiftChanging(value);
-					this.SendPropertyChanging();
-					this._AddressShift = value;
-					this.SendPropertyChanged("AddressShift");
-					this.OnAddressShiftChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PollPeriod", DbType="Decimal(18,6)")]
-		public System.Nullable<decimal> PollPeriod
-		{
-			get
-			{
-				return this._PollPeriod;
-			}
-			set
-			{
-				if ((this._PollPeriod != value))
-				{
-					this.OnPollPeriodChanging(value);
-					this.SendPropertyChanging();
-					this._PollPeriod = value;
-					this.SendPropertyChanged("PollPeriod");
-					this.OnPollPeriodChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SensivityDelta", DbType="Decimal(18,10)")]
-		public System.Nullable<decimal> SensivityDelta
-		{
-			get
-			{
-				return this._SensivityDelta;
-			}
-			set
-			{
-				if ((this._SensivityDelta != value))
-				{
-					this.OnSensivityDeltaChanging(value);
-					this.SendPropertyChanging();
-					this._SensivityDelta = value;
-					this.SendPropertyChanged("SensivityDelta");
-					this.OnSensivityDeltaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PhysicalChannel_LogicalChannel", Storage="_PhysicalChannel", ThisKey="PhysicalChannelId", OtherKey="Id", IsForeignKey=true)]
-		public PhysicalChannel PhysicalChannel
-		{
-			get
-			{
-				return this._PhysicalChannel.Entity;
-			}
-			set
-			{
-				PhysicalChannel previousValue = this._PhysicalChannel.Entity;
-				if (((previousValue != value) 
-							|| (this._PhysicalChannel.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._PhysicalChannel.Entity = null;
-						previousValue.LogicalChannels.Remove(this);
-					}
-					this._PhysicalChannel.Entity = value;
-					if ((value != null))
-					{
-						value.LogicalChannels.Add(this);
-						this._PhysicalChannelId = value.Id;
-					}
-					else
-					{
-						this._PhysicalChannelId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("PhysicalChannel");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Parameter_LogicalChannel", Storage="_Parameter", ThisKey="ParameterId", OtherKey="Id", IsForeignKey=true)]
-		public Parameter Parameter
-		{
-			get
-			{
-				return this._Parameter.Entity;
-			}
-			set
-			{
-				Parameter previousValue = this._Parameter.Entity;
-				if (((previousValue != value) 
-							|| (this._Parameter.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Parameter.Entity = null;
-						previousValue.LogicalChannels.Remove(this);
-					}
-					this._Parameter.Entity = value;
-					if ((value != null))
-					{
-						value.LogicalChannels.Add(this);
-						this._ParameterId = value.Id;
-					}
-					else
-					{
-						this._ParameterId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Parameter");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	
@@ -1921,6 +1631,769 @@ namespace Oleg_ivo.Plc.Entities
 		{
 			this.SendPropertyChanging();
 			entity.FieldBusNode = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.LogicalChannel")]
+	public partial class LogicalChannel : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private System.Nullable<int> _ParameterId;
+		
+		private System.Nullable<int> _PhysicalChannelId;
+		
+		private System.Nullable<int> _Size;
+		
+		private System.Nullable<int> _AddressShift;
+		
+		private string _Description;
+		
+		private System.Nullable<int> _StateLogicalChannelId;
+		
+		private EntitySet<LogicalChannel> _LogicalChannelStateHolders;
+		
+		private EntitySet<ProtocolData> _ProtocolDatas;
+		
+		private EntityRef<LogicalChannel> _LogicalChannelState;
+		
+		private EntityRef<Parameter> _Parameter;
+		
+		private EntityRef<PhysicalChannel> _PhysicalChannel;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnParameterIdChanging(System.Nullable<int> value);
+    partial void OnParameterIdChanged();
+    partial void OnPhysicalChannelIdChanging(System.Nullable<int> value);
+    partial void OnPhysicalChannelIdChanged();
+    partial void OnSizeChanging(System.Nullable<int> value);
+    partial void OnSizeChanged();
+    partial void OnAddressShiftChanging(System.Nullable<int> value);
+    partial void OnAddressShiftChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnStateLogicalChannelIdChanging(System.Nullable<int> value);
+    partial void OnStateLogicalChannelIdChanged();
+    #endregion
+		
+		public LogicalChannel()
+		{
+			this._LogicalChannelStateHolders = new EntitySet<LogicalChannel>(new Action<LogicalChannel>(this.attach_LogicalChannelStateHolders), new Action<LogicalChannel>(this.detach_LogicalChannelStateHolders));
+			this._ProtocolDatas = new EntitySet<ProtocolData>(new Action<ProtocolData>(this.attach_ProtocolDatas), new Action<ProtocolData>(this.detach_ProtocolDatas));
+			this._LogicalChannelState = default(EntityRef<LogicalChannel>);
+			this._Parameter = default(EntityRef<Parameter>);
+			this._PhysicalChannel = default(EntityRef<PhysicalChannel>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParameterId", DbType="Int")]
+		public System.Nullable<int> ParameterId
+		{
+			get
+			{
+				return this._ParameterId;
+			}
+			set
+			{
+				if ((this._ParameterId != value))
+				{
+					if (this._Parameter.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnParameterIdChanging(value);
+					this.SendPropertyChanging();
+					this._ParameterId = value;
+					this.SendPropertyChanged("ParameterId");
+					this.OnParameterIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhysicalChannelId", DbType="Int")]
+		public System.Nullable<int> PhysicalChannelId
+		{
+			get
+			{
+				return this._PhysicalChannelId;
+			}
+			set
+			{
+				if ((this._PhysicalChannelId != value))
+				{
+					if (this._PhysicalChannel.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPhysicalChannelIdChanging(value);
+					this.SendPropertyChanging();
+					this._PhysicalChannelId = value;
+					this.SendPropertyChanged("PhysicalChannelId");
+					this.OnPhysicalChannelIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Size", DbType="Int")]
+		public System.Nullable<int> Size
+		{
+			get
+			{
+				return this._Size;
+			}
+			set
+			{
+				if ((this._Size != value))
+				{
+					this.OnSizeChanging(value);
+					this.SendPropertyChanging();
+					this._Size = value;
+					this.SendPropertyChanged("Size");
+					this.OnSizeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressShift", DbType="Int")]
+		public System.Nullable<int> AddressShift
+		{
+			get
+			{
+				return this._AddressShift;
+			}
+			set
+			{
+				if ((this._AddressShift != value))
+				{
+					this.OnAddressShiftChanging(value);
+					this.SendPropertyChanging();
+					this._AddressShift = value;
+					this.SendPropertyChanged("AddressShift");
+					this.OnAddressShiftChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StateLogicalChannelId", DbType="Int")]
+		public System.Nullable<int> StateLogicalChannelId
+		{
+			get
+			{
+				return this._StateLogicalChannelId;
+			}
+			set
+			{
+				if ((this._StateLogicalChannelId != value))
+				{
+					if (this._LogicalChannelState.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnStateLogicalChannelIdChanging(value);
+					this.SendPropertyChanging();
+					this._StateLogicalChannelId = value;
+					this.SendPropertyChanged("StateLogicalChannelId");
+					this.OnStateLogicalChannelIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="LogicalChannel_LogicalChannel", Storage="_LogicalChannelStateHolders", ThisKey="Id", OtherKey="StateLogicalChannelId")]
+		public EntitySet<LogicalChannel> LogicalChannelStateHolders
+		{
+			get
+			{
+				return this._LogicalChannelStateHolders;
+			}
+			set
+			{
+				this._LogicalChannelStateHolders.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="LogicalChannel_ProtocolData", Storage="_ProtocolDatas", ThisKey="Id", OtherKey="LogicalChannelId")]
+		public EntitySet<ProtocolData> ProtocolDatas
+		{
+			get
+			{
+				return this._ProtocolDatas;
+			}
+			set
+			{
+				this._ProtocolDatas.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="LogicalChannel_LogicalChannel", Storage="_LogicalChannelState", ThisKey="StateLogicalChannelId", OtherKey="Id", IsForeignKey=true)]
+		public LogicalChannel LogicalChannelState
+		{
+			get
+			{
+				return this._LogicalChannelState.Entity;
+			}
+			set
+			{
+				LogicalChannel previousValue = this._LogicalChannelState.Entity;
+				if (((previousValue != value) 
+							|| (this._LogicalChannelState.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._LogicalChannelState.Entity = null;
+						previousValue.LogicalChannelStateHolders.Remove(this);
+					}
+					this._LogicalChannelState.Entity = value;
+					if ((value != null))
+					{
+						value.LogicalChannelStateHolders.Add(this);
+						this._StateLogicalChannelId = value.Id;
+					}
+					else
+					{
+						this._StateLogicalChannelId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("LogicalChannelState");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Parameter_LogicalChannel", Storage="_Parameter", ThisKey="ParameterId", OtherKey="Id", IsForeignKey=true)]
+		public Parameter Parameter
+		{
+			get
+			{
+				return this._Parameter.Entity;
+			}
+			set
+			{
+				Parameter previousValue = this._Parameter.Entity;
+				if (((previousValue != value) 
+							|| (this._Parameter.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Parameter.Entity = null;
+						previousValue.LogicalChannels.Remove(this);
+					}
+					this._Parameter.Entity = value;
+					if ((value != null))
+					{
+						value.LogicalChannels.Add(this);
+						this._ParameterId = value.Id;
+					}
+					else
+					{
+						this._ParameterId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Parameter");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PhysicalChannel_LogicalChannel", Storage="_PhysicalChannel", ThisKey="PhysicalChannelId", OtherKey="Id", IsForeignKey=true)]
+		public PhysicalChannel PhysicalChannel
+		{
+			get
+			{
+				return this._PhysicalChannel.Entity;
+			}
+			set
+			{
+				PhysicalChannel previousValue = this._PhysicalChannel.Entity;
+				if (((previousValue != value) 
+							|| (this._PhysicalChannel.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PhysicalChannel.Entity = null;
+						previousValue.LogicalChannels.Remove(this);
+					}
+					this._PhysicalChannel.Entity = value;
+					if ((value != null))
+					{
+						value.LogicalChannels.Add(this);
+						this._PhysicalChannelId = value.Id;
+					}
+					else
+					{
+						this._PhysicalChannelId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("PhysicalChannel");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_LogicalChannelStateHolders(LogicalChannel entity)
+		{
+			this.SendPropertyChanging();
+			entity.LogicalChannelState = this;
+		}
+		
+		private void detach_LogicalChannelStateHolders(LogicalChannel entity)
+		{
+			this.SendPropertyChanging();
+			entity.LogicalChannelState = null;
+		}
+		
+		private void attach_ProtocolDatas(ProtocolData entity)
+		{
+			this.SendPropertyChanging();
+			entity.LogicalChannel = this;
+		}
+		
+		private void detach_ProtocolDatas(ProtocolData entity)
+		{
+			this.SendPropertyChanging();
+			entity.LogicalChannel = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Client")]
+	public partial class Client : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ClientId;
+		
+		private string _ClientName;
+		
+		private EntitySet<ProtocolData> _ProtocolDatas;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnClientIdChanging(int value);
+    partial void OnClientIdChanged();
+    partial void OnClientNameChanging(string value);
+    partial void OnClientNameChanged();
+    #endregion
+		
+		public Client()
+		{
+			this._ProtocolDatas = new EntitySet<ProtocolData>(new Action<ProtocolData>(this.attach_ProtocolDatas), new Action<ProtocolData>(this.detach_ProtocolDatas));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ClientId
+		{
+			get
+			{
+				return this._ClientId;
+			}
+			set
+			{
+				if ((this._ClientId != value))
+				{
+					this.OnClientIdChanging(value);
+					this.SendPropertyChanging();
+					this._ClientId = value;
+					this.SendPropertyChanged("ClientId");
+					this.OnClientIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientName", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string ClientName
+		{
+			get
+			{
+				return this._ClientName;
+			}
+			set
+			{
+				if ((this._ClientName != value))
+				{
+					this.OnClientNameChanging(value);
+					this.SendPropertyChanging();
+					this._ClientName = value;
+					this.SendPropertyChanged("ClientName");
+					this.OnClientNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Client_ProtocolData", Storage="_ProtocolDatas", ThisKey="ClientId", OtherKey="ClientId")]
+		public EntitySet<ProtocolData> ProtocolDatas
+		{
+			get
+			{
+				return this._ProtocolDatas;
+			}
+			set
+			{
+				this._ProtocolDatas.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_ProtocolDatas(ProtocolData entity)
+		{
+			this.SendPropertyChanging();
+			entity.Client = this;
+		}
+		
+		private void detach_ProtocolDatas(ProtocolData entity)
+		{
+			this.SendPropertyChanging();
+			entity.Client = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ProtocolData")]
+	public partial class ProtocolData : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _Id;
+		
+		private int _ClientId;
+		
+		private int _LogicalChannelId;
+		
+		private System.DateTime _TimeStamp;
+		
+		private System.DateTime _QueueTimeStamp;
+		
+		private decimal _DataValue;
+		
+		private EntityRef<Client> _Client;
+		
+		private EntityRef<LogicalChannel> _LogicalChannel;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(long value);
+    partial void OnIdChanged();
+    partial void OnClientIdChanging(int value);
+    partial void OnClientIdChanged();
+    partial void OnLogicalChannelIdChanging(int value);
+    partial void OnLogicalChannelIdChanged();
+    partial void OnTimeStampChanging(System.DateTime value);
+    partial void OnTimeStampChanged();
+    partial void OnQueueTimeStampChanging(System.DateTime value);
+    partial void OnQueueTimeStampChanged();
+    partial void OnDataValueChanging(decimal value);
+    partial void OnDataValueChanged();
+    #endregion
+		
+		public ProtocolData()
+		{
+			this._Client = default(EntityRef<Client>);
+			this._LogicalChannel = default(EntityRef<LogicalChannel>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientId", DbType="Int NOT NULL")]
+		public int ClientId
+		{
+			get
+			{
+				return this._ClientId;
+			}
+			set
+			{
+				if ((this._ClientId != value))
+				{
+					if (this._Client.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnClientIdChanging(value);
+					this.SendPropertyChanging();
+					this._ClientId = value;
+					this.SendPropertyChanged("ClientId");
+					this.OnClientIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LogicalChannelId", DbType="Int NOT NULL")]
+		public int LogicalChannelId
+		{
+			get
+			{
+				return this._LogicalChannelId;
+			}
+			set
+			{
+				if ((this._LogicalChannelId != value))
+				{
+					if (this._LogicalChannel.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnLogicalChannelIdChanging(value);
+					this.SendPropertyChanging();
+					this._LogicalChannelId = value;
+					this.SendPropertyChanged("LogicalChannelId");
+					this.OnLogicalChannelIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeStamp", DbType="DateTime NOT NULL")]
+		public System.DateTime TimeStamp
+		{
+			get
+			{
+				return this._TimeStamp;
+			}
+			set
+			{
+				if ((this._TimeStamp != value))
+				{
+					this.OnTimeStampChanging(value);
+					this.SendPropertyChanging();
+					this._TimeStamp = value;
+					this.SendPropertyChanged("TimeStamp");
+					this.OnTimeStampChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QueueTimeStamp", DbType="DateTime NOT NULL")]
+		public System.DateTime QueueTimeStamp
+		{
+			get
+			{
+				return this._QueueTimeStamp;
+			}
+			set
+			{
+				if ((this._QueueTimeStamp != value))
+				{
+					this.OnQueueTimeStampChanging(value);
+					this.SendPropertyChanging();
+					this._QueueTimeStamp = value;
+					this.SendPropertyChanged("QueueTimeStamp");
+					this.OnQueueTimeStampChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DataValue", DbType="Decimal(18,10) NOT NULL")]
+		public decimal DataValue
+		{
+			get
+			{
+				return this._DataValue;
+			}
+			set
+			{
+				if ((this._DataValue != value))
+				{
+					this.OnDataValueChanging(value);
+					this.SendPropertyChanging();
+					this._DataValue = value;
+					this.SendPropertyChanged("DataValue");
+					this.OnDataValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Client_ProtocolData", Storage="_Client", ThisKey="ClientId", OtherKey="ClientId", IsForeignKey=true)]
+		public Client Client
+		{
+			get
+			{
+				return this._Client.Entity;
+			}
+			set
+			{
+				Client previousValue = this._Client.Entity;
+				if (((previousValue != value) 
+							|| (this._Client.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Client.Entity = null;
+						previousValue.ProtocolDatas.Remove(this);
+					}
+					this._Client.Entity = value;
+					if ((value != null))
+					{
+						value.ProtocolDatas.Add(this);
+						this._ClientId = value.ClientId;
+					}
+					else
+					{
+						this._ClientId = default(int);
+					}
+					this.SendPropertyChanged("Client");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="LogicalChannel_ProtocolData", Storage="_LogicalChannel", ThisKey="LogicalChannelId", OtherKey="Id", IsForeignKey=true)]
+		public LogicalChannel LogicalChannel
+		{
+			get
+			{
+				return this._LogicalChannel.Entity;
+			}
+			set
+			{
+				LogicalChannel previousValue = this._LogicalChannel.Entity;
+				if (((previousValue != value) 
+							|| (this._LogicalChannel.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._LogicalChannel.Entity = null;
+						previousValue.ProtocolDatas.Remove(this);
+					}
+					this._LogicalChannel.Entity = value;
+					if ((value != null))
+					{
+						value.ProtocolDatas.Add(this);
+						this._LogicalChannelId = value.Id;
+					}
+					else
+					{
+						this._LogicalChannelId = default(int);
+					}
+					this.SendPropertyChanged("LogicalChannel");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

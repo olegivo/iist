@@ -25,7 +25,7 @@ namespace Oleg_ivo.Plc.Channels
         private double? maxValue;
         private double? minNormalValue;
         private double? maxNormalValue;
-        private TimeSpan pollPeriod;
+        private TimeSpan? pollPeriod;
         private Polynom directTransform;
         private Polynom reverseTransform;
 
@@ -251,19 +251,20 @@ namespace Oleg_ivo.Plc.Channels
         /// <summary>
         /// Период опроса канала
         /// </summary>
-        public TimeSpan PollPeriod
+        public TimeSpan? PollPeriod
         {
             get
             {
-                return pollPeriod == null && Entity != null && Entity.PollPeriod.HasValue
-                    ? pollPeriod = TimeSpan.FromMilliseconds((double)Entity.PollPeriod.Value)
+                return pollPeriod == null && Entity != null && Entity.Parameter != null && Entity.Parameter.PollPeriod.HasValue
+                    ? pollPeriod = TimeSpan.FromMilliseconds((double)Entity.Parameter.PollPeriod.Value)
                     : pollPeriod;
             }
             set
             {
                 if (PollPeriod == value) return;
                 pollPeriod = value;
-                if (Entity != null) Entity.PollPeriod = (decimal?)value.TotalMilliseconds;
+                if (Entity != null && Entity.Parameter != null && value.HasValue) 
+                    Entity.Parameter.PollPeriod = (decimal?)value.Value.TotalMilliseconds;
             }
         }
 
