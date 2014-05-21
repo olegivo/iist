@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Text;
+using System.Linq;
 using System.Threading;
+using Autofac;
 using DMS.Common.Messages;
 using NLog;
 using Oleg_ivo.Base.Autofac;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
+using Oleg_ivo.Plc.Entities;
 using Oleg_ivo.Tools.ConnectionProvider;
 
 namespace Oleg_ivo.MES.Logging
@@ -31,6 +32,22 @@ namespace Oleg_ivo.MES.Logging
         }
 
         #endregion
+
+        [Dependency]
+        public IComponentContext Context { get; set; }
+
+        private PlcDataContext dataContext;
+
+        protected PlcDataContext DataContext
+        {
+            get
+            {
+                return dataContext ??
+                       (dataContext =
+                           Context.Resolve<PlcDataContext>(new TypedParameter(typeof(string),
+                               Context.Resolve<DbConnectionProvider>().DefaultConnectionString)));
+            }
+        }
 
         #region Обработка очереди сообщений
         private class QueueElement
@@ -101,7 +118,7 @@ namespace Oleg_ivo.MES.Logging
 
         private void MainLoop()
         {
-            while (!_stopped || queue.Count > 0)
+            while (!_stopped || queue.Count > 0)//TODO:переделать на асинхронное взаимодействие очереди
             {
                 CheckNewData();
             }
@@ -151,24 +168,15 @@ namespace Oleg_ivo.MES.Logging
             var dataMessage = message as InternalLogicalChannelDataMessage;
             if (dataMessage == null)
                 throw new ArgumentOutOfRangeException("Неожиданный тип сообщения" + message.GetType());
-            var command = PrepareDataMessageCommand(dataMessage, incomeTimeStamp);
-
-            if(command!=null)
+            var protocolData = CreateProtocolData(dataMessage, incomeTimeStamp);
+            try
             {
-                try
-                {
-                    connectionProvider.OpenConnection(command);
-                    command.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("При протоколировании сообщения произошла ошибка", ex);
-                }
-                finally
-                {
-                    if(command.Connection.State != ConnectionState.Closed)
-                        connectionProvider.CloseConnection(command);
-                }
+                DataContext.ProtocolDatas.InsertOnSubmit(protocolData);
+                DataContext.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("При протоколировании сообщения произошла ошибка", ex);
             }
         }
 
@@ -177,21 +185,17 @@ namespace Oleg_ivo.MES.Logging
         /// </summary>
         /// <param name="message"></param>
         /// <param name="incomeTimeStamp"></param>
-        private IDbCommand PrepareDataMessageCommand(InternalLogicalChannelDataMessage message, DateTime incomeTimeStamp)
+        private ProtocolData CreateProtocolData(InternalLogicalChannelDataMessage message, DateTime incomeTimeStamp)
         {
-            StringBuilder builder = new StringBuilder("INSERT dbo.ProtocolData ( LogicalChannelId, TimeStamp, QueueTimeStamp, DataValue)");
-            builder.AppendLine("VALUES (@LogicalChannelId, @TimeStamp, @QueueTimeStamp, @DataValue)");
-            
-            SqlCommand command = new SqlCommand(builder.ToString());
-            command.Parameters.AddRange(new[]
-                                            {
-                                                new SqlParameter("@LogicalChannelId", message.LogicalChannelId),
-                                                new SqlParameter("@TimeStamp", message.TimeStamp),
-                                                new SqlParameter("@QueueTimeStamp", incomeTimeStamp),
-                                                new SqlParameter("@DataValue", message.Value)
-                                            });
-
-            return command;
+            var client = DataContext.Clients.Single(c=>c.ClientName==message.RegNameFrom);//TODO:move client data to message
+            return new ProtocolData
+            {
+                LogicalChannelId = message.LogicalChannelId,
+                TimeStamp = message.TimeStamp,
+                QueueTimeStamp = incomeTimeStamp,
+                DataValue = Convert.ToDecimal(message.Value),
+                Client = client
+            };
         }
     }
 }

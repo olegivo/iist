@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractLevelMessageExchangeSystem.cs" />
+    <Compile Include="DI\MessageExchangeSystemAutofacModule.cs" />
     <Compile Include="High\LogicalChannelExtensions.cs" />
     <Compile Include="Logging\InternalMessageLogger.cs" />
     <Compile Include="ErrorReceivedEventArgs.cs" />

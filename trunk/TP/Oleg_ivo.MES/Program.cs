@@ -9,6 +9,7 @@ using NLog;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.Base.Autofac.Modules;
 using Oleg_ivo.Base.Communication;
+using Oleg_ivo.MES.DI;
 using Oleg_ivo.MES.High;
 using Oleg_ivo.MES.Logging;
 using Oleg_ivo.MES.Low;
@@ -34,8 +35,7 @@ namespace Oleg_ivo.MES
             Log.Info("Регистрация компонентов");
             var builder = new ContainerBuilder();
             //builder.RegisterModule(new CommandLineHelperAutofacModule<WagoCommandLineOptions>(args));
-            builder.RegisterModule<BaseAutofacModule>();
-            //builder.RegisterModule<WagoAutofacModule>();
+            builder.RegisterModule<MessageExchangeSystemAutofacModule>();
             builder.RegisterType<InternalMessageLogger>().SingleInstance();
             builder.RegisterType<LowLevelMessageExchangeSystem>().SingleInstance();
             builder.RegisterType<HighLevelMessageExchangeSystem>().SingleInstance();
