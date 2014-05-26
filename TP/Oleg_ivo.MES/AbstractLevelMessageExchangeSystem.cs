@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Autofac;
 using DMS.Common.Messages;
 using NLog;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.MES.Registered;
 
 namespace Oleg_ivo.MES
@@ -15,6 +17,9 @@ namespace Oleg_ivo.MES
 
         private readonly Dictionary<string, TRegisteredClient> _registeredClients =
             new Dictionary<string, TRegisteredClient>();
+
+        [Dependency(Required = true)]
+        public IComponentContext Context { get; set; }
 
         /// <summary>
         /// 

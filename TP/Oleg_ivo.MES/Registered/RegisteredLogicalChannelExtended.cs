@@ -43,7 +43,7 @@ namespace Oleg_ivo.MES.Registered
         /// 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="dataMode">Если <see cref="RegisteredLogicalChannel.DataMode.Unknown"/>, параметр не учитывается при фильтрации</param>
+        /// <param name="dataMode">Если <see cref="DataMode.Unknown"/>, параметр не учитывается при фильтрации</param>
         /// <returns></returns>
         public static Func<RegisteredLogicalChannelExtended, bool> GetFindChannelPredicate(int id, DataMode dataMode)
         {
