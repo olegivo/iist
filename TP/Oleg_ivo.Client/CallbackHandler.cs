@@ -2,6 +2,7 @@ using System;
 using System.ServiceModel;
 using DMS.Common.Events;
 using DMS.Common.Messages;
+using Oleg_ivo.Base.Communication;
 using Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp;
 
 #if IIST
@@ -29,7 +30,7 @@ namespace Oleg_ivo.HighLevelClient
     /// Реализация 
     /// </summary>
     [CallbackBehavior(IncludeExceptionDetailInFaults = true)]
-    [CallbackErrorHandlerBehavior(typeof(CustomErrorHandler))]
+    [ErrorBehavior(typeof(ServiceErrorHandler))]
     public class CallbackHandler : IHighLevelMessageExchangeSystemCallback// IClientCallback
     {
 

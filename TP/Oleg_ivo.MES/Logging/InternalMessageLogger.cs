@@ -190,5 +190,13 @@ namespace Oleg_ivo.MES.Logging
                 Client = client
             };
         }
+
+        public void ProtocolError(InternalMessage message, FaultException faultException)
+        {
+            //TODO:записать ошибку в базу
+            var ex = faultException.GetBaseException();
+        }
+
+
     }
 }

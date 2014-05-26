@@ -2,6 +2,7 @@ using System.Security;
 using System.ServiceModel.Channels;
 using System.Timers;
 using DMS.Common;
+using DMS.Common.Exceptions;
 using Oleg_ivo.Base.Communication;
 using Oleg_ivo.Tools.ExceptionCatcher;
 using DMS.Common.Events;
@@ -246,10 +247,16 @@ namespace Oleg_ivo.HighLevelClient
             get { return callbackHandler ?? (callbackHandler = new CallbackHandler()); }
         }
 
+        public bool IsCommunicationFailed
+        {
+            get { return highLevelMessageExchangeSystemClient.State != CommunicationState.Opened; }
+        }
+
         public void SendErrorAsync(ExtendedThreadExceptionEventArgs e)
         {
+            var exception = new TestException("У клиент обнаружена ошибка:\n" + e.Exception);
             highLevelMessageExchangeSystemClient.SendErrorAsync(
-                new InternalErrorMessage(GetRegName(), null, e.Exception), e);
+                new InternalErrorMessage(GetRegName(), null, exception), e);
         }
 
         /// <summary>
