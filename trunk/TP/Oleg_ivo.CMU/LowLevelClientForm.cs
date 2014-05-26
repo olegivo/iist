@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using DMS.Common.Messages;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
+using Oleg_ivo.CMU.Properties;
 using Oleg_ivo.LowLevelClient;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
@@ -15,7 +16,7 @@ namespace Oleg_ivo.CMU
     /// <summary>
     /// 
     /// </summary>
-    public partial class LowLevelClientForm : Form
+    public partial class LowLevelClientForm : Form//TODO:WinForms -> WPF
     {
         private ControlManagementUnit _ControlManagementUnit;
 
@@ -95,7 +96,7 @@ namespace Oleg_ivo.CMU
         {
             set
             {
-                btnRegister.Enabled = textBox2.Enabled = value;
+                btnRegister.Enabled = tbRegName.Enabled = value;
                 doubleListBoxControl1.Enabled = btnSendMessage.Enabled = btnUnregister.Enabled = !value;
             }
         }
@@ -146,7 +147,7 @@ namespace Oleg_ivo.CMU
 
         private string GetRegName()
         {
-            return textBox2.Text;
+            return tbRegName.Text;
         }
 
         private void doubleListBoxControl1_ItemMoving(object sender, MovingEventArgs e)
@@ -233,35 +234,29 @@ namespace Oleg_ivo.CMU
 
         private void LowLevelClientForm_Load(object sender, EventArgs e)
         {
-            try
-            {
-                ControlManagementUnit controlManagementUnit = ControlManagementUnit;
-                controlManagementUnit.BuildSystemConfiguration();
-                controlManagementUnit.GetRegName = GetRegName;
-                controlManagementUnit.NeedProtocol += ControlManagementUnit_NeedProtocol;
+            tbRegName.Text = Settings.Default.DefaultRegName;
+            var controlManagementUnit = ControlManagementUnit;
+            controlManagementUnit.BuildSystemConfiguration();
+            controlManagementUnit.GetRegName = GetRegName;
+            controlManagementUnit.NeedProtocol += ControlManagementUnit_NeedProtocol;
 
-                List<LogicalChannel> left = new List<LogicalChannel>();
-                List<LogicalChannel> right = new List<LogicalChannel>();
+            var left = new List<LogicalChannel>();
+            var right = new List<LogicalChannel>();
 
-                //добавляем только проидентифицированные каналы (Id > 0):
-                left.AddRange(controlManagementUnit.GetAvailableLogicalChannels());
-                //_right.AddRange(Enumerable.Range(11, 10));
+            //добавляем только проидентифицированные каналы (Id > 0):
+            left.AddRange(controlManagementUnit.GetAvailableLogicalChannels());
+            //_right.AddRange(Enumerable.Range(11, 10));
 
-                doubleListBoxControl1.InitDisplayMember("Id");
-                doubleListBoxControl1.InitSources(left, right);
-                CanRegister = true;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            doubleListBoxControl1.InitDisplayMember("Id");
+            doubleListBoxControl1.InitSources(left, right);
+            CanRegister = true;
         }
 
         private void btnChannelRead_Click(object sender, EventArgs e)
         {
             foreach (LogicalChannel logicalChannelId in doubleListBoxControl1.SelectionRight)
             {
-                InternalLogicalChannelDataMessage message =
+                var message =
                     new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Read, logicalChannelId.Id)
                         {
                             Value = Math.PI
