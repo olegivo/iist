@@ -10,6 +10,7 @@ namespace DMS.Common
     public interface IErrorSender
     {
         event EventHandler<AsyncCompletedEventArgs> SendErrorCompleted;
+        bool IsCommunicationFailed { get; }
         void SendErrorAsync(ExtendedThreadExceptionEventArgs e);
     }
 }

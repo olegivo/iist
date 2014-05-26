@@ -4,6 +4,8 @@ using System.Linq;
 using DMS.Common.MessageExchangeSystem;
 using DMS.Common.Messages;
 using NLog;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
+using Oleg_ivo.MES.Logging;
 
 namespace Oleg_ivo.MES.Registered
 {
@@ -61,6 +63,9 @@ namespace Oleg_ivo.MES.Registered
         {
             get { return RegisteredLogicalChannels.Count > 0; }
         }
+
+        [Dependency(Required = true)]
+        public InternalMessageLogger InternalMessageLogger { get; set; }
 
         #endregion
 

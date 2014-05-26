@@ -2,6 +2,7 @@ using System;
 using System.ServiceModel;
 using DMS.Common.Events;
 using DMS.Common.Messages;
+using Oleg_ivo.Base.Communication;
 #if IIST
 using Oleg_ivo.CMU.ServiceReferenceIIST;
 #else
@@ -20,6 +21,7 @@ namespace Oleg_ivo.LowLevelClient
     /// Реализация 
     /// </summary>
     [CallbackBehavior(IncludeExceptionDetailInFaults = true)]
+    [ErrorBehavior(typeof(ServiceErrorHandler))]
     public class CallbackHandler : ILowLevelMessageExchangeSystemCallback// IClientCallback
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();

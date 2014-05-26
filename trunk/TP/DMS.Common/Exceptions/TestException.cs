@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace DMS.Common.Exceptions
 {
@@ -8,18 +9,28 @@ namespace DMS.Common.Exceptions
     [Serializable]
     public class TestException : InternalException
     {
-        /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="T:System.ApplicationException"/>, используя указанное сообщение об ошибке.
-        /// </summary>
-        private TestException()
+        //
+        // For guidelines regarding the creation of new exception types, see
+        //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconerrorraisinghandlingguidelines.asp
+        // and
+        //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
+        //
+
+        public TestException()
         {
         }
 
-        /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="T:System.ApplicationException"/>, используя указанное сообщение об ошибке.
-        /// </summary>
-        /// <param name="message">Сообщение, описывающее ошибку. </param>
         public TestException(string message) : base(message)
+        {
+        }
+
+        public TestException(string message, Exception inner) : base(message, inner)
+        {
+        }
+
+        protected TestException(
+            SerializationInfo info,
+            StreamingContext context) : base(info, context)
         {
         }
     }

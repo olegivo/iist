@@ -493,6 +493,12 @@ namespace Oleg_ivo.LowLevelClient
             Protocol(string.Format("{0} отмена регистрации в системе обмена сообщениями", channel));
         }
 
+        public bool IsCommunicationFailed
+        {
+            get { return LowLevelMessageExchangeSystemClient.State != CommunicationState.Opened; }
+        }
+
+
         public void SendErrorAsync(ExtendedThreadExceptionEventArgs e)
         {
             LowLevelMessageExchangeSystemClient.SendErrorAsync(

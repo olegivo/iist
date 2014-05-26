@@ -100,7 +100,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CallbackErrorHandlerBehaviorAttribute.cs" />
     <Compile Include="ClientProvider.cs" />
     <Compile Include="CustomErrorHandler.cs" />
     <Compile Include="CallbackHandler.cs" />
