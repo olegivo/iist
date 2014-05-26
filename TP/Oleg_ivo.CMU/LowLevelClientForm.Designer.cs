@@ -21,7 +21,7 @@ namespace Oleg_ivo.CMU
             this.btnRegister = new System.Windows.Forms.Button();
             this.btnSendMessage = new System.Windows.Forms.Button();
             this.btnUnregister = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbRegName = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -95,15 +95,15 @@ namespace Oleg_ivo.CMU
             this.btnUnregister.UseVisualStyleBackColor = true;
             this.btnUnregister.Click += new System.EventHandler(this.btnUnregister_Click);
             // 
-            // textBox2
+            // tbRegName
             // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.tbRegName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(12, 12);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(629, 20);
-            this.textBox2.TabIndex = 8;
-            this.textBox2.Text = "LowLevelClient1";
+            this.tbRegName.Location = new System.Drawing.Point(12, 12);
+            this.tbRegName.Name = "tbRegName";
+            this.tbRegName.Size = new System.Drawing.Size(629, 20);
+            this.tbRegName.TabIndex = 8;
+            this.tbRegName.Text = "LowLevelClient1";
             // 
             // textBox1
             // 
@@ -125,7 +125,7 @@ namespace Oleg_ivo.CMU
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(653, 394);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.tbRegName);
             this.Controls.Add(this.textBox1);
             this.Name = "LowLevelClientForm";
             this.Text = "LowLevelClientForm";
@@ -143,7 +143,7 @@ namespace Oleg_ivo.CMU
         private System.Windows.Forms.Button btnRegister;
         private System.Windows.Forms.Button btnSendMessage;
         private System.Windows.Forms.Button btnUnregister;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tbRegName;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnChannelRead;
     }
