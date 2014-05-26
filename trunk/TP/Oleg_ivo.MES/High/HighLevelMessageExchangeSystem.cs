@@ -347,6 +347,7 @@ namespace Oleg_ivo.MES.High
                 if (registeredHighLevelClient == null)
                 {
                     registeredHighLevelClient = new RegisteredHighLevelClient(this, message.DataMode) { Ticker = message.RegNameFrom };
+                    Context.InjectAttributedProperties(registeredHighLevelClient);
                     AddClient(message.RegNameFrom, registeredHighLevelClient);
                 }
                 //                registeredHighLevelClient = (RegisteredHighLevelClient)_registeredClients[message.RegNameFrom];
