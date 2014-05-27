@@ -40,12 +40,12 @@ namespace TP.WPF.ViewModels
             SummaryTable = new SummaryTableViewModel();
             ChartTab = new ChartTabViewModel();
 
-            channelController1.AutoSubscribeChannels = true;
-            channelController1.AllowedChannels = Settings.Default.AllowedChannelsIds;
-            channelController1.InitProvider();
-            channelController1.GetRegName = GetRegName;
-            channelController1.NeedProtocol += channelController1_NeedProtocol;
-            channelController1.CanRegister = true;
+            channelController.AutoSubscribeChannels = true;
+            channelController.LogicalChannelMappings = Settings.Default.LogicalChannelMappings;
+            channelController.InitProvider();
+            channelController.GetRegName = GetRegName;
+            channelController.NeedProtocol += channelController_NeedProtocol;
+            channelController.CanRegister = true;
 
             SubscribeAndInitViewModels();
         }
@@ -98,24 +98,44 @@ namespace TP.WPF.ViewModels
             foreach (var viewModelBase in viewModels)
             {
                 var viewModel = viewModelBase;
-                channelController1.HasReadChannel += (sender, e) => viewModel.OnReadChannel(e.Message);
-                channelController1.ChannelRegistered += (sender, e) => viewModel.OnChannelRegistered(e.Message);
-                channelController1.ChannelUnRegistered += (sender, e) => viewModel.OnChannelUnRegistered(e.Message);
-                channelController1.ChannelSubscribed += (sender, e) => viewModel.OnChannelIsActiveChanged(Convert.ToInt32(e.UserState), true);
-                channelController1.ChannelUnSubscribed += (sender, e) => viewModel.OnChannelIsActiveChanged(Convert.ToInt32(e.UserState), false);
-                channelController1.UnregisterCompleted += (sender, e) => viewModel.OnUnregistered();
+                channelController.HasReadChannel += (sender, e) => viewModel.OnReadChannel(ConvertMessageToLocalChannel(e.Message));
+                channelController.ChannelRegistered += (sender, e) => viewModel.OnChannelRegistered(e.Message);
+                channelController.ChannelUnRegistered += (sender, e) => viewModel.OnChannelUnRegistered(e.Message);
+                channelController.ChannelSubscribed += (sender, e) => viewModel.OnChannelIsActiveChanged(Convert.ToInt32(e.UserState), true);
+                channelController.ChannelUnSubscribed += (sender, e) => viewModel.OnChannelIsActiveChanged(Convert.ToInt32(e.UserState), false);
+                channelController.UnregisterCompleted += (sender, e) => viewModel.OnUnregistered();
                 viewModel.IndicatorViewModels = models;
             }
         }
 
+        /// <summary>
+        /// Создать сообщение, содержащее локальный Id канала на основе реального LogicalChannelId
+        /// </summary>
+        /// <param name="originalMessage"></param>
+        /// <returns></returns>
+        private InternalLogicalChannelDataMessage ConvertMessageToLocalChannel(
+            InternalLogicalChannelDataMessage originalMessage)
+        {
+            //TODO:если кроме LogicalChannelId и Value ничего не используется, вместо генерации нового сообщения можно передавать только эти 2 параметра
+            var newMessage = new InternalLogicalChannelDataMessage
+                (originalMessage.RegNameFrom,
+                originalMessage.RegNameTo,
+                originalMessage.DataMode,
+                channelController.GetLocalChannelId(originalMessage.LogicalChannelId))
+            {
+                Value = originalMessage.Value
+            };
+            return newMessage;
+        }
+
         private void OnRegister()
         {
-            channelController1.Register();
+            channelController.Register();
         }
 
         private void OnUnregister()
         {
-            channelController1.Unregister();
+            channelController.Unregister();
         }
 
         /// <summary>
@@ -123,10 +143,10 @@ namespace TP.WPF.ViewModels
         /// </summary>
         private void OnCloseApp()
         {
-            if (!channelController1.CanRegister)
+            if (!channelController.CanRegister)
             {
-                channelController1.Unregister();
-                channelController1.Dispose();
+                channelController.Unregister();
+                channelController.Dispose();
             }
             // Ask the view to close.
             //TODO:RaiseCloseRequest();
@@ -150,11 +170,11 @@ namespace TP.WPF.ViewModels
 
         }
 
-        public ChannelController channelController1 = new ChannelController();
+        private readonly ChannelController channelController = new ChannelController();
         private string messages;
 
 
-        void channelController1_NeedProtocol(object sender, EventArgs e)
+        void channelController_NeedProtocol(object sender, EventArgs e)
         {
             Protocol(sender);
         }
@@ -218,15 +238,15 @@ namespace TP.WPF.ViewModels
         {
             base.OnChannelRegistered(message);
             IndicatorViewModel indicatorViewModel;
-            var channelId = message.LogicalChannelId;
-            if (IndicatorViewModels.ContainsKey(channelId))
+            var localChannelId = channelController.GetLocalChannelId(message.LogicalChannelId);
+            if (IndicatorViewModels.ContainsKey(localChannelId))
             {
-                indicatorViewModel = IndicatorViewModels[channelId];
+                indicatorViewModel = IndicatorViewModels[localChannelId];
             }
             else
             {
                 indicatorViewModel = new IndicatorViewModel();
-                IndicatorViewModels.Add(channelId, indicatorViewModel);
+                IndicatorViewModels.Add(localChannelId, indicatorViewModel);
             }
             indicatorViewModel.Init(message);
         }
@@ -234,7 +254,7 @@ namespace TP.WPF.ViewModels
         //TODO:изменить механизм из событий во что-нибудь другое
         private void FinishCleaning_SendControlMessage(object sender, SendControlMessageEventArgs e)
         {
-            channelController1.WriteChannel(e.ChannelId, e.Value);
+            channelController.WriteChannel(e.ChannelId, e.Value);
         }
 
         /// <summary>

@@ -8,15 +8,8 @@
     <Setting Name="MainFormTitle" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Система мониторинга1</Value>
     </Setting>
-    <Setting Name="AllowedChannels" Type="System.Collections.Specialized.StringCollection" Scope="Application">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;1&lt;/string&gt;
-  &lt;string&gt;2&lt;/string&gt;
-  &lt;string&gt;3&lt;/string&gt;
-  &lt;string&gt;4&lt;/string&gt;
-  &lt;string&gt;5&lt;/string&gt;
-&lt;/ArrayOfString&gt;</Value>
+    <Setting Name="ChannelMappingsFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ChannelMappings.xml</Value>
     </Setting>
   </Settings>
 </SettingsFile>

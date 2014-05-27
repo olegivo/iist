@@ -158,6 +158,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="IoC\TpAutofacModule.cs" />
+    <Compile Include="Properties\LogicalChannelMapping.cs" />
+    <Compile Include="Properties\LogicalChannelMappings.cs" />
+    <Compile Include="Properties\SerializationHelper.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="Resources\ucDebugPanel.xaml.cs">
       <DependentUpon>ucDebugPanel.xaml</DependentUpon>
@@ -428,6 +431,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ChannelMappings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

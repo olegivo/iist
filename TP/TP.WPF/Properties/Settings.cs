@@ -1,29 +1,27 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.IO;
+using System.Reflection;
 
 namespace TP.WPF.Properties
 {
     internal sealed partial class Settings
     {
-        private List<int> allowedChannelsIds;
+        private LogicalChannelMappings logicalChannelMappings;
 
-        public List<int> AllowedChannelsIds
+        public LogicalChannelMappings LogicalChannelMappings
         {
             get
             {
-                return allowedChannelsIds ??
-                       (allowedChannelsIds = AllowedChannels
-                           .Cast<string>()
-                           .Select(s =>
-                           {
-                               int i;
-                               var b = int.TryParse(s, out i);
-                               return new {i, b};
-                           })
-                           .Where(item => item.b)
-                           .Select(item => item.i)
-                           .ToList());
+                return logicalChannelMappings ?? (logicalChannelMappings = CreateChannelsMappings(ChannelMappingsFile));
             }
         }
+
+        private static LogicalChannelMappings CreateChannelsMappings(string channelMappingsFile)
+        {
+            var location = Assembly.GetExecutingAssembly().Location;
+            var directory = Path.GetDirectoryName(location);
+            var path = Path.Combine(directory, channelMappingsFile);
+            return File.Exists(path) ? File.ReadAllText(path).Deserialize<LogicalChannelMappings>() : null;
+        }
+
     }
 }
