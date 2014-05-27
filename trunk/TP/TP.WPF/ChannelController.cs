@@ -6,6 +6,8 @@ using DMS.Common.Events;
 using DMS.Common.Messages;
 using NLog;
 using Oleg_ivo.HighLevelClient;
+using TP.WPF.Properties;
+using System.Linq;
 
 namespace TP.WPF
 {
@@ -43,7 +45,31 @@ namespace TP.WPF
         [Description("Автоматически подписываться на вновь зарегистрированные каналы"), DefaultValue(false)]
         public bool AutoSubscribeChannels { get; set; }
 
-        public List<int> AllowedChannels { get; set; }
+        public LogicalChannelMappings LogicalChannelMappings
+        {
+            get { return logicalChannelMappings; }
+            set
+            {
+                if(logicalChannelMappings == value) return;
+                logicalChannelMappings = value;
+                localDic = LogicalChannelMappings.ToDictionary(mapping => mapping.LogicalChannelId, mapping => mapping.LocalChannelId);
+                realDic = LogicalChannelMappings.ToDictionary(mapping => mapping.LocalChannelId, mapping => mapping.LogicalChannelId);
+            }
+        }
+
+        public int GetRealLogicalChannelId(int localChannelId)
+        {
+            return realDic != null && realDic.ContainsKey(localChannelId) 
+                ? realDic[localChannelId] 
+                : localChannelId;
+        }
+
+        public int GetLocalChannelId(int realChannelId)
+        {
+            return localDic != null && localDic.ContainsKey(realChannelId)
+                ? localDic[realChannelId]
+                : realChannelId;
+        }
 
         private ClientProvider provider;
 
@@ -146,13 +172,12 @@ namespace TP.WPF
                 
                 if (!subscribedChannelsList.Contains(logicalChannelId))//TODO:проверить, можно ли без этого условия (не остаются ли каналы после отмены подписки или отмены регистрации)
                 {
-                    if (AutoSubscribeChannels && (AllowedChannels == null || AllowedChannels.Contains(logicalChannelId)))
+                    if (AutoSubscribeChannels)
                     {
                         SubscribeChannel(new ChannelSubscribeMessage(GetRegName(),
                             null,
                             SubscribeMode.Subscribe,
-                            logicalChannelId)
-                            );
+                            logicalChannelId));
                     }
                 }
             }
@@ -201,19 +226,29 @@ namespace TP.WPF
         /// <summary>
         /// Записать в канал
         /// </summary>
-        /// <param name="channelId"></param>
+        /// <param name="localChannelId"></param>
         /// <param name="value"></param>
-        public void WriteChannel(int channelId, object value)
+        public void WriteChannel(int localChannelId, object value)
         {
             log.Debug("WriteChannel");
 
-            Provider.WriteChannel(new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Write, channelId)
+            var realLogicalChannelId = GetRealLogicalChannelId(localChannelId);
+            Provider.WriteChannel(new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Write, realLogicalChannelId)
             {
                 Value = value
             });
         }
 
         private bool isitialized;
+        private LogicalChannelMappings logicalChannelMappings;
+        /// <summary>
+        /// Сопоставление realId -> localId
+        /// </summary>
+        private Dictionary<int, int> localDic;
+        /// <summary>
+        /// Сопоставление localId -> realId
+        /// </summary>
+        private Dictionary<int, int> realDic;
 
 
         /// <summary>
