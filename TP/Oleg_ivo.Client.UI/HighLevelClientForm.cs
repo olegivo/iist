@@ -102,7 +102,7 @@ namespace Oleg_ivo.HighLevelClient.UI
             Protocol(string.Format("Произошла подписка на канал [{0}]", e.UserState));
         }
 
-        void Provider_ChannelRegistered(object sender, ChannelRegisterEventArgs e)
+        void Provider_ChannelRegistered(object sender, MessageEventArgs<ChannelRegistrationMessage> e)
         {
             AddRegisteredChannel(e.Message);
         }
@@ -154,7 +154,7 @@ namespace Oleg_ivo.HighLevelClient.UI
             }
         }
 
-        void Provider_ChannelUnRegistered(object sender, ChannelRegisterEventArgs e)
+        void Provider_ChannelUnRegistered(object sender, MessageEventArgs<ChannelRegistrationMessage> e)
         {
             RemoveRegisteredChannel(e.Message);
             Protocol(string.Format("Канал [{0}] теперь недоступен для подписки", e.Message.LogicalChannelId));

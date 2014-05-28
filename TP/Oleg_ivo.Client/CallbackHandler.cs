@@ -48,22 +48,22 @@ namespace Oleg_ivo.HighLevelClient
         /// <summary>
         /// 
         /// </summary>
-        public event EventHandler<ChannelRegisterEventArgs> ChannelRegistered;
+        public event EventHandler<MessageEventArgs<ChannelRegistrationMessage>> ChannelRegistered;
 
-        private void OnChannelRegistered(ChannelRegisterEventArgs e)
+        private void OnChannelRegistered(MessageEventArgs<ChannelRegistrationMessage> e)
         {
-            EventHandler<ChannelRegisterEventArgs> handler = ChannelRegistered;
+            var handler = ChannelRegistered;
             if (handler != null) handler(null, e);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public event EventHandler<ChannelRegisterEventArgs> ChannelUnRegistered;
+        public event EventHandler<MessageEventArgs<ChannelRegistrationMessage>> ChannelUnRegistered;
 
-        private void OnChannelUnRegistered(ChannelRegisterEventArgs e)
+        private void OnChannelUnRegistered(MessageEventArgs<ChannelRegistrationMessage> e)
         {
-            EventHandler<ChannelRegisterEventArgs> handler = ChannelUnRegistered;
+            var handler = ChannelUnRegistered;
             if (handler != null) handler(null, e);
         }
 
@@ -115,7 +115,7 @@ namespace Oleg_ivo.HighLevelClient
         /// <exception cref="NotImplementedException"></exception>
         public void ChannelRegister(ChannelRegistrationMessage message)
         {
-            OnChannelRegistered(new ChannelRegisterEventArgs(message));
+            OnChannelRegistered(new MessageEventArgs<ChannelRegistrationMessage>(message));
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Oleg_ivo.HighLevelClient
         /// <exception cref="NotImplementedException"></exception>
         public void ChannelUnRegister(ChannelRegistrationMessage message)
         {
-            OnChannelUnRegistered(new ChannelRegisterEventArgs(message));
+            OnChannelUnRegistered(new MessageEventArgs<ChannelRegistrationMessage>(message));
         }
 
         /// <summary>
@@ -197,12 +197,23 @@ namespace Oleg_ivo.HighLevelClient
         /// <summary>
         /// Прочитан канал
         /// </summary>
-        public event EventHandler<DataEventArgs> HasReadChannel;
+        public event EventHandler<MessageEventArgs<InternalLogicalChannelDataMessage>> HasReadChannel;
 
         private void OnSendReadToClient(InternalLogicalChannelDataMessage message)
         {
-            EventHandler<DataEventArgs> handler = HasReadChannel;
-            if (handler != null) handler(this, new DataEventArgs(message));
+            var handler = HasReadChannel;
+            if (handler != null) handler(this, new MessageEventArgs<InternalLogicalChannelDataMessage>(message));
+        }
+
+        /// <summary>
+        /// Изменилось состояние канала
+        /// </summary>
+        public event EventHandler<MessageEventArgs<InternalLogicalChannelStateMessage>> ChannelStateChanged;
+
+        private void OnSendChannelStateToClient(InternalLogicalChannelStateMessage message)
+        {
+            var handler = ChannelStateChanged;
+            if (handler != null) handler(this, new MessageEventArgs<InternalLogicalChannelStateMessage>(message));
         }
 
         /// <summary>
@@ -224,6 +235,29 @@ namespace Oleg_ivo.HighLevelClient
         /// <param name="result"></param>
         /// <exception cref="NotImplementedException"></exception>
         public void EndSendReadToClient(IAsyncResult result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SendChannelStateToClient(InternalLogicalChannelStateMessage message)
+        {
+            string s = string.Format("MessageExchangeSystem -> Client : канала [{0}] поменял состояние на [{1}]. {2}{3}",
+                message.LogicalChannelId,
+                message.State,
+                message.TimeStamp,
+                Environment.NewLine);
+
+            OnSendChannelStateToClient(message);
+            OnNeedProtocol(s);
+        }
+
+        public IAsyncResult BeginSendChannelStateToClient(InternalLogicalChannelStateMessage message, AsyncCallback callback,
+            object asyncState)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EndSendChannelStateToClient(IAsyncResult result)
         {
             throw new NotImplementedException();
         }
