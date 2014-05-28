@@ -8,9 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="360">
 	<WrapPanel Orientation="Vertical">
-		<uiIndicators:ucLevelIndicator Height="150" Width="180" DataContext="{Binding IndicatorViewModels[191]}"/>
-        <uiIndicators:ucLevelIndicator Height="150" Width="180" DataContext="{Binding IndicatorViewModels[192]}"/>
-        <uiIndicators:ucLevelIndicator Height="150" Width="180" DataContext="{Binding IndicatorViewModels[193]}"/>
-        <uiIndicators:ucLevelIndicator Height="150" Width="180" DataContext="{Binding IndicatorViewModels[194]}"/>
+		<uiIndicators:ucLevelIndicator Height="150" Width="180" DataContext="{Binding IndicatorViewModels[1]}"/>
+        <uiIndicators:ucLevelIndicator Height="150" Width="180" DataContext="{Binding IndicatorViewModels[2]}"/>
+        <uiIndicators:ucLevelIndicator Height="150" Width="180" DataContext="{Binding IndicatorViewModels[3]}"/>
+        <uiIndicators:ucLevelIndicator Height="150" Width="180" DataContext="{Binding IndicatorViewModels[4]}"/>
 	</WrapPanel>
 </UserControl>
