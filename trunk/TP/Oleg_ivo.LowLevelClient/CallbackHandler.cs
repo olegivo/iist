@@ -45,7 +45,7 @@ namespace Oleg_ivo.LowLevelClient
         {
             string s = string.Format("MessageExchangeSystem -> Client : {0}{1}", message.TimeStamp, Environment.NewLine);
             OnNeedProtocol(s);
-
+            
             //todo:Oleg_ivo.CMU.CallbackHandler.SendMessageToClient - для проверки проброса исключений на сервер
 /*
             TestException exception = new TestException("Мне прислали сообщение, но произошла тестовая ошибка");
@@ -87,17 +87,17 @@ namespace Oleg_ivo.LowLevelClient
         /// <param name="message"></param>
         public void ChannelSubscribe(ChannelSubscribeMessage message)
         {
-            InvokeChannelSubsrcibe(new ChannelSubscribeEventArgs(message));
+            InvokeChannelSubsrcibe(new MessageEventArgs<ChannelSubscribeMessage>(message));
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public event EventHandler<ChannelSubscribeEventArgs> ChannelSubscribed;
+        public event EventHandler<MessageEventArgs<ChannelSubscribeMessage>> ChannelSubscribed;
 
-        private void InvokeChannelSubsrcibe(ChannelSubscribeEventArgs e)
+        private void InvokeChannelSubsrcibe(MessageEventArgs<ChannelSubscribeMessage> e)
         {
-            EventHandler<ChannelSubscribeEventArgs> handler = ChannelSubscribed;
+            EventHandler<MessageEventArgs<ChannelSubscribeMessage>> handler = ChannelSubscribed;
             if (handler != null) handler(this, e);
         }
 
@@ -134,28 +134,28 @@ namespace Oleg_ivo.LowLevelClient
         /// <param name="message"></param>
         public void ChannelUnSubscribe(ChannelSubscribeMessage message)
         {
-            InvokeChannelUnSubsrcibe(new ChannelSubscribeEventArgs(message));
+            InvokeChannelUnSubsrcibe(new MessageEventArgs<ChannelSubscribeMessage>(message));
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public event EventHandler<ChannelSubscribeEventArgs> ChannelUnSubscribed;
+        public event EventHandler<MessageEventArgs<ChannelSubscribeMessage>> ChannelUnSubscribed;
 
-        private void InvokeChannelUnSubsrcibe(ChannelSubscribeEventArgs e)
+        private void InvokeChannelUnSubsrcibe(MessageEventArgs<ChannelSubscribeMessage> e)
         {
-            EventHandler<ChannelSubscribeEventArgs> handler = ChannelUnSubscribed;
+            EventHandler<MessageEventArgs<ChannelSubscribeMessage>> handler = ChannelUnSubscribed;
             if (handler != null) handler(this, e);
         }
 
         /// <summary>
         /// Записан канал
         /// </summary>
-        public event EventHandler<DataEventArgs> HasWriteChannel;
+        public event EventHandler<MessageEventArgs<InternalLogicalChannelDataMessage>> HasWriteChannel;
 
         private void OnSendWriteToClient(InternalLogicalChannelDataMessage message)
         {
-            if (HasWriteChannel != null) HasWriteChannel(this, new DataEventArgs(message));
+            if (HasWriteChannel != null) HasWriteChannel(this, new MessageEventArgs<InternalLogicalChannelDataMessage>(message));
         }
 
         #region ChannelUnSubscribe
