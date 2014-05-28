@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DMS.Common.Events;
+using DMS.Common.Messages;
 using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.Plc;
@@ -35,7 +36,7 @@ namespace EmulationClient.Emulation
             }
         }
 
-        private void ControlManagementUnit_HasWriteChannel(object sender, DataEventArgs e)
+        private void ControlManagementUnit_HasWriteChannel(object sender, MessageEventArgs<InternalLogicalChannelDataMessage> e)
         {
             SetManagedValue(e.Message.LogicalChannelId, e.Message.Value);
         }

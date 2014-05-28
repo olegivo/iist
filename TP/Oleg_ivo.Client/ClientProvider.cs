@@ -34,6 +34,7 @@ namespace Oleg_ivo.HighLevelClient
 
             CallbackHandler.ChannelRegistered += CallbackHandler_ChannelRegistered;
             CallbackHandler.ChannelUnRegistered += CallbackHandler_ChannelUnRegistered;
+            CallbackHandler.ChannelStateChanged += CallbackHandler_ChannelStateChanged;
             CallbackHandler.HasReadChannel += CallbackHandler_HasReadChannel;
         }
 
@@ -164,16 +165,16 @@ namespace Oleg_ivo.HighLevelClient
         /// <summary>
         /// 
         /// </summary>
-        public event EventHandler<ChannelRegisterEventArgs> ChannelRegistered;
+        public event EventHandler<MessageEventArgs<ChannelRegistrationMessage>> ChannelRegistered;
 
         /// <summary>
         /// 
         /// </summary>
-        public event EventHandler<ChannelRegisterEventArgs> ChannelUnRegistered;
+        public event EventHandler<MessageEventArgs<ChannelRegistrationMessage>> ChannelUnRegistered;
 
         #endregion
 
-        private void CallbackHandler_ChannelRegistered(object sender, ChannelRegisterEventArgs e)
+        private void CallbackHandler_ChannelRegistered(object sender, MessageEventArgs<ChannelRegistrationMessage> e)
         {
             log.Debug("CallbackHandler_ChannelRegistered");
 
@@ -184,15 +185,15 @@ namespace Oleg_ivo.HighLevelClient
             else 
                 RegisteredChannels = newValue;
 
-            if (_actualValues.ContainsKey(message.LogicalChannelId))
-                _actualValues[message.LogicalChannelId] = default(double);
+            if (actualValues.ContainsKey(message.LogicalChannelId))
+                actualValues[message.LogicalChannelId] = default(double);
             else
-                _actualValues.Add(message.LogicalChannelId, default(double));
+                actualValues.Add(message.LogicalChannelId, default(double));
 
             if (ChannelRegistered != null) ChannelRegistered(this, e);
         }
 
-        private void CallbackHandler_ChannelUnRegistered(object sender, ChannelRegisterEventArgs e)
+        private void CallbackHandler_ChannelUnRegistered(object sender, MessageEventArgs<ChannelRegistrationMessage> e)
         {
             log.Debug("CallbackHandler_ChannelUnRegistered");
 
@@ -204,8 +205,8 @@ namespace Oleg_ivo.HighLevelClient
             else
                 throw new InvalidOperationException(string.Format("Невозможно найти зарегистрированный канал {0}", e.Message.LogicalChannelId));
 
-            if (_actualValues.ContainsKey(message.LogicalChannelId))
-                _actualValues[message.LogicalChannelId] = default(double);
+            if (actualValues.ContainsKey(message.LogicalChannelId))
+                actualValues[message.LogicalChannelId] = default(double);
 
             if (ChannelUnRegistered != null) ChannelUnRegistered(this, e);
         }
@@ -279,12 +280,13 @@ namespace Oleg_ivo.HighLevelClient
         /// <returns></returns>
         public double GetActualValue(int logicalChannelId)
         {
-            return _actualValues[logicalChannelId];
+            return actualValues[logicalChannelId];
         }
 
-        readonly SortedDictionary<int, double> _actualValues = new SortedDictionary<int, double>();
+        readonly SortedDictionary<int, double> actualValues = new SortedDictionary<int, double>();
+        readonly SortedDictionary<int, LogicalChannelState> actualStates = new SortedDictionary<int, LogicalChannelState>();
 
-        void CallbackHandler_HasReadChannel(object sender, DataEventArgs e)
+        void CallbackHandler_HasReadChannel(object sender, MessageEventArgs<InternalLogicalChannelDataMessage> e)
         {
             log.Debug("CallbackHandler_HasReadChannel");
 
@@ -292,25 +294,55 @@ namespace Oleg_ivo.HighLevelClient
             {
                 var message = e.Message;
                 double value = (double)message.Value;
-                if (_actualValues.ContainsKey(message.LogicalChannelId))
-                    _actualValues[message.LogicalChannelId] = value;
+                if (actualValues.ContainsKey(message.LogicalChannelId))
+                    actualValues[message.LogicalChannelId] = value;
                 else
-                    _actualValues.Add(message.LogicalChannelId, value);
+                    actualValues.Add(message.LogicalChannelId, value);
 
                 InvokeHasReadChannel(e);
+            }
+        }
+
+        void CallbackHandler_ChannelStateChanged(object sender, MessageEventArgs<InternalLogicalChannelStateMessage> e)
+        {
+            log.Debug("CallbackHandler_ChannelStateChanged");
+
+            if (RegisteredChannels != null)
+            {
+                var message = e.Message;
+                var value = message.State;
+                if (actualStates.ContainsKey(message.LogicalChannelId))
+                    actualStates[message.LogicalChannelId] = value;
+                else
+                    actualStates.Add(message.LogicalChannelId, value);
+
+                InvokeChannelStateChanged(e);
             }
         }
 
         /// <summary>
         /// Был прочтён канал
         /// </summary>
-        public event EventHandler<DataEventArgs> HasReadChannel;
+        public event EventHandler<MessageEventArgs<InternalLogicalChannelDataMessage>> HasReadChannel;
 
-        private void InvokeHasReadChannel(DataEventArgs e)
+        private void InvokeHasReadChannel(MessageEventArgs<InternalLogicalChannelDataMessage> e)
         {
             log.Debug("InvokeHasReadChannel");
 
-            EventHandler<DataEventArgs> handler = HasReadChannel;
+            var handler = HasReadChannel;
+            if (handler != null) handler(this, e);
+        }
+
+        /// <summary>
+        /// Был изменён статус канала
+        /// </summary>
+        public event EventHandler<MessageEventArgs<InternalLogicalChannelStateMessage>> ChannelStateChanged;
+
+        private void InvokeChannelStateChanged(MessageEventArgs<InternalLogicalChannelStateMessage> e)
+        {
+            log.Debug("InvokeChannelStateChanged");
+
+            var handler = ChannelStateChanged;
             if (handler != null) handler(this, e);
         }
 

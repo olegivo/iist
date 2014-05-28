@@ -60,5 +60,23 @@ namespace DMS.Common.MessageExchangeSystem.LowLevel
         /// <param name="result"></param>
         void EndReadChannel(InternalLogicalChannelDataMessage message, IAsyncResult result);
 
+        /// <summary>
+        /// Начало изменения состояния контролируемого канала
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        [OperationContract(AsyncPattern = true, IsInitiating = false, IsTerminating = false)]
+        IAsyncResult BeginChangeChannelState(InternalLogicalChannelStateMessage message, AsyncCallback callback, object state);
+
+
+        /// <summary>
+        /// Завершение изменения состояния из контролируемого канала
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="result"></param>
+        void EndChangeChannelState(InternalLogicalChannelStateMessage message, IAsyncResult result);
+
     }
 }

@@ -133,4 +133,11 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SendChannelStateToClient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q14:InternalLogicalChannelStateMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

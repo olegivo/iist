@@ -197,6 +197,56 @@ namespace Oleg_ivo.MES.Logging
             var ex = faultException.GetBaseException();
         }
 
+        public void ProtocolEvent(InternalMessage message)
+        {
+            //TODO:записать событие в базу
+/*
+            Action<InternalLogicalChannelStateMessage> action =
+                channelStateMessage =>
+                {
+                    /*TODO: событие об изменении состояния канала#1#
+                };
+            bool processed = ChainProcess(message, new []{action});
+            var chain = new[]
+            {
+                CreateChainItem(message, action),
+            };
+            var hasResult = chain.Select(func => func()).FirstOrDefault(b=>b);
+            if(!hasResult)
+                throw new ArgumentOutOfRangeException("message",message, "Неожиданный тип сообщения");
+*/
+        }
 
+/*
+        private bool ChainProcess(InternalMessage message, IEnumerable<Action<InternalMessage>> actions)
+        {
+            return
+                actions.Select(action => CreateChainItem(message, action))
+                .Select(func => func())
+                .FirstOrDefault(b => b);
+        }
+
+        /// <summary>
+        /// Возвращает функтор, возвращающий false, если param не соответствует ожидаемому типу.
+        /// Если параметр соответствует ожидаемому типу, функтор выполняет переданный action и возвращает true.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TExpected"></typeparam>
+        /// <param name="param"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        private Func<bool> CreateChainItem<T, TExpected>(T param, Action<TExpected> action) where TExpected : class, T
+        {
+            if (param is TExpected)
+            {
+                return () =>
+                {
+                    action(param as TExpected);
+                    return true;
+                };
+            }
+            return () => false;
+        }
+*/
     }
 }

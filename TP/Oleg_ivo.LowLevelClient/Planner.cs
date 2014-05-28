@@ -87,7 +87,7 @@ namespace Oleg_ivo.LowLevelClient
         /// <exception cref="NotImplementedException"></exception>
         public void StartPoll(LogicalChannel channel)
         {
-            MeasurementPoll measurementPoll = GetMeasurementPoll(channel);
+            var measurementPoll = GetMeasurementPoll(channel);
             if (measurementPoll == null)
                 throw new Exception("Не найден опрос для данного канала");
 

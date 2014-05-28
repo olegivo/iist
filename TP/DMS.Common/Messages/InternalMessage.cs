@@ -11,6 +11,7 @@ namespace DMS.Common.Messages
     [KnownType(typeof(ChannelRegistrationMessage))]
     [KnownType(typeof(ChannelSubscribeMessage))]
     [KnownType(typeof(InternalLogicalChannelDataMessage))]
+    [KnownType(typeof(InternalLogicalChannelStateMessage))]
     [KnownType(typeof(InternalErrorMessage))]
     public class InternalMessage : IInternalMessage
     {

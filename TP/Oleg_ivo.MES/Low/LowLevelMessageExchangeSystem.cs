@@ -51,25 +51,25 @@ namespace Oleg_ivo.MES.Low
         {
             var channel =
                 GetRegisteredLogicalChannel(
-                    RegisteredLogicalChannelExtended.GetFindChannelPredicate(e.ChannelSubscribeMessage.LogicalChannelId,
+                    RegisteredLogicalChannelExtended.GetFindChannelPredicate(e.Message.LogicalChannelId,
                                                                      DataMode.Unknown));
 
             if (channel == null)
                 throw new Exception("Невозможно отписаться от канала, который не зарегистрирован");
 
-            channel.InvokeUnSubscribed(e.ChannelSubscribeMessage);
+            channel.InvokeUnSubscribed(e.Message);
         }
 
         private void High_ChannelSubscribed(object sender, HighRegisteredLogicalChannelSubscribeEventArgs e)
         {
             var channel =
                 GetRegisteredLogicalChannel(
-                    RegisteredLogicalChannelExtended.GetFindChannelPredicate(e.ChannelSubscribeMessage.LogicalChannelId,
+                    RegisteredLogicalChannelExtended.GetFindChannelPredicate(e.Message.LogicalChannelId,
                                                                      DataMode.Unknown));
             if (channel == null)
                 throw new Exception("Невозможно подписаться на канал, который не зарегистрирован");
 
-            channel.InvokeSubscribed(e.ChannelSubscribeMessage);
+            channel.InvokeSubscribed(e.Message);
         }
 
         #endregion
@@ -181,8 +181,16 @@ namespace Oleg_ivo.MES.Low
             }
         }
 
-        private delegate void ReadChannelCaller(InternalLogicalChannelDataMessage message);
-        private delegate void ChannelRegistrationCaller(ChannelRegistrationMessage message);
+        /// <summary>
+        /// Изменение состояния контролируемого канала
+        /// </summary>
+        /// <param name="message"></param>
+        private void ChangeChannelState(InternalLogicalChannelStateMessage message)
+        {
+            log.Info("Состояние канала {0} изменилось: {1}", message.LogicalChannelId, message.State);
+            //пришли новые данные по каналу. будем передавать наверх
+            HighLevelMessageExchangeSystem.ChangeChannelState(message);
+        }
 
         /// <summary>
         /// Начало регистрации канала в системе обмена сообщениями
@@ -193,7 +201,7 @@ namespace Oleg_ivo.MES.Low
         public IAsyncResult BeginChannelRegister(ChannelRegistrationMessage message, AsyncCallback callback, object state)
         {
             log.Debug("Начало регистрации канала {0} ({1})", message.LogicalChannelId, message.DataMode.ToString());
-            var caller = new ChannelRegistrationCaller(ChannelRegister);
+            var caller = new Action<ChannelRegistrationMessage>(ChannelRegister);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
         }
@@ -217,7 +225,7 @@ namespace Oleg_ivo.MES.Low
         public IAsyncResult BeginChannelUnRegister(ChannelRegistrationMessage message, AsyncCallback callback, object state)
         {
             log.Debug("Начало отмены регистрации канала {0}", message.LogicalChannelId);
-            var caller = new ChannelRegistrationCaller(ChannelUnRegister);
+            var caller = new Action<ChannelRegistrationMessage>(ChannelUnRegister);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
         }
@@ -242,7 +250,7 @@ namespace Oleg_ivo.MES.Low
         public IAsyncResult BeginReadChannel(InternalLogicalChannelDataMessage message, AsyncCallback callback, object state)
         {
             log.Debug("Начало чтения канала {0}", message.LogicalChannelId);
-            var caller = new ReadChannelCaller(ReadChannel);
+            var caller = new Action<InternalLogicalChannelDataMessage>(ReadChannel);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
         }
@@ -253,6 +261,19 @@ namespace Oleg_ivo.MES.Low
         /// <param name="message"></param>
         /// <param name="result"></param>
         public void EndReadChannel(InternalLogicalChannelDataMessage message, IAsyncResult result)
+        {
+            log.Info("Канал был прочитан");
+        }
+
+        public IAsyncResult BeginChangeChannelState(InternalLogicalChannelStateMessage message, AsyncCallback callback, object state)
+        {
+            log.Debug("Начало чтения канала {0}", message.LogicalChannelId);
+            var caller = new Action<InternalLogicalChannelStateMessage>(ChangeChannelState);
+            IAsyncResult result = caller.BeginInvoke(message, callback, state);
+            return result;
+        }
+
+        public void EndChangeChannelState(InternalLogicalChannelStateMessage message, IAsyncResult result)
         {
             log.Info("Канал был прочитан");
         }

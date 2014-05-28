@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using DMS.Common.Events;
 using DMS.Common.MessageExchangeSystem.LowLevel;
 using DMS.Common.Messages;
 using NLog;
@@ -50,7 +51,7 @@ namespace Oleg_ivo.MES.Registered
         }
                 
 
-        private void registeredLogicalChannel_Write(object sender, InternalLogicalChannelDataMessageEventArgs e)
+        private void registeredLogicalChannel_Write(object sender, MessageEventArgs<InternalLogicalChannelDataMessage> e)
         {
             SendWriteToClient(e.Message);
         }
@@ -71,7 +72,7 @@ namespace Oleg_ivo.MES.Registered
                     }
         }
 
-        void registeredLogicalChannel_Subscribed(object sender, ChannelSubscribeMessageEventArgs e)
+        void registeredLogicalChannel_Subscribed(object sender, MessageEventArgs<ChannelSubscribeMessage> e)
         {
             //канал сообщает, что появились подписчики на канал. Уведомляем об этом клиент нижнего уровня, пусть активирует канал
             lock (Callbacks)
@@ -89,7 +90,7 @@ namespace Oleg_ivo.MES.Registered
 
         }
 
-        private void registeredLogicalChannel_UnSubscribed(object sender, ChannelSubscribeMessageEventArgs e)
+        private void registeredLogicalChannel_UnSubscribed(object sender, MessageEventArgs<ChannelSubscribeMessage> e)
         {
             //канал сообщает, что все подписчики на канал отписаны. Уведомляем об этом клиент нижнего уровня, пусть деактивирует канал
             lock (Callbacks)

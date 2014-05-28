@@ -1,4 +1,5 @@
 using System;
+using DMS.Common.Events;
 using DMS.Common.Messages;
 
 namespace TP.WPF.ViewModels
@@ -26,7 +27,7 @@ namespace TP.WPF.ViewModels
         {
             //TODO:подписать каждое View на это событие, чтобы динамически настраивать индикаторы
             if (NeedInitIndicator != null)
-                NeedInitIndicator(this, new IndicatorInitEventArgs(message));
+                NeedInitIndicator(this, new MessageEventArgs<ChannelRegistrationMessage>(message));
         }
 
         /// <summary>
@@ -63,13 +64,26 @@ namespace TP.WPF.ViewModels
         }
 
         /// <summary>
+        /// После чтения состояния канала
+        /// </summary>
+        /// <param name="message"></param>
+        public virtual void OnChannelStateChanged(InternalLogicalChannelStateMessage message)
+        {
+            var channelId = message.LogicalChannelId;
+            if(IndicatorViewModels.ContainsKey(channelId))
+            {
+                var indicatorViewModel = IndicatorViewModels[channelId];
+                indicatorViewModel.IsOn = message.State==LogicalChannelState.On;
+            }
+        }
+
+        /// <summary>
         /// После отмены регистрации канала
         /// </summary>
         /// <param name="message"></param>
         public virtual void OnChannelUnRegistered(ChannelRegistrationMessage message)
         {
-            indicatorViewModels[message.LogicalChannelId].CurrentValue = null;
-
+            IndicatorViewModels[message.LogicalChannelId].IsOn = false;
         }
 
         /// <summary>
@@ -95,7 +109,7 @@ namespace TP.WPF.ViewModels
         /// <summary>
         /// Событие необходимости инициализировать индикатор
         /// </summary>
-        public event EventHandler<IndicatorInitEventArgs> NeedInitIndicator;
+        public event EventHandler<MessageEventArgs<ChannelRegistrationMessage>> NeedInitIndicator;
 
         /// <summary>
         /// Событие необходимости послать управляющее сообщение

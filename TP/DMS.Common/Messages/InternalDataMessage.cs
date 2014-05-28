@@ -22,7 +22,7 @@ namespace DMS.Common.Messages
         public InternalDataMessage(string regNameFrom, string regNameTo, DataMode dataMode) : base(regNameFrom, regNameTo)
         {
             if (dataMode != DataMode.Read && dataMode != DataMode.Write)
-                throw new ArgumentOutOfRangeException("Режим данных может быть либо 'чтение', 'запись'", dataMode, "dataMode");
+                throw new ArgumentOutOfRangeException("dataMode", dataMode, "Режим данных может быть либо 'чтение', 'запись'");
             DataMode = dataMode;
         }
 

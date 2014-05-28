@@ -97,24 +97,36 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ChannelSubscribe">
+  <xs:element name="ChangeChannelState">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q9:ChannelSubscribeMessage" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q9:InternalLogicalChannelStateMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ChannelUnSubscribe">
+  <xs:element name="ChangeChannelStateResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChannelSubscribe">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q10:ChannelSubscribeMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ChannelUnSubscribe">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q11:ChannelSubscribeMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="SendWriteToClient">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q11:InternalLogicalChannelDataMessage" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/DMS.Common.Messages" minOccurs="0" name="message" nillable="true" type="q12:InternalLogicalChannelDataMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

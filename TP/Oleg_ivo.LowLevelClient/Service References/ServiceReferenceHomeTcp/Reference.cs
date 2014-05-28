@@ -17,10 +17,11 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageReceiver/SendMessage", ReplyAction="http://tempuri.org/IMessageReceiver/SendMessageResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalServiceMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.RegistrationMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelSubscribeMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalErrorMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.RegistrationMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalLogicalChannelStateMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalDataMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalLogicalChannelDataMessage))]
         void SendMessage(DMS.Common.Messages.InternalMessage message);
@@ -31,8 +32,8 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         void EndSendMessage(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageReceiver/SendError", ReplyAction="http://tempuri.org/IMessageReceiver/SendErrorResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.TestException), Action="http://tempuri.org/IMessageReceiver/SendErrorTestExceptionFault", Name="TestException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
         [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.RegistrationException), Action="http://tempuri.org/IMessageReceiver/SendErrorRegistrationExceptionFault", Name="RegistrationException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
+        [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.TestException), Action="http://tempuri.org/IMessageReceiver/SendErrorTestExceptionFault", Name="TestException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.SystemException))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.ArgumentException))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.ArgumentOutOfRangeException))]
@@ -91,6 +92,14 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         System.IAsyncResult BeginReadChannel(DMS.Common.Messages.InternalLogicalChannelDataMessage message, System.AsyncCallback callback, object asyncState);
         
         void EndReadChannel(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(IsInitiating=false, Action="http://tempuri.org/ILowLevelMessageExchangeSystem/ChangeChannelState", ReplyAction="http://tempuri.org/ILowLevelMessageExchangeSystem/ChangeChannelStateResponse")]
+        void ChangeChannelState(DMS.Common.Messages.InternalLogicalChannelStateMessage message);
+        
+        [System.ServiceModel.OperationContractAttribute(IsInitiating=false, AsyncPattern=true, Action="http://tempuri.org/ILowLevelMessageExchangeSystem/ChangeChannelState", ReplyAction="http://tempuri.org/ILowLevelMessageExchangeSystem/ChangeChannelStateResponse")]
+        System.IAsyncResult BeginChangeChannelState(DMS.Common.Messages.InternalLogicalChannelStateMessage message, System.AsyncCallback callback, object asyncState);
+        
+        void EndChangeChannelState(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -99,10 +108,11 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageReceiver/SendMessageToClient", ReplyAction="http://tempuri.org/IMessageReceiver/SendMessageToClientResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(DMS.Common.Exceptions.InternalException), Action="http://tempuri.org/IMessageReceiver/SendMessageToClientInternalExceptionFault", Name="InternalException", Namespace="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalServiceMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.RegistrationMessage))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelSubscribeMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalErrorMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.RegistrationMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.ChannelRegistrationMessage))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalLogicalChannelStateMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalDataMessage))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DMS.Common.Messages.InternalLogicalChannelDataMessage))]
         void SendMessageToClient(DMS.Common.Messages.InternalMessage message);
@@ -187,6 +197,12 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         
         private System.Threading.SendOrPostCallback onReadChannelCompletedDelegate;
         
+        private BeginOperationDelegate onBeginChangeChannelStateDelegate;
+        
+        private EndOperationDelegate onEndChangeChannelStateDelegate;
+        
+        private System.Threading.SendOrPostCallback onChangeChannelStateCompletedDelegate;
+        
         public LowLevelMessageExchangeSystemClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
         }
@@ -220,6 +236,8 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ChannelUnRegisterCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ReadChannelCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ChangeChannelStateCompleted;
         
         public void SendMessage(DMS.Common.Messages.InternalMessage message) {
             base.Channel.SendMessage(message);
@@ -562,6 +580,55 @@ namespace Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp {
             }
             base.InvokeAsync(this.onBeginReadChannelDelegate, new object[] {
                         message}, this.onEndReadChannelDelegate, this.onReadChannelCompletedDelegate, userState);
+        }
+        
+        public void ChangeChannelState(DMS.Common.Messages.InternalLogicalChannelStateMessage message) {
+            base.Channel.ChangeChannelState(message);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginChangeChannelState(DMS.Common.Messages.InternalLogicalChannelStateMessage message, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginChangeChannelState(message, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public void EndChangeChannelState(System.IAsyncResult result) {
+            base.Channel.EndChangeChannelState(result);
+        }
+        
+        private System.IAsyncResult OnBeginChangeChannelState(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            DMS.Common.Messages.InternalLogicalChannelStateMessage message = ((DMS.Common.Messages.InternalLogicalChannelStateMessage)(inValues[0]));
+            return this.BeginChangeChannelState(message, callback, asyncState);
+        }
+        
+        private object[] OnEndChangeChannelState(System.IAsyncResult result) {
+            this.EndChangeChannelState(result);
+            return null;
+        }
+        
+        private void OnChangeChannelStateCompleted(object state) {
+            if ((this.ChangeChannelStateCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.ChangeChannelStateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void ChangeChannelStateAsync(DMS.Common.Messages.InternalLogicalChannelStateMessage message) {
+            this.ChangeChannelStateAsync(message, null);
+        }
+        
+        public void ChangeChannelStateAsync(DMS.Common.Messages.InternalLogicalChannelStateMessage message, object userState) {
+            if ((this.onBeginChangeChannelStateDelegate == null)) {
+                this.onBeginChangeChannelStateDelegate = new BeginOperationDelegate(this.OnBeginChangeChannelState);
+            }
+            if ((this.onEndChangeChannelStateDelegate == null)) {
+                this.onEndChangeChannelStateDelegate = new EndOperationDelegate(this.OnEndChangeChannelState);
+            }
+            if ((this.onChangeChannelStateCompletedDelegate == null)) {
+                this.onChangeChannelStateCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnChangeChannelStateCompleted);
+            }
+            base.InvokeAsync(this.onBeginChangeChannelStateDelegate, new object[] {
+                        message}, this.onEndChangeChannelStateDelegate, this.onChangeChannelStateCompletedDelegate, userState);
         }
     }
 }

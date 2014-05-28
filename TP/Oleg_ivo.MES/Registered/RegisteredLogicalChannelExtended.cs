@@ -1,4 +1,5 @@
 using System;
+using DMS.Common.Events;
 using DMS.Common.MessageExchangeSystem.HighLevel;
 using DMS.Common.Messages;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
@@ -20,6 +21,8 @@ namespace Oleg_ivo.MES.Registered
             : base(id)
         {
             DataMode = dataMode;
+            State = LogicalChannelState.Off;
+            ChangeState += RegisteredLogicalChannel_ChangeState;
             Read += RegisteredLogicalChannel_Read;
             Write += RegisteredLogicalChannel_Write;
         }
@@ -27,16 +30,24 @@ namespace Oleg_ivo.MES.Registered
         [Dependency(Required = true)]
         public InternalMessageLogger InternalMessageLogger { get; set; }
 
-        void RegisteredLogicalChannel_Write(object sender, InternalLogicalChannelDataMessageEventArgs e)
+        public LogicalChannelState State { get; private set; }
+
+        void RegisteredLogicalChannel_Write(object sender, MessageEventArgs<InternalLogicalChannelDataMessage> e)
+        {
+            //протоколировать записанные в канал данные
+            InternalMessageLogger.ProtocolMessage(e.Message);
+        }
+
+        private void RegisteredLogicalChannel_Read(object sender, MessageEventArgs<InternalLogicalChannelDataMessage> e)
         {
             //протоколировать прочтённые из канала данные
             InternalMessageLogger.ProtocolMessage(e.Message);
         }
 
-        private void RegisteredLogicalChannel_Read(object sender, InternalLogicalChannelDataMessageEventArgs e)
+        private void RegisteredLogicalChannel_ChangeState(object sender, MessageEventArgs<InternalLogicalChannelStateMessage> e)
         {
-            //протоколировать прочтённые из канала данные
-            InternalMessageLogger.ProtocolMessage(e.Message);
+            //протоколировать состояние канала
+            InternalMessageLogger.ProtocolEvent(e.Message);
         }
 
         /// <summary>
@@ -53,24 +64,35 @@ namespace Oleg_ivo.MES.Registered
         }
 
         /// <summary>
+        /// Изменение статуса канала
+        /// </summary>
+        public event EventHandler<MessageEventArgs<InternalLogicalChannelStateMessage>> ChangeState;
+
+        /// <summary>
         /// Чтение канала
         /// </summary>
-        public event EventHandler<InternalLogicalChannelDataMessageEventArgs> Read;
+        public event EventHandler<MessageEventArgs<InternalLogicalChannelDataMessage>> Read;
 
         /// <summary>
         /// Запись канала
         /// </summary>
-        public event EventHandler<InternalLogicalChannelDataMessageEventArgs> Write;
+        public event EventHandler<MessageEventArgs<InternalLogicalChannelDataMessage>> Write;
 
-        private void InvokeRead(InternalLogicalChannelDataMessageEventArgs e)
+        private void InvokeChangeState(MessageEventArgs<InternalLogicalChannelStateMessage> e)
         {
-            EventHandler<InternalLogicalChannelDataMessageEventArgs> handler = Read;
+            var handler = ChangeState;
             if (handler != null) handler(this, e);
         }
 
-        private void InvokeWrite(InternalLogicalChannelDataMessageEventArgs e)
+        private void InvokeRead(MessageEventArgs<InternalLogicalChannelDataMessage> e)
         {
-            EventHandler<InternalLogicalChannelDataMessageEventArgs> handler = Write;
+            var handler = Read;
+            if (handler != null) handler(this, e);
+        }
+
+        private void InvokeWrite(MessageEventArgs<InternalLogicalChannelDataMessage> e)
+        {
+            var handler = Write;
             if (handler != null) handler(this, e);
         }
 
@@ -80,7 +102,17 @@ namespace Oleg_ivo.MES.Registered
         /// <param name="message"></param>
         public void InvokeRead(InternalLogicalChannelDataMessage message)
         {
-            InvokeRead(new InternalLogicalChannelDataMessageEventArgs(message));
+            InvokeRead(new MessageEventArgs<InternalLogicalChannelDataMessage>(message));
+        }
+
+        /// <summary>
+        /// Послать слушателям канала сообщение о новых данных
+        /// </summary>
+        /// <param name="message"></param>
+        public void InvokeChangeState(InternalLogicalChannelStateMessage message)
+        {
+            State = message.State;
+            InvokeChangeState(new MessageEventArgs<InternalLogicalChannelStateMessage>(message));
         }
 
         /// <summary>
@@ -89,15 +121,15 @@ namespace Oleg_ivo.MES.Registered
         /// <param name="message"></param>
         public void InvokeWrite(InternalLogicalChannelDataMessage message)
         {
-            InvokeWrite(new InternalLogicalChannelDataMessageEventArgs(message));
+            InvokeWrite(new MessageEventArgs<InternalLogicalChannelDataMessage>(message));
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public event EventHandler<ChannelSubscribeMessageEventArgs> Subscribed;
+        public event EventHandler<MessageEventArgs<ChannelSubscribeMessage>> Subscribed;
 
-        private int _subscribedCount;
+        private int subscribedCount;
 
         /// <summary>
         /// 
@@ -107,22 +139,22 @@ namespace Oleg_ivo.MES.Registered
         {
             //если это первая подписка, нужно сообщить слушателям (владелец канала),
             //что кто-то подписался и нужно активировать опрос канала
-            if (_subscribedCount == 0)
-                InvokeSubscribed(new ChannelSubscribeMessageEventArgs(message));
+            if (subscribedCount == 0)
+                InvokeSubscribed(new MessageEventArgs<ChannelSubscribeMessage>(message));
 
-            _subscribedCount++;
+            subscribedCount++;
         }
 
-        private void InvokeSubscribed(ChannelSubscribeMessageEventArgs e)
+        private void InvokeSubscribed(MessageEventArgs<ChannelSubscribeMessage> e)
         {
-            EventHandler<ChannelSubscribeMessageEventArgs> handler = Subscribed;
+            var handler = Subscribed;
             if (handler != null) handler(this, e);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public event EventHandler<ChannelSubscribeMessageEventArgs> UnSubscribed;
+        public event EventHandler<MessageEventArgs<ChannelSubscribeMessage>> UnSubscribed;
 
         /// <summary>
         /// 
@@ -130,22 +162,19 @@ namespace Oleg_ivo.MES.Registered
         /// <param name="message"></param>
         public void InvokeUnSubscribed(ChannelSubscribeMessage message)
         {
-            _subscribedCount--;
+            subscribedCount--;
 
             //если это была последняя отписка, нужно сообщить слушателям (владелец канала),
             //что больше подписчиков нет и нужно деактивировать опрос канала
-            if (_subscribedCount == 0)
-                InvokeUnSubscribed(new ChannelSubscribeMessageEventArgs(message));
+            if (subscribedCount == 0)
+                InvokeUnSubscribed(new MessageEventArgs<ChannelSubscribeMessage>(message));
         }
 
-        private void InvokeUnSubscribed(ChannelSubscribeMessageEventArgs e)
+        private void InvokeUnSubscribed(MessageEventArgs<ChannelSubscribeMessage> e)
         {
-            EventHandler<ChannelSubscribeMessageEventArgs> handler = UnSubscribed;
+            var handler = UnSubscribed;
             if (handler != null) handler(this, e);
         }
 
-        #region Implementation of IRegisteredChannel
-
-        #endregion
     }
 }

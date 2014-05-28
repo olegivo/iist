@@ -11,6 +11,7 @@ namespace TP.WPF.ViewModels
         private double? maxNormalValue;
         private string caption;
         private double? currentValue;
+        private bool isOn;
         private bool discreteOnState;
 
         public void Init(ChannelRegistrationMessage message)
@@ -34,7 +35,12 @@ namespace TP.WPF.ViewModels
 
         public bool IsOn
         {
-            get { return currentValue != null ? true : false; }
+            get { return isOn; }
+            set
+            {
+                isOn = value;
+                RaisePropertyChanged("IsOn");
+            }
         }
 
         public double? MinValue
@@ -95,7 +101,6 @@ namespace TP.WPF.ViewModels
                     "IsValueLowerCritycal",
                     "ShortCurrentValue",
                     "DiscreteOnState",
-                    "IsOn",
                     "CurrentState"
                 };
                 foreach (var propertyName in propertyNames)

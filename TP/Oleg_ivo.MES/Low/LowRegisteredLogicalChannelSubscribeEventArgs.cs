@@ -1,4 +1,5 @@
 ﻿using System;
+using DMS.Common.Events;
 using DMS.Common.Messages;
 using Oleg_ivo.MES.Registered;
 
@@ -7,7 +8,7 @@ namespace Oleg_ivo.MES.Low
     /// <summary>
     /// 
     /// </summary>
-    public class LowRegisteredLogicalChannelSubscribeEventArgs : EventArgs
+    public class LowRegisteredLogicalChannelSubscribeEventArgs : MessageEventArgs<ChannelRegistrationMessage>
     {
         /// <summary>
         /// 
@@ -17,17 +18,11 @@ namespace Oleg_ivo.MES.Low
         /// <summary>
         /// 
         /// </summary>
-        public ChannelRegistrationMessage ChannelRegistrationMessage { get; private set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="registeredLowLevelClient"></param>
         /// <param name="message"></param>
-        public LowRegisteredLogicalChannelSubscribeEventArgs(RegisteredLowLevelClient registeredLowLevelClient, ChannelRegistrationMessage message)
+        public LowRegisteredLogicalChannelSubscribeEventArgs(RegisteredLowLevelClient registeredLowLevelClient, ChannelRegistrationMessage message):base(message)
         {
             RegisteredLowLevelClient = registeredLowLevelClient;
-            ChannelRegistrationMessage = message;
         }
     }
 }

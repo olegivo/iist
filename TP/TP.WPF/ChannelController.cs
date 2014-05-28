@@ -273,17 +273,26 @@ namespace TP.WPF
         /// <summary>
         /// Прочитан канал
         /// </summary>
-        public event EventHandler<DataEventArgs> HasReadChannel
+        public event EventHandler<MessageEventArgs<InternalLogicalChannelDataMessage>> HasReadChannel
         {
             add { Provider.HasReadChannel += value; }
             remove { Provider.HasReadChannel -= value; }
+        }
+
+        /// <summary>
+        /// Прочитан канал
+        /// </summary>
+        public event EventHandler<MessageEventArgs<InternalLogicalChannelStateMessage>> ChannelStateChanged
+        {
+            add { Provider.ChannelStateChanged += value; }
+            remove { Provider.ChannelStateChanged -= value; }
         }
 
 
         /// <summary>
         /// Событие постановки канала на регистрацию
         /// </summary>
-        public event EventHandler<ChannelRegisterEventArgs> ChannelRegistered
+        public event EventHandler<MessageEventArgs<ChannelRegistrationMessage>> ChannelRegistered
         {
             add { Provider.ChannelRegistered += value; }
             remove { Provider.ChannelRegistered -= value; }
@@ -291,7 +300,7 @@ namespace TP.WPF
         /// <summary>
         /// Событие снятия канала с регистрации
         /// </summary>
-        public event EventHandler<ChannelRegisterEventArgs> ChannelUnRegistered
+        public event EventHandler<MessageEventArgs<ChannelRegistrationMessage>> ChannelUnRegistered
         {
             add { Provider.ChannelUnRegistered += value; }
             remove { Provider.ChannelUnRegistered -= value; }
@@ -339,7 +348,7 @@ namespace TP.WPF
         /// </summary>
         public event EventHandler NeedProtocol;
 
-        private void Provider_ChannelUnRegistered(object sender, ChannelRegisterEventArgs e)
+        private void Provider_ChannelUnRegistered(object sender, MessageEventArgs<ChannelRegistrationMessage> e)
         {
             log.Debug("Provider_ChannelUnRegistered");
 
@@ -391,7 +400,7 @@ namespace TP.WPF
             set { Provider.GetRegName = value; }
         }
 
-        private void Provider_ChannelRegistered(object sender, ChannelRegisterEventArgs e)
+        private void Provider_ChannelRegistered(object sender, MessageEventArgs<ChannelRegistrationMessage> e)
         {
             log.Debug("Provider_ChannelRegistered");
             AddRegisteredChannel(e.Message);
