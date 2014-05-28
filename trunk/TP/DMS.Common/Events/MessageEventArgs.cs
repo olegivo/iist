@@ -3,21 +3,18 @@ using DMS.Common.Messages;
 
 namespace DMS.Common.Events
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class ChannelSubscribeEventArgs : EventArgs
+    public class MessageEventArgs<TMessage> : EventArgs where TMessage : InternalMessage
     {
         /// <summary>
         /// 
         /// </summary>
-        public ChannelSubscribeMessage Message { get; private set; }
+        public TMessage Message { get; private set; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="message"></param>
-        public ChannelSubscribeEventArgs(ChannelSubscribeMessage message)
+        public MessageEventArgs(TMessage message)
         {
             Message = message;
         }

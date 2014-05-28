@@ -184,8 +184,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Registered\ChannelSubscribeMessageEventArgs.cs" />
-    <Compile Include="Registered\InternalLogicalChannelDataMessageEventArgs.cs" />
     <Compile Include="Registered\RegisteredClient.cs" />
     <Compile Include="Registered\RegisteredLogicalChannelExtended.cs" />
     <Compile Include="Low\LowRegisteredLogicalChannelSubscribeEventArgs.cs" />

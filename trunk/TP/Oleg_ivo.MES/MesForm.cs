@@ -145,12 +145,12 @@ namespace Oleg_ivo.MES
 
         private void Low_ChannelRegistered(object sender, LowRegisteredLogicalChannelSubscribeEventArgs e)
         {
-            if (e.RegisteredLowLevelClient != null && e.ChannelRegistrationMessage != null)
+            if (e.RegisteredLowLevelClient != null && e.Message != null)
             {
                 string s = String.Format("{0}\tКлиент нижнего уровня [{1}] зарегистрировал на сервере канал [{2}]{3}",
                                               DateTime.Now,
-                                              e.ChannelRegistrationMessage.RegNameFrom,
-                                              e.ChannelRegistrationMessage.LogicalChannelId,
+                                              e.Message.RegNameFrom,
+                                              e.Message.LogicalChannelId,
                                               Environment.NewLine);
                 Protocol(s);
             }
@@ -158,12 +158,12 @@ namespace Oleg_ivo.MES
 
         private void Low_ChannelUnregistered(object sender, LowRegisteredLogicalChannelSubscribeEventArgs e)
         {
-            if (e.RegisteredLowLevelClient != null && e.ChannelRegistrationMessage != null)
+            if (e.RegisteredLowLevelClient != null && e.Message != null)
             {
                 string s = String.Format("{0}\tКлиент нижнего уровня [{1}] отменил регистрацию на сервере канала [{2}]{3}",
                                               DateTime.Now,
-                                              e.ChannelRegistrationMessage.RegNameFrom,
-                                              e.ChannelRegistrationMessage.LogicalChannelId,
+                                              e.Message.RegNameFrom,
+                                              e.Message.LogicalChannelId,
                                               Environment.NewLine);
                 Protocol(s);
             }
@@ -171,12 +171,12 @@ namespace Oleg_ivo.MES
 
         private void High_ChannelSubscribed(object sender, HighRegisteredLogicalChannelSubscribeEventArgs e)
         {
-            if (e.RegisteredHighLevelClient != null && e.ChannelSubscribeMessage != null)
+            if (e.RegisteredHighLevelClient != null && e.Message != null)
             {
                 string s = String.Format("{0}\tКлиент верхнего уровня [{1}] подписался канал [{2}]{3}",
                                               DateTime.Now,
-                                              e.ChannelSubscribeMessage.RegNameFrom,
-                                              e.ChannelSubscribeMessage.LogicalChannelId,
+                                              e.Message.RegNameFrom,
+                                              e.Message.LogicalChannelId,
                                               Environment.NewLine);
                 Protocol(s);
             }
@@ -184,12 +184,12 @@ namespace Oleg_ivo.MES
 
         private void High_UnSubscribed(object sender, HighRegisteredLogicalChannelSubscribeEventArgs e)
         {
-            if (e.RegisteredHighLevelClient != null && e.ChannelSubscribeMessage != null)
+            if (e.RegisteredHighLevelClient != null && e.Message != null)
             {
                 string s = String.Format("{0}\tКлиент верхнего уровня [{1}] отписался от канала [{2}]{3}",
                                               DateTime.Now,
-                                              e.ChannelSubscribeMessage.RegNameFrom,
-                                              e.ChannelSubscribeMessage.LogicalChannelId,
+                                              e.Message.RegNameFrom,
+                                              e.Message.LogicalChannelId,
                                               Environment.NewLine);
                 Protocol(s);
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using DMS.Common.Events;
 using DMS.Common.MessageExchangeSystem.HighLevel;
 using DMS.Common.Messages;
 using NLog;
@@ -79,7 +80,7 @@ namespace Oleg_ivo.MES.Registered
         public void ChannelSubscribe(ChannelSubscribeMessage message)
         {
             //поиск ЛК, где Id - заданный:
-            Func<RegisteredLogicalChannelExtended, bool> predicate =
+            var predicate =
                 RegisteredLogicalChannelExtended.GetFindChannelPredicate(message.LogicalChannelId, DataMode.Unknown);
 
             var logicalChannel = GetRegisteredLogicalChannel(predicate);
@@ -97,6 +98,7 @@ namespace Oleg_ivo.MES.Registered
                 
                 //подписка на событие чтения канала
                 registeredLogicalChannel.Read += registeredLogicalChannel_Read;
+                registeredLogicalChannel.ChangeState += registeredLogicalChannel_ChangeState;
             }
             else
             {
@@ -133,11 +135,37 @@ namespace Oleg_ivo.MES.Registered
 
             //отписка на событие чтения канала
             registeredLogicalChannel.Read -= registeredLogicalChannel_Read;
+            registeredLogicalChannel.ChangeState -= registeredLogicalChannel_ChangeState;
         }
 
-        private void registeredLogicalChannel_Read(object sender, InternalLogicalChannelDataMessageEventArgs e)
+        private void registeredLogicalChannel_Read(object sender, MessageEventArgs<InternalLogicalChannelDataMessage> e)
         {
             SendReadToClient(e.Message);
+        }
+
+        void registeredLogicalChannel_ChangeState(object sender, MessageEventArgs<InternalLogicalChannelStateMessage> e)
+        {
+            SendChannelStateToClient(e.Message);
+        }
+
+        /// <summary>
+        /// Отправка сообщения клиенту
+        /// </summary>
+        /// <param name="message"></param>
+        public void SendChannelStateToClient(InternalLogicalChannelStateMessage message)
+        {
+            lock (Callbacks)
+                foreach (IHighLevelClientCallback callback in Callbacks)
+                    try
+                    {
+                        callback.SendChannelStateToClient(message);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.ErrorException("Ошибка при отправке новых данных клиенту: {0}",
+                                          ex);
+                        throw;
+                    }
         }
 
         /// <summary>

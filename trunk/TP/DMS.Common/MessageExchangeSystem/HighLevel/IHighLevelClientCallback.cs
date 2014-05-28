@@ -30,5 +30,12 @@ namespace DMS.Common.MessageExchangeSystem.HighLevel
         [OperationContract(IsOneWay = true, IsInitiating = false, IsTerminating = false)]
         void SendReadToClient(InternalLogicalChannelDataMessage message);
 
+        /// <summary>
+        /// Операция для чтения состояния канала от сервера клиенту (инициатор - сервер)
+        /// </summary>
+        /// <param name="message"></param>
+        [OperationContract(IsOneWay = true, IsInitiating = false, IsTerminating = false)]
+        void SendChannelStateToClient(InternalLogicalChannelStateMessage message);
+
     }
 }

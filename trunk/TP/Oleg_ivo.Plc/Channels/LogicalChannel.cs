@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Oleg_ivo.Plc.Common;
 
 namespace Oleg_ivo.Plc.Channels
@@ -16,7 +17,7 @@ namespace Oleg_ivo.Plc.Channels
         #region fields
 
         private ushort channelSize;
-        private double? previousValue;//todo:очередь
+        private object previousValue;//todo:очередь
         private string description;
         private ushort addressShift;
         private int id;
@@ -183,11 +184,11 @@ namespace Oleg_ivo.Plc.Channels
         /// </summary>
         public double? MinNormalValue
         {
-            get { return Entity != null && Entity.Parameter != null ? (double?)Entity.Parameter.MinNormalValue : maxValue; }
+            get { return Entity != null && Entity.Parameter != null ? (double?)Entity.Parameter.MinNormalValue : minNormalValue; }
             set
             {
                 if (MinNormalValue == value) return;
-                maxValue = value;
+                minNormalValue = value;
                 if (Entity != null && Entity.Parameter != null) Entity.Parameter.MinNormalValue = (decimal?)value;
             }
         }
@@ -197,11 +198,11 @@ namespace Oleg_ivo.Plc.Channels
         /// </summary>
         public double? MaxNormalValue
         {
-            get { return Entity != null && Entity.Parameter != null ? (double?)Entity.Parameter.MinNormalValue : maxValue; }
+            get { return Entity != null && Entity.Parameter != null ? (double?)Entity.Parameter.MinNormalValue : maxNormalValue; }
             set
             {
                 if (MinNormalValue == value) return;
-                maxValue = value;
+                maxNormalValue = value;
                 if (Entity != null && Entity.Parameter != null) Entity.Parameter.MinNormalValue = (decimal?)value;
             }
         }
@@ -285,6 +286,14 @@ namespace Oleg_ivo.Plc.Channels
         /// </summary>
         public bool IsEmulationMode { get; set; }
 
+        /// <summary>
+        /// Канал является состоянием другого канала (каналов)
+        /// </summary>
+        public bool IsStateChannel
+        {
+            get { return Entity != null && Entity.LogicalChannelStateHolders.Any(); }
+        }
+
         #endregion
 
         #region constructors
@@ -349,7 +358,7 @@ namespace Oleg_ivo.Plc.Channels
         ///</summary>
         ///<exception cref="ArgumentOutOfRangeException"></exception>
         ///<returns></returns>
-        public double GetValue()
+        public object GetValue()
         {
             if (IsEmulationMode)
                 return GetValueEmulation();
@@ -393,9 +402,9 @@ namespace Oleg_ivo.Plc.Channels
         /// </summary>
         /// <returns>Если новое значение мало отличается от предыдущего, возвращается <see langword="null"/>. 
         /// Иначе новое значение перезаписывает предыдущее</returns>
-        public double? GetNewValue()
+        public object GetNewValue()
         {
-            double? value = GetValue();
+            object value = GetValue();
 
             if (previousValue == null || IsNewData(previousValue, value))
                 previousValue = value;
@@ -411,10 +420,9 @@ namespace Oleg_ivo.Plc.Channels
         /// <param name="value"></param>
         private void CheckValueRange(double value)
         {
-            double limitValue;
             string message = "";
 
-            limitValue = MinValue ?? value;
+            double limitValue = MinValue ?? value;
             if (value < limitValue)
                 message += string.Format("минимальное разрешённое значение ({0})", limitValue);
 
@@ -440,25 +448,40 @@ namespace Oleg_ivo.Plc.Channels
         /// затем производится проверка полученного значения по диапазону изменения величины.
         /// </summary>
         /// <returns></returns>
-        private double GetValueEmulation()
+        private object GetValueEmulation()
         {
             if (GetValueEmulationAltDelegate != null)
                 return GetValueEmulationAltDelegate();
 
-            int second = DateTime.Now.Second;
-            double value = Math.Sin(second * 6 * (Math.PI / 180));//синус [-1;+1]
-            value = ((value + 1) / 2);//сдвиг - синус [0;+1]
-            if (MinValue != null && MaxValue != null)
-                value = (double)(MinValue + (MaxValue - MinValue) * value);//масштабирование до диапазона
+            if (IsAnalog)
+            {
+                int second = DateTime.Now.Second;
+                double value = Math.Sin(second*6*(Math.PI/180));
+                value = ((value + 1)/2); //сдвиг - синус [0;+1]
+                if (MinValue != null && MaxValue != null)
+                    value = (double) (MinValue + (MaxValue - MinValue)*value); //масштабирование до диапазона
 
-            //NOTE: при эмуляции полином прямого преобразования можно и не использовать, тогда нужно закомментить следующие строки
-            if (DirectTransform != null)
-                value = DirectTransform.GetValue(value);
+                //NOTE: при эмуляции полином прямого преобразования можно и не использовать, тогда нужно закомментить следующие строки
+                //if (DirectTransform != null)
+                //    value = DirectTransform.GetValue(value);
 
-            CheckValueRange(value);
+                CheckValueRange(value);
 
-            return value;
+                return value;
+            }
+
+            var b = (bool?) previousValue;
+            return !(b.HasValue && b.Value);
         }
+
+        private bool IsAnalog
+        {
+            get { 
+                return PhysicalChannel.IOModule.IsAnalog 
+                && !Entity.LogicalChannelStateHolders.Any()/*состояние канала на данный момент может быть только дискретным*/; 
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -499,25 +522,32 @@ namespace Oleg_ivo.Plc.Channels
         /// <param name="oldValue"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public bool IsNewData(double? oldValue, double? value)
+        public bool IsNewData(object oldValue, object value)
         {
             bool result = true;
             if (DeltaChangeLimit > 0 && oldValue != null && value != null)
             {
-                //если хотя бы одна из границ диапазона не задана, принимаем, что DeltaChangeLimit - абсолютное изменение, иначе - относительное (в % от размера диапазона)
-                double delta;
-                if (MinValue != null && MaxValue != null)
+                if (IsAnalog)
                 {
-                    //относительное различие
-                    delta = DeltaChangeLimit * 100 / Math.Abs((double)(MaxValue - MinValue));
+                    //если хотя бы одна из границ диапазона не задана, принимаем, что DeltaChangeLimit - абсолютное изменение, иначе - относительное (в % от размера диапазона)
+                    double delta; //TODO:кеширование рассчётного значения
+                    if (MinValue != null && MaxValue != null)
+                    {
+                        //относительное различие
+                        delta = DeltaChangeLimit*100/Math.Abs((double) (MaxValue - MinValue));
+                    }
+                    else
+                    {
+                        //абсолютное различие
+                        delta = DeltaChangeLimit;
+                    }
+
+                    result = Math.Abs((double) oldValue - (double) value) >= delta;
                 }
                 else
                 {
-                    //абсолютное различие
-                    delta = DeltaChangeLimit;
+                    result = (bool)oldValue != (bool)value;
                 }
-
-                result = (oldValue == null || Math.Abs((double)(oldValue - value)) >= delta);
             }
 
             return result;

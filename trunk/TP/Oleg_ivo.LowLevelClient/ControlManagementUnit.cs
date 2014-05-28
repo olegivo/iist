@@ -48,13 +48,13 @@ namespace Oleg_ivo.LowLevelClient
         /// <summary>
         /// Записан канал
         /// </summary>
-        public event EventHandler<DataEventArgs> HasWriteChannel
+        public event EventHandler<MessageEventArgs<InternalLogicalChannelDataMessage>> HasWriteChannel
         {
             add { CallbackHandler.HasWriteChannel += value; }
             remove { CallbackHandler.HasWriteChannel -= value; }
         }
 
-        void CallbackHandler_HasWriteChannel(object sender, DataEventArgs e)
+        void CallbackHandler_HasWriteChannel(object sender, MessageEventArgs<InternalLogicalChannelDataMessage> e)
         {
             string s = string.Format("Канал №{0} клиент - {1} [{2}] получено значение {3}",
                                      e.Message.LogicalChannelId,
@@ -121,17 +121,33 @@ namespace Oleg_ivo.LowLevelClient
 
         void Instance_NewDadaReceived(object sender, NewDataReceivedEventArgs e)
         {
-            InternalLogicalChannelDataMessage message = new InternalLogicalChannelDataMessage(RegName, null, DataMode.Read,
-                                                                                              e.LogicalChannel.Id)
-                                                            {
-                                                                Value = e.Value
-                                                            };
-
-            //заставляем систему обмена сообщениями реагировать на новые данные:
-            ReadChannel(message);
+            if (e.LogicalChannel.IsStateChannel)
+            {
+                //сообщение об изменении состояния канала (каналов)
+                var value = (bool?)e.Value;
+                var state = value.HasValue && value.Value ? LogicalChannelState.On : LogicalChannelState.Off;
+                foreach (var logicalChannel in e.LogicalChannel.Entity.LogicalChannelStateHolders)
+                {
+                    ChangeChannelState(new InternalLogicalChannelStateMessage(RegName, null, logicalChannel.Id, state));
+                }
+            }
+            else
+            {
+                //заставляем систему обмена сообщениями реагировать на новые данные:
+                var message = new InternalLogicalChannelDataMessage(RegName, null, DataMode.Read, e.LogicalChannel.Id)
+                {
+                    Value = e.Value
+                };
+                ReadChannel(message);
+            }
             //                var s = string.Format("{0} сообщает о новых данных [{1}]", measurementPoll.LogicalChannel, e.SignalTime);
             //                Protocol(s);
             //System.Windows.Forms.MessageBox.Show();
+        }
+
+        private void ChangeChannelState(InternalLogicalChannelStateMessage internalLogicalChannelStateMessage)
+        {
+            LowLevelMessageExchangeSystemClient.ChangeChannelStateAsync(internalLogicalChannelStateMessage);
         }
 
         public LowLevelMessageExchangeSystemClient LowLevelMessageExchangeSystemClient
@@ -242,16 +258,23 @@ namespace Oleg_ivo.LowLevelClient
         private CallbackHandler callbackHandler;
         private readonly Timer reconnectTimer;
 
-        void CallbackHandler_ChannelSubscribed(object sender, ChannelSubscribeEventArgs e)
+        void CallbackHandler_ChannelSubscribed(object sender, MessageEventArgs<ChannelSubscribeMessage> e)
         {
-            LogicalChannel channel =
-                GetLogicalChannels().AsEnumerable().FirstOrDefault(
-                    LogicalChannel.GetFindChannelPredicate(e.Message.LogicalChannelId));
+            var channel =
+                GetLogicalChannels().FirstOrDefault(LogicalChannel.GetFindChannelPredicate(e.Message.LogicalChannelId));
 
             if (channel == null)
             {
                 Log.Warn("Не удалось найти канал {0} для осуществления подписки. Канал подписан, но с ним ничего не будет происходить");
                 return;
+            }
+
+            var stateLogicalChannelId = channel.Entity.StateLogicalChannelId;
+            if (stateLogicalChannelId.HasValue)
+            {
+                var stateChannel = GetLogicalChannels().FirstOrDefault(LogicalChannel.GetFindChannelPredicate(stateLogicalChannelId.Value));
+                if(stateChannel!=null)
+                    Planner.StartPoll(stateChannel);
             }
 
             if (channel.IsInput)
@@ -271,16 +294,23 @@ namespace Oleg_ivo.LowLevelClient
             }
         }
 
-        void CallbackHandler_ChannelUnSubscribed(object sender, ChannelSubscribeEventArgs e)
+        void CallbackHandler_ChannelUnSubscribed(object sender, MessageEventArgs<ChannelSubscribeMessage> e)
         {
-            LogicalChannel channel =
-                GetLogicalChannels().AsEnumerable().FirstOrDefault(
-                    LogicalChannel.GetFindChannelPredicate(e.Message.LogicalChannelId));
+            var channel =
+                GetLogicalChannels().FirstOrDefault(LogicalChannel.GetFindChannelPredicate(e.Message.LogicalChannelId));
 
             if (channel == null)
             {
                 Log.Warn("Не удалось найти канал {0} для осуществления отписки. Тем не менее, канал отписан.");
                 return;
+            }
+
+            var stateLogicalChannelId = channel.Entity.StateLogicalChannelId;
+            if (stateLogicalChannelId.HasValue)
+            {
+                var stateChannel = GetLogicalChannels().FirstOrDefault(LogicalChannel.GetFindChannelPredicate(stateLogicalChannelId.Value));
+                if (stateChannel != null)
+                    Planner.StopPoll(stateChannel);
             }
 
             if (channel.IsInput)
@@ -392,12 +422,12 @@ namespace Oleg_ivo.LowLevelClient
         /// Получить доступные логические каналы
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<LogicalChannel> GetAvailableLogicalChannels()
+        public IEnumerable<LogicalChannel> GetAvailableLogicalChannels(bool withStateChannels = false)
         {
             //добавляем только проидентифицированные каналы (Id > 0):
             return
                 GetLogicalChannels()
-                    .Where(channel => channel.Id > 0);
+                    .Where(channel => channel.Id > 0 && (!channel.IsStateChannel || withStateChannels));
         }
 
 
@@ -414,7 +444,6 @@ namespace Oleg_ivo.LowLevelClient
 
             var channel =
                 GetLogicalChannels()
-                    .AsEnumerable()
                     .FirstOrDefault(LogicalChannel.GetFindChannelPredicate(logicalChannel.Id));
 
             if (channel == null)

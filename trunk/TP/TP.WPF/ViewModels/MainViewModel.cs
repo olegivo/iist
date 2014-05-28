@@ -99,6 +99,7 @@ namespace TP.WPF.ViewModels
             {
                 var viewModel = viewModelBase;
                 channelController.HasReadChannel += (sender, e) => viewModel.OnReadChannel(ConvertMessageToLocalChannel(e.Message));
+                channelController.ChannelStateChanged += (sender, e) => viewModel.OnChannelStateChanged(e.Message);
                 channelController.ChannelRegistered += (sender, e) => viewModel.OnChannelRegistered(e.Message);
                 channelController.ChannelUnRegistered += (sender, e) => viewModel.OnChannelUnRegistered(e.Message);
                 channelController.ChannelSubscribed += (sender, e) => viewModel.OnChannelIsActiveChanged(Convert.ToInt32(e.UserState), true);
@@ -125,6 +126,23 @@ namespace TP.WPF.ViewModels
             {
                 Value = originalMessage.Value
             };
+            return newMessage;
+        }
+
+        /// <summary>
+        /// Создать сообщение, содержащее локальный Id канала на основе реального LogicalChannelId
+        /// </summary>
+        /// <param name="originalMessage"></param>
+        /// <returns></returns>
+        private InternalLogicalChannelStateMessage ConvertMessageToLocalChannel(
+            InternalLogicalChannelStateMessage originalMessage)
+        {
+            //TODO:если кроме LogicalChannelId и Value ничего не используется, вместо генерации нового сообщения можно передавать только эти 2 параметра
+            var newMessage = new InternalLogicalChannelStateMessage
+                (originalMessage.RegNameFrom,
+                originalMessage.RegNameTo,
+                channelController.GetLocalChannelId(originalMessage.LogicalChannelId), 
+                originalMessage.State);
             return newMessage;
         }
 

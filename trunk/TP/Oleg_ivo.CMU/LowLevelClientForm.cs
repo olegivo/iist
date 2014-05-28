@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 using DMS.Common.Messages;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
@@ -152,10 +153,33 @@ namespace Oleg_ivo.CMU
 
         private void doubleListBoxControl1_ItemMoving(object sender, MovingEventArgs e)
         {
+            var channel = e.MovingObject as LogicalChannel;
+            if (channel == null) return;
+            MovingEventArgs args = null;
+            if (channel.Entity.StateLogicalChannelId.HasValue)
+            {
+                var stateChannel = ControlManagementUnit.GetAvailableLogicalChannels(true)
+                    .FirstOrDefault(LogicalChannel.GetFindChannelPredicate(channel.Entity.StateLogicalChannelId.Value));
+                args = new MovingEventArgs(e.MoveDirection, stateChannel);
+            }
             if (e.MoveDirection == DoubleListBoxControl.Direction.LeftToRight)
+            {
                 TryAddPoll(e);
+                if (!e.Cancel && args!=null)
+                {
+                    TryAddPoll(args);
+                    Protocol(string.Format("Добавление расписания для состояния канала [{0}]:\n{1}удачно", channel, e.Cancel ? "не" : ""));
+                }
+            }
             else
+            {
                 TryRemovePoll(e);
+                if (!e.Cancel && args != null)
+                {
+                    TryRemovePoll(args);
+                    Protocol(string.Format("Удаление расписания для состояния канала [{0}]:\n{1}удачно", channel, e.Cancel ? "не" : ""));
+                }
+            }
         }
 
         private void TryAddPoll(MovingEventArgs e)
@@ -192,16 +216,17 @@ namespace Oleg_ivo.CMU
                     };
 
 
-                //регистрация каналов в MES
-                switch (registrationMessage.RegistrationMode)
-                {
-                    case RegistrationMode.Register:
-                        RegisterChannel(registrationMessage);
-                        break;
-                    case RegistrationMode.Unregister:
-                        UnRegisterChannel(registrationMessage);
-                        break;
-                }
+                //регистрация каналов в MES, если это не канал состояния
+                if(!channel.IsStateChannel)
+                    switch (registrationMessage.RegistrationMode)
+                    {
+                        case RegistrationMode.Register:
+                            RegisterChannel(registrationMessage);
+                            break;
+                        case RegistrationMode.Unregister:
+                            UnRegisterChannel(registrationMessage);
+                            break;
+                    }
             }
 
             doubleListBoxControl1.Refresh();

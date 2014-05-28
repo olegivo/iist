@@ -46,13 +46,13 @@ namespace Oleg_ivo.MES.High
         private void Low_ChannelRegistered(object sender, LowRegisteredLogicalChannelSubscribeEventArgs e)
         {
             foreach (RegisteredHighLevelClient registeredHighLevelClient in InterestedRegisteredClients.Where(client => client.Interested))
-                registeredHighLevelClient.ChannelRegister(e.ChannelRegistrationMessage);
+                registeredHighLevelClient.ChannelRegister(e.Message);
         }
 
         private void Low_ChannelUnregistered(object sender, LowRegisteredLogicalChannelSubscribeEventArgs e)
         {
             foreach (RegisteredHighLevelClient registeredHighLevelClient in InterestedRegisteredClients.Where(client => client.Interested))
-                registeredHighLevelClient.ChannelUnRegister(e.ChannelRegistrationMessage);
+                registeredHighLevelClient.ChannelUnRegister(e.Message);
         }
 
         #region Вспомогательные классы и свойства для регистрации
@@ -220,11 +220,26 @@ namespace Oleg_ivo.MES.High
             if (message.Mode != SubscribeMode.Subscribe)
                 throw new ArgumentException("Для подписки на канал в сообщении используется флаг отписки");
 
-            RegisteredHighLevelClient registeredHighLevelClient = GetRegisteredHighLevelClient(message);
+            var registeredHighLevelClient = GetRegisteredHighLevelClient(message);
             if (registeredHighLevelClient != null)
                 registeredHighLevelClient.ChannelSubscribe(message);
 
             InvokeChannelSubscribed(new HighRegisteredLogicalChannelSubscribeEventArgs(registeredHighLevelClient, message));
+            if (registeredHighLevelClient != null)
+            {
+                // клиент может не понять, в каком сейчас состоянии канал, 
+                // поэтому сразу уведомляем его о текущем состоянии канала
+                var predicate =
+                    RegisteredLogicalChannelExtended.GetFindChannelPredicate(
+                        message.LogicalChannelId,
+                        DataMode.Unknown);
+                var registeredChannel = GetRegisteredChannel(predicate);//если канал 
+                var channelStateMessage = new InternalLogicalChannelStateMessage(message.RegNameFrom,
+                    message.RegNameTo,
+                    message.LogicalChannelId,
+                    registeredChannel.State);
+                registeredHighLevelClient.SendChannelStateToClient(channelStateMessage);
+            }
         }
 
         /// <summary>
@@ -513,6 +528,30 @@ namespace Oleg_ivo.MES.High
                     "Клиент [{0}] извещает о чтении новых данных из канала [{1}]. Но на него никто не подписан",
                     message.RegNameFrom,
                     message.LogicalChannelId);
+            }
+        }
+
+        /// <summary>
+        /// Прочитать канал
+        /// </summary>
+        /// <param name="message"></param>
+        public void ChangeChannelState(InternalLogicalChannelStateMessage message)
+        {
+            var subscribedChannel =
+                FindSubscribedChannel(RegisteredLogicalChannelExtended.GetFindChannelPredicate(message.LogicalChannelId,
+                                                                                       DataMode.Read));
+
+            if (subscribedChannel != null)
+            {
+                subscribedChannel.InvokeChangeState(message);
+            }
+            else
+            {
+                log.Warn(
+                    "Клиент [{0}] извещает об изменении статуса канала [{1}] ([{2}]). Но на него никто не подписан",
+                    message.RegNameFrom,
+                    message.LogicalChannelId,
+                    message.State);
             }
         }
 

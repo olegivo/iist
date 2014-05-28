@@ -53,7 +53,7 @@ namespace Oleg_ivo.LowLevelClient
 
         private void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            double? newValue;
+            object newValue;
 
             try
             {
