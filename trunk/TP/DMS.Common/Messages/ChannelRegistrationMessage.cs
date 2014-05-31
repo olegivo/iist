@@ -69,5 +69,22 @@ namespace DMS.Common.Messages
         [DataMember]
         public string Description { get; set; }
 
+        public override object Clone()
+        {
+            return new ChannelRegistrationMessage
+                (RegNameFrom,
+                 RegNameTo,
+                 RegistrationMode,
+                 DataMode,
+                 LogicalChannelId)
+            {
+                LogicalChannelId = LogicalChannelId,
+                MinValue = MinValue,
+                MaxValue = MaxValue,
+                MinNormalValue = MinNormalValue,
+                MaxNormalValue = MaxNormalValue,
+                Description = Description
+            };
+        }
     }
 }

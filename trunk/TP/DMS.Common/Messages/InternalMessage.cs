@@ -13,7 +13,7 @@ namespace DMS.Common.Messages
     [KnownType(typeof(InternalLogicalChannelDataMessage))]
     [KnownType(typeof(InternalLogicalChannelStateMessage))]
     [KnownType(typeof(InternalErrorMessage))]
-    public class InternalMessage : IInternalMessage
+    public class InternalMessage : IInternalMessage, ICloneable
     {
         #region constructors
 
@@ -58,5 +58,9 @@ namespace DMS.Common.Messages
 
         #endregion
 
+        public virtual object Clone()
+        {
+            return new InternalMessage(RegNameFrom, RegNameTo) {TimeStamp = TimeStamp};
+        }
     }
 }

@@ -34,5 +34,14 @@ namespace DMS.Common.Messages
         /// </summary>
         [DataMember]
         public LogicalChannelState State { get; set; }
+
+        public override object Clone()
+        {
+            return new InternalLogicalChannelStateMessage
+                (RegNameFrom,
+                 RegNameTo,
+                 LogicalChannelId,
+                 State);
+        }
     }
 }

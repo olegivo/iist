@@ -28,5 +28,17 @@ namespace DMS.Common.Messages
         /// Идентификатор логического канала
         /// </summary>
         public int LogicalChannelId { get; set; }
+
+        public override object Clone()
+        {
+            return new InternalLogicalChannelDataMessage
+                            (RegNameFrom,
+                             RegNameTo,
+                             DataMode,
+                             LogicalChannelId)
+            {
+                Value = Value
+            };
+        }
     }
 }
