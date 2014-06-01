@@ -28,6 +28,13 @@
 						</DoubleAnimationUsingKeyFrames>
 					</Storyboard>
 				</VisualState>
+				<VisualState x:Name="OffState">
+					<Storyboard>
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="path">
+							<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+						</DoubleAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
 				<VisualState x:Name="WorkingState">
 					<Storyboard RepeatBehavior="Forever">
 						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Offset)" Storyboard.TargetName="path">
