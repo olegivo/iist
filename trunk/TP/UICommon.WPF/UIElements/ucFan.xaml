@@ -14,6 +14,7 @@
 		<VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="States">
                 <VisualState x:Name="NoSignal"/>
+                <VisualState x:Name="OffState"/>
                 <VisualState x:Name="WorkingState"/>
 				<VisualState x:Name="AlarmState">
 						<Storyboard RepeatBehavior="Forever">
