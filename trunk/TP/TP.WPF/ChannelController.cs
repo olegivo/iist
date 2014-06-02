@@ -5,6 +5,7 @@ using System.Threading;
 using DMS.Common.Events;
 using DMS.Common.Messages;
 using NLog;
+using Oleg_ivo.Base.Extensions;
 using Oleg_ivo.HighLevelClient;
 using TP.WPF.Properties;
 using System.Linq;
@@ -233,7 +234,7 @@ namespace TP.WPF
             log.Debug("WriteChannel");
 
             var realLogicalChannelId = GetRealLogicalChannelId(localChannelId);
-            Provider.WriteChannel(new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Write, realLogicalChannelId)
+            Provider.WriteChannel(new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Write, realLogicalChannelId, value.IsBool())
             {
                 Value = value
             });

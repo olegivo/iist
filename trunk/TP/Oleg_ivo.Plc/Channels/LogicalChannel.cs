@@ -264,7 +264,7 @@ namespace Oleg_ivo.Plc.Channels
             {
                 if (PollPeriod == value) return;
                 pollPeriod = value;
-                if (Entity != null && Entity.Parameter != null && value.HasValue) 
+                if (Entity != null && Entity.Parameter != null && value.HasValue)
                     Entity.Parameter.PollPeriod = (decimal?)value.Value.TotalMilliseconds;
             }
         }
@@ -369,16 +369,23 @@ namespace Oleg_ivo.Plc.Channels
             object obj = PhysicalChannel.GetValue(AddressShift, ChannelSize);
             if (obj is Array)
             {
-                Array ar = (Array)obj;
-                if (PhysicalChannel.IOModule.IsDiscrete && ChannelSize == ar.Length)
+                var ar = (Array)obj;
+                if (IsDiscrete && ChannelSize == ar.Length)
                 {
-                    Int64 result = 0;
-                    for (int i = 0; i < ChannelSize; i++)
+                    if (ChannelSize == 1)
                     {
-                        var b = (bool)ar.GetValue(i);
-                        if (b) result += Convert.ToInt64(Math.Pow(2, i));
+                        obj = (bool)ar.GetValue(0);
                     }
-                    obj = result;
+                    else
+                    {
+                        Int64 result = 0;
+                        for (int i = 0; i < ChannelSize; i++)
+                        {
+                            var b = (bool)ar.GetValue(i);
+                            if (b) result += Convert.ToInt64(Math.Pow(2, i));
+                        }
+                        obj = result;
+                    }
                 }
                 else
                 {
@@ -388,13 +395,20 @@ namespace Oleg_ivo.Plc.Channels
                 }
             }
 
+            if (obj is bool)
+                return obj;
+
             double value = Convert.ToDouble(obj);
             if (DirectTransform != null)
                 value = DirectTransform.GetValue(value);
 
             CheckValueRange(value);
-
             return value;
+        }
+
+        public bool IsDiscrete
+        {
+            get { return PhysicalChannel.IOModule.IsDiscrete; }
         }
 
         /// <summary>
@@ -453,33 +467,25 @@ namespace Oleg_ivo.Plc.Channels
             if (GetValueEmulationAltDelegate != null)
                 return GetValueEmulationAltDelegate();
 
-            if (IsAnalog)
+            if (IsDiscrete)
             {
-                int second = DateTime.Now.Second;
-                double value = Math.Sin(second*6*(Math.PI/180));
-                value = ((value + 1)/2); //сдвиг - синус [0;+1]
-                if (MinValue != null && MaxValue != null)
-                    value = (double) (MinValue + (MaxValue - MinValue)*value); //масштабирование до диапазона
-
-                //NOTE: при эмуляции полином прямого преобразования можно и не использовать, тогда нужно закомментить следующие строки
-                //if (DirectTransform != null)
-                //    value = DirectTransform.GetValue(value);
-
-                CheckValueRange(value);
-
-                return value;
+                var b = (bool?) previousValue;
+                return !(b.HasValue && b.Value);
             }
 
-            var b = (bool?) previousValue;
-            return !(b.HasValue && b.Value);
-        }
+            int second = DateTime.Now.Second;
+            double value = Math.Sin(second * 6 * (Math.PI / 180));
+            value = ((value + 1) / 2); //сдвиг - синус [0;+1]
+            if (MinValue != null && MaxValue != null)
+                value = (double)(MinValue + (MaxValue - MinValue) * value); //масштабирование до диапазона
 
-        private bool IsAnalog
-        {
-            get { 
-                return PhysicalChannel.IOModule.IsAnalog 
-                && !Entity.LogicalChannelStateHolders.Any()/*состояние канала на данный момент может быть только дискретным*/; 
-            }
+            //NOTE: при эмуляции полином прямого преобразования можно и не использовать, тогда нужно закомментить следующие строки
+            //if (DirectTransform != null)
+            //    value = DirectTransform.GetValue(value);
+
+            CheckValueRange(value);
+
+            return value;
         }
 
         #endregion
@@ -527,14 +533,14 @@ namespace Oleg_ivo.Plc.Channels
             bool result = true;
             if (DeltaChangeLimit > 0 && oldValue != null && value != null)
             {
-                if (IsAnalog)
+                if (!IsDiscrete)
                 {
                     //если хотя бы одна из границ диапазона не задана, принимаем, что DeltaChangeLimit - абсолютное изменение, иначе - относительное (в % от размера диапазона)
                     double delta; //TODO:кеширование рассчётного значения
                     if (MinValue != null && MaxValue != null)
                     {
                         //относительное различие
-                        delta = DeltaChangeLimit*100/Math.Abs((double) (MaxValue - MinValue));
+                        delta = DeltaChangeLimit * 100 / Math.Abs((double)(MaxValue - MinValue));
                     }
                     else
                     {
@@ -542,7 +548,7 @@ namespace Oleg_ivo.Plc.Channels
                         delta = DeltaChangeLimit;
                     }
 
-                    result = Math.Abs((double) oldValue - (double) value) >= delta;
+                    result = Math.Abs((double)oldValue - (double)value) >= delta;
                 }
                 else
                 {

@@ -54,11 +54,11 @@
   <wsdl:message name="ILowLevelMessageExchangeSystem_SendError_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendErrorResponse" />
   </wsdl:message>
-  <wsdl:message name="ILowLevelMessageExchangeSystem_SendError_RegistrationExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" name="detail" element="q1:RegistrationException" />
-  </wsdl:message>
   <wsdl:message name="ILowLevelMessageExchangeSystem_SendError_TestExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" name="detail" element="q2:TestException" />
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" name="detail" element="q1:TestException" />
+  </wsdl:message>
+  <wsdl:message name="ILowLevelMessageExchangeSystem_SendError_RegistrationExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/DMS.Common.Exceptions" name="detail" element="q2:RegistrationException" />
   </wsdl:message>
   <wsdl:message name="ILowLevelMessageExchangeSystem_SendMessageToClient_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendMessageToClient" />
@@ -128,8 +128,8 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SendError">
       <wsdl:input wsaw:Action="http://tempuri.org/IMessageReceiver/SendError" message="tns:ILowLevelMessageExchangeSystem_SendError_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMessageReceiver/SendErrorResponse" message="tns:ILowLevelMessageExchangeSystem_SendError_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IMessageReceiver/SendErrorRegistrationExceptionFault" name="RegistrationExceptionFault" message="tns:ILowLevelMessageExchangeSystem_SendError_RegistrationExceptionFault_FaultMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IMessageReceiver/SendErrorTestExceptionFault" name="TestExceptionFault" message="tns:ILowLevelMessageExchangeSystem_SendError_TestExceptionFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMessageReceiver/SendErrorRegistrationExceptionFault" name="RegistrationExceptionFault" message="tns:ILowLevelMessageExchangeSystem_SendError_RegistrationExceptionFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SendMessageToClient">
       <wsdl:output wsaw:Action="http://tempuri.org/IMessageReceiver/SendMessageToClient" message="tns:ILowLevelMessageExchangeSystem_SendMessageToClient_OutputCallbackMessage" />
@@ -193,11 +193,11 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="RegistrationExceptionFault">
-        <soap12:fault use="literal" name="RegistrationExceptionFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="TestExceptionFault">
         <soap12:fault use="literal" name="TestExceptionFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="RegistrationExceptionFault">
+        <soap12:fault use="literal" name="RegistrationExceptionFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="SendMessageToClient">

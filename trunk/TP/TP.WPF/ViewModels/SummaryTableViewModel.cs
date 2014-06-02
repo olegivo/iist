@@ -59,7 +59,7 @@ namespace TP.WPF.ViewModels
         }
 
 
-        private void ActualizeChannelValue(int channelId, double chanelValue)
+        private void ActualizeChannelValue(int channelId, object chanelValue)
         {
             var row = SummaryTable.FindById(channelId);
             if (row != null)
@@ -91,7 +91,9 @@ namespace TP.WPF.ViewModels
         public override void OnReadChannel(InternalLogicalChannelDataMessage message)
         {
             base.OnReadChannel(message);
-            ActualizeChannelValue(message.LogicalChannelId, Math.Round((double)message.Value,2)); //согласно требованию представления данных в ИИС
+            object chanelValue;
+            chanelValue = message.Value is double ? Math.Round((double) message.Value, 2) : message.Value;
+            ActualizeChannelValue(message.LogicalChannelId, chanelValue); //согласно требованию представления данных в ИИС
         }
 
         /// <summary>

@@ -73,8 +73,8 @@ namespace TP.WPF.ViewModels
             });
 
             var indicatorViewModel = IndicatorViewModels[channelId];
-            if (!indicatorViewModel.CurrentValue.HasValue) indicatorViewModel.CurrentValue = 0;
-            indicatorViewModel.CurrentValue += (indicatorViewModel.CurrentValue > 50 ? -70 : 5);
+            if (!indicatorViewModel.CurrentValueDouble.HasValue) indicatorViewModel.CurrentValue = 0;
+            indicatorViewModel.CurrentValueDouble += (indicatorViewModel.CurrentValueDouble > 50 ? -70 : 5);
         }
 
         /// <summary>
@@ -99,14 +99,22 @@ namespace TP.WPF.ViewModels
             {
                 var viewModel = viewModelBase;
                 channelController.HasReadChannel += (sender, e) => viewModel.OnReadChannel(ConvertMessageToLocalChannel(e.Message));
-                channelController.ChannelStateChanged += (sender, e) => viewModel.OnChannelStateChanged(e.Message);
-                channelController.ChannelRegistered += (sender, e) => viewModel.OnChannelRegistered(e.Message);
-                channelController.ChannelUnRegistered += (sender, e) => viewModel.OnChannelUnRegistered(e.Message);
-                channelController.ChannelSubscribed += (sender, e) => viewModel.OnChannelIsActiveChanged(Convert.ToInt32(e.UserState), true);
-                channelController.ChannelUnSubscribed += (sender, e) => viewModel.OnChannelIsActiveChanged(Convert.ToInt32(e.UserState), false);
+                channelController.ChannelStateChanged += (sender, e) => viewModel.OnChannelStateChanged(ConvertMessageToLocalChannel(e.Message));
+                channelController.ChannelRegistered += (sender, e) => viewModel.OnChannelRegistered(ConvertMessageToLocalChannel(e.Message));
+                channelController.ChannelUnRegistered += (sender, e) => viewModel.OnChannelUnRegistered(ConvertMessageToLocalChannel(e.Message));
+                channelController.ChannelSubscribed += (sender, e) => viewModel.OnChannelIsActiveChanged(channelController.GetLocalChannelId(Convert.ToInt32(e.UserState)), true);
+                channelController.ChannelUnSubscribed += (sender, e) => viewModel.OnChannelIsActiveChanged(channelController.GetLocalChannelId(Convert.ToInt32(e.UserState)), false);
                 channelController.UnregisterCompleted += (sender, e) => viewModel.OnUnregistered();
                 viewModel.IndicatorViewModels = models;
             }
+        }
+
+        private ChannelRegistrationMessage ConvertMessageToLocalChannel(ChannelRegistrationMessage originalMessage)
+        {
+            //TODO:если кроме LogicalChannelId и Value ничего не используется, вместо генерации нового сообщения можно передавать только эти 2 параметра
+            var message = (ChannelRegistrationMessage) originalMessage.Clone();
+            message.LogicalChannelId = channelController.GetLocalChannelId(originalMessage.LogicalChannelId);
+            return message;
         }
 
         /// <summary>
@@ -118,15 +126,9 @@ namespace TP.WPF.ViewModels
             InternalLogicalChannelDataMessage originalMessage)
         {
             //TODO:если кроме LogicalChannelId и Value ничего не используется, вместо генерации нового сообщения можно передавать только эти 2 параметра
-            var newMessage = new InternalLogicalChannelDataMessage
-                (originalMessage.RegNameFrom,
-                originalMessage.RegNameTo,
-                originalMessage.DataMode,
-                channelController.GetLocalChannelId(originalMessage.LogicalChannelId))
-            {
-                Value = originalMessage.Value
-            };
-            return newMessage;
+            var message = (InternalLogicalChannelDataMessage) originalMessage.Clone();
+            message.LogicalChannelId = channelController.GetLocalChannelId(originalMessage.LogicalChannelId);
+            return message;
         }
 
         /// <summary>
@@ -138,12 +140,9 @@ namespace TP.WPF.ViewModels
             InternalLogicalChannelStateMessage originalMessage)
         {
             //TODO:если кроме LogicalChannelId и Value ничего не используется, вместо генерации нового сообщения можно передавать только эти 2 параметра
-            var newMessage = new InternalLogicalChannelStateMessage
-                (originalMessage.RegNameFrom,
-                originalMessage.RegNameTo,
-                channelController.GetLocalChannelId(originalMessage.LogicalChannelId), 
-                originalMessage.State);
-            return newMessage;
+            var message = (InternalLogicalChannelStateMessage) originalMessage.Clone();
+            message.LogicalChannelId = channelController.GetLocalChannelId(originalMessage.LogicalChannelId);
+            return message;
         }
 
         private void OnRegister()

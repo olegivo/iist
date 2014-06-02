@@ -275,8 +275,8 @@
     <None Include="ClassDiagram1.cd" />
     <None Include="Entities\Plc.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>Plc.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Plc.designer.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Ports\cdFieldBus.cd" />

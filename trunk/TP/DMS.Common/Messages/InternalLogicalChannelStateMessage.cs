@@ -5,7 +5,7 @@ namespace DMS.Common.Messages
     /// <summary>
     /// Сообщение, содержащее состояние логического канала
     /// </summary>
-    public class InternalLogicalChannelStateMessage : InternalMessage
+    public class InternalLogicalChannelStateMessage : InternalLogicalChannelMessage
     {
         protected InternalLogicalChannelStateMessage()
         {
@@ -18,16 +18,11 @@ namespace DMS.Common.Messages
         /// <param name="regNameTo">Регистрационое имя, которому посылается сообщение</param>
         /// <param name="logicalChannelId">Номер логического канала</param>
         /// <param name="state">Состояние канала</param>
-        public InternalLogicalChannelStateMessage(string regNameFrom, string regNameTo, int logicalChannelId, LogicalChannelState state) : base(regNameFrom, regNameTo)
+        public InternalLogicalChannelStateMessage(string regNameFrom, string regNameTo, int logicalChannelId,
+            LogicalChannelState state) : base(regNameFrom, regNameTo, logicalChannelId)
         {
-            LogicalChannelId = logicalChannelId;
             State = state;
         }
-
-        /// <summary>
-        /// Идентификатор логического канала
-        /// </summary>
-        public int LogicalChannelId { get; set; }
 
         /// <summary>
         /// Состояние канала

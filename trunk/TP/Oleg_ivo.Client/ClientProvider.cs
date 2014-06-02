@@ -278,12 +278,12 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         /// <param name="logicalChannelId"></param>
         /// <returns></returns>
-        public double GetActualValue(int logicalChannelId)
+        public object GetActualValue(int logicalChannelId)
         {
             return actualValues[logicalChannelId];
         }
 
-        readonly SortedDictionary<int, double> actualValues = new SortedDictionary<int, double>();
+        readonly SortedDictionary<int, object> actualValues = new SortedDictionary<int, object>();
         readonly SortedDictionary<int, LogicalChannelState> actualStates = new SortedDictionary<int, LogicalChannelState>();
 
         void CallbackHandler_HasReadChannel(object sender, MessageEventArgs<InternalLogicalChannelDataMessage> e)
@@ -293,11 +293,10 @@ namespace Oleg_ivo.HighLevelClient
             if (RegisteredChannels != null)
             {
                 var message = e.Message;
-                double value = (double)message.Value;
                 if (actualValues.ContainsKey(message.LogicalChannelId))
-                    actualValues[message.LogicalChannelId] = value;
+                    actualValues[message.LogicalChannelId] = message.Value;
                 else
-                    actualValues.Add(message.LogicalChannelId, value);
+                    actualValues.Add(message.LogicalChannelId, message.Value);
 
                 InvokeHasReadChannel(e);
             }

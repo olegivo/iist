@@ -8,7 +8,7 @@ namespace TP.WPF.ViewModels
     public class ChartDataItem
     {
         public int ChannelId { get; set; }
-        public double ChannelValue { get; set; }
+        public object ChannelValue { get; set; }
         public string ChannelTime { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using DMS.Common.Messages;
+using Oleg_ivo.Base.Extensions;
 
 namespace TP.WPF.ViewModels
 {
@@ -10,9 +11,9 @@ namespace TP.WPF.ViewModels
         private double? minNormalValue;
         private double? maxNormalValue;
         private string caption;
-        private double? currentValue;
+        private IComparable currentValue;
         private bool isOn;
-        private bool discreteOnState;
+        //private bool discreteOnState;
 
         public void Init(ChannelRegistrationMessage message)
         {
@@ -86,11 +87,12 @@ namespace TP.WPF.ViewModels
         /// <summary>
         /// Текущее значение
         /// </summary>
-        public double? CurrentValue
+        public IComparable CurrentValue
         {
             get { return currentValue; }
             set
             {
+                if (currentValue == value) return;
                 currentValue = value;
                 RaisePropertyChanged("CurrentValue");
                 var propertyNames = new[]
@@ -100,6 +102,8 @@ namespace TP.WPF.ViewModels
                     "IsValueHigherCritycal",
                     "IsValueLowerCritycal",
                     "ShortCurrentValue",
+                    "CurrentValueDouble",
+                    "CurrentValueBool",
                     "DiscreteOnState",
                     "CurrentState"
                 };
@@ -110,7 +114,11 @@ namespace TP.WPF.ViewModels
 
         public Decimal ShortCurrentValue
         {
-            get { return currentValue == null ? 0 : Decimal.Round((Decimal) CurrentValue, 2); }
+            get
+            {
+                var d = CurrentValueDouble;
+                return d.HasValue ? Decimal.Round((Decimal) d, 2) : 0;
+            }
         }
 
         /// <summary>
@@ -147,8 +155,9 @@ namespace TP.WPF.ViewModels
 
         private int CompareCurrentValueWith(double? compareValue)
         {
-            return CurrentValue.HasValue && compareValue.HasValue
-                ? CurrentValue.Value.CompareTo(compareValue.Value)
+            var d = CurrentValueDouble;
+            return d.HasValue && compareValue.HasValue
+                ? d.Value.CompareTo(compareValue.Value)
                 : 0;
         }
 
@@ -157,15 +166,36 @@ namespace TP.WPF.ViewModels
         {
             get
             {
-                if (IsValueHigherNormal || IsValueLowerNormal)
-                    return "AlarmState";
-                if (CurrentValue == 0)
-                    return "OffState";
-                if (CurrentValue != null)
-                    return "WorkingState";
-                return "NoSignal";
+                string state;
+                if (!IsOn /*|| CurrentValue == null*/)
+                    state = "NoSignal";
+                else
+                {
+                    var d = CurrentValueDouble;
+                    var b = CurrentValueBool;
+                    if ((d.HasValue && !(d.Value > 0)) || !(b.HasValue && b.Value))
+                        state = "OffState";
+                    else
+                        state = IsValueHigherNormal || IsValueLowerNormal
+                            ? "AlarmState"
+                            : "WorkingState";
+                }
 
+                Console.WriteLine(state);
+                return state;
             }
+        }
+
+        public double? CurrentValueDouble
+        {
+            get { return (double?) (CurrentValue != null && CurrentValue.IsNumeric() ? CurrentValue : null); }
+            set { CurrentValue = value; }
+        }
+
+        public bool? CurrentValueBool
+        {
+            get { return (bool?) (CurrentValue != null && CurrentValue.IsBool() ? CurrentValue : null); }
+            set { CurrentValue = value; }
         }
 
         //TODO: создать отдельную модель представления для дискретных индикаторов
@@ -173,9 +203,11 @@ namespace TP.WPF.ViewModels
         {
             get
             {
-                return (CurrentValue != null && CurrentValue > 0.9) ? true : false;
+                var b = CurrentValueBool;
+                return b.HasValue && b.Value;
                 //discreteOnState;
             }
+/*
             set
             {
                 if (CurrentValue != null && CurrentValue > 0.9)
@@ -185,6 +217,7 @@ namespace TP.WPF.ViewModels
                 RaisePropertyChanged("DiscreteOnState");
 
             }
+*/
         }
 
 

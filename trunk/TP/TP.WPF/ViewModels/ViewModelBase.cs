@@ -59,7 +59,7 @@ namespace TP.WPF.ViewModels
             if(IndicatorViewModels.ContainsKey(channelId))
             {
                 var indicatorViewModel = IndicatorViewModels[channelId];
-                indicatorViewModel.CurrentValue = message.Value as double?;
+                indicatorViewModel.CurrentValue = (IComparable)message.Value;//TODO: какой тип лучше передавать в Value?
             }
         }
 
