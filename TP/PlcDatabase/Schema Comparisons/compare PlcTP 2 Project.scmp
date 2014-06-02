@@ -3,10 +3,10 @@
   <Version>1</Version>
   <SourceModelProvider>
     <ConnectionBasedModelProvider>
-      <ConnectionString>Data Source=OLEG-A\SQLEXPRESS2005;Initial Catalog=PlcTP;Integrated Security=True;Pooling=False</ConnectionString>
-      <DatabaseName>PlcTP</DatabaseName>
+      <ConnectionString>Data Source=OLEG-A\SQLEXPRESS2005;Initial Catalog=plc_test;Integrated Security=True;Pooling=False</ConnectionString>
+      <DatabaseName>plc_test</DatabaseName>
       <DspFamilyName>sql</DspFamilyName>
-      <Name>[OLEG-A\SQLEXPRESS2005.PlcTP]</Name>
+      <Name>[OLEG-A\SQLEXPRESS2005.plc_test]</Name>
     </ConnectionBasedModelProvider>
   </SourceModelProvider>
   <TargetModelProvider>
