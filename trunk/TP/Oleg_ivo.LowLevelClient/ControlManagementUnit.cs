@@ -102,13 +102,7 @@ namespace Oleg_ivo.LowLevelClient
         /// <summary>
         /// Делегат для получения фасада распределённой информационно-измерительной системы
         /// </summary>
-        public GetDistributedMeasurementInformationSystemDelegate GetDistributedMeasurementInformationSystem { private get; set; }
-
-        /// <summary>
-        /// Делегат для получения фасада распределённой информационно-измерительной системы
-        /// </summary>
-        /// <returns></returns>
-        public delegate IDistributedMeasurementInformationSystem GetDistributedMeasurementInformationSystemDelegate();
+        public Func<IDistributedMeasurementInformationSystem> GetDistributedMeasurementInformationSystem { private get; set; }
 
         ///<summary>
         /// Логические каналы
@@ -125,6 +119,7 @@ namespace Oleg_ivo.LowLevelClient
             {
                 //сообщение об изменении состояния канала (каналов)
                 var value = (bool?)e.Value;
+                //TODO: пока здесь анализируется только дискретное состояние (доступен/нудоступен)
                 var state = value.HasValue && value.Value ? LogicalChannelState.On : LogicalChannelState.Off;
                 foreach (var logicalChannel in e.LogicalChannel.Entity.LogicalChannelStateHolders)
                 {
@@ -134,7 +129,7 @@ namespace Oleg_ivo.LowLevelClient
             else
             {
                 //заставляем систему обмена сообщениями реагировать на новые данные:
-                var message = new InternalLogicalChannelDataMessage(RegName, null, DataMode.Read, e.LogicalChannel.Id)
+                var message = new InternalLogicalChannelDataMessage(RegName, null, DataMode.Read, e.LogicalChannel.Id, e.LogicalChannel.IsDiscrete)
                 {
                     Value = e.Value
                 };
