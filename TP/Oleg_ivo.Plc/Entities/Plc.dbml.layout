@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 14.125" name="Plc">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 15.5" name="Plc">
   <DataContextMoniker Name="/PlcDataContext" />
   <nestedChildShapes>
     <classShape Id="8ed93f59-61c5-40be-8392-b75458b27329" absoluteBounds="0.5, 0.5, 2, 1.3862939453125">
@@ -52,7 +52,7 @@
         <elementListCompartment Id="497fbdf8-b88a-4995-bac0-3aa5fc6b6db3" absoluteBounds="0.51499999999999968, 2.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(1.5 : 4.4631982421875); (1.5 : 4.875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.5 : 4.4631982421875); (1.5 : 4.875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PlcDataContext/FieldBusNode/FieldBusNode_PhysicalChannel" />
       <nodes>
         <classShapeMoniker Id="23fb7d2a-23b9-415b-8384-971fe9ced397" />
@@ -72,21 +72,21 @@
         <elementListCompartment Id="1087ea2e-f17a-46b5-a8f9-a6aa51b455a9" absoluteBounds="0.51499999999999968, 8.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(1.20923076923077 : 10.5304996744792); (1.20923076923077 : 10.7804996744792); (1.80461538461538 : 10.7804996744792); (1.80461538461538 : 10.5304996744792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(0.5 : 9.13686142828526); (0.25 : 9.13686142828526); (0.25 : 9.78368055138221); (0.5 : 9.78368055138221)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PlcDataContext/LogicalChannel/LogicalChannel_LogicalChannel" />
       <nodes>
         <classShapeMoniker Id="5cce4e98-de7d-4d2c-8321-5194bed95f20" />
         <classShapeMoniker Id="5cce4e98-de7d-4d2c-8321-5194bed95f20" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.875 : 9.45274983723958); (2.5 : 9.45274983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.875 : 9.45274983723958); (2.5 : 9.45274983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PlcDataContext/Parameter/Parameter_LogicalChannel" />
       <nodes>
         <classShapeMoniker Id="45f1ffdc-2de7-42e9-9a9d-8eabfaba9483" />
         <classShapeMoniker Id="5cce4e98-de7d-4d2c-8321-5194bed95f20" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.5 : 7.9920068359375); (1.5 : 8.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.5 : 7.9920068359375); (1.5 : 8.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PlcDataContext/PhysicalChannel/PhysicalChannel_LogicalChannel" />
       <nodes>
         <classShapeMoniker Id="6b55008a-f9a6-4cd6-9e8e-d612ed7b5386" />
@@ -99,25 +99,49 @@
         <elementListCompartment Id="ae0a544d-bf95-4d54-bcea-f17754a81403" absoluteBounds="2.8899999999999997, 12.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="86144cc2-efe0-49ce-a87d-f14c8664f33e" absoluteBounds="0.625, 11.875, 2, 1.9631982421875">
+    <classShape Id="fae637c5-7c93-4187-ad34-2773141eb87a" absoluteBounds="0.5, 11.25, 2, 1.9631982421875005">
       <DataClassMoniker Name="/PlcDataContext/ProtocolData" />
       <nestedChildShapes>
-        <elementListCompartment Id="1c66a333-4f8f-4cc2-b0c9-1e30bd83ae61" absoluteBounds="0.63999999999999968, 12.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="ee38c8d6-7b45-4638-8f2f-82c7d3e1adc4" absoluteBounds="0.515, 11.71, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.875 : 12.4719962565104); (2.625 : 12.4719962565104)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.875 : 12.4719962565104); (2.5 : 12.4719962565104)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/PlcDataContext/Client/Client_ProtocolData" />
       <nodes>
         <classShapeMoniker Id="5f716e21-560b-4f8d-8e7f-f88d889d99f2" />
-        <classShapeMoniker Id="86144cc2-efe0-49ce-a87d-f14c8664f33e" />
+        <classShapeMoniker Id="fae637c5-7c93-4187-ad34-2773141eb87a" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.21480769230769 : 10.5304996744792); (2.21480769230769 : 11.875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.5 : 10.5304996744792); (1.5 : 11.25)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/PlcDataContext/LogicalChannel/LogicalChannel_ProtocolData" />
       <nodes>
         <classShapeMoniker Id="5cce4e98-de7d-4d2c-8321-5194bed95f20" />
-        <classShapeMoniker Id="86144cc2-efe0-49ce-a87d-f14c8664f33e" />
+        <classShapeMoniker Id="fae637c5-7c93-4187-ad34-2773141eb87a" />
       </nodes>
     </associationConnector>
+    <classShape Id="77f52db1-9ea9-461f-b92c-28c65f667758" absoluteBounds="0.5, 14, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/PlcDataContext/ProtocolDataDiscrete" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ebb6b880-a746-4fb7-9067-76c88b5e8ffa" absoluteBounds="0.51500000000000012, 14.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="11a51ca2-daa6-4817-8409-828871681fc5" absoluteBounds="3, 14, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/PlcDataContext/ProtocolDataAnalog" />
+      <nestedChildShapes>
+        <elementListCompartment Id="770980f2-4c8e-4321-bf14-2688ce618e7b" absoluteBounds="3.0149999999999997, 14.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <inheritanceConnector edgePoints="[(1.5 : 13.2131982421875); (1.5 : 14)]" fixedFrom="NotFixed" fixedTo="NotFixed" TargetRelationshipDomainClassId="7a7fe09e-e9ef-4b01-9ff3-bde95e827b62">
+      <nodes>
+        <classShapeMoniker Id="fae637c5-7c93-4187-ad34-2773141eb87a" />
+        <classShapeMoniker Id="77f52db1-9ea9-461f-b92c-28c65f667758" />
+      </nodes>
+    </inheritanceConnector>
+    <inheritanceConnector edgePoints="[(1.5 : 13.2131982421875); (1.5 : 13.625); (4 : 13.625); (4 : 14)]" fixedFrom="NotFixed" fixedTo="NotFixed" TargetRelationshipDomainClassId="7a7fe09e-e9ef-4b01-9ff3-bde95e827b62">
+      <nodes>
+        <classShapeMoniker Id="fae637c5-7c93-4187-ad34-2773141eb87a" />
+        <classShapeMoniker Id="11a51ca2-daa6-4817-8409-828871681fc5" />
+      </nodes>
+    </inheritanceConnector>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

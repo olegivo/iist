@@ -180,15 +180,26 @@ namespace Oleg_ivo.MES.Logging
         /// <param name="incomeTimeStamp"></param>
         private ProtocolData CreateProtocolData(InternalLogicalChannelDataMessage message, DateTime incomeTimeStamp)
         {
-            var client = DataContext.Clients.Single(c=>c.ClientName==message.RegNameFrom);//TODO:move client data to message
-            return new ProtocolData
-            {
-                LogicalChannelId = message.LogicalChannelId,
-                TimeStamp = message.TimeStamp,
-                QueueTimeStamp = incomeTimeStamp,
-                DataValue = Convert.ToDecimal(message.Value),
-                Client = client
-            };
+            var client = DataContext.Clients.Single(c => c.ClientName == message.RegNameFrom);
+                //TODO:move client data to message
+
+            return message.IsDiscreteData
+                ? (ProtocolData) new ProtocolDataDiscrete
+                {
+                    LogicalChannelId = message.LogicalChannelId,
+                    TimeStamp = message.TimeStamp,
+                    QueueTimeStamp = incomeTimeStamp,
+                    DiscreteValue = (bool?) (message.Value),
+                    Client = client
+                }
+                : new ProtocolDataAnalog
+                {
+                    LogicalChannelId = message.LogicalChannelId,
+                    TimeStamp = message.TimeStamp,
+                    QueueTimeStamp = incomeTimeStamp,
+                    AnalogValue = Convert.ToDecimal(message.Value),
+                    Client = client
+                };
         }
 
         public void ProtocolError(InternalMessage message, FaultException faultException)

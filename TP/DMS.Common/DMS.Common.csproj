@@ -126,9 +126,9 @@
     <Compile Include="Messages\DataMode.cs" />
     <Compile Include="Messages\IInternalMessage.cs" />
     <Compile Include="Messages\IMessageReceiverCallback.cs" />
+    <Compile Include="Messages\InternalLogicalChannelMessage.cs" />
     <Compile Include="Messages\InternalLogicalChannelStateMessage.cs" />
     <Compile Include="Messages\InternalServiceMessage.cs" />
-    <Compile Include="Messages\InternalDataMessage.cs" />
     <Compile Include="Messages\InternalErrorMessage.cs" />
     <Compile Include="Messages\InternalLogicalChannelDataMessage.cs" />
     <Compile Include="Messages\InternalMessage.cs" />

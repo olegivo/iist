@@ -279,10 +279,10 @@ namespace Oleg_ivo.CMU
 
         private void btnChannelRead_Click(object sender, EventArgs e)
         {
-            foreach (LogicalChannel logicalChannelId in doubleListBoxControl1.SelectionRight)
+            foreach (LogicalChannel channel in doubleListBoxControl1.SelectionRight)
             {
                 var message =
-                    new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Read, logicalChannelId.Id)
+                    new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Read, channel.Id, false)
                         {
                             Value = Math.PI
                         };

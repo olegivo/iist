@@ -18,7 +18,8 @@ namespace DMS.Common.Messages
         /// <param name="regNameTo">Регистрационое имя, которому посылается сообщение</param>
         /// <param name="mode">Режим регистрации (регистрация/отмена)</param>
         /// <param name="logicalChannelId">Номер логического канала</param>
-        public ChannelSubscribeMessage(string regNameFrom, string regNameTo, SubscribeMode mode, int logicalChannelId) : base(regNameFrom, regNameTo)
+        public ChannelSubscribeMessage(string regNameFrom, string regNameTo, SubscribeMode mode, int logicalChannelId)
+            : base(regNameFrom, regNameTo)
         {
             Mode = mode;
             LogicalChannelId = logicalChannelId;

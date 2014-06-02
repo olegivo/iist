@@ -8,6 +8,12 @@
     <xs:attribute ref="ser:FactoryType" />
   </xs:complexType>
   <xs:element name="Exception" nillable="true" type="tns:Exception" />
+  <xs:complexType name="ApplicationException">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Exception" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ApplicationException" nillable="true" type="tns:ApplicationException" />
   <xs:complexType name="ArgumentOutOfRangeException">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:ArgumentException" />
@@ -26,10 +32,4 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="SystemException" nillable="true" type="tns:SystemException" />
-  <xs:complexType name="ApplicationException">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Exception" />
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="ApplicationException" nillable="true" type="tns:ApplicationException" />
 </xs:schema>

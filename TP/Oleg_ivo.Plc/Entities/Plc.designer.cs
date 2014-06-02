@@ -2134,6 +2134,9 @@ namespace Oleg_ivo.Plc.Entities
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ProtocolData")]
+	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="0", Type=typeof(ProtocolData), IsDefault=true)]
+	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="1", Type=typeof(ProtocolDataDiscrete))]
+	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="2", Type=typeof(ProtocolDataAnalog))]
 	public partial class ProtocolData : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -2149,7 +2152,7 @@ namespace Oleg_ivo.Plc.Entities
 		
 		private System.DateTime _QueueTimeStamp;
 		
-		private decimal _DataValue;
+		private int _DataType;
 		
 		private EntityRef<Client> _Client;
 		
@@ -2169,8 +2172,8 @@ namespace Oleg_ivo.Plc.Entities
     partial void OnTimeStampChanged();
     partial void OnQueueTimeStampChanging(System.DateTime value);
     partial void OnQueueTimeStampChanged();
-    partial void OnDataValueChanging(decimal value);
-    partial void OnDataValueChanged();
+    partial void OnDataTypeChanging(int value);
+    partial void OnDataTypeChanged();
     #endregion
 		
 		public ProtocolData()
@@ -2288,22 +2291,22 @@ namespace Oleg_ivo.Plc.Entities
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DataValue", DbType="Decimal(18,10) NOT NULL")]
-		public decimal DataValue
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DataType", DbType="Int NOT NULL", IsDiscriminator=true)]
+		public int DataType
 		{
 			get
 			{
-				return this._DataValue;
+				return this._DataType;
 			}
 			set
 			{
-				if ((this._DataValue != value))
+				if ((this._DataType != value))
 				{
-					this.OnDataValueChanging(value);
+					this.OnDataTypeChanging(value);
 					this.SendPropertyChanging();
-					this._DataValue = value;
-					this.SendPropertyChanged("DataValue");
-					this.OnDataValueChanged();
+					this._DataType = value;
+					this.SendPropertyChanged("DataType");
+					this.OnDataTypeChanged();
 				}
 			}
 		}
@@ -2393,6 +2396,132 @@ namespace Oleg_ivo.Plc.Entities
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	public partial class ProtocolDataDiscrete : ProtocolData
+	{
+		
+		private System.Nullable<decimal> _AnalogValue;
+		
+		private System.Nullable<bool> _DiscreteValue;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAnalogValueChanging(System.Nullable<decimal> value);
+    partial void OnAnalogValueChanged();
+    partial void OnDiscreteValueChanging(System.Nullable<bool> value);
+    partial void OnDiscreteValueChanged();
+    #endregion
+		
+		public ProtocolDataDiscrete()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnalogValue", DbType="Decimal(18,10)")]
+		public System.Nullable<decimal> AnalogValue
+		{
+			get
+			{
+				return this._AnalogValue;
+			}
+			set
+			{
+				if ((this._AnalogValue != value))
+				{
+					this.OnAnalogValueChanging(value);
+					this.SendPropertyChanging();
+					this._AnalogValue = value;
+					this.SendPropertyChanged("AnalogValue");
+					this.OnAnalogValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscreteValue", DbType="Bit")]
+		public System.Nullable<bool> DiscreteValue
+		{
+			get
+			{
+				return this._DiscreteValue;
+			}
+			set
+			{
+				if ((this._DiscreteValue != value))
+				{
+					this.OnDiscreteValueChanging(value);
+					this.SendPropertyChanging();
+					this._DiscreteValue = value;
+					this.SendPropertyChanged("DiscreteValue");
+					this.OnDiscreteValueChanged();
+				}
+			}
+		}
+	}
+	
+	public partial class ProtocolDataAnalog : ProtocolData
+	{
+		
+		private System.Nullable<decimal> _AnalogValue;
+		
+		private System.Nullable<bool> _DiscreteValue;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAnalogValueChanging(System.Nullable<decimal> value);
+    partial void OnAnalogValueChanged();
+    partial void OnDiscreteValueChanging(System.Nullable<bool> value);
+    partial void OnDiscreteValueChanged();
+    #endregion
+		
+		public ProtocolDataAnalog()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnalogValue", DbType="Decimal(18,10)")]
+		public System.Nullable<decimal> AnalogValue
+		{
+			get
+			{
+				return this._AnalogValue;
+			}
+			set
+			{
+				if ((this._AnalogValue != value))
+				{
+					this.OnAnalogValueChanging(value);
+					this.SendPropertyChanging();
+					this._AnalogValue = value;
+					this.SendPropertyChanged("AnalogValue");
+					this.OnAnalogValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscreteValue", DbType="Bit")]
+		public System.Nullable<bool> DiscreteValue
+		{
+			get
+			{
+				return this._DiscreteValue;
+			}
+			set
+			{
+				if ((this._DiscreteValue != value))
+				{
+					this.OnDiscreteValueChanging(value);
+					this.SendPropertyChanging();
+					this._DiscreteValue = value;
+					this.SendPropertyChanged("DiscreteValue");
+					this.OnDiscreteValueChanged();
+				}
 			}
 		}
 	}

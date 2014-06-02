@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using AmCharts.Windows.QuickCharts;
 using DMS.Common.Messages;
 
@@ -71,7 +72,7 @@ namespace TP.WPF.ViewModels
                     
                     ChannelId = message.LogicalChannelId,
                     ChannelTime = message.TimeStamp.ToString("mm:ss"),
-                    ChannelValue = (double)message.Value
+                    ChannelValue = message.Value
                 };
             if (!ChartBindingData.Contains(new ChartDataItem()))
             {
@@ -123,14 +124,9 @@ namespace TP.WPF.ViewModels
 
         private void ClearUnregisteredChannelData(string channelId)
         {
-            foreach (ChartDataItem chartDataItem in ChartBindingData)
-            {
-                if (chartDataItem.ChannelId == Int32.Parse(channelId.Replace("Channel","")))
-                {
+            foreach (var chartDataItem in ChartBindingData.ToList())
+                if (chartDataItem.ChannelId == Int32.Parse(channelId.Replace("Channel", "")))
                     ChartBindingData.Remove(chartDataItem);
-                }
-            }
-
         }
 
     }
