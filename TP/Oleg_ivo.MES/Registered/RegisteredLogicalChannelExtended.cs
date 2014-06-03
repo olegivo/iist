@@ -21,7 +21,7 @@ namespace Oleg_ivo.MES.Registered
             : base(id)
         {
             DataMode = dataMode;
-            State = LogicalChannelState.Off;
+            State = LogicalChannelState.Break;
             ChangeState += RegisteredLogicalChannel_ChangeState;
             Read += RegisteredLogicalChannel_Read;
             Write += RegisteredLogicalChannel_Write;

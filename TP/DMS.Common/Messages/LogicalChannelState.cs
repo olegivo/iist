@@ -2,7 +2,7 @@
 {
     public enum LogicalChannelState
     {
-        Off = 0,
-        On = 1
+        Break = 0,
+        Work = 1
     }
 }
