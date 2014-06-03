@@ -154,6 +154,7 @@
     <Compile Include="Low\LowLevelMessageExchangeSystem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ClientsProvider.cs" />
     <EmbeddedResource Include="MesForm.resx">
       <DependentUpon>MesForm.cs</DependentUpon>
     </EmbeddedResource>

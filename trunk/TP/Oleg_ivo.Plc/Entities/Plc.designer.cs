@@ -57,6 +57,9 @@ namespace Oleg_ivo.Plc.Entities
     partial void InsertProtocolData(ProtocolData instance);
     partial void UpdateProtocolData(ProtocolData instance);
     partial void DeleteProtocolData(ProtocolData instance);
+    partial void InsertLogicalChannelClient(LogicalChannelClient instance);
+    partial void UpdateLogicalChannelClient(LogicalChannelClient instance);
+    partial void DeleteLogicalChannelClient(LogicalChannelClient instance);
     #endregion
 		
 		public PlcDataContext() : 
@@ -158,6 +161,14 @@ namespace Oleg_ivo.Plc.Entities
 			get
 			{
 				return this.GetTable<ProtocolData>();
+			}
+		}
+		
+		public System.Data.Linq.Table<LogicalChannelClient> LogicalChannelClients
+		{
+			get
+			{
+				return this.GetTable<LogicalChannelClient>();
 			}
 		}
 	}
@@ -1658,6 +1669,8 @@ namespace Oleg_ivo.Plc.Entities
 		
 		private EntitySet<ProtocolData> _ProtocolDatas;
 		
+		private EntitySet<LogicalChannelClient> _LogicalChannelClients;
+		
 		private EntityRef<LogicalChannel> _LogicalChannelState;
 		
 		private EntityRef<Parameter> _Parameter;
@@ -1688,6 +1701,7 @@ namespace Oleg_ivo.Plc.Entities
 		{
 			this._LogicalChannelStateHolders = new EntitySet<LogicalChannel>(new Action<LogicalChannel>(this.attach_LogicalChannelStateHolders), new Action<LogicalChannel>(this.detach_LogicalChannelStateHolders));
 			this._ProtocolDatas = new EntitySet<ProtocolData>(new Action<ProtocolData>(this.attach_ProtocolDatas), new Action<ProtocolData>(this.detach_ProtocolDatas));
+			this._LogicalChannelClients = new EntitySet<LogicalChannelClient>(new Action<LogicalChannelClient>(this.attach_LogicalChannelClients), new Action<LogicalChannelClient>(this.detach_LogicalChannelClients));
 			this._LogicalChannelState = default(EntityRef<LogicalChannel>);
 			this._Parameter = default(EntityRef<Parameter>);
 			this._PhysicalChannel = default(EntityRef<PhysicalChannel>);
@@ -1872,6 +1886,19 @@ namespace Oleg_ivo.Plc.Entities
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="LogicalChannel_LogicalChannelClient", Storage="_LogicalChannelClients", ThisKey="Id", OtherKey="LogicalChannnelId")]
+		public EntitySet<LogicalChannelClient> LogicalChannelClients
+		{
+			get
+			{
+				return this._LogicalChannelClients;
+			}
+			set
+			{
+				this._LogicalChannelClients.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="LogicalChannel_LogicalChannel", Storage="_LogicalChannelState", ThisKey="StateLogicalChannelId", OtherKey="Id", IsForeignKey=true)]
 		public LogicalChannel LogicalChannelState
 		{
@@ -2017,6 +2044,18 @@ namespace Oleg_ivo.Plc.Entities
 			this.SendPropertyChanging();
 			entity.LogicalChannel = null;
 		}
+		
+		private void attach_LogicalChannelClients(LogicalChannelClient entity)
+		{
+			this.SendPropertyChanging();
+			entity.LogicalChannel = this;
+		}
+		
+		private void detach_LogicalChannelClients(LogicalChannelClient entity)
+		{
+			this.SendPropertyChanging();
+			entity.LogicalChannel = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Client")]
@@ -2031,6 +2070,8 @@ namespace Oleg_ivo.Plc.Entities
 		
 		private EntitySet<ProtocolData> _ProtocolDatas;
 		
+		private EntitySet<LogicalChannelClient> _LogicalChannelClients;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2044,6 +2085,7 @@ namespace Oleg_ivo.Plc.Entities
 		public Client()
 		{
 			this._ProtocolDatas = new EntitySet<ProtocolData>(new Action<ProtocolData>(this.attach_ProtocolDatas), new Action<ProtocolData>(this.detach_ProtocolDatas));
+			this._LogicalChannelClients = new EntitySet<LogicalChannelClient>(new Action<LogicalChannelClient>(this.attach_LogicalChannelClients), new Action<LogicalChannelClient>(this.detach_LogicalChannelClients));
 			OnCreated();
 		}
 		
@@ -2100,6 +2142,19 @@ namespace Oleg_ivo.Plc.Entities
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Client_LogicalChannelClient", Storage="_LogicalChannelClients", ThisKey="ClientId", OtherKey="ClientId")]
+		public EntitySet<LogicalChannelClient> LogicalChannelClients
+		{
+			get
+			{
+				return this._LogicalChannelClients;
+			}
+			set
+			{
+				this._LogicalChannelClients.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2127,6 +2182,18 @@ namespace Oleg_ivo.Plc.Entities
 		}
 		
 		private void detach_ProtocolDatas(ProtocolData entity)
+		{
+			this.SendPropertyChanging();
+			entity.Client = null;
+		}
+		
+		private void attach_LogicalChannelClients(LogicalChannelClient entity)
+		{
+			this.SendPropertyChanging();
+			entity.Client = this;
+		}
+		
+		private void detach_LogicalChannelClients(LogicalChannelClient entity)
 		{
 			this.SendPropertyChanging();
 			entity.Client = null;
@@ -2522,6 +2589,198 @@ namespace Oleg_ivo.Plc.Entities
 					this.SendPropertyChanged("DiscreteValue");
 					this.OnDiscreteValueChanged();
 				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.LogicalChannelClient")]
+	public partial class LogicalChannelClient : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _ClientId;
+		
+		private int _LogicalChannnelId;
+		
+		private EntityRef<Client> _Client;
+		
+		private EntityRef<LogicalChannel> _LogicalChannel;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnClientIdChanging(int value);
+    partial void OnClientIdChanged();
+    partial void OnLogicalChannnelIdChanging(int value);
+    partial void OnLogicalChannnelIdChanged();
+    #endregion
+		
+		public LogicalChannelClient()
+		{
+			this._Client = default(EntityRef<Client>);
+			this._LogicalChannel = default(EntityRef<LogicalChannel>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientId", DbType="Int NOT NULL")]
+		public int ClientId
+		{
+			get
+			{
+				return this._ClientId;
+			}
+			set
+			{
+				if ((this._ClientId != value))
+				{
+					if (this._Client.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnClientIdChanging(value);
+					this.SendPropertyChanging();
+					this._ClientId = value;
+					this.SendPropertyChanged("ClientId");
+					this.OnClientIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LogicalChannnelId", DbType="Int NOT NULL")]
+		public int LogicalChannnelId
+		{
+			get
+			{
+				return this._LogicalChannnelId;
+			}
+			set
+			{
+				if ((this._LogicalChannnelId != value))
+				{
+					if (this._LogicalChannel.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnLogicalChannnelIdChanging(value);
+					this.SendPropertyChanging();
+					this._LogicalChannnelId = value;
+					this.SendPropertyChanged("LogicalChannnelId");
+					this.OnLogicalChannnelIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Client_LogicalChannelClient", Storage="_Client", ThisKey="ClientId", OtherKey="ClientId", IsForeignKey=true)]
+		public Client Client
+		{
+			get
+			{
+				return this._Client.Entity;
+			}
+			set
+			{
+				Client previousValue = this._Client.Entity;
+				if (((previousValue != value) 
+							|| (this._Client.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Client.Entity = null;
+						previousValue.LogicalChannelClients.Remove(this);
+					}
+					this._Client.Entity = value;
+					if ((value != null))
+					{
+						value.LogicalChannelClients.Add(this);
+						this._ClientId = value.ClientId;
+					}
+					else
+					{
+						this._ClientId = default(int);
+					}
+					this.SendPropertyChanged("Client");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="LogicalChannel_LogicalChannelClient", Storage="_LogicalChannel", ThisKey="LogicalChannnelId", OtherKey="Id", IsForeignKey=true)]
+		public LogicalChannel LogicalChannel
+		{
+			get
+			{
+				return this._LogicalChannel.Entity;
+			}
+			set
+			{
+				LogicalChannel previousValue = this._LogicalChannel.Entity;
+				if (((previousValue != value) 
+							|| (this._LogicalChannel.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._LogicalChannel.Entity = null;
+						previousValue.LogicalChannelClients.Remove(this);
+					}
+					this._LogicalChannel.Entity = value;
+					if ((value != null))
+					{
+						value.LogicalChannelClients.Add(this);
+						this._LogicalChannnelId = value.Id;
+					}
+					else
+					{
+						this._LogicalChannnelId = default(int);
+					}
+					this.SendPropertyChanged("LogicalChannel");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

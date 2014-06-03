@@ -54,7 +54,7 @@ namespace TP.WPF
                 if(logicalChannelMappings == value) return;
                 logicalChannelMappings = value;
                 localDic = LogicalChannelMappings.ToDictionary(mapping => mapping.LogicalChannelId, mapping => mapping.LocalChannelId);
-                realDic = LogicalChannelMappings.ToDictionary(mapping => mapping.LocalChannelId, mapping => mapping.LogicalChannelId);
+                realDic = new Dictionary<int, int>();
             }
         }
 
@@ -169,6 +169,14 @@ namespace TP.WPF
             if (!registeredChannelsList.Contains(logicalChannelId))
             {
                 registeredChannelsList.Add(logicalChannelId);
+
+                var localChannelId =
+                    LogicalChannelMappings.Single(
+                        mapping =>
+                            mapping.LogicalChannelId == logicalChannelId &&
+                            registeredChannelsList.Contains(mapping.LogicalChannelId)).LocalChannelId;
+                realDic.Add(localChannelId, logicalChannelId);
+                
                 Protocol(string.Format("Канал [{0}] теперь доступен для подписки", logicalChannelId));
                 
                 if (!subscribedChannelsList.Contains(logicalChannelId))//TODO:проверить, можно ли без этого условия (не остаются ли каналы после отмены подписки или отмены регистрации)
@@ -363,18 +371,27 @@ namespace TP.WPF
 
             //EventHandler handler = ChannelUnRegistered;
             //if (handler != null) handler(this, EventArgs.Empty);    
-            var channelId = message.LogicalChannelId;
-            if (subscribedChannelsList.Contains(channelId))
+            var logicalChannelId = message.LogicalChannelId;
+            if (subscribedChannelsList.Contains(logicalChannelId))
             {
-                ChannelSubscribeMessage unSubscribeMessage = new ChannelSubscribeMessage(GetRegName(), null,
+                var unSubscribeMessage = new ChannelSubscribeMessage(GetRegName(), null,
                                                                                          SubscribeMode.Unsubscribe,
-                                                                                         channelId);
+                                                                                         logicalChannelId);
 
                 ParameterizedThreadStart thread = UnSubscribeUnregisteredChannelAsync;
                 thread.Invoke(unSubscribeMessage);
             }
-            if (registeredChannelsList.Contains(channelId))
-                registeredChannelsList.Remove(channelId);
+            if (registeredChannelsList.Contains(logicalChannelId))
+            {
+                var localChannelId =
+                    LogicalChannelMappings.Single(
+                        mapping =>
+                            mapping.LogicalChannelId == logicalChannelId &&
+                            registeredChannelsList.Contains(mapping.LogicalChannelId)).LocalChannelId;
+                realDic.Remove(localChannelId);
+
+                registeredChannelsList.Remove(logicalChannelId);
+            }
         }
 
         private void UnSubscribeUnregisteredChannelAsync(object message)

@@ -5,6 +5,7 @@ using DMS.Common.Messages;
 using NLog;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.MES.Registered;
+using Oleg_ivo.MES.Services;
 
 namespace Oleg_ivo.MES
 {
@@ -20,6 +21,9 @@ namespace Oleg_ivo.MES
 
         [Dependency(Required = true)]
         public IComponentContext Context { get; set; }
+
+        [Dependency(Required = true)]
+        public ClientsProvider ClientsProvider { get; set; }
 
         /// <summary>
         /// 
