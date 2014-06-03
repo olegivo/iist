@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DMS.Common.Events;
 using DMS.Common.MessageExchangeSystem.HighLevel;
 using DMS.Common.Messages;
@@ -16,11 +18,13 @@ namespace Oleg_ivo.MES.Registered
         private readonly HighLevelMessageExchangeSystem highLevelMessageExchangeSystem;
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-        public RegisteredHighLevelClient(HighLevelMessageExchangeSystem highLevelMessageExchangeSystem, DataMode dataMode)
+        public RegisteredHighLevelClient(HighLevelMessageExchangeSystem highLevelMessageExchangeSystem,
+            DataMode dataMode, int clientId)
         {
             this.highLevelMessageExchangeSystem = Enforce.ArgumentNotNull(highLevelMessageExchangeSystem,
                 "highLevelMessageExchangeSystem");
             DataMode = dataMode;
+            this.clientId = clientId;
         }
 
         #region fields
@@ -79,6 +83,10 @@ namespace Oleg_ivo.MES.Registered
         /// или Искомый канал недоступен для подписки</exception>
         public void ChannelSubscribe(ChannelSubscribeMessage message)
         {
+            if (!AllowedLogicalChannels.Contains(message.LogicalChannelId))
+                throw new InvalidOperationException(string.Format("Клиенту не разрешено подписываться на канал {0}",
+                    message.LogicalChannelId));
+
             //поиск ЛК, где Id - заданный:
             var predicate =
                 RegisteredLogicalChannelExtended.GetFindChannelPredicate(message.LogicalChannelId, DataMode.Unknown);
@@ -203,12 +211,38 @@ namespace Oleg_ivo.MES.Registered
             
         }
 
+        private List<int> allowedLogicalChannels;
+        private readonly int clientId;
+
+        public List<int> AllowedLogicalChannels
+        {
+            get
+            {
+                lock (DataContext)
+                {
+                    return allowedLogicalChannels ??
+                   (allowedLogicalChannels =
+                       DataContext.LogicalChannelClients
+                           .Where(lcc => lcc.ClientId == ClientId)
+                           .Select(lcc => lcc.LogicalChannnelId)
+                           .ToList());
+                    
+                }
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="message"></param>
         public void ChannelRegister(ChannelRegistrationMessage message)
         {
+            if (!AllowedLogicalChannels.Contains(message.LogicalChannelId))
+            {
+                log.Warn("Клиенту {0} не разрешено видеть регистрацию канала {1}", ClientId, message.LogicalChannelId);
+                return;
+            }
+
             lock (Callbacks)
                 foreach (IHighLevelClientCallback callback in Callbacks)
                     try
@@ -229,6 +263,12 @@ namespace Oleg_ivo.MES.Registered
         /// <param name="message"></param>
         public void ChannelUnRegister(ChannelRegistrationMessage message)
         {
+            if (!AllowedLogicalChannels.Contains(message.LogicalChannelId))
+            {
+                log.Warn("Клиенту {0} не разрешено видеть отмену регистрации канала {1}", ClientId, message.LogicalChannelId);
+                return;
+            }
+
             //удаляем канал из коллекции зарегистрированных канало данного клиента
             var registeredLogicalChannel =
                 GetRegisteredLogicalChannel(RegisteredLogicalChannelExtended.GetFindChannelPredicate(message.LogicalChannelId,
@@ -258,5 +298,10 @@ namespace Oleg_ivo.MES.Registered
         /// Если клиента нет в списке заинтересованных клиентов, то он ни разу не запрашивал информацию о зарегистрированных каналах.
         /// </summary>
         public bool Interested { get; set; }
+
+        public int ClientId
+        {
+            get { return clientId; }
+        }
     }
 }
