@@ -120,7 +120,7 @@ namespace Oleg_ivo.LowLevelClient
                 //сообщение об изменении состояния канала (каналов)
                 var value = (bool?)e.Value;
                 //TODO: пока здесь анализируется только дискретное состояние (доступен/нудоступен)
-                var state = value.HasValue && value.Value ? LogicalChannelState.On : LogicalChannelState.Off;
+                var state = value.HasValue && value.Value ? LogicalChannelState.Work : LogicalChannelState.Break;
                 foreach (var logicalChannel in e.LogicalChannel.Entity.LogicalChannelStateHolders)
                 {
                     ChangeChannelState(new InternalLogicalChannelStateMessage(RegName, null, logicalChannel.Id, state));
