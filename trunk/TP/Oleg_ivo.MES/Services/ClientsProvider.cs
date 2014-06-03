@@ -20,20 +20,27 @@ namespace Oleg_ivo.MES.Services
         {
             get
             {
-                return dataContext ??
-                       (dataContext =
-                           context.Resolve<PlcDataContext>(new TypedParameter(typeof(string),
-                               context.Resolve<DbConnectionProvider>().DefaultConnectionString)));
+                lock (context)
+                {
+                    return dataContext ??
+                           (dataContext =
+                            context.Resolve<PlcDataContext>(new TypedParameter(typeof(string),
+                                                                               context.Resolve<DbConnectionProvider>().DefaultConnectionString)));                    
+                }
             }
         }
 
         public int? GetClientId(string clientName)
         {
-            return
-                DataContext.Clients
-                    .Where(client => client.ClientName == clientName)
-                    .Select(client => (int?)client.ClientId)
-                    .SingleOrDefault();
+            lock (DataContext)
+            {
+                return
+                    DataContext.Clients
+                               .Where(client => client.ClientName == clientName)
+                               .Select(client => (int?)client.ClientId)
+                               .SingleOrDefault();
+                
+            }
         }
     }
 }

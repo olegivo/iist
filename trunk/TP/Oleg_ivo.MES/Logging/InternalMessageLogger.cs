@@ -40,10 +40,13 @@ namespace Oleg_ivo.MES.Logging
         {
             get
             {
-                return dataContext ??
-                       (dataContext =
-                           context.Resolve<PlcDataContext>(new TypedParameter(typeof(string),
-                               context.Resolve<DbConnectionProvider>().DefaultConnectionString)));
+                lock (context)
+                {
+                    return dataContext ??
+                           (dataContext =
+                            context.Resolve<PlcDataContext>(new TypedParameter(typeof(string),
+                                                                               context.Resolve<DbConnectionProvider>().DefaultConnectionString)));                    
+                }
             }
         }
 

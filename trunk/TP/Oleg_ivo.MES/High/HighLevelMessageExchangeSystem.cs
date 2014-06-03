@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using Autofac;
 using DMS.Common.MessageExchangeSystem.HighLevel;
 using DMS.Common.Messages;
 using NLog;
@@ -34,6 +35,10 @@ namespace Oleg_ivo.MES.High
         #region Constructors
 
         #endregion
+
+        public HighLevelMessageExchangeSystem(IComponentContext context) : base(context)
+        {
+        }
 
         /// <summary>
         /// Регистрационое имя системы обмена сообщений верхнего уровня

@@ -23,7 +23,6 @@ namespace Oleg_ivo.MES.Low
         IncludeExceptionDetailInFaults = true)]
     public class LowLevelMessageExchangeSystem : AbstractLevelMessageExchangeSystem<RegisteredLowLevelClient>, ILowLevelMessageExchangeSystem
     {
-        private readonly IComponentContext context;
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
         
         #region Constructors
@@ -31,9 +30,8 @@ namespace Oleg_ivo.MES.Low
         /// <summary>
         /// »нициализирует новый экземпл€р класса <see cref="LowLevelMessageExchangeSystem" />.
         /// </summary>
-        public LowLevelMessageExchangeSystem(IComponentContext context)
+        public LowLevelMessageExchangeSystem(IComponentContext context) : base(context)
         {
-            this.context = Enforce.ArgumentNotNull(context,"context");
         }
 
         private bool subscribed;
@@ -105,7 +103,8 @@ namespace Oleg_ivo.MES.Low
             if (registeredLowLevelClient != null)
                 throw new Exception(" лиент уже зарегистрирован");
 
-            registeredLowLevelClient = context.ResolveUnregistered<RegisteredLowLevelClient>();
+            registeredLowLevelClient = new RegisteredLowLevelClient(context);
+            context.InjectAttributedProperties(registeredLowLevelClient);
             registeredLowLevelClient.Ticker = message.RegNameFrom;
             AddClient(message.RegNameFrom, registeredLowLevelClient);
 
