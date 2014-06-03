@@ -361,7 +361,16 @@ namespace Oleg_ivo.MES.High
             {
                 if (registeredHighLevelClient == null)
                 {
-                    registeredHighLevelClient = new RegisteredHighLevelClient(this, message.DataMode) { Ticker = message.RegNameFrom };
+                    var clientId = ClientsProvider.GetClientId(message.RegNameFrom);
+                    if (!clientId.HasValue)
+                        throw new FaultException(string.Format("Не найден клиент {0}", message.RegNameFrom));
+
+                    registeredHighLevelClient =
+                        new RegisteredHighLevelClient(this, message.DataMode,
+                            clientId.Value)
+                        {
+                            Ticker = message.RegNameFrom
+                        };
                     Context.InjectAttributedProperties(registeredHighLevelClient);
                     AddClient(message.RegNameFrom, registeredHighLevelClient);
                 }
