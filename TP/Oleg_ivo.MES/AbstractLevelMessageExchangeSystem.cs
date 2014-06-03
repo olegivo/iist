@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Autofac;
 using DMS.Common.Messages;
 using NLog;
+using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.MES.Registered;
 using Oleg_ivo.MES.Services;
@@ -15,9 +16,15 @@ namespace Oleg_ivo.MES
     public abstract class AbstractLevelMessageExchangeSystem<TRegisteredClient> where TRegisteredClient : IRegisteredChannelsHolder
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
+        protected readonly IComponentContext context;
 
         private readonly Dictionary<string, TRegisteredClient> _registeredClients =
             new Dictionary<string, TRegisteredClient>();
+
+        protected AbstractLevelMessageExchangeSystem(IComponentContext context)
+        {
+            this.context = Enforce.ArgumentNotNull(context, "context");
+        }
 
         [Dependency(Required = true)]
         public IComponentContext Context { get; set; }

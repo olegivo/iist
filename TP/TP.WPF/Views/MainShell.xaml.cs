@@ -80,10 +80,12 @@ namespace TP.WPF.Views
                 Header = "Барабанная печь",
                 Content = pn
             };
-            WindowsManager.AddFloatingWindow(pane);
+            //WindowsManager.AddFloatingWindow(pane);
 
             //TODO: Разобраться с причиной "обрыва" связи между данными и представлением в развернумо режиме.
-	        //WindowsManager.DocumentContainer.AddDocument(pane);
+	        
+	        WindowsManager.DocumentContainer.DataContext = ViewModel;
+            WindowsManager.DocumentContainer.AddDocument(pane);
 
 
 	    }
@@ -94,9 +96,10 @@ namespace TP.WPF.Views
             {
                 Height = 80,
                 Header = "Панель отладочной информации",
-                Content = new Resources.ucDebugPanel()
+                Content = new Resources.ucDebugPanel(),
+                DockPaneState = DockPaneState.Docked
             };
-	        WindowsManager.AddAutoHideWindow(pane,Dock.Bottom);
+	        WindowsManager.AddPinnedWindow(pane,Dock.Bottom);
 	    }
 
 	    private void GenerateIndicatorsPanel()

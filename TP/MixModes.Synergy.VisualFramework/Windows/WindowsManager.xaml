@@ -101,7 +101,7 @@
                     <!-- Document and Docking illustration panels -->
                     <Grid>
 
-                        <local:DocumentContainer x:Name="DocumentContainer" />
+                        <local:DocumentContainer x:Name="DocumentContainer" x:FieldModifier="public" />
 
                         <!-- Illustrates future window docked position -->
                         <DockPanel x:Name="DockingIllustrationPanel"

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac;
 using DMS.Common.MessageExchangeSystem;
 using DMS.Common.Messages;
 using NLog;
@@ -8,6 +9,7 @@ using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.MES.Logging;
 using Oleg_ivo.MES.Services;
 using Oleg_ivo.Plc.Entities;
+using Oleg_ivo.Tools.ConnectionProvider;
 
 namespace Oleg_ivo.MES.Registered
 {
@@ -17,6 +19,7 @@ namespace Oleg_ivo.MES.Registered
     public abstract class RegisteredClient<TClientCallback> : IRegisteredChannelsHolder where TClientCallback : IClientCallback
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
+        private PlcDataContext dataContext;
 
         #region fields
 
@@ -70,7 +73,16 @@ namespace Oleg_ivo.MES.Registered
         public InternalMessageLogger InternalMessageLogger { get; set; }
 
         [Dependency(Required = true)]
-        public PlcDataContext DataContext { get; set; }
+        public IComponentContext Context { get; set; }
+
+        public PlcDataContext DataContext { get
+        {
+            return dataContext ?? (dataContext = Context.Resolve<PlcDataContext>(new TypedParameter(typeof (string),
+                                                                      Context
+                                                                          .Resolve
+                                                                          <DbConnectionProvider>()
+                                                                          .DefaultConnectionString)));
+        } }
 
         #endregion
 

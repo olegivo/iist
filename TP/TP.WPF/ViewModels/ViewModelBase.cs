@@ -25,6 +25,12 @@ namespace TP.WPF.ViewModels
         /// <param name="message"></param>
         public virtual void OnChannelRegistered(ChannelRegistrationMessage message)
         {
+            int channelId = message.LogicalChannelId;
+            if (IndicatorViewModels.ContainsKey(channelId))
+            {
+                var indicatorViewModel = IndicatorViewModels[channelId];
+                indicatorViewModel.IsOn = true;
+            }
             //TODO:подписать каждое View на это событие, чтобы динамически настраивать индикаторы
             if (NeedInitIndicator != null)
                 NeedInitIndicator(this, new MessageEventArgs<ChannelRegistrationMessage>(message));
