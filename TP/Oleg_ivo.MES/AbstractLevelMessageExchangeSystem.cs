@@ -108,7 +108,7 @@ namespace Oleg_ivo.MES
         /// <param name="state"></param>
         public IAsyncResult BeginSendError(InternalErrorMessage message, AsyncCallback callback, object state)
         {
-            log.Debug("Начало передачи сообщения об ошибке от клиента {0}", message.RegNameFrom);
+            log.Trace("Начало передачи сообщения об ошибке от клиента {0}", message.RegNameFrom);
             //TODO: для тестирования BeginSendError: throw new FaultException<InternalException>(new InternalException("Test"),"Reason");
             var caller = new SendErrorCaller(SendError);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
@@ -139,7 +139,7 @@ namespace Oleg_ivo.MES
         /// <param name="result"></param>
         public void EndSendError(InternalErrorMessage message, IAsyncResult result)
         {
-            log.Debug("Сообщения об ошибке от клиента передано");
+            log.Trace("Сообщения об ошибке от клиента передано");
         }
 
     }

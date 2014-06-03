@@ -136,7 +136,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="state"></param>
         public IAsyncResult BeginChannelSubscribe(ChannelSubscribeMessage message, AsyncCallback callback, object state)
         {
-            log.Debug("Начало подписки на чтение канала {0}", message.LogicalChannelId);
+            log.Trace("Начало подписки на чтение канала {0}", message.LogicalChannelId);
 
             var caller = new ChannelSubscribeCaller(ChannelSubscribe);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
@@ -161,7 +161,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="state"></param>
         public IAsyncResult BeginChannelUnSubscribe(ChannelSubscribeMessage message, AsyncCallback callback, object state)
         {
-            log.Debug("Начало отписки от чтение канала {0}", message.LogicalChannelId);
+            log.Trace("Начало отписки от чтение канала {0}", message.LogicalChannelId);
 
             var caller = new ChannelSubscribeCaller(ChannelUnSubscribe);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
@@ -281,7 +281,7 @@ namespace Oleg_ivo.MES.High
         /// <returns></returns>
         public IAsyncResult BeginWriteChannel(InternalLogicalChannelDataMessage message, AsyncCallback callback, object state)
         {
-            log.Debug("Начало записи канала {0}", message.LogicalChannelId);
+            log.Trace("Начало записи канала {0}", message.LogicalChannelId);
             var caller = new WriteChannelCaller(WriteChannel);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
@@ -604,7 +604,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="state"></param>
         public IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state)
         {
-            log.Debug("Начало регистрации клиента {0}", message.RegNameFrom);
+            log.Trace("Начало регистрации клиента {0}", message.RegNameFrom);
 
             IHighLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IHighLevelClientCallback>();
 
@@ -662,7 +662,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="state"></param>
         public IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state)
         {
-            log.Debug("Начало отмены регистрации клиента {0}", message.RegNameFrom);
+            log.Trace("Начало отмены регистрации клиента {0}", message.RegNameFrom);
 
             IHighLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IHighLevelClientCallback>();
 

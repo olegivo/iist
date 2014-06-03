@@ -199,7 +199,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="state"></param>
         public IAsyncResult BeginChannelRegister(ChannelRegistrationMessage message, AsyncCallback callback, object state)
         {
-            log.Debug("Начало регистрации канала {0} ({1})", message.LogicalChannelId, message.DataMode.ToString());
+            log.Trace("Начало регистрации канала {0} ({1})", message.LogicalChannelId, message.DataMode.ToString());
             var caller = new Action<ChannelRegistrationMessage>(ChannelRegister);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
@@ -223,7 +223,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="state"></param>
         public IAsyncResult BeginChannelUnRegister(ChannelRegistrationMessage message, AsyncCallback callback, object state)
         {
-            log.Debug("Начало отмены регистрации канала {0}", message.LogicalChannelId);
+            log.Trace("Начало отмены регистрации канала {0}", message.LogicalChannelId);
             var caller = new Action<ChannelRegistrationMessage>(ChannelUnRegister);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
@@ -248,7 +248,7 @@ namespace Oleg_ivo.MES.Low
         /// <returns></returns>
         public IAsyncResult BeginReadChannel(InternalLogicalChannelDataMessage message, AsyncCallback callback, object state)
         {
-            log.Debug("Начало чтения канала {0}", message.LogicalChannelId);
+            log.Trace("Начало чтения канала {0}", message.LogicalChannelId);
             var caller = new Action<InternalLogicalChannelDataMessage>(ReadChannel);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
@@ -266,7 +266,7 @@ namespace Oleg_ivo.MES.Low
 
         public IAsyncResult BeginChangeChannelState(InternalLogicalChannelStateMessage message, AsyncCallback callback, object state)
         {
-            log.Debug("Начало чтения канала {0}", message.LogicalChannelId);
+            log.Trace("Начало чтения канала {0}", message.LogicalChannelId);
             var caller = new Action<InternalLogicalChannelStateMessage>(ChangeChannelState);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
@@ -491,7 +491,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="state"></param>
         public IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state)
         {
-            log.Debug("Начало регистрации клиента {0}", message.RegNameFrom);
+            log.Trace("Начало регистрации клиента {0}", message.RegNameFrom);
 
             ILowLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<ILowLevelClientCallback>();
 
@@ -518,7 +518,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="state"></param>
         public IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state)
         {
-            log.Debug("Начало отмены регистрации клиента {0}", message.RegNameFrom);
+            log.Trace("Начало отмены регистрации клиента {0}", message.RegNameFrom);
 
             ILowLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<ILowLevelClientCallback>();
 

@@ -176,7 +176,7 @@ namespace Oleg_ivo.HighLevelClient
 
         private void CallbackHandler_ChannelRegistered(object sender, MessageEventArgs<ChannelRegistrationMessage> e)
         {
-            log.Debug("CallbackHandler_ChannelRegistered");
+            log.Trace("CallbackHandler_ChannelRegistered");
 
             var message = e.Message;
             var newValue = new List<IRegisteredChannel> { new RegisteredLogicalChannel(message.LogicalChannelId) };
@@ -195,7 +195,7 @@ namespace Oleg_ivo.HighLevelClient
 
         private void CallbackHandler_ChannelUnRegistered(object sender, MessageEventArgs<ChannelRegistrationMessage> e)
         {
-            log.Debug("CallbackHandler_ChannelUnRegistered");
+            log.Trace("CallbackHandler_ChannelUnRegistered");
 
             var message = e.Message;
             var removeValue = RegisteredChannels.FirstOrDefault(RegisteredLogicalChannel.GetFindChannelPredicate(message.LogicalChannelId ));
@@ -288,7 +288,7 @@ namespace Oleg_ivo.HighLevelClient
 
         void CallbackHandler_HasReadChannel(object sender, MessageEventArgs<InternalLogicalChannelDataMessage> e)
         {
-            log.Debug("CallbackHandler_HasReadChannel");
+            log.Trace("CallbackHandler_HasReadChannel");
 
             if (RegisteredChannels != null)
             {
@@ -304,7 +304,7 @@ namespace Oleg_ivo.HighLevelClient
 
         void CallbackHandler_ChannelStateChanged(object sender, MessageEventArgs<InternalLogicalChannelStateMessage> e)
         {
-            log.Debug("CallbackHandler_ChannelStateChanged");
+            log.Trace("CallbackHandler_ChannelStateChanged");
 
             if (RegisteredChannels != null)
             {
@@ -326,7 +326,7 @@ namespace Oleg_ivo.HighLevelClient
 
         private void InvokeHasReadChannel(MessageEventArgs<InternalLogicalChannelDataMessage> e)
         {
-            log.Debug("InvokeHasReadChannel");
+            log.Trace("InvokeHasReadChannel");
 
             var handler = HasReadChannel;
             if (handler != null) handler(this, e);
@@ -339,7 +339,7 @@ namespace Oleg_ivo.HighLevelClient
 
         private void InvokeChannelStateChanged(MessageEventArgs<InternalLogicalChannelStateMessage> e)
         {
-            log.Debug("InvokeChannelStateChanged");
+            log.Trace("InvokeChannelStateChanged");
 
             var handler = ChannelStateChanged;
             if (handler != null) handler(this, e);
@@ -350,7 +350,7 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public void RegisterSync()
         {
-            log.Debug("RegisterSync");
+            log.Trace("RegisterSync");
 
             Register(false, null);
         }
@@ -360,7 +360,7 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public void RegisterAsync(EventHandler<AsyncCompletedEventArgs> proxyRegisterCompleted)
         {
-            log.Debug("RegisterAsync");
+            log.Trace("RegisterAsync");
 
             Register(true, proxyRegisterCompleted);
         }
@@ -397,7 +397,7 @@ namespace Oleg_ivo.HighLevelClient
 
         void Proxy_RegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            log.Debug("Proxy_RegisterCompleted");
+            log.Trace("Proxy_RegisterCompleted");
 
             highLevelMessageExchangeSystemClient.RegisterCompleted -= Proxy_RegisterCompleted;
             if (e.Error != null)
@@ -437,7 +437,7 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public void Unregister()
         {
-            log.Debug("Unregister");
+            log.Trace("Unregister");
 
             highLevelMessageExchangeSystemClient.UnregisterCompleted += HighLevelMessageExchangeSystemClient_UnregisterCompleted;
             highLevelMessageExchangeSystemClient.UnregisterAsync(new RegistrationMessage(GetRegName(), null, RegistrationMode.Unregister, DataMode.Unknown));
@@ -445,7 +445,7 @@ namespace Oleg_ivo.HighLevelClient
 
         void HighLevelMessageExchangeSystemClient_UnregisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            log.Debug("HighLevelMessageExchangeSystemClient_UnregisterCompleted");
+            log.Trace("HighLevelMessageExchangeSystemClient_UnregisterCompleted");
 
             highLevelMessageExchangeSystemClient.UnregisterCompleted -= HighLevelMessageExchangeSystemClient_UnregisterCompleted;
             if(RegisteredChannels!=null) RegisteredChannels.Clear();
@@ -459,7 +459,7 @@ namespace Oleg_ivo.HighLevelClient
         /// <param name="message"></param>
         public void SubscribeChannel(ChannelSubscribeMessage message)
         {
-            log.Debug("SubscribeChannel");
+            log.Trace("SubscribeChannel");
 
             highLevelMessageExchangeSystemClient.ChannelSubscribeAsync(message, message.LogicalChannelId);
         }
@@ -470,7 +470,7 @@ namespace Oleg_ivo.HighLevelClient
         /// <param name="message"></param>
         public void UnSubscribeChannel(ChannelSubscribeMessage message)
         {
-            log.Debug("UnSubscribeChannel");
+            log.Trace("UnSubscribeChannel");
 
             highLevelMessageExchangeSystemClient.ChannelUnSubscribeAsync(message, message.LogicalChannelId);
         }
@@ -481,7 +481,7 @@ namespace Oleg_ivo.HighLevelClient
         /// <param name="message"></param>
         public void WriteChannel(InternalLogicalChannelDataMessage message)
         {
-            log.Debug("WriteChannel");
+            log.Trace("WriteChannel");
 
             highLevelMessageExchangeSystemClient.WriteChannelAsync(message);
         }

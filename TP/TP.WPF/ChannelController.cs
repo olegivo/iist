@@ -87,7 +87,7 @@ namespace TP.WPF
         /// </summary>
         public void Register()
         {
-            log.Debug("Register");
+            log.Trace("Register");
 
             try
             {
@@ -139,7 +139,7 @@ namespace TP.WPF
 
         void RegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            log.Debug("RegisterCompleted");
+            log.Trace("RegisterCompleted");
 
             // регистрация завершена
             CanRegister = false;
@@ -197,7 +197,7 @@ namespace TP.WPF
         /// </summary>
         public void Unregister()
         {
-            log.Debug("Unregister");
+            log.Trace("Unregister");
 
             try
             {
@@ -239,7 +239,7 @@ namespace TP.WPF
         /// <param name="value"></param>
         public void WriteChannel(int localChannelId, object value)
         {
-            log.Debug("WriteChannel");
+            log.Trace("WriteChannel");
 
             var realLogicalChannelId = GetRealLogicalChannelId(localChannelId);
             Provider.WriteChannel(new InternalLogicalChannelDataMessage(GetRegName(), null, DataMode.Write, realLogicalChannelId, value.IsBool())
@@ -359,7 +359,7 @@ namespace TP.WPF
 
         private void Provider_ChannelUnRegistered(object sender, MessageEventArgs<ChannelRegistrationMessage> e)
         {
-            log.Debug("Provider_ChannelUnRegistered");
+            log.Trace("Provider_ChannelUnRegistered");
 
             RemoveRegisteredChannel(e.Message);
             Protocol(string.Format("Канал [{0}] теперь недоступен для подписки", e.Message.LogicalChannelId));
@@ -367,7 +367,7 @@ namespace TP.WPF
 
         private void RemoveRegisteredChannel(ChannelRegistrationMessage message)
         {
-            log.Debug("RemoveRegisteredChannel");
+            log.Trace("RemoveRegisteredChannel");
 
             //EventHandler handler = ChannelUnRegistered;
             //if (handler != null) handler(this, EventArgs.Empty);    
@@ -396,7 +396,7 @@ namespace TP.WPF
 
         private void UnSubscribeUnregisteredChannelAsync(object message)
         {
-            log.Debug("UnSubscribeUnregisteredChannelAsync");
+            log.Trace("UnSubscribeUnregisteredChannelAsync");
 
             //Thread.Sleep(TimeSpan.FromSeconds(1));
 
@@ -420,13 +420,13 @@ namespace TP.WPF
 
         private void Provider_ChannelRegistered(object sender, MessageEventArgs<ChannelRegistrationMessage> e)
         {
-            log.Debug("Provider_ChannelRegistered");
+            log.Trace("Provider_ChannelRegistered");
             AddRegisteredChannel(e.Message);
         }
 
         private void Provider_ChannelSubscribeCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            log.Debug("Provider_ChannelSubscribeCompleted");
+            log.Trace("Provider_ChannelSubscribeCompleted");
 
             var channelId = Convert.ToInt32(e.UserState);
             Protocol(string.Format("Произошла подписка на канал [{0}]", channelId));
@@ -438,7 +438,7 @@ namespace TP.WPF
 
         private void Provider_ChannelUnSubscribeCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            log.Debug("Provider_ChannelUnSubscribeCompleted");
+            log.Trace("Provider_ChannelUnSubscribeCompleted");
 
             var channelId = Convert.ToInt32(e.UserState);
             Protocol(string.Format("Произошла отписка от канала [{0}]", channelId));
@@ -503,7 +503,7 @@ namespace TP.WPF
 
         private void SubscribeChannel(ChannelSubscribeMessage message)
         {
-            log.Debug("SubscribeChannel");
+            log.Trace("SubscribeChannel");
 
             DelayedSubscriber.Subscribe(Provider, message);
             //Provider.SubscribeChannel(message);
@@ -511,7 +511,7 @@ namespace TP.WPF
 
         private void UnSubscribeChannel(ChannelSubscribeMessage subscribeMessage)
         {
-            log.Debug("UnSubscribeChannel");
+            log.Trace("UnSubscribeChannel");
 
             Provider.UnSubscribeChannel(subscribeMessage);
         }
