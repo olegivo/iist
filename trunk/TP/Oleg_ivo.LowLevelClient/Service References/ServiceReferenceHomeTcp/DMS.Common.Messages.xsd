@@ -167,8 +167,8 @@
   <xs:element name="RegistrationMode" nillable="true" type="tns:RegistrationMode" />
   <xs:simpleType name="LogicalChannelState">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="Off" />
-      <xs:enumeration value="On" />
+      <xs:enumeration value="Break" />
+      <xs:enumeration value="Work" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="LogicalChannelState" nillable="true" type="tns:LogicalChannelState" />

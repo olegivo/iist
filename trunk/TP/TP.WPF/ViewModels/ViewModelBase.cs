@@ -73,7 +73,7 @@ namespace TP.WPF.ViewModels
             if(IndicatorViewModels.ContainsKey(channelId))
             {
                 var indicatorViewModel = IndicatorViewModels[channelId];
-                indicatorViewModel.IsOn = message.State==LogicalChannelState.On;
+                indicatorViewModel.IsOn = message.State==LogicalChannelState.Work;
             }
         }
 
