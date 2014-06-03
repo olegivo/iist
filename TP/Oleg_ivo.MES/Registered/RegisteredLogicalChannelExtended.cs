@@ -17,11 +17,12 @@ namespace Oleg_ivo.MES.Registered
         /// </summary>
         /// <param name="id">Идентификатор канала</param>
         /// <param name="dataMode">Режим данных канала</param>
-        public RegisteredLogicalChannelExtended(int id, DataMode dataMode)
+        /// <param name="initialState"></param>
+        public RegisteredLogicalChannelExtended(int id, DataMode dataMode, LogicalChannelState initialState)
             : base(id)
         {
             DataMode = dataMode;
-            State = LogicalChannelState.Break;
+            State = initialState;
             ChangeState += RegisteredLogicalChannel_ChangeState;
             Read += RegisteredLogicalChannel_Read;
             Write += RegisteredLogicalChannel_Write;

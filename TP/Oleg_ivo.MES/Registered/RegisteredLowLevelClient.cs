@@ -31,8 +31,7 @@ namespace Oleg_ivo.MES.Registered
             var registeredLogicalChannel = new RegisteredLogicalChannelExtended
                 (
                     message.LogicalChannelId, 
-                    message.DataMode
-                )
+                    message.DataMode, message.IsDiscrete ? LogicalChannelState.Work : LogicalChannelState.Break/*дискретные каналы не имеют состояния => всегда Work*/)
                 {
                     MinValue = message.MinValue,
                     MaxValue = message.MaxValue,
