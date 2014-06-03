@@ -69,6 +69,9 @@ namespace DMS.Common.Messages
         [DataMember]
         public string Description { get; set; }
 
+        [DataMember]
+        public bool IsDiscrete { get; set; }
+
         public override object Clone()
         {
             return new ChannelRegistrationMessage

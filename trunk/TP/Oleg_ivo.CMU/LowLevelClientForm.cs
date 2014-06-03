@@ -212,7 +212,8 @@ namespace Oleg_ivo.CMU
                         MinValue = channel.MinValue,
                         MaxValue = channel.MaxValue,
                         MinNormalValue = channel.MinNormalValue,
-                        MaxNormalValue = channel.MaxNormalValue
+                        MaxNormalValue = channel.MaxNormalValue,
+                        IsDiscrete = channel.IsDiscrete
                     };
 
 

@@ -9,7 +9,8 @@ namespace Oleg_ivo.MES.High
     {
          public static IRegisteredChannel GetRegisteredChannel(this LogicalChannel channel)
          {
-             return new RegisteredLogicalChannelExtended(channel.Id, DataMode.Unknown/*TODO: DataMode.Unknown*/)
+             return new RegisteredLogicalChannelExtended(channel.Id, DataMode.Unknown, LogicalChannelState.Break
+/*TODO: DataMode.Unknown*/)
                  {
                      Description = channel.Description,
                      MinValue = channel.MinValue,

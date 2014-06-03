@@ -264,14 +264,17 @@ namespace Oleg_ivo.LowLevelClient
                 return;
             }
 
-            var stateLogicalChannelId = channel.Entity.StateLogicalChannelId;
-            if (stateLogicalChannelId.HasValue)
+            if (!channel.IsDiscrete)/*дискретные каналы не имеют состояния => всегда Work*/
             {
-                var stateChannel = GetLogicalChannels().FirstOrDefault(LogicalChannel.GetFindChannelPredicate(stateLogicalChannelId.Value));
-                if(stateChannel!=null)
-                    Planner.StartPoll(stateChannel);
+                var stateLogicalChannelId = channel.Entity.StateLogicalChannelId;
+                if (stateLogicalChannelId.HasValue)
+                {
+                    var stateChannel = GetLogicalChannels().FirstOrDefault(LogicalChannel.GetFindChannelPredicate(stateLogicalChannelId.Value));
+                    if (stateChannel != null)
+                        Planner.StartPoll(stateChannel);
+                }
+                
             }
-
             if (channel.IsInput)
             {
                 Protocol(string.Format("{0} был подписан на получение новых данных", channel));
