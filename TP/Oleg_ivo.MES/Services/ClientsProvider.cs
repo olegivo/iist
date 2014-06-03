@@ -1,22 +1,36 @@
 ﻿using System.Linq;
+using Autofac;
 using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Plc.Entities;
+using Oleg_ivo.Tools.ConnectionProvider;
 
 namespace Oleg_ivo.MES.Services
 {
     public class ClientsProvider
     {
-        private readonly PlcDataContext dataContext;
+        private PlcDataContext dataContext;
+        private readonly IComponentContext context;
 
-        public ClientsProvider(PlcDataContext dataContext)
+        public ClientsProvider(IComponentContext context)
         {
-            this.dataContext = Enforce.ArgumentNotNull(dataContext, "dataContext");
+            this.context = Enforce.ArgumentNotNull(context, "");
+        }
+
+        private PlcDataContext DataContext
+        {
+            get
+            {
+                return dataContext ??
+                       (dataContext =
+                           context.Resolve<PlcDataContext>(new TypedParameter(typeof(string),
+                               context.Resolve<DbConnectionProvider>().DefaultConnectionString)));
+            }
         }
 
         public int? GetClientId(string clientName)
         {
             return
-                dataContext.Clients
+                DataContext.Clients
                     .Where(client => client.ClientName == clientName)
                     .Select(client => (int?)client.ClientId)
                     .SingleOrDefault();
