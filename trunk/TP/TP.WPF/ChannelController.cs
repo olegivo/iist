@@ -152,10 +152,12 @@ namespace TP.WPF
                 foreach (var registeredChannel in registeredChannels)
                 {
                     //TODO: заполнить RegNameFrom
-                    ChannelRegistrationMessage message = new ChannelRegistrationMessage(null, null,
-                                                                                        RegistrationMode.Register,
-                                                                                        DataMode.Read,
-                                                                                        registeredChannel.LogicalChannelId);
+                    var message = new ChannelRegistrationMessage(null,
+                        null,
+                        RegistrationMode.Register,
+                        DataMode.Read,
+                        registeredChannel.LogicalChannelId);
+                    //эмуляция ситуации "канал только что зарегистрирован"
                     AddRegisteredChannel(message);
                 }
         }

@@ -1,6 +1,7 @@
 using System.ServiceModel.Channels;
 using DMS.Common;
 using NLog;
+using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Base.Communication;
 using Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp;
 using DMS.Common.Events;
@@ -26,13 +27,23 @@ namespace Oleg_ivo.LowLevelClient
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
+        private readonly Planner planner;
+        private readonly IDistributedMeasurementInformationSystem distributedMeasurementInformationSystem;
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ControlManagementUnit" />.
-        /// Для того, чтобы построить конфигурацию каналов, следует задать делегат <see cref="GetDistributedMeasurementInformationSystem"/> 
-        /// и вызвать метода <see cref="BuildSystemConfiguration"/>
         /// </summary>
-        public ControlManagementUnit()
+        /// <param name="planner"></param>
+        /// <param name="distributedMeasurementInformationSystem"></param>
+        public ControlManagementUnit(Planner planner, IDistributedMeasurementInformationSystem distributedMeasurementInformationSystem)
         {
+            this.distributedMeasurementInformationSystem =
+                Enforce.ArgumentNotNull(distributedMeasurementInformationSystem,
+                    "distributedMeasurementInformationSystem");
+            this.planner = Enforce.ArgumentNotNull(planner, "planner");
+            this.planner.NewDadaReceived += Instance_NewDadaReceived;
+
+            //TODO:Timers to RX
             reconnectTimer = new Timer(5000);
             reconnectTimer.Elapsed += reconnectTimer_Elapsed;
 
@@ -40,9 +51,6 @@ namespace Oleg_ivo.LowLevelClient
             CallbackHandler.ChannelSubscribed += CallbackHandler_ChannelSubscribed;
             CallbackHandler.ChannelUnSubscribed += CallbackHandler_ChannelUnSubscribed;
             CallbackHandler.HasWriteChannel += CallbackHandler_HasWriteChannel;
-
-            Planner = Planner.Instance;
-            Planner.NewDadaReceived += Instance_NewDadaReceived;
         }
 
         /// <summary>
@@ -76,40 +84,16 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public void BuildSystemConfiguration()
         {
-            if (DistributedMeasurementInformationSystem != null)
-                DistributedMeasurementInformationSystem.BuildSystemConfiguration();
+            if (distributedMeasurementInformationSystem != null)
+                distributedMeasurementInformationSystem.BuildSystemConfiguration();
         }
-
-        /// <summary>
-        /// Планировщик опроса каналов
-        /// </summary>
-        private Planner Planner { get; set; }
-
-        ///<summary>
-        /// Распределённая информационно-измерительная система (фасад)
-        ///</summary>
-        private IDistributedMeasurementInformationSystem DistributedMeasurementInformationSystem
-        {
-            get
-            {
-                if (GetDistributedMeasurementInformationSystem == null)
-                    throw new NullReferenceException(
-                        "Не указан делегат для получения фасада распределённой информационно-измерительной системы");
-                return GetDistributedMeasurementInformationSystem();
-            }
-        }
-
-        /// <summary>
-        /// Делегат для получения фасада распределённой информационно-измерительной системы
-        /// </summary>
-        public Func<IDistributedMeasurementInformationSystem> GetDistributedMeasurementInformationSystem { private get; set; }
 
         ///<summary>
         /// Логические каналы
         ///</summary>
         protected virtual IEnumerable<LogicalChannel> GetLogicalChannels()
         {
-            return DistributedMeasurementInformationSystem.PlcManager.LogicalChannels;
+            return distributedMeasurementInformationSystem.PlcManager.LogicalChannels;
         }
 
 
@@ -271,7 +255,7 @@ namespace Oleg_ivo.LowLevelClient
                 {
                     var stateChannel = GetLogicalChannels().FirstOrDefault(LogicalChannel.GetFindChannelPredicate(stateLogicalChannelId.Value));
                     if (stateChannel != null)
-                        Planner.StartPoll(stateChannel);
+                        planner.StartPoll(stateChannel);
                 }
                 
             }
@@ -279,7 +263,7 @@ namespace Oleg_ivo.LowLevelClient
             {
                 Protocol(string.Format("{0} был подписан на получение новых данных", channel));
                 //запустить таймер опроса для зарегистрированного канала после подписки на него
-                Planner.StartPoll(channel);
+                planner.StartPoll(channel);
             }
             else if (channel.IsOutput)
             {
@@ -308,13 +292,13 @@ namespace Oleg_ivo.LowLevelClient
             {
                 var stateChannel = GetLogicalChannels().FirstOrDefault(LogicalChannel.GetFindChannelPredicate(stateLogicalChannelId.Value));
                 if (stateChannel != null)
-                    Planner.StopPoll(stateChannel);
+                    planner.StopPoll(stateChannel);
             }
 
             if (channel.IsInput)
             {
                 Protocol(string.Format("{0} был отписан от получения новых данных", channel));
-                Planner.StopPoll(channel);
+                planner.StopPoll(channel);
             }
             else if (channel.IsOutput)
             {
@@ -393,7 +377,7 @@ namespace Oleg_ivo.LowLevelClient
         public void Unregister()
         {
             //перед тем, как совершить последнюю операцию сессии останавливаем все попытки посыла сообщений
-            Planner.StopAllPolls();
+            planner.StopAllPolls();
             LowLevelMessageExchangeSystemClient.UnregisterAsync(new RegistrationMessage(GetRegName(), null, RegistrationMode.Unregister, DataMode.Unknown));
         }
 
@@ -462,7 +446,7 @@ namespace Oleg_ivo.LowLevelClient
 
             if (double.TryParse(s, out interval))
             {
-                Planner.AddPoll(channel, interval, synchronizingObject);
+                planner.AddPoll(channel, interval, synchronizingObject);
             }
             else
             {
@@ -489,7 +473,7 @@ namespace Oleg_ivo.LowLevelClient
             if (channel == null)
                 throw new Exception("Канал не найден");
 
-            Planner.RemovePoll(channel);
+            planner.RemovePoll(channel);
         }
 
         /// <summary>

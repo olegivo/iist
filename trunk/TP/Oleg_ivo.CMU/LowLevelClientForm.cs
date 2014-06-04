@@ -8,7 +8,6 @@ using DMS.Common.Messages;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.CMU.Properties;
 using Oleg_ivo.LowLevelClient;
-using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Tools.UI;
 
@@ -19,8 +18,6 @@ namespace Oleg_ivo.CMU
     /// </summary>
     public partial class LowLevelClientForm : Form//TODO:WinForms -> WPF
     {
-        private ControlManagementUnit _ControlManagementUnit;
-
         /// <summary>
         /// 
         /// </summary>
@@ -29,27 +26,8 @@ namespace Oleg_ivo.CMU
             InitializeComponent();
         }
 
-        internal ControlManagementUnit ControlManagementUnit
-        {
-            get
-            {
-                return _ControlManagementUnit ??
-                       (_ControlManagementUnit =
-                        new ControlManagementUnit
-                            {
-                                GetDistributedMeasurementInformationSystem = GetDistributedMeasurementInformationSystem
-                            });
-            }
-        }
-
-        [Dependency]
-        public IDistributedMeasurementInformationSystem DMIS { private get; set; }
-
-        private IDistributedMeasurementInformationSystem GetDistributedMeasurementInformationSystem()
-        {
-            return DMIS;
-        }
-
+        [Dependency(Required = true)]
+        public ControlManagementUnit ControlManagementUnit { get; set; }
 
         void ControlManagementUnit_NeedProtocol(object sender, EventArgs e)
         {

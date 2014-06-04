@@ -33,6 +33,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -416,6 +418,10 @@
       <Project>{332a1894-922f-49a1-bd6a-e4e981fa2fec}</Project>
       <Name>Oleg_ivo.Tools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Oleg_ivo.LowLevelClient\Oleg_ivo.LowLevelClient.csproj">
+      <Project>{E4A5FB38-CE2F-4096-AA67-255D0CE35C0A}</Project>
+      <Name>Oleg_ivo.LowLevelClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Oleg_ivo.Plc\Oleg_ivo.Plc.csproj">
       <Project>{69B7862C-FA74-4ED5-A0F7-BF7216204016}</Project>
       <Name>Oleg_ivo.Plc</Name>
@@ -499,6 +505,13 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

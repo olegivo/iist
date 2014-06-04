@@ -1,5 +1,6 @@
 using Autofac;
 using Oleg_ivo.Base.Autofac.Modules;
+using Oleg_ivo.LowLevelClient.DI;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Entities;
 using Oleg_ivo.Plc.Factory;
@@ -9,13 +10,11 @@ using Oleg_ivo.WAGO.Factory;
 
 namespace Oleg_ivo.WAGO.Autofac
 {
-    public class WagoAutofacModule : BaseAutofacModule
+    public class WagoAutofacModule : LowLevelClientModule
     {
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
-
-            builder.RegisterType<PlcDataContext>().SingleInstance();//TODO: регистрация конструктора в контексте
 
             builder.RegisterType<ConfigurationManager>()
                    .SingleInstance();
@@ -40,9 +39,6 @@ namespace Oleg_ivo.WAGO.Autofac
                 .RegisterType<WagoPlcFactory>()
                 .As<IPlcFactory>();
 
-            builder
-                .RegisterType<PlcManager>()
-                .As<IPlcManager>();
         }
     }
 }
