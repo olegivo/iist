@@ -127,6 +127,7 @@
     <Compile Include="CallbackHandler.cs" />
     <Compile Include="ControlManagementUnit.cs" />
     <Compile Include="CustomErrorHandler.cs" />
+    <Compile Include="DI\LowLevelClientModule.cs" />
     <Compile Include="MeasurementPoll.cs" />
     <Compile Include="NewDataReceivedEventArgs.cs" />
     <Compile Include="Planner.cs" />

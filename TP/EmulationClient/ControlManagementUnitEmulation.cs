@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using DMS.Common.Messages;
 using NLog;
 using Oleg_ivo.LowLevelClient;
+using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Tools.UI;
 
@@ -21,7 +22,9 @@ namespace EmulationClient
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ControlManagementUnitEmulation" />.
         /// </summary>
-        public ControlManagementUnitEmulation()
+        /// <param name="planner"></param>
+        /// <param name="distributedMeasurementInformationSystem"></param>
+        public ControlManagementUnitEmulation(Planner planner, IDistributedMeasurementInformationSystem distributedMeasurementInformationSystem) : base(planner, distributedMeasurementInformationSystem)
         {
             CanRegister = true;
             IsModulationMode = true; 

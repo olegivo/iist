@@ -10,38 +10,10 @@ namespace Oleg_ivo.LowLevelClient
     ///</summary>
     public class Planner
     {
-        #region Singleton
-
-        private static Planner _instance;
-
-        ///<summary>
-        /// Единственный экземпляр
-        ///</summary>
-        public static Planner Instance//TODO: 2 context
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new Planner();
-                }
-                return _instance;
-            }
-        }
-
-        /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="Planner" />.
-        /// </summary>
-        private Planner()
-        {
-        }
-
-        #endregion
-
         /// <summary>
         /// Опросы каналов
         /// </summary>
-        private readonly Dictionary<LogicalChannel, MeasurementPoll> MeasurementPolls = new Dictionary<LogicalChannel, MeasurementPoll>();
+        private readonly Dictionary<LogicalChannel, MeasurementPoll> measurementPolls = new Dictionary<LogicalChannel, MeasurementPoll>();
 
         /// <summary>
         /// Добавить опрос канала
@@ -51,18 +23,18 @@ namespace Oleg_ivo.LowLevelClient
         /// <param name="synchronizingObject"></param>
         public void AddPoll(LogicalChannel channel, double interval, ISynchronizeInvoke synchronizingObject)
         {
-            MeasurementPoll measurementPoll = GetMeasurementPoll(channel);
+            var measurementPoll = GetMeasurementPoll(channel);
             if (measurementPoll != null)
                 throw new Exception("Уже есть опрос для данного канала");
 
-            MeasurementPoll poll = new MeasurementPoll(channel, interval, synchronizingObject);
-            MeasurementPolls.Add(channel, poll);
+            var poll = new MeasurementPoll(channel, interval, synchronizingObject);
+            measurementPolls.Add(channel, poll);
             //throw new NotImplementedException("Учесть настройки опроса");
         }
 
         private MeasurementPoll GetMeasurementPoll(LogicalChannel channel)
         {
-            return MeasurementPolls.ContainsKey(channel) ? MeasurementPolls[channel] : null;
+            return measurementPolls.ContainsKey(channel) ? measurementPolls[channel] : null;
         }
 
         /// <summary>
@@ -71,12 +43,12 @@ namespace Oleg_ivo.LowLevelClient
         /// <param name="channel"></param>
         public void RemovePoll(LogicalChannel channel)
         {
-            MeasurementPoll measurementPoll = GetMeasurementPoll(channel);
+            var measurementPoll = GetMeasurementPoll(channel);
             if (measurementPoll == null)
                 throw new Exception("Не найден опрос для данного канала");
 
             measurementPoll.StopPoll();//обязательно остановить, иначе будет тикать
-            MeasurementPolls.Remove(channel);
+            measurementPolls.Remove(channel);
             //throw new NotImplementedException("Удалить опрос");
         }
 
@@ -97,11 +69,9 @@ namespace Oleg_ivo.LowLevelClient
 
         void measurementPoll_Elapsed(object sender, NewDataReceivedEventArgs e)
         {
-            EventHandler<NewDataReceivedEventArgs> handler = NewDadaReceived;
+            var handler = NewDadaReceived;
             if (handler != null)
-            {
                 handler(sender, e);
-            }
         }
 
         /// <summary>
@@ -116,7 +86,7 @@ namespace Oleg_ivo.LowLevelClient
         /// <exception cref="NotImplementedException"></exception>
         public void StopPoll(LogicalChannel channel)
         {
-            MeasurementPoll measurementPoll = GetMeasurementPoll(channel);
+            var measurementPoll = GetMeasurementPoll(channel);
             if (measurementPoll == null)
                 throw new Exception("Не найден опрос для данного канала");
 
@@ -129,10 +99,8 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public void StopAllPolls()
         {
-            foreach (var measurementPoll in MeasurementPolls)
-            {
+            foreach (var measurementPoll in measurementPolls)
                 measurementPoll.Value.StopPoll();
-            }
         }
     }
 }
