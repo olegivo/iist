@@ -6,7 +6,6 @@ using DMS.Common.MessageExchangeSystem;
 using DMS.Common.Messages;
 using NLog;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
-using Oleg_ivo.MES.Logging;
 using Oleg_ivo.MES.Services;
 using Oleg_ivo.Plc.Entities;
 using Oleg_ivo.Tools.ConnectionProvider;

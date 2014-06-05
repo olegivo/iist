@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Subjects;
 using System.ServiceModel;
-using System.Threading;
 using Autofac;
 using DMS.Common.Messages;
 using NLog;
@@ -10,7 +9,7 @@ using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Plc.Entities;
 using Oleg_ivo.Tools.ConnectionProvider;
 
-namespace Oleg_ivo.MES.Logging
+namespace Oleg_ivo.MES.Services
 {
     ///<summary>
     /// Протоколирование сообщений
@@ -40,13 +39,10 @@ namespace Oleg_ivo.MES.Logging
         {
             get
             {
-                lock (context)
-                {
-                    return dataContext ??
-                           (dataContext =
-                            context.Resolve<PlcDataContext>(new TypedParameter(typeof(string),
-                                                                               context.Resolve<DbConnectionProvider>().DefaultConnectionString)));                    
-                }
+                return dataContext ??
+                       (dataContext =
+                           context.Resolve<PlcDataContext>(new TypedParameter(typeof(string),
+                               context.Resolve<DbConnectionProvider>().DefaultConnectionString)));
             }
         }
 
@@ -64,18 +60,17 @@ namespace Oleg_ivo.MES.Logging
             public DateTime IncomeTimeStamp { get; internal set; }
         }
 
-        private readonly Queue<QueueElement> queue = new Queue<QueueElement>();
-
         /// <summary>
         /// Запустить очередь протоколирования
         /// </summary>
         public void Start()
         {
-            if (isStopped)
+            lock (this)
             {
+                if (!isStopped) return;
+                subject = new Subject<QueueElement>();
+                subject.Subscribe(queueElement => ProtocolMessage(queueElement.Message, queueElement.IncomeTimeStamp));
                 isStopped = false;
-                Thread thread = new Thread(MainLoop);
-                thread.Start();
             }
         }
 
@@ -85,23 +80,23 @@ namespace Oleg_ivo.MES.Logging
         /// <param name="forceInterruptProcessing">Остановить обработку оставшейся очереди</param>
         public void Stop(bool forceInterruptProcessing)
         {
-            if (!isStopped)
+            lock (this)
+            {
+                if (isStopped) return;
                 isStopped = true;
-
-            // в режиме остановки обработки оставшейся очереди не ждём, когда очередь обработается, а очищаем её принудительно
-            if (forceInterruptProcessing)
-            {
-                Log.Debug("Элементов в очереди - {0}", queue.Count);
-                queue.Clear();
-                Log.Debug("Очередь принудительно очищена");
-            }
-            else
-            {
-                Log.Debug("Ожидание обработки оставшейся очереди...");
-                while (queue.Count > 0)
+                if (forceInterruptProcessing)
                 {
+                    subject.OnCompleted();//TODO:аварийное прерывание обработки?
+                    Log.Debug("Очередь принудительно очищена");
                 }
-                Log.Debug("Очередь обработана");
+                else
+                {
+                    Log.Debug("Ожидание обработки оставшейся очереди");
+                    subject.OnCompleted();
+                    Log.Debug("Очередь обработана");
+                }
+                subject.Dispose();
+                subject = null;
             }
         }
 
@@ -111,37 +106,17 @@ namespace Oleg_ivo.MES.Logging
         /// <param name="message"></param>
         private void AddMessageToQueue(InternalMessage message)
         {
-            if (isStopped)
-                throw new InvalidOperationException("Невозможно добавить сообщение в очередь, т.к. протоколирование остановлено");
-
-            queue.Enqueue(new QueueElement { IncomeTimeStamp = DateTime.Now, Message = message });
-        }
-
-        private void MainLoop()
-        {
-            while (!isStopped || queue.Count > 0)//TODO:переделать на асинхронное взаимодействие очереди
+            lock (this)
             {
-                CheckNewData();
+                if (isStopped)
+                    throw new InvalidOperationException("Невозможно добавить сообщение в очередь, т.к. протоколирование остановлено");
+
+                subject.OnNext(new QueueElement { IncomeTimeStamp = DateTime.Now, Message = message });                
             }
         }
 
         private bool isStopped;
-
-        private void CheckNewData()
-        {
-            //ClearExcessQueueElements();
-
-            if (queue.Count > 0)
-            {
-                Log.Debug("Найдены данные для отправки");
-
-                var queueElement = queue.Dequeue();
-                //Log.Debug("Данные:\t{0}", GetStringBytes(queueElement));
-                Log.Debug("Осталось элементов в очереди - {0}", queue.Count);
-                
-                ProtocolMessage(queueElement.Message, queueElement.IncomeTimeStamp);
-            }
-        }
+        private Subject<QueueElement> subject;
 
         /// <summary>
         /// Протоколировать сообщение
@@ -161,6 +136,9 @@ namespace Oleg_ivo.MES.Logging
         /// <param name="incomeTimeStamp"></param>
         private void ProtocolMessage(InternalMessage message, DateTime incomeTimeStamp)
         {
+            //Log.Debug("Найдены данные для отправки");
+            //Log.Debug("Осталось элементов в очереди: {0}", subject.Count().First());
+
             var dataMessage = message as InternalLogicalChannelDataMessage;
             if (dataMessage == null)
                 throw new ArgumentOutOfRangeException("Неожиданный тип сообщения" + message.GetType());

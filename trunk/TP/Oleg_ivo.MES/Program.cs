@@ -11,8 +11,8 @@ using Oleg_ivo.Base.Autofac.Modules;
 using Oleg_ivo.Base.Communication;
 using Oleg_ivo.MES.DI;
 using Oleg_ivo.MES.High;
-using Oleg_ivo.MES.Logging;
 using Oleg_ivo.MES.Low;
+using Oleg_ivo.MES.Services;
 using Oleg_ivo.Tools.ExceptionCatcher;
 using Logger = Oleg_ivo.Tools.Logger;
 

@@ -3,7 +3,7 @@ using DMS.Common.Events;
 using DMS.Common.MessageExchangeSystem.HighLevel;
 using DMS.Common.Messages;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
-using Oleg_ivo.MES.Logging;
+using Oleg_ivo.MES.Services;
 
 namespace Oleg_ivo.MES.Registered
 {
