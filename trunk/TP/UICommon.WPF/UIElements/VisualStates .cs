@@ -27,7 +27,7 @@ namespace UICommon.WPF.UIElements
             Control c = sender as Control;
             if (c != null)
             {
-                VisualStateManager.GoToState(c, (string)args.NewValue??"NoSignal", true);
+                VisualStateManager.GoToState(c, (string)args.NewValue??"NotRegistered", true);
             }
             else
             {

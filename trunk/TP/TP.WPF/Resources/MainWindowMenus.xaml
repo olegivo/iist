@@ -28,8 +28,7 @@
             </MenuItem>
         </MenuItem>
         <MenuItem Header="Окна и панели">
-            <MenuItem Header="Показать панель индикаторов"></MenuItem>
-            <MenuItem Header="Показать отладочную панель"></MenuItem>
+            <MenuItem Header="Восстановить расположение панелей" Command="{Binding RestoreLayoutCommand}"></MenuItem>
         </MenuItem>
         <MenuItem Header="Справка">
             <MenuItem Header="Репозиторий и обновления" Command="{Binding GoForUpdatesCommand}"></MenuItem>

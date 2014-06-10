@@ -7,47 +7,48 @@
 	mc:Ignorable="d"
 	x:Class="UICommon.WPF.UIElements.ucFurnanceLoad"
 	uiElements:VisualStates.CurrentState="{Binding CurrentState}"
-	x:Name="FurnanceLoad1"
-	d:DesignWidth="46"
-	d:DesignHeight="28">
+	x:Name="FurnanceLoad1" Height="30" Width="50">
 
 	<Canvas x:Name="LayoutRoot" ClipToBounds="True">
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="States">
-				<VisualState x:Name="NoSignal"/>
-				<VisualState x:Name="WorkingState">
-					<Storyboard>
-							<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="rectangle">
-								<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-								<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0.141"/>
-							</DoubleAnimationUsingKeyFrames>
+				<VisualStateGroup.Transitions>
+					<VisualTransition From="NotRegistered" GeneratedDuration="0:0:1" To="WorkingState">
+						<Storyboard>
 							<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="rectangle">
-								<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-								<EasingDoubleKeyFrame KeyTime="0:0:1" Value="-11.167"/>
+								<EasingDoubleKeyFrame KeyTime="0:0:1" Value="-30"/>
+							</DoubleAnimationUsingKeyFrames>
+							<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="rectangle">
+								<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
 							</DoubleAnimationUsingKeyFrames>
 							<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="path">
-								<EasingDoubleKeyFrame KeyTime="0" Value="15.917"/>
-								<EasingDoubleKeyFrame KeyTime="0:0:3" Value="-28.156"/>
+								<EasingDoubleKeyFrame KeyTime="0:0:1" Value="-30"/>
 							</DoubleAnimationUsingKeyFrames>
-							<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="path">
-								<EasingDoubleKeyFrame KeyTime="0" Value="-1.667"/>
-								<EasingDoubleKeyFrame KeyTime="0:0:3" Value="-1.667"/>
-							</DoubleAnimationUsingKeyFrames>
+						</Storyboard>
+					</VisualTransition>
+				</VisualStateGroup.Transitions>
+				<VisualState x:Name="NotRegistered"/>
+				<VisualState x:Name="WorkingState">
+					<Storyboard RepeatBehavior="Forever">
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="path2">
+							<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+							<EasingDoubleKeyFrame KeyTime="0:0:1" Value="-10"/>
+						</DoubleAnimationUsingKeyFrames>
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="path2">
+							<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+							<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+						</DoubleAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="path">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+						</ObjectAnimationUsingKeyFrames>
 					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
-		<Path Data="M570,198L615,198L615,171L570,171z" Height="26" Canvas.Left="1" Stretch="Fill" Canvas.Top="1" Width="44">
-			<Path.Fill>
-				<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-					<GradientStop Color="#FFCE232C" Offset="0"/>
-					<GradientStop Color="#FFF0553C" Offset="0.5"/>
-					<GradientStop Color="#FFFFDD17" Offset="0.768218994140625"/>
-					<GradientStop Color="#FFFFDD17" Offset="1"/>
-				</LinearGradientBrush>
-			</Path.Fill>
-		</Path>
-		<Path x:Name="path" Data="M16.000475,26.906253 L17.531341,17.906593 13.625737,17.906648 20.030738,11.094256 25.998323,17.875 22.061671,17.90654 23.530105,26.937254 z" Fill="#FF5C2626" Height="15.843" Canvas.Left="16.917" Stretch="Fill" Canvas.Top="12.157" Width="12.375" RenderTransformOrigin="0.5,0.5">
+		<Path x:Name="path2" Data="M9.5,9.5 C9.5,9.5 9.5,19.5 14.5,19.5 19.5,19.5 19.5,9.5 19.5,9.5 19.5,9.5 19.5,19.5 24.5,19.5 29.5,19.5 29.5,9.5 29.5,9.5 29.5,9.5 29.5,19.5 34.5,19.5 39.5,19.5 39.5,9.5 39.5,9.5 39.5,9.5 39.5,19.5 44.5,19.5 49.5,19.5 49.5,9.5&#xD;&#xA;49.5,9.5 49.5,9.590401 49.500234,19.5005 54.500234,19.5005 59.500255,19.5005 59.500255,9.501 59.500255,9.501 59.500255,9.501 59.500255,19.5005 64.500276,19.5 69.500298,19.4995 69.500298,19.5 69.500298,19.5 L69.500298,29.5 -0.5,29.5 -0.5,19.5 C-0.5,19.5 -0.5,19.5 4.5,19.5 9.5,19.5 9.5,10.793121 9.5,9.5 z" Height="21.001" Canvas.Left="-0.5" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF231F20" StrokeThickness="1" StrokeMiterLimit="10" StrokeLineJoin="Miter" Canvas.Top="9.499" Width="71" RenderTransformOrigin="0.5,0.5">
 			<Path.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform/>
@@ -56,8 +57,14 @@
 					<TranslateTransform/>
 				</TransformGroup>
 			</Path.RenderTransform>
+			<Path.Fill>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="Red" Offset="0"/>
+					<GradientStop Color="#FFD2E60E" Offset="1"/>
+				</LinearGradientBrush>
+			</Path.Fill>
 		</Path>
-		<Rectangle x:Name="rectangle" Height="26" Canvas.Left="1" Canvas.Top="1" Width="44" Fill="#FF605C5C" RenderTransformOrigin="0.5,0.5">
+		<Rectangle x:Name="rectangle" Height="30" Width="50" Fill="#FF605C5C" RenderTransformOrigin="0.5,0.5">
 			<Rectangle.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform/>
@@ -67,7 +74,17 @@
 				</TransformGroup>
 			</Rectangle.RenderTransform>
 		</Rectangle>
-		<Path x:Name="path1" Data="M615,198L570,198L570,171L615,171z" Height="28" Canvas.Left="0" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF231F20" StrokeThickness="1" StrokeMiterLimit="10" StrokeLineJoin="Miter" Canvas.Top="0" Width="46" RenderTransformOrigin="0.5,0.5">
+		<Path x:Name="path" Data="M16.708136,23.937254 L16.708136,13.937256 11.709111,13.937256 21.70716,8.9372567 31.705209,13.937256 26.706185,13.937256 26.706185,23.937254 z" Fill="#FF231F20" Height="14.036" Canvas.Left="20" Stretch="Fill" Canvas.Top="15" Width="10" RenderTransformOrigin="0.5,0.5">
+			<Path.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform/>
+					<SkewTransform/>
+					<RotateTransform/>
+					<TranslateTransform/>
+				</TransformGroup>
+			</Path.RenderTransform>
+		</Path>
+		<Path x:Name="path1" Data="M615,198L570,198L570,171L615,171z" Height="30" Canvas.Left="0" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF231F20" StrokeThickness="1" StrokeMiterLimit="10" StrokeLineJoin="Miter" Canvas.Top="0" Width="50" RenderTransformOrigin="0.5,0.5">
 			<Path.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform/>

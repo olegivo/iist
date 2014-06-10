@@ -8,43 +8,49 @@
 	x:Class="UICommon.WPF.UIElements.ucFan"
     uiElements:VisualStates.CurrentState="{Binding CurrentState}"
 	x:Name="ucFun1"
-	d:DesignWidth="46" d:DesignHeight="37">
+	d:DesignWidth="46" d:DesignHeight="37" Width="50" Height="40">
 
-	<Grid x:Name="LayoutRoot">
+	<Viewbox Stretch="Fill">
 		<VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="States">
-                <VisualState x:Name="NoSignal"/>
-                <VisualState x:Name="OffState"/>
-                <VisualState x:Name="WorkingState"/>
-				<VisualState x:Name="AlarmState">
-						<Storyboard RepeatBehavior="Forever">
-							<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="path">
-								<EasingColorKeyFrame KeyTime="0:0:0.3" Value="#FFFF3717"/>
-							</ColorAnimationUsingKeyFrames>
-						</Storyboard>
+			<VisualStateGroup x:Name="States">
+				<VisualState x:Name="NotRegistered"/>
+				<VisualState x:Name="WorkingState">
+					<Storyboard RepeatBehavior="Forever">
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="path">
+							<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+							<EasingDoubleKeyFrame KeyTime="0:0:2" Value="1"/>
+						</DoubleAnimationUsingKeyFrames>
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="path">
+							<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+							<EasingDoubleKeyFrame KeyTime="0:0:2" Value="-360"/>
+						</DoubleAnimationUsingKeyFrames>
+					</Storyboard>
 				</VisualState>
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
-		<Path Data="M480,189L507,189L507,171L480,171z" Height="18" Stretch="Fill" Margin="0.5,0.5,18.5,0" VerticalAlignment="Top">
-			<Path.Fill>
-				<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-					<GradientStop Color="#FFF5FBFE" Offset="0"/>
-					<GradientStop Color="#FFAAB1B5" Offset="0.56741297245025635"/>
-					<GradientStop Color="#FFCBD1D6" Offset="1"/>
-				</LinearGradientBrush>
-			</Path.Fill>
-		</Path>
-		<Path Data="M507,189L480,189L480,171L507,171z" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF231F20" StrokeThickness="1" StrokeMiterLimit="10" StrokeLineJoin="Miter" Margin="0,0,18,18"/>
-        <Path x:Name="path"  Data="F1M489,189C489,198.942,497.058,207,507,207L507,207C516.941,207,525,198.942,525,189L525,189C525,179.059,516.941,171,507,171L507,171C497.058,171,489,179.059,489,189" Stretch="Fill" Margin="9.5,0.5,0.5,0.5">
-			<Path.Fill>
-				<RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5" RadiusY="0.5" RadiusX="0.5">
-					<GradientStop Color="#FFF5FBFE" Offset="0"/>
-					<GradientStop Color="#FFAAB1B5" Offset="0.56741297245025635"/>
-					<GradientStop Color="#FFCBD1D6" Offset="1"/>
-				</RadialGradientBrush>
-			</Path.Fill>
-		</Path>
-		<Path Data="M525,189C525,198.941,516.941,207,507,207C497.059,207,489,198.941,489,189C489,179.059,497.059,171,507,171C516.941,171,525,179.059,525,189z" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF231F20" StrokeThickness="1" StrokeMiterLimit="10" StrokeLineJoin="Miter" Margin="9,0,0,0"/>
-		<Path Data="M516,189C516,193.971,511.971,198,507,198C502.029,198,498,193.971,498,189C498,184.029,502.029,180,507,180C511.971,180,516,184.029,516,189z" Fill="White" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF231F20" StrokeThickness="1" StrokeMiterLimit="10" StrokeLineJoin="Miter" Margin="18,9,9,9"/>
-	</Grid>
+
+		<Canvas x:Name="LayoutRoot" Height="40" Width="50">
+			<Path Data="M507,189L480,189L480,171L507,171z" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF231F20" StrokeThickness="1" StrokeMiterLimit="10" StrokeLineJoin="Miter" Fill="#FFCBD1D6" Height="20" Width="30"/>
+			<Path Data="M8.9873449,19.24026 C8.9873449,19.24026 8.9873447,40.019479 29.501969,40.019481 50.016685,40.019482 50.016528,19.24026 50.016528,19.24026 50.016528,19.24026 50.016529,-1.538961 29.501893,-1.538961 9.7385908,-1.5389611 8.9873449,19.24026 8.9873449,19.24026 z" HorizontalAlignment="Left" Height="40" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF231F20" StrokeThickness="1" StrokeMiterLimit="10" StrokeLineJoin="Miter" VerticalAlignment="Top" Width="40" Canvas.Left="10">
+				<Path.Fill>
+					<RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5" RadiusY="0.5" RadiusX="0.5">
+						<GradientStop Color="#FFF5FBFE" Offset="0"/>
+						<GradientStop Color="#FFAAB1B5" Offset="0.56741297245025635"/>
+						<GradientStop Color="#FFCBD1D6" Offset="1"/>
+					</RadialGradientBrush>
+				</Path.Fill>
+			</Path>
+			<Path Data="M8.5455036,19.500024 C8.5455036,19.500024 8.5053899,40.552684 29.559884,40.552684 50.615255,40.552684 50.55877,19.5 50.55877,19.5 50.55877,19.5 50.599329,-1.55266 29.543958,-1.55266 8.4444273,-1.55266 8.5455036,19.500024 8.5455036,19.500024 z" HorizontalAlignment="Left" Height="21" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF231F20" StrokeThickness="1" StrokeMiterLimit="10" StrokeLineJoin="Miter" VerticalAlignment="Top" Width="20.952" Fill="{DynamicResource BrushWhite}" Canvas.Left="19.548" Canvas.Top="9.5"/>
+			<Path x:Name="path" Data="M64,39.999527 C64,39.999527 84,40 84,20 L74,20 C74,20 74,29.999764 64,29.999764 z" HorizontalAlignment="Left" Height="20" StrokeStartLineCap="Flat" Stretch="Fill" StrokeEndLineCap="Flat" Stroke="#FF231F20" StrokeThickness="1" StrokeMiterLimit="10" StrokeLineJoin="Miter" VerticalAlignment="Top" Width="20" RenderTransformOrigin="0,0" Fill="#FF231F20" Opacity="0" Canvas.Left="30" Canvas.Top="20">
+				<Path.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</Path.RenderTransform>
+			</Path>
+		</Canvas>
+	</Viewbox>
 </UserControl>
