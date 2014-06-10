@@ -12,7 +12,7 @@ namespace TP.WPF.ViewModels
         private double? maxNormalValue;
         private string caption;
         private IComparable currentValue;
-        private bool isOn;
+        private bool _isOn;
         //private bool discreteOnState;
 
         public void Init(ChannelRegistrationMessage message)
@@ -36,10 +36,10 @@ namespace TP.WPF.ViewModels
 
         public bool IsOn
         {
-            get { return isOn; }
+            get { return _isOn; }
             set
             {
-                isOn = value;
+                _isOn = value;
                 RaisePropertyChanged("IsOn");
             }
         }
@@ -104,7 +104,6 @@ namespace TP.WPF.ViewModels
                     "ShortCurrentValue",
                     "CurrentValueDouble",
                     "CurrentValueBool",
-                    "DiscreteOnState",
                     "CurrentState"
                 };
                 foreach (var propertyName in propertyNames)
@@ -161,27 +160,41 @@ namespace TP.WPF.ViewModels
                 : 0;
         }
 
-
+        /// <summary>
+        /// NotRegistered - канал не подписан либо поступает значение False (0) с дискретного модуля
+        /// BreakState - сигнал об обрыве связи (только для аналоговых модулей 4...20мА)
+        /// AlarmState - значение аналоговой величины превышает максимально допустимую
+        /// WorkingState - данные поступают, канал исправен
+        /// </summary>
         public string CurrentState
         {
             get
             {
-                string state;
-                if (!IsOn /*|| CurrentValue == null*/)
-                    state = "NoSignal";
-                else
+                string state = "undefined";
+                var d = CurrentValueDouble;
+                var b = CurrentValueBool;
+
+                if (!IsOn || b==false)
                 {
-                    var d = CurrentValueDouble;
-                    var b = CurrentValueBool;
-                    if ((d.HasValue && !(d.Value > 0)) || !(b.HasValue && b.Value))
-                        state = "OffState";
-                    else
-                        state = IsValueHigherNormal || IsValueLowerNormal
-                            ? "AlarmState"
-                            : "WorkingState";
+                    state = "NotRegistered";
+                    return state;
+                }
+                if (IsOn && !d.HasValue && !b.HasValue)
+                {
+                    state = "BreakState";
+                    return state;
+                }
+                if (IsValueHigherNormal || IsValueLowerNormal)
+                {
+                    state = "AlarmState";
+                    return state;
+                }
+                if (d.HasValue || b.HasValue)
+                {
+                    state = "WorkingState";
+                    return state;
                 }
 
-                Console.WriteLine(state);
                 return state;
             }
         }
@@ -196,28 +209,6 @@ namespace TP.WPF.ViewModels
         {
             get { return (bool?) (CurrentValue != null && CurrentValue.IsBool() ? CurrentValue : null); }
             set { CurrentValue = value; }
-        }
-
-        //TODO: создать отдельную модель представления для дискретных индикаторов
-        public bool DiscreteOnState
-        {
-            get
-            {
-                var b = CurrentValueBool;
-                return b.HasValue && b.Value;
-                //discreteOnState;
-            }
-/*
-            set
-            {
-                if (CurrentValue != null && CurrentValue > 0.9)
-                    discreteOnState = true;//Convert.ToBoolean(value);
-                else
-                    discreteOnState = false;
-                RaisePropertyChanged("DiscreteOnState");
-
-            }
-*/
         }
 
 

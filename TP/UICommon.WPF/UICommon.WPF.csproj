@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
     <ProjectGuid>{46D87FCA-8216-4BA1-81C6-8288641B573E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -95,6 +95,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\net40\GalaSoft.MvvmLight.WPF4.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -133,6 +134,12 @@
     <Compile Include="Converters\ValueAngelConverter260.cs" />
     <Compile Include="Converters\ValueAngleConverter.cs" />
     <Compile Include="Converters\ValueHeightConverter.cs" />
+    <Compile Include="UIElements\ucLamp.xaml.cs">
+      <DependentUpon>ucLamp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIElements\ucWaterNozzle.xaml.cs">
+      <DependentUpon>ucWaterNozzle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIElements\ucFurnanceLoad.xaml.cs">
       <DependentUpon>ucFurnanceLoad.xaml</DependentUpon>
     </Compile>
@@ -184,6 +191,14 @@
     <Page Include="Simple Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIElements\ucLamp.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIElements\ucWaterNozzle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
