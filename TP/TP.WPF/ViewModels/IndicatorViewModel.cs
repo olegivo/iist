@@ -12,7 +12,8 @@ namespace TP.WPF.ViewModels
         private double? maxNormalValue;
         private string caption;
         private IComparable currentValue;
-        private bool _isOn;
+        private LogicalChannelState? channelState;
+        private bool isRegistered;
         //private bool discreteOnState;
 
         public void Init(ChannelRegistrationMessage message)
@@ -34,13 +35,25 @@ namespace TP.WPF.ViewModels
             }
         }
 
-        public bool IsOn
+        public LogicalChannelState? ChannelState
         {
-            get { return _isOn; }
+            get { return channelState; }
             set
             {
-                _isOn = value;
-                RaisePropertyChanged("IsOn");
+                channelState = value;
+                RaisePropertyChanged("ChannelState");
+                RaisePropertyChanged("CurrentState");
+            }
+        }
+
+        public bool IsRegistered
+        {
+            get { return isRegistered; }
+            set
+            {
+                isRegistered = value;
+                RaisePropertyChanged("IsRegistered");
+                RaisePropertyChanged("CurrentState");
             }
         }
 
@@ -160,42 +173,40 @@ namespace TP.WPF.ViewModels
                 : 0;
         }
 
+        public const string NotRegistered = "NotRegistered";
+        public const string Undefined = "Undefined";
+        public const string BreakState = "BreakState";
+        public const string AlarmState = "AlarmState";
+        public const string WorkingState = "WorkingState";
+        public const string DiscreteOff = "DiscreteOff";
         /// <summary>
         /// NotRegistered - канал не подписан либо поступает значение False (0) с дискретного модуля
         /// BreakState - сигнал об обрыве связи (только для аналоговых модулей 4...20мА)
         /// AlarmState - значение аналоговой величины превышает максимально допустимую
         /// WorkingState - данные поступают, канал исправен
+        /// DiscreteOff - данные поступают, канал исправен, дискретный канал в состоянии "выключен"
         /// </summary>
         public string CurrentState
         {
             get
             {
-                string state = "undefined";
                 var d = CurrentValueDouble;
                 var b = CurrentValueBool;
 
-                if (!IsOn || b==false)
+                if (!IsRegistered)
+                    return NotRegistered;
+                if (ChannelState.HasValue)
                 {
-                    state = "NotRegistered";
-                    return state;
+                    if (ChannelState == LogicalChannelState.Break)
+                        return BreakState;
+                    if (IsValueHigherNormal || IsValueLowerNormal)
+                        return AlarmState;
+                    if (d.HasValue)
+                        return WorkingState;
+                    if (b.HasValue)
+                        return b.Value ? WorkingState : DiscreteOff;
                 }
-                if (IsOn && !d.HasValue && !b.HasValue)
-                {
-                    state = "BreakState";
-                    return state;
-                }
-                if (IsValueHigherNormal || IsValueLowerNormal)
-                {
-                    state = "AlarmState";
-                    return state;
-                }
-                if (d.HasValue || b.HasValue)
-                {
-                    state = "WorkingState";
-                    return state;
-                }
-
-                return state;
+                return Undefined;
             }
         }
 

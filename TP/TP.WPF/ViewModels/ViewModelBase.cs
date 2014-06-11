@@ -29,7 +29,7 @@ namespace TP.WPF.ViewModels
             if (IndicatorViewModels.ContainsKey(channelId))
             {
                 var indicatorViewModel = IndicatorViewModels[channelId];
-                indicatorViewModel.IsOn = true;
+                indicatorViewModel.IsRegistered = true;
             }
             //TODO:подписать каждое View на это событие, чтобы динамически настраивать индикаторы
             if (NeedInitIndicator != null)
@@ -79,7 +79,7 @@ namespace TP.WPF.ViewModels
             if(IndicatorViewModels.ContainsKey(channelId))
             {
                 var indicatorViewModel = IndicatorViewModels[channelId];
-                indicatorViewModel.IsOn = message.State==LogicalChannelState.Work;
+                indicatorViewModel.ChannelState = message.State;
             }
         }
 
@@ -89,7 +89,9 @@ namespace TP.WPF.ViewModels
         /// <param name="message"></param>
         public virtual void OnChannelUnRegistered(ChannelRegistrationMessage message)
         {
-            IndicatorViewModels[message.LogicalChannelId].IsOn = false;
+            var indicatorViewModel = IndicatorViewModels[message.LogicalChannelId];
+            indicatorViewModel.ChannelState = null;
+            indicatorViewModel.IsRegistered = false;
         }
 
         /// <summary>
