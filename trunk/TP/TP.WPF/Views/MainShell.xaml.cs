@@ -87,7 +87,7 @@ namespace TP.WPF.Views
 	        WindowsManager.DocumentContainer.DataContext = ViewModel;
             WindowsManager.DocumentContainer.AddDocument(pane);
 
-
+            //ViewModel.SaveLayout(WindowsManager);
 	    }
 
 	    private void GenereteDebugPanel()
@@ -106,11 +106,12 @@ namespace TP.WPF.Views
 	    {
             var pane = new DockPane
             {
-                Width = 180,
-                Header = "Индикаторы",
+                Tag = "no",
+                Height = 170,
+                Header = "Панель индикаторов",
                 Content = new Resources.ucIndicatorGroupFurnance()
             };
-	        WindowsManager.AddPinnedWindow(pane,Dock.Right);
+	        WindowsManager.AddPinnedWindow(pane,Dock.Top);
 
 	    }
 	}

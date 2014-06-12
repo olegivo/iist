@@ -12,5 +12,7 @@
         <uiIndicators:ucLevelIndicator Height="150" Width="180" DataContext="{Binding IndicatorViewModels[2]}"/>
         <uiIndicators:ucLevelIndicator Height="150" Width="180" DataContext="{Binding IndicatorViewModels[3]}"/>
         <uiIndicators:ucLevelIndicator Height="150" Width="180" DataContext="{Binding IndicatorViewModels[4]}"/>
+        <uiIndicators:ucLevelIndicator Height="150" Width="180" DataContext="{Binding IndicatorViewModels[5]}"/>
+        <uiIndicators:ucLevelIndicator Height="150" Width="180" DataContext="{Binding IndicatorViewModels[6]}"/>
 	</WrapPanel>
 </UserControl>

@@ -13,7 +13,7 @@
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="States">
 				<VisualStateGroup.Transitions>
-					<VisualTransition From="NotRegistered" GeneratedDuration="0:0:1" To="WorkingState">
+                    <VisualTransition From="DiscreteOff" GeneratedDuration="0:0:1" To="WorkingState">
 						<Storyboard>
 							<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="rectangle">
 								<EasingDoubleKeyFrame KeyTime="0:0:1" Value="-30"/>
@@ -28,6 +28,7 @@
 					</VisualTransition>
 				</VisualStateGroup.Transitions>
 				<VisualState x:Name="NotRegistered"/>
+                <VisualState x:Name="DiscreteOff"/>
 				<VisualState x:Name="WorkingState">
 					<Storyboard RepeatBehavior="Forever">
 						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="path2">

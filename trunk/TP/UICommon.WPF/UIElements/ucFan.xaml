@@ -14,6 +14,7 @@
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="States">
 				<VisualState x:Name="NotRegistered"/>
+                <VisualState x:Name="DiscreteOff"/>
 				<VisualState x:Name="WorkingState">
 					<Storyboard RepeatBehavior="Forever">
 						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="path">
