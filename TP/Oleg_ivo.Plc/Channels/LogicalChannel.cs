@@ -198,12 +198,12 @@ namespace Oleg_ivo.Plc.Channels
         /// </summary>
         public double? MaxNormalValue
         {
-            get { return Entity != null && Entity.Parameter != null ? (double?)Entity.Parameter.MinNormalValue : maxNormalValue; }
+            get { return Entity != null && Entity.Parameter != null ? (double?)Entity.Parameter.MaxNormalValue : maxNormalValue; }
             set
             {
-                if (MinNormalValue == value) return;
+                if (MaxNormalValue == value) return;
                 maxNormalValue = value;
-                if (Entity != null && Entity.Parameter != null) Entity.Parameter.MinNormalValue = (decimal?)value;
+                if (Entity != null && Entity.Parameter != null) Entity.Parameter.MaxNormalValue = (decimal?)value;
             }
         }
 
