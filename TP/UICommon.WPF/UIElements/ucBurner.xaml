@@ -19,17 +19,18 @@
 							</DoubleAnimationUsingKeyFrames>
 						</Storyboard>
 					</VisualTransition>
-					<VisualTransition From="NotRegistered" GeneratedDuration="0:0:0.5" To="WorkingState">
+                    <VisualTransition From="DiscreteOff" GeneratedDuration="0:0:0.5" To="WorkingState">
 						<Storyboard>
 							<DoubleAnimation Duration="0:0:1" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="path"/>
 							<DoubleAnimation Duration="0:0:1" To="0.24" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Offset)" Storyboard.TargetName="path"/>
 						</Storyboard>
 					</VisualTransition>
-					<VisualTransition From="WorkingState" GeneratedDuration="0:0:1" To="NotRegistered">
+                    <VisualTransition From="WorkingState" GeneratedDuration="0:0:1" To="DiscreteOff">
 						<Storyboard/>
 					</VisualTransition>
 				</VisualStateGroup.Transitions>
-				<VisualState x:Name="NotRegistered">
+				<VisualState x:Name="NotRegistered" />
+                <VisualState x:Name="DiscreteOff">
 					<Storyboard>
 						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="path">
 							<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
