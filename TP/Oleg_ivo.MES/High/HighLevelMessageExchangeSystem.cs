@@ -315,27 +315,6 @@ namespace Oleg_ivo.MES.High
                     message.LogicalChannelId, message.RegNameFrom);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public void SendMessage(InternalMessage message)
-        {
-            string s = string.Format("HighLevelClient -> MessageExchangeSystem : {0}{1}", message.TimeStamp, Environment.NewLine);
-            InvokeMessageReceived(s);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public event EventHandler MessageReceived;
-
-        private void InvokeMessageReceived(object e)
-        {
-            EventHandler handler = MessageReceived;
-            if (handler != null) handler(e, EventArgs.Empty);
-        }
 
         #endregion
 
@@ -602,11 +581,11 @@ namespace Oleg_ivo.MES.High
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state)
+        public override IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state)
         {
             log.Trace("Начало регистрации клиента {0}", message.RegNameFrom);
 
-            IHighLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IHighLevelClientCallback>();
+            var clientCallback = OperationContext.Current.GetCallbackChannel<IHighLevelClientCallback>();
 
             var caller = new RegistrationCaller(Register);
             IAsyncResult result = caller.BeginInvoke(message, clientCallback, callback, state);
@@ -619,10 +598,8 @@ namespace Oleg_ivo.MES.High
         /// </summary>
         /// <param name="message"></param>
         /// <param name="result"></param>
-        public void EndRegister(RegistrationMessage message, IAsyncResult result)
+        public override void EndRegister(RegistrationMessage message, IAsyncResult result)
         {
-            log.Info("Клиент был зарегистрирован");
-
             NotifyRegisteredChannelsToClients();
         }
 
@@ -660,7 +637,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state)
+        public override IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state)
         {
             log.Trace("Начало отмены регистрации клиента {0}", message.RegNameFrom);
 
@@ -669,16 +646,6 @@ namespace Oleg_ivo.MES.High
             var caller = new RegistrationCaller(Unregister);
             IAsyncResult result = caller.BeginInvoke(message, clientCallback, callback, state);
             return result;
-        }
-
-        /// <summary>
-        /// Завершение отмены регистрации клиента
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="result"></param>
-        public void EndUnregister(RegistrationMessage message, IAsyncResult result)
-        {
-            log.Info("Регистрация клиента была отменена");
         }
 
         #endregion

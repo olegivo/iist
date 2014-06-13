@@ -144,7 +144,7 @@ namespace Oleg_ivo.HighLevelClient
 
             site = new InstanceContext(CallbackHandler);
             if(highLevelMessageExchangeSystemClient!=null)
-                highLevelMessageExchangeSystemClient.SafeClose();
+                highLevelMessageExchangeSystemClient.SafeClose(TimeSpan.FromSeconds(5));
             highLevelMessageExchangeSystemClient = new HighLevelMessageExchangeSystemClient(site);
 
             SubscribeProxy();
@@ -449,6 +449,9 @@ namespace Oleg_ivo.HighLevelClient
 
             highLevelMessageExchangeSystemClient.UnregisterCompleted -= HighLevelMessageExchangeSystemClient_UnregisterCompleted;
             if(RegisteredChannels!=null) RegisteredChannels.Clear();
+            //TODO:Disconnect неужели вызывается до этого?
+            //Task.Factory.StartNew(() => highLevelMessageExchangeSystemClient.Disconnect(GetRegName()))
+            //    .ContinueWith(task => log.Info("Disconnected"));
         }
 
         public event EventHandler<AsyncCompletedEventArgs> UnregisterCompleted;

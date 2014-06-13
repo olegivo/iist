@@ -34,7 +34,7 @@ namespace DMS.Common.MessageExchangeSystem
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        [OperationContract(AsyncPattern = true, IsInitiating = false, IsTerminating = true)]
+        [OperationContract(AsyncPattern = true, IsInitiating = false, IsTerminating = false)]
         [FaultContract(typeof (RegistrationException))]
         IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state);
 
@@ -44,5 +44,12 @@ namespace DMS.Common.MessageExchangeSystem
         /// <param name="message"></param>
         /// <param name="result"></param>
         void EndUnregister(RegistrationMessage message, IAsyncResult result);
+
+        /// <summary>
+        /// Отключение клиента от системы
+        /// </summary>
+        /// <param name="clientName"></param>
+        [OperationContract(AsyncPattern = false, IsInitiating = false, IsTerminating = true)]
+        void Disconnect(string clientName);
     }
 }
