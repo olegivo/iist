@@ -1,4 +1,5 @@
 using System.ServiceModel.Channels;
+using System.Threading.Tasks;
 using DMS.Common;
 using NLog;
 using Oleg_ivo.Base.Autofac;
@@ -15,7 +16,6 @@ using DMS.Common.Messages;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Tools.ExceptionCatcher;
-using Oleg_ivo.Tools.UI;
 using Timer = System.Timers.Timer;
 
 namespace Oleg_ivo.LowLevelClient
@@ -69,6 +69,7 @@ namespace Oleg_ivo.LowLevelClient
                                      e.Message.RegNameFrom,
                                      e.Message.TimeStamp,
                                      e.Message.Value);
+            Log.Debug(s);
             Protocol(s);
             OnWriteChannel(e.Message);
         }
@@ -126,6 +127,11 @@ namespace Oleg_ivo.LowLevelClient
 
         private void ChangeChannelState(InternalLogicalChannelStateMessage internalLogicalChannelStateMessage)
         {
+            if (IsCommunicationFailed)
+            {
+                Log.Error("Communication failed");
+                return;
+            }
             LowLevelMessageExchangeSystemClient.ChangeChannelStateAsync(internalLogicalChannelStateMessage);
         }
 
@@ -152,6 +158,7 @@ namespace Oleg_ivo.LowLevelClient
         protected virtual void SubscribeProxy()
         {
             site.Faulted += site_Faulted;
+            proxy.RegisterCompleted += proxy_RegisterCompleted;
             proxy.UnregisterCompleted += proxy_UnregisterCompleted;
             proxy.SendErrorCompleted += proxy_SendErrorCompleted;
         }
@@ -261,12 +268,14 @@ namespace Oleg_ivo.LowLevelClient
             }
             if (channel.IsInput)
             {
+                Log.Info("{0} был подписан на получение новых данных", channel);
                 Protocol(string.Format("{0} был подписан на получение новых данных", channel));
                 //запустить таймер опроса для зарегистрированного канала после подписки на него
                 planner.StartPoll(channel);
             }
             else if (channel.IsOutput)
             {
+                Log.Info("{0} был подписан на установку новых данных", channel);
                 //TODO:добавить канал в список подписанных каналов, для которых разрешена запись извне
                 Protocol(string.Format("{0} был подписан на установку новых данных", channel));
             }
@@ -297,11 +306,13 @@ namespace Oleg_ivo.LowLevelClient
 
             if (channel.IsInput)
             {
+                Log.Info("{0} был отписан от получения новых данных", channel);
                 Protocol(string.Format("{0} был отписан от получения новых данных", channel));
                 planner.StopPoll(channel);
             }
             else if (channel.IsOutput)
             {
+                Log.Info("{0} был отписан от установки новых данных", channel);
                 //TODO:удалить канал из списка подписанных каналов, для которых разрешена запись извне
                 Protocol(string.Format("{0} был отписан от установки новых данных", channel));
             }
@@ -348,6 +359,12 @@ namespace Oleg_ivo.LowLevelClient
         /// <param name="message"></param>
         public void ReadChannel(InternalLogicalChannelDataMessage message)
         {
+            if (IsCommunicationFailed)
+            {
+                Log.Error("Communication failed");
+                return;
+            }
+
             LowLevelMessageExchangeSystemClient.ReadChannelAsync(message);
         }
 
@@ -378,6 +395,7 @@ namespace Oleg_ivo.LowLevelClient
         {
             //перед тем, как совершить последнюю операцию сессии останавливаем все попытки посыла сообщений
             planner.StopAllPolls();
+            //LowLevelMessageExchangeSystemClient.Unregister(new RegistrationMessage(GetRegName(), null, RegistrationMode.Unregister, DataMode.Unknown));
             LowLevelMessageExchangeSystemClient.UnregisterAsync(new RegistrationMessage(GetRegName(), null, RegistrationMode.Unregister, DataMode.Unknown));
         }
 
@@ -388,8 +406,32 @@ namespace Oleg_ivo.LowLevelClient
 
         private void proxy_UnregisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
+            if (e.Error == null)
+                Log.Info("Отмена регистрации на сервере завершилась успешно");
+            else
+                Log.Error("Отмена регистрации на сервере завершилась неудачно:\n{0}", e.Error);
+            
             if (UnregisterCompleted != null) 
                 UnregisterCompleted(this, e);
+
+            Task.Factory.StartNew(() => LowLevelMessageExchangeSystemClient.Disconnect(GetRegName()))
+                .ContinueWith(task => Log.Info("Disconnected"));
+        }
+
+        /// <summary>
+        /// Регистрация завершена
+        /// </summary>
+        public event EventHandler<AsyncCompletedEventArgs> RegisterCompleted;
+
+        private void proxy_RegisterCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            if (e.Error != null)
+                Log.Error("Регистрация на сервере завершилась неудачно:\n{0}", e.Error);
+            else
+                Log.Info("Регистрация на сервере завершилась успешно");
+
+            if (RegisterCompleted != null)
+                RegisterCompleted(this, e);
         }
 
         public event EventHandler<AsyncCompletedEventArgs> SendErrorCompleted;
@@ -407,22 +449,21 @@ namespace Oleg_ivo.LowLevelClient
         public IEnumerable<LogicalChannel> GetAvailableLogicalChannels(bool withStateChannels = false)
         {
             //добавляем только проидентифицированные каналы (Id > 0):
+            var channels = GetLogicalChannels()
+                .Where(channel => channel.Id > 0 && (!channel.IsStateChannel || withStateChannels)).ToList();
             return
-                GetLogicalChannels()
-                    .Where(channel => channel.Id > 0 && (!channel.IsStateChannel || withStateChannels));
+                channels;
         }
 
 
         /// <summary>
         /// Добавить опрос канала
         /// </summary>
-        /// <param name="e"></param>
-        /// <param name="synchronizingObject"></param>
+        /// <param name="logicalChannel"></param>
         /// <exception cref="Exception"></exception>
-        public void TryAddPoll(MovingEventArgs e, ISynchronizeInvoke synchronizingObject)
+        public bool TryAddPoll(LogicalChannel logicalChannel)
         {
-            var logicalChannel = e.MovingObject as LogicalChannel;
-            if (logicalChannel == null) return;
+            if (logicalChannel == null) return false;
 
             var channel =
                 GetLogicalChannels()
@@ -446,25 +487,24 @@ namespace Oleg_ivo.LowLevelClient
 
             if (double.TryParse(s, out interval))
             {
-                planner.AddPoll(channel, interval, synchronizingObject);
+                planner.AddPoll(channel, interval);
+                return true;
             }
-            else
-            {
-                MessageBox.Show("Указанное значение не является корректным", "Ошибка указания интервала опроса канала",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                e.Cancel = true;
-            }
+            
+            MessageBox.Show("Указанное значение не является корректным", "Ошибка указания интервала опроса канала",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
         }
 
         /// <summary>
         /// Удалить опрос канала
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="logicalChannel"></param>
         /// <exception cref="Exception"></exception>
-        public void TryRemovePoll(MovingEventArgs e)
+        public bool TryRemovePoll(LogicalChannel logicalChannel)
         {
-            var logicalChannel = e.MovingObject as LogicalChannel;
-            if (logicalChannel == null) return;
+            if (logicalChannel == null) return false;
+
             var channel =
                 GetLogicalChannels()
                     .AsEnumerable()
@@ -474,6 +514,7 @@ namespace Oleg_ivo.LowLevelClient
                 throw new Exception("Канал не найден");
 
             planner.RemovePoll(channel);
+            return true;
         }
 
         /// <summary>
@@ -487,6 +528,7 @@ namespace Oleg_ivo.LowLevelClient
                 GetLogicalChannels().AsEnumerable().FirstOrDefault(
                     LogicalChannel.GetFindChannelPredicate(channelRegistrationMessage.LogicalChannelId));
 
+            Log.Info("{0} зарегистрирован в системе обмена сообщениями", channel);
             Protocol(string.Format("{0} зарегистрирован в системе обмена сообщениями", channel));
         }
 
@@ -501,6 +543,7 @@ namespace Oleg_ivo.LowLevelClient
                 GetLogicalChannels().AsEnumerable().FirstOrDefault(
                     LogicalChannel.GetFindChannelPredicate(channelRegistrationMessage.LogicalChannelId));
 
+            Log.Info("{0} отмена регистрации в системе обмена сообщениями", channel);
             Protocol(string.Format("{0} отмена регистрации в системе обмена сообщениями", channel));
         }
 

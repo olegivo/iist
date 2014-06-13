@@ -162,12 +162,12 @@ namespace Oleg_ivo.CMU
 
         private void TryAddPoll(MovingEventArgs e)
         {
-            ControlManagementUnit.TryAddPoll(e, this);
+            ControlManagementUnit.TryAddPoll(e.MovingObject as LogicalChannel);
         }
 
         private void TryRemovePoll(MovingEventArgs e)
         {
-            ControlManagementUnit.TryRemovePoll(e);
+            ControlManagementUnit.TryRemovePoll(e.MovingObject as LogicalChannel);
         }
 
         private void doubleListBoxControl1_ItemMoved(object sender, MovedEventArgs e)

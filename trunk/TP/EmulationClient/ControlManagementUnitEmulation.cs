@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ServiceModel;
-using System.Windows.Forms;
 using DMS.Common.Messages;
 using NLog;
 using Oleg_ivo.LowLevelClient;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
-using Oleg_ivo.Tools.UI;
 
 namespace EmulationClient
 {
@@ -168,9 +166,8 @@ namespace EmulationClient
                 {
                     foreach (var logicalChannel in LogicalChannels)
                     {
-                        var synchronizingObject = new Control();
-                        TryAddPoll(new MovingEventArgs(DoubleListBoxControl.Direction.LeftToRight, logicalChannel),
-                                   synchronizingObject);
+                        var success = TryAddPoll(logicalChannel);
+                        Log.Trace("Успешность добавления расписания для канала: {0}", success);
                     }
                 }
             }

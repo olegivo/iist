@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Oleg_ivo.Plc.Channels;
 
 namespace Oleg_ivo.LowLevelClient
@@ -20,14 +19,13 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         /// <param name="channel"></param>
         /// <param name="interval"></param>
-        /// <param name="synchronizingObject"></param>
-        public void AddPoll(LogicalChannel channel, double interval, ISynchronizeInvoke synchronizingObject)
+        public void AddPoll(LogicalChannel channel, double interval)
         {
             var measurementPoll = GetMeasurementPoll(channel);
             if (measurementPoll != null)
                 throw new Exception("Уже есть опрос для данного канала");
 
-            var poll = new MeasurementPoll(channel, interval, synchronizingObject);
+            var poll = new MeasurementPoll(channel);
             measurementPolls.Add(channel, poll);
             //throw new NotImplementedException("Учесть настройки опроса");
         }
