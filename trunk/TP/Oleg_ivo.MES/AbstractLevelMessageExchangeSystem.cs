@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Autofac;
+using DMS.Common.MessageExchangeSystem;
 using DMS.Common.Messages;
 using NLog;
 using Oleg_ivo.Base.Autofac;
@@ -13,7 +14,7 @@ namespace Oleg_ivo.MES
     /// <summary>
     /// 
     /// </summary>
-    public abstract class AbstractLevelMessageExchangeSystem<TRegisteredClient> where TRegisteredClient : IRegisteredChannelsHolder
+    public abstract class AbstractLevelMessageExchangeSystem<TRegisteredClient> : IMessageExchangeSystem where TRegisteredClient : IRegisteredChannelsHolder
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
         protected readonly IComponentContext context;
@@ -76,7 +77,6 @@ namespace Oleg_ivo.MES
             }
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -99,6 +99,31 @@ namespace Oleg_ivo.MES
         }
 
         private delegate void SendErrorCaller(InternalErrorMessage message);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler MessageReceived;
+
+        protected void InvokeMessageReceived(object e)
+        {
+            EventHandler handler = MessageReceived;
+            if (handler != null) handler(e, EventArgs.Empty);
+        }
+
+        #region Implementation of IMessageReceiver
+
+        /// <summary>
+        /// Послать данному приёмнику сообщений сообщение
+        /// </summary>
+        /// <param name="message"></param>
+        public void SendMessage(InternalMessage message)
+        {
+            string s = string.Format("{0} -> {1} : {2}{3}", message.RegNameFrom, RegName, message.TimeStamp, Environment.NewLine);
+            InvokeMessageReceived(s);
+        }
+
+        #endregion
 
         /// <summary>
         /// Начало передачи сообщения об ошибке
@@ -142,5 +167,51 @@ namespace Oleg_ivo.MES
             log.Trace("Сообщения об ошибке от клиента передано");
         }
 
+        /// <summary>
+        /// Начало регистрации клиента
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public abstract IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state);
+
+        /// <summary>
+        /// Завершение регистрации клиента
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="result"></param>
+        public virtual void EndRegister(RegistrationMessage message, IAsyncResult result)
+        {
+            //TODO: почему-то message==null
+            log.Info("Клиент {0} был зарегистрирован", /*message.RegNameFrom*/"");
+        }
+
+        /// <summary>
+        /// Начало отмены регистрации клиента
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        public abstract IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state);
+
+        /// <summary>
+        /// Завершение отмены регистрации клиента
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="result"></param>
+        public virtual void EndUnregister(RegistrationMessage message, IAsyncResult result)
+        {
+            //TODO: почему-то message==null
+            log.Info("Регистрация клиента {0} была отменена", /*message.RegNameFrom*/"");
+        }
+
+        /// <summary>
+        /// Отключение клиента от системы
+        /// </summary>
+        /// <param name="clientName"></param>
+        public void Disconnect(string clientName)
+        {
+            log.Info("{0} disconnected from {1}", clientName, RegName);
+        }
     }
 }
