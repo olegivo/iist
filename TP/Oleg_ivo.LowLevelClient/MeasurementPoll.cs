@@ -1,6 +1,5 @@
 using System;
-using System.ComponentModel;
-using System.Timers;
+using System.Reactive.Linq;
 using Oleg_ivo.Plc.Channels;
 
 namespace Oleg_ivo.LowLevelClient
@@ -10,35 +9,44 @@ namespace Oleg_ivo.LowLevelClient
     /// </summary>
     public class MeasurementPoll
     {
-        private readonly Timer _timer;
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="logicalChannel"></param>
-        /// <param name="interval">Интервал опроса канала (в миллисекундах)</param>
-        /// <param name="synchronizingObject">Объект для синхронизации</param>
-        public MeasurementPoll(LogicalChannel logicalChannel, double interval, ISynchronizeInvoke synchronizingObject)
+        public MeasurementPoll(LogicalChannel logicalChannel)
         {
             LogicalChannel = logicalChannel;
-            _timer = new Timer(interval);
-            _timer.Elapsed += _timer_Elapsed;
-            SynchronizingObject = synchronizingObject;
+            var period = logicalChannel.PollPeriod ?? TimeSpan.FromSeconds(5);
+            Observable.Interval(period).Subscribe(l => OnTick());
+            //TODO: более продуманный отключаемый таймер (чтобы он не работал, когда выключен, чтобы каждый раз не проверять в OnTick свойство IsStarted)
         }
+
+        private void OnTick()
+        {
+            if (IsStarted)
+            {
+                object newValue;
+
+                try
+                {
+                    newValue = LogicalChannel.GetNewValue();
+                }
+                catch (ArgumentOutOfRangeException ex)
+                {
+                    throw;
+                }
+
+                if (newValue != null)
+                    InvokeNewDataReceived(LogicalChannel, newValue);
+            }
+        }
+
+        public bool IsStarted { get; private set; }
 
         /// <summary>
         /// 
         /// </summary>
-        private LogicalChannel LogicalChannel { get; set; }
-
-        /// <summary>
-        /// Объект для синхронизации
-        /// </summary>
-        private ISynchronizeInvoke SynchronizingObject
-        {
-            get { return _timer.SynchronizingObject; }
-            set { _timer.SynchronizingObject = value; }
-        }
+        public LogicalChannel LogicalChannel { get; private set; }
 
         /// <summary>
         /// 
@@ -51,30 +59,13 @@ namespace Oleg_ivo.LowLevelClient
             if (handler != null) handler(this, new NewDataReceivedEventArgs(logicalChannel, newValue));
         }
 
-        private void _timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            object newValue;
-
-            try
-            {
-                newValue = LogicalChannel.GetNewValue();
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                throw;
-            }
-
-            if (newValue!=null)
-                InvokeNewDataReceived(LogicalChannel, newValue);
-        }
-
         /// <summary>
         /// запустить таймер опроса канала
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
         public void StartPoll()
         {
-            _timer.Start();
+            IsStarted = true;
         }
 
         /// <summary>
@@ -83,7 +74,7 @@ namespace Oleg_ivo.LowLevelClient
         /// <exception cref="NotImplementedException"></exception>
         public void StopPoll()
         {
-            _timer.Stop();
+            IsStarted = false;
         }
     }
 }
