@@ -414,8 +414,10 @@ namespace Oleg_ivo.LowLevelClient
             if (UnregisterCompleted != null) 
                 UnregisterCompleted(this, e);
 
+/*
             Task.Factory.StartNew(() => LowLevelMessageExchangeSystemClient.Disconnect(GetRegName()))
                 .ContinueWith(task => Log.Info("Disconnected"));
+*/
         }
 
         /// <summary>
