@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="Oleg_ivo.CMU.WPF.Views.ChannelsListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ViewModels="clr-namespace:Oleg_ivo.CMU.WPF.ViewModels"
+             xmlns:Views="clr-namespace:Oleg_ivo.CMU.WPF.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             VerticalAlignment="Stretch"
+             VerticalContentAlignment="Stretch"
+             Name="view"
+             BorderThickness="2" BorderBrush="DarkBlue" Margin="4">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <ListBox
+        HorizontalContentAlignment="Stretch"
+        ScrollViewer.VerticalScrollBarVisibility="Visible"
+        SelectionMode="Extended"
+        ItemsSource="{Binding ElementName=view, Path=AvialableChannels}"
+        Views:MultiSelectorBehaviours.SynchronizedSelectedItems="{Binding ElementName=view, Path=SelectedChannels, Mode=TwoWay}">
+        <ListBox.ItemTemplate>
+            <DataTemplate DataType="{x:Type ViewModels:LogicalChannelViewModel}">
+                <Border BorderBrush="DarkBlue" BorderThickness="1">
+                    <DockPanel LastChildFill="True">
+                        <Button 
+                            DockPanel.Dock="Right"
+                            MinWidth="30"
+                            Visibility="{Binding IsNotRegistered, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                            Content="&gt;" 
+                            Command="{Binding ElementName=view, Path=MainViewModel.CommandRegisterChannel}"
+                            CommandParameter="{Binding}"/>
+                        <Button 
+                            DockPanel.Dock="Left"
+                            MinWidth="30"
+                            Visibility="{Binding IsRegistered, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                            Content="&lt;"
+                            Command="{Binding ElementName=view, Path=MainViewModel.CommandUnregisterChannel}"
+                            CommandParameter="{Binding}"/>
+                        <TextBlock 
+                            Text="{Binding DisplayText}" VerticalAlignment="Center" />
+                    </DockPanel>
+                </Border>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</UserControl>

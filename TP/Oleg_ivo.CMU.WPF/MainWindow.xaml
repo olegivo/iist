@@ -1,0 +1,9 @@
+﻿<Window x:Class="Oleg_ivo.CMU.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Regions="http://www.codeplex.com/CompositeWPF"
+        Title="Control Management Unit" Height="600" Width="800" 
+        HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" 
+        WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <ContentControl Regions:RegionManager.RegionName="MainRegion" />
+</Window>
