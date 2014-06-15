@@ -61,21 +61,21 @@
                     <Rectangle.Height>
                         <MultiBinding Converter="{StaticResource valueHeightConverter}">
                             <Binding Path="CurrentValue"/>
-                            <Binding Path="MinValue"/>
-                            <Binding Path="MaxValue"/>
+                            <Binding Path="MinNormalValue"/>
+                            <Binding Path="MaxNormalValue"/>
                         </MultiBinding>
                     </Rectangle.Height>
                 </Rectangle>
             </Border>
-            <TextBlock x:Name="MinNormalValue" Height="25" TextWrapping="Wrap" Text="{Binding MinNormalValue}" Canvas.Top="55" Width="60" Foreground="Black" TextAlignment="Right" FontSize="18.667" Margin="0" Padding="0,0,5,0"/>
-            <TextBlock x:Name="MaxNormalValue" Height="25" TextWrapping="Wrap" Text="{Binding MaxNormalValue}" Canvas.Top="180" Width="60" Foreground="Black" TextAlignment="Right" FontSize="18.667" Margin="0" Padding="0,0,5,0"/>
+            <TextBlock x:Name="MaxNormalValue" Height="25" TextWrapping="Wrap" Text="{Binding MaxNormalValue}" Canvas.Top="55" Width="60" Foreground="Black" TextAlignment="Right" FontSize="18.667" Margin="0" Padding="0,0,5,0"/>
+            <TextBlock x:Name="MinNormalValue" Height="25" TextWrapping="Wrap" Text="{Binding MinNormalValue}" Canvas.Top="180" Width="60" Foreground="Black" TextAlignment="Right" FontSize="18.667" Margin="0" Padding="0,0,5,0"/>
             <TextBlock x:Name="IndicatorValue" Style="{StaticResource AlarmStateStyle}" TextWrapping="Wrap" Text="{Binding ShortCurrentValue}" FontFamily="Arial Black" TextAlignment="Center" Width="175" Height="60" Canvas.Left="105" Canvas.Top="120" RenderTransformOrigin="0.5,0.5" FontSize="32" FontWeight="ExtraBold" />
             <Border Width="180" Height="80" Canvas.Left="100" Canvas.Top="16" BorderThickness="0,0,0,2" BorderBrush="#FF0C0B23" >
             	<TextBlock x:Name="IndicatorCaption" TextWrapping="Wrap" Text="{Binding Caption}" FontFamily="Tahoma" TextAlignment="Right" RenderTransformOrigin="0.5,0.5" FontSize="21.333" FontStretch="Condensed"/>
             </Border>
-            <Path Data="M38.791667,59.5 L48.51389,59.5" Height="1" Canvas.Left="60" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="65" Width="11"/>
-            <Path Data="M38.791667,189.5 L48.513889,189.5" Height="1" Canvas.Left="60" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="194.5" Width="11"/>
-            <Path Data="M38.791667,128.33333 L48.513889,128.33333" Height="1" Canvas.Left="60" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="134" Width="11"/>
+            <Path Data="M38.791667,59.5 L48.51389,59.5" Height="1" Canvas.Left="60" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="60" Width="11"/>
+            <Path Data="M38.791667,189.5 L48.513889,189.5" Height="1" Canvas.Left="60" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="199" Width="11"/>
+            <Path Data="M38.791667,128.33333 L48.513889,128.33333" Height="1" Canvas.Left="60" Stretch="Fill" Stroke="{DynamicResource BrushBlack}" Canvas.Top="130" Width="11"/>
             <Grid x:Name="NoSignal" Height="250" Width="300" Style="{StaticResource NoSignalStyle}" d:IsHidden="True">
 				<Rectangle Stroke="Black">
 					<Rectangle.Fill>

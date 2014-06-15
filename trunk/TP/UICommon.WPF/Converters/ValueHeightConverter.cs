@@ -15,13 +15,23 @@ namespace UICommon.WPF.Converters
         {
             double? total = 0;
             double? currentValue = values[0] as double?;
-            double? minValue = values[1] as double?;
-            double? maxValue = values[2] as double?;
+            double? minValue = values[1] as double?;        //Минимально допустимое значение
+            double? maxValue = values[2] as double?;        //Максимально допустимое значение
 
-            if (values[0] != null && currentValue!=0)
-            {
-                total = 185/(maxValue - minValue)*currentValue;
-            }
+            //Если не поступают данные -> устанавливаем индикатор в ноль
+            if (currentValue == null)
+                return total;
+            
+            // Можно добавить ограничение
+            //if (currentValue > maxValue)
+            //    return 140;
+            //if (currentValue < minValue)
+            //    return total;
+            
+            var d = maxValue - minValue;                    //рабочий диапазон измеряемой величины
+            var m = (currentValue - minValue) / d;          //нормированая входная величина
+            total = (m * 140) + 20;                         //прибавим 20 пикселей снизу т.к. нижняя отметка шкалы приподнята
+            return total;
 
             return total;
         }
