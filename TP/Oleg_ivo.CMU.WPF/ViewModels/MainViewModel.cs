@@ -1,4 +1,3 @@
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -9,6 +8,7 @@ using GalaSoft.MvvmLight.Command;
 using NLog;
 using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
+using Oleg_ivo.CMU.WPF.Properties;
 using Oleg_ivo.LowLevelClient;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
@@ -37,14 +37,13 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(ControlManagementUnit controlManagementUnit, ExceptionHandler exceptionHandler)
+        public MainViewModel(ControlManagementUnit controlManagementUnit, ExceptionHandler exceptionHandler, ErrorSenderWrapper<ControlManagementUnit> errorSenderWrapper)
         {
             ControlManagementUnit = Enforce.ArgumentNotNull(controlManagementUnit, "controlManagementUnit");
-            ControlManagementUnit.GetRegName = getRegName;
+            ControlManagementUnit.GetRegName = () => RegName;
             ControlManagementUnit.RegisterCompleted += ControlManagementUnit_RegisterCompleted;
             ControlManagementUnit.UnregisterCompleted += ControlManagementUnit_UnregisterCompleted;
 
-            var errorSenderWrapper = new ErrorSenderWrapper<ControlManagementUnit>(ControlManagementUnit);//TODO: конструктор - в контекст?
             Enforce.ArgumentNotNull(exceptionHandler, "exceptionHandler").AdditionalErrorHandler =
                 errorSenderWrapper.LogError;
 
@@ -92,7 +91,6 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
         private bool isRegistered;
         private bool canRegister;
         private bool registering;
-        private readonly Func<string> getRegName = () => "ControlManagementUnit";
         private ObservableCollection<LogicalChannelViewModel> registeredChannels;
         private ObservableCollection<LogicalChannelViewModel> unregisteredChannels;
         private ObservableCollection<LogicalChannelViewModel> selectedUnregisteredChannels;
@@ -111,6 +109,19 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
         public ControlManagementUnit ControlManagementUnit { get; set; }
 
         public ObservableLogTarget LogTarget { get; private set; }
+
+        private string regName;
+
+        public string RegName
+        {
+            get { return regName; }
+            set
+            {
+                if (regName == value) return;
+                regName = value;
+                RaisePropertyChanged(() => RegName);
+            }
+        }
 
         public bool AutoRegister
         {
@@ -315,6 +326,8 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
 
         private void Unregister()
         {
+            UnregisterAllChannels();
+
             ControlManagementUnit.Unregister();
             Registering = true;
         }
@@ -331,8 +344,7 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
 
         private void MoveChannel(LogicalChannelViewModel logicalChannelViewModel, RegistrationMode registrationMode)
         {
-            var registrationMessage = logicalChannelViewModel.GetRegistrationMessage(getRegName(),
-                registrationMode);
+            var registrationMessage = logicalChannelViewModel.GetRegistrationMessage(RegName, registrationMode);
             //регистрация каналов в MES, если это не канал состояния
             var channel = logicalChannelViewModel.LogicalChannel;
             if (!channel.IsStateChannel)
@@ -408,6 +420,7 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
 
         public void OnLoad()
         {
+            RegName = Settings.Default.DefaultRegName;
             if(AutoRegister)
                 Register();
         }

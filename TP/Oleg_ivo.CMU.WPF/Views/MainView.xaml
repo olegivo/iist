@@ -19,6 +19,12 @@
                 <Setter Property="Margin" Value="5"/>
             </Style.Setters>
         </Style>
+        <Style TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style.Setters>
+        </Style>
     </UserControl.Resources>
     
     <ContentControl Content="{Binding}">
@@ -37,8 +43,12 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+                    <TextBox 
+                        Grid.Row="0" Grid.Column="0"
+                        Text="{Binding RegName}" 
+                        IsEnabled="{Binding CanRegister}" />
                     <Button 
-                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                        Grid.Row="0" Grid.Column="1"
                         Command="{Binding CommandRegister}">Зарегистрироваться</Button>
                     <Button 
                         Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
