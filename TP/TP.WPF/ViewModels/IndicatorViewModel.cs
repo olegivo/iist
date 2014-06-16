@@ -112,8 +112,8 @@ namespace TP.WPF.ViewModels
                 {
                     "IsValueHigherNormal",
                     "IsValueLowerNormal",
-                    "IsValueHigherCritycal",
-                    "IsValueLowerCritycal",
+                    "IsValueHigherCritical",
+                    "IsValueLowerCritical",
                     "ShortCurrentValue",
                     "CurrentValueDouble",
                     "CurrentValueBool",
@@ -144,7 +144,7 @@ namespace TP.WPF.ViewModels
         /// <summary>
         /// Текущее значение больше максимально возможного
         /// </summary>
-        public bool IsValueHigherCritycal
+        public bool IsValueHigherCritical
         {
             get { return CompareCurrentValueWith(MaxValue) > 0; }
         }
@@ -160,7 +160,7 @@ namespace TP.WPF.ViewModels
         /// <summary>
         /// Текущее значение меньше минимально возможного
         /// </summary>
-        public bool IsValueLowerCritycal
+        public bool IsValueLowerCritical
         {
             get { return CompareCurrentValueWith(MinValue) < 0; }
         }
