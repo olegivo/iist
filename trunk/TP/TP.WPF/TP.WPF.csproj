@@ -159,6 +159,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="IoC\TpAutofacModule.cs" />
+    <Compile Include="IoC\TpCommandLineOptions.cs" />
     <Compile Include="Properties\LogicalChannelMapping.cs" />
     <Compile Include="Properties\LogicalChannelMappings.cs" />
     <Compile Include="Properties\SerializationHelper.cs" />

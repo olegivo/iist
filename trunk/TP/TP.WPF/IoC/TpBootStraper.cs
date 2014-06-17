@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using Autofac;
 using Microsoft.Practices.Prism.Modularity;
+using Oleg_ivo.Base.Autofac.Modules;
 using Prism.AutofacExtension;
 using TP.WPF.Views;
 
@@ -19,7 +20,7 @@ namespace TP.WPF.IoC
         {
             base.ConfigureContainer(builder);
 
-            //builder.RegisterModule(new CommandLineHelperAutofacModule<WagoCommandLineOptions>(args));
+            builder.RegisterModule(new CommandLineHelperAutofacModule<TpCommandLineOptions>(args));
             builder.RegisterModule<TpAutofacModule>();
 
             builder.RegisterType<MainWindow>();
