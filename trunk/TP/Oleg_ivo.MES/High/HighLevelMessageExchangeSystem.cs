@@ -23,7 +23,7 @@ namespace Oleg_ivo.MES.High
         AutomaticSessionShutdown = false,
         IncludeExceptionDetailInFaults = true)]
     [KnownType(typeof(RegisteredLogicalChannel))]
-    public class HighLevelMessageExchangeSystem : AbstractLevelMessageExchangeSystem<RegisteredHighLevelClient>, IHighLevelMessageExchangeSystem
+    public class HighLevelMessageExchangeSystem : AbstractLevelMessageExchangeSystem<RegisteredHighLevelClient, IHighLevelClientCallback>, IHighLevelMessageExchangeSystem
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
@@ -126,8 +126,6 @@ namespace Oleg_ivo.MES.High
             }
         }
 
-        private delegate void ChannelSubscribeCaller(ChannelSubscribeMessage message);
-
         /// <summary>
         /// Начало подписки на чтение контролируемого канала
         /// </summary>
@@ -138,7 +136,7 @@ namespace Oleg_ivo.MES.High
         {
             log.Trace("Начало подписки на чтение канала {0}", message.LogicalChannelId);
 
-            var caller = new ChannelSubscribeCaller(ChannelSubscribe);
+            var caller = new Action<ChannelSubscribeMessage>(ChannelSubscribe);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
         }
@@ -163,7 +161,7 @@ namespace Oleg_ivo.MES.High
         {
             log.Trace("Начало отписки от чтение канала {0}", message.LogicalChannelId);
 
-            var caller = new ChannelSubscribeCaller(ChannelUnSubscribe);
+            var caller = new Action<ChannelSubscribeMessage>(ChannelUnSubscribe);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
         }
@@ -282,7 +280,7 @@ namespace Oleg_ivo.MES.High
         public IAsyncResult BeginWriteChannel(InternalLogicalChannelDataMessage message, AsyncCallback callback, object state)
         {
             log.Trace("Начало записи канала {0}", message.LogicalChannelId);
-            var caller = new WriteChannelCaller(WriteChannel);
+            var caller = new Action<InternalLogicalChannelDataMessage>(WriteChannel);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
         }
@@ -325,7 +323,7 @@ namespace Oleg_ivo.MES.High
         /// </summary>
         /// <param name="message"></param>
         /// <param name="clientCallback"></param>
-        private void Register(RegistrationMessage message, IHighLevelClientCallback clientCallback)
+        protected override void Register(RegistrationMessage message, IHighLevelClientCallback clientCallback)
         {
             if (message.RegistrationMode != RegistrationMode.Register)
                 throw new ArgumentException("Для регистрации клиента в сообщении используется флаг отмены регистрации");
@@ -353,15 +351,11 @@ namespace Oleg_ivo.MES.High
                         new RegisteredHighLevelClient(this, message.DataMode,
                             clientId.Value)
                         {
-                            Ticker = message.RegNameFrom
+                            RegName = message.RegNameFrom
                         };
                     Context.InjectAttributedProperties(registeredHighLevelClient);
                     AddClient(message.RegNameFrom, registeredHighLevelClient);
                 }
-                //                registeredHighLevelClient = (RegisteredHighLevelClient)_registeredClients[message.RegNameFrom];
-
-                //Thread t = new Thread(w.RegisteredHighLevelClientProcess.SendUpdateToClient) { IsBackground = true };
-                //t.Start();
 
                 //получить рабочий объект из данного тикера и добавить
                 //прокси клиента в список обратных вызовов
@@ -393,12 +387,7 @@ namespace Oleg_ivo.MES.High
             }
         }
 
-        private RegisteredHighLevelClient GetRegisteredHighLevelClient(InternalMessage message)
-        {
-            return GetRegisteredHighLevelClient(message, true);
-        }
-
-        private RegisteredHighLevelClient GetRegisteredHighLevelClient(InternalMessage message, bool withCallbacks)
+        private RegisteredHighLevelClient GetRegisteredHighLevelClient(InternalMessage message, bool withCallbacks = true)
         {
             RegisteredHighLevelClient registeredHighLevelClient = this[message.RegNameFrom];
             if (withCallbacks && registeredHighLevelClient != null && !registeredHighLevelClient.HasCallbacks)
@@ -413,7 +402,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="message"></param>
         public void SendMessageToClients(InternalMessage message)
         {
-            foreach (RegisteredHighLevelClient value in RegisteredClients)
+            foreach (var value in RegisteredClients)
                 value.SendMessageToClient(message);
         }
 
@@ -422,7 +411,7 @@ namespace Oleg_ivo.MES.High
         /// </summary>
         /// <param name="message"></param>
         /// <param name="clientCallback"></param>
-        private void Unregister(RegistrationMessage message, IHighLevelClientCallback clientCallback)
+        protected override void Unregister(RegistrationMessage message, IHighLevelClientCallback clientCallback)
         {
             if (message.RegistrationMode != RegistrationMode.Unregister)
                 throw new ArgumentException("Для отмены регистрации клиента в сообщении используется флаг регистрации");
@@ -576,24 +565,6 @@ namespace Oleg_ivo.MES.High
         #region Implementation of IMessageExchangeSystem
 
         /// <summary>
-        /// Начало регистрации клиента
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public override IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state)
-        {
-            log.Trace("Начало регистрации клиента {0}", message.RegNameFrom);
-
-            var clientCallback = OperationContext.Current.GetCallbackChannel<IHighLevelClientCallback>();
-
-            var caller = new RegistrationCaller(Register);
-            IAsyncResult result = caller.BeginInvoke(message, clientCallback, callback, state);
-
-            return result;
-        }
-
-        /// <summary>
         /// Завершение регистрации клиента
         /// </summary>
         /// <param name="message"></param>
@@ -611,11 +582,11 @@ namespace Oleg_ivo.MES.High
             var highLevelClients = RegisteredClients.Except(InterestedRegisteredClients);
             foreach (var client in highLevelClients)
             {
-                var registeredChannels = GetRegisteredChannels(new InternalMessage(client.Ticker, null));
+                var registeredChannels = GetRegisteredChannels(new InternalMessage(client.RegName, null));
                 foreach (var registeredChannel in registeredChannels)
                 {
                     var registrationMessage = new ChannelRegistrationMessage(null,
-                                                                             client.Ticker,
+                                                                             client.RegName,
                                                                              RegistrationMode.Register,
                                                                              registeredChannel.DataMode,
                                                                              registeredChannel.LogicalChannelId)
@@ -631,26 +602,7 @@ namespace Oleg_ivo.MES.High
             }
         }
 
-        /// <summary>
-        /// Начало отмены регистрации клиента
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public override IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state)
-        {
-            log.Trace("Начало отмены регистрации клиента {0}", message.RegNameFrom);
-
-            IHighLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<IHighLevelClientCallback>();
-
-            var caller = new RegistrationCaller(Unregister);
-            IAsyncResult result = caller.BeginInvoke(message, clientCallback, callback, state);
-            return result;
-        }
-
         #endregion
 
-        private delegate void RegistrationCaller(RegistrationMessage message, IHighLevelClientCallback clientCallback);
-        private delegate void WriteChannelCaller(InternalLogicalChannelDataMessage message);
     }
 }

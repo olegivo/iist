@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ServiceModel;
 using Autofac;
 using DMS.Common.MessageExchangeSystem;
 using DMS.Common.Messages;
@@ -14,21 +15,19 @@ namespace Oleg_ivo.MES
     /// <summary>
     /// 
     /// </summary>
-    public abstract class AbstractLevelMessageExchangeSystem<TRegisteredClient> : IMessageExchangeSystem where TRegisteredClient : IRegisteredChannelsHolder
+    public abstract class AbstractLevelMessageExchangeSystem<TRegisteredClient, TClientCallback> : IMessageExchangeSystem 
+        where TRegisteredClient : IRegisteredChannelsHolder 
+        where TClientCallback : IClientCallback
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
-        protected readonly IComponentContext context;
+        protected readonly IComponentContext Context;
 
-        private readonly Dictionary<string, TRegisteredClient> _registeredClients =
-            new Dictionary<string, TRegisteredClient>();
+        private readonly Dictionary<string, TRegisteredClient> registeredClients = new Dictionary<string, TRegisteredClient>();
 
         protected AbstractLevelMessageExchangeSystem(IComponentContext context)
         {
-            this.context = Enforce.ArgumentNotNull(context, "context");
+            this.Context = Enforce.ArgumentNotNull(context, "context");
         }
-
-        [Dependency(Required = true)]
-        public IComponentContext Context { get; set; }
 
         [Dependency(Required = true)]
         public ClientsProvider ClientsProvider { get; set; }
@@ -40,8 +39,8 @@ namespace Oleg_ivo.MES
         {
             get
             {
-                TRegisteredClient[] ar = new TRegisteredClient[_registeredClients.Count];
-                _registeredClients.Values.CopyTo(ar, 0);
+                TRegisteredClient[] ar = new TRegisteredClient[registeredClients.Count];
+                registeredClients.Values.CopyTo(ar, 0);
                 return ar;
             }
         }
@@ -57,22 +56,22 @@ namespace Oleg_ivo.MES
         /// <param name="key"></param>
         protected TRegisteredClient this[string key]
         {
-            get { return _registeredClients.ContainsKey(key) ? _registeredClients[key] : default(TRegisteredClient); }
+            get { return registeredClients.ContainsKey(key) ? registeredClients[key] : default(TRegisteredClient); }
             private set
             {
                 if (Equals(value, default(TRegisteredClient)))//пустое значение
                 {
-                    if (_registeredClients.ContainsKey(key))
-                        _registeredClients.Remove(key);//удаляем
+                    if (registeredClients.ContainsKey(key))
+                        registeredClients.Remove(key);//удаляем
                     else
                         log.Warn("Не найден ключ для удаления {0}", key);
                 }
                 else//другое значение
                 {
-                    if (_registeredClients.ContainsKey(key))
-                        _registeredClients[key] = value;//заменяем
+                    if (registeredClients.ContainsKey(key))
+                        registeredClients[key] = value;//заменяем
                     else
-                        _registeredClients.Add(key, value);//добавляем
+                        registeredClients.Add(key, value);//добавляем
                 }
             }
         }
@@ -97,8 +96,6 @@ namespace Oleg_ivo.MES
             //убираем из коллекции зарегистрированных клиентов
             this[clientRegName] = default(TRegisteredClient);
         }
-
-        private delegate void SendErrorCaller(InternalErrorMessage message);
 
         /// <summary>
         /// 
@@ -135,7 +132,7 @@ namespace Oleg_ivo.MES
         {
             log.Trace("Начало передачи сообщения об ошибке от клиента {0}", message.RegNameFrom);
             //TODO: для тестирования BeginSendError: throw new FaultException<InternalException>(new InternalException("Test"),"Reason");
-            var caller = new SendErrorCaller(SendError);
+            var caller = new Action<InternalErrorMessage>(SendError);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
             return result;
         }
@@ -173,7 +170,18 @@ namespace Oleg_ivo.MES
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public abstract IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state);
+        public virtual IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state)
+        {
+            log.Trace("Начало регистрации клиента {0}", message.RegNameFrom);
+
+            var clientCallback = OperationContext.Current.GetCallbackChannel<TClientCallback>();
+
+            var caller = new Action<RegistrationMessage, TClientCallback>(Register);
+            IAsyncResult result = caller.BeginInvoke(message, clientCallback, callback, state);
+            return result;
+        }
+
+        protected abstract void Register(RegistrationMessage message, TClientCallback clientcallback);
 
         /// <summary>
         /// Завершение регистрации клиента
@@ -192,7 +200,18 @@ namespace Oleg_ivo.MES
         /// <param name="message"></param>
         /// <param name="callback"></param>
         /// <param name="state"></param>
-        public abstract IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state);
+        public virtual IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state)
+        {
+            log.Trace("Начало отмены регистрации клиента {0}", message.RegNameFrom);
+
+            var clientCallback = OperationContext.Current.GetCallbackChannel<TClientCallback>();
+
+            var caller = new Action<RegistrationMessage, TClientCallback>(Unregister);
+            IAsyncResult result = caller.BeginInvoke(message, clientCallback, callback, state);
+            return result;
+        }
+
+        protected abstract void Unregister(RegistrationMessage message, TClientCallback clientcallback);
 
         /// <summary>
         /// Завершение отмены регистрации клиента

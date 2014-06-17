@@ -16,7 +16,6 @@ using DMS.Common.Messages;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
 using Oleg_ivo.Tools.ExceptionCatcher;
-using Timer = System.Timers.Timer;
 
 namespace Oleg_ivo.LowLevelClient
 {
@@ -41,16 +40,15 @@ namespace Oleg_ivo.LowLevelClient
                 Enforce.ArgumentNotNull(distributedMeasurementInformationSystem,
                     "distributedMeasurementInformationSystem");
             this.planner = Enforce.ArgumentNotNull(planner, "planner");
-            this.planner.NewDadaReceived += Instance_NewDadaReceived;
+            this.planner.NewDadaReceived += planner_NewDadaReceived;
 
-            //TODO:Timers to RX
-            reconnectTimer = new Timer(5000);
-            reconnectTimer.Elapsed += reconnectTimer_Elapsed;
+            callbackHandler = new CallbackHandler();
+            callbackHandler.NeedProtocol += callbackHandler_NeedProtocol;
+            callbackHandler.ChannelSubscribed += callbackHandler_ChannelSubscribed;
+            callbackHandler.ChannelUnSubscribed += callbackHandler_ChannelUnSubscribed;
+            callbackHandler.HasWriteChannel += callbackHandler_HasWriteChannel;
 
-            CallbackHandler.NeedProtocol += CallbackHandler_NeedProtocol;
-            CallbackHandler.ChannelSubscribed += CallbackHandler_ChannelSubscribed;
-            CallbackHandler.ChannelUnSubscribed += CallbackHandler_ChannelUnSubscribed;
-            CallbackHandler.HasWriteChannel += CallbackHandler_HasWriteChannel;
+            reliableConnector = new ReliableConnector(this);
         }
 
         /// <summary>
@@ -58,13 +56,13 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public event EventHandler<MessageEventArgs<InternalLogicalChannelDataMessage>> HasWriteChannel
         {
-            add { CallbackHandler.HasWriteChannel += value; }
-            remove { CallbackHandler.HasWriteChannel -= value; }
+            add { callbackHandler.HasWriteChannel += value; }
+            remove { callbackHandler.HasWriteChannel -= value; }
         }
 
-        void CallbackHandler_HasWriteChannel(object sender, MessageEventArgs<InternalLogicalChannelDataMessage> e)
+        void callbackHandler_HasWriteChannel(object sender, MessageEventArgs<InternalLogicalChannelDataMessage> e)
         {
-            string s = string.Format(" анал є{0} клиент - {1} [{2}] получено значение {3}",
+            var s = string.Format(" анал є{0} клиент - {1} [{2}] получено значение {3}",
                                      e.Message.LogicalChannelId,
                                      e.Message.RegNameFrom,
                                      e.Message.TimeStamp,
@@ -97,9 +95,15 @@ namespace Oleg_ivo.LowLevelClient
             return distributedMeasurementInformationSystem.PlcManager.LogicalChannels;
         }
 
-
-        void Instance_NewDadaReceived(object sender, NewDataReceivedEventArgs e)
+        void planner_NewDadaReceived(object sender, NewDataReceivedEventArgs e)
         {
+            if (IsCommunicationFailed)
+            {
+                Log.Error(" оммуникаци€ с сервером нарушена. ќстановка опросов всех каналов до восстановлени€ св€зи.");
+                planner.StopAllPolls();
+                //TODO:возможно, не останавливать опрос каналов, но буферизовать полученные данные до восстановлени€ св€зи, отправив их потом? “огда нужна очередь
+                return;
+            }
             if (e.LogicalChannel.IsStateChannel)
             {
                 //сообщение об изменении состо€ни€ канала (каналов)
@@ -127,11 +131,6 @@ namespace Oleg_ivo.LowLevelClient
 
         private void ChangeChannelState(InternalLogicalChannelStateMessage internalLogicalChannelStateMessage)
         {
-            if (IsCommunicationFailed)
-            {
-                Log.Error("Communication failed");
-                return;
-            }
             LowLevelMessageExchangeSystemClient.ChangeChannelStateAsync(internalLogicalChannelStateMessage);
         }
 
@@ -143,21 +142,29 @@ namespace Oleg_ivo.LowLevelClient
         private InstanceContext site;
         private LowLevelMessageExchangeSystemClient proxy;
 
+        public ICommunicationObject Proxy { get { return proxy; } }
+
         private void CreateProxy()
         {
             UnsubscribeProxy();
 
-            site = new InstanceContext(CallbackHandler);
+            Log.Debug("—оздание канала св€зи");
+            site = new InstanceContext(callbackHandler);
             if (proxy != null) 
                 proxy.SafeClose();
             proxy = new LowLevelMessageExchangeSystemClient(site);
-            
+
+            reliableConnector.SetProxy(proxy);
+
             SubscribeProxy();
         }
 
         protected virtual void SubscribeProxy()
         {
             site.Faulted += site_Faulted;
+
+            //proxy.InnerChannel.Faulted += reliableConnector.ProxyFaulted;
+
             proxy.RegisterCompleted += proxy_RegisterCompleted;
             proxy.UnregisterCompleted += proxy_UnregisterCompleted;
             proxy.SendErrorCompleted += proxy_SendErrorCompleted;
@@ -171,12 +178,15 @@ namespace Oleg_ivo.LowLevelClient
             }
             if (proxy != null)
             {
-                proxy.UnregisterCompleted -= proxy_UnregisterCompleted;
+                proxy.RegisterCompleted += proxy_RegisterCompleted;
+                proxy.UnregisterCompleted += proxy_UnregisterCompleted;
+                proxy.SendErrorCompleted += proxy_SendErrorCompleted;
             }
         }
 
         void site_Faulted(object sender, EventArgs e)
         {
+            Log.Error("Site faulted");//TODO:сюда добратьс€ не ожидаем!
             var channel = sender as IChannel;
             if (channel != null)
             {
@@ -191,38 +201,18 @@ namespace Oleg_ivo.LowLevelClient
             AbortProxy();
 
             //Enable the try again timer and attempt to reconnect
-            reconnectTimer.Start();
+            //reconnectTimer.Start();
         }
 
         public void AbortProxy()
         {
             if (proxy != null)
             {
+                Log.Debug("ѕрекращение канала св€зи");
                 proxy.Abort();
                 proxy.Close();
                 proxy = null;
             }
-        }
-
-        private void reconnectTimer_Elapsed(object sender, EventArgs e)
-        {
-            if (proxy == null)
-                CreateProxy();
-            
-            if (proxy != null)
-            {
-                reconnectTimer.Stop();
-                //_keepAliveTimer.Start();
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        protected CallbackHandler CallbackHandler
-        {
-            get { return callbackHandler ?? (callbackHandler = new CallbackHandler()); }
         }
 
         protected string RegName
@@ -241,10 +231,10 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public Func<string> GetRegName { get; set; }
 
-        private CallbackHandler callbackHandler;
-        private readonly Timer reconnectTimer;
+        private readonly CallbackHandler callbackHandler;
+        private readonly ReliableConnector reliableConnector;
 
-        void CallbackHandler_ChannelSubscribed(object sender, MessageEventArgs<ChannelSubscribeMessage> e)
+        void callbackHandler_ChannelSubscribed(object sender, MessageEventArgs<ChannelSubscribeMessage> e)
         {
             var channel =
                 GetLogicalChannels().FirstOrDefault(LogicalChannel.GetFindChannelPredicate(e.Message.LogicalChannelId));
@@ -285,7 +275,7 @@ namespace Oleg_ivo.LowLevelClient
             }
         }
 
-        void CallbackHandler_ChannelUnSubscribed(object sender, MessageEventArgs<ChannelSubscribeMessage> e)
+        void callbackHandler_ChannelUnSubscribed(object sender, MessageEventArgs<ChannelSubscribeMessage> e)
         {
             var channel =
                 GetLogicalChannels().FirstOrDefault(LogicalChannel.GetFindChannelPredicate(e.Message.LogicalChannelId));
@@ -322,7 +312,7 @@ namespace Oleg_ivo.LowLevelClient
             }
         }
 
-        void CallbackHandler_NeedProtocol(object sender, EventArgs e)
+        void callbackHandler_NeedProtocol(object sender, EventArgs e)
         {
             if (sender is double || sender is string)
                 Protocol(sender);
@@ -359,12 +349,6 @@ namespace Oleg_ivo.LowLevelClient
         /// <param name="message"></param>
         public void ReadChannel(InternalLogicalChannelDataMessage message)
         {
-            if (IsCommunicationFailed)
-            {
-                Log.Error("Communication failed");
-                return;
-            }
-
             LowLevelMessageExchangeSystemClient.ReadChannelAsync(message);
         }
 
@@ -374,7 +358,7 @@ namespace Oleg_ivo.LowLevelClient
         public void Register()
         {
             CreateProxy();
-            RegistrationMessage message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
+            var message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
             LowLevelMessageExchangeSystemClient.Register(message);
         }
 
@@ -384,7 +368,7 @@ namespace Oleg_ivo.LowLevelClient
         public void RegisterAsync()
         {
             CreateProxy();
-            RegistrationMessage message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
+            var message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
             LowLevelMessageExchangeSystemClient.RegisterAsync(message);
         }
 
@@ -476,7 +460,7 @@ namespace Oleg_ivo.LowLevelClient
             if (channel.PollPeriod == TimeSpan.Zero)
                 channel.PollPeriod = TimeSpan.FromMilliseconds(1000);
 
-            string s = (channel.PollPeriod ?? TimeSpan.FromSeconds(5)).TotalMilliseconds.ToString();
+            var s = (channel.PollPeriod ?? TimeSpan.FromSeconds(5)).TotalMilliseconds.ToString();
 
             /*
                         s = InputBox.Show("”кажите интервал опроса канала (в миллисекундах)",
@@ -549,7 +533,7 @@ namespace Oleg_ivo.LowLevelClient
 
         public bool IsCommunicationFailed
         {
-            get { return LowLevelMessageExchangeSystemClient.State != CommunicationState.Opened; }
+            get { return LowLevelMessageExchangeSystemClient == null || LowLevelMessageExchangeSystemClient.State == CommunicationState.Faulted; }
         }
 
 
@@ -565,5 +549,4 @@ namespace Oleg_ivo.LowLevelClient
                 LowLevelMessageExchangeSystemClient.SafeClose();
         }
     }
-
 }

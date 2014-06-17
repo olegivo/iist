@@ -57,53 +57,43 @@ namespace Oleg_ivo.MES.Registered
 
         private void SendWriteToClient(InternalLogicalChannelDataMessage message)
         {
-            lock (Callbacks)
-                foreach (ILowLevelClientCallback callback in Callbacks)
-                    try
-                    {
-                        callback.SendWriteToClient(message);
-                    }
-                    catch (Exception ex)
-                    {
-                        log.ErrorException("Ошибка при отправке новых данных клиенту: {0}",
-                                          ex);
-                        throw;
-                    }
+            try
+            {
+                IterateCallbacks(c=> c.SendWriteToClient(message));
+            }
+            catch (Exception ex)
+            {
+                log.ErrorException("Ошибка при отправке новых данных клиенту: {0}", ex);
+                throw;
+            }
         }
 
         void registeredLogicalChannel_Subscribed(object sender, MessageEventArgs<ChannelSubscribeMessage> e)
         {
             //канал сообщает, что появились подписчики на канал. Уведомляем об этом клиент нижнего уровня, пусть активирует канал
-            lock (Callbacks)
-                foreach (ILowLevelClientCallback callback in Callbacks)
-                    try
-                    {
-                        callback.ChannelSubscribe(e.Message);
-                    }
-                    catch (Exception ex)
-                    {
-                        log.ErrorException("Ошибка при уведомлении клиента о первой подписке на канал: {0}",
-                                          ex);
-                        throw;
-                    }
-
+            try
+            {
+                IterateCallbacks(c=> c.ChannelSubscribe(e.Message));
+            }
+            catch (Exception ex)
+            {
+                log.ErrorException("Ошибка при уведомлении клиента о первой подписке на канал: {0}", ex);
+                throw;
+            }
         }
 
         private void registeredLogicalChannel_UnSubscribed(object sender, MessageEventArgs<ChannelSubscribeMessage> e)
         {
             //канал сообщает, что все подписчики на канал отписаны. Уведомляем об этом клиент нижнего уровня, пусть деактивирует канал
-            lock (Callbacks)
-                foreach (ILowLevelClientCallback callback in Callbacks)
-                    try
-                    {
-                        callback.ChannelUnSubscribe(e.Message);
-                    }
-                    catch (Exception ex)
-                    {
-                        log.ErrorException("Ошибка при уведомлении клиента о последней отписке от канала: {0}",
-                                          ex);
-                        throw;
-                    }
+            try
+            {
+                IterateCallbacks(c=> c.ChannelUnSubscribe(e.Message));
+            }
+            catch (Exception ex)
+            {
+                log.ErrorException("Ошибка при уведомлении клиента о последней отписке от канала: {0}", ex);
+                throw;
+            }
         }
 
         /// <summary>
