@@ -43,36 +43,6 @@ namespace Oleg_ivo.MES.Registered
 
         #endregion
 
-/*
-        /// <summary>
-        /// Отправка сообщения клиенту об обновлении цены
-        /// </summary>
-        public void SendUpdateToClient()
-        {
-            throw new NotImplementedException("Метод не будет использоваться, т.к. он тестовый");
-            Random w = new Random();
-            Random p = new Random();
-            while (true)
-            {
-//                    Thread.Sleep(w.Next(5000)); // Откуда-то получаем обновления
-                lock (Callbacks)
-                    foreach (IHighLevelClientCallback c in Callbacks)
-                        try
-                        {
-                            double d = 100.00 + p.NextDouble() * 10;
-                            HighLevelMessageExchangeSystem.Instance.OnUpdate(d);
-                            c.PriceUpdate(Ticker, d);
-                        }
-                        catch (Exception ex)
-                        {
-                            log.("Ошибка при отправке кэшированного значения клиенту: {0}",
-                                              ex.Message);
-                        }
-            }
-        }
-*/
-
-
         /// <summary>
         /// Добавление канала к зарегистрированным
         /// и подписка на 
@@ -162,18 +132,15 @@ namespace Oleg_ivo.MES.Registered
         /// <param name="message"></param>
         public void SendChannelStateToClient(InternalLogicalChannelStateMessage message)
         {
-            lock (Callbacks)
-                foreach (IHighLevelClientCallback callback in Callbacks)
-                    try
-                    {
-                        callback.SendChannelStateToClient(message);
-                    }
-                    catch (Exception ex)
-                    {
-                        log.ErrorException("Ошибка при отправке новых данных клиенту: {0}",
-                                          ex);
-                        throw;
-                    }
+            try
+            {
+                IterateCallbacks(c=> c.SendChannelStateToClient(message));
+            }
+            catch (Exception ex)
+            {
+                log.ErrorException("Ошибка при отправке новых данных клиенту: {0}", ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -182,27 +149,22 @@ namespace Oleg_ivo.MES.Registered
         /// <param name="message"></param>
         public void SendReadToClient(InternalLogicalChannelDataMessage message)
         {
-            lock (Callbacks)
-                foreach (IHighLevelClientCallback callback in Callbacks)
-                    try
-                    {
-                        callback.SendReadToClient(message);
-                    }
-                    catch (Exception ex)
-                    {
-                        log.ErrorException("Ошибка при отправке новых данных клиенту: {0}",
-                                          ex);
-                        throw;
-                    }
+            try
+            {
+                IterateCallbacks(c=> c.SendReadToClient(message));
+            }
+            catch (Exception ex)
+            {
+                log.ErrorException("Ошибка при отправке новых данных клиенту: {0}", ex);
+                throw;
+            }
         }
-
-        private delegate void ChannelRegisterCaller(ChannelRegistrationMessage message);
 
         public void ChannelRegisterAsync(ChannelRegistrationMessage message)
         {
             AsyncCallback callback = EndChannelRegister;
             object state = null;
-            var caller = new ChannelRegisterCaller(ChannelRegister);
+            var caller = new Action<ChannelRegistrationMessage>(ChannelRegister);
             IAsyncResult result = caller.BeginInvoke(message, callback, state);
         }
 
@@ -243,18 +205,15 @@ namespace Oleg_ivo.MES.Registered
                 return;
             }
 
-            lock (Callbacks)
-                foreach (IHighLevelClientCallback callback in Callbacks)
-                    try
-                    {
-                        callback.ChannelRegister(message);
-                    }
-                    catch (Exception ex)
-                    {
-                        log.ErrorException("Ошибка при сообщении клиенту о регистрации канала: {0}",
-                                          ex);
-                        throw;
-                    }
+            try
+            {
+                IterateCallbacks(c=> c.ChannelRegister(message));
+            }
+            catch (Exception ex)
+            {
+                log.ErrorException("Ошибка при сообщении клиенту о регистрации канала: {0}", ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -276,24 +235,21 @@ namespace Oleg_ivo.MES.Registered
             if (registeredLogicalChannel != null)
                 RemoveRegisteredChannel(registeredLogicalChannel);
 
-            lock (Callbacks)
-                foreach (IHighLevelClientCallback callback in Callbacks)
-                    try
-                    {
-                        callback.ChannelUnRegister(message);
-                    }
-                    catch (Exception ex)
-                    {
-                        log.ErrorException("Ошибка при сообщении клиенту об отмене регистрации канала: {0}",
-                                          ex);
-                        throw;
-                    }
+            try
+            {
+                IterateCallbacks(c=> c.ChannelUnRegister(message));
+            }
+            catch (Exception ex)
+            {
+                log.ErrorException("Ошибка при сообщении клиенту об отмене регистрации канала: {0}", ex);
+                throw;
+            }
         }
 
         /// <summary>
         /// Заинтересованность клиента в зарегистрированных каналах.
-        /// Если <see langword="true"/>, то клиент уже успешно запросил о зарегистрированных каналах и был получен ответ.
-        /// Если <see langword="false"/>, но он есть в списке заинтересованных клиентов, 
+        /// Если true, то клиент уже успешно запросил о зарегистрированных каналах и был получен ответ.
+        /// Если false, но он есть в списке заинтересованных клиентов, 
         /// то клиент уже запросил о зарегистрированных каналах, но ответа пока не дождался.
         /// Если клиента нет в списке заинтересованных клиентов, то он ни разу не запрашивал информацию о зарегистрированных каналах.
         /// </summary>

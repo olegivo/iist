@@ -20,7 +20,7 @@ namespace Oleg_ivo.MES.Low
         ConcurrencyMode = ConcurrencyMode.Reentrant,
         AutomaticSessionShutdown = false,
         IncludeExceptionDetailInFaults = true)]
-    public class LowLevelMessageExchangeSystem : AbstractLevelMessageExchangeSystem<RegisteredLowLevelClient>, ILowLevelMessageExchangeSystem
+    public class LowLevelMessageExchangeSystem : AbstractLevelMessageExchangeSystem<RegisteredLowLevelClient, ILowLevelClientCallback>, ILowLevelMessageExchangeSystem
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
         
@@ -78,25 +78,25 @@ namespace Oleg_ivo.MES.Low
         /// </summary>
         /// <param name="message"></param>
         /// <param name="clientCallback"></param>
-        private void Register(RegistrationMessage message, ILowLevelClientCallback clientCallback)
+        protected override void Register(RegistrationMessage message, ILowLevelClientCallback clientCallback)
         {
             if (message.RegistrationMode != RegistrationMode.Register)
                 throw new ArgumentException("Для регистрации клиента в сообщении используется флаг отмены регистрации");
 
-            RegisteredLowLevelClient registeredLowLevelClient = GetRegisteredLowLevelClient(message, false, false);
+            var registeredLowLevelClient = this[message.RegNameFrom];
 
             if (registeredLowLevelClient != null)
-                throw new Exception("Клиент уже зарегистрирован");
-
-            registeredLowLevelClient = new RegisteredLowLevelClient(context);
-            context.InjectAttributedProperties(registeredLowLevelClient);
-            registeredLowLevelClient.Ticker = message.RegNameFrom;
-            AddClient(message.RegNameFrom, registeredLowLevelClient);
-
-            //                registeredLowLevelClient = (RegisteredLowLevelClient)_registeredClients[message.RegNameFrom];
-
-            //Thread t = new Thread(w.RegisteredLowLevelClientProcess.SendUpdateToClient) { IsBackground = true };
-            //t.Start();
+            {
+                if (registeredLowLevelClient.HasCallbacks)
+                    throw new Exception("Клиент уже зарегистрирован");
+            }
+            else
+            {
+                registeredLowLevelClient = new RegisteredLowLevelClient(Context);
+                Context.InjectAttributedProperties(registeredLowLevelClient);
+                registeredLowLevelClient.RegName = message.RegNameFrom;
+                AddClient(message.RegNameFrom, registeredLowLevelClient);
+            }
 
             //получить рабочий объект из данного тикера и добавить
             //прокси клиента в список обратных вызовов
@@ -111,25 +111,21 @@ namespace Oleg_ivo.MES.Low
         /// </summary>
         /// <param name="message"></param>
         /// <param name="clientCallback"></param>
-        private void Unregister(RegistrationMessage message, ILowLevelClientCallback clientCallback)
+        protected override void Unregister(RegistrationMessage message, ILowLevelClientCallback clientCallback)
         {
             if (message.RegistrationMode != RegistrationMode.Unregister) 
                 throw new ArgumentException("Для отмены регистрации клиента в сообщении используется флаг регистрации");
 
             //получить рабочий объект из данного тикера и удалить
             //прокси клиента из списка обратных вызовов
-            RegisteredLowLevelClient registeredLowLevelClient = GetRegisteredLowLevelClient(message, false, false);
+            RegisteredLowLevelClient registeredLowLevelClient = GetRegisteredLowLevelClient(message);
+            
+            registeredLowLevelClient.RemoveCallback(clientCallback);//лишаем клиента уведомлений
 
-            if (registeredLowLevelClient != null)
-            {
-                registeredLowLevelClient.RemoveCallback(clientCallback);//лишаем клиента уведомлений
+            OnUnRegistered(registeredLowLevelClient, message);//уведомляем о том, что клиент отменил регистрацию
 
-                OnUnRegistered(registeredLowLevelClient, message);//уведомляем о том, что клиент отменил регистрацию
-
-                //                if (registeredLowLevelClient.HasCallbacks)
-                RemoveClient(message.RegNameFrom);
-
-            }
+            //                if (registeredLowLevelClient.HasCallbacks)
+            RemoveClient(message.RegNameFrom);
         }
 
         #endregion
@@ -334,21 +330,15 @@ namespace Oleg_ivo.MES.Low
         /// Получить зарегистрированного клиента по имени.
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="withRegisteredChannels">Только с зарегистрированными каналами. 
-        /// Может потребоваться, когда требуется найти клиента-владельца канала</param>
-        /// <param name="withCallbacks"></param>
+        /// <exception cref="Exception">В случае, когда клиент не найден по имени или когда у клиента нет обратных вызовов, генерируется исключение</exception>
         /// <returns></returns>
-        private RegisteredLowLevelClient GetRegisteredLowLevelClient(InternalMessage message, bool withRegisteredChannels, bool withCallbacks)
+        private RegisteredLowLevelClient GetRegisteredLowLevelClient(InternalMessage message)
         {
-            RegisteredLowLevelClient registeredLowLevelClient = this[message.RegNameFrom];
-            if (registeredLowLevelClient != null)
-            {
-                if ((withRegisteredChannels && !registeredLowLevelClient.HasRegisteredLogicalChannels)
-                        ||
-                        (withCallbacks && !registeredLowLevelClient.HasCallbacks))
-                    registeredLowLevelClient = null;
-            }
-
+            var registeredLowLevelClient = this[message.RegNameFrom];
+            if (registeredLowLevelClient == null)
+                throw new Exception("Клиент не зарегистрирован");
+            if (!registeredLowLevelClient.HasCallbacks)
+                throw new Exception("У клиента нет обратных вызовов"); 
             return registeredLowLevelClient;
         }
 
@@ -358,9 +348,9 @@ namespace Oleg_ivo.MES.Low
         /// <param name="message"></param>
         public void ChannelRegister(ChannelRegistrationMessage message)
         {
-            RegisteredLowLevelClient registeredLowLevelClient = GetRegisteredLowLevelClient(message, false, false);
-            if (registeredLowLevelClient == null)
-                throw new Exception("Данный клиент не зарегистрирован");
+            var registeredLowLevelClient = GetRegisteredLowLevelClient(message);
+            //if(!registeredLowLevelClient.HasRegisteredLogicalChannels)
+            //    throw new Exception("У клиента нет зарегистрированных каналов");
 
             RegisteredLogicalChannelExtended channel =
                 registeredLowLevelClient.GetRegisteredLogicalChannel(
@@ -389,9 +379,9 @@ namespace Oleg_ivo.MES.Low
         /// <param name="message"></param>
         public void ChannelUnRegister(ChannelRegistrationMessage message)
         {
-            RegisteredLowLevelClient registeredLowLevelClient = GetRegisteredLowLevelClient(message, false, false);
-            if (registeredLowLevelClient == null)
-                throw new Exception("Данный клиент не зарегистрирован");
+            var registeredLowLevelClient = GetRegisteredLowLevelClient(message);
+            if (!registeredLowLevelClient.HasRegisteredLogicalChannels)
+                throw new Exception("У клиента нет зарегистрированных каналов");
 
             RegisteredLogicalChannelExtended channel =
                 registeredLowLevelClient.GetRegisteredLogicalChannel(
@@ -452,50 +442,6 @@ namespace Oleg_ivo.MES.Low
 
             base.RemoveClient(clientRegName);
         }
-
-        #region Implementation of IMessageExchangeSystem
-
-        #region Implementation of IMessageExchangeSystem
-
-        /// <summary>
-        /// Начало регистрации клиента
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public override IAsyncResult BeginRegister(RegistrationMessage message, AsyncCallback callback, object state)
-        {
-            log.Trace("Начало регистрации клиента {0}", message.RegNameFrom);
-
-            var clientCallback = OperationContext.Current.GetCallbackChannel<ILowLevelClientCallback>();
-
-            var caller = new RegistrationCaller(Register);
-            IAsyncResult result = caller.BeginInvoke(message, clientCallback, callback, state);
-            return result;
-        }
-
-        /// <summary>
-        /// Начало отмены регистрации клиента
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="callback"></param>
-        /// <param name="state"></param>
-        public override IAsyncResult BeginUnregister(RegistrationMessage message, AsyncCallback callback, object state)
-        {
-            log.Trace("Начало отмены регистрации клиента {0}", message.RegNameFrom);
-
-            ILowLevelClientCallback clientCallback = OperationContext.Current.GetCallbackChannel<ILowLevelClientCallback>();
-
-            var caller = new RegistrationCaller(Unregister);
-            IAsyncResult result = caller.BeginInvoke(message, clientCallback, callback, state);
-            return result;
-        }
-
-        #endregion
-
-        #endregion
-
-        private delegate void RegistrationCaller(RegistrationMessage message, ILowLevelClientCallback clientCallback);
 
         /// <summary>
         /// Записать канал

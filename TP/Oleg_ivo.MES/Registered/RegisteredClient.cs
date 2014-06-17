@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using Autofac;
 using DMS.Common.MessageExchangeSystem;
 using DMS.Common.Messages;
@@ -53,7 +54,7 @@ namespace Oleg_ivo.MES.Registered
         /// <summary>
         /// 
         /// </summary>
-        public string Ticker { get; set; }
+        public string RegName { get; set; }
 
         /// <summary>
         /// Зарегистрированные логические каналы
@@ -112,32 +113,23 @@ namespace Oleg_ivo.MES.Registered
         /// <param name="message"></param>
         public void SendMessageToClient(InternalMessage message)
         {
-            lock (Callbacks)
-                foreach (TClientCallback callback in Callbacks)
-                    try
-                    {
-//                            double d = 100.00 + p.NextDouble() * 10;
-//                            Instance.OnUpdate(d);
-                        callback.SendMessageToClient(message);
-                    }
-                    catch (System.ServiceModel.FaultException<InvalidOperationException> ex)
-                    {
-                        throw;
-                    }
-                    catch (System.ServiceModel.FaultException ex)
-                    {
-                        throw;
-                    }
-                    catch (System.ServiceModel.CommunicationException ex)
-                    {
-                        throw;
-                    }
-                    catch (Exception ex)
-                    {
-                        log.ErrorException("Ошибка при отправке кэшированного значения клиенту: {0}",
-                                          ex);
-                        throw;
-                    }
+            try
+            {
+                IterateCallbacks(c=> c.SendMessageToClient(message));
+            }
+            catch (FaultException<InvalidOperationException> ex)
+            {
+                throw;
+            }
+            catch (FaultException ex)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                log.ErrorException("Ошибка при отправке кэшированного значения клиенту: {0}", ex);
+                throw;
+            }
         }
 
         #endregion
@@ -168,6 +160,25 @@ namespace Oleg_ivo.MES.Registered
         protected void RemoveRegisteredChannel(RegisteredLogicalChannelExtended registeredLogicalChannel)
         {
             RegisteredLogicalChannels.Remove(registeredLogicalChannel.Id);
+        }
+
+        protected void IterateCallbacks(Action<TClientCallback> callbackAction)
+        {
+            lock (Callbacks)
+                foreach (var callback in Callbacks.ToList())
+                    try
+                    {
+                        callbackAction(callback);
+                    }
+                    catch (CommunicationObjectFaultedException ex)
+                    {
+                        var error =
+                            string.Format(
+                                "Обратный вызов с клиентом [{0}] нарушен. Удаляем обратный вызов и ждём повторной регистрации клиента.",
+                                RegName);
+                        log.ErrorException(error, ex);
+                        Callbacks.Remove(callback);
+                    }
         }
     }
 }
