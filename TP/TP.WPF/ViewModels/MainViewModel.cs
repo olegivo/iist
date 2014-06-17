@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Windows.Input;
 using DMS.Common.Messages;
 using GalaSoft.MvvmLight.Command;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
+using TP.WPF.IoC;
 using TP.WPF.Properties;
 using TP.WPF.Views;
 
@@ -48,6 +50,15 @@ namespace TP.WPF.ViewModels
             channelController.CanRegister = true;
 
             SubscribeAndInitViewModels();
+        }
+
+        [Dependency(Required = true)]
+        public TpCommandLineOptions CommandLineOptions { get; set; }
+
+        public void OnLoad()
+        {
+            if(CommandLineOptions.AutoRegister)
+                channelController.Register();
         }
 
         private string GetRegName()

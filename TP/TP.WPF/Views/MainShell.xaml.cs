@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
 using MixModes.Synergy.VisualFramework.Windows;
-using Oleg_ivo.Base.Autofac.DependencyInjection;
+using Oleg_ivo.Base.Autofac;
 using TP.WPF.Properties;
 using TP.WPF.ViewModels;
 
@@ -16,20 +17,21 @@ namespace TP.WPF.Views
 	public partial class MainShell
 	{
 	    private const string ViewNameSpaceName = "TP.WPF.Views";
-		public MainShell()
+
+	    public MainShell()
+	    {
+            InitializeComponent();
+        }
+
+	    public MainShell(MainViewModel viewModel) : this()
 		{
-			this.InitializeComponent();
-			this.GenerateLayout();
-            this.GenereteDebugPanel();
-		    this.GenerateIndicatorsPanel();
-		    Title += string.Format(" [{0}]", Settings.Default.MainFormTitle);
+            ViewModel = Enforce.ArgumentNotNull(viewModel, "viewModel");
 		}
 
-        [Dependency(Required = true)]
 	    public MainViewModel ViewModel
 	    {
 	        get { return (MainViewModel) DataContext; }
-	        set { DataContext = value; }
+            private set { DataContext = value; }
 	    }
 
 	    private Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)
@@ -114,5 +116,14 @@ namespace TP.WPF.Views
 	        WindowsManager.AddPinnedWindow(pane,Dock.Top);
 
 	    }
+
+	    private void MainShell_OnLoaded(object sender, RoutedEventArgs e)
+	    {
+	        ViewModel.OnLoad();
+            GenerateLayout();
+            GenereteDebugPanel();
+            GenerateIndicatorsPanel();
+            Title += string.Format(" [{0}]", Settings.Default.MainFormTitle);
+        }
 	}
 }
