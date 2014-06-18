@@ -9,6 +9,8 @@ namespace Oleg_ivo.LowLevelClient
     /// </summary>
     public class MeasurementPoll
     {
+        private IDisposable disposable;
+
         /// <summary>
         /// 
         /// </summary>
@@ -17,8 +19,12 @@ namespace Oleg_ivo.LowLevelClient
         {
             LogicalChannel = logicalChannel;
             var period = logicalChannel.PollPeriod ?? TimeSpan.FromSeconds(5);
-            Observable.Interval(period).Subscribe(l => OnTick());
-            //TODO: более продуманный отключаемый таймер (чтобы он не работал, когда выключен, чтобы каждый раз не проверять в OnTick свойство IsStarted)
+            disposable = Observable.Interval(period).Where(l => IsStarted).Subscribe(l => OnTick(), HandleException);//TODO:dispose
+        }
+
+        private void HandleException(Exception exception)
+        {
+            Console.WriteLine(exception);
         }
 
         private void OnTick()
