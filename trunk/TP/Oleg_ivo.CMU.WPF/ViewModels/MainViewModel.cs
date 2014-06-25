@@ -1,6 +1,9 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
 using DMS.Common;
 using DMS.Common.Messages;
 using GalaSoft.MvvmLight;
@@ -47,18 +50,18 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
             Enforce.ArgumentNotNull(exceptionHandler, "exceptionHandler").AdditionalErrorHandler =
                 errorSenderWrapper.LogError;
 
-            ControlManagementUnit.BuildSystemConfiguration();
-            UnregisteredChannels =
-                new ObservableCollection<LogicalChannelViewModel>(
-                    ControlManagementUnit.GetAvailableLogicalChannels()
-                        .Select(channel => new LogicalChannelViewModel(channel)));
+            dispatcher = Dispatcher.CurrentDispatcher;
+
+            LogTarget = LogManager.Configuration.FindTargetByName("uiLog") as ObservableLogTarget;
+            UnregisteredChannels = new ObservableCollection<LogicalChannelViewModel>();
             RegisteredChannels = new ObservableCollection<LogicalChannelViewModel>();
             SelectedUnregisteredChannels = new ObservableCollection<LogicalChannelViewModel>();
             SelectedRegisteredChannels = new ObservableCollection<LogicalChannelViewModel>();
-
-            LogTarget = LogManager.Configuration.FindTargetByName("uiLog") as ObservableLogTarget;
-
-            CanRegister = true;
+            initTask = Task.Factory.StartNew(() =>
+            {
+                ControlManagementUnit.BuildSystemConfiguration();
+                CanRegister = true;
+            });
         }
 
         #region EventHandlers
@@ -111,6 +114,8 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
         public ObservableLogTarget LogTarget { get; private set; }
 
         private string regName;
+        private readonly Task initTask;
+        private Dispatcher dispatcher;
 
         public string RegName
         {
@@ -420,9 +425,19 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
 
         public void OnLoad()
         {
-            RegName = Settings.Default.DefaultRegName;
-            if(AutoRegister)
-                Register();
+            initTask.ContinueWith(task =>
+            {
+                dispatcher.Invoke(new Action(() =>
+                {
+                    UnregisteredChannels =
+                        new ObservableCollection<LogicalChannelViewModel>(
+                            ControlManagementUnit.GetAvailableLogicalChannels()
+                                .Select(channel => new LogicalChannelViewModel(channel)));
+                    RegName = Settings.Default.DefaultRegName;
+                    if (AutoRegister)
+                        Register();
+                }));
+            });
         }
     }
 }
