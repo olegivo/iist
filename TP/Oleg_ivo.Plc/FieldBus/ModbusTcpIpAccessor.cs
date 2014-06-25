@@ -27,7 +27,7 @@ namespace Oleg_ivo.Plc.FieldBus
         }
 
         #region fields
-        private TcpClient _client;
+        private TcpClient client;
 
         #endregion
 
@@ -37,25 +37,28 @@ namespace Oleg_ivo.Plc.FieldBus
         ///</summary>
         private TcpClient Client
         {
-            get
-            {
-                if (_client == null)
-                    try
-                    {
-                        //IPEndPoint ipEndPoint = new IPEndPoint(IPAddress, Port);
-                        //todo: ModbusTcpIpAccessor.Client - кэшировать доступ к TCP-IP каналу?
-                        _client = new TcpClient(IPAddress.ToString(), Port);
-                    }
-
-                    catch (Exception ex)
-                    {
-                        Log.Debug(ex.Message);
-                        Log.Debug("Невозможно подключиться к TCP-IP каналу {0}:{1}", IPAddress, Port);
-                    }
-
-                return _client;
-            }
+            get { return client ?? (client = CreateClient()); }
         }
+
+        private TcpClient CreateClient()
+        {
+            TcpClient tcpClient = null;
+            try
+            {
+                //IPEndPoint ipEndPoint = new IPEndPoint(IPAddress, Port);
+                //todo: ModbusTcpIpAccessor.Client - кэшировать доступ к TCP-IP каналу?
+                tcpClient = new TcpClient(IPAddress.ToString(), Port);
+            }
+
+            catch (SocketException ex)
+            {
+                var s = string.Format("Невозможно подключиться к TCP-IP каналу {0}:{1}", IPAddress, Port);
+                Log.ErrorException(s, ex);
+            }
+
+            return tcpClient;
+        }
+
         #endregion
 
 
@@ -111,8 +114,11 @@ namespace Oleg_ivo.Plc.FieldBus
         private void CheckClient()
         {
             Log.Debug("Проверка подключенности TCP-клиента");
-            var pollFailed = (Client.Client.Poll(10, SelectMode.SelectRead) && (Client.Available == 0));
-            if (!Client.Connected || pollFailed)
+            var tcpClient = Client;
+            if (tcpClient == null) return;
+
+            var pollFailed = (tcpClient.Client.Poll(10, SelectMode.SelectRead) && (tcpClient.Available == 0));
+            if (!tcpClient.Connected || pollFailed)
             {
                 Log.Debug("TCP-клиент не подключен, попытка подключения");
                 //TcpClient t = Client;
@@ -120,16 +126,16 @@ namespace Oleg_ivo.Plc.FieldBus
                 try
                 {
                     //Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, );
-                    Client.LingerState = new LingerOption(true, 3600);
-                    Client.Connect(IPAddress, Port);
+                    tcpClient.LingerState = new LingerOption(true, 3600);
+                    tcpClient.Connect(IPAddress, Port);
                 }
                 catch (InvalidOperationException ex)
                 {
                     Log.Debug("Невозможно выполнить операцию подключения к TCP-клиенту. Попытка пересоздать TCP-клиент", ex);
                     //сброс полей для их повторной инициализации
-                    //_client.Client.Shutdown();
-                    _client.Client.Close();
-                    _client = null;
+                    //client.Client.Shutdown();
+                    client.Client.Close();
+                    client = null;
                     _modbusAdapter = null;
                     modbusMaster = null;
                     CreateModbusMaster();
@@ -150,7 +156,7 @@ namespace Oleg_ivo.Plc.FieldBus
         {
             //throw new NotImplementedException("InitializeModbusMaster");
             // открываем соединение
-            //_client = null;//todo: ModbusTcpIpAccessor.InitializeModbusMaster() - всё время переинициализация?
+            //client = null;//todo: ModbusTcpIpAccessor.InitializeModbusMaster() - всё время переинициализация?
             if (Client != null)
             {
                 if (modbusMaster == null)
@@ -179,12 +185,12 @@ namespace Oleg_ivo.Plc.FieldBus
                 Log.Debug("Не инициализирован _modbusAdapter");
                 return false;
             }
-            if (_client == null)
+            if (client == null)
             {
-                Log.Debug("Не инициализирован _client");
+                Log.Debug("Не инициализирован client");
                 return false;
             }
-            Log.Debug("Тестирование подключения к {0}...", _client);
+            Log.Debug("Тестирование подключения к {0}...", client);
             bool[] coils = _modbusAdapter.ReadCoils(0, 0, 1);
             return coils != null && coils.Length > 0;
         }

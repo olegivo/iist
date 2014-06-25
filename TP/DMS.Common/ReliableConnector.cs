@@ -12,17 +12,22 @@ namespace DMS.Common
     {
         private readonly IClientBase clientBase;
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-        private readonly Timer reconnectTimer;
+        private Timer reconnectTimer;
         private ICommunicationObject proxy;
         private IDisposable disposable;
-        private readonly DateTime start;
+        private DateTime start;
         private int reconnectsCount;
 
         public ReliableConnector(IClientBase clientBase)
         {
             this.clientBase = clientBase;
+        }
+
+        private void Run()
+        {
+            Log.Debug("Запуск таймеров переподключения ({0})", clientBase.GetRegName());
             //TODO:Timers to RX
-            reconnectTimer = new Timer(5000);
+            reconnectTimer = new Timer(5000) {Enabled = false};
             reconnectTimer.Elapsed += reconnectTimer_Elapsed;
 
             start = DateTime.Now;
@@ -37,7 +42,7 @@ namespace DMS.Common
             {
                 if (repairing) return;
                 Log.Debug("Ping from {0}. Продолжительность полёта - {1}. Переподключений: {2}", clientBase.GetRegName(), DateTime.Now - start, reconnectsCount);
-                if (clientBase.Proxy == null || clientBase.Proxy.State == CommunicationState.Faulted)
+                if (IsNeedRepair)
                 {
                     try
                     {
@@ -50,6 +55,11 @@ namespace DMS.Common
                     }
                 }
             }
+        }
+
+        private bool IsNeedRepair
+        {
+            get { return clientBase.Proxy == null || clientBase.Proxy.State == CommunicationState.Faulted; }
         }
 
         private void reconnectTimer_Elapsed(object sender, EventArgs e)
@@ -75,7 +85,10 @@ namespace DMS.Common
                 ((ClientBase<T>)proxy).InnerChannel.Faulted -= InnerChannel_Faulted;
             proxy = value;
             if (proxy != null)
+            {
                 ((ClientBase<T>)proxy).InnerChannel.Faulted += InnerChannel_Faulted;
+                if (reconnectTimer == null) Run();//перед первой попыткой коннекта - запускаем таймеры
+            }
         }
 
         private void InnerChannel_Faulted(object sender, EventArgs e)

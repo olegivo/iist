@@ -79,7 +79,13 @@ namespace TP.WPF
         /// </summary>
         protected ClientProvider Provider
         {
-            get { return provider ?? (provider = new ClientProvider()); }
+            get
+            {
+                lock (this)
+                {
+                    return provider ?? (provider = new ClientProvider());
+                }
+            }
         }
 
         /// <summary>
