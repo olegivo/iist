@@ -24,9 +24,6 @@ namespace Oleg_ivo.CMU.WPF.IoC
             builder.RegisterModule<CmuAutofacModule>();
 
             builder.RegisterType<MainWindow>();
-
-            // register autofac module
-            builder.RegisterModule<CmuAutofacModule>();
         }
 
         protected override DependencyObject CreateShell()
