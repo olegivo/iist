@@ -101,7 +101,7 @@ namespace Oleg_ivo.WAGO.CMS.ViewModel
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при редактировании параметров", ex);
+                log.Error("Ошибка при редактировании параметров", ex);
             }
         }
 
@@ -124,7 +124,7 @@ namespace Oleg_ivo.WAGO.CMS.ViewModel
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при редактировании прямого преобразования", ex);
+                log.Error("Ошибка при редактировании прямого преобразования", ex);
             }
         }
 
@@ -147,7 +147,7 @@ namespace Oleg_ivo.WAGO.CMS.ViewModel
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при редактировании обратного преобразования", ex);
+                log.Error("Ошибка при редактировании обратного преобразования", ex);
             }
         }
     }

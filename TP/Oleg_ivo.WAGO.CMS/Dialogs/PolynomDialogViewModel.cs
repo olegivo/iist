@@ -51,7 +51,7 @@ namespace Oleg_ivo.WAGO.CMS.Dialogs
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при удалении коэффициента", ex);
+                log.Error("Ошибка при удалении коэффициента", ex);
             }
         }
 
@@ -66,7 +66,7 @@ namespace Oleg_ivo.WAGO.CMS.Dialogs
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при добавлении коэффициента", ex);
+                log.Error("Ошибка при добавлении коэффициента", ex);
             }
         }
 

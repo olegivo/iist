@@ -138,7 +138,7 @@ namespace Oleg_ivo.MES.Registered
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при отправке новых данных клиенту: {0}", ex);
+                log.Error("Ошибка при отправке новых данных клиенту: {0}", ex);
                 throw;
             }
         }
@@ -155,7 +155,7 @@ namespace Oleg_ivo.MES.Registered
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при отправке новых данных клиенту: {0}", ex);
+                log.Error("Ошибка при отправке новых данных клиенту: {0}", ex);
                 throw;
             }
         }
@@ -211,7 +211,7 @@ namespace Oleg_ivo.MES.Registered
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при сообщении клиенту о регистрации канала: {0}", ex);
+                log.Error("Ошибка при сообщении клиенту о регистрации канала: {0}", ex);
                 throw;
             }
         }
@@ -241,7 +241,7 @@ namespace Oleg_ivo.MES.Registered
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при сообщении клиенту об отмене регистрации канала: {0}", ex);
+                log.Error("Ошибка при сообщении клиенту об отмене регистрации канала: {0}", ex);
                 throw;
             }
         }

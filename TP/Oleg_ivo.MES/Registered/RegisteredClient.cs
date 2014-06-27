@@ -127,7 +127,7 @@ namespace Oleg_ivo.MES.Registered
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при отправке кэшированного значения клиенту: {0}", ex);
+                log.Error("Ошибка при отправке кэшированного значения клиенту: {0}", ex);
                 throw;
             }
         }
@@ -176,7 +176,7 @@ namespace Oleg_ivo.MES.Registered
                             string.Format(
                                 "Обратный вызов с клиентом [{0}] нарушен. Удаляем обратный вызов и ждём повторной регистрации клиента.",
                                 RegName);
-                        log.ErrorException(error, ex);
+                        log.Error(error, ex);
                         Callbacks.Remove(callback);
                     }
         }
