@@ -79,7 +79,7 @@ namespace Oleg_ivo.WAGO.CMS.Dialogs
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при удалении параметра", ex);
+                log.Error("Ошибка при удалении параметра", ex);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Oleg_ivo.WAGO.CMS.Dialogs
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при добавлении параметра", ex);
+                log.Error("Ошибка при добавлении параметра", ex);
             }
         }
     }

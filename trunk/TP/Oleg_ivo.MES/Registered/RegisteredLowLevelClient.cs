@@ -63,7 +63,7 @@ namespace Oleg_ivo.MES.Registered
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при отправке новых данных клиенту: {0}", ex);
+                log.Error("Ошибка при отправке новых данных клиенту: {0}", ex);
                 throw;
             }
         }
@@ -77,7 +77,7 @@ namespace Oleg_ivo.MES.Registered
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при уведомлении клиента о первой подписке на канал: {0}", ex);
+                log.Error("Ошибка при уведомлении клиента о первой подписке на канал: {0}", ex);
                 throw;
             }
         }
@@ -91,7 +91,7 @@ namespace Oleg_ivo.MES.Registered
             }
             catch (Exception ex)
             {
-                log.ErrorException("Ошибка при уведомлении клиента о последней отписке от канала: {0}", ex);
+                log.Error("Ошибка при уведомлении клиента о последней отписке от канала: {0}", ex);
                 throw;
             }
         }

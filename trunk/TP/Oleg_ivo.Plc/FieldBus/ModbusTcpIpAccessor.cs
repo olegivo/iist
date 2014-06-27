@@ -53,7 +53,7 @@ namespace Oleg_ivo.Plc.FieldBus
             catch (SocketException ex)
             {
                 var s = string.Format("Невозможно подключиться к TCP-IP каналу {0}:{1}", IPAddress, Port);
-                Log.ErrorException(s, ex);
+                Log.Error(s, ex);
             }
 
             return tcpClient;
