@@ -80,7 +80,7 @@ namespace DMS.Common
 
         public void SetProxy<T>(ClientBase<T> value) where T : class
         {
-            if (proxy != value) return;
+            if (proxy == value) return;
             if (proxy != null)
                 ((ClientBase<T>)proxy).InnerChannel.Faulted -= InnerChannel_Faulted;
             proxy = value;
