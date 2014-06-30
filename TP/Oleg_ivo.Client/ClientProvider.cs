@@ -123,6 +123,11 @@ namespace Oleg_ivo.HighLevelClient
             }
         }
 
+        public bool IsRegistered
+        {
+            get { return true;/*TODO: Implement IsRegistered*/ }
+        }
+
 
         /// <summary>
         /// Создать Proxy

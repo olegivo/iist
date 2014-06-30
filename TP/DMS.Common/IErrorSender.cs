@@ -11,6 +11,7 @@ namespace DMS.Common
     {
         event EventHandler<AsyncCompletedEventArgs> SendErrorCompleted;
         bool IsCommunicationFailed { get; }
+        bool IsRegistered { get; }
         void SendErrorAsync(ExtendedThreadExceptionEventArgs e);
     }
 }

@@ -44,8 +44,8 @@ namespace TP.WPF.ViewModels
 
             channelController.AutoSubscribeChannels = true;
             channelController.LogicalChannelMappings = Settings.Default.LogicalChannelMappings;
-            channelController.InitProvider();
             channelController.GetRegName = GetRegName;
+            channelController.InitProvider();
             channelController.NeedProtocol += channelController_NeedProtocol;
             channelController.CanRegister = true;
 
