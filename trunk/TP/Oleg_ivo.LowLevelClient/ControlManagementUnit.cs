@@ -215,6 +215,11 @@ namespace Oleg_ivo.LowLevelClient
             }
         }
 
+        public bool IsRegistered
+        {
+            get { return isRegistered; }
+        }
+
         protected string RegName
         {
             get
@@ -357,9 +362,13 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public void Register()
         {
-            CreateProxy();
-            var message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
-            LowLevelMessageExchangeSystemClient.Register(message);
+            lock (registerLock)
+            {
+                CreateProxy();
+                var message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
+                LowLevelMessageExchangeSystemClient.Register(message);
+                isRegistered = true;
+            } 
         }
 
         /// <summary>
@@ -390,7 +399,8 @@ namespace Oleg_ivo.LowLevelClient
 
         private void proxy_UnregisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            if (e.Error == null)
+            lock (registerLock) isRegistered = e.Error == null;
+            if (isRegistered)
                 Log.Info("Отмена регистрации на сервере завершилась успешно");
             else
                 Log.Error("Отмена регистрации на сервере завершилась неудачно:\n{0}", e.Error);
@@ -409,13 +419,23 @@ namespace Oleg_ivo.LowLevelClient
 
         private void proxy_RegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            if (e.Error != null)
-                Log.Error("Регистрация на сервере завершилась неудачно:\n{0}", e.Error);
-            else
-                Log.Info("Регистрация на сервере завершилась успешно");
-
-            if (RegisterCompleted != null)
-                RegisterCompleted(this, e);
+            try
+            {
+                lock (registerLock) isRegistered = e.Error == null;
+                
+                if (isRegistered)
+                    Log.Info("Регистрация на сервере завершилась успешно");
+                else
+                {
+                    Log.Error("Регистрация на сервере завершилась неудачно:\n{0}", e.Error);
+                    throw e.Error;
+                }
+            }
+            finally
+            {
+                if (RegisterCompleted != null)
+                    RegisterCompleted(this, e);
+            }
         }
 
         public event EventHandler<AsyncCompletedEventArgs> SendErrorCompleted;
@@ -531,11 +551,31 @@ namespace Oleg_ivo.LowLevelClient
             Protocol(string.Format("{0} отмена регистрации в системе обмена сообщениями", channel));
         }
 
+        private readonly object registerLock = new object();
+
         public bool IsCommunicationFailed
         {
-            get { return LowLevelMessageExchangeSystemClient == null || LowLevelMessageExchangeSystemClient.State == CommunicationState.Faulted; }
+            get
+            {
+                lock (registerLock)
+                {
+                    Log.Trace("Проверка коммуникаций");
+                    if (LowLevelMessageExchangeSystemClient == null)
+                    {
+                        Log.Warn("Прокси не создан");
+                        return true;
+                    }
+                    if (LowLevelMessageExchangeSystemClient.State == CommunicationState.Faulted)
+                    {
+                        Log.Warn("Канал связи нарушен");
+                        return true;
+                    }
+                    return false;
+                }
+            }
         }
 
+        private bool isRegistered;
 
         public void SendErrorAsync(ExtendedThreadExceptionEventArgs e)
         {
