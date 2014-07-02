@@ -2,6 +2,7 @@ using System;
 using System.ServiceModel;
 using DMS.Common.Events;
 using DMS.Common.Messages;
+using NLog;
 using Oleg_ivo.Base.Communication;
 using Oleg_ivo.HighLevelClient.ServiceReferenceHomeTcp;
 
@@ -33,7 +34,9 @@ namespace Oleg_ivo.HighLevelClient
     [ErrorBehavior(typeof(ServiceErrorHandler))]
     public class CallbackHandler : IHighLevelMessageExchangeSystemCallback// IClientCallback
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
+        [Obsolete]
         private void OnNeedProtocol(object d)
         {
             EventHandler handler = NeedProtocol;
@@ -75,8 +78,8 @@ namespace Oleg_ivo.HighLevelClient
         public void SendMessageToClient(DMS.Common.Messages.InternalMessage message)
         {
             string s = string.Format("MessageExchangeSystem -> Client : {0}", message.TimeStamp);
+            log.Debug(s);
             OnNeedProtocol(s);
-
             //todo:Oleg_ivo.Client.CallbackHandler.SendMessageToClient - для проверки проброса исключений на сервер
             /*
                         TestException exception = new TestException("Мне прислали сообщение, но произошла тестовая ошибка");
@@ -187,6 +190,7 @@ namespace Oleg_ivo.HighLevelClient
                 Environment.NewLine);
 
             OnSendReadToClient(message);
+            log.Debug(s);
             OnNeedProtocol(s);
 
 #if LABVIEW
@@ -248,6 +252,7 @@ namespace Oleg_ivo.HighLevelClient
                 Environment.NewLine);
 
             OnSendChannelStateToClient(message);
+            log.Debug(s);
             OnNeedProtocol(s);
         }
 
