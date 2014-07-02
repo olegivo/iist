@@ -152,7 +152,7 @@ namespace TP.WPF
             var registeredChannels = Provider.RegisteredChannels;
             if (registeredChannels == null || registeredChannels.Count == 0)
             {
-                Protocol("Регистрация завершена успешно. На сервере не опубликовано ни одного канала");
+                log.Info("Регистрация завершена успешно. На сервере не опубликовано ни одного канала");
             }
             else
                 foreach (var registeredChannel in registeredChannels)
@@ -184,8 +184,9 @@ namespace TP.WPF
                             mapping.LogicalChannelId == logicalChannelId &&
                             registeredChannelsList.Contains(mapping.LogicalChannelId)).LocalChannelId;
                 realDic.Add(localChannelId, logicalChannelId);
-                
-                Protocol(string.Format("Канал [{0}] теперь доступен для подписки", logicalChannelId));
+
+                var s = string.Format("Канал [{0}] теперь доступен для подписки", logicalChannelId);
+                log.Info(s);
                 
                 if (!subscribedChannelsList.Contains(logicalChannelId))//TODO:проверить, можно ли без этого условия (не остаются ли каналы после отмены подписки или отмены регистрации)
                 {
@@ -231,7 +232,7 @@ namespace TP.WPF
 
                 Provider.Unregister();
                 CanRegister = true;
-                Protocol("Отмена регистрации на сервере завершилась успешно");
+                log.Info("Отмена регистрации на сервере завершилась успешно");
             }
             catch (Exception)
             {
@@ -278,7 +279,6 @@ namespace TP.WPF
             
             Provider.Init();
 
-            Provider.NeedProtocol += Provider_NeedProtocol;
             Provider.ChannelUnRegistered += Provider_ChannelUnRegistered;
             Provider.ChannelRegistered += Provider_ChannelRegistered;
             Provider.ChannelSubscribeCompleted += Provider_ChannelSubscribeCompleted;
@@ -350,27 +350,13 @@ namespace TP.WPF
             remove { Provider.UnregisterCompleted -= value; }
         }
 
-        private void Provider_NeedProtocol(object sender, EventArgs e)
-        {
-            Protocol(sender);
-        }
-
-        private void Protocol(object sender)
-        {
-            if (NeedProtocol != null) NeedProtocol(sender, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public event EventHandler NeedProtocol;
-
         private void Provider_ChannelUnRegistered(object sender, MessageEventArgs<ChannelRegistrationMessage> e)
         {
             log.Trace("Provider_ChannelUnRegistered");
 
             RemoveRegisteredChannel(e.Message);
-            Protocol(string.Format("Канал [{0}] теперь недоступен для подписки", e.Message.LogicalChannelId));
+            var s = string.Format("Канал [{0}] теперь недоступен для подписки", e.Message.LogicalChannelId);
+            log.Info(s);
         }
 
         private void RemoveRegisteredChannel(ChannelRegistrationMessage message)
@@ -412,7 +398,7 @@ namespace TP.WPF
             subscribedChannelsList.Remove(channelSubscribeMessage.LogicalChannelId);
             string s = string.Format("Подписка на канал [{0}] была отменена из-за отмены регистрации канала",
                                           channelSubscribeMessage.LogicalChannelId);
-            Protocol(s);
+            log.Info(s);
             //MessageBox.Show(s);
             //Program.Proxy.ChannelUnSubscribe(channelSubscribeMessage);
         }
@@ -437,8 +423,9 @@ namespace TP.WPF
             log.Trace("Provider_ChannelSubscribeCompleted");
 
             var channelId = Convert.ToInt32(e.UserState);
-            Protocol(string.Format("Произошла подписка на канал [{0}]", channelId));
-            if(!subscribedChannelsList.Contains(channelId))
+            var s = string.Format("Произошла подписка на канал [{0}]", channelId);
+            log.Info(s);
+            if (!subscribedChannelsList.Contains(channelId))
                 subscribedChannelsList.Add(channelId);
             //EventHandler handler = ChannelSubscribed;
             //if (handler != null) handler(this, EventArgs.Empty);   
@@ -449,7 +436,8 @@ namespace TP.WPF
             log.Trace("Provider_ChannelUnSubscribeCompleted");
 
             var channelId = Convert.ToInt32(e.UserState);
-            Protocol(string.Format("Произошла отписка от канала [{0}]", channelId));
+            var s = string.Format("Произошла отписка от канала [{0}]", channelId);
+            log.Info(s);
             if (subscribedChannelsList.Contains(channelId))
                 subscribedChannelsList.Remove(channelId);
             //EventHandler handler = ChannelUnSubscribed;
@@ -466,7 +454,6 @@ namespace TP.WPF
             {
                 if (isitialized)
                 {
-                    Provider.NeedProtocol -= Provider_NeedProtocol;
                     Provider.ChannelUnRegistered -= Provider_ChannelUnRegistered;
                     Provider.ChannelRegistered -= Provider_ChannelRegistered;
                     Provider.ChannelSubscribeCompleted -= Provider_ChannelSubscribeCompleted;
