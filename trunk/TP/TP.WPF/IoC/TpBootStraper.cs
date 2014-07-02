@@ -24,9 +24,6 @@ namespace TP.WPF.IoC
             builder.RegisterModule<TpAutofacModule>();
 
             builder.RegisterType<MainWindow>();
-
-            // register autofac module
-            builder.RegisterModule<TpAutofacModule>();
         }
 
         protected override DependencyObject CreateShell()

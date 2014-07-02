@@ -92,13 +92,13 @@ namespace TP.WPF.Views
             //ViewModel.SaveLayout(WindowsManager);
 	    }
 
-	    private void GenereteDebugPanel()
+	    private void GenerateDebugPanel()
 	    {
             var pane = new DockPane
             {
                 Height = 80,
                 Header = "Панель отладочной информации",
-                Content = new Resources.ucDebugPanel(),
+                Content = new Resources.ucLog(),
                 DockPaneState = DockPaneState.Docked
             };
 	        WindowsManager.AddPinnedWindow(pane,Dock.Bottom);
@@ -121,7 +121,7 @@ namespace TP.WPF.Views
 	    {
 	        ViewModel.OnLoad();
             GenerateLayout();
-            GenereteDebugPanel();
+            GenerateDebugPanel();
             GenerateIndicatorsPanel();
             Title += string.Format(" [{0}]", Settings.Default.MainFormTitle);
         }
