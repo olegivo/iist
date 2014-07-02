@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Input;
+using DMS.Common;
 using DMS.Common.Messages;
 using GalaSoft.MvvmLight.Command;
+using NLog;
+using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
+using Oleg_ivo.HighLevelClient;
+using Oleg_ivo.Tools.ExceptionCatcher;
 using TP.WPF.IoC;
 using TP.WPF.Properties;
 using TP.WPF.Views;
+using UICommon.WPF.LogBinding;
 
 
 namespace TP.WPF.ViewModels
@@ -21,8 +27,18 @@ namespace TP.WPF.ViewModels
         public SummaryTableViewModel SummaryTable { get; private set; }
         public ChartTabViewModel ChartTab { get; private set; }
 
-        public MainViewModel()
+        public MainViewModel(ExceptionHandler exceptionHandler, ErrorSenderWrapper<ClientProvider> errorSenderWrapper)
         {
+            Enforce.ArgumentNotNull(exceptionHandler, "exceptionHandler").AdditionalErrorHandler =
+                errorSenderWrapper.LogError;
+            LogTarget = LogManager.Configuration.FindTargetByName("uiLog") as ObservableLogTarget;
+
+            channelController.AutoSubscribeChannels = true;
+            channelController.LogicalChannelMappings = Settings.Default.LogicalChannelMappings;
+            channelController.GetRegName = GetRegName;
+            channelController.InitProvider();
+            channelController.CanRegister = true;
+
             TestCommand = new RelayCommand(OnTest);
             CloseAppCommand = new RelayCommand(OnCloseApp);
             DisplayAboutCommand = new RelayCommand(OnShowAbout);
@@ -42,15 +58,10 @@ namespace TP.WPF.ViewModels
             SummaryTable = new SummaryTableViewModel();
             ChartTab = new ChartTabViewModel();
 
-            channelController.AutoSubscribeChannels = true;
-            channelController.LogicalChannelMappings = Settings.Default.LogicalChannelMappings;
-            channelController.GetRegName = GetRegName;
-            channelController.InitProvider();
-            channelController.NeedProtocol += channelController_NeedProtocol;
-            channelController.CanRegister = true;
-
             SubscribeAndInitViewModels();
         }
+
+        public ObservableLogTarget LogTarget { get; private set; }
 
         [Dependency(Required = true)]
         public TpCommandLineOptions CommandLineOptions { get; set; }
@@ -199,33 +210,7 @@ namespace TP.WPF.ViewModels
         }
 
         private readonly ChannelController channelController = new ChannelController();
-        private string messages;
 
-
-        void channelController_NeedProtocol(object sender, EventArgs e)
-        {
-            Protocol(sender);
-        }
-
-        private void Protocol(object sender)
-        {
-
-            if (sender is double || sender is string)
-            {
-                var s = string.Format("{0}\t{1}{2}", DateTime.Now, sender, Environment.NewLine);
-                Messages = (Messages ?? string.Empty) + s;
-            }
-        }
-
-        public string Messages
-        {
-            get { return messages; }
-            set
-            {
-                messages = value;
-                RaisePropertyChanged("Messages");
-            }
-        }
 
         /// <summary>
         /// После чтения канала

@@ -399,9 +399,9 @@ namespace Oleg_ivo.HighLevelClient
         {
             Log.Trace("Proxy_RegisterCompleted");
 
-            highLevelMessageExchangeSystemClient.RegisterCompleted -= Proxy_RegisterCompleted;
             if (e.Error != null)
-                throw new InvalidOperationException(e.Error.ToString(), e.Error);
+                throw e.Error;
+            highLevelMessageExchangeSystemClient.RegisterCompleted -= Proxy_RegisterCompleted;
 
             //object channels;
             //try
