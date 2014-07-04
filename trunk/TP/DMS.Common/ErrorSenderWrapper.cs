@@ -17,6 +17,7 @@ namespace DMS.Common
         public ErrorSenderWrapper(T errorSender) : this()
         {
             this.errorSender = errorSender;
+            this.errorSender.SendErrorCompleted += ErrorSender_SendErrorCompleted;
         }
 
         public ErrorSenderWrapper(Func<T> errorSenderProvider) : this()
@@ -29,8 +30,8 @@ namespace DMS.Common
             replaySubject = new ReplaySubject<QueueItem>(50);
             replaySubject.Delay(TimeSpan.FromSeconds(3)).Subscribe(
                 SendError,
-                exception => Log.Error("Очередь обработки ошибок остановлена из-за ошибки", exception),
-                () => Log.Debug("Очередь обработки ошибок остановлена"));
+                exception => Log.Error(string.Format("{0}: Очередь обработки ошибок остановлена из-за ошибки", ErrorSender), exception),
+                () => Log.Debug("{0}: Очередь обработки ошибок остановлена", ErrorSender));
         }
 
         protected T ErrorSender
@@ -55,28 +56,28 @@ namespace DMS.Common
             var reEnqueue = false;
             try
             {
-                Log.Trace("Отправка ошибки на сервер (попытка №{0}). Ошибка впервые создана {1}.", ++queueItem.Times, queueItem.ThrowTime);
+                Log.Trace("{2}: Отправка ошибки на сервер (попытка №{0}). Ошибка впервые создана {1}.", ++queueItem.Times, queueItem.ThrowTime, ErrorSender);
                 if (ErrorSender.IsCommunicationFailed)
                 {
-                    Log.Warn("Канал связи нарушен. Ошибка повторно добавлена в очередь.");
+                    Log.Warn("{0}: Канал связи нарушен. Ошибка повторно добавлена в очередь.", ErrorSender);
                     reEnqueue = true;
-                }
+                } 
                 else if(!ErrorSender.IsRegistered)
                 {
-                    Log.Warn("Канал связи не инициализирован. Ошибка повторно добавлена в очередь.");
+                    Log.Warn("{0}: Канал связи не инициализирован. Ошибка повторно добавлена в очередь.", ErrorSender);
                     reEnqueue = true;
                 }
-                else
+                else 
                 {
                     //TODO: заполнить RegNameFrom
                     ErrorSender.SendErrorAsync(queueItem.E);
-                    Log.Trace("Ошибка отправлена на сервер, скоро он должен сообщить, принял ли он её");
+                    Log.Trace("{0}: Ошибка отправлена на сервер, скоро он должен сообщить, принял ли он её", ErrorSender);
                 }
             }
             catch (Exception ex)
             {
                 Log.Warn(
-                    "При попытке отправки сообщений на сервер произошла ошибка. Ошибка повторно добавлена в очередь.",
+                    string.Format("{0}: При попытке отправки сообщений на сервер произошла ошибка. Ошибка повторно добавлена в очередь.", ErrorSender),
                     ex);
                 reEnqueue = true;
             }
@@ -107,7 +108,7 @@ namespace DMS.Common
 
         public void LogError(object sender, ExtendedThreadExceptionEventArgs e)//TODO: переименовать метод
         {
-            Log.Trace("Добавление ошибки в очередь отправки на сервер");
+            Log.Trace("{0}: Добавление ошибки в очередь отправки на сервер", ErrorSender);
             e.ShowError = false;
             //if(!ErrorSender.IsCommunicationFailed)
                 Enqueue(new QueueItem(e));
@@ -144,7 +145,7 @@ namespace DMS.Common
             //если не удалось передать ошибку службе обмена сообщениями, ещё раз передаём
             if (e.Error != null)
             {
-                Log.Warn("Не удалось передать ошибку на сервер. Повторное добавление в очередь.");
+                Log.Warn("{0}: Не удалось передать ошибку на сервер. Повторное добавление в очередь.", ErrorSender);
                 var args = e.UserState as ExtendedThreadExceptionEventArgs;
                 replaySubject.OnNext(new QueueItem(args));
             }

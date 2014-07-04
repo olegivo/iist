@@ -38,7 +38,7 @@ namespace Oleg_ivo.HighLevelClient
 
         #region connectivity
         InstanceContext site;
-        HighLevelMessageExchangeSystemClient highLevelMessageExchangeSystemClient;
+        HighLevelMessageExchangeSystemClient proxy;
         CallbackHandler callbackHandler;
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Oleg_ivo.HighLevelClient
 
         public event EventHandler<AsyncCompletedEventArgs> SendErrorCompleted;
 
-        private void HighLevelMessageExchangeSystemClient_SendErrorCompleted(object sender, AsyncCompletedEventArgs e)
+        private void proxy_SendErrorCompleted(object sender, AsyncCompletedEventArgs e)
         {
             if (SendErrorCompleted != null)
                 SendErrorCompleted(this, e);
@@ -63,11 +63,11 @@ namespace Oleg_ivo.HighLevelClient
         {
             site.Faulted += site_Faulted;
 
-            highLevelMessageExchangeSystemClient.UnregisterCompleted += HighLevelMessageExchangeSystemClient_UnregisterCompleted  ;
-            highLevelMessageExchangeSystemClient.SendErrorCompleted += HighLevelMessageExchangeSystemClient_SendErrorCompleted;
-            highLevelMessageExchangeSystemClient.ChannelSubscribeCompleted += ChannelSubscribeCompleted;
-            highLevelMessageExchangeSystemClient.ChannelUnSubscribeCompleted += ChannelUnSubscribeCompleted;
-            highLevelMessageExchangeSystemClient.UnregisterCompleted += UnregisterCompleted;
+            proxy.UnregisterCompleted += proxy_UnregisterCompleted  ;
+            proxy.SendErrorCompleted += proxy_SendErrorCompleted;
+            proxy.ChannelSubscribeCompleted += ChannelSubscribeCompleted;
+            proxy.ChannelUnSubscribeCompleted += ChannelUnSubscribeCompleted;
+            proxy.UnregisterCompleted += UnregisterCompleted;
         }
 
         protected virtual void UnsubscribeProxy()
@@ -76,13 +76,13 @@ namespace Oleg_ivo.HighLevelClient
             {
                 site.Faulted -= site_Faulted;
             }
-            if (highLevelMessageExchangeSystemClient != null)
+            if (proxy != null)
             {
-                highLevelMessageExchangeSystemClient.UnregisterCompleted -= HighLevelMessageExchangeSystemClient_UnregisterCompleted;
-                highLevelMessageExchangeSystemClient.SendErrorCompleted -= HighLevelMessageExchangeSystemClient_SendErrorCompleted;
-                highLevelMessageExchangeSystemClient.ChannelSubscribeCompleted -= ChannelSubscribeCompleted;
-                highLevelMessageExchangeSystemClient.ChannelUnSubscribeCompleted -= ChannelUnSubscribeCompleted;
-                highLevelMessageExchangeSystemClient.UnregisterCompleted -= UnregisterCompleted;
+                proxy.UnregisterCompleted -= proxy_UnregisterCompleted;
+                proxy.SendErrorCompleted -= proxy_SendErrorCompleted;
+                proxy.ChannelSubscribeCompleted -= ChannelSubscribeCompleted;
+                proxy.ChannelUnSubscribeCompleted -= ChannelUnSubscribeCompleted;
+                proxy.UnregisterCompleted -= UnregisterCompleted;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Oleg_ivo.HighLevelClient
             //reconnectTimer.Start();
         }
 
-        public ICommunicationObject Proxy { get { return highLevelMessageExchangeSystemClient; } }
+        public ICommunicationObject Proxy { get { return proxy; } }
 
         public void Register()
         {
@@ -115,19 +115,21 @@ namespace Oleg_ivo.HighLevelClient
 
         public void AbortProxy()
         {
-            if (highLevelMessageExchangeSystemClient != null)
+            if (proxy != null)
             {
-                highLevelMessageExchangeSystemClient.Abort();
-                highLevelMessageExchangeSystemClient.Close();
-                highLevelMessageExchangeSystemClient = null;
+                Log.Debug("Прекращение канала связи");
+                proxy.Abort();
+                proxy.Close();
+                proxy = null;
             }
         }
 
         public bool IsRegistered
         {
-            get { return true;/*TODO: Implement IsRegistered*/ }
+            get { lock (proxyLock) return isRegistered; }
         }
 
+        private readonly object proxyLock = new object();
 
         /// <summary>
         /// Создать Proxy
@@ -138,16 +140,19 @@ namespace Oleg_ivo.HighLevelClient
         /// </remarks>
         private void CreateProxy()
         {
-            UnsubscribeProxy();
+            lock (proxyLock)
+            {
+                UnsubscribeProxy();
 
-            site = new InstanceContext(CallbackHandler);
-            if(highLevelMessageExchangeSystemClient!=null)
-                highLevelMessageExchangeSystemClient.SafeClose(TimeSpan.FromSeconds(5));
-            highLevelMessageExchangeSystemClient = new HighLevelMessageExchangeSystemClient(site);
+                Log.Debug("Создание прокси");
+                if (proxy != null)
+                    proxy.SafeClose();
+                site = new InstanceContext(CallbackHandler);
+                proxy = new HighLevelMessageExchangeSystemClient(site);
+                reliableConnector.SetProxy(proxy);
 
-            reliableConnector.SetProxy(highLevelMessageExchangeSystemClient);
-
-            SubscribeProxy();
+                SubscribeProxy();
+            }
         }
 
         #endregion
@@ -250,13 +255,30 @@ namespace Oleg_ivo.HighLevelClient
 
         public bool IsCommunicationFailed
         {
-            get { return highLevelMessageExchangeSystemClient == null || highLevelMessageExchangeSystemClient.State == CommunicationState.Faulted; }
+            get
+            {
+                lock (proxyLock)
+                {
+                    Log.Trace("Проверка коммуникаций");
+                    if (proxy == null)
+                    {
+                        Log.Warn("Прокси не создан");
+                        return true;
+                    }
+                    if (proxy.State == CommunicationState.Faulted)
+                    {
+                        Log.Warn("Канал связи нарушен");
+                        return true;
+                    }
+                    return false;
+                }
+            }
         }
 
         public void SendErrorAsync(ExtendedThreadExceptionEventArgs e)
         {
             var exception = new TestException("У клиент обнаружена ошибка:\n" + e.Exception);
-            highLevelMessageExchangeSystemClient.SendErrorAsync(
+            proxy.SendErrorAsync(
                 new InternalErrorMessage(GetRegName(), null, exception), e);
         }
 
@@ -265,7 +287,7 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public void Init()
         {
-            if (highLevelMessageExchangeSystemClient == null)
+            if (proxy == null)
                 CreateProxy();
 
             //TODO: загружать конфигурацию?
@@ -372,17 +394,20 @@ namespace Oleg_ivo.HighLevelClient
         /// <param name="proxyRegisterCompleted"></param>
         public void Register(bool async, EventHandler<AsyncCompletedEventArgs> proxyRegisterCompleted)
         {
-            CreateProxy();
-
-            _proxyRegisterCompleted = proxyRegisterCompleted;
-            highLevelMessageExchangeSystemClient.RegisterCompleted += Proxy_RegisterCompleted;
-            var registrationMessage = new RegistrationMessage(GetRegName(), null, RegistrationMode.Register, AllowedDataMode);
-            if (async)
-                highLevelMessageExchangeSystemClient.RegisterAsync(registrationMessage, registrationMessage);
-            else
+            lock (proxyLock)
             {
-                highLevelMessageExchangeSystemClient.Register(registrationMessage);
-                Proxy_RegisterCompleted(this, new AsyncCompletedEventArgs(null, false, null));
+                CreateProxy();
+
+                _proxyRegisterCompleted = proxyRegisterCompleted;
+                proxy.RegisterCompleted += Proxy_RegisterCompleted;
+                var registrationMessage = new RegistrationMessage(GetRegName(), null, RegistrationMode.Register, AllowedDataMode);
+                if (async)
+                    proxy.RegisterAsync(registrationMessage, registrationMessage);
+                else
+                {
+                    proxy.Register(registrationMessage);
+                    Proxy_RegisterCompleted(this, new AsyncCompletedEventArgs(null, false, null));
+                }                
             }
         }
 
@@ -399,9 +424,10 @@ namespace Oleg_ivo.HighLevelClient
         {
             Log.Trace("Proxy_RegisterCompleted");
 
+            isRegistered = e.Error == null;
             if (e.Error != null)
                 throw e.Error;
-            highLevelMessageExchangeSystemClient.RegisterCompleted -= Proxy_RegisterCompleted;
+            proxy.RegisterCompleted -= Proxy_RegisterCompleted;
 
             //object channels;
             //try
@@ -432,6 +458,7 @@ namespace Oleg_ivo.HighLevelClient
 
         private EventHandler<AsyncCompletedEventArgs> _proxyRegisterCompleted;
         private readonly ReliableConnector reliableConnector;
+        private bool isRegistered;
 
         /// <summary>
         /// отмена регистрации
@@ -440,18 +467,23 @@ namespace Oleg_ivo.HighLevelClient
         {
             Log.Trace("Unregister");
 
-            highLevelMessageExchangeSystemClient.UnregisterCompleted += HighLevelMessageExchangeSystemClient_UnregisterCompleted;
-            highLevelMessageExchangeSystemClient.UnregisterAsync(new RegistrationMessage(GetRegName(), null, RegistrationMode.Unregister, DataMode.Unknown));
+            proxy.UnregisterCompleted += proxy_UnregisterCompleted;
+            proxy.UnregisterAsync(new RegistrationMessage(GetRegName(), null, RegistrationMode.Unregister, DataMode.Unknown));
         }
 
-        void HighLevelMessageExchangeSystemClient_UnregisterCompleted(object sender, AsyncCompletedEventArgs e)
+        void proxy_UnregisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            Log.Trace("HighLevelMessageExchangeSystemClient_UnregisterCompleted");
+            Log.Trace("proxy_UnregisterCompleted");
 
-            highLevelMessageExchangeSystemClient.UnregisterCompleted -= HighLevelMessageExchangeSystemClient_UnregisterCompleted;
+            lock (proxyLock) isRegistered = e.Error != null;
+            if (!isRegistered)
+                Log.Info("Отмена регистрации на сервере завершилась успешно");
+            else
+                Log.Error("Отмена регистрации на сервере завершилась неудачно:\n{0}", e.Error);
+            proxy.UnregisterCompleted -= proxy_UnregisterCompleted;
             if(RegisteredChannels!=null) RegisteredChannels.Clear();
             //TODO:Disconnect неужели вызывается до этого?
-            //Task.Factory.StartNew(() => highLevelMessageExchangeSystemClient.Disconnect(GetRegName()))
+            //Task.Factory.StartNew(() => proxy.Disconnect(GetRegName()))
             //    .ContinueWith(task => log.Info("Disconnected"));
         }
 
@@ -465,7 +497,7 @@ namespace Oleg_ivo.HighLevelClient
         {
             Log.Trace("SubscribeChannel");
 
-            highLevelMessageExchangeSystemClient.ChannelSubscribeAsync(message, message.LogicalChannelId);
+            proxy.ChannelSubscribeAsync(message, message.LogicalChannelId);
         }
 
         /// <summary>
@@ -476,7 +508,7 @@ namespace Oleg_ivo.HighLevelClient
         {
             Log.Trace("UnSubscribeChannel");
 
-            highLevelMessageExchangeSystemClient.ChannelUnSubscribeAsync(message, message.LogicalChannelId);
+            proxy.ChannelUnSubscribeAsync(message, message.LogicalChannelId);
         }
 
         /// <summary>
@@ -487,14 +519,14 @@ namespace Oleg_ivo.HighLevelClient
         {
             Log.Trace("WriteChannel");
 
-            highLevelMessageExchangeSystemClient.WriteChannelAsync(message);
+            proxy.WriteChannelAsync(message);
         }
 
         [SecuritySafeCritical]
         public void Dispose()
         {
-            if (highLevelMessageExchangeSystemClient != null)
-                highLevelMessageExchangeSystemClient.SafeClose();
+            if (proxy != null)
+                proxy.SafeClose();
         }
     }
 }
