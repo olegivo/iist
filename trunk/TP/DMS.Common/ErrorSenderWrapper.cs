@@ -145,7 +145,7 @@ namespace DMS.Common
             //если не удалось передать ошибку службе обмена сообщениями, ещё раз передаём
             if (e.Error != null)
             {
-                Log.Warn("{0}: Не удалось передать ошибку на сервер. Повторное добавление в очередь.", ErrorSender);
+                Log.Warn("{0}: Не удалось передать ошибку на сервер. Повторное добавление в очередь.", e.Error, ErrorSender);
                 var args = e.UserState as ExtendedThreadExceptionEventArgs;
                 replaySubject.OnNext(new QueueItem(args));
             }
