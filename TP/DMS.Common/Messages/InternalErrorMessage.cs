@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using DMS.Common.Exceptions;
 
 namespace DMS.Common.Messages
 {
     /// <summary>
     /// Внутреннее сообщение, передающее ошибку
     /// </summary>
-    [KnownType(typeof(ArgumentOutOfRangeException))]
-    [KnownType(typeof(Exception))]
-    [KnownType(typeof(TestException))]
     public class InternalErrorMessage : InternalServiceMessage
     {
         protected InternalErrorMessage() : base()
@@ -35,14 +31,14 @@ namespace DMS.Common.Messages
         public InternalErrorMessage(string regNameFrom, string regNameTo, Exception error)
             : this(regNameFrom, regNameTo)
         {
-            Error = error;
+            Error = error.ToString();
         }
 
         /// <summary>
         /// Ошибка
         /// </summary>
         [DataMember]
-        public Exception Error { get; set; }
+        public string Error { get; set; }
 
     }
 }
