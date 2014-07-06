@@ -1,4 +1,6 @@
-﻿using DMS.Common.Messages;
+﻿using System.Collections.Generic;
+using System.Linq;
+using DMS.Common.Messages;
 using GalaSoft.MvvmLight;
 using Oleg_ivo.Plc.Channels;
 
@@ -65,6 +67,15 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
             };
 
             return registrationMessage;
+        }
+    }
+
+    public static class LogicalChannelViewModelExtensions
+    {
+        public static LogicalChannelViewModel Find(this IEnumerable<LogicalChannelViewModel> source,
+            int logicalChannelId)
+        {
+            return source.SingleOrDefault(model => model.LogicalChannel.Id == logicalChannelId);
         }
     }
 }

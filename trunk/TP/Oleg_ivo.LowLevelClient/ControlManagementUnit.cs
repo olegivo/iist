@@ -168,6 +168,8 @@ namespace Oleg_ivo.LowLevelClient
             proxy.RegisterCompleted += proxy_RegisterCompleted;
             proxy.UnregisterCompleted += proxy_UnregisterCompleted;
             proxy.SendErrorCompleted += proxy_SendErrorCompleted;
+            proxy.ChannelRegisterCompleted += proxy_ChannelRegisterCompleted;
+            proxy.ChannelUnRegisterCompleted += proxy_ChannelUnRegisterCompleted;
         }
 
         protected virtual void UnsubscribeProxy()
@@ -178,9 +180,11 @@ namespace Oleg_ivo.LowLevelClient
             }
             if (proxy != null)
             {
-                proxy.RegisterCompleted += proxy_RegisterCompleted;
-                proxy.UnregisterCompleted += proxy_UnregisterCompleted;
-                proxy.SendErrorCompleted += proxy_SendErrorCompleted;
+                proxy.RegisterCompleted -= proxy_RegisterCompleted;
+                proxy.UnregisterCompleted -= proxy_UnregisterCompleted;
+                proxy.SendErrorCompleted -= proxy_SendErrorCompleted;
+                proxy.ChannelRegisterCompleted -= proxy_ChannelRegisterCompleted;
+                proxy.ChannelRegisterCompleted -= proxy_ChannelUnRegisterCompleted;
             }
         }
 
@@ -364,10 +368,13 @@ namespace Oleg_ivo.LowLevelClient
         {
             lock (registerLock)
             {
+                Log.Trace("Запуск синхронной регистрации");
                 CreateProxy();
                 var message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
                 LowLevelMessageExchangeSystemClient.Register(message);
                 isRegistered = true;
+                if(RegisterCompleted!=null)
+                    RegisterCompleted(this, new AsyncCompletedEventArgs(null, false, null));
             } 
         }
 
@@ -376,6 +383,7 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public void RegisterAsync()
         {
+            Log.Trace("Запуск асинхронной регистрации");
             CreateProxy();
             var message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
             LowLevelMessageExchangeSystemClient.RegisterAsync(message);
@@ -399,7 +407,7 @@ namespace Oleg_ivo.LowLevelClient
 
         private void proxy_UnregisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            lock (registerLock) isRegistered = e.Error == null;
+            lock (registerLock) isRegistered = e.Error != null;
             if (isRegistered)
                 Log.Info("Отмена регистрации на сервере завершилась успешно");
             else
@@ -446,6 +454,22 @@ namespace Oleg_ivo.LowLevelClient
                 SendErrorCompleted(this, e);
         }
 
+        public event EventHandler<AsyncCompletedEventArgs> ChannelRegisterCompleted;
+
+        void proxy_ChannelRegisterCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            if (ChannelRegisterCompleted != null)
+                ChannelRegisterCompleted(this, e);
+        }
+
+        public event EventHandler<AsyncCompletedEventArgs> ChannelUnRegisterCompleted;
+
+        void proxy_ChannelUnRegisterCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            if (ChannelUnRegisterCompleted != null)
+                ChannelUnRegisterCompleted(this, e);
+        }
+
         /// <summary>
         /// Получить доступные логические каналы
         /// </summary>
@@ -476,28 +500,11 @@ namespace Oleg_ivo.LowLevelClient
             if (channel == null)
                 throw new Exception("Канал не найден");
 
-            double interval;
             if (channel.PollPeriod == TimeSpan.Zero)
                 channel.PollPeriod = TimeSpan.FromMilliseconds(1000);
-
-            var s = (channel.PollPeriod ?? TimeSpan.FromSeconds(5)).TotalMilliseconds.ToString();
-
-            /*
-                        s = InputBox.Show("Укажите интервал опроса канала (в миллисекундах)",
-                                          string.Format("Интервал опроса канала [{0}]", channel),
-                                          "1000");
-                */
-
-
-            if (double.TryParse(s, out interval))
-            {
-                planner.AddPoll(channel, interval);
-                return true;
-            }
             
-            MessageBox.Show("Указанное значение не является корректным", "Ошибка указания интервала опроса канала",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return false;
+            planner.AddPoll(channel);
+            return true;
         }
 
         /// <summary>
@@ -527,7 +534,7 @@ namespace Oleg_ivo.LowLevelClient
         /// <param name="channelRegistrationMessage"></param>
         public void RegisterChannel(ChannelRegistrationMessage channelRegistrationMessage)
         {
-            LowLevelMessageExchangeSystemClient.ChannelRegisterAsync(channelRegistrationMessage);
+            LowLevelMessageExchangeSystemClient.ChannelRegisterAsync(channelRegistrationMessage, channelRegistrationMessage);
             LogicalChannel channel =
                 GetLogicalChannels().AsEnumerable().FirstOrDefault(
                     LogicalChannel.GetFindChannelPredicate(channelRegistrationMessage.LogicalChannelId));
@@ -542,7 +549,7 @@ namespace Oleg_ivo.LowLevelClient
         /// <param name="channelRegistrationMessage"></param>
         public void UnregisterChannel(ChannelRegistrationMessage channelRegistrationMessage)
         {
-            LowLevelMessageExchangeSystemClient.ChannelUnRegisterAsync(channelRegistrationMessage);
+            LowLevelMessageExchangeSystemClient.ChannelUnRegisterAsync(channelRegistrationMessage, channelRegistrationMessage);
             LogicalChannel channel =
                 GetLogicalChannels().AsEnumerable().FirstOrDefault(
                     LogicalChannel.GetFindChannelPredicate(channelRegistrationMessage.LogicalChannelId));

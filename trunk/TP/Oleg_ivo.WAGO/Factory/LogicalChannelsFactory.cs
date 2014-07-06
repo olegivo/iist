@@ -71,6 +71,14 @@ namespace Oleg_ivo.WAGO.Factory
             {
                 IsEmulationMode = dmis.Settings.IsEmulationMode
             };
+            if (entity != null)
+            {
+                //HACK: не оставляем сущности в состоянии ленивой ндогрузки:
+                if (entity.Parameter == null || entity.Parameter.MeasurementUnit==null)
+                {
+                    
+                }
+            }
             return logicalChannel;
         }
 
