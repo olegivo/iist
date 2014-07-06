@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using NLog;
+using Oleg_ivo.Base.Extensions;
 using Oleg_ivo.Plc.Channels;
 
 namespace Oleg_ivo.LowLevelClient
@@ -9,30 +12,34 @@ namespace Oleg_ivo.LowLevelClient
     ///</summary>
     public class Planner
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Опросы каналов
         /// </summary>
-        private readonly Dictionary<LogicalChannel, MeasurementPoll> measurementPolls = new Dictionary<LogicalChannel, MeasurementPoll>();
+        private readonly ConcurrentDictionary<LogicalChannel, MeasurementPoll> measurementPolls = new ConcurrentDictionary<LogicalChannel, MeasurementPoll>();
 
         /// <summary>
         /// Добавить опрос канала
         /// </summary>
         /// <param name="channel"></param>
-        /// <param name="interval"></param>
-        public void AddPoll(LogicalChannel channel, double interval)
+        public void AddPoll(LogicalChannel channel)
         {
-            var measurementPoll = GetMeasurementPoll(channel);
-            if (measurementPoll != null)
-                throw new Exception("Уже есть опрос для данного канала");
-
             var poll = new MeasurementPoll(channel);
-            measurementPolls.Add(channel, poll);
-            //throw new NotImplementedException("Учесть настройки опроса");
+            measurementPolls.AddOrUpdate(channel, logicalChannel => poll, (logicalChannel, existsPoll) =>
+            {
+                log.Trace("Опрос для канала №{0} уже существует в расписании. Перед добалвением необходима его остановка и удаление.", logicalChannel.Id);
+                existsPoll.StopPoll();
+                MeasurementPoll oldPoll;
+                var removed = measurementPolls.TryRemove(channel, out oldPoll);
+                log.Trace("Удаление предыдущего опроса для канала №{0}: {1}", logicalChannel.Id, removed ? "успешно, добавление новой версии" : "неудачно, новая версия не добавлена");
+                return removed ? poll : existsPoll;
+            });
         }
 
         private MeasurementPoll GetMeasurementPoll(LogicalChannel channel)
         {
-            return measurementPolls.ContainsKey(channel) ? measurementPolls[channel] : null;
+            return measurementPolls.GetValueOrDefault(channel);
         }
 
         /// <summary>
@@ -41,12 +48,15 @@ namespace Oleg_ivo.LowLevelClient
         /// <param name="channel"></param>
         public void RemovePoll(LogicalChannel channel)
         {
-            var measurementPoll = GetMeasurementPoll(channel);
-            if (measurementPoll == null)
-                throw new Exception("Не найден опрос для данного канала");
-
-            measurementPoll.StopPoll();//обязательно остановить, иначе будет тикать
-            measurementPolls.Remove(channel);
+            log.Trace("Удаление опроса канала №{0}", channel.Id);
+            MeasurementPoll poll;
+            if (measurementPolls.TryRemove(channel, out poll))
+            {
+                poll.StopPoll(); //обязательно остановить, иначе будет тикать
+                log.Trace("Опрос канала №{0} удалён из расписания и остановлен", channel.Id);
+            }
+            else
+                log.Warn("Для канала №{0} не найден опрос", channel.Id);
             //throw new NotImplementedException("Удалить опрос");
         }
 

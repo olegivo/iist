@@ -1,5 +1,6 @@
 using System;
 using System.Reactive.Linq;
+using NLog;
 using Oleg_ivo.Plc.Channels;
 
 namespace Oleg_ivo.LowLevelClient
@@ -9,6 +10,7 @@ namespace Oleg_ivo.LowLevelClient
     /// </summary>
     public class MeasurementPoll
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
         private IDisposable disposable;
 
         /// <summary>
@@ -24,7 +26,7 @@ namespace Oleg_ivo.LowLevelClient
 
         private void HandleException(Exception exception)
         {
-            Console.WriteLine(exception);
+            log.Error(exception);
         }
 
         private void OnTick()
@@ -71,7 +73,11 @@ namespace Oleg_ivo.LowLevelClient
         /// <exception cref="NotImplementedException"></exception>
         public void StartPoll()
         {
-            IsStarted = true;
+            log.Trace("Запуск опроса канала №{0}", LogicalChannel.Id);
+            if (IsStarted)
+                log.Warn("Запуск опроса канала №{0} уже был произведён", LogicalChannel.Id);
+            else
+                IsStarted = true;
         }
 
         /// <summary>
@@ -80,7 +86,11 @@ namespace Oleg_ivo.LowLevelClient
         /// <exception cref="NotImplementedException"></exception>
         public void StopPoll()
         {
-            IsStarted = false;
+            log.Trace("Остановка опроса канала №{0}", LogicalChannel.Id);
+            if (!IsStarted)
+                log.Warn("Остановка опроса канала №{0} уже была произведёна", LogicalChannel.Id);
+            else
+                IsStarted = false;
         }
     }
 }

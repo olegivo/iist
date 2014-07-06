@@ -3,16 +3,8 @@ using System.ServiceModel;
 using DMS.Common.Events;
 using DMS.Common.Messages;
 using Oleg_ivo.Base.Communication;
-#if IIST
-using Oleg_ivo.CMU.ServiceReferenceIIST;
-#else
-#if BINDING_TCP
 using NLog;
 using Oleg_ivo.LowLevelClient.ServiceReferenceHomeTcp;
-#else
-
-#endif
-#endif
 
 namespace Oleg_ivo.LowLevelClient
 {
@@ -87,7 +79,7 @@ namespace Oleg_ivo.LowLevelClient
         /// <param name="message"></param>
         public void ChannelSubscribe(ChannelSubscribeMessage message)
         {
-            InvokeChannelSubsrcibe(new MessageEventArgs<ChannelSubscribeMessage>(message));
+            InvokeChannelSubscribe(new MessageEventArgs<ChannelSubscribeMessage>(message));
         }
 
         /// <summary>
@@ -95,7 +87,7 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public event EventHandler<MessageEventArgs<ChannelSubscribeMessage>> ChannelSubscribed;
 
-        private void InvokeChannelSubsrcibe(MessageEventArgs<ChannelSubscribeMessage> e)
+        private void InvokeChannelSubscribe(MessageEventArgs<ChannelSubscribeMessage> e)
         {
             EventHandler<MessageEventArgs<ChannelSubscribeMessage>> handler = ChannelSubscribed;
             if (handler != null) handler(this, e);
@@ -134,7 +126,7 @@ namespace Oleg_ivo.LowLevelClient
         /// <param name="message"></param>
         public void ChannelUnSubscribe(ChannelSubscribeMessage message)
         {
-            InvokeChannelUnSubsrcibe(new MessageEventArgs<ChannelSubscribeMessage>(message));
+            InvokeChannelUnSubscribe(new MessageEventArgs<ChannelSubscribeMessage>(message));
         }
 
         /// <summary>
@@ -142,7 +134,7 @@ namespace Oleg_ivo.LowLevelClient
         /// </summary>
         public event EventHandler<MessageEventArgs<ChannelSubscribeMessage>> ChannelUnSubscribed;
 
-        private void InvokeChannelUnSubsrcibe(MessageEventArgs<ChannelSubscribeMessage> e)
+        private void InvokeChannelUnSubscribe(MessageEventArgs<ChannelSubscribeMessage> e)
         {
             EventHandler<MessageEventArgs<ChannelSubscribeMessage>> handler = ChannelUnSubscribed;
             if (handler != null) handler(this, e);

@@ -116,10 +116,13 @@ namespace Oleg_ivo.HighLevelClient
         {
             lock (registerLock)
             {
+                Log.Trace("Запуск синхронной регистрации");
                 CreateProxy();
                 var message = new RegistrationMessage(GetRegName(), null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
                 proxy.Register(message);
                 isRegistered = true;
+                if (RegisterCompleted != null)
+                    RegisterCompleted(this, new AsyncCompletedEventArgs(null, false, null));
             }
         }
 
@@ -382,6 +385,7 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public void RegisterAsync()
         {
+            Log.Trace("Запуск асинхронной регистрации");
             CreateProxy();
             var message = new RegistrationMessage(GetRegName(), null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
             proxy.RegisterAsync(message);

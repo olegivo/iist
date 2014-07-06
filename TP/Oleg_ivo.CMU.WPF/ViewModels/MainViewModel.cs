@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,6 +47,8 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
             ControlManagementUnit.GetRegName = () => RegName;
             ControlManagementUnit.RegisterCompleted += ControlManagementUnit_RegisterCompleted;
             ControlManagementUnit.UnregisterCompleted += ControlManagementUnit_UnregisterCompleted;
+            ControlManagementUnit.ChannelRegisterCompleted += ControlManagementUnit_ChannelRegisterCompleted;
+            ControlManagementUnit.ChannelUnRegisterCompleted += ControlManagementUnit_ChannelUnRegisterCompleted;
 
             Enforce.ArgumentNotNull(exceptionHandler, "exceptionHandler").AdditionalErrorHandler =
                 errorSenderWrapper.LogError;
@@ -65,19 +68,108 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
         }
 
         #region EventHandlers
+
         void ControlManagementUnit_RegisterCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             Registering = false;
             CanRegister = e.Error != null;
 
             if (CanRegisterChannels && AutoRegisterAllChannels)
+            {
+                Log.Info("После регистрации клиента требуется автоматическая регистрация его каналов ({0})", UnregisteredChannels.Count);
                 RegisterAllChannels();
+            }
         }
 
         void ControlManagementUnit_UnregisterCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             Registering = false;
             CanRegister = e.Error == null;
+        }
+
+        void ControlManagementUnit_ChannelRegisterCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            if (e.Error != null || e.Cancelled)
+            {
+                Log.Error("Не удалось зарегистрировать канал");
+                return;
+            }
+            
+            var message = e.UserState as ChannelRegistrationMessage;
+            if (message == null)
+            {
+                Log.Error("В аргументах события регистрации канала необходимо передавать UserState");
+                return;
+            }
+            
+            var logicalChannelViewModel = UnregisteredChannels.Find(message.LogicalChannelId);
+            if (logicalChannelViewModel == null)
+            {
+                Log.Error("Канал №{0} не найден среди незарегистрированных", message.LogicalChannelId);
+                return;
+            }
+            
+            var channel = logicalChannelViewModel.LogicalChannel;
+            if (!channel.IsStateChannel)
+            {
+                dispatcher.Invoke(new Action(() =>
+                {
+                    UnregisteredChannels.Remove(logicalChannelViewModel);
+                    RegisteredChannels.Add(logicalChannelViewModel);
+                    logicalChannelViewModel.IsRegistered = true;
+                }));
+                if (TryAddPoll(channel))
+                {
+                    LogicalChannel stateChannel = null;
+                    if (channel.Entity.StateLogicalChannelId.HasValue)
+                        stateChannel = ControlManagementUnit.GetAvailableLogicalChannels(true)
+                            .FirstOrDefault(LogicalChannel.GetFindChannelPredicate(channel.Entity.StateLogicalChannelId.Value));
+                    TryAddPoll(stateChannel);
+                }
+            }
+        }
+
+        void ControlManagementUnit_ChannelUnRegisterCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            if (e.Error != null || e.Cancelled)
+            {
+                Log.Error("Не удалось отменить регистрацию канала");
+                return;
+            }
+
+            var message = e.UserState as ChannelRegistrationMessage;
+            if (message == null)
+            {
+                Log.Error("В аргументах события регистрации канала необходимо передавать UserState");
+                return;
+            }
+
+            var logicalChannelViewModel = RegisteredChannels.Find(message.LogicalChannelId);
+            if (logicalChannelViewModel == null)
+            {
+                Log.Error("Канал №{0} не найден среди зарегистрированных", message.LogicalChannelId);
+                return;
+            }
+
+            var channel = logicalChannelViewModel.LogicalChannel;
+            if (!channel.IsStateChannel)
+            {
+                dispatcher.Invoke(new Action(() =>
+                {
+                    RegisteredChannels.Remove(logicalChannelViewModel);
+                    UnregisteredChannels.Add(logicalChannelViewModel);
+                    logicalChannelViewModel.IsRegistered = false;
+                }));
+                if (TryRemovePoll(channel))
+                {
+                    LogicalChannel stateChannel = null;
+                    if (channel.Entity.StateLogicalChannelId.HasValue)
+                        stateChannel = ControlManagementUnit.GetAvailableLogicalChannels(true)
+                            .FirstOrDefault(LogicalChannel.GetFindChannelPredicate(channel.Entity.StateLogicalChannelId.Value));
+                    if (stateChannel != null)
+                        TryRemovePoll(stateChannel);
+                }
+            }
         }
 
         #endregion
@@ -339,47 +431,23 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
 
         private void RegisterChannel(LogicalChannelViewModel logicalChannelViewModel)
         {
-            MoveChannel(logicalChannelViewModel, RegistrationMode.Register);
+            var registrationMessage = logicalChannelViewModel.GetRegistrationMessage(RegName, RegistrationMode.Register);
+            //регистрация каналов в MES, если это не канал состояния
+            if (!logicalChannelViewModel.LogicalChannel.IsStateChannel)
+            {
+                Log.Debug("Регистрация канала {0}", logicalChannelViewModel.DisplayText);
+                ControlManagementUnit.RegisterChannel(registrationMessage);
+            }
         }
 
         private void UnregisterChannel(LogicalChannelViewModel logicalChannelViewModel)
         {
-            MoveChannel(logicalChannelViewModel, RegistrationMode.Unregister);
-        }
-
-        private void MoveChannel(LogicalChannelViewModel logicalChannelViewModel, RegistrationMode registrationMode)
-        {
-            var registrationMessage = logicalChannelViewModel.GetRegistrationMessage(RegName, registrationMode);
+            var registrationMessage = logicalChannelViewModel.GetRegistrationMessage(RegName, RegistrationMode.Unregister);
             //регистрация каналов в MES, если это не канал состояния
-            var channel = logicalChannelViewModel.LogicalChannel;
-            if (!channel.IsStateChannel)
+            if (!logicalChannelViewModel.LogicalChannel.IsStateChannel)
             {
-                LogicalChannel stateChannel = null;
-                if (channel.Entity.StateLogicalChannelId.HasValue)
-                {
-                    stateChannel = ControlManagementUnit.GetAvailableLogicalChannels(true)
-                        .FirstOrDefault(LogicalChannel.GetFindChannelPredicate(channel.Entity.StateLogicalChannelId.Value));
-                }
-
-                switch (registrationMessage.RegistrationMode)
-                {
-                    case RegistrationMode.Register:
-                        ControlManagementUnit.RegisterChannel(registrationMessage);
-                        UnregisteredChannels.Remove(logicalChannelViewModel);
-                        RegisteredChannels.Add(logicalChannelViewModel);
-                        logicalChannelViewModel.IsRegistered = true;
-                        if (TryAddPoll(channel) && stateChannel != null)
-                            TryAddPoll(stateChannel);
-                        break;
-                    case RegistrationMode.Unregister:
-                        ControlManagementUnit.UnregisterChannel(registrationMessage);
-                        RegisteredChannels.Remove(logicalChannelViewModel);
-                        UnregisteredChannels.Add(logicalChannelViewModel);
-                        logicalChannelViewModel.IsRegistered = false;
-                        if (TryRemovePoll(channel) && stateChannel != null)
-                            TryRemovePoll(stateChannel);
-                        break;
-                }
+                Log.Debug("Отмена регистрация канала {0}", logicalChannelViewModel.DisplayText);
+                ControlManagementUnit.UnregisterChannel(registrationMessage);
             }
         }
 
@@ -397,6 +465,7 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
 
         private void RegisterAllChannels()
         {
+            Log.Debug("Регистрация всех каналов {0}", UnregisteredChannels.Count);
             foreach (var channel in UnregisteredChannels.ToList())
                 RegisterChannel(channel);
         }
