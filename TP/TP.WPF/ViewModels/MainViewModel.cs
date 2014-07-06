@@ -27,15 +27,18 @@ namespace TP.WPF.ViewModels
         public SummaryTableViewModel SummaryTable { get; private set; }
         public ChartTabViewModel ChartTab { get; private set; }
 
-        public MainViewModel(ExceptionHandler exceptionHandler, ErrorSenderWrapper<ClientProvider> errorSenderWrapper)
+        public MainViewModel(ClientProvider clientProvider, ExceptionHandler exceptionHandler, ErrorSenderWrapper<ClientProvider> errorSenderWrapper)
         {
             Enforce.ArgumentNotNull(exceptionHandler, "exceptionHandler").AdditionalErrorHandler =
                 errorSenderWrapper.LogError;
             LogTarget = LogManager.Configuration.FindTargetByName("uiLog") as ObservableLogTarget;
 
-            channelController.AutoSubscribeChannels = true;
-            channelController.LogicalChannelMappings = Settings.Default.LogicalChannelMappings;
-            channelController.GetRegName = GetRegName;
+            channelController = new ChannelController(Enforce.ArgumentNotNull(clientProvider, "clientProvider"))
+            {
+                AutoSubscribeChannels = true,
+                LogicalChannelMappings = Settings.Default.LogicalChannelMappings,
+                GetRegName = GetRegName
+            };
             channelController.InitProvider();
             channelController.CanRegister = true;
 
@@ -209,7 +212,7 @@ namespace TP.WPF.ViewModels
 
         }
 
-        private readonly ChannelController channelController = new ChannelController();
+        private readonly ChannelController channelController;
 
 
         /// <summary>
