@@ -5,6 +5,7 @@ using System.Threading;
 using DMS.Common.Events;
 using DMS.Common.Messages;
 using NLog;
+using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Base.Extensions;
 using Oleg_ivo.HighLevelClient;
 using TP.WPF.Properties;
@@ -15,29 +16,18 @@ namespace TP.WPF
     /// <summary>
     /// 
     /// </summary>
-    public class ChannelController : Component
+    public class ChannelController : IDisposable
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-        private readonly IContainer components;
         /// <summary>
         /// 
         /// </summary>
-        public ChannelController()
+        /// <param name="clientProvider"></param>
+        public ChannelController(ClientProvider clientProvider)
         {
-            //InitializeComponent();
-            components = new Container();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="container"></param>
-        public ChannelController(IContainer container)
-        {
-            container.Add(this);
-            components = new Container();
-            //InitializeComponent();
+            this.clientProvider = Enforce.ArgumentNotNull(clientProvider, "clientProvider");
+            clientProvider.RegisterCompleted += RegisterCompleted;
         }
 
         /// <summary>
@@ -72,20 +62,14 @@ namespace TP.WPF
                 : realChannelId;
         }
 
-        private ClientProvider provider;
+        private ClientProvider clientProvider;
 
         /// <summary>
         /// 
         /// </summary>
         protected ClientProvider Provider
         {
-            get
-            {
-                lock (this)
-                {
-                    return provider ?? (provider = new ClientProvider());
-                }
-            }
+            get { lock (this) return clientProvider; }
         }
 
         /// <summary>
@@ -97,7 +81,7 @@ namespace TP.WPF
 
             try
             {
-                Provider.Register(true, RegisterCompleted);
+                Provider.RegisterAsync();
             }
             catch (Exception ex)
             {
@@ -143,7 +127,7 @@ namespace TP.WPF
         /// </summary>
         //public event EventHandler ChannelUnSubscribed;
 
-        void RegisterCompleted(object sender, AsyncCompletedEventArgs e)
+        private void RegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
             log.Trace("RegisterCompleted");
 
@@ -444,30 +428,18 @@ namespace TP.WPF
             //if (handler != null) handler(this, EventArgs.Empty);    
         }
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing"><see langword="true"/> if managed resources should be disposed; otherwise, <see langword="false"/>.</param>
-        protected override void Dispose(bool disposing)
+        public void Dispose()
         {
-            if (disposing)
-            {
-                if (isitialized)
-                {
-                    Provider.ChannelUnRegistered -= Provider_ChannelUnRegistered;
-                    Provider.ChannelRegistered -= Provider_ChannelRegistered;
-                    Provider.ChannelSubscribeCompleted -= Provider_ChannelSubscribeCompleted;
-                    Provider.ChannelUnSubscribeCompleted -= Provider_ChannelUnSubscribeCompleted;
+            if (!isitialized) return;
+            
+            Provider.ChannelUnRegistered -= Provider_ChannelUnRegistered;
+            Provider.ChannelRegistered -= Provider_ChannelRegistered;
+            Provider.ChannelSubscribeCompleted -= Provider_ChannelSubscribeCompleted;
+            Provider.ChannelUnSubscribeCompleted -= Provider_ChannelUnSubscribeCompleted;
 
-                    Provider.Dispose();
+            Provider.Dispose();
 
-                    isitialized = false;
-                }
-
-                if (components != null)
-                    components.Dispose();
-            }
-            base.Dispose(disposing);
+            isitialized = false;
         }
 
 

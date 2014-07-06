@@ -67,6 +67,7 @@ namespace Oleg_ivo.HighLevelClient
             proxy.SendErrorCompleted += proxy_SendErrorCompleted;
             proxy.ChannelSubscribeCompleted += ChannelSubscribeCompleted;
             proxy.ChannelUnSubscribeCompleted += ChannelUnSubscribeCompleted;
+            proxy.RegisterCompleted += Proxy_RegisterCompleted;
             proxy.UnregisterCompleted += UnregisterCompleted;
         }
 
@@ -82,6 +83,7 @@ namespace Oleg_ivo.HighLevelClient
                 proxy.SendErrorCompleted -= proxy_SendErrorCompleted;
                 proxy.ChannelSubscribeCompleted -= ChannelSubscribeCompleted;
                 proxy.ChannelUnSubscribeCompleted -= ChannelUnSubscribeCompleted;
+                proxy.RegisterCompleted -= Proxy_RegisterCompleted;
                 proxy.UnregisterCompleted -= UnregisterCompleted;
             }
         }
@@ -108,9 +110,17 @@ namespace Oleg_ivo.HighLevelClient
 
         public ICommunicationObject Proxy { get { return proxy; } }
 
+        private readonly object registerLock = new object();
+
         public void Register()
         {
-            RegisterSync();
+            lock (registerLock)
+            {
+                CreateProxy();
+                var message = new RegistrationMessage(GetRegName(), null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
+                proxy.Register(message);
+                isRegistered = true;
+            }
         }
 
         public void AbortProxy()
@@ -257,7 +267,7 @@ namespace Oleg_ivo.HighLevelClient
         {
             get
             {
-                lock (proxyLock)
+                lock (registerLock)
                 {
                     Log.Trace("Проверка коммуникаций");
                     if (proxy == null)
@@ -285,10 +295,10 @@ namespace Oleg_ivo.HighLevelClient
         /// <summary>
         /// 
         /// </summary>
-        public void Init()
+        public void Init()//TODO: а нужен ли метод?
         {
-            if (proxy == null)
-                CreateProxy();
+            //if (proxy == null)
+            //    CreateProxy();
 
             //TODO: загружать конфигурацию?
             //System.Configuration.ConfigurationManager.OpenExeConfiguration(appConfigFileName);
@@ -368,47 +378,13 @@ namespace Oleg_ivo.HighLevelClient
         }
 
         /// <summary>
-        /// Синхронная регистрация (используется для LabView)
-        /// </summary>
-        public void RegisterSync()
-        {
-            Log.Trace("RegisterSync");
-
-            Register(false, null);
-        }
-
-        /// <summary>
         /// Асинхронная регистрация
         /// </summary>
-        public void RegisterAsync(EventHandler<AsyncCompletedEventArgs> proxyRegisterCompleted)
+        public void RegisterAsync()
         {
-            Log.Trace("RegisterAsync");
-
-            Register(true, proxyRegisterCompleted);
-        }
-
-        /// <summary>
-        /// Универсальная регистрация
-        /// </summary>
-        /// <param name="async"></param>
-        /// <param name="proxyRegisterCompleted"></param>
-        public void Register(bool async, EventHandler<AsyncCompletedEventArgs> proxyRegisterCompleted)
-        {
-            lock (proxyLock)
-            {
-                CreateProxy();
-
-                _proxyRegisterCompleted = proxyRegisterCompleted;
-                proxy.RegisterCompleted += Proxy_RegisterCompleted;
-                var registrationMessage = new RegistrationMessage(GetRegName(), null, RegistrationMode.Register, AllowedDataMode);
-                if (async)
-                    proxy.RegisterAsync(registrationMessage, registrationMessage);
-                else
-                {
-                    proxy.Register(registrationMessage);
-                    Proxy_RegisterCompleted(this, new AsyncCompletedEventArgs(null, false, null));
-                }                
-            }
+            CreateProxy();
+            var message = new RegistrationMessage(GetRegName(), null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
+            proxy.RegisterAsync(message);
         }
 
         /// <summary>
@@ -420,29 +396,29 @@ namespace Oleg_ivo.HighLevelClient
             get { return DataMode.Read | DataMode.Write; }
         }
 
+        /// <summary>
+        /// Регистрация завершена
+        /// </summary>
+        public event EventHandler<AsyncCompletedEventArgs> RegisterCompleted;
+
         void Proxy_RegisterCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            Log.Trace("Proxy_RegisterCompleted");
-
-            isRegistered = e.Error == null;
-            if (e.Error != null)
-                throw e.Error;
-            proxy.RegisterCompleted -= Proxy_RegisterCompleted;
-
-            //object channels;
-            //try
-            //{
-            //    channels = HighLevelMessageExchangeSystemClient.GetRegisteredChannels(new InternalMessage(RegName, null));
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw;
-            //}            //RegisteredChannels = HighLevelMessageExchangeSystemClient.GetRegisteredChannels(new InternalMessage(RegName, null));
-
-            if (_proxyRegisterCompleted != null)
+            try
             {
-                // чтобы снаружи знали, что регистрация завершена, каналы передаются сохраняются в UserState
-                _proxyRegisterCompleted(this, e);
+                lock (registerLock) isRegistered = e.Error == null;
+
+                if (isRegistered)
+                    Log.Info("Регистрация на сервере завершилась успешно");
+                else
+                {
+                    Log.Error("Регистрация на сервере завершилась неудачно:\n{0}", e.Error);
+                    throw e.Error;
+                }
+            }
+            finally
+            {
+                if (RegisterCompleted != null)
+                    RegisterCompleted(this, e);
             }
         }
 
@@ -456,7 +432,6 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public Func<string> GetRegName { get; set; }
 
-        private EventHandler<AsyncCompletedEventArgs> _proxyRegisterCompleted;
         private readonly ReliableConnector reliableConnector;
         private bool isRegistered;
 

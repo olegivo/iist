@@ -311,9 +311,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChannelController.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="ChannelController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
