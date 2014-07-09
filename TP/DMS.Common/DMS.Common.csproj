@@ -134,6 +134,7 @@
     <Compile Include="MessageExchangeSystem\HighLevel\RegisteredLogicalChannel.cs" />
     <Compile Include="Messages\ChannelRegistrationMessage.cs" />
     <Compile Include="Messages\ChannelSubscribeMessage.cs" />
+    <Compile Include="Messages\EventType.cs" />
     <Compile Include="Messages\IMessageReceiver.cs" />
     <Compile Include="MessageExchangeSystem\IClientCallback.cs" />
     <Compile Include="MessageExchangeSystem\HighLevel\IHighLevelClientCallback.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Messages\IMessageReceiverCallback.cs" />
     <Compile Include="Messages\InternalLogicalChannelMessage.cs" />
     <Compile Include="Messages\InternalLogicalChannelStateMessage.cs" />
+    <Compile Include="Messages\InternalServiceChannelMessage.cs" />
     <Compile Include="Messages\InternalServiceMessage.cs" />
     <Compile Include="Messages\InternalErrorMessage.cs" />
     <Compile Include="Messages\InternalLogicalChannelDataMessage.cs" />

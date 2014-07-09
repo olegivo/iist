@@ -11,6 +11,7 @@ using Oleg_ivo.MES.Low;
 using Oleg_ivo.MES.Registered;
 
 using System.Linq;
+using Oleg_ivo.MES.Services;
 
 namespace Oleg_ivo.MES.High
 {
@@ -36,7 +37,7 @@ namespace Oleg_ivo.MES.High
 
         #endregion
 
-        public HighLevelMessageExchangeSystem(IComponentContext context) : base(context)
+        public HighLevelMessageExchangeSystem(IComponentContext context, InternalMessageLogger internalLogger) : base(context, internalLogger)
         {
         }
 
@@ -220,6 +221,8 @@ namespace Oleg_ivo.MES.High
         /// <param name="message"></param>
         private void ChannelSubscribe(ChannelSubscribeMessage message)
         {
+            MessageLogger.ProtocolMessage(message);
+
             if (message.Mode != SubscribeMode.Subscribe)
                 throw new ArgumentException("Для подписки на канал в сообщении используется флаг отписки");
 
@@ -251,6 +254,8 @@ namespace Oleg_ivo.MES.High
         /// <param name="message"></param>
         private void ChannelUnSubscribe(ChannelSubscribeMessage message)
         {
+            MessageLogger.ProtocolMessage(message);
+
             if (message.Mode != SubscribeMode.Unsubscribe)
                 throw new ArgumentException("Для отписки от канала в сообщении используется флаг подписки");
 
@@ -325,8 +330,7 @@ namespace Oleg_ivo.MES.High
         /// <param name="clientCallback"></param>
         protected override void Register(RegistrationMessage message, IHighLevelClientCallback clientCallback)
         {
-            if (message.RegistrationMode != RegistrationMode.Register)
-                throw new ArgumentException("Для регистрации клиента в сообщении используется флаг отмены регистрации");
+            base.Register(message, clientCallback);
 
             RegisteredHighLevelClient registeredHighLevelClient = GetRegisteredHighLevelClient(message, false);
             // Это ПЛОХОЙ алгоритм оповещения, поскольку для каждого клиента
@@ -413,12 +417,11 @@ namespace Oleg_ivo.MES.High
         /// <param name="clientCallback"></param>
         protected override void Unregister(RegistrationMessage message, IHighLevelClientCallback clientCallback)
         {
-            if (message.RegistrationMode != RegistrationMode.Unregister)
-                throw new ArgumentException("Для отмены регистрации клиента в сообщении используется флаг регистрации");
+            base.Unregister(message, clientCallback);
 
             //получить рабочий объект из данного тикера и удалить
             //прокси клиента из списка обратных вызовов
-            RegisteredHighLevelClient registeredHighLevelClient = GetRegisteredHighLevelClient(message);
+            var registeredHighLevelClient = GetRegisteredHighLevelClient(message);
 
             if (registeredHighLevelClient != null)
             {

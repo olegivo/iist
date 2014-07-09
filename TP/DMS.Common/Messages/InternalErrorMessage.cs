@@ -8,7 +8,7 @@ namespace DMS.Common.Messages
     /// </summary>
     public class InternalErrorMessage : InternalServiceMessage
     {
-        protected InternalErrorMessage() : base()
+        protected InternalErrorMessage()
         {
             
         }
@@ -18,27 +18,29 @@ namespace DMS.Common.Messages
         /// </summary>
         /// <param name="regNameFrom">Регистрационое имя, от которого посылается сообщение</param>
         /// <param name="regNameTo">Регистрационое имя, которому посылается сообщение</param>
-        private InternalErrorMessage(string regNameFrom, string regNameTo) : base(regNameFrom, regNameTo)
-        {
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="regNameFrom">Регистрационое имя, от которого посылается сообщение</param>
-        /// <param name="regNameTo">Регистрационое имя, которому посылается сообщение</param>
         /// <param name="error"></param>
         public InternalErrorMessage(string regNameFrom, string regNameTo, Exception error)
-            : this(regNameFrom, regNameTo)
+            : base(regNameFrom, regNameTo)
         {
-            Error = error.ToString();
+            Error = error.Message;
+            StackTrace = error.StackTrace;
         }
 
         /// <summary>
-        /// Ошибка
+        /// Текст ошибки
         /// </summary>
         [DataMember]
         public string Error { get; set; }
 
+        /// <summary>
+        /// Стек исключения
+        /// </summary>
+        [DataMember]
+        public string StackTrace { get; set; }
+
+        public override EventType EventType
+        {
+            get { return EventType.Error; }
+        }
     }
 }

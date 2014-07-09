@@ -1,4 +1,6 @@
-﻿namespace DMS.Common.Messages
+﻿using System.Runtime.Serialization;
+
+namespace DMS.Common.Messages
 {
     /// <summary>
     /// Сообщение, содержащее управляющую информацию
@@ -19,5 +21,8 @@
         {
             
         }
+
+        [DataMember]
+        public abstract EventType EventType { get; }
     }
 }

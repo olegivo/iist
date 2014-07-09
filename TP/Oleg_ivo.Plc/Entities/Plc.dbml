@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="plc_test" Class="PlcDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=OLEG-A\SQLEXPRESS2005;Initial Catalog=plc_test;Integrated Security=True" SettingsObjectName="Oleg_ivo.Plc.Properties.Settings" SettingsPropertyName="plc_testConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQL2008R2;Initial Catalog=plc_test;Integrated Security=True" SettingsObjectName="Oleg_ivo.Plc.Properties.Settings" SettingsPropertyName="plc_testConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.FieldBus" Member="FieldBus">
     <Type Name="FieldBus">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -84,6 +84,7 @@
       <Association Name="LogicalChannel_LogicalChannel" Member="LogicalChannelStateHolders" ThisKey="Id" OtherKey="StateLogicalChannelId" Type="LogicalChannel" />
       <Association Name="LogicalChannel_ProtocolData" Member="ProtocolDatas" ThisKey="Id" OtherKey="LogicalChannelId" Type="ProtocolData" />
       <Association Name="LogicalChannel_LogicalChannelClient" Member="LogicalChannelClients" ThisKey="Id" OtherKey="LogicalChannnelId" Type="LogicalChannelClient" />
+      <Association Name="LogicalChannel_ProtocolEvent" Member="ProtocolEvents" ThisKey="Id" OtherKey="LogicalChannelId" Type="ProtocolEvent" />
       <Association Name="LogicalChannel_LogicalChannel" Member="LogicalChannelState" ThisKey="StateLogicalChannelId" OtherKey="Id" Type="LogicalChannel" IsForeignKey="true" />
       <Association Name="Parameter_LogicalChannel" Member="Parameter" ThisKey="ParameterId" OtherKey="Id" Type="Parameter" IsForeignKey="true" />
       <Association Name="PhysicalChannel_LogicalChannel" Member="PhysicalChannel" ThisKey="PhysicalChannelId" OtherKey="Id" Type="PhysicalChannel" IsForeignKey="true" />
@@ -95,6 +96,7 @@
       <Column Name="ClientName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Association Name="Client_ProtocolData" Member="ProtocolDatas" ThisKey="ClientId" OtherKey="ClientId" Type="ProtocolData" />
       <Association Name="Client_LogicalChannelClient" Member="LogicalChannelClients" ThisKey="ClientId" OtherKey="ClientId" Type="LogicalChannelClient" />
+      <Association Name="Client_ProtocolEvent" Member="ProtocolEvents" ThisKey="ClientId" OtherKey="ClientId" Type="ProtocolEvent" />
     </Type>
   </Table>
   <Table Name="dbo.ProtocolData" Member="ProtocolDatas">
@@ -124,6 +126,29 @@
       <Column Name="LogicalChannnelId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Client_LogicalChannelClient" Member="Client" ThisKey="ClientId" OtherKey="ClientId" Type="Client" IsForeignKey="true" />
       <Association Name="LogicalChannel_LogicalChannelClient" Member="LogicalChannel" ThisKey="LogicalChannnelId" OtherKey="Id" Type="LogicalChannel" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProtocolException" Member="ProtocolExceptions">
+    <Type Name="ProtocolException">
+      <Column Name="ProtocolEventId" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="StackTrace" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="ProtocolEvent_ProtocolException" Member="ProtocolEvent" ThisKey="ProtocolEventId" OtherKey="Id" Type="ProtocolEvent" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProtocolEvent" Member="ProtocolEvents">
+    <Type Name="ProtocolEvent">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EventTypeId" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="ClientId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LogicalChannelId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TimeStamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="QueueTimeStamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Data" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="ProtocolEvent_ProtocolException" Member="ProtocolException" ThisKey="Id" OtherKey="ProtocolEventId" Type="ProtocolException" Cardinality="One" />
+      <Association Name="Client_ProtocolEvent" Member="Client" ThisKey="ClientId" OtherKey="ClientId" Type="Client" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="LogicalChannel_ProtocolEvent" Member="LogicalChannel" ThisKey="LogicalChannelId" OtherKey="Id" Type="LogicalChannel" IsForeignKey="true" DeleteRule="CASCADE" />
     </Type>
   </Table>
 </Database>

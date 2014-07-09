@@ -42,5 +42,13 @@ namespace Oleg_ivo.MES.Services
                 
             }
         }
+
+        public Client GetClient(string clientName)
+        {
+            lock (DataContext)
+            {
+                return DataContext.Clients.SingleOrDefault(client => client.ClientName == clientName);
+            }
+        }
     }
 }

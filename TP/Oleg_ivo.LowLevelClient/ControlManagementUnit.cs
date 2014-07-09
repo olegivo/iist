@@ -1,6 +1,7 @@
 using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 using DMS.Common;
+using DMS.Common.Exceptions;
 using NLog;
 using Oleg_ivo.Base.Autofac;
 using Oleg_ivo.Base.Communication;
@@ -11,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows.Forms;
 using DMS.Common.Messages;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Channels;
@@ -369,9 +369,16 @@ namespace Oleg_ivo.LowLevelClient
             lock (registerLock)
             {
                 Log.Trace("Запуск синхронной регистрации");
-                CreateProxy();
-                var message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
-                LowLevelMessageExchangeSystemClient.Register(message);
+                try
+                {
+                    CreateProxy();
+                    var message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
+                    LowLevelMessageExchangeSystemClient.Register(message);
+                }
+                catch (Exception ex)
+                {
+                    throw new RegistrationException(string.Format("Синхронная регистрация {0} на сервере прошла неудачно", RegName), ex);
+                } 
                 isRegistered = true;
                 if(RegisterCompleted!=null)
                     RegisterCompleted(this, new AsyncCompletedEventArgs(null, false, null));
@@ -436,7 +443,7 @@ namespace Oleg_ivo.LowLevelClient
                 else
                 {
                     Log.Error("Регистрация на сервере завершилась неудачно:\n{0}", e.Error);
-                    throw e.Error;
+                    throw new RegistrationException(string.Format("Асинхронная регистрация {0} на сервере прошла неудачно", RegName), e.Error);
                 }
             }
             finally
@@ -566,7 +573,7 @@ namespace Oleg_ivo.LowLevelClient
             {
                 lock (registerLock)
                 {
-                    Log.Trace("Проверка коммуникаций");
+                    //Log.Trace("Проверка коммуникаций");
                     if (LowLevelMessageExchangeSystemClient == null)
                     {
                         Log.Warn("Прокси не создан");

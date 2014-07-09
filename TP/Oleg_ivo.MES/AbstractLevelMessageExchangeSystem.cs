@@ -19,14 +19,16 @@ namespace Oleg_ivo.MES
         where TRegisteredClient : IRegisteredChannelsHolder 
         where TClientCallback : IClientCallback
     {
-        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+        private readonly Logger log = LogManager.GetCurrentClassLogger();
+        protected readonly InternalMessageLogger MessageLogger;
         protected readonly IComponentContext Context;
 
         private readonly Dictionary<string, TRegisteredClient> registeredClients = new Dictionary<string, TRegisteredClient>();
 
-        protected AbstractLevelMessageExchangeSystem(IComponentContext context)
+        protected AbstractLevelMessageExchangeSystem(IComponentContext context, InternalMessageLogger messageLogger)
         {
-            this.Context = Enforce.ArgumentNotNull(context, "context");
+            Context = Enforce.ArgumentNotNull(context, "context");
+            this.MessageLogger = Enforce.ArgumentNotNull(messageLogger, "messageLogger");
         }
 
         [Dependency(Required = true)]
@@ -139,7 +141,7 @@ namespace Oleg_ivo.MES
 
         private void SendError(InternalErrorMessage message)
         {
-            //TODO: SendError - протоколировать ошибки, поступающие с клиентов верхнего и нижнего уровня
+            MessageLogger.ProtocolMessage(message);
             InvokeErrorReceived(new ErrorReceivedEventArgs(message));
         }
 
@@ -181,7 +183,12 @@ namespace Oleg_ivo.MES
             return result;
         }
 
-        protected abstract void Register(RegistrationMessage message, TClientCallback clientcallback);
+        protected virtual void Register(RegistrationMessage message, TClientCallback clientcallback)
+        {
+            MessageLogger.ProtocolMessage(message);
+            if (message.RegistrationMode != RegistrationMode.Register)
+                throw new ArgumentException("Для регистрации клиента в сообщении используется флаг отмены регистрации");
+        }
 
         /// <summary>
         /// Завершение регистрации клиента
@@ -211,7 +218,12 @@ namespace Oleg_ivo.MES
             return result;
         }
 
-        protected abstract void Unregister(RegistrationMessage message, TClientCallback clientcallback);
+        protected virtual void Unregister(RegistrationMessage message, TClientCallback clientcallback)
+        {
+            MessageLogger.ProtocolMessage(message);
+            if (message.RegistrationMode != RegistrationMode.Unregister)
+                throw new ArgumentException("Для отмены регистрации клиента в сообщении используется флаг регистрации");
+        }
 
         /// <summary>
         /// Завершение отмены регистрации клиента

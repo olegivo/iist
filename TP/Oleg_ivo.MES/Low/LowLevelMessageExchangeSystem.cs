@@ -9,6 +9,7 @@ using NLog;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.MES.High;
 using Oleg_ivo.MES.Registered;
+using Oleg_ivo.MES.Services;
 
 namespace Oleg_ivo.MES.Low
 {
@@ -29,7 +30,8 @@ namespace Oleg_ivo.MES.Low
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="LowLevelMessageExchangeSystem" />.
         /// </summary>
-        public LowLevelMessageExchangeSystem(IComponentContext context) : base(context)
+        public LowLevelMessageExchangeSystem(IComponentContext context, InternalMessageLogger internalLogger)
+            : base(context, internalLogger)
         {
         }
 
@@ -80,8 +82,7 @@ namespace Oleg_ivo.MES.Low
         /// <param name="clientCallback"></param>
         protected override void Register(RegistrationMessage message, ILowLevelClientCallback clientCallback)
         {
-            if (message.RegistrationMode != RegistrationMode.Register)
-                throw new ArgumentException("Для регистрации клиента в сообщении используется флаг отмены регистрации");
+            base.Register(message, clientCallback);
 
             var registeredLowLevelClient = this[message.RegNameFrom];
 
@@ -113,12 +114,11 @@ namespace Oleg_ivo.MES.Low
         /// <param name="clientCallback"></param>
         protected override void Unregister(RegistrationMessage message, ILowLevelClientCallback clientCallback)
         {
-            if (message.RegistrationMode != RegistrationMode.Unregister) 
-                throw new ArgumentException("Для отмены регистрации клиента в сообщении используется флаг регистрации");
+            base.Unregister(message, clientCallback);
 
             //получить рабочий объект из данного тикера и удалить
             //прокси клиента из списка обратных вызовов
-            RegisteredLowLevelClient registeredLowLevelClient = GetRegisteredLowLevelClient(message);
+            var registeredLowLevelClient = GetRegisteredLowLevelClient(message);
             
             registeredLowLevelClient.RemoveCallback(clientCallback);//лишаем клиента уведомлений
 
@@ -167,6 +167,8 @@ namespace Oleg_ivo.MES.Low
         /// <param name="message"></param>
         private void ChangeChannelState(InternalLogicalChannelStateMessage message)
         {
+            MessageLogger.ProtocolMessage(message);
+
             log.Info("Состояние канала {0} изменилось: {1}", message.LogicalChannelId, message.State);
             //пришли новые данные по каналу. будем передавать наверх
             HighLevelMessageExchangeSystem.ChangeChannelState(message);
@@ -348,6 +350,8 @@ namespace Oleg_ivo.MES.Low
         /// <param name="message"></param>
         public void ChannelRegister(ChannelRegistrationMessage message)
         {
+            MessageLogger.ProtocolMessage(message);
+
             var registeredLowLevelClient = GetRegisteredLowLevelClient(message);
             //if(!registeredLowLevelClient.HasRegisteredLogicalChannels)
             //    throw new Exception("У клиента нет зарегистрированных каналов");
@@ -379,6 +383,8 @@ namespace Oleg_ivo.MES.Low
         /// <param name="message"></param>
         public void ChannelUnRegister(ChannelRegistrationMessage message)
         {
+            MessageLogger.ProtocolMessage(message);
+
             var registeredLowLevelClient = GetRegisteredLowLevelClient(message);
             if (!registeredLowLevelClient.HasRegisteredLogicalChannels)
                 throw new Exception("У клиента нет зарегистрированных каналов");

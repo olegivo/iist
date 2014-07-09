@@ -5,7 +5,7 @@ namespace DMS.Common.Messages
     /// <summary>
     /// Сообщение для подписки / отписки от канала
     /// </summary>
-    public class ChannelSubscribeMessage : InternalServiceMessage
+    public class ChannelSubscribeMessage : InternalServiceChannelMessage
     {
         protected ChannelSubscribeMessage()
         {
@@ -19,10 +19,9 @@ namespace DMS.Common.Messages
         /// <param name="mode">Режим регистрации (регистрация/отмена)</param>
         /// <param name="logicalChannelId">Номер логического канала</param>
         public ChannelSubscribeMessage(string regNameFrom, string regNameTo, SubscribeMode mode, int logicalChannelId)
-            : base(regNameFrom, regNameTo)
+            : base(regNameFrom, regNameTo, logicalChannelId)
         {
             Mode = mode;
-            LogicalChannelId = logicalChannelId;
         }
 
         /// <summary>
@@ -31,10 +30,9 @@ namespace DMS.Common.Messages
         [DataMember]
         public SubscribeMode Mode { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [DataMember]
-        public int LogicalChannelId { get; set; }
+        public override EventType EventType
+        {
+            get { return EventType.ChannelSubscription; }
+        }
     }
 }
