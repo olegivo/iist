@@ -94,5 +94,16 @@ namespace DMS.Common.Messages
                 Description = Description
             };
         }
+
+        protected override string GetMessageType()
+        {
+            return "Регистрация канала";
+        }
+
+        protected override string GetMessageDescription()
+        {
+            //TODO:string builder with other parameters?
+            return string.Format("{0}, канал №{1}", base.GetMessageDescription(), LogicalChannelId);
+        }
     }
 }

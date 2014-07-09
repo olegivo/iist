@@ -40,5 +40,15 @@ namespace DMS.Common.Messages
         {
             get { return EventType.ClientRegistration; }
         }
+
+        protected override string GetMessageType()
+        {
+            return "Регистрация клиента";
+        }
+
+        protected override string GetMessageDescription()
+        {
+            return string.Format("Режим регистрации - {0}, режим данных - {1}", RegistrationMode, DataMode);
+        }
     }
 }

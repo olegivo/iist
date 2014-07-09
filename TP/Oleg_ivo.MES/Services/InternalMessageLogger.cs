@@ -208,6 +208,7 @@ namespace Oleg_ivo.MES.Services
                 QueueTimeStamp = incomeTimeStamp,
                 Client = client,
                 EventTypeId = (short) serviceMessage.EventType,
+                Message = serviceMessage.ToString(),
                 ProtocolException = protocolException
             };
 

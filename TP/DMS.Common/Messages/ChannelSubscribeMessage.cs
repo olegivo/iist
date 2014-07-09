@@ -34,5 +34,15 @@ namespace DMS.Common.Messages
         {
             get { return EventType.ChannelSubscription; }
         }
+
+        protected override string GetMessageType()
+        {
+            return "Подписка канала";
+        }
+
+        protected override string GetMessageDescription()
+        {
+            return string.Format("{0}, канал №{1}, подписка - {2}", base.GetMessageDescription(), LogicalChannelId, Mode);
+        }
     }
 }

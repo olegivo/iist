@@ -42,5 +42,15 @@ namespace DMS.Common.Messages
         {
             get { return EventType.Error; }
         }
+
+        protected override string GetMessageType()
+        {
+            return "Ошибка";
+        }
+
+        protected override string GetMessageDescription()
+        {
+            return Error;
+        }
     }
 }

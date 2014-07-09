@@ -43,5 +43,15 @@ namespace DMS.Common.Messages
         {
             get { return EventType.LogicalChannelState; }
         }
+
+        protected override string GetMessageType()
+        {
+            return "Состояние канала";
+        }
+
+        protected override string GetMessageDescription()
+        {
+            return string.Format("{0}, канал №{1}, состояние - {2}", base.GetMessageDescription(), LogicalChannelId, State);
+        }
     }
 }
