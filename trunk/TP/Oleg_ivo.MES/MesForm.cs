@@ -13,7 +13,7 @@ namespace Oleg_ivo.MES
     /// <summary>
     /// 
     /// </summary>
-    public partial class MesForm : Form
+    public partial class MesForm : Form//TODO: to WPF
     {
         private readonly DbConnectionProvider connectionProvider;
         private readonly HighLevelMessageExchangeSystem highLevelMessageExchangeSystem;

@@ -5,7 +5,7 @@ namespace DMS.Common.Messages
     /// <summary>
     /// Сообщение, содержащее состояние логического канала
     /// </summary>
-    public class InternalLogicalChannelStateMessage : InternalLogicalChannelMessage
+    public class InternalLogicalChannelStateMessage : InternalServiceChannelMessage
     {
         protected InternalLogicalChannelStateMessage()
         {
@@ -37,6 +37,11 @@ namespace DMS.Common.Messages
                  RegNameTo,
                  LogicalChannelId,
                  State);
+        }
+
+        public override EventType EventType
+        {
+            get { return EventType.LogicalChannelState; }
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Oleg_ivo.MES.Low
     /// <summary>
     /// 
     /// </summary>
-    public class LowLevelClientEventArgs : EventArgs
+    public class LowLevelClientEventArgs/*TODO:to generic by client type*/ : EventArgs
     {
         /// <summary>
         /// Обратный вызов для клиента

@@ -1,13 +1,13 @@
 using System;
-using System.Linq;
 using System.Reactive.Subjects;
-using System.ServiceModel;
 using Autofac;
 using DMS.Common.Messages;
 using NLog;
 using Oleg_ivo.Base.Autofac;
+using Oleg_ivo.Base.Autofac.DependencyInjection;
 using Oleg_ivo.Plc.Entities;
 using Oleg_ivo.Tools.ConnectionProvider;
+using ProtocolException = Oleg_ivo.Plc.Entities.ProtocolException;
 
 namespace Oleg_ivo.MES.Services
 {
@@ -32,6 +32,10 @@ namespace Oleg_ivo.MES.Services
         #endregion
 
         private readonly IComponentContext context;
+
+        [Dependency(Required = true)]
+        public ClientsProvider ClientsProvider { get; set; }
+
 
         private PlcDataContext dataContext;
 
@@ -69,7 +73,7 @@ namespace Oleg_ivo.MES.Services
             {
                 if (!isStopped) return;
                 subject = new Subject<QueueElement>();
-                subject.Subscribe(queueElement => ProtocolMessage(queueElement.Message, queueElement.IncomeTimeStamp));
+                subject.Subscribe(queueElement => ProcessQueueItem(queueElement.Message, queueElement.IncomeTimeStamp));
                 isStopped = false;
             }
         }
@@ -111,6 +115,7 @@ namespace Oleg_ivo.MES.Services
                 if (isStopped)
                     throw new InvalidOperationException("Невозможно добавить сообщение в очередь, т.к. протоколирование остановлено");
 
+                Log.Trace("Добавление сообщения в очередь ({0})", message.GetType().Name);
                 subject.OnNext(new QueueElement { IncomeTimeStamp = DateTime.Now, Message = message });                
             }
         }
@@ -134,15 +139,55 @@ namespace Oleg_ivo.MES.Services
         /// </summary>
         /// <param name="message"></param>
         /// <param name="incomeTimeStamp"></param>
-        private void ProtocolMessage(InternalMessage message, DateTime incomeTimeStamp)
+        private void ProcessQueueItem(InternalMessage message, DateTime incomeTimeStamp)
         {
             //Log.Debug("Найдены данные для отправки");
             //Log.Debug("Осталось элементов в очереди: {0}", subject.Count().First());
 
             var dataMessage = message as InternalLogicalChannelDataMessage;
-            if (dataMessage == null)
-                throw new ArgumentOutOfRangeException("Неожиданный тип сообщения" + message.GetType());
-            var protocolData = CreateProtocolData(dataMessage, incomeTimeStamp);
+            if (dataMessage != null)
+            {
+                WriteProtocolData(incomeTimeStamp, dataMessage);
+                return;
+            }
+
+            var serviceMessage = message as InternalServiceMessage;
+            if (serviceMessage != null)
+            {
+                var errorMessage = serviceMessage as InternalErrorMessage;
+                var protocolException = errorMessage != null
+                    ? new ProtocolException
+                    {
+                        Message = errorMessage.Error,
+                        StackTrace = errorMessage.StackTrace
+                    }
+                    : null;
+                WriteProtocolEvent(incomeTimeStamp, serviceMessage, protocolException);
+                return;
+            }
+            throw new InvalidOperationException("Неожиданный тип сообщения " + message.GetType());
+        }
+
+        private void WriteProtocolData(DateTime incomeTimeStamp, InternalLogicalChannelDataMessage dataMessage)
+        {
+            var client = GetClient(dataMessage);
+            var protocolData = dataMessage.IsDiscreteData
+                ? (ProtocolData) new ProtocolDataDiscrete
+                {
+                    LogicalChannelId = dataMessage.LogicalChannelId,
+                    TimeStamp = dataMessage.TimeStamp,
+                    QueueTimeStamp = incomeTimeStamp,
+                    DiscreteValue = (bool?) (dataMessage.Value),
+                    Client = client
+                }
+                : new ProtocolDataAnalog
+                {
+                    LogicalChannelId = dataMessage.LogicalChannelId,
+                    TimeStamp = dataMessage.TimeStamp,
+                    QueueTimeStamp = incomeTimeStamp,
+                    AnalogValue = Convert.ToDecimal(dataMessage.Value),
+                    Client = client
+                };
             try
             {
                 DataContext.ProtocolDatas.InsertOnSubmit(protocolData);
@@ -154,45 +199,46 @@ namespace Oleg_ivo.MES.Services
             }
         }
 
-        /// <summary>
-        /// Подготовка команды для вставки протокола сообщения
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="incomeTimeStamp"></param>
-        private ProtocolData CreateProtocolData(InternalLogicalChannelDataMessage message, DateTime incomeTimeStamp)
+        private void WriteProtocolEvent(DateTime incomeTimeStamp, InternalServiceMessage serviceMessage, ProtocolException protocolException)
         {
-            var client = DataContext.Clients.Single(c => c.ClientName == message.RegNameFrom);
-                //TODO:move client data to message
+            var client = GetClient(serviceMessage);
+            var protocolEvent = new ProtocolEvent
+            {
+                TimeStamp = serviceMessage.TimeStamp,
+                QueueTimeStamp = incomeTimeStamp,
+                Client = client,
+                EventTypeId = (short) serviceMessage.EventType,
+                ProtocolException = protocolException
+            };
 
-            return message.IsDiscreteData
-                ? (ProtocolData) new ProtocolDataDiscrete
-                {
-                    LogicalChannelId = message.LogicalChannelId,
-                    TimeStamp = message.TimeStamp,
-                    QueueTimeStamp = incomeTimeStamp,
-                    DiscreteValue = (bool?) (message.Value),
-                    Client = client
-                }
-                : new ProtocolDataAnalog
-                {
-                    LogicalChannelId = message.LogicalChannelId,
-                    TimeStamp = message.TimeStamp,
-                    QueueTimeStamp = incomeTimeStamp,
-                    AnalogValue = Convert.ToDecimal(message.Value),
-                    Client = client
-                };
+            var channelStateMessage = serviceMessage as InternalLogicalChannelStateMessage;
+            if (channelStateMessage != null)
+            {
+                protocolEvent.LogicalChannelId = channelStateMessage.LogicalChannelId;
+                protocolEvent.Data = channelStateMessage.State.ToString();
+            }
+
+            try
+            {
+                DataContext.ProtocolEvents.InsertOnSubmit(protocolEvent);
+                DataContext.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("При протоколировании сообщения произошла ошибка", ex);
+            }
         }
 
-        public void ProtocolError(InternalMessage message, FaultException faultException)
+        private Client GetClient(InternalMessage message)
         {
-            //TODO:записать ошибку в базу
-            var ex = faultException.GetBaseException();
+            //TODO:move client data to message?
+            return ClientsProvider.GetClient(message.RegNameFrom);
         }
 
-        public void ProtocolEvent(InternalMessage message)
+/*
+        private void ProtocolEvent(InternalMessage message)
         {
             //TODO:записать событие в базу
-/*
             Action<InternalLogicalChannelStateMessage> action =
                 channelStateMessage =>
                 {
@@ -206,8 +252,8 @@ namespace Oleg_ivo.MES.Services
             var hasResult = chain.Select(func => func()).FirstOrDefault(b=>b);
             if(!hasResult)
                 throw new ArgumentOutOfRangeException("message",message, "Неожиданный тип сообщения");
-*/
         }
+*/
 
 /*
         private bool ChainProcess(InternalMessage message, IEnumerable<Action<InternalMessage>> actions)

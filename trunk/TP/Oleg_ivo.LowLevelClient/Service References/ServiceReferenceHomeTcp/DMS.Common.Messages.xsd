@@ -9,22 +9,45 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="InternalMessage" nillable="true" type="tns:InternalMessage" />
-  <xs:complexType name="ChannelRegistrationMessage">
+  <xs:complexType name="ChannelSubscribeMessage">
     <xs:complexContent mixed="false">
-      <xs:extension base="tns:RegistrationMessage">
+      <xs:extension base="tns:InternalServiceChannelMessage">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="IsDiscrete" type="xs:boolean" />
-          <xs:element minOccurs="0" name="LogicalChannelId" type="xs:int" />
-          <xs:element minOccurs="0" name="MaxNormalValue" nillable="true" type="xs:double" />
-          <xs:element minOccurs="0" name="MaxValue" nillable="true" type="xs:double" />
-          <xs:element minOccurs="0" name="MinNormalValue" nillable="true" type="xs:double" />
-          <xs:element minOccurs="0" name="MinValue" nillable="true" type="xs:double" />
+          <xs:element minOccurs="0" name="Mode" type="tns:SubscribeMode" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="ChannelRegistrationMessage" nillable="true" type="tns:ChannelRegistrationMessage" />
+  <xs:element name="ChannelSubscribeMessage" nillable="true" type="tns:ChannelSubscribeMessage" />
+  <xs:complexType name="InternalServiceChannelMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:InternalServiceMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="LogicalChannelId" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="InternalServiceChannelMessage" nillable="true" type="tns:InternalServiceChannelMessage" />
+  <xs:complexType name="InternalServiceMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:InternalMessage">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="InternalServiceMessage" nillable="true" type="tns:InternalServiceMessage" />
+  <xs:complexType name="InternalErrorMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:InternalServiceMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Error" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="StackTrace" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="InternalErrorMessage" nillable="true" type="tns:InternalErrorMessage" />
   <xs:complexType name="RegistrationMessage">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:InternalServiceMessage">
@@ -36,93 +59,6 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="RegistrationMessage" nillable="true" type="tns:RegistrationMessage" />
-  <xs:complexType name="InternalServiceMessage">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:InternalMessage">
-        <xs:sequence />
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="InternalServiceMessage" nillable="true" type="tns:InternalServiceMessage" />
-  <xs:complexType name="ChannelSubscribeMessage">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:InternalServiceMessage">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="LogicalChannelId" type="xs:int" />
-          <xs:element minOccurs="0" name="Mode" type="tns:SubscribeMode" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="ChannelSubscribeMessage" nillable="true" type="tns:ChannelSubscribeMessage" />
-  <xs:simpleType name="SubscribeMode">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Subscribe">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Unsubscribe">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="SubscribeMode" nillable="true" type="tns:SubscribeMode" />
-  <xs:complexType name="InternalLogicalChannelDataMessage">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:InternalLogicalChannelMessage">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="DataMode" type="tns:DataMode" />
-          <xs:element minOccurs="0" name="IsDiscreteData" type="xs:boolean" />
-          <xs:element minOccurs="0" name="Value" nillable="true" type="xs:anyType" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="InternalLogicalChannelDataMessage" nillable="true" type="tns:InternalLogicalChannelDataMessage" />
-  <xs:complexType name="InternalLogicalChannelMessage">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:InternalMessage">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="LogicalChannelId" type="xs:int" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="InternalLogicalChannelMessage" nillable="true" type="tns:InternalLogicalChannelMessage" />
-  <xs:complexType name="InternalErrorMessage">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:InternalServiceMessage">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Error" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="InternalErrorMessage" nillable="true" type="tns:InternalErrorMessage" />
-  <xs:complexType name="InternalLogicalChannelStateMessage">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:InternalLogicalChannelMessage">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="State" type="tns:LogicalChannelState" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="InternalLogicalChannelStateMessage" nillable="true" type="tns:InternalLogicalChannelStateMessage" />
-  <xs:simpleType name="LogicalChannelState">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Break" />
-      <xs:enumeration value="Work" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="LogicalChannelState" nillable="true" type="tns:LogicalChannelState" />
   <xs:simpleType name="DataMode">
     <xs:list>
       <xs:simpleType>
@@ -172,4 +108,78 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="RegistrationMode" nillable="true" type="tns:RegistrationMode" />
+  <xs:complexType name="InternalLogicalChannelDataMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:InternalLogicalChannelMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DataMode" type="tns:DataMode" />
+          <xs:element minOccurs="0" name="IsDiscreteData" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Value" nillable="true" type="xs:anyType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="InternalLogicalChannelDataMessage" nillable="true" type="tns:InternalLogicalChannelDataMessage" />
+  <xs:complexType name="InternalLogicalChannelMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:InternalMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="LogicalChannelId" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="InternalLogicalChannelMessage" nillable="true" type="tns:InternalLogicalChannelMessage" />
+  <xs:complexType name="InternalLogicalChannelStateMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:InternalServiceChannelMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="State" type="tns:LogicalChannelState" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="InternalLogicalChannelStateMessage" nillable="true" type="tns:InternalLogicalChannelStateMessage" />
+  <xs:simpleType name="LogicalChannelState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Break" />
+      <xs:enumeration value="Work" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="LogicalChannelState" nillable="true" type="tns:LogicalChannelState" />
+  <xs:complexType name="ChannelRegistrationMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:RegistrationMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsDiscrete" type="xs:boolean" />
+          <xs:element minOccurs="0" name="LogicalChannelId" type="xs:int" />
+          <xs:element minOccurs="0" name="MaxNormalValue" nillable="true" type="xs:double" />
+          <xs:element minOccurs="0" name="MaxValue" nillable="true" type="xs:double" />
+          <xs:element minOccurs="0" name="MinNormalValue" nillable="true" type="xs:double" />
+          <xs:element minOccurs="0" name="MinValue" nillable="true" type="xs:double" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ChannelRegistrationMessage" nillable="true" type="tns:ChannelRegistrationMessage" />
+  <xs:simpleType name="SubscribeMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Subscribe">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Unsubscribe">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SubscribeMode" nillable="true" type="tns:SubscribeMode" />
 </xs:schema>

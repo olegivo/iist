@@ -35,5 +35,10 @@ namespace DMS.Common.Messages
         /// </summary>
         [DataMember]
         public DataMode DataMode { get; set; }
+
+        public override EventType EventType
+        {
+            get { return EventType.ClientRegistration; }
+        }
     }
 }

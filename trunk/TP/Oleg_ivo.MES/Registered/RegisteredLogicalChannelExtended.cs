@@ -48,7 +48,7 @@ namespace Oleg_ivo.MES.Registered
         private void RegisteredLogicalChannel_ChangeState(object sender, MessageEventArgs<InternalLogicalChannelStateMessage> e)
         {
             //протоколировать состояние канала
-            InternalMessageLogger.ProtocolEvent(e.Message);
+            InternalMessageLogger.ProtocolMessage(e.Message);
         }
 
         /// <summary>

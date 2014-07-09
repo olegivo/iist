@@ -72,6 +72,11 @@ namespace DMS.Common.Messages
         [DataMember]
         public bool IsDiscrete { get; set; }
 
+        public override EventType EventType
+        {
+            get { return EventType.ChannelRegistration; }
+        }
+
         public override object Clone()
         {
             return new ChannelRegistrationMessage

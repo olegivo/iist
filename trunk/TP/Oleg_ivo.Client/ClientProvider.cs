@@ -117,10 +117,18 @@ namespace Oleg_ivo.HighLevelClient
             lock (registerLock)
             {
                 Log.Trace("Запуск синхронной регистрации");
-                CreateProxy();
-                var message = new RegistrationMessage(GetRegName(), null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
-                proxy.Register(message);
-                isRegistered = true;
+                try
+                {
+                    CreateProxy();
+                    var message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
+                    proxy.Register(message);
+                    isRegistered = true;
+
+                }
+                catch (Exception ex)
+                {
+                    throw new RegistrationException(string.Format("Синхронная регистрация {0} на сервере прошла неудачно", RegName), ex);
+                }
                 if (RegisterCompleted != null)
                     RegisterCompleted(this, new AsyncCompletedEventArgs(null, false, null));
             }
@@ -292,7 +300,7 @@ namespace Oleg_ivo.HighLevelClient
         {
             var exception = new TestException("У клиент обнаружена ошибка:\n" + e.Exception);
             proxy.SendErrorAsync(
-                new InternalErrorMessage(GetRegName(), null, exception), e);
+                new InternalErrorMessage(RegName, null, exception), e);
         }
 
         /// <summary>
@@ -387,7 +395,7 @@ namespace Oleg_ivo.HighLevelClient
         {
             Log.Trace("Запуск асинхронной регистрации");
             CreateProxy();
-            var message = new RegistrationMessage(GetRegName(), null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
+            var message = new RegistrationMessage(RegName, null, RegistrationMode.Register, DataMode.Read | DataMode.Write);
             proxy.RegisterAsync(message);
         }
 
@@ -416,7 +424,7 @@ namespace Oleg_ivo.HighLevelClient
                 else
                 {
                     Log.Error("Регистрация на сервере завершилась неудачно:\n{0}", e.Error);
-                    throw e.Error;
+                    throw new RegistrationException(string.Format("Асинхронная регистрация {0} на сервере прошла неудачно", RegName), e.Error);
                 }
             }
             finally
@@ -436,6 +444,17 @@ namespace Oleg_ivo.HighLevelClient
         /// </summary>
         public Func<string> GetRegName { get; set; }
 
+        protected string RegName
+        {
+            get
+            {
+                if (GetRegName == null)
+                    throw new NullReferenceException("Не задан делегат GetRegName");
+
+                return GetRegName();
+            }
+        }
+
         private readonly ReliableConnector reliableConnector;
         private bool isRegistered;
 
@@ -447,7 +466,7 @@ namespace Oleg_ivo.HighLevelClient
             Log.Trace("Unregister");
 
             proxy.UnregisterCompleted += proxy_UnregisterCompleted;
-            proxy.UnregisterAsync(new RegistrationMessage(GetRegName(), null, RegistrationMode.Unregister, DataMode.Unknown));
+            proxy.UnregisterAsync(new RegistrationMessage(RegName, null, RegistrationMode.Unregister, DataMode.Unknown));
         }
 
         void proxy_UnregisterCompleted(object sender, AsyncCompletedEventArgs e)
@@ -462,7 +481,7 @@ namespace Oleg_ivo.HighLevelClient
             proxy.UnregisterCompleted -= proxy_UnregisterCompleted;
             if(RegisteredChannels!=null) RegisteredChannels.Clear();
             //TODO:Disconnect неужели вызывается до этого?
-            //Task.Factory.StartNew(() => proxy.Disconnect(GetRegName()))
+            //Task.Factory.StartNew(() => proxy.Disconnect(RegName))
             //    .ContinueWith(task => log.Info("Disconnected"));
         }
 
