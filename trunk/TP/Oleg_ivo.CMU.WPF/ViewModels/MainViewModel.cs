@@ -351,7 +351,7 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
             get
             {
                 return commandUnregister ??
-                       (commandUnregister = new RelayCommand(Unregister, () => CanUnRegister));
+                       (commandUnregister = new RelayCommand(UnregisterAsync, () => CanUnRegister));
             }
         }
 
@@ -421,11 +421,27 @@ namespace Oleg_ivo.CMU.WPF.ViewModels
             Registering = true;
         }
 
-        private void Unregister()
+        public void Unregister()
         {
             UnregisterAllChannels();
 
-            ControlManagementUnit.Unregister();
+            Registering = true;
+            try
+            {
+                ControlManagementUnit.Unregister();
+
+            }
+            finally
+            {
+                Registering = false;
+            } 
+        }
+
+        private void UnregisterAsync()
+        {
+            UnregisterAllChannels();
+
+            ControlManagementUnit.UnregisterAsync();
             Registering = true;
         }
 

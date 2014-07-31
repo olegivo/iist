@@ -1,8 +1,6 @@
 using Autofac;
-using Oleg_ivo.Base.Autofac.Modules;
 using Oleg_ivo.LowLevelClient.DI;
 using Oleg_ivo.Plc;
-using Oleg_ivo.Plc.Entities;
 using Oleg_ivo.Plc.Factory;
 using Oleg_ivo.WAGO.Configuration;
 using Oleg_ivo.WAGO.Devices;

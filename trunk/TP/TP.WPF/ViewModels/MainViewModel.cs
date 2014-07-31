@@ -42,14 +42,15 @@ namespace TP.WPF.ViewModels
             channelController.InitProvider();
             channelController.CanRegister = true;
 
+            //TODO:переписать команды (CanExecute e.t.c.)
             TestCommand = new RelayCommand(OnTest);
             CloseAppCommand = new RelayCommand(OnCloseApp);
             DisplayAboutCommand = new RelayCommand(OnShowAbout);
 
             GoForUpdatesCommand = new RelayCommand(OnGetUpdates);
 
-            RegisterCommand = new RelayCommand(OnRegister);
-            UnregisterCommand = new RelayCommand(OnUnregister);
+            RegisterCommand = new RelayCommand(Register);
+            UnregisterCommand = new RelayCommand(Unregister);
 
             FinishCleaning = new FinishCleaningViewModel();
             FinishCleaning.SendControlMessage += FinishCleaning_SendControlMessage;
@@ -65,6 +66,8 @@ namespace TP.WPF.ViewModels
         }
 
         public ObservableLogTarget LogTarget { get; private set; }
+
+        public bool CanUnregister { get { return !channelController.CanRegister; } }
 
         [Dependency(Required = true)]
         public TpCommandLineOptions CommandLineOptions { get; set; }
@@ -170,12 +173,12 @@ namespace TP.WPF.ViewModels
             return message;
         }
 
-        private void OnRegister()
+        private void Register()
         {
             channelController.Register();
         }
 
-        private void OnUnregister()
+        public void Unregister()
         {
             channelController.Unregister();
         }

@@ -403,6 +403,16 @@ namespace Oleg_ivo.LowLevelClient
         {
             //перед тем, как совершить последнюю операцию сессии останавливаем все попытки посыла сообщений
             planner.StopAllPolls();
+            LowLevelMessageExchangeSystemClient.Unregister(new RegistrationMessage(GetRegName(), null, RegistrationMode.Unregister, DataMode.Unknown));
+        }
+
+        /// <summary>
+        /// Послать в систему обмена сообщениями сообщение об отмене регистрации
+        /// </summary>
+        public void UnregisterAsync()
+        {
+            //перед тем, как совершить последнюю операцию сессии останавливаем все попытки посыла сообщений
+            planner.StopAllPolls();
             //LowLevelMessageExchangeSystemClient.Unregister(new RegistrationMessage(GetRegName(), null, RegistrationMode.Unregister, DataMode.Unknown));
             LowLevelMessageExchangeSystemClient.UnregisterAsync(new RegistrationMessage(GetRegName(), null, RegistrationMode.Unregister, DataMode.Unknown));
         }

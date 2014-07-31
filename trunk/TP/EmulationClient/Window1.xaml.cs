@@ -35,7 +35,7 @@ namespace EmulationClient
 
         private void btnUnregister_Click(object sender, RoutedEventArgs e)
         {
-            ControlManagementUnitEmulation.Unregister();
+            ControlManagementUnitEmulation.UnregisterAsync();
         }
 
         private void btnRegisterChannels_Click(object sender, RoutedEventArgs e)
