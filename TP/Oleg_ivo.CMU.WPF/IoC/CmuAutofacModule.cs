@@ -11,8 +11,6 @@ namespace Oleg_ivo.CMU.WPF.IoC
         {
             base.Load(builder);
 
-            builder.RegisterType<CmuPrismModule>();
-            
             builder.RegisterType<MainViewModel>();
             builder.RegisterType<MainView>();//.UsingConstructor(typeof(MainViewModel));
 

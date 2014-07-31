@@ -99,8 +99,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Prism.Interactivity, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.UnityExtensions">
@@ -124,7 +123,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NSubstitute.1.7.2.0\lib\NET40\NSubstitute.dll</HintPath>
     </Reference>
-    <Reference Include="Prism.AutofacExtension">
+    <Reference Include="Prism.AutofacExtension, Version=1.0.40.0, Culture=neutral, PublicKeyToken=151cd86bf24ad997, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Prism.AutofacExtension.1.0.40.0\lib\net40\Prism.AutofacExtension.dll</HintPath>
     </Reference>
     <Reference Include="PrismMVVMLibrary">

@@ -394,6 +394,10 @@
       <Project>{ac7d7f53-a330-45b0-a6b3-498be85b9739}</Project>
       <Name>Oleg_ivo.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\External\Oleg_ivo.Tools\Oleg_ivo.Prism\Oleg_ivo.Prism.csproj">
+      <Project>{194522F9-C931-45AB-98B1-BA0CDBD7DEB1}</Project>
+      <Name>Oleg_ivo.Prism</Name>
+    </ProjectReference>
     <ProjectReference Include="..\External\Oleg_ivo.Tools\Oleg_ivo.Tools\Oleg_ivo.Tools.csproj">
       <Project>{332A1894-922F-49A1-BD6A-E4E981FA2FEC}</Project>
       <Name>Oleg_ivo.Tools</Name>

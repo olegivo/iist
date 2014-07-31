@@ -1,52 +1,25 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
 using Autofac;
-using Microsoft.Practices.Prism.Modularity;
 using Oleg_ivo.Base.Autofac.Modules;
-using Prism.AutofacExtension;
+using TP.WPF.ViewModels;
 using TP.WPF.Views;
 
 namespace TP.WPF.IoC
 {
-    public class TpBootStraper : AutofacBootstrapper
+    public class TpBootStraper : AutofacBootstrapperBase<MainShell, TpCommandLineOptions, TpPrismModule, TpAutofacModule>
     {
-        private readonly string[] args;
-
-        public TpBootStraper(string[] args)
+        public TpBootStraper(string[] args) : base(args)
         {
-            this.args = args;
         }
 
-        protected override void ConfigureContainer(ContainerBuilder builder)
+        protected override void OnClosing(CancelEventArgs e)
         {
-            base.ConfigureContainer(builder);
+            base.OnClosing(e);
+            if (e.Cancel) return;
 
-            builder.RegisterModule(new CommandLineHelperAutofacModule<TpCommandLineOptions>(args));
-            builder.RegisterModule<TpAutofacModule>();
-
-            builder.RegisterType<MainWindow>();
+            var viewModel = Container.Resolve<MainViewModel>();
+            if (viewModel.CanUnregister)
+                viewModel.Unregister();
         }
-
-        protected override DependencyObject CreateShell()
-        {
-            return Container.Resolve<MainShell>();
-        }
-
-        protected override void InitializeShell()
-        {
-            base.InitializeShell();
-
-            Application.Current.MainWindow = (Window)Shell;
-            Application.Current.MainWindow.Show();
-        }
-
-        protected override void ConfigureModuleCatalog()
-        {
-            base.ConfigureModuleCatalog();
-
-            // register prism module
-            var prismModuleType = typeof(TpPrismModule);
-            ModuleCatalog.AddModule(new ModuleInfo(prismModuleType.Name, prismModuleType.AssemblyQualifiedName));
-        }
-
     }
 }
