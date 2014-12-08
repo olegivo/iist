@@ -1,9 +1,9 @@
 using Autofac;
+using Oleg_ivo.Base.WPF.Dialogs;
 using Oleg_ivo.WAGO.Autofac;
 using Oleg_ivo.WAGO.CMS.Dialogs;
 using Oleg_ivo.WAGO.CMS.View;
 using Oleg_ivo.WAGO.CMS.ViewModel;
-using UICommon.WPF.Dialogs;
 
 namespace Oleg_ivo.WAGO.CMS.Prism
 {

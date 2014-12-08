@@ -6,12 +6,12 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using NLog;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
+using Oleg_ivo.Base.WPF.Dialogs;
 using Oleg_ivo.Plc;
 using Oleg_ivo.Plc.Entities;
 using Oleg_ivo.Plc.FieldBus.FieldBusManagers;
 using Oleg_ivo.Tools.ConnectionProvider;
 using Oleg_ivo.WAGO.CMS.Dialogs;
-using UICommon.WPF.Dialogs;
 using LogicalChannel = Oleg_ivo.Plc.Channels.LogicalChannel;
 
 namespace Oleg_ivo.WAGO.CMS.ViewModel
