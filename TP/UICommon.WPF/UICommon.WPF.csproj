@@ -163,9 +163,6 @@
     <Compile Include="UIElements\ucBurner.xaml.cs">
       <DependentUpon>ucBurner.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\IModalDialogService.cs" />
-    <Compile Include="Dialogs\IModalWindow.cs" />
-    <Compile Include="Dialogs\ModalDialogService.cs" />
     <Compile Include="UIElements\ucFan.xaml.cs">
       <DependentUpon>ucFan.xaml</DependentUpon>
     </Compile>

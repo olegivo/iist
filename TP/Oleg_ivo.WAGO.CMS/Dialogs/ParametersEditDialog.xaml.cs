@@ -1,13 +1,13 @@
 ﻿using System.Windows;
 using Oleg_ivo.Base.Autofac.DependencyInjection;
-using UICommon.WPF.Dialogs;
+using Oleg_ivo.Base.WPF.Dialogs;
 
 namespace Oleg_ivo.WAGO.CMS.Dialogs
 {
     /// <summary>
     /// Interaction logic for PolynomDialog.xaml
     /// </summary>
-    public partial class ParametersEditDialog : Window, IModalWindow<ParametersEditDialogViewModel>
+    public partial class ParametersEditDialog : IModalWindow<ParametersEditDialogViewModel>
     {
         public ParametersEditDialog()
         {

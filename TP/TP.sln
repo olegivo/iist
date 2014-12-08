@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oleg_ivo.HighLevelClient", "Oleg_ivo.Client\Oleg_ivo.HighLevelClient.csproj", "{D3640EED-9D98-4EBC-9F8B-98B74B67ED21}"
 EndProject
@@ -40,6 +40,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oleg_ivo.CMU.WPF", "Oleg_ivo.CMU.WPF\Oleg_ivo.CMU.WPF.csproj", "{4D5C35C3-10EE-4B9C-8AFA-FFA762563C2F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oleg_ivo.Prism", "External\Oleg_ivo.Tools\Oleg_ivo.Prism\Oleg_ivo.Prism.csproj", "{194522F9-C931-45AB-98B1-BA0CDBD7DEB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oleg_ivo.Base.WPF", "External\Oleg_ivo.Tools\Oleg_ivo.Base.WPF\Oleg_ivo.Base.WPF.csproj", "{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -364,12 +366,27 @@ Global
 		{194522F9-C931-45AB-98B1-BA0CDBD7DEB1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{194522F9-C931-45AB-98B1-BA0CDBD7DEB1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{194522F9-C931-45AB-98B1-BA0CDBD7DEB1}.Release|x86.ActiveCfg = Release|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Default|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Default|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Default|x86.ActiveCfg = Debug|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{EFCA38A8-EC7B-4947-80B6-9D9579BB19CC}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		VisualSVNWorkingCopyRoot = .
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
+		VisualSVNWorkingCopyRoot = .
 	EndGlobalSection
 EndGlobal
